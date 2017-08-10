@@ -1,17 +1,5 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-####################################
-# CLIENT
-####################################
-# compiled output
-client/dist
-client/tmp
-client/out-tsc
-
-# dependencies
-/node_modules
-client/node_modules
-
 # IDEs and editors
 /.idea
 .project
@@ -29,6 +17,22 @@ client/node_modules
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# System Files
+.DS_Store
+Thumbs.db
+
+####################################
+# CLIENT
+####################################
+# compiled output
+client/dist
+client/tmp
+client/out-tsc
+
+# dependencies
+client/node_modules
+
+
 # misc
 client/.sass-cache
 client/connect.lock
@@ -42,21 +46,17 @@ client/typings
 client/e2e/*.js
 client/e2e/*.map
 
-# System Files
-.DS_Store
-Thumbs.db
-
 
 ###########################
 # SERVER
 ###########################
 
 # dependencies
-server/node_modules
+node_modules
 
 # variables
-server/variables.env
+variables.env
 
 # Public folder
-server/public/app/index.html
-server/public/uploads/*
+public/app/index.html
+public/uploads/*
