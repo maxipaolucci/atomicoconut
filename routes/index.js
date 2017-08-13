@@ -7,6 +7,9 @@ router.get('/', (req, res) => {
 });
 
 //Angular App urls
+router.get('/app', (req, res) => {
+  res.render('home', {title: 'Home'});
+});
 router.get('/app/investments', (req, res) => {
   res.render('home', {title: 'Investements'});
 });
