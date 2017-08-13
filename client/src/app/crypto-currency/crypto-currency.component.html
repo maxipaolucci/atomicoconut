@@ -1,9 +1,16 @@
-<div class="currency-box">
-  <div class="currency-box__contents">
-    <h3>Moneros ({{cryptoCurrencyCount}})</h3> 
-    today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>
-    <br><br>
-
+<md-card class="currency-card">
+  <md-card-header>
+    <div md-card-avatar 
+        class="header-image"
+        [class.header-image__xmr]="cryptoCurrency === 'xmr'"
+        [class.header-image__btc]="cryptoCurrency === 'btc'">
+    </div>
+    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>
+    <md-card-subtitle>
+      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>
+    </md-card-subtitle>
+  </md-card-header>
+  <md-card-content>
     Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> 
     <br>
 
@@ -14,5 +21,5 @@
       <br>
       ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)
     </div>
-  </div>
-</div>
+  </md-card-content>
+</md-card>
