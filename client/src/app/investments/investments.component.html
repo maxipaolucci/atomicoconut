@@ -1,6 +1,6 @@
-<div fxLayout="column">
-  <div fxLayout="row" fxFlex>
-    <app-crypto-currency 
+<div fxLayout="column" fxLayoutGap="10px">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+    <app-crypto-currency fxFlex 
       [cryptoCurrency]="'xmr'"
       [cryptoCurrencyCount]="218"
       [cryptoCurrencyBuyPrice]="50"
@@ -8,7 +8,7 @@
       (totalReturns)="setTotals($event)">
     </app-crypto-currency>
 
-    <app-crypto-currency 
+    <app-crypto-currency fxFlex
       [cryptoCurrency]="'btc'"
       [cryptoCurrencyCount]="1.28129356"
       [cryptoCurrencyBuyPrice]="2359.99"
@@ -16,26 +16,26 @@
       (totalReturns)="setTotals($event)">
     </app-crypto-currency>
   </div>
-  <div fxFlex="100">
-    <md-card class="totals-card">
-      <md-card-header>
-        <div md-card-avatar 
-            class="header-image header-image__totals">
-        </div>
-        <md-card-title>Totals</md-card-title>
-        <md-card-subtitle>
-          today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>
-        </md-card-subtitle>
-      </md-card-header>
-      <md-card-content>
-        Investment: <strong>{{totalInvestment | currency }}</strong>
-        <br>
 
-        <div [class.color__green]="totalReturn >= totalInvestment" 
-            [class.color__red]="totalReturn < totalInvestment">
-          ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
-        </div>
-      </md-card-content>
-    </md-card>
-  </div>
+  <md-card fxFlex class="totals-card">
+    <md-card-header>
+      <div md-card-avatar 
+          class="header-image header-image__totals">
+      </div>
+      <md-card-title>Totals</md-card-title>
+      <md-card-subtitle>
+        today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>
+      </md-card-subtitle>
+    </md-card-header>
+    <md-card-content>
+      Investment: <strong>{{totalInvestment | currency }}</strong>
+      <br>
+
+      <div [class.color__green]="totalReturn >= totalInvestment" 
+          [class.color__red]="totalReturn < totalInvestment">
+        ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
+      </div>
+    </md-card-content>
+  </md-card>
+  
 </div>
