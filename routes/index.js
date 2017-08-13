@@ -6,6 +6,11 @@ router.get('/', (req, res) => {
   res.render('home', {title: 'Home'});
 });
 
+//Angular App urls
+router.get('/app/investments', (req, res) => {
+  res.render('home', {title: 'Investements'});
+});
+
 router.get('/data', (req, res) => {
   res.json({ here : 'data'});
 });
