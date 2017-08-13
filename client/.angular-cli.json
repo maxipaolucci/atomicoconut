@@ -7,10 +7,9 @@
     {
       "root": "src",
       "outDir": "../public/app",
-
       "assets": [
-        "assets",
-        "favicon.ico"
+        { "glob": "**/*", "input": "./assets/", "output": "../assets/" },
+        { "glob": "favicon.ico", "input": "./", "output": "../" }
       ],
       "index": "index.html",
       "main": "main.ts",
