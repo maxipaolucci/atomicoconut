@@ -6,9 +6,9 @@ exports.loginForm = (req, res) => {
     res.render('login', { title : 'Login' });
 }
 
-exports.registerForm = (req, res) => {
-    res.render('register', { title : 'Register'});
-};
+// exports.registerForm = (req, res) => {
+//     res.render('register', { title : 'Register'});
+// };
 
 exports.validateRegister = (req, res, next) => {
     req.sanitizeBody('name'); //this method comes with the expressValidator plugin we added in app.js. With this we sanitze the value in req.body.name
@@ -39,12 +39,6 @@ exports.register = async (req, res, next) => {
                                                     //this User.register function was added to model by passportLocalMongoose plugin in the user schema. 
     await register(user, req.body.password); //this stores a hash of the password in database (thanks to the plugin) 
     next(); //call next middleware
-    
-    //this does the same thing we did above but without promises.
-    // User.register(user, req.body.password, function(err, user) {
-    //     res.send('it works!!');
-    //     next(); //call next middleware
-    // });
 };
 
 exports.account = (req, res) => {

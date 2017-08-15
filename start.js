@@ -18,6 +18,8 @@ mongoose.connection.on('error', (err) => {
 });
 
 // READY?! Let's go!
+// import all of our models
+require('./models/User');
 
 
 // Start our app!

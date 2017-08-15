@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const md5 = require('md5');
 const validator = require('validator'); //validator package in nodejs, check doc online
 const mongodbErrorHandler = require('mongoose-mongodb-errors');
 const passportLocalMongoose = require('passport-local-mongoose');
+
 mongoose.Promise = global.Promise; //this is already defined in app js but mongoose has a bug that sometimes forgot this so nothing happens if we redefine it in the schema
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   email: {
@@ -21,10 +22,7 @@ const userSchema = new Schema({
     trim: true
   },
   resetPasswordToken : String,
-  resetPasswordExpires : Date,
-  hearts : [
-    { type : mongoose.Schema.ObjectId, ref : 'Store' }
-  ]
+  resetPasswordExpires : Date
 });
 
 
