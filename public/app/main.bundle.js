@@ -277,7 +277,7 @@ var _a;
 /***/ "../../../../../src/app/crypto-currency/crypto-currency.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<md-card class=\"currency-card\">\r\n  <md-card-header>\r\n    <div md-card-avatar \r\n        class=\"header-image\"\r\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\r\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\r\n    </div>\r\n    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>\r\n    <md-card-subtitle>\r\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\r\n    </md-card-subtitle>\r\n  </md-card-header>\r\n  <md-card-content>\r\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\r\n\r\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \r\n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n  </md-card-content>\r\n</md-card>"
+module.exports = "<md-card class=\"currency-card\">\n  <md-card-header>\n    <div md-card-avatar \n        class=\"header-image\"\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\n    </div>\n    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>\n    <md-card-subtitle>\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\n    </md-card-subtitle>\n  </md-card-header>\n  <md-card-content>\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \n    <br>\n\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\n\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\n      <br>\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\n    </div>\n  </md-card-content>\n</md-card>"
 
 /***/ }),
 
@@ -289,7 +289,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".currency-card .header-image {\n  background-size: cover; }\n  .currency-card .header-image.header-image__xmr {\n    background-image: url(\"/assets/images/xmr.png\"); }\n  .currency-card .header-image.header-image__btc {\n    background-image: url(\"/assets/images/btc.png\"); }\n", ""]);
+exports.push([module.i, ".currency-card {\n  text-align: center; }\n  .currency-card .header-image {\n    background-size: cover; }\n    .currency-card .header-image.header-image__xmr {\n      background-image: url(\"/assets/images/xmr.png\"); }\n    .currency-card .header-image.header-image__btc {\n      background-image: url(\"/assets/images/btc.png\"); }\n", ""]);
 
 // exports
 
@@ -483,7 +483,7 @@ CustomMaterialDesignModule = __decorate([
 /***/ "../../../../../src/app/investments/investments.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <app-crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"218\"\r\n      [cryptoCurrencyBuyPrice]=\"50\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </app-crypto-currency>\r\n\r\n    <app-crypto-currency fxFlex\r\n      [cryptoCurrency]=\"'btc'\"\r\n      [cryptoCurrencyCount]=\"1.28129356\"\r\n      [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n      [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </app-crypto-currency>\r\n  </div>\r\n\r\n  <md-card fxFlex class=\"totals-card\">\r\n    <md-card-header>\r\n      <div md-card-avatar \r\n          class=\"header-image header-image__totals\">\r\n      </div>\r\n      <md-card-title>Totals</md-card-title>\r\n      <md-card-subtitle>\r\n        today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\r\n      </md-card-subtitle>\r\n    </md-card-header>\r\n    <md-card-content>\r\n      Investment: <strong>{{totalInvestment | currency }}</strong>\r\n      <br>\r\n\r\n      <div [class.color__green]=\"totalReturn >= totalInvestment\" \r\n          [class.color__red]=\"totalReturn < totalInvestment\">\r\n        ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n      </div>\r\n    </md-card-content>\r\n  </md-card>\r\n  \r\n</div>\r\n"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <app-crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"218\"\r\n      [cryptoCurrencyBuyPrice]=\"50\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </app-crypto-currency>\r\n\r\n    <app-crypto-currency fxFlex\r\n      [cryptoCurrency]=\"'btc'\"\r\n      [cryptoCurrencyCount]=\"1.28129356\"\r\n      [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n      [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </app-crypto-currency>\r\n  </div>\r\n\r\n  <md-card fxFlex class=\"totals-card\">\r\n    <md-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n      <p [class.color__green]=\"totalReturn >= totalInvestment\" \r\n          [class.color__red]=\"totalReturn < totalInvestment\">\r\n        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n      </p>\r\n    </md-card-content>\r\n  </md-card>\r\n  \r\n</div>\r\n"
 
 /***/ }),
 
@@ -495,7 +495,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".totals-card .header-image {\n  background-size: cover; }\n  .totals-card .header-image.header-image__totals {\n    background-image: url(\"/assets/images/equals.jpg\"); }\n", ""]);
+exports.push([module.i, ".totals-card {\n  text-align: center; }\n  .totals-card md-card-content p {\n    margin-bottom: 0; }\n", ""]);
 
 // exports
 

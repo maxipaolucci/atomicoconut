@@ -18,23 +18,13 @@
   </div>
 
   <md-card fxFlex class="totals-card">
-    <md-card-header>
-      <div md-card-avatar 
-          class="header-image header-image__totals">
-      </div>
-      <md-card-title>Totals</md-card-title>
-      <md-card-subtitle>
-        today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>
-      </md-card-subtitle>
-    </md-card-header>
-    <md-card-content>
-      Investment: <strong>{{totalInvestment | currency }}</strong>
-      <br>
-
-      <div [class.color__green]="totalReturn >= totalInvestment" 
+    <md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+        fxLayoutAlign="space-around center">
+      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>
+      <p [class.color__green]="totalReturn >= totalInvestment" 
           [class.color__red]="totalReturn < totalInvestment">
-        ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
-      </div>
+        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
+      </p>
     </md-card-content>
   </md-card>
   
