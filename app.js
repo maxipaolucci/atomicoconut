@@ -65,6 +65,13 @@ app.use((req, res, next) => {
   next();
 });
 
+//allow cross origin requests
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // After allllll that above middleware, we finally handle our own routes!
 app.use('/', routes);
 

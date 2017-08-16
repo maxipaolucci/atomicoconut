@@ -30,6 +30,13 @@ router.get('/data', (req, res) => {
 //****************************** USERS API ********************************** */
 //*************************************************************************** */
 //user controller
+
+router.get('/api/users/test', (req, res) => {
+  console.log(123);
+  
+  res.json({test : 'data'});
+});
+
 //router.get('/api/users/login', userController.loginForm);
 router.post('/api/users/login', authController.login);
 // router.get('/register', userController.registerForm);
