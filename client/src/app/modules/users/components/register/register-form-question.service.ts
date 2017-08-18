@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { DropdownQuestion } from '../../../dynamic-form/question-dropdown';
 import { QuestionBase }     from '../../../dynamic-form/question-base';
 import { TextboxQuestion }  from '../../../dynamic-form/question-textbox';
@@ -16,7 +17,10 @@ export class RegisterFormQuestionService {
         key: 'name',
         label: 'Name',
         value: '',
-        required: true,
+        validators: [
+          Validators.required,
+          Validators.minLength(3)  
+        ],
         order: 1
       }),
 
@@ -24,7 +28,7 @@ export class RegisterFormQuestionService {
         key: 'email',
         label: 'Email',
         type: 'email',
-        required : true,
+        validators : [],
         order: 2
       }),
 
@@ -32,7 +36,6 @@ export class RegisterFormQuestionService {
         key: 'password',
         label: 'Password',
         type: 'password',
-        required : true,
         order: 3
       }),
 
@@ -40,7 +43,7 @@ export class RegisterFormQuestionService {
         key: 'passwordConfirm',
         label: 'Confirm password',
         type: 'password',
-        required : true,
+        validators : [],
         order: 4
       })
     ];

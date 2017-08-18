@@ -1,16 +1,13 @@
 <div>
-  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form" novalidate>
 
-    <div *ngFor="let question of questions" class="form-row">
-      <df-question [question]="question" [form]="form"></df-question>
-    </div>
-
-    <div class="form-row">
-      <button type="submit" [disabled]="!form.valid">Save</button>
-    </div>
+    <df-question *ngFor="let question of questions" [question]="question" [form]="form"></df-question>
+    
+    <button type="submit" [disabled]="!form.valid">Save</button>
+    
   </form>
 
-  <div *ngIf="payLoad" class="form-row">
+  <div *ngIf="payLoad">
     <strong>Saved the following values</strong><br>{{payLoad}}
   </div>
 </div>
