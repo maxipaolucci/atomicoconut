@@ -28,7 +28,10 @@ export class RegisterFormQuestionService {
         key: 'email',
         label: 'Email',
         type: 'email',
-        validators : [],
+        validators : [
+          Validators.required,
+          Validators.email
+        ],
         order: 2
       }),
 
@@ -36,6 +39,11 @@ export class RegisterFormQuestionService {
         key: 'password',
         label: 'Password',
         type: 'password',
+        validators: [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(20)
+        ],
         order: 3
       }),
 
@@ -43,7 +51,11 @@ export class RegisterFormQuestionService {
         key: 'passwordConfirm',
         label: 'Confirm password',
         type: 'password',
-        validators : [],
+        validators: [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(20)
+        ],
         order: 4
       })
     ];

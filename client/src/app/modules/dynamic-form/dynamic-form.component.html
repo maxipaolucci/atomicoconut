@@ -3,7 +3,9 @@
 
     <df-question *ngFor="let question of questions" [question]="question" [form]="form"></df-question>
     
-    <button type="submit" [disabled]="!form.valid">Save</button>
+    <div class="button-row">
+      <button md-raised-button type="submit" [disabled]="!form.valid">Register</button>
+    </div>
     
   </form>
 
