@@ -2,5 +2,5 @@
   register works!
   {{data | json}}
 
-  <dynamic-form [questions]="questions"></dynamic-form>
+  <dynamic-form [questions]="questions" (formData)="onFormSubmitHandler($event)"></dynamic-form>
 </p>

@@ -32,8 +32,6 @@ router.get('/data', (req, res) => {
 //user controller
 
 router.get('/api/users/test', (req, res) => {
-  console.log(123);
-  
   res.json({test : 'data'});
 });
 

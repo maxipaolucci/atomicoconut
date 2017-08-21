@@ -25,8 +25,12 @@ exports.validateRegister = (req, res, next) => {
 
     const errors = req.validationErrors();
     if (errors) {
-        req.flash('error', errors.map(err => err.msg));
-        res.render('register', { title : 'Register', body : req.body, flashes : req.flash() });
+        //req.flash('error', errors.map(err => err.msg));
+        //res.json('register', { title : 'Register', body : req.body, flashes : req.flash() });
+        res.status(400).json({ 
+            status : "error", 
+            codeno : 400,
+            msg : errors.map(err => err.msg)});
         return; //stop from running
     }
 

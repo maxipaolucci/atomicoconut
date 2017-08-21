@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 
 import {Observable} from "rxjs/Rx";
 
 @Injectable()
 export class UsersService {
 
+  private serverHost : string = 'http://localhost:7777';
   private serverUrl : string = 'http://localhost:7777/api/users/test';
+  private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http : Http) {
 
@@ -15,6 +17,12 @@ export class UsersService {
   getTest() : Observable<any> {
     
     return this.http.get(`${this.serverUrl}`)
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
+
+  register(postData : any = {}) : Observable<any> {
+    return this.http.post(`${this.serverHost}/api/users/register`, postData, { headers : this.headers })
         .map(this.extractData)
         .catch(this.handleError);
   }

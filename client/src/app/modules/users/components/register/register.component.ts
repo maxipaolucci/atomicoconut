@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
       private usersService : UsersService) { }
 
   ngOnInit() {
-    let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     this.questions = this.registerFormQuestionService.getQuestions();
     console.log(this.questions);
     this.usersService.getTest().subscribe(
@@ -25,6 +25,17 @@ export class RegisterComponent implements OnInit {
         this.data = data;
       },
       (error : any) =>  console.error(`${methodTrace} There was an error trying to load Monero prices > ${error}`)
+    );
+  }
+
+  onFormSubmitHandler(formData : any) {
+    console.log(formData);
+    const methodTrace = `${this.constructor.name} > onFormSubmitHandler() > `; //for debugging
+    this.usersService.register(formData).subscribe(
+      (data : any) => {
+        console.log(data) 
+      },
+      (error : any) =>  console.error(`${methodTrace} There was an error with the register service > ${error}`)
     );
   }
 

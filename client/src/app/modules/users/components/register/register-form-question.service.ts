@@ -48,7 +48,7 @@ export class RegisterFormQuestionService {
       }),
 
       new TextboxQuestion({
-        key: 'passwordConfirm',
+        key: 'password-confirm',
         label: 'Confirm password',
         type: 'password',
         validators: [
