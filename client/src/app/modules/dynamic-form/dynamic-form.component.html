@@ -2,11 +2,10 @@
   <form (ngSubmit)="onSubmit()" [formGroup]="form" novalidate>
 
     <df-question *ngFor="let question of questions" [question]="question" [form]="form"></df-question>
-    
-    <div class="button-row">
-      <button md-raised-button type="submit" [disabled]="!form.valid">Register</button>
+    <md-error *ngFor="let error of postSubmitErrors">{{error}}</md-error>
+    <div>
+      <button class="mat-raised-button" md-raised-button type="submit" [disabled]="!form.valid">Register</button>
     </div>
-    
   </form>
 
   <div *ngIf="payLoad">

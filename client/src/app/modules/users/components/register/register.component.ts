@@ -12,14 +12,15 @@ import { RegisterFormQuestionService } from './register-form-question.service';
 export class RegisterComponent implements OnInit {
   private data : any = {};
   private questions: any[];
+  private postSubmitErrors : string[];
   
-  constructor(private registerFormQuestionService: RegisterFormQuestionService, 
-      private usersService : UsersService) { }
+  constructor(private registerFormQuestionService: RegisterFormQuestionService, private usersService : UsersService) {
+    this.postSubmitErrors = [];
+  }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     this.questions = this.registerFormQuestionService.getQuestions();
-    console.log(this.questions);
     this.usersService.getTest().subscribe(
       (data : any) => {
         this.data = data;
@@ -29,8 +30,13 @@ export class RegisterComponent implements OnInit {
   }
 
   onFormSubmitHandler(formData : any) {
-    console.log(formData);
     const methodTrace = `${this.constructor.name} > onFormSubmitHandler() > `; //for debugging
+    
+    if (formData['password'] !== formData['password-confirm']) {
+      this.postSubmitErrors.push('The confirm password field must match the password');
+      return false;
+    }
+    
     this.usersService.register(formData).subscribe(
       (data : any) => {
         console.log(data) 

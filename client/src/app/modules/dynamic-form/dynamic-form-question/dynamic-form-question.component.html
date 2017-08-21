@@ -1,7 +1,12 @@
 <div [formGroup]="form" [ngSwitch]="question.controlType">
   
   <md-input-container *ngSwitchCase="'textbox'" class="example-full-width">
-    <input mdInput [type]="question.type" [id]="question.key" [placeholder]="question.label" [formControlName]="question.key">
+    <input mdInput 
+        [type]="question.type" 
+        [id]="question.key" 
+        [placeholder]="question.label" 
+        [formControlName]="question.key">
+
     <md-error *ngIf="!isValid && form.get(question.key).hasError('required')">{{question.label}} is required</md-error>
     <md-error *ngIf="!isValid && form.get(question.key).hasError('minlength')">{{question.label}} must contains at least {{form.get(question.key).errors.minlength.requiredLength}} characters</md-error>
     <md-error *ngIf="!isValid && form.get(question.key).hasError('maxlength')">{{question.label}} must contains {{form.get(question.key).errors.maxlength.requiredLength}} or less characters</md-error>
