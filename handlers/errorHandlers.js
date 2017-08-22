@@ -1,3 +1,5 @@
+const errorTrace = 'errorHandlers >';
+
 /*
   Catch Errors Handler
 
@@ -7,20 +9,10 @@
 */
 
 exports.catchErrors = (fn) => {
+  const methodTrace = `${errorTrace} catchErrors() >`;
+
   return function(req, res, next) {
     return fn(req, res, next).catch(next);
-  };
-};
-
-
-exports.catchApiErrors = (fn) => {
-  return function(req, res, next) {
-    return fn(req, res, next).catch(res.status(401).json({ 
-        status : "error", 
-        codeno : 400, 
-        msg : 'Server > catchApiErrors() > Something fail in the server'
-      })
-    );
   };
 };
 
@@ -31,7 +23,9 @@ exports.catchApiErrors = (fn) => {
 */
 exports.notFound = (req, res, next) => {
   const err = new Error('Not Found');
-  err.status = 404;
+  err.status = 'error';
+  err.codeno = 404;
+  err.message = 'Page not found';
   next(err);
 };
 
@@ -56,17 +50,24 @@ exports.flashValidationErrors = (err, req, res, next) => {
   In development we show good error messages so if we hit a syntax error or any other previously un-handled error, we can show good info on what happened
 */
 exports.developmentErrors = (err, req, res, next) => {
+  const methodTrace = `${errorTrace} developmentErrors() >`;
+
   err.stack = err.stack || '';
   const errorDetails = {
     message: err.message,
-    status: err.status,
-    stackHighlighted: err.stack.replace(/[a-z_-\d]+.js:\d+:\d+/gi, '<mark>$&</mark>')
+    status: 'error',
+    codeno: 400,
+    data: err.stack.replace(/[a-z_-\d]+.js:\d+:\d+/gi, '<mark>$&</mark>')
   };
-  res.status(err.status || 500);
+
+  console.log(`${methodTrace} Error occurs ${JSON.stringify(errorDetails)}`);
+
+  res.status(err.status || 400);
   res.format({
     // Based on the `Accept` http header
     'text/html': () => {
-      res.render('error', errorDetails);
+      res.json(errorDetails);
+      //res.render('tests/error', errorDetails);
     }, // Form Submit, Reload the page
     'application/json': () => res.json(errorDetails) // Ajax call, send JSON back
   });

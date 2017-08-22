@@ -5,10 +5,14 @@ const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 
+const errorTrace = 'authController >';
 
 exports.login = (req, res, next) => {
+    const methodTrace = `${errorTrace} login() >`;
+
     passport.authenticate('local', function(err, user, info) {
         if (err) {
+            console.log(`${methodTrace} Login failed 1. ${err}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 400,
@@ -17,7 +21,8 @@ exports.login = (req, res, next) => {
             });
             return; //stop from running 
         }
-        if (!user) { 
+        if (!user) {
+            console.log(`${methodTrace} Login failed 2. Not user back`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 400,
@@ -28,7 +33,8 @@ exports.login = (req, res, next) => {
         }
 
         req.logIn(user, function(err) {
-            if (err) { 
+            if (err) {
+                console.log(`${methodTrace} Login failed 2. ${err}`);
                 res.status(401).json({ 
                     status : "error", 
                     codeno : 400,
@@ -38,6 +44,7 @@ exports.login = (req, res, next) => {
                 return; //stop from running 
             }
             
+            console.log(`${methodTrace} Login Works!`);
             res.json({
                 status : 'success', 
                 codeno : 200,
