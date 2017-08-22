@@ -12,6 +12,18 @@ exports.catchErrors = (fn) => {
   };
 };
 
+
+exports.catchApiErrors = (fn) => {
+  return function(req, res, next) {
+    return fn(req, res, next).catch(res.status(401).json({ 
+        status : "error", 
+        codeno : 400, 
+        msg : 'Server > catchApiErrors() > Something fail in the server'
+      })
+    );
+  };
+};
+
 /*
   Not Found Error Handler
 

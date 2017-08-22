@@ -6,7 +6,7 @@ import {Observable} from "rxjs/Rx";
 @Injectable()
 export class UsersService {
 
-  private serverHost : string = 'http://localhost:7777';
+  private serverHost : string = 'http://localhost:7777/api';
   private serverUrl : string = 'http://localhost:7777/api/users/test';
   private headers = new Headers({'Content-Type': 'application/json'});
 
@@ -22,14 +22,13 @@ export class UsersService {
   }
 
   register(postData : any = {}) : Observable<any> {
-    return this.http.post(`${this.serverHost}/api/users/register`, postData, { headers : this.headers })
+    return this.http.post(`${this.serverHost}/users/register`, postData, { headers : this.headers })
         .map(this.extractData)
         .catch(this.handleError);
   }
 
   private extractData(res: Response) : any {
     let body = res.json();
-    console.log(body);
     return body;
     // if (body.success === true) {
     //   return body.ticker;

@@ -32,11 +32,13 @@ export class RegisterComponent implements OnInit {
   onFormSubmitHandler(formData : any) {
     const methodTrace = `${this.constructor.name} > onFormSubmitHandler() > `; //for debugging
     
+    //chech that the password and the confirmed password are the same
     if (formData['password'] !== formData['password-confirm']) {
       this.postSubmitErrors.push('The confirm password field must match the password');
       return false;
     }
     
+    //call the register service
     this.usersService.register(formData).subscribe(
       (data : any) => {
         console.log(data) 

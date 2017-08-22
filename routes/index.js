@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
-const { catchErrors } = require('../handlers/errorHandlers');
+const { catchErrors, catchApiErrors } = require('../handlers/errorHandlers');
 
 // Do work here
 router.get('/', (req, res) => {
@@ -15,6 +15,10 @@ router.get('/app', (req, res) => {
 });
 router.get('/app/investments', (req, res) => {
   res.render('home', {title: 'Investements'});
+});
+
+router.get('/app/register', (req, res) => {
+  res.render('home', {title: 'Register'});
 });
 
 router.get('/data', (req, res) => {
@@ -40,7 +44,7 @@ router.post('/api/users/login', authController.login);
 // router.get('/register', userController.registerForm);
 router.post('/api/users/register', 
     userController.validateRegister,
-    userController.register,
+    catchApiErrors(userController.register),
     authController.login
 );
 

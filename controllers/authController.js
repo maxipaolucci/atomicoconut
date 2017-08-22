@@ -5,12 +5,48 @@ const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 
-exports.login = passport.authenticate('local', {
-    failureRedirect : '/login',
-    failureFlash: 'Failed Login!',
-    successRedirect : '/',
-    successFlash : 'You are logged in!'
-}); //authenticate is a middleware on passport. local means we are using our local authentication with email and password. 
+
+exports.login = (req, res, next) => {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) {
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 400,
+                msg : errors.map(err => err.msg),
+                data : info
+            });
+            return; //stop from running 
+        }
+        if (!user) { 
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 400,
+                msg : 'No user found with the provided credentials',
+                data : info
+            });
+            return; //stop from running 
+        }
+
+        req.logIn(user, function(err) {
+            if (err) { 
+                res.status(401).json({ 
+                    status : "error", 
+                    codeno : 400,
+                    msg : err,
+                    data : info
+                });
+                return; //stop from running 
+            }
+            
+            res.json({
+                status : 'success', 
+                codeno : 200,
+                msg : 'Login successful',
+                data : { name : user.name, email : user.email }
+            });
+        });
+    })(req, res, next);
+}; //authenticate is a middleware on passport. local means we are using our local authentication with email and password. 
     //But we can put ther 'facebook' to use facebook. Check documentation. 
     //This uses the passport handler in handlers folder
 
