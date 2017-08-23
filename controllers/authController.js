@@ -59,8 +59,12 @@ exports.login = (req, res, next) => {
 
 exports.logout = (req, res) => {
     req.logout(); //this was added in passport
-    req.flash('success', 'You are now logged out');
-    res.redirect('/');
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : 'Logout successful',
+        data : null
+    });
 };
 
 exports.isLogggedIn = (req, res, next) => {
@@ -69,16 +73,25 @@ exports.isLogggedIn = (req, res, next) => {
         return;
     }
 
-    req.flash('error', 'Oops you must be logged in to do that!');
-    res.redirect('/login');
+    res.status(401).json({ 
+        status : "error", 
+        codeno : 400,
+        msg : 'You are not authenticated to proceed.',
+        data : null
+    });
 };
 
 exports.forgot = async (req, res) => {
     //1 see user with that exitst
     const user = await User.findOne({ email : req.body.email });
     if (!user) {
-        req.flash('error', 'No account with that email exists.');
-        return res.redirect('/login');
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 400,
+            msg : 'No account with that email exists.',
+            data : null
+        });
+        return;
     }
     //2 set reset tokens and expiry on their account
     user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
@@ -92,26 +105,13 @@ exports.forgot = async (req, res) => {
         resetURL,
         filename : 'password-reset' //this is going to be the mail template file
     });
-    req.flash('success', `You have been emailed a password reset link.`);
-    //4 redirect to login page
-    res.redirect('/login');
-};
 
-exports.reset = async (req, res) => {
-    
-    const user = await User.findOne({
-        $and : [
-            { resetPasswordToken : req.params.token },
-            { resetPasswordToken : { $gt : Date.now() } }
-        ]
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : 'You have been emailed a password reset link',
+        data : null
     });
-    
-    if (!user) {
-        req.flash('error', 'Password reset is invalid or has expired.');
-        return res.redirect('/login');
-    }
-
-    res.render('reset', { title : 'Reset your Password' });
 };
 
 exports.confirmedPasswords = (req, res, next) => {
@@ -120,8 +120,12 @@ exports.confirmedPasswords = (req, res, next) => {
         return;
     }
 
-    req.flash('error', 'Passwords do not match!');
-    res.redirect('back');
+    res.status(401).json({
+        status : "error", 
+        codeno : 400,
+        msg : 'Passwords do not match!',
+        data : null
+    });
 };
 
 exports.update = async (req, res) => {
@@ -133,8 +137,13 @@ exports.update = async (req, res) => {
     });
 
     if (!user) {
-        req.flash('error', 'Password reset is invalid or has expired.');
-        return res.redirect('/login');
+        res.status(401).json({
+            status : "error", 
+            codeno : 400,
+            msg : 'Password reset is invalid or has expired.',
+            data : null
+        });
+        return;
     }
 
     const setPassword = promisify(user.setPassword, user); //this User.setPassword function was added to model by passportLocalMongoose plugin in the user schema. 
@@ -144,6 +153,11 @@ exports.update = async (req, res) => {
     user.resetPasswordExpires = undefined;
     const updatedUser = await user.save(); //here is when we save in the database the deleted values before 
     await req.login(updatedUser); //this comes from passport js
-    req.flash('success', 'Nice! Your password has been reset! You are now logged in!');
-    res.redirect('/');
+    
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : 'Nice! Your password has been reset! You are now logged in!',
+        data : null
+    });
 };

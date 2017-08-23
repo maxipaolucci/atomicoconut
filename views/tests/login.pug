@@ -1,0 +1,12 @@
+extends layout
+
+include ../mixins/tests/_loginForm
+include ../mixins/tests/_forgot
+
+block content
+    .inner
+        if user
+            p Your are already logged in!!!
+            pre= h.dump(user)
+        +loginForm()
+        +forgotForm()

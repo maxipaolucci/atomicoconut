@@ -66,8 +66,8 @@ exports.developmentErrors = (err, req, res, next) => {
   res.format({
     // Based on the `Accept` http header
     'text/html': () => {
-      res.json(errorDetails);
-      //res.render('tests/error', errorDetails);
+      //res.json(errorDetails);
+      res.render('tests/error', errorDetails);
     }, // Form Submit, Reload the page
     'application/json': () => res.json(errorDetails) // Ajax call, send JSON back
   });

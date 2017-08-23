@@ -59,6 +59,10 @@ exports.updateAccount = async (req, res) => {
         { new : true, runValidators : true, context : 'query' }
     );
 
-    req.flash('success', 'Updated the profile!')
-    res.redirect('back');
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : 'Profile successfully edited.',
+        data : { name : user.name, email : user.email }
+    });
 };

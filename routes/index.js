@@ -25,6 +25,13 @@ router.get('/app/register', (req, res) => {
 
 // TEST controller
 router.get('/register', testController.registerForm);
+router.get('/login', testController.loginForm);
+router.get('/logout', testController.logoutForm);
+router.get('/account', 
+    authController.isLogggedIn, 
+    testController.account
+);
+router.get('/account/reset/:token', catchErrors(testController.reset));
 
 
 //*************************************************************************** */
@@ -40,8 +47,8 @@ router.get('/api/users/test', (req, res) => {
   res.json({test : 'data'});
 });
 
-//router.get('/api/users/login', userController.loginForm);
 router.post('/api/users/login', authController.login);
+
 router.post('/api/users/register', 
     userController.validateRegister,
     catchErrors(userController.register),
@@ -50,10 +57,6 @@ router.post('/api/users/register',
 
 router.get('/api/users/logout', authController.logout);
 
-// router.get('/account', 
-//     authController.isLogggedIn, 
-//     userController.account
-// );
 router.post('/api/users/account', 
     authController.isLogggedIn, 
     catchErrors(userController.updateAccount)
@@ -61,7 +64,7 @@ router.post('/api/users/account',
 router.post('/api/users/account/forgot',  
     catchErrors(authController.forgot)
 );
-// router.get('/account/reset/:token', catchErrors(authController.reset));
+
 router.post('/api/users/account/reset/:token', 
     authController.confirmedPasswords,
     catchErrors(authController.update)
