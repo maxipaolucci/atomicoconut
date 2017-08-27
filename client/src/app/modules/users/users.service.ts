@@ -27,14 +27,21 @@ export class UsersService {
         .catch(this.handleError);
   }
 
+  getUser() : Observable<any> {
+    console.log(`${this.serverHost}/users/getUser`);
+    return this.http.get(`${this.serverHost}/users/getUser`)
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
+
   private extractData(res: Response) : any {
     let body = res.json();
-    return body;
-    // if (body.success === true) {
-    //   return body.ticker;
-    // } else {
-    //   throw body;
-    // }
+
+    if (body.codeno === 200 && body.status === 'success') {
+      return body.data;
+    } else {
+      throw body;
+    }
   }
 
   private handleError (error: Response | any) {
@@ -42,12 +49,10 @@ export class UsersService {
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+      errMsg = body.message || JSON.stringify(body);
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
-    console.error(errMsg);
     return Observable.throw(errMsg);
   }
 

@@ -55,6 +55,8 @@ router.post('/api/users/register',
     authController.login
 );
 
+router.get('/api/users/getUser', authController.getUser);
+
 router.get('/api/users/logout', authController.logout);
 
 router.post('/api/users/account', 

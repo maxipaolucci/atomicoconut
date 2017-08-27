@@ -27,7 +27,7 @@ exports.login = (req, res, next) => {
                 status : "error", 
                 codeno : 400,
                 msg : 'No user found with the provided credentials',
-                data : info
+                data : null
             });
             return; //stop from running 
         }
@@ -38,8 +38,8 @@ exports.login = (req, res, next) => {
                 res.status(401).json({ 
                     status : "error", 
                     codeno : 400,
-                    msg : err,
-                    data : info
+                    msg : 'There was an error trying to login with the recently registered user.',
+                    data : null
                 });
                 return; //stop from running 
             }
@@ -77,6 +77,25 @@ exports.isLogggedIn = (req, res, next) => {
         status : "error", 
         codeno : 400,
         msg : 'You are not authenticated to proceed.',
+        data : null
+    });
+};
+
+exports.getUser = (req, res, next) => {
+    if (req.isAuthenticated()) { //check in passport for authentication
+        res.json({
+            status : 'success', 
+            codeno : 200,
+            msg : 'User is logged in.',
+            data : { name : req.user.name, email : req.user.email }
+        });
+        return;
+    }
+
+    res.json({ 
+        status : "success", 
+        codeno : 200,
+        msg : 'No user logged in currently.',
         data : null
     });
 };

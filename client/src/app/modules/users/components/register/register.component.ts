@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UsersService } from '../../users.service';
 import { RegisterFormQuestionService } from './register-form-question.service';
@@ -14,7 +15,7 @@ export class RegisterComponent implements OnInit {
   private questions: any[];
   private postSubmitErrors : string[];
   
-  constructor(private registerFormQuestionService: RegisterFormQuestionService, private usersService : UsersService) {
+  constructor(private registerFormQuestionService: RegisterFormQuestionService, private usersService : UsersService, private router : Router) {
     this.postSubmitErrors = [];
   }
 
@@ -41,7 +42,11 @@ export class RegisterComponent implements OnInit {
     //call the register service
     this.usersService.register(formData).subscribe(
       (data : any) => {
-        console.log(data) 
+        if (data && data.email) {
+          this.router.navigate(['/']); //go home
+        } else {
+          console.error(`${methodTrace} Unexpected data format.`)
+        }
       },
       (error : any) =>  console.error(`${methodTrace} There was an error with the register service > ${error}`)
     );

@@ -57,19 +57,20 @@ exports.developmentErrors = (err, req, res, next) => {
     message: err.message,
     status: 'error',
     codeno: 400,
-    data: err.stack.replace(/[a-z_-\d]+.js:\d+:\d+/gi, '<mark>$&</mark>')
+    data: null
   };
-
-  console.log(`${methodTrace} Error occurs ${JSON.stringify(errorDetails)}`);
 
   res.status(err.status || 400);
   res.format({
     // Based on the `Accept` http header
     'text/html': () => {
+      errorDetails.data = err.stack.replace(/[a-z_-\d]+.js:\d+:\d+/gi, '<mark>$&</mark>');
       //res.json(errorDetails);
       res.render('tests/error', errorDetails);
     }, // Form Submit, Reload the page
-    'application/json': () => res.json(errorDetails) // Ajax call, send JSON back
+    'application/json': () => {
+      res.json(errorDetails) // Ajax call, send JSON back
+    }
   });
 };
 
