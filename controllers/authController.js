@@ -84,7 +84,7 @@ exports.isLogggedIn = (req, res, next) => {
 exports.getUser = (req, res, next) => {
     if (req.isAuthenticated()) { //check in passport for authentication
         res.json({
-            status : 'success', 
+            status : 'success',
             codeno : 200,
             msg : 'User is logged in.',
             data : { name : req.user.name, email : req.user.email }

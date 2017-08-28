@@ -22,12 +22,6 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     this.questions = this.registerFormQuestionService.getQuestions();
-    this.usersService.getTest().subscribe(
-      (data : any) => {
-        this.data = data;
-      },
-      (error : any) =>  console.error(`${methodTrace} There was an error trying to load Monero prices > ${error}`)
-    );
   }
 
   onFormSubmitHandler(formData : any) {
@@ -39,16 +33,18 @@ export class RegisterComponent implements OnInit {
       return false;
     }
     
+    this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
     //call the register service
     this.usersService.register(formData).subscribe(
       (data : any) => {
         if (data && data.email) {
+          this.usersService.setUser(data);
           this.router.navigate(['/']); //go home
         } else {
           console.error(`${methodTrace} Unexpected data format.`)
         }
       },
-      (error : any) =>  console.error(`${methodTrace} There was an error with the register service > ${error}`)
+      (error : any) => console.error(`${methodTrace} There was an error with the register service > ${error}`)
     );
   }
 

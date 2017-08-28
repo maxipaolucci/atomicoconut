@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging  
     
-    this.usersService.getUser().subscribe(
+    this.usersService.getAuthenticatedUser().subscribe(
       (data : any) => {
         if (data && data.email) {
           console.log(data);

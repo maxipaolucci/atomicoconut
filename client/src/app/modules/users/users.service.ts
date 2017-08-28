@@ -9,17 +9,9 @@ export class UsersService {
   private serverHost : string = 'http://localhost:7777/api';
   private serverUrl : string = 'http://localhost:7777/api/users/test';
   private headers = new Headers({'Content-Type': 'application/json'});
+  private user : any = null;
 
-  constructor(private http : Http) {
-
-  }
-
-  getTest() : Observable<any> {
-    
-    return this.http.get(`${this.serverUrl}`)
-        .map(this.extractData)
-        .catch(this.handleError);
-  }
+  constructor(private http : Http) {}
 
   register(postData : any = {}) : Observable<any> {
     return this.http.post(`${this.serverHost}/users/register`, postData, { headers : this.headers })
@@ -27,11 +19,18 @@ export class UsersService {
         .catch(this.handleError);
   }
 
-  getUser() : Observable<any> {
-    console.log(`${this.serverHost}/users/getUser`);
+  getAuthenticatedUser() : Observable<any> {
     return this.http.get(`${this.serverHost}/users/getUser`)
         .map(this.extractData)
         .catch(this.handleError);
+  }
+  
+  isAuthenticated() : boolean {
+    return this.user && this.user.email ? true : false;
+  }
+
+  setUser(user : any) {
+    this.user = user;
   }
 
   private extractData(res: Response) : any {

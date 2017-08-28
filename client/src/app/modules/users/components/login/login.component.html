@@ -1,0 +1,33 @@
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
+
+    <md-input-container class="example-full-width">
+      <input mdInput type="email" id="email" name="email" placeholder="Email address" 
+          [(ngModel)]="model.email" 
+          required email
+          #email="ngModel">
+
+
+      <div *ngIf="email.invalid && (email.dirty || email.touched)">
+        <md-error *ngIf="email.errors.required">Email is required</md-error>
+        <md-error *ngIf="email.errors.email">Email must be a valid email address</md-error>
+      </div>
+    </md-input-container>
+
+    <md-input-container class="example-full-width">
+      <input mdInput type="password" id="password" name="password" placeholder="Password" 
+          [(ngModel)]="model.password" 
+          required minlength="3" maxlength="8"
+          #password="ngModel">
+
+
+      <div *ngIf="password.invalid && (password.dirty || password.touched)">
+        <md-error *ngIf="password.errors.required">Password is required</md-error>
+        <md-error *ngIf="password.errors.minlenght">Password must be longer than 3 characters</md-error>
+        <md-error *ngIf="password.errors.maxlenght">Password must be shorter than 8 characters</md-error>
+      </div>
+    </md-input-container>
+
+    <div>
+      <button class="mat-raised-button" md-raised-button type="submit" [disabled]="!loginForm.form.valid">Register</button>
+    </div>
+</form>
