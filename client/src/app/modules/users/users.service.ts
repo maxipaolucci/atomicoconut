@@ -6,29 +6,60 @@ import {Observable} from "rxjs/Rx";
 @Injectable()
 export class UsersService {
 
-  private serverHost : string = 'http://localhost:7777/api';
-  private serverUrl : string = 'http://localhost:7777/api/users/test';
+  private serverHost : string = 'http://localhost:7777/api/users';
   private headers = new Headers({'Content-Type': 'application/json'});
   private user : any = null;
 
   constructor(private http : Http) {}
 
+  /**
+   * Server call to Register a new user in the system 
+   * @param postData 
+   */
   register(postData : any = {}) : Observable<any> {
-    return this.http.post(`${this.serverHost}/users/register`, postData, { headers : this.headers })
+    return this.http.post(`${this.serverHost}/register`, postData, { headers : this.headers })
         .map(this.extractData)
         .catch(this.handleError);
   }
 
+  /**
+   * Server call to retrieve the currently authenticated user, or null if nobody .
+   */
   getAuthenticatedUser() : Observable<any> {
-    return this.http.get(`${this.serverHost}/users/getUser`)
+    return this.http.get(`${this.serverHost}/getUser`)
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
+
+  /**
+   * Server call to login the provided user email and pass.
+   */
+  login(postData : any = {}) : Observable<any> {
+    return this.http.post(`${this.serverHost}/login`, postData, { headers : this.headers })
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
+
+  /**
+   * Server call to login the provided user email and pass.
+   */
+  logout() : Observable<any> {
+    return this.http.get(`${this.serverHost}/logout`)
         .map(this.extractData)
         .catch(this.handleError);
   }
   
-  isAuthenticated() : boolean {
+  /**
+   * Tells whether the user is logged in in the system. Checks the local user variable
+   */
+  isLoggedIn() : boolean {
     return this.user && this.user.email ? true : false;
   }
 
+  /**
+   * Sets the local user variable with the user provided as param
+   * @param user (any). The user to set
+   */
   setUser(user : any) {
     this.user = user;
   }

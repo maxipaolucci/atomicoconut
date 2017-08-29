@@ -58,6 +58,9 @@ exports.login = (req, res, next) => {
     //This uses the passport handler in handlers folder
 
 exports.logout = (req, res) => {
+    const methodTrace = `${errorTrace} logout() >`;
+    console.log(`${methodTrace} Logout user: ${req.user ? req.user.name : 'null'}.`);
+    
     req.logout(); //this was added in passport
     res.json({
         status : 'success', 
@@ -82,7 +85,11 @@ exports.isLogggedIn = (req, res, next) => {
 };
 
 exports.getUser = (req, res, next) => {
+    const methodTrace = `${errorTrace} getUser() >`;
+
     if (req.isAuthenticated()) { //check in passport for authentication
+        console.log(`${methodTrace} User is authenticated!.`);
+
         res.json({
             status : 'success',
             codeno : 200,
@@ -92,6 +99,7 @@ exports.getUser = (req, res, next) => {
         return;
     }
 
+    console.log(`${methodTrace} User NOT authenticated.`);
     res.json({ 
         status : "success", 
         codeno : 200,

@@ -21,10 +21,21 @@ export class AppComponent implements OnInit {
     this.usersService.getAuthenticatedUser().subscribe(
       (data : any) => {
         if (data && data.email) {
-          console.log(data);
+          console.log(methodTrace, data);
         } else {
           console.info(`${methodTrace} User not logged in.`)
         }
+      },
+      (error : any) =>  console.error(`${methodTrace} There was an error with the register service > ${error}`)
+    );
+  }
+
+  logout() : void {
+    let methodTrace = `${this.constructor.name} > logout() > `; //for debugging  
+    
+    this.usersService.logout().subscribe(
+      (data : any) => {
+        console.log(methodTrace, data);
       },
       (error : any) =>  console.error(`${methodTrace} There was an error with the register service > ${error}`)
     );
