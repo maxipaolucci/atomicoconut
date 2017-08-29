@@ -14,8 +14,13 @@ router.get('/', (req, res) => {
 router.get('/app', (req, res) => {
   res.render('home', {title: 'Home'});
 });
+
 router.get('/app/investments', (req, res) => {
   res.render('home', {title: 'Investements'});
+});
+
+router.get('/app/login', (req, res) => {
+  res.render('home', {title: 'Login'});
 });
 
 router.get('/app/register', (req, res) => {
