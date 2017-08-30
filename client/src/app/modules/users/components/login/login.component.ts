@@ -37,8 +37,4 @@ export class LoginComponent implements OnInit {
       (error : any) => console.error(`${methodTrace} There was an error with the register service > ${error}`)
     );
   }
-
-  resetForm() {
-    this.model = {email : '', password : ''};
-  }
 }

@@ -35,7 +35,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 exports.i(__webpack_require__("../../../../css-loader/index.js?{\"sourceMap\":false,\"importLoaders\":1}!../../../../postcss-loader/index.js?{\"ident\":\"postcss\"}!../../../material/prebuilt-themes/purple-green.css"), "");
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\nbody {\n  color: #fff; }\n\n.color__green {\n  color: #28FE7C; }\n\n.color__red {\n  color: #FE244C; }\n", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\n.form__container .form__fields .form__field .mat-input-underline {\n  bottom: auto; }\n\n.form__container .form__fields .form__field .mat-input-subscript-wrapper {\n  position: relative; }\n\n@media screen and (min-width: 600px) {\n  .form__container .form__actions .form__action {\n    max-width: 300px; } }\n\nbody {\n  color: #fff; }\n\n.color__green {\n  color: #28FE7C; }\n\n.color__red {\n  color: #FE244C; }\n", ""]);
 
 // exports
 

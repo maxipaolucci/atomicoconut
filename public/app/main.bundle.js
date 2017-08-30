@@ -467,54 +467,6 @@ var _a;
 
 /***/ }),
 
-/***/ "../../../../../src/app/directives/equal-validator.directive.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EqualValidatorDirective; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-
-
-var EqualValidatorDirective = EqualValidatorDirective_1 = (function () {
-    function EqualValidatorDirective(equalFormControlName) {
-        this.equalFormControlName = equalFormControlName;
-    }
-    EqualValidatorDirective.prototype.validate = function (control) {
-        var equalsFormControl = control.root.get(this.equalFormControlName);
-        if (equalsFormControl && equalsFormControl.value !== control.value) {
-            return { 'equalValidator': true };
-        }
-        return null;
-    };
-    return EqualValidatorDirective;
-}());
-EqualValidatorDirective = EqualValidatorDirective_1 = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* Directive */])({
-        selector: '[equalvalidation]',
-        providers: [{ provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* NG_VALIDATORS */], useExisting: EqualValidatorDirective_1, multi: true }]
-    }),
-    __param(0, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Attribute */])('equalvalidation')),
-    __metadata("design:paramtypes", [String])
-], EqualValidatorDirective);
-
-var EqualValidatorDirective_1;
-//# sourceMappingURL=equal-validator.directive.js.map
-
-/***/ }),
-
 /***/ "../../../../../src/app/investments/investments.component.html":
 /***/ (function(module, exports) {
 
@@ -655,302 +607,10 @@ CustomMaterialDesignModule = __decorate([
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/dynamic-form/dynamic-form-question/dynamic-form-question.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div [formGroup]=\"form\" [ngSwitch]=\"question.controlType\">\r\n  \r\n  <md-input-container *ngSwitchCase=\"'textbox'\" class=\"example-full-width\">\r\n    <input mdInput \r\n        [type]=\"question.type\" \r\n        [id]=\"question.key\" \r\n        [placeholder]=\"question.label\" \r\n        [formControlName]=\"question.key\">\r\n\r\n    <md-error *ngIf=\"!isValid && form.get(question.key).hasError('required')\">{{question.label}} is required</md-error>\r\n    <md-error *ngIf=\"!isValid && form.get(question.key).hasError('minlength')\">{{question.label}} must contains at least {{form.get(question.key).errors.minlength.requiredLength}} characters</md-error>\r\n    <md-error *ngIf=\"!isValid && form.get(question.key).hasError('maxlength')\">{{question.label}} must contains {{form.get(question.key).errors.maxlength.requiredLength}} or less characters</md-error>\r\n    <md-error *ngIf=\"!isValid && form.get(question.key).hasError('email')\">{{question.label}} must be a valid email address</md-error>\r\n  </md-input-container>\r\n  <!-- <pre>{{form.get(question.key).errors | json}}</pre> -->\r\n\r\n  <md-select [id]=\"question.key\" *ngSwitchCase=\"'dropdown'\" [formControlName]=\"question.key\" [placeholder]=\"question.label\">\r\n    <md-option *ngFor=\"let opt of question.options\" [value]=\"opt.key\">{{opt.value}}</md-option>\r\n  </md-select>\r\n\r\n</div> "
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/dynamic-form/dynamic-form-question/dynamic-form-question.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__question_base__ = __webpack_require__("../../../../../src/app/modules/dynamic-form/question-base.ts");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DynamicFormQuestionComponent; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var DynamicFormQuestionComponent = (function () {
-    function DynamicFormQuestionComponent() {
-    }
-    Object.defineProperty(DynamicFormQuestionComponent.prototype, "isValid", {
-        get: function () {
-            return this.form.controls[this.question.key].valid;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return DynamicFormQuestionComponent;
-}());
-__decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Input */])(),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__question_base__["a" /* QuestionBase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__question_base__["a" /* QuestionBase */]) === "function" && _a || Object)
-], DynamicFormQuestionComponent.prototype, "question", void 0);
-__decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Input */])(),
-    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* FormGroup */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* FormGroup */]) === "function" && _b || Object)
-], DynamicFormQuestionComponent.prototype, "form", void 0);
-DynamicFormQuestionComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_0" /* Component */])({
-        selector: 'df-question',
-        template: __webpack_require__("../../../../../src/app/modules/dynamic-form/dynamic-form-question/dynamic-form-question.component.html")
-    })
-], DynamicFormQuestionComponent);
-
-var _a, _b;
-//# sourceMappingURL=dynamic-form-question.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/dynamic-form/dynamic-form.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div>\r\n  <form (ngSubmit)=\"onSubmit()\" [formGroup]=\"form\" novalidate>\r\n\r\n    <df-question *ngFor=\"let question of questions\" [question]=\"question\" [form]=\"form\"></df-question>\r\n    <md-error *ngFor=\"let error of postSubmitErrors\">{{error}}</md-error>\r\n    <div>\r\n      <button class=\"mat-raised-button\" md-raised-button type=\"submit\" [disabled]=\"!form.valid\">Register</button>\r\n    </div>\r\n  </form>\r\n\r\n  <div *ngIf=\"payLoad\">\r\n    <strong>Saved the following values</strong><br>{{payLoad}}\r\n  </div>\r\n</div>"
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/dynamic-form/dynamic-form.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__question_control_service__ = __webpack_require__("../../../../../src/app/modules/dynamic-form/question-control.service.ts");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DynamicFormComponent; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var DynamicFormComponent = (function () {
-    function DynamicFormComponent(qcs) {
-        this.qcs = qcs;
-        this.questions = [];
-        this.postSubmitErrors = [];
-        this.formData = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* EventEmitter */]();
-        this.payLoad = '';
-    }
-    DynamicFormComponent.prototype.ngOnInit = function () {
-        this.form = this.qcs.toFormGroup(this.questions);
-    };
-    DynamicFormComponent.prototype.ngOnChanges = function (changes) {
-        // if (changes.postSubmitErrors && !changes.postSubmitErrors.isFirstChange()) {
-        // }
-        // //OR....
-        // for (let propName in changes) {
-        //   let changedProp = changes[propName];
-        //   let to = JSON.stringify(changedProp.currentValue);
-        //   if (changedProp.isFirstChange()) {
-        //     console.log(`Initial value of ${propName} set to ${to}`);
-        //   } else {
-        //     let from = JSON.stringify(changedProp.previousValue);
-        //     console.log(`${propName} changed from ${from} to ${to}`);
-        //   }
-        // }
-    };
-    DynamicFormComponent.prototype.onSubmit = function () {
-        this.payLoad = JSON.stringify(this.form.value);
-        this.formData.emit(this.form.value); //send data to the component that use the dynamic form compoennt
-    };
-    return DynamicFormComponent;
-}());
-__decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Input */])(),
-    __metadata("design:type", Array)
-], DynamicFormComponent.prototype, "questions", void 0);
-__decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Input */])(),
-    __metadata("design:type", Array)
-], DynamicFormComponent.prototype, "postSubmitErrors", void 0);
-__decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_1" /* Output */])(),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* EventEmitter */]) === "function" && _a || Object)
-], DynamicFormComponent.prototype, "formData", void 0);
-DynamicFormComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_0" /* Component */])({
-        selector: 'dynamic-form',
-        template: __webpack_require__("../../../../../src/app/modules/dynamic-form/dynamic-form.component.html"),
-        providers: [__WEBPACK_IMPORTED_MODULE_1__question_control_service__["a" /* QuestionControlService */]]
-    }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__question_control_service__["a" /* QuestionControlService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__question_control_service__["a" /* QuestionControlService */]) === "function" && _b || Object])
-], DynamicFormComponent);
-
-var _a, _b;
-//# sourceMappingURL=dynamic-form.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/dynamic-form/dynamic-form.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dynamic_form_component__ = __webpack_require__("../../../../../src/app/modules/dynamic-form/dynamic-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__dynamic_form_question_dynamic_form_question_component__ = __webpack_require__("../../../../../src/app/modules/dynamic-form/dynamic-form-question/dynamic-form-question.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__question_control_service__ = __webpack_require__("../../../../../src/app/modules/dynamic-form/question-control.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__directives_equal_validator_directive__ = __webpack_require__("../../../../../src/app/directives/equal-validator.directive.ts");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DynamicFormModule; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-
-
-
-var DynamicFormModule = (function () {
-    function DynamicFormModule() {
-    }
-    return DynamicFormModule;
-}());
-DynamicFormModule = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["b" /* NgModule */])({
-        declarations: [
-            __WEBPACK_IMPORTED_MODULE_3__dynamic_form_component__["a" /* DynamicFormComponent */],
-            __WEBPACK_IMPORTED_MODULE_4__dynamic_form_question_dynamic_form_question_component__["a" /* DynamicFormQuestionComponent */],
-            __WEBPACK_IMPORTED_MODULE_7__directives_equal_validator_directive__["a" /* EqualValidatorDirective */]
-        ],
-        imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_common__["e" /* CommonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* ReactiveFormsModule */],
-            __WEBPACK_IMPORTED_MODULE_6__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
-        ],
-        exports: [
-            __WEBPACK_IMPORTED_MODULE_3__dynamic_form_component__["a" /* DynamicFormComponent */],
-            __WEBPACK_IMPORTED_MODULE_4__dynamic_form_question_dynamic_form_question_component__["a" /* DynamicFormQuestionComponent */]
-        ],
-        providers: [__WEBPACK_IMPORTED_MODULE_5__question_control_service__["a" /* QuestionControlService */]]
-    })
-], DynamicFormModule);
-
-//# sourceMappingURL=dynamic-form.module.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/dynamic-form/question-base.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return QuestionBase; });
-var QuestionBase = (function () {
-    function QuestionBase(options) {
-        if (options === void 0) { options = {}; }
-        this.value = options.value;
-        this.key = options.key || '';
-        this.label = options.label || '';
-        this.validators = options.validators || [];
-        this.order = options.order === undefined ? 1 : options.order;
-        this.controlType = options.controlType || '';
-    }
-    return QuestionBase;
-}());
-
-//# sourceMappingURL=question-base.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/dynamic-form/question-control.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return QuestionControlService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var QuestionControlService = (function () {
-    function QuestionControlService() {
-    }
-    QuestionControlService.prototype.toFormGroup = function (questions) {
-        var group = {};
-        questions.forEach(function (question) {
-            group[question.key] = new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */](question.value || '', question.validators || []);
-        });
-        return new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* FormGroup */](group);
-    };
-    return QuestionControlService;
-}());
-QuestionControlService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [])
-], QuestionControlService);
-
-//# sourceMappingURL=question-control.service.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/dynamic-form/question-textbox.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__question_base__ = __webpack_require__("../../../../../src/app/modules/dynamic-form/question-base.ts");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TextboxQuestion; });
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-var TextboxQuestion = (function (_super) {
-    __extends(TextboxQuestion, _super);
-    function TextboxQuestion(options) {
-        if (options === void 0) { options = {}; }
-        var _this = _super.call(this, options) || this;
-        _this.controlType = 'textbox';
-        _this.type = options['type'] || '';
-        return _this;
-    }
-    return TextboxQuestion;
-}(__WEBPACK_IMPORTED_MODULE_0__question_base__["a" /* QuestionBase */]));
-
-//# sourceMappingURL=question-textbox.js.map
-
-/***/ }),
-
 /***/ "../../../../../src/app/modules/users/components/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form (ngSubmit)=\"onSubmit()\" #loginForm=\"ngForm\" novalidate>\r\n    <!-- Email -->\r\n    <md-input-container class=\"example-full-width\">\r\n      <input mdInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n          [(ngModel)]=\"model.email\" \r\n          required email\r\n          #email=\"ngModel\">\r\n\r\n      <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</md-error>\r\n      <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</md-error>\r\n    </md-input-container>\r\n    \r\n    <!-- Password -->\r\n    <md-input-container class=\"example-full-width\">\r\n      <input mdInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n          [(ngModel)]=\"model.password\" \r\n          required minlength=\"3\" maxlength=\"8\"\r\n          #password=\"ngModel\">\r\n\r\n      <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</md-error>\r\n      <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</md-error>\r\n      <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</md-error>\r\n    </md-input-container>\r\n\r\n    <div>\r\n      <button class=\"mat-raised-button\" md-raised-button type=\"submit\" [disabled]=\"!loginForm.form.valid\">Register</button>\r\n    </div>\r\n</form>"
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #loginForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\">\r\n      <!-- Email -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            #email=\"ngModel\">\r\n  \r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</md-error>\r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</md-error>\r\n      </md-input-container>\r\n      \r\n      <!-- Password -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\"\r\n            #password=\"ngModel\">\r\n  \r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</md-error>\r\n      </md-input-container>\r\n    </div>\r\n  </div>\r\n  \r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button fxFlex class=\"form__action mat-raised-button\" md-raised-button type=\"submit\" [disabled]=\"!loginForm.form.valid\">Register</button>\r\n  </div>\r\n\r\n</form>"
 
 /***/ }),
 
@@ -1018,9 +678,6 @@ var LoginComponent = (function () {
             }
         }, function (error) { return console.error(methodTrace + " There was an error with the register service > " + error); });
     };
-    LoginComponent.prototype.resetForm = function () {
-        this.model = { email: '', password: '' };
-    };
     return LoginComponent;
 }());
 LoginComponent = __decorate([
@@ -1037,91 +694,10 @@ var _a, _b;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/register/register-form-question.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dynamic_form_question_textbox__ = __webpack_require__("../../../../../src/app/modules/dynamic-form/question-textbox.ts");
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterFormQuestionService; });
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var RegisterFormQuestionService = (function () {
-    function RegisterFormQuestionService() {
-    }
-    RegisterFormQuestionService.prototype.getQuestions = function () {
-        var questions = [
-            new __WEBPACK_IMPORTED_MODULE_2__dynamic_form_question_textbox__["a" /* TextboxQuestion */]({
-                key: 'name',
-                label: 'Name',
-                value: '',
-                validators: [
-                    __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* Validators */].required,
-                    __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* Validators */].minLength(3)
-                ],
-                order: 1
-            }),
-            new __WEBPACK_IMPORTED_MODULE_2__dynamic_form_question_textbox__["a" /* TextboxQuestion */]({
-                key: 'email',
-                label: 'Email',
-                type: 'email',
-                validators: [
-                    __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* Validators */].required,
-                    __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* Validators */].email
-                ],
-                order: 2
-            }),
-            new __WEBPACK_IMPORTED_MODULE_2__dynamic_form_question_textbox__["a" /* TextboxQuestion */]({
-                key: 'password',
-                label: 'Password',
-                type: 'password',
-                validators: [
-                    __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* Validators */].required,
-                    __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* Validators */].minLength(4),
-                    __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* Validators */].maxLength(20)
-                ],
-                order: 3
-            }),
-            new __WEBPACK_IMPORTED_MODULE_2__dynamic_form_question_textbox__["a" /* TextboxQuestion */]({
-                key: 'password-confirm',
-                label: 'Confirm password',
-                type: 'password',
-                validators: [
-                    __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* Validators */].required,
-                    __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* Validators */].minLength(4),
-                    __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* Validators */].maxLength(20)
-                ],
-                order: 4
-            })
-        ];
-        return questions.sort(function (a, b) { return a.order - b.order; });
-    };
-    return RegisterFormQuestionService;
-}());
-RegisterFormQuestionService = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [])
-], RegisterFormQuestionService);
-
-//# sourceMappingURL=register-form-question.service.js.map
-
-/***/ }),
-
 /***/ "../../../../../src/app/modules/users/components/register/register.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n\r\n  <dynamic-form \r\n      [questions]=\"questions\" \r\n      [postSubmitErrors]=\"postSubmitErrors\"\r\n      (formData)=\"onFormSubmitHandler($event)\"></dynamic-form>\r\n</p>\r\n"
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #loginForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            #name=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</md-error>\r\n        <md-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</md-error>\r\n      </md-input-container>\r\n      \r\n      <!-- Email -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            #email=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</md-error>\r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</md-error>\r\n      </md-input-container>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\"\r\n            #password=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</md-error>\r\n      </md-input-container>\r\n\r\n      <!-- Password confirm -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model.passwordConfirm\" \r\n            required minlength=\"3\" maxlength=\"8\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</md-error>\r\n      </md-input-container>\r\n    </div>\r\n    \r\n    \r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button fxFlex class=\"form__action mat-raised-button\" md-raised-button type=\"submit\" [disabled]=\"!loginForm.form.valid\">Register</button>\r\n  </div>\r\n\r\n</form>"
 
 /***/ }),
 
@@ -1150,7 +726,6 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register_form_question_service__ = __webpack_require__("../../../../../src/app/modules/users/components/register/register-form-question.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1164,30 +739,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var RegisterComponent = (function () {
-    function RegisterComponent(registerFormQuestionService, usersService, router) {
-        this.registerFormQuestionService = registerFormQuestionService;
+    function RegisterComponent(usersService, router) {
         this.usersService = usersService;
         this.router = router;
-        this.data = {};
-        this.postSubmitErrors = [];
+        this.model = { name: '', email: '', password: '', passwordConfirm: '' };
     }
     RegisterComponent.prototype.ngOnInit = function () {
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
-        this.questions = this.registerFormQuestionService.getQuestions();
     };
-    RegisterComponent.prototype.onFormSubmitHandler = function (formData) {
+    RegisterComponent.prototype.onSubmit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onFormSubmitHandler() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
         //chech that the password and the confirmed password are the same
-        if (formData['password'] !== formData['password-confirm']) {
-            this.postSubmitErrors.push('The confirm password field must match the password');
+        if (this.model.password !== this.model.passwordConfirm) {
+            console.error(methodTrace + " Confirm password must match password.");
             return false;
         }
         this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
         //call the register service
-        this.usersService.register(formData).subscribe(function (data) {
+        this.usersService.register(this.model).subscribe(function (data) {
             if (data && data.email) {
                 _this.usersService.setUser(data);
                 _this.router.navigate(['/']); //go home
@@ -1203,13 +774,12 @@ RegisterComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_0" /* Component */])({
         selector: 'users-register',
         template: __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/modules/users/components/register/register.component.scss")],
-        providers: [__WEBPACK_IMPORTED_MODULE_3__register_form_question_service__["a" /* RegisterFormQuestionService */]]
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/register/register.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__register_form_question_service__["a" /* RegisterFormQuestionService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__register_form_question_service__["a" /* RegisterFormQuestionService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === "function" && _b || Object])
 ], RegisterComponent);
 
-var _a, _b, _c;
+var _a, _b;
 //# sourceMappingURL=register.component.js.map
 
 /***/ }),
@@ -1260,13 +830,12 @@ UsersRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_routing_module__ = __webpack_require__("../../../../../src/app/modules/users/users-routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dynamic_form_dynamic_form_module__ = __webpack_require__("../../../../../src/app/modules/dynamic-form/dynamic-form.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_register_register_component__ = __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_register_register_form_question_service__ = __webpack_require__("../../../../../src/app/modules/users/components/register/register-form-question.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_login_login_component__ = __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_login_login_component__ = __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1274,7 +843,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -1294,15 +862,15 @@ UsersModule = __decorate([
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["e" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_2__users_routing_module__["a" /* UsersRoutingModule */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_3__dynamic_form_dynamic_form_module__["a" /* DynamicFormModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["a" /* FlexLayoutModule */],
             __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_6__components_register_register_component__["a" /* RegisterComponent */],
-            __WEBPACK_IMPORTED_MODULE_9__components_login_login_component__["a" /* LoginComponent */]
+            __WEBPACK_IMPORTED_MODULE_8__components_login_login_component__["a" /* LoginComponent */]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_7__users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_8__components_register_register_form_question_service__["a" /* RegisterFormQuestionService */]]
+        providers: [__WEBPACK_IMPORTED_MODULE_7__users_service__["a" /* UsersService */]]
     })
 ], UsersModule);
 
