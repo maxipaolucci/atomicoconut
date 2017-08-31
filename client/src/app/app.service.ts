@@ -6,20 +6,7 @@ import {Observable} from "rxjs/Rx";
 @Injectable()
 export class AppService {
 
-  private serverUrl : string = 'https://api.cryptonator.com/api/ticker/';
-  private serverUrl2 : string = '/node';
-  
-
-  constructor(private http : Http) {
-
-  }
-
-  getPrices(currency = 'btc') : Observable<any> {
-    
-    return this.http.get(`${this.serverUrl}${currency}-usd`)
-        .map(this.extractData)
-        .catch(this.handleError);
-  }
+  constructor(private http : Http) {}
 
   private extractData(res: Response) : any {
     let body = res.json();

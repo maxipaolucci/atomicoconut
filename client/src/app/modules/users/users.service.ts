@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 
 import {Observable} from "rxjs/Rx";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class UsersService {
 
-  private serverHost : string = 'http://localhost:7777/api/users';
+  private serverHost : string = environment.serverHost + '/api/users';
   private headers = new Headers({'Content-Type': 'application/json'});
   private user : any = null;
 
@@ -26,6 +27,7 @@ export class UsersService {
    * Server call to retrieve the currently authenticated user, or null if nobody .
    */
   getAuthenticatedUser() : Observable<any> {
+    console.log(this.serverHost);
     return this.http.get(`${this.serverHost}/getUser`)
         .map(this.extractData)
         .catch(this.handleError);

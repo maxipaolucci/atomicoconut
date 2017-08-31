@@ -7,12 +7,9 @@ import {Observable} from "rxjs/Rx";
 export class CrytoCurrencyService {
 
   private serverUrl : string = 'https://api.cryptonator.com/api/ticker/';
-  private serverUrl2 : string = '/node';
   
 
-  constructor(private http : Http) {
-
-  }
+  constructor(private http : Http) {}
 
   getPrices(currency = 'btc') : Observable<any> {
     
