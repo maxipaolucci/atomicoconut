@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
     this.usersService.login(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
-          console.log(data);
           this.usersService.setUser(data);
           this.router.navigate(['/']); //go home
         } else {

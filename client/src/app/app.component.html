@@ -4,9 +4,28 @@
   <md-toolbar class="toolbar" color="primary">
     <span>AtomiCoconut</span>
     <span class="example-spacer"></span>
-    <md-icon class="example-icon">build</md-icon>
-    <md-icon (click)="logout()" class="example-icon">exit_to_app</md-icon>
+    
+    <span *ngIf="!usersService.getUser()" fxLayoutAlign=" center">
+      <md-icon routerLink="/login" class="toolbar__icon">account_circle</md-icon>
+    </span>
+    <span *ngIf="usersService.getUser()" fxLayoutAlign=" center">
+      <img *ngIf="usersService.getUser().avatar !== defaultGravatarUrl" [mdMenuTriggerFor]="userMenu" 
+          class="toolbar__icon user__avatar" [src]="usersService.getUser().avatar" />
+      <md-icon *ngIf="usersService.getUser().avatar === defaultGravatarUrl"
+          class="toolbar__icon user__icon--logged-in" [mdMenuTriggerFor]="userMenu">account_circle</md-icon>
+      
+      <md-menu class="user__menu--logged-in" #userMenu="mdMenu" [overlapTrigger]="false">
+        <button md-menu-item>
+          <md-icon>settings</md-icon>
+          <span>My account</span>
+        </button>
+        <button md-menu-item (click)="logout()">
+          <md-icon>exit_to_app</md-icon>
+          <span>Logout</span>
+        </button>
+      </md-menu>
+    </span>
+    
   </md-toolbar>
-
   <router-outlet></router-outlet>
 </div>

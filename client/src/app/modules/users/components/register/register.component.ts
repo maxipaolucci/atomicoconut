@@ -9,7 +9,7 @@ import { UsersService } from '../../users.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  private model : any = {name : '', email : '', password : '', passwordConfirm : ''};
+  private model : any = {name : '', email : '', password : '', 'password-confirm' : ''};
   
   constructor(private usersService : UsersService, private router : Router) {}
 
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
 
     //chech that the password and the confirmed password are the same
-    if (this.model.password !== this.model.passwordConfirm) {
+    if (this.model.password !== this.model['password-confirm']) {
       console.error(`${methodTrace} Confirm password must match password.`);
       return false;
     }

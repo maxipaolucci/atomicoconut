@@ -7,7 +7,7 @@ import {environment} from "../../../environments/environment";
 @Injectable()
 export class UsersService {
 
-  private serverHost : string = environment.serverHost + '/api/users';
+  private serverHost : string = environment.apiHost + '/api/users';
   private headers = new Headers({'Content-Type': 'application/json'});
   private user : any = null;
 
@@ -27,7 +27,6 @@ export class UsersService {
    * Server call to retrieve the currently authenticated user, or null if nobody .
    */
   getAuthenticatedUser() : Observable<any> {
-    console.log(this.serverHost);
     return this.http.get(`${this.serverHost}/getUser`)
         .map(this.extractData)
         .catch(this.handleError);
@@ -62,8 +61,12 @@ export class UsersService {
    * Sets the local user variable with the user provided as param
    * @param user (any). The user to set
    */
-  setUser(user : any) {
+  setUser(user : any = null) {
     this.user = user;
+  }
+
+  getUser() : any {
+    return this.user;
   }
 
   private extractData(res: Response) : any {

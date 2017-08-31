@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { UsersService } from './modules/users/users.service';
 
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import { configuration } from "../../configuration";
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 export class AppComponent implements OnInit {
   
   title = 'app';
+  defaultGravatarUrl = configuration.defaultGravatarUrl;
 
   constructor(private appService: AppService, private usersService : UsersService) { }
 
@@ -21,8 +23,9 @@ export class AppComponent implements OnInit {
     this.usersService.getAuthenticatedUser().subscribe(
       (data : any) => {
         if (data && data.email) {
-          console.log(methodTrace, data);
+          this.usersService.setUser(data);
         } else {
+          this.usersService.setUser();
           console.info(`${methodTrace} User not logged in.`)
         }
       },
@@ -35,7 +38,7 @@ export class AppComponent implements OnInit {
     
     this.usersService.logout().subscribe(
       (data : any) => {
-        console.log(methodTrace, data);
+        this.usersService.setUser();
       },
       (error : any) =>  console.error(`${methodTrace} There was an error with the register service > ${error}`)
     );

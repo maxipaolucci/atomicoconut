@@ -41,7 +41,7 @@
       <!-- Password confirm -->
       <md-input-container fxFlex class="form__field">
         <input mdInput type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm password" 
-            [(ngModel)]="model.passwordConfirm" 
+            [(ngModel)]="model['password-confirm']" 
             required minlength="3" maxlength="8"
             #passwordConfirm="ngModel">
 

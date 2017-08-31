@@ -49,7 +49,7 @@ exports.login = (req, res, next) => {
                 status : 'success', 
                 codeno : 200,
                 msg : 'Login successful',
-                data : { name : user.name, email : user.email }
+                data : { name : user.name, email : user.email, avatar : user.gravatar }
             });
         });
     })(req, res, next);
@@ -94,7 +94,7 @@ exports.getUser = (req, res, next) => {
             status : 'success',
             codeno : 200,
             msg : 'User is logged in.',
-            data : { name : req.user.name, email : req.user.email }
+            data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar }
         });
         return;
     }
