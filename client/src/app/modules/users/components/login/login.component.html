@@ -1,6 +1,6 @@
 <form class="form__container" (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
   
-  <div fxLayout="column" class="form__fields">
+  <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="form__fields__row">
       <!-- Email -->
       <md-input-container fxFlex class="form__field">
@@ -25,11 +25,35 @@
         <md-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.maxlength">Password must be shorter than 8 characters</md-error>
       </md-input-container>
     </div>
-  </div>
+  </section>
+
+  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions">
+    <button class="form__action mat-raised-button" md-raised-button type="submit" [disabled]="!loginForm.form.valid">Login</button>
+    <md-checkbox fxLayoutAlign.xs="center center" class="form__action" [(ngModel)]="forgotModel.forgot" name="forgot" id="forgot">Forgot my password</md-checkbox>
+  </section>
+
+</form>
+
+<form class="form__container form__forgot" (ngSubmit)="onForgotSubmit()" #forgotForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" *ngIf="forgotModel.forgot">
   
-  
-  <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center none" class="form__actions">
-    <button fxFlex class="form__action mat-raised-button" md-raised-button type="submit" [disabled]="!loginForm.form.valid">Register</button>
-  </div>
+  <section fxLayout="column" class="form__fields">
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="form__fields__row">
+      <!-- Email -->
+      <md-input-container fxFlex class="form__field">
+        
+        <input mdInput type="email" id="emailForgot" name="emailForgot" placeholder="Email address" 
+            [(ngModel)]="forgotModel.email" 
+            required email
+            #emailForgot="ngModel">
+        <md-hint align="start">Type your email and we will send you an email to reset your password.</md-hint>
+        <md-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.required">Email is required</md-error>
+        <md-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.email">Email must be a valid email address</md-error>
+      </md-input-container>
+    </div>
+  </section>
+
+  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center none" class="form__actions">
+    <button class="form__action mat-raised-button" md-raised-button type="submit" [disabled]="!forgotForm.form.valid">Send</button>
+  </section>
 
 </form>

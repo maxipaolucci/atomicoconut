@@ -10,6 +10,7 @@ import { CustomMaterialDesignModule } from '../../modules/custom-material-design
 import { RegisterComponent } from './components/register/register.component';
 import { UsersService } from './users.service';
 import { LoginComponent } from './components/login/login.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { LoginComponent } from './components/login/login.component';
   ],
   declarations: [
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    ResetPasswordComponent
   ],
   providers: [UsersService]
 })

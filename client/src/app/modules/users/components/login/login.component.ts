@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UsersService } from '../../users.service';
+import { MdSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -10,18 +11,16 @@ import { UsersService } from '../../users.service';
 })
 export class LoginComponent implements OnInit {
 
-  private model : any = {email : '', password : ''};
-  private submitted : boolean = false;
+  model : any = {email : '', password : ''};
+  forgotModel : any = { email : '', forgot : false };
 
-  constructor(private usersService : UsersService, private router : Router) { }
+  constructor(private usersService : UsersService, private router : Router, public snackBar: MdSnackBar) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSubmit() { 
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
 
-    this.submitted = true;
     this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
     //call the register service
     this.usersService.login(this.model).subscribe(
@@ -35,5 +34,27 @@ export class LoginComponent implements OnInit {
       },
       (error : any) => console.error(`${methodTrace} There was an error with the register service > ${error}`)
     );
+  }
+
+  onForgotSubmit() { 
+    const methodTrace = `${this.constructor.name} > onForgotSubmit() > `; //for debugging
+
+    //call the register service
+    this.usersService.forgot(this.forgotModel).subscribe(
+      (data : any) => {
+        this.showResults(`You have been emailed a password reset link.`);
+      },
+      (error : any) => {
+        console.error(`${methodTrace} There was an error with the register service > ${error}`);
+        this.showResults(`No account with that email exists.`);
+      }
+    );
+  }
+
+  showResults(message : string) {
+    this.snackBar.open(message, null, {
+      duration: 3000,
+      extraClasses: ['snack-bar--simple']
+    });
   }
 }

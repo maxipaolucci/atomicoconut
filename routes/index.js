@@ -27,6 +27,11 @@ router.get('/app/register', (req, res) => {
   res.render('home', {title: 'Register'});
 });
 
+router.get('/app/account/reset/:token', catchErrors(authController.reset));
+
+router.get('/app/account/reset/expired', (req, res) => {
+  res.render('home', {title: 'Expired'});
+});
 
 // TEST controller
 router.get('/register', testController.registerForm);
@@ -37,7 +42,6 @@ router.get('/account',
     testController.account
 );
 router.get('/account/reset/:token', catchErrors(testController.reset));
-
 
 //*************************************************************************** */
 //******************************** API ************************************** */
@@ -68,9 +72,7 @@ router.post('/api/users/account',
     authController.isLogggedIn, 
     catchErrors(userController.updateAccount)
 );
-router.post('/api/users/account/forgot',  
-    catchErrors(authController.forgot)
-);
+router.post('/api/users/account/forgot', catchErrors(authController.forgot));
 
 router.post('/api/users/account/reset/:token', 
     authController.confirmedPasswords,

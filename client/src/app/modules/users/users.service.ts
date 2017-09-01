@@ -42,6 +42,27 @@ export class UsersService {
   }
 
   /**
+   * Server call to forgot with the provided user email.
+   */
+  forgot(postData : any = {}) : Observable<any> {
+    return this.http.post(`${this.serverHost}/account/forgot`, postData, { headers : this.headers })
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
+
+  /**
+   * Server call to reset password api with the provided new password.
+   */
+  reset(postData : any = {}) : Observable<any> {
+    ////////////////////////////////////////////
+    ///////////// FALTA EL TOKEN Q LO TENGO EN LA URL
+    ///////////////////////////////////////////////
+    return this.http.post(`${this.serverHost}/api/users/account/reset/`, postData, { headers : this.headers })
+        .map(this.extractData)
+        .catch(this.handleError);
+  }
+
+  /**
    * Server call to login the provided user email and pass.
    */
   logout() : Observable<any> {
