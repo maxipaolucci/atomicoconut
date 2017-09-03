@@ -109,9 +109,14 @@ exports.getUser = (req, res, next) => {
 };
 
 exports.forgot = async (req, res) => {
+    const methodTrace = `${errorTrace} forgot() >`;
+
+    const email = req.body.email;
+    console.log(`${methodTrace} Checking user with email: ${email}...`);
     //1 see user with that exitst
-    const user = await User.findOne({ email : req.body.email });
+    const user = await User.findOne({ email });
     if (!user) {
+        console.log(`${methodTrace} No user found with email: ${email}.`);
         res.status(401).json({ 
             status : "error", 
             codeno : 400,
@@ -120,11 +125,14 @@ exports.forgot = async (req, res) => {
         });
         return;
     }
+
     //2 set reset tokens and expiry on their account
+    console.log(`${methodTrace} User ${email} found, saving token in user Schema...`);
     user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
     user.resetPasswordExpires = Date.now() + 3600000; //1 hour from now
     await user.save();
     //3 send them email with the token
+    console.log(`${methodTrace} Token saved for ${email}, sending email to user with reset password url...`);
     const resetURL = `http://${req.headers.host}/app/account/reset/${user.resetPasswordToken}`;
     await mail.send({
         user,
@@ -139,6 +147,8 @@ exports.forgot = async (req, res) => {
         msg : 'You have been emailed a password reset link',
         data : { email : user.email, expires : '1 hour' }
     });
+
+    console.log(`${methodTrace} Mail successfully sent to ${email}.`);
 };
 
 exports.confirmedPasswords = (req, res, next) => {

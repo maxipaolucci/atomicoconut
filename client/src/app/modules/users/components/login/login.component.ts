@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
         this.showResults(`You have been emailed a password reset link.`);
       },
       (error : any) => {
-        console.error(`${methodTrace} There was an error with the register service > ${error}`);
+        console.error(`${methodTrace} There was an error with the forgot password service > ${error}`);
         this.showResults(`No account with that email exists.`);
       }
     );

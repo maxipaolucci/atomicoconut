@@ -232,10 +232,10 @@ var AppRoutingModule = (function () {
 AppRoutingModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* RouterModule */].forRoot(appRoutes)
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forRoot(appRoutes)
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* RouterModule */]
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]
         ]
     })
 ], AppRoutingModule);
@@ -307,7 +307,7 @@ var _a;
 /***/ "../../../../../src/app/crypto-currency/crypto-currency.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<md-card class=\"currency-card\">\r\n  <md-card-header>\r\n    <div md-card-avatar \r\n        class=\"header-image\"\r\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\r\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\r\n    </div>\r\n    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>\r\n    <md-card-subtitle>\r\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\r\n    </md-card-subtitle>\r\n  </md-card-header>\r\n  <md-card-content>\r\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\r\n\r\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \r\n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n  </md-card-content>\r\n</md-card>"
+module.exports = "<md-card class=\"currency-card\">\n  <md-card-header>\n    <div md-card-avatar \n        class=\"header-image\"\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\n    </div>\n    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>\n    <md-card-subtitle>\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\n    </md-card-subtitle>\n  </md-card-header>\n  <md-card-content>\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \n    <br>\n\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\n\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\n      <br>\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\n    </div>\n  </md-card-content>\n</md-card>"
 
 /***/ }),
 
@@ -657,7 +657,7 @@ var LoginComponent = (function () {
         this.usersService.forgot(this.forgotModel).subscribe(function (data) {
             _this.showResults("You have been emailed a password reset link.");
         }, function (error) {
-            console.error(methodTrace + " There was an error with the register service > " + error);
+            console.error(methodTrace + " There was an error with the forgot password service > " + error);
             _this.showResults("No account with that email exists.");
         });
     };
@@ -675,7 +675,7 @@ LoginComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/users/components/login/login.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdSnackBar */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["b" /* MdSnackBar */]) === "function" && _c || Object])
 ], LoginComponent);
 
 var _a, _b, _c;
@@ -765,7 +765,7 @@ RegisterComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/users/components/register/register.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object])
 ], RegisterComponent);
 
 var _a, _b;
@@ -776,7 +776,7 @@ var _a, _b;
 /***/ "../../../../../src/app/modules/users/components/reset-password/reset-password.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #resetForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\n  \n  <div fxLayout=\"column\" class=\"form__fields\">\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\n      <!-- Password -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \n            [(ngModel)]=\"model.password\" \n            required minlength=\"3\" maxlength=\"8\"\n            #password=\"ngModel\">\n\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</md-error>\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</md-error>\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</md-error>\n      </md-input-container>\n\n      <!-- Password confirm -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \n            [(ngModel)]=\"model['password-confirm']\" \n            required minlength=\"3\" maxlength=\"8\"\n            #passwordConfirm=\"ngModel\">\n\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</md-error>\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</md-error>\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</md-error>\n      </md-input-container>\n    </div>\n    \n    \n    \n  </div>\n  \n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\n    <button fxFlex class=\"form__action mat-raised-button\" md-raised-button type=\"submit\" [disabled]=\"!resetForm.form.valid\">Reset password</button>\n  </div>\n\n</form>"
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #resetForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\"\r\n            #password=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</md-error>\r\n      </md-input-container>\r\n\r\n      <!-- Password confirm -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model['password-confirm']\" \r\n            required minlength=\"3\" maxlength=\"8\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</md-error>\r\n      </md-input-container>\r\n    </div>\r\n    \r\n    \r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button fxFlex class=\"form__action mat-raised-button\" md-raised-button type=\"submit\" [disabled]=\"!resetForm.form.valid\">Reset password</button>\r\n  </div>\r\n\r\n</form>"
 
 /***/ }),
 
@@ -819,12 +819,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ResetPasswordComponent = (function () {
-    function ResetPasswordComponent(usersService, router) {
+    function ResetPasswordComponent(usersService, router, route) {
         this.usersService = usersService;
         this.router = router;
+        this.route = route;
         this.model = { password: '', 'password-confirm': '' };
     }
-    ResetPasswordComponent.prototype.ngOnInit = function () { };
+    ResetPasswordComponent.prototype.ngOnInit = function () {
+        console.log(this.route);
+        this.route.paramMap.subscribe(function (params) {
+            console.log(params);
+        });
+    };
     ResetPasswordComponent.prototype.onSubmit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
@@ -853,10 +859,10 @@ ResetPasswordComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _c || Object])
 ], ResetPasswordComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=reset-password.component.js.map
 
 /***/ }),
@@ -879,6 +885,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 
 
+//import { ActivatedRouteSnapshot } from '@angular/router';
 
 
 
@@ -895,8 +902,8 @@ var UsersRoutingModule = (function () {
 }());
 UsersRoutingModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
-        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* RouterModule */].forChild(routes)],
-        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* RouterModule */]]
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
     })
 ], UsersRoutingModule);
 

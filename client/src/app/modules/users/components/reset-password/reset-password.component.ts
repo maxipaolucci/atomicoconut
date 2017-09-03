@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap  } from '@angular/router';
 
 import { UsersService } from '../../users.service';
 
@@ -12,9 +12,13 @@ export class ResetPasswordComponent implements OnInit {
 
   model : any = { password : '', 'password-confirm' : ''};
 
-  constructor(private usersService : UsersService, private router : Router) { }
+  constructor(private usersService : UsersService, private router : Router, private route : ActivatedRoute ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.route);
+    this.route.paramMap.map((params: ParamMap) => params.get('token'))
+        .subscribe(token => console.log(token));
+  }
 
   onSubmit() { 
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
