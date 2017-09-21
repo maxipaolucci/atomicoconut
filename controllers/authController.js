@@ -166,23 +166,27 @@ exports.confirmedPasswords = (req, res, next) => {
 };
 
 exports.update = async (req, res) => {
+    const methodTrace = `${errorTrace} update() >`;
+    
+    console.log(`${methodTrace} Checking for User with token ${req.params.token} not expired...`);
     const user = await User.findOne({
         $and : [
             { resetPasswordToken : req.params.token },
-            { resetPasswordToken : { $gt : Date.now() } }
+            { resetPasswordExpires : { $gt : Date.now() } }
         ]
     });
 
     if (!user) {
+        console.log(`${methodTrace} User not found.`);
         res.status(401).json({
             status : "error", 
             codeno : 400,
-            msg : 'Password reset is invalid or has expired.',
+            msg : 'Password reset token is invalid or has expired.',
             data : null
         });
         return;
     }
-
+    console.log(`${methodTrace} User found, saving new password...`);
     const setPassword = promisify(user.setPassword, user); //this User.setPassword function was added to model by passportLocalMongoose plugin in the user schema. 
                                                             // User.setPassword is a callback based method as register in userController so with promisify we convert it into a promise based method.
     await setPassword(req.body.password); // set the new password to the user in MongoDB
@@ -191,27 +195,31 @@ exports.update = async (req, res) => {
     const updatedUser = await user.save(); //here is when we save in the database the deleted values before 
     await req.login(updatedUser); //this comes from passport js
     
+    console.log(`${methodTrace} Password successfully updated!!!`);
     res.json({
         status : 'success', 
         codeno : 200,
         msg : 'Nice! Your password has been reset! You are now logged in!',
-        data : null
+        data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar }
     });
 };
 
 exports.reset = async (req, res) => {
+    const methodTrace = `${errorTrace} reset() >`;
     
+    console.log(`${methodTrace} Checking for User with token ${req.params.token} not expired...`);
     const user = await User.findOne({
         $and : [
             { resetPasswordToken : req.params.token },
-            { resetPasswordToken : { $gt : Date.now() } }
+            { resetPasswordExpires : { $gt : Date.now() } }
         ]
     });
     
     if (!user) {
-        req.flash('error', 'Password reset is invalid or has expired.');
+        console.log(`${methodTrace} User not found.`);
         return res.redirect('/app/account/reset/expired');
     }
 
+    console.log(`${methodTrace} User with token provided found.`);
     res.render('home', {title: 'Reset password'});
 };

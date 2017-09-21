@@ -824,11 +824,20 @@ var ResetPasswordComponent = (function () {
         this.router = router;
         this.route = route;
         this.model = { password: '', 'password-confirm': '' };
+        this.token = '';
     }
     ResetPasswordComponent.prototype.ngOnInit = function () {
-        console.log(this.route);
-        this.route.paramMap.subscribe(function (params) {
-            console.log(params);
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.route.paramMap.map(function (params) { return params.get('token'); })
+            .subscribe(function (token) {
+            if (token) {
+                _this.token = token;
+            }
+            else {
+                console.error(methodTrace + " Token must be set to reset a password.");
+                _this.router.navigate(['/']);
+            }
         });
     };
     ResetPasswordComponent.prototype.onSubmit = function () {
@@ -839,11 +848,9 @@ var ResetPasswordComponent = (function () {
             console.error(methodTrace + " Confirm password must match password.");
             return false;
         }
-        this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
         //call the register service
-        this.usersService.register(this.model).subscribe(function (data) {
-            if (data && data.email) {
-                _this.usersService.setUser(data);
+        this.usersService.reset(this.token, this.model).subscribe(function (data) {
+            if (data) {
                 _this.router.navigate(['/']); //go home
             }
             else {
@@ -892,8 +899,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var routes = [
     { path: 'register', component: __WEBPACK_IMPORTED_MODULE_2__components_register_register_component__["a" /* RegisterComponent */] },
     { path: 'login', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
-    { path: 'account/reset/:token', component: __WEBPACK_IMPORTED_MODULE_4__components_reset_password_reset_password_component__["a" /* ResetPasswordComponent */] },
-    { path: 'account/reset/expired', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] }
+    { path: 'account/reset/expired', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
+    { path: 'account/reset/:token', component: __WEBPACK_IMPORTED_MODULE_4__components_reset_password_reset_password_component__["a" /* ResetPasswordComponent */] }
 ];
 var UsersRoutingModule = (function () {
     function UsersRoutingModule() {
@@ -1038,12 +1045,9 @@ var UsersService = (function () {
     /**
      * Server call to reset password api with the provided new password.
      */
-    UsersService.prototype.reset = function (postData) {
+    UsersService.prototype.reset = function (token, postData) {
         if (postData === void 0) { postData = {}; }
-        ////////////////////////////////////////////
-        ///////////// FALTA EL TOKEN Q LO TENGO EN LA URL
-        ///////////////////////////////////////////////
-        return this.http.post(this.serverHost + "/api/users/account/reset/", postData, { headers: this.headers })
+        return this.http.post(this.serverHost + "/account/reset/" + token, postData, { headers: this.headers })
             .map(this.extractData)
             .catch(this.handleError);
     };
@@ -1110,9 +1114,14 @@ var _a;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
+// The file contents for the current environment will overwrite these during build.
+// The build system defaults to the dev environment which uses `environment.ts`, but if you do
+// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// The list of which env maps to which file can be found in `.angular-cli.json`.
+// The file contents for the current environment will overwrite these during build.
 var environment = {
-    production: true,
-    apiHost: ''
+    production: false,
+    apiHost: 'http://localhost:7777'
 };
 //# sourceMappingURL=environment.js.map
 

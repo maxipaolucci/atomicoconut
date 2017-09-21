@@ -53,11 +53,8 @@ export class UsersService {
   /**
    * Server call to reset password api with the provided new password.
    */
-  reset(postData : any = {}) : Observable<any> {
-    ////////////////////////////////////////////
-    ///////////// FALTA EL TOKEN Q LO TENGO EN LA URL
-    ///////////////////////////////////////////////
-    return this.http.post(`${this.serverHost}/api/users/account/reset/`, postData, { headers : this.headers })
+  reset(token : string, postData : any = {}) : Observable<any> {
+    return this.http.post(`${this.serverHost}/account/reset/${token}`, postData, { headers : this.headers })
         .map(this.extractData)
         .catch(this.handleError);
   }

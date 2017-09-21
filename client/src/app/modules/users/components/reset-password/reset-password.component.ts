@@ -11,13 +11,22 @@ import { UsersService } from '../../users.service';
 export class ResetPasswordComponent implements OnInit {
 
   model : any = { password : '', 'password-confirm' : ''};
+  token : string = '';
 
   constructor(private usersService : UsersService, private router : Router, private route : ActivatedRoute ) { }
 
   ngOnInit() {
-    console.log(this.route);
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+    
     this.route.paramMap.map((params: ParamMap) => params.get('token'))
-        .subscribe(token => console.log(token));
+        .subscribe(token => { 
+          if (token) {
+            this.token = token;
+          } else {
+            console.error(`${methodTrace} Token must be set to reset a password.`);
+            this.router.navigate(['/']);
+          }
+        });
   }
 
   onSubmit() { 
@@ -29,12 +38,10 @@ export class ResetPasswordComponent implements OnInit {
       return false;
     }
 
-    this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
     //call the register service
-    this.usersService.register(this.model).subscribe(
+    this.usersService.reset(this.token, this.model).subscribe(
       (data : any) => {
-        if (data && data.email) {
-          this.usersService.setUser(data);
+        if (data) {
           this.router.navigate(['/']); //go home
         } else {
           console.error(`${methodTrace} Unexpected data format.`)

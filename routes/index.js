@@ -27,11 +27,11 @@ router.get('/app/register', (req, res) => {
   res.render('home', {title: 'Register'});
 });
 
-router.get('/app/account/reset/:token', catchErrors(authController.reset));
-
 router.get('/app/account/reset/expired', (req, res) => {
   res.render('home', {title: 'Expired'});
 });
+
+router.get('/app/account/reset/:token', catchErrors(authController.reset));
 
 // TEST controller
 router.get('/register', testController.registerForm);
