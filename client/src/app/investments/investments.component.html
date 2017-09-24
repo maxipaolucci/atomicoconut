@@ -15,6 +15,22 @@
       [cryptoCurrencyBuyDate]="btcBuyDate"
       (totalReturns)="setTotals($event)">
     </app-crypto-currency>
+
+    <app-crypto-currency fxFlex 
+      [cryptoCurrency]="'xmr'"
+      [cryptoCurrencyCount]="5.94093753"
+      [cryptoCurrencyBuyPrice]="87.5282"
+      [cryptoCurrencyBuyDate]="xmrBuyDate2"
+      (totalReturns)="setTotals($event)">
+    </app-crypto-currency>
+
+    <app-crypto-currency fxFlex 
+      [cryptoCurrency]="'xmr'"
+      [cryptoCurrencyCount]="5.72806551"
+      [cryptoCurrencyBuyPrice]="90.9556"
+      [cryptoCurrencyBuyDate]="xmrBuyDate3"
+      (totalReturns)="setTotals($event)">
+    </app-crypto-currency>
   </div>
 
   <md-card fxFlex class="totals-card">
