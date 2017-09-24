@@ -15,7 +15,9 @@
       [cryptoCurrencyBuyDate]="btcBuyDate"
       (totalReturns)="setTotals($event)">
     </app-crypto-currency>
+  </div>
 
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
     <app-crypto-currency fxFlex 
       [cryptoCurrency]="'xmr'"
       [cryptoCurrencyCount]="5.94093753"
