@@ -30,7 +30,7 @@
       <md-input-container fxFlex class="form__field">
         <input mdInput type="password" id="password" name="password" placeholder="Password" 
             [(ngModel)]="model.password" 
-            required minlength="3" maxlength="8"
+            required minlength="3" maxlength="8" equalvalidator="passwordConfirm" reverse="true"
             #password="ngModel">
 
         <md-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.required">Password is required</md-error>
@@ -42,16 +42,16 @@
       <md-input-container fxFlex class="form__field">
         <input mdInput type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm password" 
             [(ngModel)]="model['password-confirm']" 
-            required minlength="3" maxlength="8"
+            required minlength="3" maxlength="8" equalvalidator="password"
             #passwordConfirm="ngModel">
 
         <md-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required">Confirm password is required</md-error>
         <md-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength">Confirm password must be longer than 3 characters</md-error>
         <md-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength">Confirm password must be shorter than 8 characters</md-error>
+        <md-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator">Confirm password must match password</md-error>
       </md-input-container>
+      <!-- <pre>{{passwordConfirm.errors | json}}</pre> -->
     </div>
-    
-    
     
   </div>
   
