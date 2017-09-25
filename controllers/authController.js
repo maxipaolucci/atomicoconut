@@ -8,43 +8,45 @@ const mail = require('../handlers/mail');
 const errorTrace = 'authController >';
 
 exports.login = (req, res, next) => {
-    const methodTrace = `${errorTrace} login() >`;
+    const methodTrace = `${errorTrace} login() > `;
 
+    console.log(`${methodTrace}Trying to authenticate with passport...`);
     passport.authenticate('local', function(err, user, info) {
         if (err) {
-            console.log(`${methodTrace} Login failed 1. ${err}`);
+            console.log(`${methodTrace}There was an arror trying to authenticate the user.`);
             res.status(401).json({ 
                 status : "error", 
-                codeno : 400,
+                codeno : 450,
                 msg : errors.map(err => err.msg),
                 data : info
             });
             return; //stop from running 
         }
         if (!user) {
-            console.log(`${methodTrace} Login failed 2. Not user back`);
+            console.log(`${methodTrace}No user found with the provided credentials`);
             res.status(401).json({ 
                 status : "error", 
-                codeno : 400,
+                codeno : 451,
                 msg : 'No user found with the provided credentials',
                 data : null
             });
             return; //stop from running 
         }
 
+        console.log(`${methodTrace}Authentication successfull. Now trying to login...`);
         req.logIn(user, function(err) {
             if (err) {
-                console.log(`${methodTrace} Login failed 2. ${err}`);
+                console.log(`${methodTrace} There was an error trying to login with the recently authenticated user.`);
                 res.status(401).json({ 
                     status : "error", 
-                    codeno : 400,
-                    msg : 'There was an error trying to login with the recently registered user.',
+                    codeno : 452,
+                    msg : 'There was an error trying to login with the recently authenticated user.',
                     data : null
                 });
                 return; //stop from running 
             }
             
-            console.log(`${methodTrace} Login Works!`);
+            console.log(`${methodTrace} Login successfull!`);
             res.json({
                 status : 'success', 
                 codeno : 200,
