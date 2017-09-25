@@ -4,12 +4,22 @@ const juice = require('juice'); //inline css for email clients
 const htmlToText = require('html-to-text'); //convert html to text format
 const promisify = require('es6-promisify');
 
-const transport = nodemailer.createTransport({
+//mailtrap io
+const transportMailTrap = nodemailer.createTransport({
   host : process.env.MAIL_HOST,
   port : process.env.MAIL_PORT,
   auth : {
     user : process.env.MAIL_USER,
     pass : process.env.MAIL_PASS
+  }
+});
+
+//for use a gmail account go to https://www.google.com/settings/security/lesssecureapps and turn less secure app ON
+const transportGmail = nodemailer.createTransport({
+  service: 'gmail',
+  auth : {
+    user : process.env.GMAIL_USER,
+    pass : process.env.GMAIL_PASS
   }
 });
 
@@ -30,6 +40,6 @@ exports.send = async (options) => {
     text
   }
 
-  const sendMail = promisify(transport.sendMail, transport);
+  const sendMail = promisify(transportGmail.sendMail, transportGmail);
   return sendMail(mailOptions);
 };
