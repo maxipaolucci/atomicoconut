@@ -4,16 +4,17 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
+const { errorCodes, messageCodes } = require('../handlers/errorHandlers');
 
 const errorTrace = 'authController >';
 
 exports.login = (req, res, next) => {
     const methodTrace = `${errorTrace} login() > `;
 
-    console.log(`${methodTrace}Trying to authenticate with passport...`);
+    console.log(`${methodTrace}${messageCodes[1001]}`);
     passport.authenticate('local', function(err, user, info) {
         if (err) {
-            console.log(`${methodTrace}There was an arror trying to authenticate the user.`);
+            console.log(`${methodTrace}${errorCodes[451]}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 450,
@@ -23,34 +24,34 @@ exports.login = (req, res, next) => {
             return; //stop from running 
         }
         if (!user) {
-            console.log(`${methodTrace}No user found with the provided credentials`);
+            console.log(`${methodTrace}${errorCodes[451]}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 451,
-                msg : 'No user found with the provided credentials',
+                msg : errorCodes[451],
                 data : null
             });
             return; //stop from running 
         }
 
-        console.log(`${methodTrace}Authentication successfull. Now trying to login...`);
+        console.log(`${methodTrace}${messageCodes[1002]}`);
         req.logIn(user, function(err) {
             if (err) {
-                console.log(`${methodTrace} There was an error trying to login with the recently authenticated user.`);
+                console.log(`${methodTrace}${errorCodes[452]}`);
                 res.status(401).json({ 
                     status : "error", 
                     codeno : 452,
-                    msg : 'There was an error trying to login with the recently authenticated user.',
+                    msg : errorCodes[452],
                     data : null
                 });
                 return; //stop from running 
             }
             
-            console.log(`${methodTrace} Login successfull!`);
+            console.log(`${methodTrace}${messageCodes[1000]}`);
             res.json({
                 status : 'success', 
                 codeno : 200,
-                msg : 'Login successful',
+                msg : messageCodes[1000],
                 data : { name : user.name, email : user.email, avatar : user.gravatar }
             });
         });
@@ -61,7 +62,7 @@ exports.login = (req, res, next) => {
 
 exports.logout = (req, res) => {
     const methodTrace = `${errorTrace} logout() >`;
-    console.log(`${methodTrace} Logout user: ${req.user ? req.user.name : 'null'}.`);
+    console.log(`${methodTrace} Logged out user: ${req.user ? req.user.name : 'null'}.`);
     
     req.logout(); //this was added in passport
     res.json({
@@ -73,15 +74,20 @@ exports.logout = (req, res) => {
 };
 
 exports.isLogggedIn = (req, res, next) => {
+    const methodTrace = `${errorTrace} isLogggedIn() >`;
+
+    console.log(`${methodTrace}${messageCodes[1003]}`);
     if (req.isAuthenticated()) { //check in passport for authentication
+        console.log(`${methodTrace} ${messageCodes[1004]}`);
         next();
         return;
     }
 
+    console.log(`${methodTrace} ${errorCodes[453]}`);
     res.status(401).json({ 
         status : "error", 
         codeno : 400,
-        msg : 'You are not authenticated to proceed.',
+        msg : errorCodes[453],
         data : null
     });
 };
@@ -90,22 +96,21 @@ exports.getUser = (req, res, next) => {
     const methodTrace = `${errorTrace} getUser() >`;
 
     if (req.isAuthenticated()) { //check in passport for authentication
-        console.log(`${methodTrace} User is authenticated!.`);
-
+        console.log(`${methodTrace} ${messageCodes[1004]}`);
         res.json({
             status : 'success',
             codeno : 200,
-            msg : 'User is logged in.',
+            msg : messageCodes[1004],
             data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar }
         });
         return;
     }
 
-    console.log(`${methodTrace} User NOT authenticated.`);
+    console.log(`${methodTrace} ${errorCodes[453]}`);
     res.json({ 
         status : "success", 
         codeno : 200,
-        msg : 'No user logged in currently.',
+        msg : errorCodes[453],
         data : null
     });
 };
@@ -121,7 +126,7 @@ exports.forgot = async (req, res) => {
         console.log(`${methodTrace} No user found with email: ${email}.`);
         res.status(401).json({ 
             status : "error", 
-            codeno : 400,
+            codeno : 452,
             msg : 'No account with that email exists.',
             data : null
         });

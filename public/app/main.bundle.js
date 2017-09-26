@@ -269,28 +269,33 @@ var AppService = (function () {
     function AppService(http) {
         this.http = http;
     }
+    /**
+     * Extract data from a server response
+     * @param res
+     */
     AppService.prototype.extractData = function (res) {
         var body = res.json();
-        if (body.success === true) {
-            return body.ticker;
+        if (body.codeno === 200 && body.status === 'success') {
+            return body.data;
         }
         else {
             throw body;
         }
     };
+    /**
+     * Handle server service errors and parse the result in an object
+     * @param error
+     */
     AppService.prototype.handleError = function (error) {
         // In a real world app, we might use a remote logging infrastructure
-        var errMsg;
+        var errObj = {};
         if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
-            var body = error.json() || '';
-            var err = body.error || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+            errObj = error.json() || {};
         }
         else {
-            errMsg = error.message ? error.message : error.toString();
+            errObj = error || {};
         }
-        console.error(errMsg);
-        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(errMsg);
+        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(errObj);
     };
     return AppService;
 }());
@@ -307,7 +312,7 @@ var _a;
 /***/ "../../../../../src/app/crypto-currency/crypto-currency.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<md-card class=\"currency-card\">\n  <md-card-header>\n    <div md-card-avatar \n        class=\"header-image\"\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\n    </div>\n    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>\n    <md-card-subtitle>\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\n    </md-card-subtitle>\n  </md-card-header>\n  <md-card-content>\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \n    <br>\n\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\n\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\n      <br>\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\n    </div>\n  </md-card-content>\n</md-card>"
+module.exports = "<md-card class=\"currency-card\">\r\n  <md-card-header>\r\n    <div md-card-avatar \r\n        class=\"header-image\"\r\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\r\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\r\n    </div>\r\n    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>\r\n    <md-card-subtitle>\r\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\r\n    </md-card-subtitle>\r\n  </md-card-header>\r\n  <md-card-content>\r\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\r\n\r\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \r\n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n  </md-card-content>\r\n</md-card>"
 
 /***/ }),
 
@@ -461,7 +466,6 @@ var CrytoCurrencyService = (function () {
         else {
             errMsg = error.message ? error.message : error.toString();
         }
-        console.error(errMsg);
         return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(errMsg);
     };
     return CrytoCurrencyService;
@@ -726,7 +730,6 @@ var LoginComponent = (function () {
             }
         }, function (error) {
             console.error(methodTrace + " There was an error with the login service: ", error);
-            error = JSON.parse(error);
             if (error.codeno === 451) {
                 _this.showResults(error.msg, 60000, 'Close');
             }
@@ -739,8 +742,15 @@ var LoginComponent = (function () {
         this.usersService.forgot(this.forgotModel).subscribe(function (data) {
             _this.showResults("You have been emailed a password reset link.");
         }, function (error) {
-            console.error(methodTrace + " There was an error with the forgot password service > " + error);
-            _this.showResults("No account with that email exists.");
+            console.error(methodTrace + " There was an error with the forgot password service: ", error);
+            if (error.codeno === 452) {
+                //invalid email
+                _this.showResults(error.msg, 3000);
+            }
+            else if (error.codeno === 400) {
+                //the mail system failed for external reasons
+                _this.showResults("There was an issue sending the reset password email, please try again in a few minutes.");
+            }
         });
     };
     LoginComponent.prototype.showResults = function (message, duration, actionName) {
@@ -750,7 +760,6 @@ var LoginComponent = (function () {
             duration: duration,
             extraClasses: ['snack-bar--simple']
         });
-        console.log(snackBarRef, snackBarRef.instance.action);
         snackBarRef.onAction().subscribe(function () {
             if (snackBarRef.instance.action === 'Close') {
                 snackBarRef.dismiss();
@@ -1076,9 +1085,8 @@ UsersModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1093,9 +1101,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var UsersService = (function () {
-    function UsersService(http) {
+    function UsersService(http, appService) {
         this.http = http;
-        this.serverHost = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiHost + '/api/users';
+        this.appService = appService;
+        this.serverHost = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].apiHost + '/api/users';
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         this.user = null;
     }
@@ -1106,16 +1115,16 @@ var UsersService = (function () {
     UsersService.prototype.register = function (postData) {
         if (postData === void 0) { postData = {}; }
         return this.http.post(this.serverHost + "/register", postData, { headers: this.headers })
-            .map(this.extractData)
-            .catch(this.handleError);
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to retrieve the currently authenticated user, or null if nobody .
      */
     UsersService.prototype.getAuthenticatedUser = function () {
         return this.http.get(this.serverHost + "/getUser")
-            .map(this.extractData)
-            .catch(this.handleError);
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to login the provided user email and pass.
@@ -1123,8 +1132,8 @@ var UsersService = (function () {
     UsersService.prototype.login = function (postData) {
         if (postData === void 0) { postData = {}; }
         return this.http.post(this.serverHost + "/login", postData, { headers: this.headers })
-            .map(this.extractData)
-            .catch(this.handleError);
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to forgot with the provided user email.
@@ -1132,8 +1141,8 @@ var UsersService = (function () {
     UsersService.prototype.forgot = function (postData) {
         if (postData === void 0) { postData = {}; }
         return this.http.post(this.serverHost + "/account/forgot", postData, { headers: this.headers })
-            .map(this.extractData)
-            .catch(this.handleError);
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to reset password api with the provided new password.
@@ -1141,16 +1150,16 @@ var UsersService = (function () {
     UsersService.prototype.reset = function (token, postData) {
         if (postData === void 0) { postData = {}; }
         return this.http.post(this.serverHost + "/account/reset/" + token, postData, { headers: this.headers })
-            .map(this.extractData)
-            .catch(this.handleError);
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to login the provided user email and pass.
      */
     UsersService.prototype.logout = function () {
         return this.http.get(this.serverHost + "/logout")
-            .map(this.extractData)
-            .catch(this.handleError);
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
     };
     /**
      * Tells whether the user is logged in in the system. Checks the local user variable
@@ -1169,35 +1178,14 @@ var UsersService = (function () {
     UsersService.prototype.getUser = function () {
         return this.user;
     };
-    UsersService.prototype.extractData = function (res) {
-        var body = res.json();
-        if (body.codeno === 200 && body.status === 'success') {
-            return body.data;
-        }
-        else {
-            throw body;
-        }
-    };
-    UsersService.prototype.handleError = function (error) {
-        // In a real world app, we might use a remote logging infrastructure
-        var errMsg;
-        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
-            var body = error.json() || '';
-            errMsg = body.message || JSON.stringify(body);
-        }
-        else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(errMsg);
-    };
     return UsersService;
 }());
 UsersService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object])
 ], UsersService);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=users.service.js.map
 
 /***/ }),

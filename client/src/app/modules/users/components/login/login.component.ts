@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
       },
       (error : any) => {
         console.error(`${methodTrace} There was an error with the login service: `, error);
-        error = JSON.parse(error);
 
         if (error.codeno === 451) {
           this.showResults(error.msg, 60000, 'Close');
@@ -52,8 +51,14 @@ export class LoginComponent implements OnInit {
         this.showResults(`You have been emailed a password reset link.`);
       },
       (error : any) => {
-        console.error(`${methodTrace} There was an error with the forgot password service > ${error}`);
-        this.showResults(`No account with that email exists.`);
+        console.error(`${methodTrace} There was an error with the forgot password service: `, error);
+        if (error.codeno === 452) {
+          //invalid email
+          this.showResults(error.msg, 3000);
+        } else if (error.codeno === 400) {
+          //the mail system failed for external reasons
+          this.showResults(`There was an issue sending the reset password email, please try again in a few minutes.`);
+        }
       }
     );
   }
@@ -64,7 +69,6 @@ export class LoginComponent implements OnInit {
       extraClasses: ['snack-bar--simple']
     });
 
-    console.log(snackBarRef, snackBarRef.instance.action);
     snackBarRef.onAction().subscribe(() => {
       if (snackBarRef.instance.action === 'Close') {
         snackBarRef.dismiss();

@@ -8,27 +8,34 @@ export class AppService {
 
   constructor(private http : Http) {}
 
-  private extractData(res: Response) : any {
+  /**
+   * Extract data from a server response
+   * @param res 
+   */
+  public extractData(res: Response) : any {
     let body = res.json();
-    if (body.success === true) {
-      return body.ticker;
+
+    if (body.codeno === 200 && body.status === 'success') {
+      return body.data;
     } else {
       throw body;
     }
   }
 
-  private handleError (error: Response | any) {
+  /**
+   * Handle server service errors and parse the result in an object
+   * @param error 
+   */
+  public handleError (error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
-    let errMsg: string;
+    let errObj: any = {};
     if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+      errObj = error.json() || {};
     } else {
-      errMsg = error.message ? error.message : error.toString();
+      errObj = error || {};
     }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
+    
+    return Observable.throw(errObj);
   }
 
 }

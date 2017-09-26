@@ -1,5 +1,26 @@
 const errorTrace = 'errorHandlers >';
 
+const errorCodes = {
+  400 : 'Error catched by errorHandlers().',
+  450: 'There was an arror trying to authenticate the user.',
+  451 : 'No user found with the provided credentials',
+  452 : 'There was an error trying to login with the recently authenticated user.',
+  453 : 'User not authenticated to proceed.'
+};
+
+const messageCodes = {
+  1000 : 'Login successfull!',
+  1001 : 'Trying to authenticate with passport...',
+  1002 : 'Authentication successfull. Now trying to login...',
+  1003 : 'Checking for authenticated user...',
+  1004 : 'User is authenticated!' 
+};
+
+exports.errorCodes = errorCodes;
+exports.messageCodes = messageCodes;
+
+
+
 /*
   Catch Errors Handler
 
@@ -11,6 +32,7 @@ const errorTrace = 'errorHandlers >';
 exports.catchErrors = (fn) => {
   const methodTrace = `${errorTrace} catchErrors() >`;
 
+  console.log(`${methodTrace} Something went wrong.`);
   return function(req, res, next) {
     return fn(req, res, next).catch(next);
   };
@@ -22,6 +44,9 @@ exports.catchErrors = (fn) => {
   If we hit a route that is not found, we mark it as 404 and pass it along to the next error handler to display
 */
 exports.notFound = (req, res, next) => {
+  const methodTrace = `${errorTrace} notFound() >`;
+  
+  console.log(`${methodTrace} Route not found.`);
   const err = new Error('Not Found');
   err.status = 'error';
   err.codeno = 404;
@@ -52,9 +77,10 @@ exports.flashValidationErrors = (err, req, res, next) => {
 exports.developmentErrors = (err, req, res, next) => {
   const methodTrace = `${errorTrace} developmentErrors() >`;
 
+  console.log(`${methodTrace} Something went wrong.`);
   err.stack = err.stack || '';
   const errorDetails = {
-    message: err.message,
+    msg: `${errorCodes[400]} ${err.message || err.msg}`,
     status: 'error',
     codeno: 400,
     data: null
@@ -81,6 +107,9 @@ exports.developmentErrors = (err, req, res, next) => {
   No stacktraces are leaked to user
 */
 exports.productionErrors = (err, req, res, next) => {
+  const methodTrace = `${errorTrace} productionErrors() >`;
+  
+  console.log(`${methodTrace} Something went wrong.`);
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,

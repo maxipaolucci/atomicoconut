@@ -3,6 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 
 import {Observable} from "rxjs/Rx";
 import {environment} from "../../../environments/environment";
+import {AppService} from "../../app.service";
 
 @Injectable()
 export class UsersService {
@@ -11,7 +12,7 @@ export class UsersService {
   private headers = new Headers({'Content-Type': 'application/json'});
   private user : any = null;
 
-  constructor(private http : Http) {}
+  constructor(private http : Http, private appService : AppService) {}
 
   /**
    * Server call to Register a new user in the system 
@@ -19,8 +20,8 @@ export class UsersService {
    */
   register(postData : any = {}) : Observable<any> {
     return this.http.post(`${this.serverHost}/register`, postData, { headers : this.headers })
-        .map(this.extractData)
-        .catch(this.handleError);
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -28,8 +29,8 @@ export class UsersService {
    */
   getAuthenticatedUser() : Observable<any> {
     return this.http.get(`${this.serverHost}/getUser`)
-        .map(this.extractData)
-        .catch(this.handleError);
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -37,8 +38,8 @@ export class UsersService {
    */
   login(postData : any = {}) : Observable<any> {
     return this.http.post(`${this.serverHost}/login`, postData, { headers : this.headers })
-        .map(this.extractData)
-        .catch(this.handleError);
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -46,8 +47,8 @@ export class UsersService {
    */
   forgot(postData : any = {}) : Observable<any> {
     return this.http.post(`${this.serverHost}/account/forgot`, postData, { headers : this.headers })
-        .map(this.extractData)
-        .catch(this.handleError);
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -55,8 +56,8 @@ export class UsersService {
    */
   reset(token : string, postData : any = {}) : Observable<any> {
     return this.http.post(`${this.serverHost}/account/reset/${token}`, postData, { headers : this.headers })
-        .map(this.extractData)
-        .catch(this.handleError);
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -64,8 +65,8 @@ export class UsersService {
    */
   logout() : Observable<any> {
     return this.http.get(`${this.serverHost}/logout`)
-        .map(this.extractData)
-        .catch(this.handleError);
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
   }
   
   /**
@@ -86,27 +87,4 @@ export class UsersService {
   getUser() : any {
     return this.user;
   }
-
-  private extractData(res: Response) : any {
-    let body = res.json();
-
-    if (body.codeno === 200 && body.status === 'success') {
-      return body.data;
-    } else {
-      throw body;
-    }
-  }
-
-  private handleError (error: Response | any) {
-    // In a real world app, we might use a remote logging infrastructure
-    let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      errMsg = body.message || JSON.stringify(body);
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    return Observable.throw(errMsg);
-  }
-
 }
