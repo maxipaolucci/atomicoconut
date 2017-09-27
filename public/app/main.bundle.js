@@ -132,15 +132,17 @@ var _a, _b;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__crypto_currency_crypto_currency_component__ = __webpack_require__("../../../../../src/app/crypto-currency/crypto-currency.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__crypto_currency_crypto_currency_service__ = __webpack_require__("../../../../../src/app/crypto-currency/crypto-currency.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__investments_crypto_currency_crypto_currency_component__ = __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__investments_crypto_currency_crypto_currency_service__ = __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__investments_investments_component__ = __webpack_require__("../../../../../src/app/investments/investments.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__investments_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -173,10 +175,11 @@ AppModule = __decorate([
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__crypto_currency_crypto_currency_component__["a" /* CryptoCurrencyComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__investments_investments_component__["a" /* InvestmentsComponent */]
+            __WEBPACK_IMPORTED_MODULE_11__investments_crypto_currency_crypto_currency_component__["a" /* CryptoCurrencyComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__investments_investments_component__["a" /* InvestmentsComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__investments_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_12__crypto_currency_crypto_currency_service__["a" /* CrytoCurrencyService */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_12__investments_crypto_currency_crypto_currency_service__["a" /* CrytoCurrencyService */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -193,6 +196,7 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investments_investments_component__ = __webpack_require__("../../../../../src/app/investments/investments.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__investments_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -205,6 +209,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var appRoutes = [
     {
         path: '',
@@ -213,7 +218,10 @@ var appRoutes = [
     },
     {
         path: 'investments',
-        component: __WEBPACK_IMPORTED_MODULE_2__investments_investments_component__["a" /* InvestmentsComponent */]
+        component: __WEBPACK_IMPORTED_MODULE_2__investments_investments_component__["a" /* InvestmentsComponent */],
+        children: [
+            { path: '', component: __WEBPACK_IMPORTED_MODULE_3__investments_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */] }
+        ]
     }
     // {
     //   path : 'page-not-found',
@@ -309,177 +317,6 @@ var _a;
 
 /***/ }),
 
-/***/ "../../../../../src/app/crypto-currency/crypto-currency.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<md-card class=\"currency-card\">\r\n  <md-card-header>\r\n    <div md-card-avatar \r\n        class=\"header-image\"\r\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\r\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\r\n    </div>\r\n    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>\r\n    <md-card-subtitle>\r\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\r\n    </md-card-subtitle>\r\n  </md-card-header>\r\n  <md-card-content>\r\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\r\n\r\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \r\n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n  </md-card-content>\r\n</md-card>"
-
-/***/ }),
-
-/***/ "../../../../../src/app/crypto-currency/crypto-currency.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".currency-card {\n  text-align: center; }\n  .currency-card .header-image {\n    background-size: cover; }\n    .currency-card .header-image.header-image__xmr {\n      background-image: url(\"/assets/images/xmr.png\"); }\n    .currency-card .header-image.header-image__btc {\n      background-image: url(\"/assets/images/btc.png\"); }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/crypto-currency/crypto-currency.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoCurrencyComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__ = __webpack_require__("../../../../../src/app/crypto-currency/crypto-currency.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/BehaviorSubject.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var CryptoCurrencyComponent = (function () {
-    function CryptoCurrencyComponent(crytoCurrencyService) {
-        this.crytoCurrencyService = crytoCurrencyService;
-        this.usdFromCryptoCurrency = 0;
-        this.usdFromCryptoCurrencyWhenBought = 0;
-        this.cryptoCurrencyCurrentPrice = 0;
-        this.totalReturns = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.cryptoCurrency$ = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["BehaviorSubject"](null);
-    }
-    CryptoCurrencyComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
-        this.usdFromCryptoCurrencyWhenBought = this.cryptoCurrencyBuyPrice * this.cryptoCurrencyCount;
-        this.crytoCurrencyService.getPrices(this.cryptoCurrency).subscribe(function (pricesData) {
-            _this.cryptoCurrency$.next(pricesData);
-            _this.cryptoCurrencyCurrentPrice = pricesData.price;
-            _this.usdFromCryptoCurrency = pricesData.price * _this.cryptoCurrencyCount;
-            _this.totalReturns.emit({
-                usdFromCryptoCurrencyWhenBought: _this.usdFromCryptoCurrencyWhenBought,
-                usdFromCryptoCurrency: _this.usdFromCryptoCurrency
-            });
-        }, function (error) { return console.error(methodTrace + " There was an error trying to load Monero prices > " + error); });
-    };
-    return CryptoCurrencyComponent;
-}());
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", String)
-], CryptoCurrencyComponent.prototype, "cryptoCurrency", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", Number)
-], CryptoCurrencyComponent.prototype, "cryptoCurrencyCount", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", Number)
-], CryptoCurrencyComponent.prototype, "cryptoCurrencyBuyPrice", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", Object)
-], CryptoCurrencyComponent.prototype, "cryptoCurrencyBuyDate", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["T" /* Output */])(),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
-], CryptoCurrencyComponent.prototype, "totalReturns", void 0);
-CryptoCurrencyComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-crypto-currency',
-        template: __webpack_require__("../../../../../src/app/crypto-currency/crypto-currency.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/crypto-currency/crypto-currency.component.scss")]
-    }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */]) === "function" && _b || Object])
-], CryptoCurrencyComponent);
-
-var _a, _b;
-//# sourceMappingURL=crypto-currency.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/crypto-currency/crypto-currency.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CrytoCurrencyService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var CrytoCurrencyService = (function () {
-    function CrytoCurrencyService(http) {
-        this.http = http;
-        this.serverUrl = 'https://api.cryptonator.com/api/ticker/';
-    }
-    CrytoCurrencyService.prototype.getPrices = function (currency) {
-        if (currency === void 0) { currency = 'btc'; }
-        return this.http.get("" + this.serverUrl + currency + "-usd")
-            .map(this.extractData)
-            .catch(this.handleError);
-    };
-    CrytoCurrencyService.prototype.extractData = function (res) {
-        var body = res.json();
-        if (body.success === true) {
-            return body.ticker;
-        }
-        else {
-            throw body;
-        }
-    };
-    CrytoCurrencyService.prototype.handleError = function (error) {
-        // In a real world app, we might use a remote logging infrastructure
-        var errMsg;
-        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
-            var body = error.json() || '';
-            var err = body.error || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
-        }
-        else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(errMsg);
-    };
-    return CrytoCurrencyService;
-}());
-CrytoCurrencyService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
-], CrytoCurrencyService);
-
-var _a;
-//# sourceMappingURL=crypto-currency.service.js.map
-
-/***/ }),
-
 /***/ "../../../../../src/app/directives/equal-validator.directive.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -554,10 +391,253 @@ var EqualValidatorDirective_1;
 
 /***/ }),
 
+/***/ "../../../../../src/app/investments/crypto-currency/crypto-currency.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<md-card class=\"currency-card\">\n  <md-card-header>\n    <div md-card-avatar \n        class=\"header-image\"\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\n    </div>\n    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>\n    <md-card-subtitle>\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\n    </md-card-subtitle>\n  </md-card-header>\n  <md-card-content>\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \n    <br>\n\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\n\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\n      <br>\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\n    </div>\n  </md-card-content>\n</md-card>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/investments/crypto-currency/crypto-currency.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".currency-card {\n  text-align: center; }\n  .currency-card .header-image {\n    background-size: cover; }\n    .currency-card .header-image.header-image__xmr {\n      background-image: url(\"/assets/images/xmr.png\"); }\n    .currency-card .header-image.header-image__btc {\n      background-image: url(\"/assets/images/btc.png\"); }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/investments/crypto-currency/crypto-currency.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoCurrencyComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__ = __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/BehaviorSubject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CryptoCurrencyComponent = (function () {
+    function CryptoCurrencyComponent(crytoCurrencyService) {
+        this.crytoCurrencyService = crytoCurrencyService;
+        this.usdFromCryptoCurrency = 0;
+        this.usdFromCryptoCurrencyWhenBought = 0;
+        this.cryptoCurrencyCurrentPrice = 0;
+        this.totalReturns = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.cryptoCurrency$ = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["BehaviorSubject"](null);
+    }
+    CryptoCurrencyComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.usdFromCryptoCurrencyWhenBought = this.cryptoCurrencyBuyPrice * this.cryptoCurrencyCount;
+        this.crytoCurrencyService.getPrices(this.cryptoCurrency).subscribe(function (pricesData) {
+            _this.cryptoCurrency$.next(pricesData);
+            _this.cryptoCurrencyCurrentPrice = pricesData.price;
+            _this.usdFromCryptoCurrency = pricesData.price * _this.cryptoCurrencyCount;
+            _this.totalReturns.emit({
+                usdFromCryptoCurrencyWhenBought: _this.usdFromCryptoCurrencyWhenBought,
+                usdFromCryptoCurrency: _this.usdFromCryptoCurrency
+            });
+        }, function (error) { return console.error(methodTrace + " There was an error trying to load Monero prices > " + error); });
+    };
+    return CryptoCurrencyComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CryptoCurrencyComponent.prototype, "cryptoCurrency", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", Number)
+], CryptoCurrencyComponent.prototype, "cryptoCurrencyCount", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", Number)
+], CryptoCurrencyComponent.prototype, "cryptoCurrencyBuyPrice", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", Object)
+], CryptoCurrencyComponent.prototype, "cryptoCurrencyBuyDate", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["T" /* Output */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
+], CryptoCurrencyComponent.prototype, "totalReturns", void 0);
+CryptoCurrencyComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'crypto-currency',
+        template: __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */]) === "function" && _b || Object])
+], CryptoCurrencyComponent);
+
+var _a, _b;
+//# sourceMappingURL=crypto-currency.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/investments/crypto-currency/crypto-currency.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CrytoCurrencyService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CrytoCurrencyService = (function () {
+    function CrytoCurrencyService(http) {
+        this.http = http;
+        this.serverUrl = 'https://api.cryptonator.com/api/ticker/';
+    }
+    CrytoCurrencyService.prototype.getPrices = function (currency) {
+        if (currency === void 0) { currency = 'btc'; }
+        return this.http.get("" + this.serverUrl + currency + "-usd")
+            .map(this.extractData)
+            .catch(this.handleError);
+    };
+    CrytoCurrencyService.prototype.extractData = function (res) {
+        var body = res.json();
+        if (body.success === true) {
+            return body.ticker;
+        }
+        else {
+            throw body;
+        }
+    };
+    CrytoCurrencyService.prototype.handleError = function (error) {
+        // In a real world app, we might use a remote logging infrastructure
+        var errMsg;
+        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
+            var body = error.json() || '';
+            var err = body.error || JSON.stringify(body);
+            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+        }
+        else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(errMsg);
+    };
+    return CrytoCurrencyService;
+}());
+CrytoCurrencyService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
+], CrytoCurrencyService);
+
+var _a;
+//# sourceMappingURL=crypto-currency.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\">\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\n    <crypto-currency fxFlex \n      [cryptoCurrency]=\"'xmr'\"\n      [cryptoCurrencyCount]=\"218.85627651\"\n      [cryptoCurrencyBuyPrice]=\"50\"\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\n      (totalReturns)=\"setTotals($event)\">\n    </crypto-currency>\n\n    <crypto-currency fxFlex\n      [cryptoCurrency]=\"'btc'\"\n      [cryptoCurrencyCount]=\"1.28129356\"\n      [cryptoCurrencyBuyPrice]=\"2359.99\"\n      [cryptoCurrencyBuyDate]=\"btcBuyDate\"\n      (totalReturns)=\"setTotals($event)\">\n    </crypto-currency>\n  </div>\n\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\n    <crypto-currency fxFlex \n      [cryptoCurrency]=\"'xmr'\"\n      [cryptoCurrencyCount]=\"5.94093753\"\n      [cryptoCurrencyBuyPrice]=\"87.5282\"\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\n      (totalReturns)=\"setTotals($event)\">\n    </crypto-currency>\n\n    <crypto-currency fxFlex \n      [cryptoCurrency]=\"'xmr'\"\n      [cryptoCurrencyCount]=\"5.72806551\"\n      [cryptoCurrencyBuyPrice]=\"90.9556\"\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\n      (totalReturns)=\"setTotals($event)\">\n    </crypto-currency>\n  </div>\n\n  <md-card fxFlex class=\"totals-card\">\n    <md-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\n        fxLayoutAlign=\"space-around center\">\n      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\n      <p [class.color__green]=\"totalReturn >= totalInvestment\" \n          [class.color__red]=\"totalReturn < totalInvestment\">\n        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\n      </p>\n    </md-card-content>\n  </md-card>\n  \n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".totals-card {\n  text-align: center; }\n  .totals-card md-card-content p {\n    margin-bottom: 0; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsDashboardComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var InvestmentsDashboardComponent = (function () {
+    function InvestmentsDashboardComponent() {
+        this.xmrBuyDate = new Date(2017, 5, 23); //month minus 1, 5 = june
+        this.xmrBuyDate2 = new Date(2017, 8, 23);
+        this.xmrBuyDate3 = new Date(2017, 8, 25);
+        this.btcBuyDate = new Date(2017, 6, 19);
+        this.totalInvestment = 0;
+        this.totalReturn = 0;
+    }
+    InvestmentsDashboardComponent.prototype.ngOnInit = function () {
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+    };
+    InvestmentsDashboardComponent.prototype.setTotals = function (totalReturns) {
+        this.totalReturn += totalReturns.usdFromCryptoCurrency;
+        this.totalInvestment += totalReturns.usdFromCryptoCurrencyWhenBought;
+    };
+    return InvestmentsDashboardComponent;
+}());
+InvestmentsDashboardComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'investments-dashboard',
+        template: __webpack_require__("../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], InvestmentsDashboardComponent);
+
+//# sourceMappingURL=investments-dashboard.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/investments/investments.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <app-crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"218.85627651\"\r\n      [cryptoCurrencyBuyPrice]=\"50\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </app-crypto-currency>\r\n\r\n    <app-crypto-currency fxFlex\r\n      [cryptoCurrency]=\"'btc'\"\r\n      [cryptoCurrencyCount]=\"1.28129356\"\r\n      [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n      [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </app-crypto-currency>\r\n  </div>\r\n\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <app-crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.94093753\"\r\n      [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </app-crypto-currency>\r\n\r\n    <app-crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.72806551\"\r\n      [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </app-crypto-currency>\r\n  </div>\r\n\r\n  <md-card fxFlex class=\"totals-card\">\r\n    <md-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n      <p [class.color__green]=\"totalReturn >= totalInvestment\" \r\n          [class.color__red]=\"totalReturn < totalInvestment\">\r\n        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n      </p>\r\n    </md-card-content>\r\n  </md-card>\r\n  \r\n</div>\r\n"
+module.exports = "<investments-dashboard></investments-dashboard>"
 
 /***/ }),
 
@@ -569,7 +649,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".totals-card {\n  text-align: center; }\n  .totals-card md-card-content p {\n    margin-bottom: 0; }\n", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -597,25 +677,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var InvestmentsComponent = (function () {
     function InvestmentsComponent() {
-        this.xmrBuyDate = new Date(2017, 5, 23); //month minus 1, 5 = june
-        this.xmrBuyDate2 = new Date(2017, 8, 23);
-        this.xmrBuyDate3 = new Date(2017, 8, 25);
-        this.btcBuyDate = new Date(2017, 6, 19);
-        this.totalInvestment = 0;
-        this.totalReturn = 0;
     }
     InvestmentsComponent.prototype.ngOnInit = function () {
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
-    };
-    InvestmentsComponent.prototype.setTotals = function (totalReturns) {
-        this.totalReturn += totalReturns.usdFromCryptoCurrency;
-        this.totalInvestment += totalReturns.usdFromCryptoCurrencyWhenBought;
     };
     return InvestmentsComponent;
 }());
 InvestmentsComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-investments',
+        selector: 'investments',
         template: __webpack_require__("../../../../../src/app/investments/investments.component.html"),
         styles: [__webpack_require__("../../../../../src/app/investments/investments.component.scss")]
     }),

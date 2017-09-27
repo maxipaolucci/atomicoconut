@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AppComponent} from "./app.component";
 import {InvestmentsComponent} from './investments/investments.component';
+import {InvestmentsDashboardComponent} from './investments/investments-dashboard/investments-dashboard.component';
 
 const appRoutes : Routes = [
   {
@@ -14,7 +15,10 @@ const appRoutes : Routes = [
   },
   {
     path : 'investments',
-    component : InvestmentsComponent
+    component : InvestmentsComponent,
+    children : [
+      { path : '', component : InvestmentsDashboardComponent }
+    ]
   }
   // {
   //   path : 'page-not-found',

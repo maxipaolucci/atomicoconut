@@ -10,9 +10,10 @@ import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { CustomMaterialDesignModule } from './modules/custom-material-design/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
-import { CryptoCurrencyComponent } from './crypto-currency/crypto-currency.component'
-import { CrytoCurrencyService } from './crypto-currency/crypto-currency.service';
+import { CryptoCurrencyComponent } from './investments/crypto-currency/crypto-currency.component'
+import { CrytoCurrencyService } from './investments/crypto-currency/crypto-currency.service';
 import { InvestmentsComponent } from './investments/investments.component';
+import { InvestmentsDashboardComponent } from './investments/investments-dashboard/investments-dashboard.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { InvestmentsComponent } from './investments/investments.component';
   declarations: [
     AppComponent,
     CryptoCurrencyComponent,
-    InvestmentsComponent
+    InvestmentsComponent,
+    InvestmentsDashboardComponent
   ],
   providers: [AppService, CrytoCurrencyService],
   bootstrap: [AppComponent]

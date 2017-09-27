@@ -1,0 +1,15 @@
+.currency-card {
+  text-align: center;
+
+  .header-image {
+    background-size: cover;
+
+    &.header-image__xmr {
+      background-image: url('/assets/images/xmr.png'); 
+    }
+
+    &.header-image__btc {
+      background-image: url('/assets/images/btc.png'); 
+    }
+  }
+}
