@@ -40,6 +40,6 @@ exports.send = async (options) => {
     text
   }
 
-  const sendMail = promisify(transportGmail.sendMail, transportGmail);
+  const sendMail = promisify(transportMailTrap.sendMail, transportMailTrap);
   return sendMail(mailOptions);
 };

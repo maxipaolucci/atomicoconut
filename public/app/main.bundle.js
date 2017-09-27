@@ -743,7 +743,7 @@ var LoginComponent = (function () {
             _this.showResults("You have been emailed a password reset link.");
         }, function (error) {
             console.error(methodTrace + " There was an error with the forgot password service: ", error);
-            if (error.codeno === 452) {
+            if (error.codeno === 455) {
                 //invalid email
                 _this.showResults(error.msg, 3000);
             }

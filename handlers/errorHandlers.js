@@ -2,10 +2,15 @@ const errorTrace = 'errorHandlers >';
 
 const errorCodes = {
   400 : 'Error catched by errorHandlers().',
-  450: 'There was an arror trying to authenticate the user.',
+  450 : 'There was an arror trying to authenticate the user.',
   451 : 'No user found with the provided credentials',
   452 : 'There was an error trying to login with the recently authenticated user.',
-  453 : 'User not authenticated to proceed.'
+  453 : 'User not authenticated to proceed.',
+  454 : 'this {{param}} is a {{param}} test.',
+  455 : 'None user found with email: {{param}}.',
+  456 : 'Passwords do not match!',
+  457 : 'User not found with that token, it may be invalid or already expired.',
+  458 : 'The register form contains some errors: {{param}}'
 };
 
 const messageCodes = {
@@ -13,13 +18,51 @@ const messageCodes = {
   1001 : 'Trying to authenticate with passport...',
   1002 : 'Authentication successfull. Now trying to login...',
   1003 : 'Checking for authenticated user...',
-  1004 : 'User is authenticated!' 
+  1004 : 'User is authenticated!',
+  1005 : 'Logged out user {{param}}.',
+  1006 : 'Checking user with email {{param}}...',
+  1007 : 'User {{param}} found, saving token in user Schema...',
+  1008 : 'Token saved for {{param}}, sending email to user with reset password url...',
+  1009 : 'You have been emailed a password reset link',
+  1010 : 'Mail successfully sent to {{param}}.',
+  1011 : 'Checking for User with token {{param}} not expired...',
+  1012 : 'User found, saving new password...',
+  1013 : 'Nice! Password has been reset! You are now logged in.',
+  1014 : 'User with token provided found.',
+  1015 : 'Validating register form fields...',
+  1016 : 'Register form fields are OK.',
+  1017 : 'Trying to register {{param}}...',
+  1018 : 'User {{param}} successfully registered.',
+  1019 : 'Searching user {{param}} for update...',
+  1020 : 'User profile successfully updated.'
 };
 
-exports.errorCodes = errorCodes;
-exports.messageCodes = messageCodes;
+/**
+ * Return messages configured with provided params if set
+ * @param {*} codeno . The number of message to get back
+ * @param {*} params . The params to configure the message
+ */
+const getMessage = (type = 'error', codeno = -1, ...params) => {
+  if (codeno === -1) {
+    return '';
+  }
+  
+  let message = type === 'error' ? errorCodes[codeno] : messageCodes[codeno];
 
+  if (!message) {
+    return '';
+  }
 
+  if (params.length) {
+    for (const param of params) {
+      message = message.replace("{{param}}", param);
+    }
+  }
+  
+  return message;
+};
+
+exports.getMessage = getMessage;
 
 /*
   Catch Errors Handler
@@ -80,7 +123,7 @@ exports.developmentErrors = (err, req, res, next) => {
   console.log(`${methodTrace} Something went wrong.`);
   err.stack = err.stack || '';
   const errorDetails = {
-    msg: `${errorCodes[400]} ${err.message || err.msg}`,
+    msg: `${getMessage('error', 400)} ${err.message || err.msg}`,
     status: 'error',
     codeno: 400,
     data: null

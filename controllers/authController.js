@@ -4,17 +4,17 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
-const { errorCodes, messageCodes } = require('../handlers/errorHandlers');
+const { getMessage } = require('../handlers/errorHandlers');
 
 const errorTrace = 'authController >';
 
 exports.login = (req, res, next) => {
     const methodTrace = `${errorTrace} login() > `;
 
-    console.log(`${methodTrace}${messageCodes[1001]}`);
+    console.log(`${methodTrace}${getMessage('message', 1001)}`);
     passport.authenticate('local', function(err, user, info) {
         if (err) {
-            console.log(`${methodTrace}${errorCodes[451]}`);
+            console.log(`${methodTrace}${getMessage('error', 450)}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 450,
@@ -24,34 +24,34 @@ exports.login = (req, res, next) => {
             return; //stop from running 
         }
         if (!user) {
-            console.log(`${methodTrace}${errorCodes[451]}`);
+            console.log(`${methodTrace}${getMessage('error', 451)}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 451,
-                msg : errorCodes[451],
+                msg : getMessage('error', 451),
                 data : null
             });
             return; //stop from running 
         }
 
-        console.log(`${methodTrace}${messageCodes[1002]}`);
+        console.log(`${methodTrace}${getMessage('message', 1002)}`);
         req.logIn(user, function(err) {
             if (err) {
-                console.log(`${methodTrace}${errorCodes[452]}`);
+                console.log(`${methodTrace}${getMessage('error', 452)}`);
                 res.status(401).json({ 
                     status : "error", 
                     codeno : 452,
-                    msg : errorCodes[452],
+                    msg : getMessage('error', 452),
                     data : null
                 });
                 return; //stop from running 
             }
             
-            console.log(`${methodTrace}${messageCodes[1000]}`);
+            console.log(`${methodTrace}${getMessage('message', 1000)}`);
             res.json({
                 status : 'success', 
                 codeno : 200,
-                msg : messageCodes[1000],
+                msg : getMessage('message', 1000),
                 data : { name : user.name, email : user.email, avatar : user.gravatar }
             });
         });
@@ -62,7 +62,7 @@ exports.login = (req, res, next) => {
 
 exports.logout = (req, res) => {
     const methodTrace = `${errorTrace} logout() >`;
-    console.log(`${methodTrace} Logged out user: ${req.user ? req.user.name : 'null'}.`);
+    console.log(`${methodTrace} ${getMessage('message', 1005, req.user ? req.user.name : 'null')}`);
     
     req.logout(); //this was added in passport
     res.json({
@@ -76,18 +76,18 @@ exports.logout = (req, res) => {
 exports.isLogggedIn = (req, res, next) => {
     const methodTrace = `${errorTrace} isLogggedIn() >`;
 
-    console.log(`${methodTrace}${messageCodes[1003]}`);
+    console.log(`${methodTrace}${getMessage('message', 1003)}`);
     if (req.isAuthenticated()) { //check in passport for authentication
-        console.log(`${methodTrace} ${messageCodes[1004]}`);
+        console.log(`${methodTrace} ${getMessage('message', 1004)}`);
         next();
         return;
     }
 
-    console.log(`${methodTrace} ${errorCodes[453]}`);
+    console.log(`${methodTrace} ${getMessage('error', 453)}`);
     res.status(401).json({ 
         status : "error", 
-        codeno : 400,
-        msg : errorCodes[453],
+        codeno : 453,
+        msg : getMessage('error', 453),
         data : null
     });
 };
@@ -96,21 +96,21 @@ exports.getUser = (req, res, next) => {
     const methodTrace = `${errorTrace} getUser() >`;
 
     if (req.isAuthenticated()) { //check in passport for authentication
-        console.log(`${methodTrace} ${messageCodes[1004]}`);
+        console.log(`${methodTrace} ${getMessage('message', 1004)}`);
         res.json({
             status : 'success',
             codeno : 200,
-            msg : messageCodes[1004],
+            msg : getMessage('message', 1004),
             data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar }
         });
         return;
     }
 
-    console.log(`${methodTrace} ${errorCodes[453]}`);
+    console.log(`${methodTrace} ${getMessage('error', 453)}`);
     res.json({ 
         status : "success", 
         codeno : 200,
-        msg : errorCodes[453],
+        msg : getMessage('error', 453),
         data : null
     });
 };
@@ -119,27 +119,27 @@ exports.forgot = async (req, res) => {
     const methodTrace = `${errorTrace} forgot() >`;
 
     const email = req.body.email;
-    console.log(`${methodTrace} Checking user with email: ${email}...`);
-    //1 see user with that exitst
+    console.log(`${methodTrace} ${getMessage('message', 1006, email)}`);
+    //1 see user with that email exists
     const user = await User.findOne({ email });
     if (!user) {
-        console.log(`${methodTrace} No user found with email: ${email}.`);
+        console.log(`${methodTrace} ${getMessage('error', 455, email)}`);
         res.status(401).json({ 
             status : "error", 
-            codeno : 452,
-            msg : 'No account with that email exists.',
+            codeno : 455,
+            msg : getMessage('error', 455, email),
             data : null
         });
         return;
     }
 
     //2 set reset tokens and expiry on their account
-    console.log(`${methodTrace} User ${email} found, saving token in user Schema...`);
+    console.log(`${methodTrace} ${getMessage('message', 1007, email)}`);
     user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
     user.resetPasswordExpires = Date.now() + 3600000; //1 hour from now
     await user.save();
     //3 send them email with the token
-    console.log(`${methodTrace} Token saved for ${email}, sending email to user with reset password url...`);
+    console.log(`${methodTrace} ${getMessage('message', 1008, email)}`);
     const resetURL = `http://${req.headers.host}/app/account/reset/${user.resetPasswordToken}`;
     await mail.send({
         user,
@@ -151,11 +151,11 @@ exports.forgot = async (req, res) => {
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : 'You have been emailed a password reset link',
+        msg : getMessage('message', 1009),
         data : { email : user.email, expires : '1 hour' }
     });
 
-    console.log(`${methodTrace} Mail successfully sent to ${email}.`);
+    console.log(`${methodTrace} ${getMessage('message', 1010, email)}`);
 };
 
 exports.confirmedPasswords = (req, res, next) => {
@@ -166,8 +166,8 @@ exports.confirmedPasswords = (req, res, next) => {
 
     res.status(401).json({
         status : "error", 
-        codeno : 400,
-        msg : 'Passwords do not match!',
+        codeno : 456,
+        msg : getMessage('error', 456),
         data : null
     });
 };
@@ -175,7 +175,7 @@ exports.confirmedPasswords = (req, res, next) => {
 exports.update = async (req, res) => {
     const methodTrace = `${errorTrace} update() >`;
     
-    console.log(`${methodTrace} Checking for User with token ${req.params.token} not expired...`);
+    console.log(`${methodTrace} ${getMessage('message', 1011, req.params.token)}`);
     const user = await User.findOne({
         $and : [
             { resetPasswordToken : req.params.token },
@@ -184,16 +184,16 @@ exports.update = async (req, res) => {
     });
 
     if (!user) {
-        console.log(`${methodTrace} User not found.`);
+        console.log(`${methodTrace} ${getMessage('error', 457)}`);
         res.status(401).json({
             status : "error", 
-            codeno : 400,
-            msg : 'Password reset token is invalid or has expired.',
+            codeno : 457,
+            msg : getMessage('error', 457),
             data : null
         });
         return;
     }
-    console.log(`${methodTrace} User found, saving new password...`);
+    console.log(`${methodTrace} ${getMessage('message', 1012)}`);
     const setPassword = promisify(user.setPassword, user); //this User.setPassword function was added to model by passportLocalMongoose plugin in the user schema. 
                                                             // User.setPassword is a callback based method as register in userController so with promisify we convert it into a promise based method.
     await setPassword(req.body.password); // set the new password to the user in MongoDB
@@ -202,11 +202,11 @@ exports.update = async (req, res) => {
     const updatedUser = await user.save(); //here is when we save in the database the deleted values before 
     await req.login(updatedUser); //this comes from passport js
     
-    console.log(`${methodTrace} Password successfully updated!!!`);
+    console.log(`${methodTrace} ${getMessage('message', 1013)}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : 'Nice! Your password has been reset! You are now logged in!',
+        msg : getMessage('message', 1013),
         data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar }
     });
 };
@@ -214,7 +214,7 @@ exports.update = async (req, res) => {
 exports.reset = async (req, res) => {
     const methodTrace = `${errorTrace} reset() >`;
     
-    console.log(`${methodTrace} Checking for User with token ${req.params.token} not expired...`);
+    console.log(`${methodTrace} ${getMessage('message', 1011, req.params.token)}`);
     const user = await User.findOne({
         $and : [
             { resetPasswordToken : req.params.token },
@@ -223,10 +223,10 @@ exports.reset = async (req, res) => {
     });
     
     if (!user) {
-        console.log(`${methodTrace} User not found.`);
+        console.log(`${methodTrace} ${getMessage('error', 457)}`);
         return res.redirect('/app/account/reset/expired');
     }
 
-    console.log(`${methodTrace} User with token provided found.`);
+    console.log(`${methodTrace} ${getMessage('message', 1014)}`);
     res.render('home', {title: 'Reset password'});
 };
