@@ -28,7 +28,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <md-toolbar class=\"toolbar\" color=\"primary\">\r\n    <span>AtomiCoconut</span>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!usersService.getUser()\" fxLayoutAlign=\" center\">\r\n      <md-icon routerLink=\"/login\" class=\"toolbar__icon\">account_circle</md-icon>\r\n    </span>\r\n    <span *ngIf=\"usersService.getUser()\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"usersService.getUser().avatar !== defaultGravatarUrl\" [mdMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" [src]=\"usersService.getUser().avatar\" />\r\n      <md-icon *ngIf=\"usersService.getUser().avatar === defaultGravatarUrl\"\r\n          class=\"toolbar__icon user__icon--logged-in\" [mdMenuTriggerFor]=\"userMenu\">account_circle</md-icon>\r\n      \r\n      <md-menu class=\"user__menu--logged-in\" #userMenu=\"mdMenu\" [overlapTrigger]=\"false\">\r\n        <button md-menu-item>\r\n          <md-icon>settings</md-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button md-menu-item (click)=\"logout()\">\r\n          <md-icon>exit_to_app</md-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </md-menu>\r\n    </span>\r\n    \r\n  </md-toolbar>\r\n  <router-outlet></router-outlet>\r\n</div>"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <md-toolbar class=\"toolbar\" color=\"primary\">\r\n    <span>AtomiCoconut</span>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!usersService.user\" fxLayoutAlign=\" center\">\r\n      <md-icon routerLink=\"/login\" class=\"toolbar__icon\">account_circle</md-icon>\r\n    </span>\r\n    <span *ngIf=\"usersService.user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"usersService.user.avatar !== defaultGravatarUrl\" [mdMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" [src]=\"usersService.user.avatar\" />\r\n      <md-icon *ngIf=\"usersService.user.avatar === defaultGravatarUrl\"\r\n          class=\"toolbar__icon user__icon--logged-in\" [mdMenuTriggerFor]=\"userMenu\">account_circle</md-icon>\r\n      \r\n      <md-menu class=\"user__menu--logged-in\" #userMenu=\"mdMenu\" [overlapTrigger]=\"false\">\r\n        <button md-menu-item>\r\n          <md-icon>settings</md-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button md-menu-item (click)=\"logout()\">\r\n          <md-icon>exit_to_app</md-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </md-menu>\r\n    </span>\r\n    \r\n  </md-toolbar>\r\n  <router-outlet></router-outlet>\r\n</div>"
 
 /***/ }),
 
@@ -59,6 +59,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__configuration__ = __webpack_require__("../../../../../configuration.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -72,32 +73,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AppComponent = (function () {
-    function AppComponent(appService, usersService) {
+    function AppComponent(router, appService, usersService) {
+        this.router = router;
         this.appService = appService;
         this.usersService = usersService;
         this.title = 'app';
         this.defaultGravatarUrl = __WEBPACK_IMPORTED_MODULE_3__configuration__["a" /* configuration */].defaultGravatarUrl;
     }
     AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging  
-        this.usersService.getAuthenticatedUser().subscribe(function (data) {
-            if (data && data.email) {
-                _this.usersService.setUser(data);
-            }
-            else {
-                _this.usersService.setUser();
-                console.info(methodTrace + " User not logged in.");
-            }
-        }, function (error) { return console.error(methodTrace + " There was an error with the register service > " + error); });
     };
     AppComponent.prototype.logout = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > logout() > "; //for debugging  
         this.usersService.logout().subscribe(function (data) {
-            _this.usersService.setUser();
-        }, function (error) { return console.error(methodTrace + " There was an error with the register service > " + error); });
+            _this.usersService.user = null;
+            console.log(123);
+            _this.router.navigate(['/']);
+        }, function (error) {
+            console.error(methodTrace + " There was an error with the logout service > " + error);
+        });
     };
     return AppComponent;
 }());
@@ -107,10 +104,10 @@ AppComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _c || Object])
 ], AppComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -130,18 +127,20 @@ var _a, _b;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_routing_module__ = __webpack_require__("../../../../../src/app/app.routing.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__investments_crypto_currency_crypto_currency_component__ = __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__investments_crypto_currency_crypto_currency_service__ = __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__investments_investments_component__ = __webpack_require__("../../../../../src/app/investments/investments.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__investments_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__investments_crypto_currency_crypto_currency_component__ = __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__investments_crypto_currency_crypto_currency_service__ = __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__investments_investments_component__ = __webpack_require__("../../../../../src/app/investments/investments.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__investments_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -170,16 +169,16 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_6__app_routing_module__["a" /* AppRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_http__["c" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["a" /* FlexLayoutModule */],
-            __WEBPACK_IMPORTED_MODULE_9__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
-            __WEBPACK_IMPORTED_MODULE_10__modules_users_users_module__["a" /* UsersModule */]
+            __WEBPACK_IMPORTED_MODULE_10__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_11__modules_users_users_module__["a" /* UsersModule */]
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__investments_crypto_currency_crypto_currency_component__["a" /* CryptoCurrencyComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__investments_investments_component__["a" /* InvestmentsComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__investments_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */]
+            __WEBPACK_IMPORTED_MODULE_12__investments_crypto_currency_crypto_currency_component__["a" /* CryptoCurrencyComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__investments_investments_component__["a" /* InvestmentsComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__investments_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_12__investments_crypto_currency_crypto_currency_service__["a" /* CrytoCurrencyService */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_13__investments_crypto_currency_crypto_currency_service__["a" /* CrytoCurrencyService */], __WEBPACK_IMPORTED_MODULE_9__auth_resolver_service__["a" /* AuthResolver */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -197,6 +196,7 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investments_investments_component__ = __webpack_require__("../../../../../src/app/investments/investments.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__investments_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -210,6 +210,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var appRoutes = [
     {
         path: '',
@@ -219,6 +220,9 @@ var appRoutes = [
     {
         path: 'investments',
         component: __WEBPACK_IMPORTED_MODULE_2__investments_investments_component__["a" /* InvestmentsComponent */],
+        resolve: {
+            authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+        },
         children: [
             { path: '', component: __WEBPACK_IMPORTED_MODULE_3__investments_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */] }
         ]
@@ -317,6 +321,67 @@ var _a;
 
 /***/ }),
 
+/***/ "../../../../../src/app/auth-resolver.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthResolver; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_user__ = __webpack_require__("../../../../../src/app/modules/users/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var AuthResolver = (function () {
+    function AuthResolver(usersService, router) {
+        this.usersService = usersService;
+        this.router = router;
+    }
+    AuthResolver.prototype.resolve = function (route, state) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > resolve() > "; //for debugging  
+        return this.usersService.getAuthenticatedUser().map(function (data) {
+            if (data && data.email) {
+                var user = new __WEBPACK_IMPORTED_MODULE_2__modules_users_user__["a" /* User */](data.name, data.email, data.avatar);
+                _this.usersService.user = user;
+                return user;
+            }
+            else {
+                console.info(methodTrace + " User not logged in.");
+                _this.usersService.user = null;
+                _this.router.navigate(['/login']);
+                return null;
+            }
+        }, function (error) {
+            console.error(methodTrace + " There was an error with the getAuthenticatedUser service > " + error);
+            _this.usersService.user = null;
+            _this.router.navigate(['/login']);
+            return null;
+        });
+    };
+    return AuthResolver;
+}());
+AuthResolver = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object])
+], AuthResolver);
+
+var _a, _b;
+//# sourceMappingURL=auth-resolver.service.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/directives/equal-validator.directive.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -394,7 +459,7 @@ var EqualValidatorDirective_1;
 /***/ "../../../../../src/app/investments/crypto-currency/crypto-currency.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<md-card class=\"currency-card\">\n  <md-card-header>\n    <div md-card-avatar \n        class=\"header-image\"\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\n    </div>\n    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>\n    <md-card-subtitle>\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\n    </md-card-subtitle>\n  </md-card-header>\n  <md-card-content>\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \n    <br>\n\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\n\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\n      <br>\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\n    </div>\n  </md-card-content>\n</md-card>"
+module.exports = "<md-card class=\"currency-card\">\r\n  <md-card-header>\r\n    <div md-card-avatar \r\n        class=\"header-image\"\r\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\r\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\r\n    </div>\r\n    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>\r\n    <md-card-subtitle>\r\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\r\n    </md-card-subtitle>\r\n  </md-card-header>\r\n  <md-card-content>\r\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\r\n\r\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \r\n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n  </md-card-content>\r\n</md-card>"
 
 /***/ }),
 
@@ -565,7 +630,7 @@ var _a;
 /***/ "../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\">\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\n    <crypto-currency fxFlex \n      [cryptoCurrency]=\"'xmr'\"\n      [cryptoCurrencyCount]=\"218.85627651\"\n      [cryptoCurrencyBuyPrice]=\"50\"\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\n      (totalReturns)=\"setTotals($event)\">\n    </crypto-currency>\n\n    <crypto-currency fxFlex\n      [cryptoCurrency]=\"'btc'\"\n      [cryptoCurrencyCount]=\"1.28129356\"\n      [cryptoCurrencyBuyPrice]=\"2359.99\"\n      [cryptoCurrencyBuyDate]=\"btcBuyDate\"\n      (totalReturns)=\"setTotals($event)\">\n    </crypto-currency>\n  </div>\n\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\n    <crypto-currency fxFlex \n      [cryptoCurrency]=\"'xmr'\"\n      [cryptoCurrencyCount]=\"5.94093753\"\n      [cryptoCurrencyBuyPrice]=\"87.5282\"\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\n      (totalReturns)=\"setTotals($event)\">\n    </crypto-currency>\n\n    <crypto-currency fxFlex \n      [cryptoCurrency]=\"'xmr'\"\n      [cryptoCurrencyCount]=\"5.72806551\"\n      [cryptoCurrencyBuyPrice]=\"90.9556\"\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\n      (totalReturns)=\"setTotals($event)\">\n    </crypto-currency>\n  </div>\n\n  <md-card fxFlex class=\"totals-card\">\n    <md-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\n        fxLayoutAlign=\"space-around center\">\n      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\n      <p [class.color__green]=\"totalReturn >= totalInvestment\" \n          [class.color__red]=\"totalReturn < totalInvestment\">\n        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\n      </p>\n    </md-card-content>\n  </md-card>\n  \n</div>\n"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"218.85627651\"\r\n      [cryptoCurrencyBuyPrice]=\"50\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex\r\n      [cryptoCurrency]=\"'btc'\"\r\n      [cryptoCurrencyCount]=\"1.28129356\"\r\n      [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n      [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.94093753\"\r\n      [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.72806551\"\r\n      [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <md-card fxFlex class=\"totals-card\">\r\n    <md-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n      <p [class.color__green]=\"totalReturn >= totalInvestment\" \r\n          [class.color__red]=\"totalReturn < totalInvestment\">\r\n        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n      </p>\r\n    </md-card-content>\r\n  </md-card>\r\n  \r\n</div>\r\n"
 
 /***/ }),
 
@@ -763,6 +828,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__("../../../material/@angular/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__user__ = __webpack_require__("../../../../../src/app/modules/users/user.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -776,6 +842,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LoginComponent = (function () {
     function LoginComponent(usersService, router, snackBar) {
         this.usersService = usersService;
@@ -785,14 +852,18 @@ var LoginComponent = (function () {
         this.forgotModel = { email: '', forgot: false };
     }
     LoginComponent.prototype.ngOnInit = function () { };
+    /**
+     * When user submits the login form
+     */
     LoginComponent.prototype.onSubmit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
-        this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
+        this.usersService.user = null; //reset authenticated user. Register automatically authenticates the registered user.
         //call the register service
         this.usersService.login(this.model).subscribe(function (data) {
             if (data && data.email) {
-                _this.usersService.setUser(data);
+                var user = new __WEBPACK_IMPORTED_MODULE_4__user__["a" /* User */](data.name, data.email);
+                _this.usersService.user = user;
                 _this.router.navigate(['/']); //go home
             }
             else {
@@ -805,6 +876,9 @@ var LoginComponent = (function () {
             }
         });
     };
+    /**
+     * When user submits the forgot password form
+     */
     LoginComponent.prototype.onForgotSubmit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onForgotSubmit() > "; //for debugging
@@ -823,6 +897,12 @@ var LoginComponent = (function () {
             }
         });
     };
+    /**
+     * Shows messages in snackbar component
+     * @param message . The text to show
+     * @param duration . The duration in milliseconds . Optional
+     * @param actionName . An action name to close the message on click. Optional
+     */
     LoginComponent.prototype.showResults = function (message, duration, actionName) {
         if (duration === void 0) { duration = 5000; }
         if (actionName === void 0) { actionName = ''; }
@@ -885,6 +965,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__user__ = __webpack_require__("../../../../../src/app/modules/users/user.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -897,6 +978,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var RegisterComponent = (function () {
     function RegisterComponent(usersService, router) {
         this.usersService = usersService;
@@ -906,6 +988,9 @@ var RegisterComponent = (function () {
     RegisterComponent.prototype.ngOnInit = function () {
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
     };
+    /**
+     * When user submits the register form.
+     */
     RegisterComponent.prototype.onSubmit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
@@ -914,11 +999,12 @@ var RegisterComponent = (function () {
             console.error(methodTrace + " Confirm password must match password.");
             return false;
         }
-        this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
+        this.usersService.user = null; //reset authenticated user. Register automatically authenticates the registered user.
         //call the register service
         this.usersService.register(this.model).subscribe(function (data) {
             if (data && data.email) {
-                _this.usersService.setUser(data);
+                var user = new __WEBPACK_IMPORTED_MODULE_3__user__["a" /* User */](data.name, data.email);
+                _this.usersService.user = user;
                 _this.router.navigate(['/']); //go home
             }
             else {
@@ -1040,6 +1126,57 @@ ResetPasswordComponent = __decorate([
 
 var _a, _b, _c;
 //# sourceMappingURL=reset-password.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/user.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
+var User = (function () {
+    function User(name, email, avatar) {
+        if (name === void 0) { name = ''; }
+        if (email === void 0) { email = ''; }
+        if (avatar === void 0) { avatar = ''; }
+        this._name = name;
+        this._email = email;
+        this._avatar = avatar;
+    }
+    Object.defineProperty(User.prototype, "name", {
+        get: function () {
+            return this._name;
+        },
+        set: function (name) {
+            this._name = name;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(User.prototype, "email", {
+        get: function () {
+            return this._email;
+        },
+        set: function (email) {
+            this._email = email;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(User.prototype, "avatar", {
+        get: function () {
+            return this._avatar;
+        },
+        set: function (avatar) {
+            this._avatar = avatar;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return User;
+}());
+
+//# sourceMappingURL=user.js.map
 
 /***/ }),
 
@@ -1176,7 +1313,7 @@ var UsersService = (function () {
         this.appService = appService;
         this.serverHost = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].apiHost + '/api/users';
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
-        this.user = null;
+        this._user = null;
     }
     /**
      * Server call to Register a new user in the system
@@ -1201,6 +1338,7 @@ var UsersService = (function () {
      */
     UsersService.prototype.login = function (postData) {
         if (postData === void 0) { postData = {}; }
+        console.log('login service called');
         return this.http.post(this.serverHost + "/login", postData, { headers: this.headers })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
@@ -1237,17 +1375,20 @@ var UsersService = (function () {
     UsersService.prototype.isLoggedIn = function () {
         return this.user && this.user.email ? true : false;
     };
-    /**
-     * Sets the local user variable with the user provided as param
-     * @param user (any). The user to set
-     */
-    UsersService.prototype.setUser = function (user) {
-        if (user === void 0) { user = null; }
-        this.user = user;
-    };
-    UsersService.prototype.getUser = function () {
-        return this.user;
-    };
+    Object.defineProperty(UsersService.prototype, "user", {
+        get: function () {
+            return this._user;
+        },
+        /**
+         * Sets the local user variable with the user provided as param
+         * @param user (User). The user to set
+         */
+        set: function (user) {
+            this._user = user;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return UsersService;
 }());
 UsersService = __decorate([

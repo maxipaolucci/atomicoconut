@@ -8,6 +8,7 @@ import 'hammerjs';
 import { AppRoutingModule } from "./app.routing.module";
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
+import { AuthResolver } from './auth-resolver.service';
 import { CustomMaterialDesignModule } from './modules/custom-material-design/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
 import { CryptoCurrencyComponent } from './investments/crypto-currency/crypto-currency.component'
@@ -31,7 +32,7 @@ import { InvestmentsDashboardComponent } from './investments/investments-dashboa
     InvestmentsComponent,
     InvestmentsDashboardComponent
   ],
-  providers: [AppService, CrytoCurrencyService],
+  providers: [AppService, CrytoCurrencyService, AuthResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

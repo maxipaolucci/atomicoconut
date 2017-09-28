@@ -4,15 +4,18 @@ import { Http, Response, Headers } from '@angular/http';
 import {Observable} from "rxjs/Rx";
 import {environment} from "../../../environments/environment";
 import {AppService} from "../../app.service";
+import {User} from "./user";
 
 @Injectable()
 export class UsersService {
 
   private serverHost : string = environment.apiHost + '/api/users';
   private headers = new Headers({'Content-Type': 'application/json'});
-  private user : any = null;
+  private _user : User;
 
-  constructor(private http : Http, private appService : AppService) {}
+  constructor(private http : Http, private appService : AppService) {
+    this._user = null;
+  }
 
   /**
    * Server call to Register a new user in the system 
@@ -37,6 +40,7 @@ export class UsersService {
    * Server call to login the provided user email and pass.
    */
   login(postData : any = {}) : Observable<any> {
+    console.log('login service called');
     return this.http.post(`${this.serverHost}/login`, postData, { headers : this.headers })
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
@@ -78,13 +82,13 @@ export class UsersService {
 
   /**
    * Sets the local user variable with the user provided as param
-   * @param user (any). The user to set
+   * @param user (User). The user to set
    */
-  setUser(user : any = null) {
-    this.user = user;
+  set user(user : User) {
+    this._user = user;
   }
 
-  getUser() : any {
-    return this.user;
+  get user() {
+    return this._user;
   }
 }

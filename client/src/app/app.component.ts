@@ -4,6 +4,8 @@ import { UsersService } from './modules/users/users.service';
 
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import { configuration } from "../../configuration";
+import {User} from './modules/users/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,22 +17,10 @@ export class AppComponent implements OnInit {
   title = 'app';
   defaultGravatarUrl = configuration.defaultGravatarUrl;
 
-  constructor(private appService: AppService, private usersService : UsersService) { }
+  constructor(private router : Router, private appService: AppService, private usersService : UsersService) { }
 
   ngOnInit(): void {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging  
-    
-    this.usersService.getAuthenticatedUser().subscribe(
-      (data : any) => {
-        if (data && data.email) {
-          this.usersService.setUser(data);
-        } else {
-          this.usersService.setUser();
-          console.info(`${methodTrace} User not logged in.`)
-        }
-      },
-      (error : any) =>  console.error(`${methodTrace} There was an error with the register service > ${error}`)
-    );
   }
 
   logout() : void {
@@ -38,9 +28,13 @@ export class AppComponent implements OnInit {
     
     this.usersService.logout().subscribe(
       (data : any) => {
-        this.usersService.setUser();
+        this.usersService.user = null;
+        console.log(123);
+        this.router.navigate(['/']);
       },
-      (error : any) =>  console.error(`${methodTrace} There was an error with the register service > ${error}`)
+      (error : any) =>  {
+        console.error(`${methodTrace} There was an error with the logout service > ${error}`);
+      }
     );
   }
 

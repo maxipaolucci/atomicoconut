@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {AppComponent} from "./app.component";
 import {InvestmentsComponent} from './investments/investments.component';
 import {InvestmentsDashboardComponent} from './investments/investments-dashboard/investments-dashboard.component';
+import {AuthResolver} from './auth-resolver.service';
 
 const appRoutes : Routes = [
   {
@@ -16,6 +17,9 @@ const appRoutes : Routes = [
   {
     path : 'investments',
     component : InvestmentsComponent,
+    resolve : {
+      authUser : AuthResolver
+    },
     children : [
       { path : '', component : InvestmentsDashboardComponent }
     ]
