@@ -224,7 +224,7 @@ exports.reset = async (req, res) => {
     
     if (!user) {
         console.log(`${methodTrace} ${getMessage('error', 457)}`);
-        return res.redirect('/app/account/reset/expired');
+        return res.redirect('/app/users/account/reset/expired');
     }
 
     console.log(`${methodTrace} ${getMessage('message', 1014)}`);
