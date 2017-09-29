@@ -31,6 +31,10 @@ router.get('/app/users/register', (req, res) => {
   res.render('home', {title: 'Register'});
 });
 
+router.get('/app/users/account', (req, res) => {
+  res.render('home', {title: 'Account'});
+});
+
 router.get('/app/users/account/reset/expired', (req, res) => {
   res.render('home', {title: 'Expired'});
 });

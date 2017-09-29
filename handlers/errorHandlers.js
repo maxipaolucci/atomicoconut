@@ -34,7 +34,7 @@ const messageCodes = {
   1017 : 'Trying to register {{param}}...',
   1018 : 'User {{param}} successfully registered.',
   1019 : 'Searching user {{param}} for update...',
-  1020 : 'User profile successfully updated.'
+  1020 : 'User {{param}} profile successfully updated.'
 };
 
 /**

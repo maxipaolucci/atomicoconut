@@ -12,6 +12,7 @@ import { UsersService } from './users.service';
 import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { EqualValidatorDirective } from '../../directives/equal-validator.directive';
+import { AccountComponent } from './components/account/account.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { EqualValidatorDirective } from '../../directives/equal-validator.direct
     RegisterComponent,
     LoginComponent,
     ResetPasswordComponent,
-    EqualValidatorDirective
+    EqualValidatorDirective,
+    AccountComponent
   ],
   providers: [UsersService]
 })

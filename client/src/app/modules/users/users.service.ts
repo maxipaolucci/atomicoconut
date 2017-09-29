@@ -28,6 +28,16 @@ export class UsersService {
   }
 
   /**
+   * Server call to Account to update account details 
+   * @param postData 
+   */
+  updateAccount(postData : any = {}) : Observable<any> {
+    return this.http.post(`${this.serverHost}/account`, postData, { headers : this.headers })
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
+  }
+
+  /**
    * Server call to retrieve the currently authenticated user, or null if nobody .
    */
   getAuthenticatedUser() : Observable<any> {
