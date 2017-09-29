@@ -6,7 +6,8 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 @Component({
   selector: 'crypto-currency',
   templateUrl: './crypto-currency.component.html',
-  styleUrls: ['./crypto-currency.component.scss']
+  styleUrls: ['./crypto-currency.component.scss'],
+  providers: [ CrytoCurrencyService ]
 })
 export class CryptoCurrencyComponent implements OnInit {
 

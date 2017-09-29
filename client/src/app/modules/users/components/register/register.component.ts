@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
     this.usersService.register(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
-          const user = new User(data.name, data.email)
+          const user = new User(data.name, data.email, data.avatar)
           this.usersService.user = user;
           this.router.navigate(['/']); //go home
         } else {

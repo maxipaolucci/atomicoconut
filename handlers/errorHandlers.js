@@ -94,6 +94,7 @@ exports.notFound = (req, res, next) => {
   err.status = 'error';
   err.codeno = 404;
   err.message = 'Page not found';
+  console.log(req);
   next(err);
 };
 

@@ -4,25 +4,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AppComponent} from "./app.component";
-import {InvestmentsComponent} from './investments/investments.component';
-import {InvestmentsDashboardComponent} from './investments/investments-dashboard/investments-dashboard.component';
 import {AuthResolver} from './auth-resolver.service';
-
+import { WelcomeComponent } from './components/welcome/welcome.component';
 const appRoutes : Routes = [
   {
     path : '',
-    redirectTo : 'investments',
+    redirectTo : 'welcome',
     pathMatch : 'full'
   },
   {
-    path : 'investments',
-    component : InvestmentsComponent,
-    resolve : {
-      authUser : AuthResolver
-    },
-    children : [
-      { path : '', component : InvestmentsDashboardComponent }
-    ]
+    path : 'welcome',
+    component : WelcomeComponent
   }
   // {
   //   path : 'page-not-found',

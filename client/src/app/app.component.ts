@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from './app.service';
 import { UsersService } from './modules/users/users.service';
 
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { configuration } from "../../configuration";
-import {User} from './modules/users/user';
+import { User } from './modules/users/user';
 import { Router } from '@angular/router';
 
 @Component({

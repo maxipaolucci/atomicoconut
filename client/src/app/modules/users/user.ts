@@ -2,7 +2,7 @@ export class User {
 
   private _name : string;
   private _email : string;
-  private _avatar : string;
+  private _avatar : string; 
 
 
   constructor(name : string = '', email : string = '', avatar : string = '') {
@@ -12,7 +12,7 @@ export class User {
   }
 
   get name() {
-    return this._name;
+    return this._name; 
   }
 
   set name(name) {
@@ -28,7 +28,7 @@ export class User {
   }
 
   get avatar() {
-    return this._avatar;
+    return this._avatar; 
   }
 
   set avatar(avatar) {

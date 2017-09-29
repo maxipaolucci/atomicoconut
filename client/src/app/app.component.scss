@@ -2,6 +2,10 @@
 .toolbar {
   margin-bottom: 10px;
   
+  .toolbar__brand-name {
+    text-decoration: none;
+  }
+
   .toolbar__icon {
     padding: 0 10px;
     cursor: pointer;

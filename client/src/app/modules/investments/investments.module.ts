@@ -1,0 +1,29 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { InvestmentsRoutingModule } from './investments-routing.module';
+import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { CustomMaterialDesignModule } from '../../modules/custom-material-design/custom-material-design.module';
+
+import { InvestmentsComponent } from './investments.component';
+import { InvestmentsDashboardComponent } from './components/investments-dashboard/investments-dashboard.component';
+import { CryptoCurrencyComponent } from './components/crypto-currency/crypto-currency.component';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    InvestmentsRoutingModule,
+    FormsModule,
+    FlexLayoutModule,
+    CustomMaterialDesignModule
+  ],
+  declarations: [
+    CryptoCurrencyComponent,
+    InvestmentsComponent,
+    InvestmentsDashboardComponent
+  ],
+  providers: []
+})
+export class InvestmentsModule {}

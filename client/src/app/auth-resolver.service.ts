@@ -20,14 +20,14 @@ export class AuthResolver implements Resolve<User> {
         } else {
           console.info(`${methodTrace} User not logged in.`);
           this.usersService.user = null;
-          this.router.navigate(['/login']);
+          this.router.navigate(['/users/login']);
           return null;
         }
       }, 
       (error : any) => {
         console.error(`${methodTrace} There was an error with the getAuthenticatedUser service > ${error}`);
         this.usersService.user = null;
-        this.router.navigate(['/login']);
+        this.router.navigate(['/users/login']);
         return null;
       }
     );

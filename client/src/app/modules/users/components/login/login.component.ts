@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     this.usersService.login(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
-          const user = new User(data.name, data.email);
+          const user = new User(data.name, data.email, data.avatar);
           this.usersService.user = user;
           this.router.navigate(['/']); //go home
         } else {

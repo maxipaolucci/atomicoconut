@@ -28,7 +28,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <md-toolbar class=\"toolbar\" color=\"primary\">\r\n    <span>AtomiCoconut</span>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!usersService.user\" fxLayoutAlign=\" center\">\r\n      <md-icon routerLink=\"/login\" class=\"toolbar__icon\">account_circle</md-icon>\r\n    </span>\r\n    <span *ngIf=\"usersService.user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"usersService.user.avatar !== defaultGravatarUrl\" [mdMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" [src]=\"usersService.user.avatar\" />\r\n      <md-icon *ngIf=\"usersService.user.avatar === defaultGravatarUrl\"\r\n          class=\"toolbar__icon user__icon--logged-in\" [mdMenuTriggerFor]=\"userMenu\">account_circle</md-icon>\r\n      \r\n      <md-menu class=\"user__menu--logged-in\" #userMenu=\"mdMenu\" [overlapTrigger]=\"false\">\r\n        <button md-menu-item>\r\n          <md-icon>settings</md-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button md-menu-item (click)=\"logout()\">\r\n          <md-icon>exit_to_app</md-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </md-menu>\r\n    </span>\r\n    \r\n  </md-toolbar>\r\n  <router-outlet></router-outlet>\r\n</div>"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <md-toolbar class=\"toolbar\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!usersService.user\" fxLayoutAlign=\" center\">\r\n      <md-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</md-icon>\r\n    </span>\r\n    <span *ngIf=\"usersService.user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"usersService.user.avatar\" \r\n          [mdMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"usersService.user.avatar\" \r\n      />\r\n      <md-icon *ngIf=\"!usersService.user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [mdMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </md-icon>\r\n      \r\n      <md-menu class=\"user__menu--logged-in\" #userMenu=\"mdMenu\" [overlapTrigger]=\"false\">\r\n        <button md-menu-item>\r\n          <md-icon>settings</md-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button md-menu-item (click)=\"logout()\">\r\n          <md-icon>exit_to_app</md-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </md-menu>\r\n    </span>\r\n    \r\n  </md-toolbar>\r\n  <router-outlet></router-outlet>\r\n</div>"
 
 /***/ }),
 
@@ -40,7 +40,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".toolbar {\n  margin-bottom: 10px; }\n  .toolbar .toolbar__icon {\n    padding: 0 10px;\n    cursor: pointer; }\n  .toolbar .example-spacer {\n    -ms-flex: 1 1 auto;\n        flex: 1 1 auto; }\n  .toolbar .user__avatar {\n    border-radius: 50%;\n    width: 30px;\n    padding: 0 10px; }\n  .toolbar .user__icon--logged-in {\n    color: #28FE7C; }\n", ""]);
+exports.push([module.i, ".toolbar {\n  margin-bottom: 10px; }\n  .toolbar .toolbar__brand-name {\n    text-decoration: none; }\n  .toolbar .toolbar__icon {\n    padding: 0 10px;\n    cursor: pointer; }\n  .toolbar .example-spacer {\n    -ms-flex: 1 1 auto;\n        flex: 1 1 auto; }\n  .toolbar .user__avatar {\n    border-radius: 50%;\n    width: 30px;\n    padding: 0 10px; }\n  .toolbar .user__icon--logged-in {\n    color: #28FE7C; }\n", ""]);
 
 // exports
 
@@ -130,18 +130,14 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__investments_crypto_currency_crypto_currency_component__ = __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__investments_crypto_currency_crypto_currency_service__ = __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__investments_investments_component__ = __webpack_require__("../../../../../src/app/investments/investments.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__investments_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__modules_investments_investments_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
 
 
 
@@ -170,15 +166,14 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__angular_http__["c" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["a" /* FlexLayoutModule */],
             __WEBPACK_IMPORTED_MODULE_10__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
-            __WEBPACK_IMPORTED_MODULE_11__modules_users_users_module__["a" /* UsersModule */]
+            __WEBPACK_IMPORTED_MODULE_11__modules_users_users_module__["a" /* UsersModule */],
+            __WEBPACK_IMPORTED_MODULE_12__modules_investments_investments_module__["a" /* InvestmentsModule */]
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__investments_crypto_currency_crypto_currency_component__["a" /* CryptoCurrencyComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__investments_investments_component__["a" /* InvestmentsComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__investments_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */]
+            __WEBPACK_IMPORTED_MODULE_13__components_welcome_welcome_component__["a" /* WelcomeComponent */]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_13__investments_crypto_currency_crypto_currency_service__["a" /* CrytoCurrencyService */], __WEBPACK_IMPORTED_MODULE_9__auth_resolver_service__["a" /* AuthResolver */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_9__auth_resolver_service__["a" /* AuthResolver */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -194,9 +189,7 @@ AppModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppRoutingModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investments_investments_component__ = __webpack_require__("../../../../../src/app/investments/investments.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__investments_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -209,23 +202,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-
-
 var appRoutes = [
     {
         path: '',
-        redirectTo: 'investments',
+        redirectTo: 'welcome',
         pathMatch: 'full'
     },
     {
-        path: 'investments',
-        component: __WEBPACK_IMPORTED_MODULE_2__investments_investments_component__["a" /* InvestmentsComponent */],
-        resolve: {
-            authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
-        },
-        children: [
-            { path: '', component: __WEBPACK_IMPORTED_MODULE_3__investments_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */] }
-        ]
+        path: 'welcome',
+        component: __WEBPACK_IMPORTED_MODULE_2__components_welcome_welcome_component__["a" /* WelcomeComponent */]
     }
     // {
     //   path : 'page-not-found',
@@ -360,13 +345,13 @@ var AuthResolver = (function () {
             else {
                 console.info(methodTrace + " User not logged in.");
                 _this.usersService.user = null;
-                _this.router.navigate(['/login']);
+                _this.router.navigate(['/users/login']);
                 return null;
             }
         }, function (error) {
             console.error(methodTrace + " There was an error with the getAuthenticatedUser service > " + error);
             _this.usersService.user = null;
-            _this.router.navigate(['/login']);
+            _this.router.navigate(['/users/login']);
             return null;
         });
     };
@@ -379,6 +364,67 @@ AuthResolver = __decorate([
 
 var _a, _b;
 //# sourceMappingURL=auth-resolver.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/welcome/welcome.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<a class=\"color__almost-white\" routerLink=\"/investments\">Go to investments</a>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/welcome/welcome.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/welcome/welcome.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WelcomeComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var WelcomeComponent = (function () {
+    function WelcomeComponent() {
+    }
+    WelcomeComponent.prototype.ngOnInit = function () {
+    };
+    return WelcomeComponent;
+}());
+WelcomeComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-welcome',
+        template: __webpack_require__("../../../../../src/app/components/welcome/welcome.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/welcome/welcome.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], WelcomeComponent);
+
+//# sourceMappingURL=welcome.component.js.map
 
 /***/ }),
 
@@ -456,14 +502,47 @@ var EqualValidatorDirective_1;
 
 /***/ }),
 
-/***/ "../../../../../src/app/investments/crypto-currency/crypto-currency.component.html":
+/***/ "../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomMaterialDesignModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/@angular/material.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var CustomMaterialDesignModule = (function () {
+    function CustomMaterialDesignModule() {
+    }
+    return CustomMaterialDesignModule;
+}());
+CustomMaterialDesignModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MaterialModule */]],
+        exports: [__WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MaterialModule */]]
+    })
+], CustomMaterialDesignModule);
+
+//# sourceMappingURL=custom-material-design.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<md-card class=\"currency-card\">\r\n  <md-card-header>\r\n    <div md-card-avatar \r\n        class=\"header-image\"\r\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\r\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\r\n    </div>\r\n    <md-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</md-card-title>\r\n    <md-card-subtitle>\r\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\r\n    </md-card-subtitle>\r\n  </md-card-header>\r\n  <md-card-content>\r\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\r\n\r\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \r\n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n  </md-card-content>\r\n</md-card>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/investments/crypto-currency/crypto-currency.component.scss":
+/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.scss":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -481,13 +560,13 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/investments/crypto-currency/crypto-currency.component.ts":
+/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoCurrencyComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__ = __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/BehaviorSubject.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -550,8 +629,9 @@ __decorate([
 CryptoCurrencyComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
         selector: 'crypto-currency',
-        template: __webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/investments/crypto-currency/crypto-currency.component.scss")]
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.scss")],
+        providers: [__WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */]]
     }),
     __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */]) === "function" && _b || Object])
 ], CryptoCurrencyComponent);
@@ -561,7 +641,7 @@ var _a, _b;
 
 /***/ }),
 
-/***/ "../../../../../src/app/investments/crypto-currency/crypto-currency.service.ts":
+/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -627,14 +707,14 @@ var _a;
 
 /***/ }),
 
-/***/ "../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.html":
+/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"218.85627651\"\r\n      [cryptoCurrencyBuyPrice]=\"50\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex\r\n      [cryptoCurrency]=\"'btc'\"\r\n      [cryptoCurrencyCount]=\"1.28129356\"\r\n      [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n      [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.94093753\"\r\n      [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.72806551\"\r\n      [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <md-card fxFlex class=\"totals-card\">\r\n    <md-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n      <p [class.color__green]=\"totalReturn >= totalInvestment\" \r\n          [class.color__red]=\"totalReturn < totalInvestment\">\r\n        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n      </p>\r\n    </md-card-content>\r\n  </md-card>\r\n  \r\n</div>\r\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.scss":
+/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -652,7 +732,7 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.ts":
+/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -689,8 +769,8 @@ var InvestmentsDashboardComponent = (function () {
 InvestmentsDashboardComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
         selector: 'investments-dashboard',
-        template: __webpack_require__("../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/investments/investments-dashboard/investments-dashboard.component.scss")]
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
     }),
     __metadata("design:paramtypes", [])
 ], InvestmentsDashboardComponent);
@@ -699,14 +779,64 @@ InvestmentsDashboardComponent = __decorate([
 
 /***/ }),
 
-/***/ "../../../../../src/app/investments/investments.component.html":
+/***/ "../../../../../src/app/modules/investments/investments-routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investments_component__ = __webpack_require__("../../../../../src/app/modules/investments/investments.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+//import { CrytoCurrencyService } from './investments/crypto-currency/crypto-currency.service';
+
+
+
+var routes = [
+    {
+        path: 'investments',
+        component: __WEBPACK_IMPORTED_MODULE_2__investments_component__["a" /* InvestmentsComponent */],
+        resolve: {
+            authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+        },
+        children: [
+            { path: '', component: __WEBPACK_IMPORTED_MODULE_3__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */] }
+        ]
+    }
+];
+var InvestmentsRoutingModule = (function () {
+    function InvestmentsRoutingModule() {
+    }
+    return InvestmentsRoutingModule;
+}());
+InvestmentsRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+    })
+], InvestmentsRoutingModule);
+
+//# sourceMappingURL=investments-routing.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/investments.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<investments-dashboard></investments-dashboard>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/investments/investments.component.scss":
+/***/ "../../../../../src/app/modules/investments/investments.component.scss":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -724,7 +854,7 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/investments/investments.component.ts":
+/***/ "../../../../../src/app/modules/investments/investments.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -751,8 +881,8 @@ var InvestmentsComponent = (function () {
 InvestmentsComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
         selector: 'investments',
-        template: __webpack_require__("../../../../../src/app/investments/investments.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/investments/investments.component.scss")]
+        template: __webpack_require__("../../../../../src/app/modules/investments/investments.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/investments.component.scss")]
     }),
     __metadata("design:paramtypes", [])
 ], InvestmentsComponent);
@@ -761,14 +891,20 @@ InvestmentsComponent = __decorate([
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts":
+/***/ "../../../../../src/app/modules/investments/investments.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomMaterialDesignModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/@angular/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investments_routing_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments-routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__investments_component__ = __webpack_require__("../../../../../src/app/modules/investments/investments.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_crypto_currency_crypto_currency_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -778,19 +914,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var CustomMaterialDesignModule = (function () {
-    function CustomMaterialDesignModule() {
-    }
-    return CustomMaterialDesignModule;
-}());
-CustomMaterialDesignModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
-        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MaterialModule */]],
-        exports: [__WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MaterialModule */]]
-    })
-], CustomMaterialDesignModule);
 
-//# sourceMappingURL=custom-material-design.module.js.map
+
+
+
+
+
+var InvestmentsModule = (function () {
+    function InvestmentsModule() {
+    }
+    return InvestmentsModule;
+}());
+InvestmentsModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__investments_routing_module__["a" /* InvestmentsRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["a" /* FlexLayoutModule */],
+            __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_8__components_crypto_currency_crypto_currency_component__["a" /* CryptoCurrencyComponent */],
+            __WEBPACK_IMPORTED_MODULE_6__investments_component__["a" /* InvestmentsComponent */],
+            __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */]
+        ],
+        providers: []
+    })
+], InvestmentsModule);
+
+//# sourceMappingURL=investments.module.js.map
 
 /***/ }),
 
@@ -862,7 +1015,7 @@ var LoginComponent = (function () {
         //call the register service
         this.usersService.login(this.model).subscribe(function (data) {
             if (data && data.email) {
-                var user = new __WEBPACK_IMPORTED_MODULE_4__user__["a" /* User */](data.name, data.email);
+                var user = new __WEBPACK_IMPORTED_MODULE_4__user__["a" /* User */](data.name, data.email, data.avatar);
                 _this.usersService.user = user;
                 _this.router.navigate(['/']); //go home
             }
@@ -1003,7 +1156,7 @@ var RegisterComponent = (function () {
         //call the register service
         this.usersService.register(this.model).subscribe(function (data) {
             if (data && data.email) {
-                var user = new __WEBPACK_IMPORTED_MODULE_3__user__["a" /* User */](data.name, data.email);
+                var user = new __WEBPACK_IMPORTED_MODULE_3__user__["a" /* User */](data.name, data.email, data.avatar);
                 _this.usersService.user = user;
                 _this.router.navigate(['/']); //go home
             }
@@ -1203,10 +1356,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 var routes = [
-    { path: 'register', component: __WEBPACK_IMPORTED_MODULE_2__components_register_register_component__["a" /* RegisterComponent */] },
-    { path: 'login', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
-    { path: 'account/reset/expired', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
-    { path: 'account/reset/:token', component: __WEBPACK_IMPORTED_MODULE_4__components_reset_password_reset_password_component__["a" /* ResetPasswordComponent */] }
+    {
+        path: 'users',
+        children: [
+            { path: 'register', component: __WEBPACK_IMPORTED_MODULE_2__components_register_register_component__["a" /* RegisterComponent */] },
+            { path: 'login', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
+            { path: 'account/reset/expired', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
+            { path: 'account/reset/:token', component: __WEBPACK_IMPORTED_MODULE_4__components_reset_password_reset_password_component__["a" /* ResetPasswordComponent */] }
+        ]
+    }
 ];
 var UsersRoutingModule = (function () {
     function UsersRoutingModule() {

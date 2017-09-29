@@ -12,36 +12,40 @@ router.get('/', (req, res) => {
 
 //Angular App urls
 router.get('/app', (req, res) => {
-  res.render('home', {title: 'Home'});
+  res.redirect('/');
+});
+
+router.get('/app/welcome', (req, res) => {
+  res.render('home', {title: 'Welcome'});
 });
 
 router.get('/app/investments', (req, res) => {
   res.render('home', {title: 'Investements'});
 });
 
-router.get('/app/login', (req, res) => {
+router.get('/app/users/login', (req, res) => {
   res.render('home', {title: 'Login'});
 });
 
-router.get('/app/register', (req, res) => {
+router.get('/app/users/register', (req, res) => {
   res.render('home', {title: 'Register'});
 });
 
-router.get('/app/account/reset/expired', (req, res) => {
+router.get('/app/users/account/reset/expired', (req, res) => {
   res.render('home', {title: 'Expired'});
 });
 
-router.get('/app/account/reset/:token', catchErrors(authController.reset));
+router.get('/app/users/account/reset/:token', catchErrors(authController.reset));
 
 // TEST controller
-router.get('/register', testController.registerForm);
-router.get('/login', testController.loginForm);
-router.get('/logout', testController.logoutForm);
-router.get('/account', 
-    authController.isLogggedIn, 
-    testController.account
-);
-router.get('/account/reset/:token', catchErrors(testController.reset));
+// router.get('/register', testController.registerForm);
+// router.get('/login', testController.loginForm);
+// router.get('/logout', testController.logoutForm);
+// router.get('/account', 
+//     authController.isLogggedIn, 
+//     testController.account
+// );
+// router.get('/account/reset/:token', catchErrors(testController.reset));
 
 //*************************************************************************** */
 //******************************** API ************************************** */

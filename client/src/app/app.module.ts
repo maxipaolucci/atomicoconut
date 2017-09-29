@@ -11,10 +11,8 @@ import { AppService } from './app.service';
 import { AuthResolver } from './auth-resolver.service';
 import { CustomMaterialDesignModule } from './modules/custom-material-design/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
-import { CryptoCurrencyComponent } from './investments/crypto-currency/crypto-currency.component'
-import { CrytoCurrencyService } from './investments/crypto-currency/crypto-currency.service';
-import { InvestmentsComponent } from './investments/investments.component';
-import { InvestmentsDashboardComponent } from './investments/investments-dashboard/investments-dashboard.component';
+import { InvestmentsModule } from './modules/investments/investments.module';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
   imports: [
@@ -24,15 +22,14 @@ import { InvestmentsDashboardComponent } from './investments/investments-dashboa
     HttpModule,
     FlexLayoutModule,
     CustomMaterialDesignModule,
-    UsersModule
+    UsersModule,
+    InvestmentsModule
   ],
   declarations: [
     AppComponent,
-    CryptoCurrencyComponent,
-    InvestmentsComponent,
-    InvestmentsDashboardComponent
+    WelcomeComponent
   ],
-  providers: [AppService, CrytoCurrencyService, AuthResolver],
+  providers: [AppService, AuthResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

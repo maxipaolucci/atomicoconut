@@ -2,17 +2,23 @@
 <div class="inner mat-typography">
 
   <md-toolbar class="toolbar" color="primary">
-    <span>AtomiCoconut</span>
+    <a class="toolbar__brand-name color__almost-white" routerLink="/"><span>AtomiCoconut</span></a>
     <span class="example-spacer"></span>
     
     <span *ngIf="!usersService.user" fxLayoutAlign=" center">
-      <md-icon routerLink="/login" class="toolbar__icon">account_circle</md-icon>
+      <md-icon routerLink="/users/login" class="toolbar__icon">account_circle</md-icon>
     </span>
     <span *ngIf="usersService.user" fxLayoutAlign=" center">
-      <img *ngIf="usersService.user.avatar !== defaultGravatarUrl" [mdMenuTriggerFor]="userMenu" 
-          class="toolbar__icon user__avatar" [src]="usersService.user.avatar" />
-      <md-icon *ngIf="usersService.user.avatar === defaultGravatarUrl"
-          class="toolbar__icon user__icon--logged-in" [mdMenuTriggerFor]="userMenu">account_circle</md-icon>
+      <img *ngIf="usersService.user.avatar" 
+          [mdMenuTriggerFor]="userMenu" 
+          class="toolbar__icon user__avatar" 
+          [src]="usersService.user.avatar" 
+      />
+      <md-icon *ngIf="!usersService.user.avatar"
+          class="toolbar__icon user__icon--logged-in" 
+          [mdMenuTriggerFor]="userMenu">
+        account_circle
+      </md-icon>
       
       <md-menu class="user__menu--logged-in" #userMenu="mdMenu" [overlapTrigger]="false">
         <button md-menu-item>
