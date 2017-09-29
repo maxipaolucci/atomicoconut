@@ -6,11 +6,11 @@ const promisify = require('es6-promisify');
 
 //mailtrap io
 const transportMailTrap = nodemailer.createTransport({
-  host : process.env.MAIL_HOST,
-  port : process.env.MAIL_PORT,
+  host : process.env.MAIL_TRAP_HOST,
+  port : process.env.MAIL_TRAP_PORT,
   auth : {
-    user : process.env.MAIL_USER,
-    pass : process.env.MAIL_PASS
+    user : process.env.MAIL_TRAP_USER,
+    pass : process.env.MAIL_TRAP_PASS
   }
 });
 
