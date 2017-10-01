@@ -14,7 +14,7 @@ require('dotenv').config({ path: 'variables.env' });
 console.log(process.env.NODE_ENV + '-------------------------------------------------');
 if (process.env.NODE_ENV === 'development') {
   mongoose.connect(process.env.DATABASE);
-} else if (app.get('env') === 'production') {
+} else if (process.env.NODE_ENV === 'production') {
   mongoose.connect(process.env.DATABASE_PROD);
 }
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
