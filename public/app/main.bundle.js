@@ -131,13 +131,15 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__modules_investments_investments_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_calculators_calculators_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -167,11 +169,12 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["a" /* FlexLayoutModule */],
             __WEBPACK_IMPORTED_MODULE_10__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
             __WEBPACK_IMPORTED_MODULE_11__modules_users_users_module__["a" /* UsersModule */],
-            __WEBPACK_IMPORTED_MODULE_12__modules_investments_investments_module__["a" /* InvestmentsModule */]
+            __WEBPACK_IMPORTED_MODULE_12__modules_investments_investments_module__["a" /* InvestmentsModule */],
+            __WEBPACK_IMPORTED_MODULE_13__modules_calculators_calculators_module__["a" /* CalculatorsModule */]
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__components_welcome_welcome_component__["a" /* WelcomeComponent */]
+            __WEBPACK_IMPORTED_MODULE_14__components_welcome_welcome_component__["a" /* WelcomeComponent */]
         ],
         providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_9__auth_resolver_service__["a" /* AuthResolver */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
@@ -392,7 +395,7 @@ var _a, _b;
 /***/ "../../../../../src/app/components/welcome/welcome.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<a class=\"color__almost-white\" routerLink=\"/investments\">Go to investments</a>"
+module.exports = "<div>\r\n<a class=\"color__almost-white\" routerLink=\"/investments\">Go to investments</a>\r\n</div>\r\n<div>\r\n  <a class=\"color__almost-white\" routerLink=\"/calculators\">Go to calculators</a>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -521,6 +524,236 @@ EqualValidatorDirective = EqualValidatorDirective_1 = __decorate([
 
 var EqualValidatorDirective_1;
 //# sourceMappingURL=equal-validator.directive.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/calculators-routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_equity_equity_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_calculators_dashboard_calculators_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var routes = [{
+        path: 'calculators',
+        children: [
+            { path: '', component: __WEBPACK_IMPORTED_MODULE_3__components_calculators_dashboard_calculators_dashboard_component__["a" /* CalculatorsDashboardComponent */] },
+            { path: 'equity', component: __WEBPACK_IMPORTED_MODULE_2__components_equity_equity_component__["a" /* EquityComponent */] }
+        ]
+    }];
+var CalculatorsRoutingModule = (function () {
+    function CalculatorsRoutingModule() {
+    }
+    return CalculatorsRoutingModule;
+}());
+CalculatorsRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+    })
+], CalculatorsRoutingModule);
+
+//# sourceMappingURL=calculators-routing.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/calculators.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__calculators_routing_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators-routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_equity_equity_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_calculators_dashboard_calculators_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+var CalculatorsModule = (function () {
+    function CalculatorsModule() {
+    }
+    return CalculatorsModule;
+}());
+CalculatorsModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_5__calculators_routing_module__["a" /* CalculatorsRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__["a" /* FlexLayoutModule */],
+            __WEBPACK_IMPORTED_MODULE_4__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
+        ],
+        declarations: [__WEBPACK_IMPORTED_MODULE_6__components_equity_equity_component__["a" /* EquityComponent */], __WEBPACK_IMPORTED_MODULE_7__components_calculators_dashboard_calculators_dashboard_component__["a" /* CalculatorsDashboardComponent */]]
+    })
+], CalculatorsModule);
+
+//# sourceMappingURL=calculators.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  <a class=\"color__almost-white ac__link\" routerLink=\"./equity\">Equity calculator</a>\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsDashboardComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var CalculatorsDashboardComponent = (function () {
+    function CalculatorsDashboardComponent() {
+    }
+    CalculatorsDashboardComponent.prototype.ngOnInit = function () {
+    };
+    return CalculatorsDashboardComponent;
+}());
+CalculatorsDashboardComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-calculators-dashboard',
+        template: __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], CalculatorsDashboardComponent);
+
+//# sourceMappingURL=calculators-dashboard.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #equityForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\n  \n  <section fxLayout=\"column\" class=\"form__fields\">\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\">\n      <!-- Purchase price -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\" \n            [(ngModel)]=\"model.purchasePrice\" \n            required purchasePrice\n            value=\"model.purchasePrice\"\n            #purchasePrice=\"ngModel\">\n  \n        <md-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required\">Purchase price is required</md-error>\n      </md-input-container>\n      \n      <!-- Market value -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\" \n            [(ngModel)]=\"model.marketValue\" \n            required marketValue\n            value=\"model.marketValue\"\n            #marketValue=\"ngModel\">\n  \n        <md-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required\">Market value is required</md-error>\n      </md-input-container>\n      \n      <!-- Loan coverage -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"loanCoverage\" name=\"loanCoverage\" placeholder=\"Loan coverage %\" \n            [(ngModel)]=\"model.loanCoverage\" \n            required loanCoverage\n            value=\"model.loanCoverage\"\n            #loanCoverage=\"ngModel\">\n  \n        <md-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required\">Loan coverage is required</md-error>\n      </md-input-container>\n\n      <!-- Savings -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"savings\" name=\"savings\" placeholder=\"Current savings\" \n            [(ngModel)]=\"model.savings\" \n            savings\n            value=\"model.savings\"\n            #savings=\"ngModel\">\n      </md-input-container>\n\n      <md-checkbox class=\"form__action\" [(ngModel)]=\"model.addRenovations\" name=\"addRenovations\" id=\"addRenovations\">Add renovations data</md-checkbox>\n    </div>\n  </section>\n\n  <section fxLayout=\"column\" class=\"form__fields\" *ngIf=\"model.addRenovations\">\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\">\n      <!-- Renovation cost -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\" \n            [(ngModel)]=\"model.renovationCost\" \n            renovationCost\n            value=\"model.renovationCost\"\n            #renovationCost=\"ngModel\">\n      </md-input-container>\n      \n      <!-- New market value -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"newMarketValue\" name=\"newMarketValue\" placeholder=\"After renovations market value\" \n            [(ngModel)]=\"model.newMarketValue\" \n            newMarketValue\n            value=\"model.newMarketValue\"\n            #newMarketValue=\"ngModel\">\n      </md-input-container>\n      \n      <!-- First year repayment -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"firstYearRepayment\" name=\"firstYearRepayment\" placeholder=\"First year loan repayments\" \n            [(ngModel)]=\"model.firstYearRepayment\" \n            firstYearRepayment\n            value=\"model.firstYearRepayment\"\n            #firstYearRepayment=\"ngModel\">\n      </md-input-container>\n    </div>\n  </section>\n\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions\">\n    <button class=\"form__action mat-raised-button\" md-raised-button type=\"submit\" [disabled]=\"!equityForm.form.valid\">Calculate</button>\n  </section>\n\n</form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EquityComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var EquityComponent = (function () {
+    function EquityComponent() {
+        this.loanAmount = 0;
+        this.discount = 0;
+        this.equity = 0;
+        this.depositAmount = 0;
+        this.usableEquityAfterReno = 0;
+        this.addRenovations = false;
+        this.model = {
+            purchasePrice: 0,
+            marketValue: 0,
+            loanCoverage: 0.8,
+            savings: 0,
+            renovationCost: 0,
+            newMarketValue: 0,
+            firstYearRepayment: 0
+        };
+    }
+    EquityComponent.prototype.ngOnInit = function () {
+    };
+    EquityComponent.prototype.onSubmit = function () {
+    };
+    return EquityComponent;
+}());
+EquityComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-equity',
+        template: __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], EquityComponent);
+
+//# sourceMappingURL=equity.component.js.map
 
 /***/ }),
 

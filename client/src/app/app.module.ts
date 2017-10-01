@@ -12,6 +12,7 @@ import { AuthResolver } from './auth-resolver.service';
 import { CustomMaterialDesignModule } from './modules/custom-material-design/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
 import { InvestmentsModule } from './modules/investments/investments.module';
+import { CalculatorsModule } from './modules/calculators/calculators.module';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
@@ -23,7 +24,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     FlexLayoutModule,
     CustomMaterialDesignModule,
     UsersModule,
-    InvestmentsModule
+    InvestmentsModule,
+    CalculatorsModule
   ],
   declarations: [
     AppComponent,

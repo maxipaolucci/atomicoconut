@@ -19,10 +19,12 @@ router.get('/app/welcome', (req, res) => {
   res.render('home', {title: 'Welcome'});
 });
 
+/** Investments */
 router.get('/app/investments', (req, res) => {
   res.render('home', {title: 'Investements'});
 });
 
+/** Users */
 router.get('/app/users/login', (req, res) => {
   res.render('home', {title: 'Login'});
 });
@@ -40,6 +42,15 @@ router.get('/app/users/account/reset/expired', (req, res) => {
 });
 
 router.get('/app/users/account/reset/:token', catchErrors(authController.reset));
+
+/** Calculators */
+router.get('/app/calculators', (req, res) => {
+  res.render('home', {title: 'Calculators'});
+});
+
+router.get('/app/calculators/equity', (req, res) => {
+  res.render('home', {title: 'Equity calculator'});
+});
 
 // TEST controller
 // router.get('/register', testController.registerForm);

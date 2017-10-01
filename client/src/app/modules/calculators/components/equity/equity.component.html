@@ -1,0 +1,86 @@
+<form class="form__container" (ngSubmit)="onSubmit()" #equityForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
+  
+  <section fxLayout="column" class="form__fields">
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="form__fields__row">
+      <!-- Purchase price -->
+      <md-input-container fxFlex class="form__field">
+        <input mdInput type="text" id="purchasePrice" name="purchasePrice" placeholder="Purchase price" 
+            [(ngModel)]="model.purchasePrice" 
+            required purchasePrice
+            value="model.purchasePrice"
+            #purchasePrice="ngModel">
+  
+        <md-error *ngIf="purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required">Purchase price is required</md-error>
+      </md-input-container>
+      
+      <!-- Market value -->
+      <md-input-container fxFlex class="form__field">
+        <input mdInput type="text" id="marketValue" name="marketValue" placeholder="Market value" 
+            [(ngModel)]="model.marketValue" 
+            required marketValue
+            value="model.marketValue"
+            #marketValue="ngModel">
+  
+        <md-error *ngIf="marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required">Market value is required</md-error>
+      </md-input-container>
+      
+      <!-- Loan coverage -->
+      <md-input-container fxFlex class="form__field">
+        <input mdInput type="text" id="loanCoverage" name="loanCoverage" placeholder="Loan coverage %" 
+            [(ngModel)]="model.loanCoverage" 
+            required loanCoverage
+            value="model.loanCoverage"
+            #loanCoverage="ngModel">
+  
+        <md-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required">Loan coverage is required</md-error>
+      </md-input-container>
+
+      <!-- Savings -->
+      <md-input-container fxFlex class="form__field">
+        <input mdInput type="text" id="savings" name="savings" placeholder="Current savings" 
+            [(ngModel)]="model.savings" 
+            savings
+            value="model.savings"
+            #savings="ngModel">
+      </md-input-container>
+
+      <md-checkbox class="form__action" [(ngModel)]="model.addRenovations" name="addRenovations" id="addRenovations">Add renovations data</md-checkbox>
+    </div>
+  </section>
+
+  <section fxLayout="column" class="form__fields" *ngIf="model.addRenovations">
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="form__fields__row">
+      <!-- Renovation cost -->
+      <md-input-container fxFlex class="form__field">
+        <input mdInput type="text" id="renovationCost" name="renovationCost" placeholder="Renovation cost" 
+            [(ngModel)]="model.renovationCost" 
+            renovationCost
+            value="model.renovationCost"
+            #renovationCost="ngModel">
+      </md-input-container>
+      
+      <!-- New market value -->
+      <md-input-container fxFlex class="form__field">
+        <input mdInput type="text" id="newMarketValue" name="newMarketValue" placeholder="After renovations market value" 
+            [(ngModel)]="model.newMarketValue" 
+            newMarketValue
+            value="model.newMarketValue"
+            #newMarketValue="ngModel">
+      </md-input-container>
+      
+      <!-- First year repayment -->
+      <md-input-container fxFlex class="form__field">
+        <input mdInput type="text" id="firstYearRepayment" name="firstYearRepayment" placeholder="First year loan repayments" 
+            [(ngModel)]="model.firstYearRepayment" 
+            firstYearRepayment
+            value="model.firstYearRepayment"
+            #firstYearRepayment="ngModel">
+      </md-input-container>
+    </div>
+  </section>
+
+  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions">
+    <button class="form__action mat-raised-button" md-raised-button type="submit" [disabled]="!equityForm.form.valid">Calculate</button>
+  </section>
+
+</form>
