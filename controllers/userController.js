@@ -12,11 +12,12 @@ exports.validateRegister = (req, res, next) => {
     req.sanitizeBody('name'); //this method comes with the expressValidator plugin we added in app.js. With this we sanitze the value in req.body.name
     req.checkBody('name', 'You must supply a name!').notEmpty(); //same as above check for not empty
     req.checkBody('email', 'That Email is not valid!').isEmail(); //same as above. All this methods are in express validator
-    req.sanitizeBody('email').normalizeEmail({
-        remove_dots : false,
-        remove_extension : false,
-        gmail_remove_subaddress : false
-    });
+    req.sanitizeBody('email');
+            // .normalizeEmail({
+            //     remove_dots : false,
+            //     remove_extension : false,
+            //     gmail_remove_subaddress : false
+            // });
     req.checkBody('password', 'Password cannot be blank').notEmpty();
     req.checkBody('password-confirm', 'Confirmed password cannot be blank').notEmpty();
     req.checkBody('password-confirm', 'Oops! Your passwords do not match').equals(req.body.password);

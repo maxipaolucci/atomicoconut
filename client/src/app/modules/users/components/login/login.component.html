@@ -32,6 +32,10 @@
     <md-checkbox fxLayoutAlign.xs="center center" class="form__action" [(ngModel)]="forgotModel.forgot" name="forgot" id="forgot">Forgot my password</md-checkbox>
   </section>
 
+  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions">
+    <a class="color__almost-white ac__link" routerLink="/users/register">Create an account</a>
+  </section>
+
 </form>
 
 <form class="form__container form__forgot" (ngSubmit)="onForgotSubmit()" #forgotForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" *ngIf="forgotModel.forgot">

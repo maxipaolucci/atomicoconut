@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UsersService } from '../../users.service';
+import { AppService } from '../../../../app.service';
 import {User} from '../../user';
 
 @Component({
@@ -12,7 +13,7 @@ import {User} from '../../user';
 export class RegisterComponent implements OnInit {
   private model : any = {name : '', email : '', password : '', 'password-confirm' : ''};
   
-  constructor(private usersService : UsersService, private router : Router) {}
+  constructor(private usersService : UsersService, private appService : AppService, private router : Router) {}
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
@@ -38,11 +39,19 @@ export class RegisterComponent implements OnInit {
           const user = new User(data.name, data.email, data.avatar)
           this.usersService.user = user;
           this.router.navigate(['/']); //go home
+          this.appService.showResults(`${user.name} welcome to AtomiCoconut!`);
         } else {
-          console.error(`${methodTrace} Unexpected data format.`)
+          console.error(`${methodTrace} Unexpected data format.`, data);
         }
       },
-      (error : any) => console.error(`${methodTrace} There was an error with the register service > ${error}`)
+      (error : any) => {
+        console.error(`${methodTrace} There was an error with the register service.`, error);
+        if (error.codeno === 400) {
+          if (error.data && error.data.name === 'UserExistsError')
+          //the mail system failed for external reasons
+          this.appService.showResults(`The submitted email was already use by another person, pick a different one please.`);
+        }
+      }
     );
   }
 

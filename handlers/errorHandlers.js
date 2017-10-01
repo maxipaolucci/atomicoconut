@@ -123,11 +123,12 @@ exports.developmentErrors = (err, req, res, next) => {
 
   console.log(`${methodTrace} Something went wrong.`);
   err.stack = err.stack || '';
+  //console.log(err);
   const errorDetails = {
     msg: `${getMessage('error', 400)} ${err.message || err.msg}`,
     status: 'error',
     codeno: 400,
-    data: null
+    data: err
   };
 
   res.status(err.status || 400);
