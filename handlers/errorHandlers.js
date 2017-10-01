@@ -94,7 +94,7 @@ exports.notFound = (req, res, next) => {
   err.status = 'error';
   err.codeno = 404;
   err.message = 'Page not found';
-  console.log(req);
+  
   next(err);
 };
 
@@ -104,13 +104,13 @@ exports.notFound = (req, res, next) => {
   Detect if there are mongodb validation errors that we can nicely show via flash messages
 */
 
-exports.flashValidationErrors = (err, req, res, next) => {
-  if (!err.errors) return next(err);
-  // validation errors look like
-  const errorKeys = Object.keys(err.errors);
-  errorKeys.forEach(key => req.flash('error', err.errors[key].message));
-  res.redirect('back');
-};
+// exports.flashValidationErrors = (err, req, res, next) => {
+//   if (!err.errors) return next(err);
+//   // validation errors look like
+//   const errorKeys = Object.keys(err.errors);
+//   errorKeys.forEach(key => req.flash('error', err.errors[key].message));
+//   res.redirect('back');
+// };
 
 
 /*
@@ -121,7 +121,7 @@ exports.flashValidationErrors = (err, req, res, next) => {
 exports.developmentErrors = (err, req, res, next) => {
   const methodTrace = `${errorTrace} developmentErrors() >`;
 
-  console.log(`${methodTrace} Something went wrong.`);
+  console.log(`${methodTrace} Something went wrong: ${err.message}`);
   err.stack = err.stack || '';
   //console.log(err);
   const errorDetails = {
