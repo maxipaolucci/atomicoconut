@@ -59,7 +59,8 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__configuration__ = __webpack_require__("../../../../../configuration.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_users_user__ = __webpack_require__("../../../../../src/app/modules/users/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -74,6 +75,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AppComponent = (function () {
     function AppComponent(router, appService, usersService) {
         this.router = router;
@@ -83,17 +85,30 @@ var AppComponent = (function () {
         this.defaultGravatarUrl = __WEBPACK_IMPORTED_MODULE_3__configuration__["a" /* configuration */].defaultGravatarUrl;
     }
     AppComponent.prototype.ngOnInit = function () {
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging  
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.usersService.getAuthenticatedUser().subscribe(function (data) {
+            if (data && data.email) {
+                var user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_user__["a" /* User */](data.name, data.email, data.avatar);
+                _this.usersService.user = user;
+            }
+            else {
+                _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
+                _this.usersService.user = null;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.usersService.user = null;
+        });
     };
     AppComponent.prototype.logout = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > logout() > "; //for debugging  
         this.usersService.logout().subscribe(function (data) {
             _this.usersService.user = null;
-            console.log(123);
             _this.router.navigate(['/']);
         }, function (error) {
-            console.error(methodTrace + " There was an error with the logout service > " + error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the logout service.", error);
         });
     };
     return AppComponent;
@@ -104,7 +119,7 @@ AppComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _c || Object])
 ], AppComponent);
 
 var _a, _b, _c;
@@ -128,17 +143,19 @@ var _a, _b, _c;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__modules_investments_investments_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_calculators_calculators_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__auth_guard__ = __webpack_require__("../../../../../src/app/auth.guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_investments_investments_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modules_calculators_calculators_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -167,16 +184,16 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_6__app_routing_module__["a" /* AppRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_http__["c" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["a" /* FlexLayoutModule */],
-            __WEBPACK_IMPORTED_MODULE_10__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
-            __WEBPACK_IMPORTED_MODULE_11__modules_users_users_module__["a" /* UsersModule */],
-            __WEBPACK_IMPORTED_MODULE_12__modules_investments_investments_module__["a" /* InvestmentsModule */],
-            __WEBPACK_IMPORTED_MODULE_13__modules_calculators_calculators_module__["a" /* CalculatorsModule */]
+            __WEBPACK_IMPORTED_MODULE_11__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_12__modules_users_users_module__["a" /* UsersModule */],
+            __WEBPACK_IMPORTED_MODULE_13__modules_investments_investments_module__["a" /* InvestmentsModule */],
+            __WEBPACK_IMPORTED_MODULE_14__modules_calculators_calculators_module__["a" /* CalculatorsModule */]
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__components_welcome_welcome_component__["a" /* WelcomeComponent */]
+            __WEBPACK_IMPORTED_MODULE_15__components_welcome_welcome_component__["a" /* WelcomeComponent */]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_9__auth_resolver_service__["a" /* AuthResolver */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_9__auth_resolver_service__["a" /* AuthResolver */], __WEBPACK_IMPORTED_MODULE_10__auth_guard__["a" /* AuthGuard */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -254,6 +271,7 @@ AppRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__("../../../material/@angular/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -263,6 +281,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -319,6 +338,21 @@ var AppService = (function () {
             }
         });
     };
+    /**
+     * Show logs in the console if enabled in the current environment
+     * @param type . Error type
+     * @param message . The message to show
+     * @param params . Any extra parameters to list in the log.
+     */
+    AppService.prototype.consoleLog = function (type, message) {
+        var params = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            params[_i - 2] = arguments[_i];
+        }
+        if (__WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].showLogs) {
+            console[type](message, params);
+        }
+    };
     return AppService;
 }());
 AppService = __decorate([
@@ -340,6 +374,7 @@ var _a, _b;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_user__ = __webpack_require__("../../../../../src/app/modules/users/user.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -353,8 +388,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AuthResolver = (function () {
-    function AuthResolver(usersService, router) {
+    function AuthResolver(appService, usersService, router) {
+        this.appService = appService;
         this.usersService = usersService;
         this.router = router;
     }
@@ -368,13 +405,13 @@ var AuthResolver = (function () {
                 return user;
             }
             else {
-                console.info(methodTrace + " User not logged in.");
+                _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
                 _this.usersService.user = null;
                 _this.router.navigate(['/users/login']);
                 return null;
             }
         }, function (error) {
-            console.error(methodTrace + " There was an error with the getAuthenticatedUser service > " + error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
             _this.usersService.user = null;
             _this.router.navigate(['/users/login']);
             return null;
@@ -384,11 +421,71 @@ var AuthResolver = (function () {
 }());
 AuthResolver = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _c || Object])
 ], AuthResolver);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=auth-resolver.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/auth.guard.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthGuard; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var AuthGuard = (function () {
+    function AuthGuard(appService, usersService, router) {
+        this.appService = appService;
+        this.usersService = usersService;
+        this.router = router;
+    }
+    AuthGuard.prototype.canActivate = function (next, state) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > canActivate() > "; //for debugging
+        this.usersService.routerRedirectUrl = state.url;
+        return this.usersService.getAuthenticatedUser().map(function (data) {
+            if (data && data.email) {
+                _this.usersService.routerRedirectUrl = null; //we don't need this
+                return true;
+            }
+            else {
+                _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
+                _this.router.navigate(['/users/login']);
+                return false;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.router.navigate(['/users/login']);
+            return false;
+        });
+    };
+    return AuthGuard;
+}());
+AuthGuard = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _c || Object])
+], AuthGuard);
+
+var _a, _b, _c;
+//# sourceMappingURL=auth.guard.js.map
 
 /***/ }),
 
@@ -621,7 +718,7 @@ CalculatorsModule = __decorate([
 /***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  <a class=\"color__almost-white ac__link\" routerLink=\"./equity\">Equity calculator</a>\n</p>\n"
+module.exports = "<p>\r\n  <a class=\"color__almost-white ac__link\" routerLink=\"./equity\">Equity calculator</a>\r\n</p>\r\n"
 
 /***/ }),
 
@@ -682,7 +779,7 @@ CalculatorsDashboardComponent = __decorate([
 /***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #equityForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\n  \n  <section fxLayout=\"column\" class=\"form__fields\">\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\">\n      <!-- Purchase price -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\" \n            [(ngModel)]=\"model.purchasePrice\" \n            required purchasePrice\n            value=\"model.purchasePrice\"\n            #purchasePrice=\"ngModel\">\n  \n        <md-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required\">Purchase price is required</md-error>\n      </md-input-container>\n      \n      <!-- Market value -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\" \n            [(ngModel)]=\"model.marketValue\" \n            required marketValue\n            value=\"model.marketValue\"\n            #marketValue=\"ngModel\">\n  \n        <md-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required\">Market value is required</md-error>\n      </md-input-container>\n      \n      <!-- Loan coverage -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"loanCoverage\" name=\"loanCoverage\" placeholder=\"Loan coverage %\" \n            [(ngModel)]=\"model.loanCoverage\" \n            required loanCoverage\n            value=\"model.loanCoverage\"\n            #loanCoverage=\"ngModel\">\n  \n        <md-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required\">Loan coverage is required</md-error>\n      </md-input-container>\n\n      <!-- Savings -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"savings\" name=\"savings\" placeholder=\"Current savings\" \n            [(ngModel)]=\"model.savings\" \n            savings\n            value=\"model.savings\"\n            #savings=\"ngModel\">\n      </md-input-container>\n\n      <md-checkbox class=\"form__action\" [(ngModel)]=\"model.addRenovations\" name=\"addRenovations\" id=\"addRenovations\">Add renovations data</md-checkbox>\n    </div>\n  </section>\n\n  <section fxLayout=\"column\" class=\"form__fields\" *ngIf=\"model.addRenovations\">\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\">\n      <!-- Renovation cost -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\" \n            [(ngModel)]=\"model.renovationCost\" \n            renovationCost\n            value=\"model.renovationCost\"\n            #renovationCost=\"ngModel\">\n      </md-input-container>\n      \n      <!-- New market value -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"newMarketValue\" name=\"newMarketValue\" placeholder=\"After renovations market value\" \n            [(ngModel)]=\"model.newMarketValue\" \n            newMarketValue\n            value=\"model.newMarketValue\"\n            #newMarketValue=\"ngModel\">\n      </md-input-container>\n      \n      <!-- First year repayment -->\n      <md-input-container fxFlex class=\"form__field\">\n        <input mdInput type=\"text\" id=\"firstYearRepayment\" name=\"firstYearRepayment\" placeholder=\"First year loan repayments\" \n            [(ngModel)]=\"model.firstYearRepayment\" \n            firstYearRepayment\n            value=\"model.firstYearRepayment\"\n            #firstYearRepayment=\"ngModel\">\n      </md-input-container>\n    </div>\n  </section>\n\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions\">\n    <button class=\"form__action mat-raised-button\" md-raised-button type=\"submit\" [disabled]=\"!equityForm.form.valid\">Calculate</button>\n  </section>\n\n</form>"
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #equityForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\">\r\n      <!-- Purchase price -->\r\n      <md-input-container fxFlex=\"200px\" class=\"form__field\">\r\n        <input mdInput type=\"number\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\" \r\n            [(ngModel)]=\"model.purchasePrice\" \r\n            required\r\n            value=\"model.purchasePrice\"\r\n            #purchasePrice=\"ngModel\">\r\n  \r\n        <md-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required\">Purchase price is required</md-error>\r\n      </md-input-container>\r\n      \r\n      <!-- Market value -->\r\n      <md-input-container fxFlex=\"200px\" class=\"form__field\">\r\n        <input mdInput type=\"number\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\" \r\n            [(ngModel)]=\"model.marketValue\" \r\n            required\r\n            value=\"model.marketValue\"\r\n            #marketValue=\"ngModel\">\r\n  \r\n        <md-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required\">Market value is required</md-error>\r\n      </md-input-container>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\">\r\n      <!-- Loan coverage -->\r\n      <md-input-container fxFlex=\"200px\" class=\"form__field\">\r\n        <input mdInput type=\"number\" id=\"loanCoverage\" name=\"loanCoverage\" placeholder=\"Loan coverage %\" \r\n            [(ngModel)]=\"model.loanCoverage\" \r\n            required loanCoverage\r\n            value=\"model.loanCoverage\"\r\n            #loanCoverage=\"ngModel\">\r\n  \r\n        <md-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required\">Loan coverage is required</md-error>\r\n      </md-input-container>\r\n\r\n      <!-- Savings -->\r\n      <md-input-container fxFlex=\"200px\" class=\"form__field\">\r\n        <input mdInput type=\"number\" id=\"savings\" name=\"savings\" placeholder=\"Current savings\" \r\n            [(ngModel)]=\"model.savings\" \r\n            value=\"model.savings\"\r\n            #savings=\"ngModel\">\r\n      </md-input-container>\r\n\r\n      <!-- Add renovations checkbox -->\r\n      <md-checkbox fxFlex=\"200px\" class=\"form__action\" [(ngModel)]=\"model.addRenovations\" name=\"addRenovations\" id=\"addRenovations\">Add renovations data</md-checkbox>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\" *ngIf=\"model.addRenovations\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\">\r\n      <!-- Renovation cost -->\r\n      <md-input-container fxFlex=\"200px\" class=\"form__field\">\r\n        <input mdInput type=\"number\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\" \r\n            [(ngModel)]=\"model.renovationCost\" \r\n            value=\"model.renovationCost\"\r\n            #renovationCost=\"ngModel\">\r\n      </md-input-container>\r\n      \r\n      <!-- New market value -->\r\n      <md-input-container fxFlex=\"200px\" class=\"form__field\">\r\n        <input mdInput type=\"number\" id=\"newMarketValue\" name=\"newMarketValue\" placeholder=\"After renovations market value\" \r\n            [(ngModel)]=\"model.newMarketValue\" \r\n            value=\"model.newMarketValue\"\r\n            #newMarketValue=\"ngModel\">\r\n      </md-input-container>\r\n      \r\n      <!-- First year repayment -->\r\n      <md-input-container fxFlex=\"200px\" class=\"form__field\">\r\n        <input mdInput type=\"number\" id=\"firstYearRepayment\" name=\"firstYearRepayment\" placeholder=\"First year loan repayments\" \r\n            [(ngModel)]=\"model.firstYearRepayment\" \r\n            value=\"model.firstYearRepayment\"\r\n            #firstYearRepayment=\"ngModel\">\r\n      </md-input-container>\r\n    </div>\r\n  </section>\r\n\r\n</form>\r\n\r\n<section fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"\">\r\n  <div fxFlex=\"620px\" fxLayoutGap.gt-sm=\"10px\">\r\n    <md-card fxFlex>\r\n      <md-card-title>Initial figures</md-card-title>\r\n      <md-card-content>\r\n        <div><label>Loan amount: </label><span>{{loanAmount}}</span></div>\r\n        <div><label>Deposit amount: </label><span>{{depositAmount}}</span></div>\r\n        <div><label>Discount: </label><span>{{discount}}</span></div>\r\n        <div><label>Equity: </label><span>{{equity}}</span></div>\r\n        \r\n        Usable equity : {{usableEquityAfterReno}}\r\n      </md-card-content>\r\n    </md-card>\r\n\r\n    <md-card fxFlex=\"350px\" *ngIf=\"model.addRenovations\">\r\n      <md-card-title>After renovations figures</md-card-title>\r\n      <md-card-content>\r\n        <div><label>Usable equity: </label><span>{{usableEquityAfterReno}}</span></div>\r\n      </md-card-content>\r\n    </md-card>\r\n  </div>\r\n</section>"
 
 /***/ }),
 
@@ -727,7 +824,6 @@ var EquityComponent = (function () {
         this.equity = 0;
         this.depositAmount = 0;
         this.usableEquityAfterReno = 0;
-        this.addRenovations = false;
         this.model = {
             purchasePrice: 0,
             marketValue: 0,
@@ -735,15 +831,29 @@ var EquityComponent = (function () {
             savings: 0,
             renovationCost: 0,
             newMarketValue: 0,
-            firstYearRepayment: 0
+            firstYearRepayment: 0,
+            addRenovations: false
         };
     }
-    EquityComponent.prototype.ngOnInit = function () {
-    };
-    EquityComponent.prototype.onSubmit = function () {
+    EquityComponent.prototype.ngOnInit = function () { };
+    EquityComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        this.form.valueChanges.debounceTime(500).subscribe(function (values) {
+            _this.loanAmount = values.purchasePrice * values.loanCoverage;
+            _this.discount = values.marketValue - values.purchasePrice;
+            _this.depositAmount = values.purchasePrice - _this.loanAmount;
+            _this.equity = values.savings + _this.discount + _this.depositAmount;
+            if (values.addRenovations) {
+                _this.usableEquityAfterReno = values.newMarketValue * 0.8 - _this.loanAmount + values.firstYearRepayment;
+            }
+        });
     };
     return EquityComponent;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_16" /* ViewChild */])('equityForm'),
+    __metadata("design:type", Object)
+], EquityComponent.prototype, "form", void 0);
 EquityComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
         selector: 'app-equity',
@@ -1043,7 +1153,7 @@ InvestmentsDashboardComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investments_component__ = __webpack_require__("../../../../../src/app/modules/investments/investments.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_guard__ = __webpack_require__("../../../../../src/app/auth.guard.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1060,9 +1170,7 @@ var routes = [
     {
         path: 'investments',
         component: __WEBPACK_IMPORTED_MODULE_2__investments_component__["a" /* InvestmentsComponent */],
-        resolve: {
-            authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
-        },
+        canActivate: [__WEBPACK_IMPORTED_MODULE_4__auth_guard__["a" /* AuthGuard */]],
         children: [
             { path: '', component: __WEBPACK_IMPORTED_MODULE_3__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */] }
         ]
@@ -1374,7 +1482,9 @@ var LoginComponent = (function () {
             if (data && data.email) {
                 var user = new __WEBPACK_IMPORTED_MODULE_4__user__["a" /* User */](data.name, data.email, data.avatar);
                 _this.usersService.user = user;
-                _this.router.navigate(['/']); //go home
+                var redirectUrl = _this.usersService.routerRedirectUrl ? _this.usersService.routerRedirectUrl : '/';
+                _this.usersService.routerRedirectUrl = null;
+                _this.router.navigate([redirectUrl]); //go home
             }
             else {
                 console.error(methodTrace + " Unexpected data format.");
@@ -1833,6 +1943,7 @@ var UsersService = (function () {
         this.appService = appService;
         this.serverHost = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].apiHost + '/api/users';
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
+        this.routerRedirectUrl = null; //a route to redirect the user to when login is successfull
         this._user = null;
     }
     /**
@@ -1938,7 +2049,8 @@ var _a, _b;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
 var environment = {
     production: true,
-    apiHost: ''
+    apiHost: '',
+    showLogs: true
 };
 //# sourceMappingURL=environment.js.map
 

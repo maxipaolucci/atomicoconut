@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 
 import {Observable} from "rxjs/Rx";
 import { MdSnackBar } from '@angular/material';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class AppService {
@@ -56,5 +57,17 @@ export class AppService {
         snackBarRef.dismiss();
       }
     });
+  }
+
+  /**
+   * Show logs in the console if enabled in the current environment
+   * @param type . Error type
+   * @param message . The message to show
+   * @param params . Any extra parameters to list in the log.
+   */
+  consoleLog(type : 'log' | 'debug' | 'warn' | 'info' | 'error', message : string, ...params) {
+    if (environment.showLogs) {
+      console[type](message, params);
+    }
   }
 }

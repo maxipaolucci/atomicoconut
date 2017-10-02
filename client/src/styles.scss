@@ -21,6 +21,14 @@ body {
     color: $red;
 }
 
+.color__purple {
+    color : $purple;
+}
+
+.color__purple--fonts {
+    color : $purpleFonts;
+}
+
 .color__almost-white {
     color: rgba(255,255,255,.87);
 }

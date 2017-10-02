@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-equity',
@@ -6,13 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./equity.component.scss']
 })
 export class EquityComponent implements OnInit {
+  @ViewChild('equityForm') form;
 
   private loanAmount : number = 0;
   private discount : number = 0;
   private equity : number = 0;
   private depositAmount : number = 0;
   private usableEquityAfterReno : number = 0;
-  private addRenovations = false;
 
   private model : any = { 
     purchasePrice : 0,
@@ -21,16 +21,24 @@ export class EquityComponent implements OnInit {
     savings : 0,
     renovationCost : 0,
     newMarketValue : 0,
-    firstYearRepayment : 0
+    firstYearRepayment : 0,
+    addRenovations : false
   }
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  onSubmit() {
-    
+  ngAfterViewInit() {
+    this.form.valueChanges.debounceTime(500).subscribe(values => {
+      this.loanAmount = values.purchasePrice * values.loanCoverage;
+      this.discount = values.marketValue - values.purchasePrice;
+      this.depositAmount = values.purchasePrice - this.loanAmount;
+      this.equity = values.savings + this.discount + this.depositAmount;
+      if (values.addRenovations) {
+        this.usableEquityAfterReno = values.newMarketValue * 0.8 - this.loanAmount + values.firstYearRepayment;
+      }
+    });
   }
 
 }

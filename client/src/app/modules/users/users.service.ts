@@ -12,6 +12,7 @@ export class UsersService {
   private serverHost : string = environment.apiHost + '/api/users';
   private headers = new Headers({'Content-Type': 'application/json'});
   private _user : User;
+  routerRedirectUrl : string = null; //a route to redirect the user to when login is successfull
 
   constructor(private http : Http, private appService : AppService) {
     this._user = null;

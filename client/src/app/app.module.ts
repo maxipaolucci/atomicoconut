@@ -9,6 +9,7 @@ import { AppRoutingModule } from "./app.routing.module";
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { AuthResolver } from './auth-resolver.service';
+import { AuthGuard } from './auth.guard';
 import { CustomMaterialDesignModule } from './modules/custom-material-design/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
 import { InvestmentsModule } from './modules/investments/investments.module';
@@ -31,7 +32,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
     AppComponent,
     WelcomeComponent
   ],
-  providers: [AppService, AuthResolver],
+  providers: [AppService, AuthResolver, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

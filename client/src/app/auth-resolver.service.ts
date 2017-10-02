@@ -3,10 +3,11 @@ import { Observable } from 'rxjs/Observable';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { User } from './modules/users/user';
 import { UsersService } from './modules/users/users.service';
+import { AppService } from './app.service';
 
 @Injectable()
 export class AuthResolver implements Resolve<User> {
-  constructor(private usersService : UsersService, private router : Router) { }
+  constructor(private appService : AppService, private usersService : UsersService, private router : Router) { }
   
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): User | Observable<User> | Promise<User> {
     let methodTrace = `${this.constructor.name} > resolve() > `; //for debugging  
@@ -18,14 +19,14 @@ export class AuthResolver implements Resolve<User> {
           this.usersService.user = user;
           return user;
         } else {
-          console.info(`${methodTrace} User not logged in.`);
+          this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
           this.usersService.user = null;
           this.router.navigate(['/users/login']);
           return null;
         }
       }, 
       (error : any) => {
-        console.error(`${methodTrace} There was an error with the getAuthenticatedUser service > ${error}`);
+        this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
         this.usersService.user = null;
         this.router.navigate(['/users/login']);
         return null;

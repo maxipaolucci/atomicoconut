@@ -4,15 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 //import { CrytoCurrencyService } from './investments/crypto-currency/crypto-currency.service';
 import { InvestmentsComponent } from './investments.component';
 import { InvestmentsDashboardComponent } from './components/investments-dashboard/investments-dashboard.component';
-import { AuthResolver } from '../../auth-resolver.service';
+import { AuthGuard } from '../../auth.guard';
 
 const routes: Routes = [
   {
     path : 'investments',
     component : InvestmentsComponent,
-    resolve : {
-      authUser : AuthResolver
-    },
+    canActivate: [ AuthGuard ],
     children : [
       { path : '', component : InvestmentsDashboardComponent }
     ]

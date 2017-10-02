@@ -3,28 +3,34 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Observable } from 'rxjs/Observable';
 import { UsersService } from './modules/users/users.service';
 import { User } from './modules/users/user';
+import { AppService } from './app.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private usersService : UsersService, private router : Router) {}
+  constructor(private appService : AppService, private usersService : UsersService, private router : Router) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<boolean> | Promise<boolean> | boolean {
-    let url: string = state.url;
+    let methodTrace = `${this.constructor.name} > canActivate() > `; //for debugging
+    this.usersService.routerRedirectUrl = state.url;
     
-    return this.checkLogin(url);
-  }
+    return this.usersService.getAuthenticatedUser().map(
+      (data : any) => {
+        if (data && data.email) {
+          this.usersService.routerRedirectUrl = null; //we don't need this
+          return true;
+        } else {
+          this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
+          this.router.navigate(['/users/login']);
 
-  checkLogin(url: string) : boolean {
-    if (this.usersService.isLoggedIn) { 
-      return true; 
-    }
-
-    // Store the attempted URL for redirecting
-    //this.authService.redirectUrl = url;
-
-    // Navigate to the login page with extras
-    this.router.navigate(['/users/login']);
-    return false;
+          return false;
+        }
+      }, 
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
+        this.router.navigate(['/users/login']);
+        return false;
+      }
+    );
   }
 }

@@ -32,7 +32,9 @@ export class LoginComponent implements OnInit {
         if (data && data.email) {
           const user = new User(data.name, data.email, data.avatar);
           this.usersService.user = user;
-          this.router.navigate(['/']); //go home
+          const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
+          this.usersService.routerRedirectUrl = null;
+          this.router.navigate([redirectUrl]); //go home
         } else {
           console.error(`${methodTrace} Unexpected data format.`);
         }

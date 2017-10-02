@@ -20,7 +20,23 @@ export class AppComponent implements OnInit {
   constructor(private router : Router, private appService: AppService, private usersService : UsersService) { }
 
   ngOnInit(): void {
-    let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging  
+    let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+
+    this.usersService.getAuthenticatedUser().subscribe(
+      (data : any) => {
+        if (data && data.email) {
+          const user : User = new User(data.name, data.email, data.avatar);          
+          this.usersService.user = user;
+        } else {
+          this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
+          this.usersService.user = null;
+        }
+      }, 
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
+        this.usersService.user = null;
+      }
+    );
   }
 
   logout() : void {
@@ -29,14 +45,11 @@ export class AppComponent implements OnInit {
     this.usersService.logout().subscribe(
       (data : any) => {
         this.usersService.user = null;
-        console.log(123);
         this.router.navigate(['/']);
       },
       (error : any) =>  {
-        console.error(`${methodTrace} There was an error with the logout service > ${error}`);
+        this.appService.consoleLog('error', `${methodTrace} There was an error with the logout service.`, error);
       }
     );
   }
-
-
 }
