@@ -1,9 +1,17 @@
+<nav class="navigation--main">
+  <md-chip-list>
+    <md-chip routerLink="/welcome">Welcome</md-chip>
+    <md-chip routerLink="/calculators">Calculators</md-chip>
+    <md-chip selected="true">Equity</md-chip>
+  </md-chip-list>      
+</nav>
+
 <form class="form__container" (ngSubmit)="onSubmit()" #equityForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
   
   <section fxLayout="column" class="form__fields">
-    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="form__fields__row">
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
       <!-- Purchase price -->
-      <md-input-container fxFlex="200px" class="form__field">
+      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input mdInput type="number" id="purchasePrice" name="purchasePrice" placeholder="Purchase price" 
             [(ngModel)]="model.purchasePrice" 
             required
@@ -14,7 +22,7 @@
       </md-input-container>
       
       <!-- Market value -->
-      <md-input-container fxFlex="200px" class="form__field">
+      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input mdInput type="number" id="marketValue" name="marketValue" placeholder="Market value" 
             [(ngModel)]="model.marketValue" 
             required
@@ -27,9 +35,9 @@
   </section>
 
   <section fxLayout="column" class="form__fields">
-    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="form__fields__row">
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
       <!-- Loan coverage -->
-      <md-input-container fxFlex="200px" class="form__field">
+      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input mdInput type="number" id="loanCoverage" name="loanCoverage" placeholder="Loan coverage %" 
             [(ngModel)]="model.loanCoverage" 
             required loanCoverage
@@ -40,7 +48,7 @@
       </md-input-container>
 
       <!-- Savings -->
-      <md-input-container fxFlex="200px" class="form__field">
+      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input mdInput type="number" id="savings" name="savings" placeholder="Current savings" 
             [(ngModel)]="model.savings" 
             value="model.savings"
@@ -48,14 +56,14 @@
       </md-input-container>
 
       <!-- Add renovations checkbox -->
-      <md-checkbox fxFlex="200px" class="form__action" [(ngModel)]="model.addRenovations" name="addRenovations" id="addRenovations">Add renovations data</md-checkbox>
+      <md-checkbox fxFlex fxFlex.gt-xs="200px" class="form__action" [(ngModel)]="model.addRenovations" name="addRenovations" id="addRenovations">Add renovations data</md-checkbox>
     </div>
   </section>
 
   <section fxLayout="column" class="form__fields" *ngIf="model.addRenovations">
-    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="form__fields__row">
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
       <!-- Renovation cost -->
-      <md-input-container fxFlex="200px" class="form__field">
+      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input mdInput type="number" id="renovationCost" name="renovationCost" placeholder="Renovation cost" 
             [(ngModel)]="model.renovationCost" 
             value="model.renovationCost"
@@ -63,7 +71,7 @@
       </md-input-container>
       
       <!-- New market value -->
-      <md-input-container fxFlex="200px" class="form__field">
+      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input mdInput type="number" id="newMarketValue" name="newMarketValue" placeholder="After renovations market value" 
             [(ngModel)]="model.newMarketValue" 
             value="model.newMarketValue"
@@ -71,7 +79,7 @@
       </md-input-container>
       
       <!-- First year repayment -->
-      <md-input-container fxFlex="200px" class="form__field">
+      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input mdInput type="number" id="firstYearRepayment" name="firstYearRepayment" placeholder="First year loan repayments" 
             [(ngModel)]="model.firstYearRepayment" 
             value="model.firstYearRepayment"
@@ -82,22 +90,20 @@
 
 </form>
 
-<section fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="">
-  <div fxFlex="620px" fxLayoutGap.gt-sm="10px">
+<section  class="">
+  <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxFlex fxFlex.gt-xs="620px">
     <md-card fxFlex>
-      <md-card-title>Initial figures</md-card-title>
+      <md-card-title class="md-card-title--ac">Initial figures</md-card-title>
       <md-card-content>
         <div><label>Loan amount: </label><span>{{loanAmount}}</span></div>
         <div><label>Deposit amount: </label><span>{{depositAmount}}</span></div>
         <div><label>Discount: </label><span>{{discount}}</span></div>
         <div><label>Equity: </label><span>{{equity}}</span></div>
-        
-        Usable equity : {{usableEquityAfterReno}}
       </md-card-content>
     </md-card>
 
-    <md-card fxFlex="350px" *ngIf="model.addRenovations">
-      <md-card-title>After renovations figures</md-card-title>
+    <md-card fxFlex *ngIf="model.addRenovations">
+      <md-card-title class="md-card-title--ac">After renovations figures</md-card-title>
       <md-card-content>
         <div><label>Usable equity: </label><span>{{usableEquityAfterReno}}</span></div>
       </md-card-content>

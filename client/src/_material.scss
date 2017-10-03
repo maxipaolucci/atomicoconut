@@ -1,3 +1,11 @@
 snack-bar-container.snack-bar--simple {
   background-color: $purple;
 }
+
+md-chip {
+  cursor: pointer;
+}
+
+md-card .mat-card-title.md-card-title--ac {
+  font-size: 18px;
+}

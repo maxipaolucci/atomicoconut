@@ -29,6 +29,10 @@ router.get('/app/users/login', (req, res) => {
   res.render('home', {title: 'Login'});
 });
 
+router.get('/app/users/login/:state', (req, res) => {
+  res.render('home', {title: 'Login'});
+});
+
 router.get('/app/users/register', (req, res) => {
   res.render('home', {title: 'Register'});
 });

@@ -1,3 +1,10 @@
+<nav class="navigation--main">
+  <md-chip-list>
+    <md-chip routerLink="/welcome">Welcome</md-chip>
+    <md-chip selected="true">My account</md-chip>
+  </md-chip-list>
+</nav>
+
 <form class="form__container" (ngSubmit)="onSubmit()" #accountForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
   
   <div fxLayout="column" class="form__fields">

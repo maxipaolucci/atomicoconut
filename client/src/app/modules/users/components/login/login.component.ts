@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
@@ -15,9 +15,18 @@ export class LoginComponent implements OnInit {
   model : any = {email : '', password : ''};
   forgotModel : any = { email : '', forgot : false };
 
-  constructor(private usersService : UsersService, private appService : AppService, private router : Router) { }
+  constructor(private usersService : UsersService, private appService : AppService, private router : Router, private route : ActivatedRoute) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+    
+    this.route.paramMap.map((params: ParamMap) => params.get('state'))
+        .subscribe(state => {
+          if (state === 'reset-password-token-expired') {
+            this.appService.showResults('Reset password url has expired or is invalid. Please go to Forgot my password again to create a new one.', 5000);
+          }
+        });
+  }
 
   /**
    * When user submits the login form
