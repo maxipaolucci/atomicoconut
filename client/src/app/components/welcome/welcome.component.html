@@ -1,7 +1,5 @@
-<nav class="navigation--main">
-  <md-chip-list>
-    <md-chip selected="true">Welcome</md-chip>
-    <md-chip routerLink="/investments">Investments</md-chip>
-    <md-chip routerLink="/calculators">Calculators</md-chip>
-  </md-chip-list>
-</nav>
+<main-navigator [links]="[
+    { displayName: 'Welcome', url: null, selected: true },
+    { displayName: 'Investments', url: '/investments' },
+    { displayName: 'Calculators', url: '/calculators' }]">
+</main-navigator>

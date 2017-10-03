@@ -4,6 +4,10 @@ snack-bar-container.snack-bar--simple {
 
 md-chip {
   cursor: pointer;
+
+  &.mat-chip-selected {
+    cursor: default;
+  }
 }
 
 md-card .mat-card-title.md-card-title--ac {

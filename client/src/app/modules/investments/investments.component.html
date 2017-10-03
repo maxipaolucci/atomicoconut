@@ -1,8 +1,6 @@
-<nav class="navigation--main">
-  <md-chip-list>
-    <md-chip routerLink="/welcome">Welcome</md-chip>
-    <md-chip selected="true">Investments</md-chip>
-  </md-chip-list>
-</nav>
+<main-navigator [links]="[
+  { displayName: 'Welcome', url: '/welcome', selected: false },
+  { displayName: 'Investments', url: null, selected: true }]">
+</main-navigator>
 
 <investments-dashboard></investments-dashboard>

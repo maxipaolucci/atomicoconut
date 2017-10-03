@@ -1,9 +1,7 @@
-<nav class="navigation--main">
-  <md-chip-list>
-    <md-chip routerLink="/welcome">Welcome</md-chip>
-    <md-chip selected="true">My account</md-chip>
-  </md-chip-list>
-</nav>
+<main-navigator [links]="[
+    { displayName: 'Welcome', url: '/welcome', selected: false },
+    { displayName: 'My account', url: null, selected: true }]">
+</main-navigator>
 
 <form class="form__container" (ngSubmit)="onSubmit()" #accountForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
   
@@ -36,7 +34,7 @@
   </div>
 
   <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center none" class="form__actions">
-    <button fxFlex class="form__action mat-raised-button" md-raised-button type="submit" [disabled]="!accountForm.form.valid">Save</button>
+    <button class="form__action mat-raised-button" color="accent" md-raised-button type="submit" [disabled]="!accountForm.form.valid">Save</button>
   </div>
 
 </form>

@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { CustomMaterialDesignModule } from '../../modules/custom-material-design/custom-material-design.module';
-
+import { SharedModule } from '../../modules/shared/shared.module';
 import { InvestmentsComponent } from './investments.component';
 import { InvestmentsDashboardComponent } from './components/investments-dashboard/investments-dashboard.component';
 import { CryptoCurrencyComponent } from './components/crypto-currency/crypto-currency.component';
@@ -17,7 +17,8 @@ import { CryptoCurrencyComponent } from './components/crypto-currency/crypto-cur
     InvestmentsRoutingModule,
     FormsModule,
     FlexLayoutModule,
-    CustomMaterialDesignModule
+    CustomMaterialDesignModule,
+    SharedModule
   ],
   declarations: [
     CryptoCurrencyComponent,

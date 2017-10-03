@@ -1,5 +1,12 @@
 @import '../../../../../variables';
 
+.form__login {
+
+  .form__actions--create-account {
+    margin: 20px 0;
+  }
+}
+
 .form__forgot {
   margin-top: 50px;
 }

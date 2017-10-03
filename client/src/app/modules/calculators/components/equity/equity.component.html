@@ -1,12 +1,10 @@
-<nav class="navigation--main">
-  <md-chip-list>
-    <md-chip routerLink="/welcome">Welcome</md-chip>
-    <md-chip routerLink="/calculators">Calculators</md-chip>
-    <md-chip selected="true">Equity</md-chip>
-  </md-chip-list>      
-</nav>
+<main-navigator [links]="[
+    { displayName: 'Welcome', url: '/welcome', selected: false },
+    { displayName: 'Calculators', url: '/calculators', selected: false },
+    { displayName: 'Equity', url: null, selected: true }]">
+</main-navigator>
 
-<form class="form__container" (ngSubmit)="onSubmit()" #equityForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
+<form class="form__container form__equity-calc" (ngSubmit)="onSubmit()" #equityForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
   
   <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
@@ -56,7 +54,12 @@
       </md-input-container>
 
       <!-- Add renovations checkbox -->
-      <md-checkbox fxFlex fxFlex.gt-xs="200px" class="form__action" [(ngModel)]="model.addRenovations" name="addRenovations" id="addRenovations">Add renovations data</md-checkbox>
+      <md-slide-toggle color="accent" class="form__field form__field__toogle form__field__toogle--add-reno"
+          [(ngModel)]="model.addRenovations" name="addRenovations" id="addRenovations">
+        
+        Add renovations data
+      </md-slide-toggle>
+      <!-- <md-checkbox fxFlex fxFlex.gt-xs="200px" class="form__action" [(ngModel)]="model.addRenovations" name="addRenovations" id="addRenovations">Add renovations data</md-checkbox> -->
     </div>
   </section>
 

@@ -1,11 +1,9 @@
-<nav class="navigation--main">
-  <md-chip-list>
-    <md-chip routerLink="/welcome">Welcome</md-chip>
-    <md-chip selected="true">Login</md-chip>
-  </md-chip-list>
-</nav>
+<main-navigator [links]="[
+    { displayName: 'Welcome', url: '/welcome', selected: false },
+    { displayName: 'Login', url: null, selected: true }]">
+</main-navigator>
 
-<form class="form__container" (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
+<form class="form__container form__login" (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
   
   <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="form__fields__row">
@@ -35,12 +33,13 @@
   </section>
 
   <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions">
-    <button class="form__action mat-raised-button" md-raised-button type="submit" [disabled]="!loginForm.form.valid">Login</button>
+    <button class="form__action mat-raised-button" md-raised-button type="submit" 
+        color="accent" [disabled]="!loginForm.form.valid">Login</button>
     <md-checkbox fxLayoutAlign.xs="center center" class="form__action" [(ngModel)]="forgotModel.forgot" name="forgot" id="forgot">Forgot my password</md-checkbox>
   </section>
 
-  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions">
-    <a class="color__almost-white ac__link" routerLink="/users/register">Create an account</a>
+  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign="center center" class="form__actions form__actions--create-account">
+    <a md-button color="accent" class="color__almost-white ac__link" routerLink="/users/register">Create an account</a>
   </section>
 
 </form>
@@ -64,7 +63,7 @@
   </section>
 
   <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center none" class="form__actions">
-    <button class="form__action mat-raised-button" md-raised-button type="submit" [disabled]="!forgotForm.form.valid">Send</button>
+    <button class="form__action mat-raised-button" color="accent" md-raised-button type="submit" [disabled]="!forgotForm.form.valid">Send</button>
   </section>
 
 </form>
