@@ -14,6 +14,7 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 export class AccountComponent implements OnInit {
 
   private model : any = {name : '', email : ''};
+  private updateAccountServiceRunning : boolean = false;
 
   constructor(private usersService : UsersService, private appService : AppService, 
       private mainNavigatorService : MainNavigatorService, private route : ActivatedRoute) { }
@@ -33,6 +34,7 @@ export class AccountComponent implements OnInit {
    */
   onSubmit() { 
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
+    this.updateAccountServiceRunning = true;
     
     //call the account service
     this.usersService.updateAccount(this.model).subscribe(
@@ -44,6 +46,8 @@ export class AccountComponent implements OnInit {
         } else {
           console.error(`${methodTrace} Unexpected data format.`)
         }
+
+        this.updateAccountServiceRunning = false;
       },
       (error : any) => {
         console.error(`${methodTrace} There was an error with the update account service > ${error}`);
@@ -51,6 +55,8 @@ export class AccountComponent implements OnInit {
           //the mail system failed for external reasons
           this.appService.showResults(`There was an error with the update account service, please try again in a few minutes.`);
         }
+
+        this.updateAccountServiceRunning = false;
       }
     );
   }

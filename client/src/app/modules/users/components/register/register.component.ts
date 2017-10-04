@@ -12,7 +12,9 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+
   private model : any = {name : '', email : '', password : '', 'password-confirm' : ''};
+  private registerServiceRunning : boolean = false;
   
   constructor(private usersService : UsersService, private appService : AppService, private router : Router,
       private mainNavigatorService : MainNavigatorService) {}
@@ -32,9 +34,12 @@ export class RegisterComponent implements OnInit {
   onSubmit() { 
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
 
+    this.registerServiceRunning = true;
+
     //chech that the password and the confirmed password are the same
     if (this.model.password !== this.model['password-confirm']) {
       console.error(`${methodTrace} Confirm password must match password.`);
+      this.registerServiceRunning = false;
       return false;
     }
 
@@ -50,6 +55,8 @@ export class RegisterComponent implements OnInit {
         } else {
           console.error(`${methodTrace} Unexpected data format.`, data);
         }
+
+        this.registerServiceRunning = false;
       },
       (error : any) => {
         console.error(`${methodTrace} There was an error with the register service.`, error);
@@ -58,6 +65,8 @@ export class RegisterComponent implements OnInit {
           //the mail system failed for external reasons
           this.appService.showResults(`The submitted email was already use by another person, pick a different one please.`);
         }
+
+        this.registerServiceRunning = false;
       }
     );
   }

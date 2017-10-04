@@ -99,6 +99,7 @@ var AppComponent = (function () {
         this.usersService.getAuthenticatedUser().subscribe(function (data) {
             if (data && data.email) {
                 var user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_user__["a" /* User */](data.name, data.email, data.avatar);
+                console.log(user, data);
                 _this.usersService.user = user;
             }
             else {
@@ -1516,7 +1517,7 @@ SharedModule = __decorate([
 /***/ "../../../../../src/app/modules/users/components/account/account.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #accountForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            value=\"model.name\"\r\n            #name=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</md-error>\r\n        <md-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</md-error>\r\n      </md-input-container>\r\n      \r\n      <!-- Email -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            value=\"model.email\"\r\n            #email=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</md-error>\r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</md-error>\r\n      </md-input-container>\r\n    </div>\r\n  </div>\r\n\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button class=\"form__action mat-raised-button\" color=\"accent\" md-raised-button type=\"submit\" [disabled]=\"!accountForm.form.valid\">Save</button>\r\n  </div>\r\n\r\n</form>"
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #accountForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            value=\"model.name\"\r\n            #name=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</md-error>\r\n        <md-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</md-error>\r\n      </md-input-container>\r\n      \r\n      <!-- Email -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            value=\"model.email\"\r\n            #email=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</md-error>\r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</md-error>\r\n      </md-input-container>\r\n    </div>\r\n  </div>\r\n\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!updateAccountServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" md-raised-button type=\"submit\" \r\n        [disabled]=\"!accountForm.form.valid\">Save</button>\r\n\r\n    <md-progress-bar *ngIf=\"updateAccountServiceRunning\"\r\n        class=\"progress-bar progress-bar--update-account\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </md-progress-bar>\r\n  </div>\r\n\r\n</form>"
 
 /***/ }),
 
@@ -1528,7 +1529,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
 
 // exports
 
@@ -1571,6 +1572,7 @@ var AccountComponent = (function () {
         this.mainNavigatorService = mainNavigatorService;
         this.route = route;
         this.model = { name: '', email: '' };
+        this.updateAccountServiceRunning = false;
     }
     AccountComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1588,6 +1590,7 @@ var AccountComponent = (function () {
     AccountComponent.prototype.onSubmit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.updateAccountServiceRunning = true;
         //call the account service
         this.usersService.updateAccount(this.model).subscribe(function (data) {
             if (data && data.email) {
@@ -1598,12 +1601,14 @@ var AccountComponent = (function () {
             else {
                 console.error(methodTrace + " Unexpected data format.");
             }
+            _this.updateAccountServiceRunning = false;
         }, function (error) {
             console.error(methodTrace + " There was an error with the update account service > " + error);
             if (error.codeno === 400) {
                 //the mail system failed for external reasons
                 _this.appService.showResults("There was an error with the update account service, please try again in a few minutes.");
             }
+            _this.updateAccountServiceRunning = false;
         });
     };
     return AccountComponent;
@@ -1771,7 +1776,7 @@ var _a, _b, _c, _d, _e;
 /***/ "../../../../../src/app/modules/users/components/register/register.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #registerForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            #name=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</md-error>\r\n        <md-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</md-error>\r\n      </md-input-container>\r\n      \r\n      <!-- Email -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            #email=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</md-error>\r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</md-error>\r\n      </md-input-container>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"passwordConfirm\" reverse=\"true\"\r\n            #password=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</md-error>\r\n      </md-input-container>\r\n\r\n      <!-- Password confirm -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model['password-confirm']\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"password\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator\">Confirm password must match password</md-error>\r\n      </md-input-container>\r\n      <!-- <pre>{{passwordConfirm.errors | json}}</pre> -->\r\n    </div>\r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button class=\"form__action mat-raised-button\" color=\"accent\" md-raised-button type=\"submit\" [disabled]=\"!registerForm.form.valid\">Create account</button>\r\n  </div>\r\n\r\n</form>"
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #registerForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            #name=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</md-error>\r\n        <md-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</md-error>\r\n      </md-input-container>\r\n      \r\n      <!-- Email -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            #email=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</md-error>\r\n        <md-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</md-error>\r\n      </md-input-container>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"passwordConfirm\" reverse=\"true\"\r\n            #password=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</md-error>\r\n      </md-input-container>\r\n\r\n      <!-- Password confirm -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model['password-confirm']\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"password\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator\">Confirm password must match password</md-error>\r\n      </md-input-container>\r\n      <!-- <pre>{{passwordConfirm.errors | json}}</pre> -->\r\n    </div>\r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!registerServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" md-raised-button type=\"submit\" \r\n        [disabled]=\"!registerForm.form.valid\">Create account</button>\r\n\r\n    <md-progress-bar *ngIf=\"registerServiceRunning\"\r\n        class=\"progress-bar progress-bar--register\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n  </md-progress-bar>\r\n  </div>\r\n\r\n</form>"
 
 /***/ }),
 
@@ -1783,7 +1788,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 127px; } }\n", ""]);
 
 // exports
 
@@ -1826,6 +1831,7 @@ var RegisterComponent = (function () {
         this.router = router;
         this.mainNavigatorService = mainNavigatorService;
         this.model = { name: '', email: '', password: '', 'password-confirm': '' };
+        this.registerServiceRunning = false;
     }
     RegisterComponent.prototype.ngOnInit = function () {
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
@@ -1841,9 +1847,11 @@ var RegisterComponent = (function () {
     RegisterComponent.prototype.onSubmit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.registerServiceRunning = true;
         //chech that the password and the confirmed password are the same
         if (this.model.password !== this.model['password-confirm']) {
             console.error(methodTrace + " Confirm password must match password.");
+            this.registerServiceRunning = false;
             return false;
         }
         this.usersService.user = null; //reset authenticated user. Register automatically authenticates the registered user.
@@ -1858,6 +1866,7 @@ var RegisterComponent = (function () {
             else {
                 console.error(methodTrace + " Unexpected data format.", data);
             }
+            _this.registerServiceRunning = false;
         }, function (error) {
             console.error(methodTrace + " There was an error with the register service.", error);
             if (error.codeno === 400) {
@@ -1865,6 +1874,7 @@ var RegisterComponent = (function () {
                     //the mail system failed for external reasons
                     _this.appService.showResults("The submitted email was already use by another person, pick a different one please.");
             }
+            _this.registerServiceRunning = false;
         });
     };
     return RegisterComponent;
@@ -1886,7 +1896,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/modules/users/components/reset-password/reset-password.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #resetForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"passwordConfirm\" reverse=\"true\"\r\n            #password=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</md-error>\r\n      </md-input-container>\r\n\r\n      <!-- Password confirm -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model['password-confirm']\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"password\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator\">Confirm password must match password</md-error>\r\n      </md-input-container>\r\n    </div>\r\n    \r\n    \r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button class=\"form__action mat-raised-button\" color=\"accent\" md-raised-button type=\"submit\" [disabled]=\"!resetForm.form.valid\">Reset password</button>\r\n  </div>\r\n\r\n</form>"
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #resetForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"passwordConfirm\" reverse=\"true\"\r\n            #password=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</md-error>\r\n      </md-input-container>\r\n\r\n      <!-- Password confirm -->\r\n      <md-input-container fxFlex class=\"form__field\">\r\n        <input mdInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model['password-confirm']\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"password\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</md-error>\r\n        <md-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator\">Confirm password must match password</md-error>\r\n      </md-input-container>\r\n    </div>\r\n    \r\n    \r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!resetPasswordServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" md-raised-button type=\"submit\" \r\n        [disabled]=\"!resetForm.form.valid\">Reset password</button>\r\n\r\n    <md-progress-bar *ngIf=\"resetPasswordServiceRunning\"\r\n        class=\"progress-bar progress-bar--reset-password\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </md-progress-bar>\r\n  </div>\r\n\r\n</form>"
 
 /***/ }),
 
@@ -1898,7 +1908,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 127px; } }\n", ""]);
 
 // exports
 
@@ -1916,7 +1926,8 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__user__ = __webpack_require__("../../../../../src/app/modules/users/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1930,6 +1941,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ResetPasswordComponent = (function () {
     function ResetPasswordComponent(usersService, router, route, mainNavigatorService) {
         this.usersService = usersService;
@@ -1938,6 +1950,7 @@ var ResetPasswordComponent = (function () {
         this.mainNavigatorService = mainNavigatorService;
         this.model = { password: '', 'password-confirm': '' };
         this.token = '';
+        this.resetPasswordServiceRunning = false;
     }
     ResetPasswordComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1961,20 +1974,29 @@ var ResetPasswordComponent = (function () {
     ResetPasswordComponent.prototype.onSubmit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.resetPasswordServiceRunning = true;
         //chech that the password and the confirmed password are the same
         if (this.model.password !== this.model['password-confirm']) {
             console.error(methodTrace + " Confirm password must match password.");
+            this.resetPasswordServiceRunning = false;
             return false;
         }
-        //call the register service
+        //call the reset password service.
+        this.usersService.user = null; //reset authenticated user. Reset automatically authenticates the registered user.
         this.usersService.reset(this.token, this.model).subscribe(function (data) {
             if (data) {
+                var user = new __WEBPACK_IMPORTED_MODULE_3__user__["a" /* User */](data.name, data.email, data.avatar);
+                _this.usersService.user = user;
                 _this.router.navigate(['/']); //go home
             }
             else {
                 console.error(methodTrace + " Unexpected data format.");
             }
-        }, function (error) { return console.error(methodTrace + " There was an error with the register service > " + error); });
+            _this.resetPasswordServiceRunning = false;
+        }, function (error) {
+            console.error(methodTrace + " There was an error with the reset password service > " + error);
+            _this.resetPasswordServiceRunning = false;
+        });
     };
     return ResetPasswordComponent;
 }());
@@ -1984,7 +2006,7 @@ ResetPasswordComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _d || Object])
 ], ResetPasswordComponent);
 
 var _a, _b, _c, _d;
