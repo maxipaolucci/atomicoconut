@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import {User} from '../../user';
+import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({
   selector: 'app-login',
@@ -15,11 +16,16 @@ export class LoginComponent implements OnInit {
   model : any = {email : '', password : ''};
   forgotModel : any = { email : '', forgot : false };
 
-  constructor(private usersService : UsersService, private appService : AppService, private router : Router, private route : ActivatedRoute) { }
+  constructor(private usersService : UsersService, private appService : AppService,  
+    private mainNavigatorService : MainNavigatorService, private router : Router, private route : ActivatedRoute) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     
+    this.mainNavigatorService.setLinks([
+      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'Login', url: null, selected: true }]);
+
     this.route.paramMap.map((params: ParamMap) => params.get('state'))
         .subscribe(state => {
           if (state === 'reset-password-token-expired') {

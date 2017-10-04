@@ -1,9 +1,3 @@
-<main-navigator [links]="[
-    { displayName: 'Welcome', url: '/welcome', selected: false },
-    { displayName: 'Calculators', url: '/calculators', selected: false },
-    { displayName: 'Equity', url: null, selected: true }]">
-</main-navigator>
-
 <form class="form__container form__equity-calc" (ngSubmit)="onSubmit()" #equityForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
   
   <section fxLayout="column" class="form__fields">

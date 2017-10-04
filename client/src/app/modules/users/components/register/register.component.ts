@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import {User} from '../../user';
+import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({
   selector: 'users-register',
@@ -13,10 +14,16 @@ import {User} from '../../user';
 export class RegisterComponent implements OnInit {
   private model : any = {name : '', email : '', password : '', 'password-confirm' : ''};
   
-  constructor(private usersService : UsersService, private appService : AppService, private router : Router) {}
+  constructor(private usersService : UsersService, private appService : AppService, private router : Router,
+      private mainNavigatorService : MainNavigatorService) {}
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+
+    this.mainNavigatorService.setLinks([
+      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'Login', url: '/users/login', selected: false },
+      { displayName: 'Create account', url: null, selected: true }]);
   }
 
   /**

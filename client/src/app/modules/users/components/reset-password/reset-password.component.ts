@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap  } from '@angular/router';
 
 import { UsersService } from '../../users.service';
+import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -13,11 +14,17 @@ export class ResetPasswordComponent implements OnInit {
   model : any = { password : '', 'password-confirm' : ''};
   token : string = '';
 
-  constructor(private usersService : UsersService, private router : Router, private route : ActivatedRoute ) { }
+  constructor(private usersService : UsersService, private router : Router, private route : ActivatedRoute,
+      private mainNavigatorService : MainNavigatorService ) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     
+    this.mainNavigatorService.setLinks([
+      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'Login', url: '/users/login', selected: false },
+      { displayName: 'Reset password', url: null, selected: true }]);
+
     this.route.paramMap.map((params: ParamMap) => params.get('token'))
         .subscribe(token => { 
           if (token) {

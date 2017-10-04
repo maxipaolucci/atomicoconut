@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({
   selector: 'app-equity',
@@ -25,9 +26,14 @@ export class EquityComponent implements OnInit {
     addRenovations : false
   }
 
-  constructor() { }
+  constructor(private mainNavigatorService : MainNavigatorService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.mainNavigatorService.setLinks([
+      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'Calculators', url: '/calculators', selected: false },
+      { displayName: 'Equity', url: null, selected: true }]);
+  }
 
   ngAfterViewInit() {
     this.form.valueChanges.debounceTime(500).subscribe(values => {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-
+import { MainNavigatorService } from './main-navigator.service';
 @Component({
   selector: 'main-navigator',
   templateUrl: './main-navigator.component.html',
@@ -7,10 +7,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MainNavigatorComponent implements OnInit {
   
-  @Input() links : any;
+  links : any;
   
-  constructor() { }
+  constructor(private mainNavigatorService : MainNavigatorService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.mainNavigatorService.links$.subscribe((links : any[]) => this.links = links);
+  }
 
 }

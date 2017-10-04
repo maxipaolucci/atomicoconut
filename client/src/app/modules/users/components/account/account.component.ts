@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import {User} from '../../user';
+import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({
   selector: 'app-account',
@@ -14,9 +15,14 @@ export class AccountComponent implements OnInit {
 
   private model : any = {name : '', email : ''};
 
-  constructor(private usersService : UsersService, private appService : AppService, private route : ActivatedRoute) { }
+  constructor(private usersService : UsersService, private appService : AppService, 
+      private mainNavigatorService : MainNavigatorService, private route : ActivatedRoute) { }
 
   ngOnInit() {
+    this.mainNavigatorService.setLinks([
+      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'My account', url: null, selected: true }]);
+
     this.route.data.subscribe((data: { authUser: User }) => {
       this.model = { name : data.authUser.name, email : data.authUser.email };
     });

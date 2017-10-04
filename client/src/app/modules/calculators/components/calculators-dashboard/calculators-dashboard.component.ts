@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({
   selector: 'app-calculators-dashboard',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalculatorsDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private mainNavigatorService : MainNavigatorService) { }
 
   ngOnInit() {
+    this.mainNavigatorService.setLinks([
+      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'Calculators', url: null, selected: true },
+      { displayName: 'Equity', url: '/calculators/equity', selected: false }]);
   }
 
 }
