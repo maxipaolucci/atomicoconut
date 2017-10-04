@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
 
   model : any = {email : '', password : ''};
   forgotModel : any = { email : '', forgot : false };
+  loginServiceRunning : boolean = false;
+  forgotServiceRunning : boolean = false;
 
   constructor(private usersService : UsersService, private appService : AppService,  
     private mainNavigatorService : MainNavigatorService, private router : Router, private route : ActivatedRoute) { }
@@ -40,6 +42,7 @@ export class LoginComponent implements OnInit {
   onSubmit() { 
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
 
+    this.loginServiceRunning = true;
     this.usersService.user = null; //reset authenticated user. Register automatically authenticates the registered user.
     //call the register service
     this.usersService.login(this.model).subscribe(
@@ -53,6 +56,8 @@ export class LoginComponent implements OnInit {
         } else {
           console.error(`${methodTrace} Unexpected data format.`);
         }
+
+        this.loginServiceRunning = false;
       },
       (error : any) => {
         console.error(`${methodTrace} There was an error with the login service: `, error);
@@ -60,6 +65,8 @@ export class LoginComponent implements OnInit {
         if (error.codeno === 451) {
           this.appService.showResults(error.msg, 60000, 'Close');
         }
+
+        this.loginServiceRunning = false;
       }
     );
   }
@@ -70,13 +77,17 @@ export class LoginComponent implements OnInit {
   onForgotSubmit() { 
     const methodTrace = `${this.constructor.name} > onForgotSubmit() > `; //for debugging
 
+    this.forgotServiceRunning = true;
     //call the register service
     this.usersService.forgot(this.forgotModel).subscribe(
       (data : any) => {
+        this.forgotServiceRunning = false;
         this.appService.showResults(`You have been emailed a password reset link.`);
       },
       (error : any) => {
         console.error(`${methodTrace} There was an error with the forgot password service: `, error);
+        this.forgotServiceRunning = false;
+        
         if (error.codeno === 455) {
           //invalid email
           this.appService.showResults(error.msg, 3000);

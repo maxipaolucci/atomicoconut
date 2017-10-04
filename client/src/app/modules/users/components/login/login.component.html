@@ -27,9 +27,16 @@
     </div>
   </section>
 
-  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions">
-    <button class="form__action mat-raised-button" md-raised-button type="submit" 
+  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--login">
+    <button *ngIf="!loginServiceRunning" class="form__action mat-raised-button" md-raised-button type="submit" 
         color="accent" [disabled]="!loginForm.form.valid">Login</button>
+    
+    <md-progress-bar *ngIf="loginServiceRunning"
+        class="progress-bar progress-bar--login"
+        color="primary"
+        mode="indeterminate">
+    </md-progress-bar>
+    
     <md-checkbox fxLayoutAlign.xs="center center" class="form__action" [(ngModel)]="forgotModel.forgot" name="forgot" id="forgot">Forgot my password</md-checkbox>
   </section>
 
@@ -58,7 +65,14 @@
   </section>
 
   <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center none" class="form__actions">
-    <button class="form__action mat-raised-button" color="accent" md-raised-button type="submit" [disabled]="!forgotForm.form.valid">Send</button>
+    <button *ngIf="!forgotServiceRunning" class="form__action mat-raised-button" 
+        color="accent" md-raised-button type="submit" [disabled]="!forgotForm.form.valid">Send</button>
+
+    <md-progress-bar *ngIf="forgotServiceRunning"
+        class="progress-bar progress-bar--forgot"
+        color="primary"
+        mode="indeterminate">
+    </md-progress-bar>
   </section>
 
 </form>
