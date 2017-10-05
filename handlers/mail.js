@@ -43,3 +43,18 @@ exports.send = async (options) => {
   const sendMail = promisify(transportMailTrap.sendMail, transportMailTrap);
   return sendMail(mailOptions);
 };
+
+const sgMail = require('@sendgrid/mail');
+exports.sendSgMail = async (options) => {
+  const html = generateHTML(options.filename, options);
+  const text = htmlToText.fromString(html); 
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const mailOptions = {
+    to: options.user.email,
+    from: 'support@atomiCoconut.com',
+    subject: options.subject,
+    text,
+    html
+  };
+  return sgMail.send(mailOptions);
+};

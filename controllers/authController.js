@@ -141,7 +141,13 @@ exports.forgot = async (req, res) => {
     //3 send them email with the token
     console.log(`${methodTrace} ${getMessage('message', 1008, email)}`);
     const resetURL = `http://${req.headers.host}/app/users/account/reset/${user.resetPasswordToken}`;
-    await mail.send({
+    // await mail.send({
+    //     user,
+    //     subject : 'Password reset',
+    //     resetURL,
+    //     filename : 'password-reset' //this is going to be the mail template file
+    // });
+    await mail.sendSgMail({
         user,
         subject : 'Password reset',
         resetURL,
