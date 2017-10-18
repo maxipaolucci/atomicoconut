@@ -2,13 +2,15 @@ export class User {
 
   private _name : string;
   private _email : string;
-  private _avatar : string; 
+  private _avatar : string;
+  private _accessToinvestments : boolean;
 
 
-  constructor(name : string = '', email : string = '', avatar : string = '') {
+  constructor(name : string = '', email : string = '', avatar : string = '', accessToInvestments = false) {
     this._name = name;
     this._email = email;
     this._avatar = avatar;
+    this._accessToinvestments = accessToInvestments;
   }
 
   get name() {
@@ -33,5 +35,13 @@ export class User {
 
   set avatar(avatar) {
     this._avatar = avatar;
+  }
+
+  get accessToInvestments() {
+    return this._accessToinvestments;
+  }
+
+  set accessToInvestments(accessToInvestments) {
+    this._accessToinvestments = accessToInvestments;
   }
 }

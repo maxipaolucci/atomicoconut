@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const { getMessage } = require('../handlers/errorHandlers');
+const { accessToInvestments } = require('../handlers/userHandlers');
 
 const errorTrace = 'userController >';
 
@@ -71,6 +72,6 @@ exports.updateAccount = async (req, res) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1020, user.email),
-        data : { name : user.name, email : user.email, avatar : user.gravatar }
+        data : { name : user.name, email : user.email, avatar : user.gravatar, accessToInvestments : accessToInvestments(user.email) }
     });
 };

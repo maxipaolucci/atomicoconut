@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
+import {User} from '../../../users/user';
 
 @Component({
   selector: 'investments-dashboard',
@@ -12,11 +16,22 @@ export class InvestmentsDashboardComponent implements OnInit {
   private btcBuyDate : Date = new Date(2017, 6, 19);
   private totalInvestment = 0;
   private totalReturn = 0;
+  private showInvestments = false;
 
-  constructor() { }
+  constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService) { }
 
   ngOnInit() {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+
+    this.mainNavigatorService.setLinks([
+      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'Investments', url: null, selected: true }
+    ]);
+
+    //get authUser from resolver
+    this.route.data.subscribe((data: { authUser: User }) => {
+      this.showInvestments = data.authUser.accessToInvestments;
+    });
   }
 
   setTotals(totalReturns : any) : void {

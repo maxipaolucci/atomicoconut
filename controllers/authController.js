@@ -5,8 +5,12 @@ const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
+const { accessToInvestments } = require('../handlers/userHandlers');
+
 
 const errorTrace = 'authController >';
+
+
 
 exports.login = (req, res, next) => {
     const methodTrace = `${errorTrace} login() > `;
@@ -52,7 +56,7 @@ exports.login = (req, res, next) => {
                 status : 'success', 
                 codeno : 200,
                 msg : getMessage('message', 1000),
-                data : { name : user.name, email : user.email, avatar : user.gravatar }
+                data : { name : user.name, email : user.email, avatar : user.gravatar, accessToInvestments : accessToInvestments(user.email) }
             });
         });
     })(req, res, next);
@@ -97,11 +101,12 @@ exports.getUser = (req, res, next) => {
 
     if (req.isAuthenticated()) { //check in passport for authentication
         console.log(`${methodTrace} ${getMessage('message', 1004)}`);
+
         res.json({
             status : 'success',
             codeno : 200,
             msg : getMessage('message', 1004),
-            data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar }
+            data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar, accessToInvestments : accessToInvestments(req.user.email) }
         });
         return;
     }
@@ -213,7 +218,7 @@ exports.update = async (req, res) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1013),
-        data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar }
+        data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar, accessToInvestments : accessToInvestments(req.user.email) }
     });
 };
 

@@ -23,7 +23,8 @@ export class AccountComponent implements OnInit {
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'My account', url: null, selected: true }]);
-
+    
+    //get authUser from resolver
     this.route.data.subscribe((data: { authUser: User }) => {
       this.model = { name : data.authUser.name, email : data.authUser.email };
     });
@@ -40,7 +41,7 @@ export class AccountComponent implements OnInit {
     this.usersService.updateAccount(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
-          const user = new User(data.name, data.email, data.avatar);
+          const user = new User(data.name, data.email, data.avatar, data.accessToInvestments);
           this.usersService.user = user;
           this.appService.showResults(`Your profile was successfully updated!.`);
         } else {

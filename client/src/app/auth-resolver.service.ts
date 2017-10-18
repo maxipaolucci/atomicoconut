@@ -15,7 +15,7 @@ export class AuthResolver implements Resolve<User> {
     return this.usersService.getAuthenticatedUser().map(
       (data : any) => {
         if (data && data.email) {
-          const user : User = new User(data.name, data.email, data.avatar);          
+          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments);          
           this.usersService.user = user;
           return user;
         } else {

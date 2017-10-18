@@ -48,16 +48,15 @@ export class LoginComponent implements OnInit {
     this.usersService.login(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
-          const user = new User(data.name, data.email, data.avatar);
+          const user = new User(data.name, data.email, data.avatar, data.accessToInvestments);
           this.usersService.user = user;
           const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
           this.usersService.routerRedirectUrl = null;
           this.router.navigate([redirectUrl]); //go home
         } else {
           console.error(`${methodTrace} Unexpected data format.`);
+          this.loginServiceRunning = false;
         }
-
-        this.loginServiceRunning = false;
       },
       (error : any) => {
         console.error(`${methodTrace} There was an error with the login service: `, error);

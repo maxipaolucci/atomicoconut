@@ -34,7 +34,10 @@ const messageCodes = {
   1017 : 'Trying to register {{param}}...',
   1018 : 'User {{param}} successfully registered.',
   1019 : 'Searching user {{param}} for update...',
-  1020 : 'User {{param}} profile successfully updated.'
+  1020 : 'User {{param}} profile successfully updated.',
+  1021 : 'User {{param}} has not got access to investments',
+  1022 : 'User {{param}} has access to investments',
+  1023 : 'Checking access to investments for {{param}}...'
 };
 
 /**

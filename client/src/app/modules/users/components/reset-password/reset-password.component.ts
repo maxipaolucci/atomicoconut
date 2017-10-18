@@ -55,7 +55,7 @@ export class ResetPasswordComponent implements OnInit {
     this.usersService.reset(this.token, this.model).subscribe(
       (data : any) => {
         if (data) {
-          const user = new User(data.name, data.email, data.avatar);
+          const user = new User(data.name, data.email, data.avatar, data.accessToInvestments);
           this.usersService.user = user;
           this.router.navigate(['/']); //go home
         } else {

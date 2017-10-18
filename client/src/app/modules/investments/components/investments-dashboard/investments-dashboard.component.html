@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="10px">
+<div *ngIf="showInvestments" fxLayout="column" fxLayoutGap="10px">
   <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
     <crypto-currency fxFlex 
       [cryptoCurrency]="'xmr'"
@@ -42,6 +42,18 @@
       <p [class.color__green]="totalReturn >= totalInvestment" 
           [class.color__red]="totalReturn < totalInvestment">
         Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
+      </p>
+    </md-card-content>
+  </md-card>
+  
+</div>
+
+<div *ngIf="!showInvestments" fxLayout="column" fxLayoutGap="10px">
+  <md-card fxFlex class="totals-card">
+    <md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+        fxLayoutAlign="space-around center">
+      <p>
+        You do not have any investment to show
       </p>
     </md-card-content>
   </md-card>
