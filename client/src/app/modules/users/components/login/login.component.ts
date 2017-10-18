@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
-import {User} from '../../user';
+import {User} from '../../models/user';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({

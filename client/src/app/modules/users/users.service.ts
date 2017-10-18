@@ -4,7 +4,7 @@ import { Http, Response, Headers } from '@angular/http';
 import {Observable} from "rxjs/Rx";
 import {environment} from "../../../environments/environment";
 import {AppService} from "../../app.service";
-import {User} from "./user";
+import {User} from "./models/user";
 
 @Injectable()
 export class UsersService {

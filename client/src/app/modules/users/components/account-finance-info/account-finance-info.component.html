@@ -1,0 +1,49 @@
+<form class="form__container form__account-finance" (ngSubmit)="onSubmit()" #financeForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
+
+  <section fxLayout="column" class="form__fields">
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
+      <!-- Active income -->
+      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+        <input mdInput type="number" id="activeIncome" name="activeIncome" placeholder="Active Income" 
+            [(ngModel)]="model.activeIncome" 
+            value="model.activeIncome"
+            #activeIncome="ngModel">
+        <md-hint align="start">Annual income amount pre-tax.</md-hint>
+      </md-input-container>
+      
+      <!-- Tax rate -->
+      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+        <input mdInput type="number" id="incomeTaxRate" name="incomeTaxRate" placeholder="Active income tax rate" 
+            [(ngModel)]="model.incomeTaxRate" 
+            value="model.incomeTaxRate"
+            #incomeTaxRate="ngModel">
+
+        <md-hint align="start">Income tax rate (%).</md-hint>
+      </md-input-container>
+      
+      <!-- Net worth -->
+      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+        <input mdInput type="number" id="netWorth" name="netWorth" placeholder="Net worth" 
+            [(ngModel)]="model.netWorth" 
+            value="model.netWorth"
+            #netWorth="ngModel">
+      </md-input-container>
+    </div>
+  </section>
+
+  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--account-finance">
+    <button *ngIf="!accountFinanceServiceRunning" 
+        class="form__action mat-raised-button" 
+        md-raised-button 
+        type="submit" 
+        color="accent" 
+        [disabled]="!financeForm.form.valid">Save</button>
+    
+    <md-progress-bar *ngIf="accountFinanceServiceRunning"
+        class="progress-bar progress-bar--account-finance"
+        color="primary"
+        mode="indeterminate">
+    </md-progress-bar>
+  </section>
+
+</form>

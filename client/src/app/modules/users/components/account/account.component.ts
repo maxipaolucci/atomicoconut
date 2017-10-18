@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
-import {User} from '../../user';
+import {User} from '../../models/user';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({
@@ -14,6 +14,7 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 export class AccountComponent implements OnInit {
 
   public model : any = {name : '', email : ''};
+  public user : User = null;
   public updateAccountServiceRunning : boolean = false;
 
   constructor(private usersService : UsersService, private appService : AppService, 
@@ -26,6 +27,7 @@ export class AccountComponent implements OnInit {
     
     //get authUser from resolver
     this.route.data.subscribe((data: { authUser: User }) => {
+      this.user = data.authUser;
       this.model = { name : data.authUser.name, email : data.authUser.email };
     });
   }

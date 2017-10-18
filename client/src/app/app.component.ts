@@ -4,7 +4,7 @@ import { UsersService } from './modules/users/users.service';
 
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { configuration } from "../../configuration";
-import { User } from './modules/users/user';
+import { User } from './modules/users/models/user';
 import { Router } from '@angular/router';
 import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
 @Component({
