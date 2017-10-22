@@ -10,6 +10,7 @@ import { UsersService } from './users.service';
 import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { EqualValidatorDirective } from '../../directives/equal-validator.directive';
+import { NumberValidatorDirective } from '../../directives/number-validator.directive';
 import { AccountComponent } from './components/account/account.component';
 import { AccountFinanceInfoComponent } from './components/account-finance-info/account-finance-info.component';
 
@@ -27,6 +28,7 @@ import { AccountFinanceInfoComponent } from './components/account-finance-info/a
     LoginComponent,
     ResetPasswordComponent,
     EqualValidatorDirective,
+    NumberValidatorDirective,
     AccountComponent,
     AccountFinanceInfoComponent
   ],

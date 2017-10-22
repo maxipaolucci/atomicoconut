@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { UsersService } from './modules/users/users.service';
-import { User } from './modules/users/user';
+import { User } from './modules/users/models/user';
 import { AppService } from './app.service';
 
 @Injectable()
@@ -13,7 +13,6 @@ export class AuthGuard implements CanActivate {
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<boolean> | Promise<boolean> | boolean {
     let methodTrace = `${this.constructor.name} > canActivate() > `; //for debugging
     this.usersService.routerRedirectUrl = state.url;
-    console.log(state, next);
 
     return this.usersService.getAuthenticatedUser().map(
       (data : any) => {

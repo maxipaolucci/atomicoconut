@@ -1,4 +1,14 @@
 <div *ngIf="showInvestments" fxLayout="column" fxLayoutGap="10px">
+
+    <md-card fxFlex class="totals-card">
+      <md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+          fxLayoutAlign="space-around center">
+        <p>
+          Your expected net worth is {{ 35 * user.finance.activeIncome / 10 }} but your current net worth is {{user.finance.netWorth}}
+        </p>
+      </md-card-content>
+    </md-card>
+
   <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
     <crypto-currency fxFlex 
       [cryptoCurrency]="'xmr'"
