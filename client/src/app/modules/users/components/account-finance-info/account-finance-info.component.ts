@@ -11,6 +11,7 @@ export class AccountFinanceInfoComponent implements OnInit {
   @ViewChild('financeForm') form;
   @Input() user : User;
   model : AccountFinance = null;
+  accountFinanceServiceRunning : boolean = false;
 
   constructor() {}
 
