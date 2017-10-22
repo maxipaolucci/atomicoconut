@@ -14,8 +14,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() questions: QuestionBase<any>[] = [];
   @Input() postSubmitErrors : string[] = [];
   @Output() formData: EventEmitter<any> = new EventEmitter();
-  private form: FormGroup;
-  private payLoad = '';
+  public form: FormGroup;
+  public payLoad = '';
 
   constructor(private qcs: QuestionControlService) {}
 

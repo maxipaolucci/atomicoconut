@@ -12,9 +12,9 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 })
 export class ResetPasswordComponent implements OnInit {
 
-  private model : any = { password : '', 'password-confirm' : ''};
+  public model : any = { password : '', 'password-confirm' : ''};
   private token : string = '';
-  private resetPasswordServiceRunning : boolean = false;
+  public resetPasswordServiceRunning : boolean = false;
 
   constructor(private usersService : UsersService, private router : Router, private route : ActivatedRoute,
       private mainNavigatorService : MainNavigatorService ) { }

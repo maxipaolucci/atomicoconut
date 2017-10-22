@@ -16,7 +16,7 @@ export class InvestmentsDashboardComponent implements OnInit {
   private btcBuyDate : Date = new Date(2017, 6, 19);
   private totalInvestment = 0;
   private totalReturn = 0;
-  private showInvestments = false;
+  public showInvestments = false;
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService) { }
 

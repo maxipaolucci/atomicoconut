@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   title = 'app';
   defaultGravatarUrl = configuration.defaultGravatarUrl;
 
-  constructor(private router : Router, private appService: AppService, private usersService : UsersService,
+  constructor(private router : Router, private appService: AppService, public usersService : UsersService,
     private mainNavigatorService : MainNavigatorService) { }
 
   ngOnInit(): void {

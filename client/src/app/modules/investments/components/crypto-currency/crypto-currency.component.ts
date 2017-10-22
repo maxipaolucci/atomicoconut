@@ -16,9 +16,9 @@ export class CryptoCurrencyComponent implements OnInit {
   @Input() cryptoCurrencyCount : number;
   @Input() cryptoCurrencyBuyPrice : number; //USD
   @Input() cryptoCurrencyBuyDate : Date;
-  private usdFromCryptoCurrency : number = 0;
-  private usdFromCryptoCurrencyWhenBought : number = 0;
-  private cryptoCurrencyCurrentPrice : number = 0;
+  public usdFromCryptoCurrency : number = 0;
+  public usdFromCryptoCurrencyWhenBought : number = 0;
+  public cryptoCurrencyCurrentPrice : number = 0;
   @Output() totalReturns: EventEmitter<any> = new EventEmitter();
 
   constructor(private crytoCurrencyService: CrytoCurrencyService) {

@@ -13,8 +13,8 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 })
 export class RegisterComponent implements OnInit {
 
-  private model : any = {name : '', email : '', password : '', 'password-confirm' : ''};
-  private registerServiceRunning : boolean = false;
+  public model : any = {name : '', email : '', password : '', 'password-confirm' : ''};
+  public registerServiceRunning : boolean = false;
   
   constructor(private usersService : UsersService, private appService : AppService, private router : Router,
       private mainNavigatorService : MainNavigatorService) {}

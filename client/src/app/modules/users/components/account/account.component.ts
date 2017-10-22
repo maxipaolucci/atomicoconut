@@ -13,8 +13,8 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 })
 export class AccountComponent implements OnInit {
 
-  private model : any = {name : '', email : ''};
-  private updateAccountServiceRunning : boolean = false;
+  public model : any = {name : '', email : ''};
+  public updateAccountServiceRunning : boolean = false;
 
   constructor(private usersService : UsersService, private appService : AppService, 
       private mainNavigatorService : MainNavigatorService, private route : ActivatedRoute) { }

@@ -12,7 +12,7 @@ export class AppService {
 
   /**
    * Extract data from a server response
-   * @param res 
+   * @param res
    */
   public extractData(res: Response) : any {
     let body = res.json();

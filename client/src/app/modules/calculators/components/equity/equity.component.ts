@@ -9,13 +9,13 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 export class EquityComponent implements OnInit {
   @ViewChild('equityForm') form;
 
-  private loanAmount : number = 0;
-  private discount : number = 0;
-  private equity : number = 0;
-  private depositAmount : number = 0;
-  private usableEquityAfterReno : number = 0;
+  public loanAmount : number = 0;
+  public discount : number = 0;
+  public equity : number = 0;
+  public depositAmount : number = 0;
+  public usableEquityAfterReno : number = 0;
 
-  private model : any = { 
+  public model : any = { 
     purchasePrice : 0,
     marketValue : 0,
     loanCoverage : 0.8,
