@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DateAdapter, NativeDateAdapter } from '@angular/material';
 
 @Component({
   selector: 'account-personal-info',
@@ -9,7 +10,9 @@ export class AccountPersonalInfoComponent implements OnInit {
 
   model : any = { birthday : new Date(1990, 0, 1) };
 
-  constructor() { }
+  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>) {
+    this.dateAdapter.setLocale('en-GB');
+  }
 
   ngOnInit() {
   }
