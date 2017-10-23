@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 import {Observable} from "rxjs/Rx";
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { environment } from '../environments/environment';
 
 @Injectable()
 export class AppService {
 
-  constructor(private http : Http, public snackBar: MdSnackBar) {}
+  constructor(private http : Http, public snackBar: MatSnackBar) {}
 
   /**
    * Extract data from a server response
@@ -53,9 +53,7 @@ export class AppService {
     });
 
     snackBarRef.onAction().subscribe(() => {
-      if (snackBarRef.instance.action === 'Close') {
-        snackBarRef.dismiss();
-      }
+      snackBarRef.dismiss();
     });
   }
 

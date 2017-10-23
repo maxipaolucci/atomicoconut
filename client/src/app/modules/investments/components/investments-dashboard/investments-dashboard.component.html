@@ -1,13 +1,13 @@
 <div *ngIf="showInvestments" fxLayout="column" fxLayoutGap="10px">
 
-    <md-card fxFlex class="totals-card">
-      <md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+    <mat-card fxFlex class="totals-card">
+      <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
           fxLayoutAlign="space-around center">
         <p>
           Your expected net worth is {{ 35 * user.finance.activeIncome / 10 }} but your current net worth is {{user.finance.netWorth}}
         </p>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
 
   <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
     <crypto-currency fxFlex 
@@ -45,27 +45,27 @@
     </crypto-currency>
   </div>
 
-  <md-card fxFlex class="totals-card">
-    <md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+  <mat-card fxFlex class="totals-card">
+    <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
         fxLayoutAlign="space-around center">
       <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>
       <p [class.color__green]="totalReturn >= totalInvestment" 
           [class.color__red]="totalReturn < totalInvestment">
         Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
       </p>
-    </md-card-content>
-  </md-card>
+    </mat-card-content>
+  </mat-card>
   
 </div>
 
 <div *ngIf="!showInvestments" fxLayout="column" fxLayoutGap="10px">
-  <md-card fxFlex class="totals-card">
-    <md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+  <mat-card fxFlex class="totals-card">
+    <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
         fxLayoutAlign="space-around center">
       <p>
         You do not have any investment to show
       </p>
-    </md-card-content>
-  </md-card>
+    </mat-card-content>
+  </mat-card>
   
 </div>

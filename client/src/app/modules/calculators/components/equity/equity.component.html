@@ -3,85 +3,85 @@
   <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
       <!-- Purchase price -->
-      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input mdInput type="number" id="purchasePrice" name="purchasePrice" placeholder="Purchase price" 
+      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+        <input matInput type="number" id="purchasePrice" name="purchasePrice" placeholder="Purchase price" 
             [(ngModel)]="model.purchasePrice" 
             required
             value="model.purchasePrice"
             #purchasePrice="ngModel">
   
-        <md-error *ngIf="purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required">Purchase price is required</md-error>
-      </md-input-container>
+        <mat-error *ngIf="purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required">Purchase price is required</mat-error>
+      </mat-input-container>
       
       <!-- Market value -->
-      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input mdInput type="number" id="marketValue" name="marketValue" placeholder="Market value" 
+      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+        <input matInput type="number" id="marketValue" name="marketValue" placeholder="Market value" 
             [(ngModel)]="model.marketValue" 
             required
             value="model.marketValue"
             #marketValue="ngModel">
   
-        <md-error *ngIf="marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required">Market value is required</md-error>
-      </md-input-container>
+        <mat-error *ngIf="marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required">Market value is required</mat-error>
+      </mat-input-container>
     </div>
   </section>
 
   <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
       <!-- Loan coverage -->
-      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input mdInput type="number" id="loanCoverage" name="loanCoverage" placeholder="Loan coverage %" 
+      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+        <input matInput type="number" id="loanCoverage" name="loanCoverage" placeholder="Loan coverage %" 
             [(ngModel)]="model.loanCoverage" 
             required loanCoverage
             value="model.loanCoverage"
             #loanCoverage="ngModel">
   
-        <md-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required">Loan coverage is required</md-error>
-      </md-input-container>
+        <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required">Loan coverage is required</mat-error>
+      </mat-input-container>
 
       <!-- Savings -->
-      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input mdInput type="number" id="savings" name="savings" placeholder="Current savings" 
+      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+        <input matInput type="number" id="savings" name="savings" placeholder="Current savings" 
             [(ngModel)]="model.savings" 
             value="model.savings"
             #savings="ngModel">
-      </md-input-container>
+      </mat-input-container>
 
       <!-- Add renovations checkbox -->
-      <md-slide-toggle color="accent" class="form__field form__field__toogle form__field__toogle--add-reno"
+      <mat-slide-toggle color="accent" class="form__field form__field__toogle form__field__toogle--add-reno"
           [(ngModel)]="model.addRenovations" name="addRenovations" id="addRenovations">
         
         Add renovations data
-      </md-slide-toggle>
-      <!-- <md-checkbox fxFlex fxFlex.gt-xs="200px" class="form__action" [(ngModel)]="model.addRenovations" name="addRenovations" id="addRenovations">Add renovations data</md-checkbox> -->
+      </mat-slide-toggle>
+      <!-- <mat-checkbox fxFlex fxFlex.gt-xs="200px" class="form__action" [(ngModel)]="model.addRenovations" name="addRenovations" id="addRenovations">Add renovations data</mat-checkbox> -->
     </div>
   </section>
 
   <section fxLayout="column" class="form__fields" *ngIf="model.addRenovations">
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
       <!-- Renovation cost -->
-      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input mdInput type="number" id="renovationCost" name="renovationCost" placeholder="Renovation cost" 
+      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+        <input matInput type="number" id="renovationCost" name="renovationCost" placeholder="Renovation cost" 
             [(ngModel)]="model.renovationCost" 
             value="model.renovationCost"
             #renovationCost="ngModel">
-      </md-input-container>
+      </mat-input-container>
       
       <!-- New market value -->
-      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input mdInput type="number" id="newMarketValue" name="newMarketValue" placeholder="After renovations market value" 
+      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+        <input matInput type="number" id="newMarketValue" name="newMarketValue" placeholder="After renovations market value" 
             [(ngModel)]="model.newMarketValue" 
             value="model.newMarketValue"
             #newMarketValue="ngModel">
-      </md-input-container>
+      </mat-input-container>
       
       <!-- First year repayment -->
-      <md-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input mdInput type="number" id="firstYearRepayment" name="firstYearRepayment" placeholder="First year loan repayments" 
+      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+        <input matInput type="number" id="firstYearRepayment" name="firstYearRepayment" placeholder="First year loan repayments" 
             [(ngModel)]="model.firstYearRepayment" 
             value="model.firstYearRepayment"
             #firstYearRepayment="ngModel">
-      </md-input-container>
+      </mat-input-container>
     </div>
   </section>
 
@@ -89,21 +89,21 @@
 
 <section  class="">
   <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxFlex fxFlex.gt-xs="620px">
-    <md-card fxFlex>
-      <md-card-title class="md-card-title--ac">Initial figures</md-card-title>
-      <md-card-content>
+    <mat-card fxFlex>
+      <mat-card-title class="mat-card-title--ac">Initial figures</mat-card-title>
+      <mat-card-content>
         <div><label>Loan amount: </label><span>{{loanAmount}}</span></div>
         <div><label>Deposit amount: </label><span>{{depositAmount}}</span></div>
         <div><label>Discount: </label><span>{{discount}}</span></div>
         <div><label>Equity: </label><span>{{equity}}</span></div>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
 
-    <md-card fxFlex *ngIf="model.addRenovations">
-      <md-card-title class="md-card-title--ac">After renovations figures</md-card-title>
-      <md-card-content>
+    <mat-card fxFlex *ngIf="model.addRenovations">
+      <mat-card-title class="mat-card-title--ac">After renovations figures</mat-card-title>
+      <mat-card-content>
         <div><label>Usable equity: </label><span>{{usableEquityAfterReno}}</span></div>
-      </md-card-content>
-    </md-card>
+      </mat-card-content>
+    </mat-card>
   </div>
 </section>

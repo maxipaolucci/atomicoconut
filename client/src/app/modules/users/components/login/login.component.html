@@ -3,45 +3,45 @@
   <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="form__fields__row">
       <!-- Email -->
-      <md-input-container fxFlex class="form__field">
-        <input mdInput type="email" id="email" name="email" placeholder="Email address" 
+      <mat-input-container fxFlex class="form__field">
+        <input matInput type="email" id="email" name="email" placeholder="Email address" 
             [(ngModel)]="model.email" 
             required email
             #email="ngModel">
   
-        <md-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</md-error>
-        <md-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</md-error>
-      </md-input-container>
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
+      </mat-input-container>
       
       <!-- Password -->
-      <md-input-container fxFlex class="form__field">
-        <input mdInput type="password" id="password" name="password" placeholder="Password" 
+      <mat-input-container fxFlex class="form__field">
+        <input matInput type="password" id="password" name="password" placeholder="Password" 
             [(ngModel)]="model.password" 
             required minlength="3" maxlength="8"
             #password="ngModel">
   
-        <md-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.required">Password is required</md-error>
-        <md-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.minlength">Password must be longer than 3 characters</md-error>
-        <md-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.maxlength">Password must be shorter than 8 characters</md-error>
-      </md-input-container>
+        <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.required">Password is required</mat-error>
+        <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.minlength">Password must be longer than 3 characters</mat-error>
+        <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.maxlength">Password must be shorter than 8 characters</mat-error>
+      </mat-input-container>
     </div>
   </section>
 
   <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--login">
-    <button *ngIf="!loginServiceRunning" class="form__action mat-raised-button" md-raised-button type="submit" 
+    <button *ngIf="!loginServiceRunning" class="form__action mat-raised-button" mat-raised-button type="submit" 
         color="accent" [disabled]="!loginForm.form.valid">Login</button>
     
-    <md-progress-bar *ngIf="loginServiceRunning"
+    <mat-progress-bar *ngIf="loginServiceRunning"
         class="progress-bar progress-bar--login"
         color="primary"
         mode="indeterminate">
-    </md-progress-bar>
+    </mat-progress-bar>
     
-    <md-checkbox fxLayoutAlign.xs="center center" class="form__action" [(ngModel)]="forgotModel.forgot" name="forgot" id="forgot">Forgot my password</md-checkbox>
+    <mat-checkbox fxLayoutAlign.xs="center center" class="form__action" [(ngModel)]="forgotModel.forgot" name="forgot" id="forgot">Forgot my password</mat-checkbox>
   </section>
 
   <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign="center center" class="form__actions form__actions--create-account">
-    <a md-button color="accent" class="color__almost-white ac__link" routerLink="/users/register">Create an account</a>
+    <a mat-button color="accent" class="color__almost-white ac__link" routerLink="/users/register">Create an account</a>
   </section>
 
 </form>
@@ -51,28 +51,28 @@
   <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="form__fields__row">
       <!-- Email -->
-      <md-input-container fxFlex class="form__field">
+      <mat-input-container fxFlex class="form__field">
         
-        <input mdInput type="email" id="emailForgot" name="emailForgot" placeholder="Email address" 
+        <input matInput type="email" id="emailForgot" name="emailForgot" placeholder="Email address" 
             [(ngModel)]="forgotModel.email" 
             required email
             #emailForgot="ngModel">
-        <md-hint align="start">Type your email and we will send you an email to reset your password.</md-hint>
-        <md-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.required">Email is required</md-error>
-        <md-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.email">Email must be a valid email address</md-error>
-      </md-input-container>
+        <mat-hint align="start">Type your email and we will send you an email to reset your password.</mat-hint>
+        <mat-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.required">Email is required</mat-error>
+        <mat-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.email">Email must be a valid email address</mat-error>
+      </mat-input-container>
     </div>
   </section>
 
   <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center none" class="form__actions">
     <button *ngIf="!forgotServiceRunning" class="form__action mat-raised-button" 
-        color="accent" md-raised-button type="submit" [disabled]="!forgotForm.form.valid">Send</button>
+        color="accent" mat-raised-button type="submit" [disabled]="!forgotForm.form.valid">Send</button>
 
-    <md-progress-bar *ngIf="forgotServiceRunning"
+    <mat-progress-bar *ngIf="forgotServiceRunning"
         class="progress-bar progress-bar--forgot"
         color="primary"
         mode="indeterminate">
-    </md-progress-bar>
+    </mat-progress-bar>
   </section>
 
 </form>

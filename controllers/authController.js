@@ -50,13 +50,18 @@ exports.login = (req, res, next) => {
                 });
                 return; //stop from running 
             }
-            
+            console.log(user);
             console.log(`${methodTrace}${getMessage('message', 1000)}`);
             res.json({
                 status : 'success', 
                 codeno : 200,
                 msg : getMessage('message', 1000),
-                data : { name : user.name, email : user.email, avatar : user.gravatar, accessToInvestments : accessToInvestments(user.email) }
+                data : { 
+                    name : user.name, 
+                    email : user.email, 
+                    avatar : user.gravatar,
+                    personalInfo : user.personalInfo, 
+                    accessToInvestments : accessToInvestments(user.email) }
             });
         });
     })(req, res, next);

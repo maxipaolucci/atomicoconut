@@ -1,1 +1,2618 @@
-webpackJsonp([1],{0:function(l,n,u){l.exports=u("cDNt")},cDNt:function(l,n,u){"use strict";function e(l){return Hl._43(0,[],null,null)}function r(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,1,"app-welcome",[],null,null,null,e,Yl)),Hl._19(114688,null,0,zl,[Zl],null,null)],function(l,n){l(n,1,0)},null)}function t(l){return rn._43(0,[(l()(),rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(16384,[[3,4]],0,tn._2,[],null,null),(l()(),rn._41(null,["Name is required"]))],null,null)}function a(l){return rn._43(0,[(l()(),rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(16384,[[3,4]],0,tn._2,[],null,null),(l()(),rn._41(null,["Name must contains more than 4 characters"]))],null,null)}function o(l){return rn._43(0,[(l()(),rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(16384,[[9,4]],0,tn._2,[],null,null),(l()(),rn._41(null,["Email is required"]))],null,null)}function i(l){return rn._43(0,[(l()(),rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(16384,[[9,4]],0,tn._2,[],null,null),(l()(),rn._41(null,["Email must be a valid email address"]))],null,null)}function _(l){return rn._43(0,[(l()(),rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(16384,[[15,4]],0,tn._2,[],null,null),(l()(),rn._41(null,["Password is required"]))],null,null)}function s(l){return rn._43(0,[(l()(),rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(16384,[[15,4]],0,tn._2,[],null,null),(l()(),rn._41(null,["Password must be longer than 3 characters"]))],null,null)}function c(l){return rn._43(0,[(l()(),rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(16384,[[15,4]],0,tn._2,[],null,null),(l()(),rn._41(null,["Password must be shorter than 8 characters"]))],null,null)}function d(l){return rn._43(0,[(l()(),rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(16384,[[21,4]],0,tn._2,[],null,null),(l()(),rn._41(null,["Confirm password is required"]))],null,null)}function m(l){return rn._43(0,[(l()(),rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(16384,[[21,4]],0,tn._2,[],null,null),(l()(),rn._41(null,["Confirm password must be longer than 3 characters"]))],null,null)}function p(l){return rn._43(0,[(l()(),rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(16384,[[21,4]],0,tn._2,[],null,null),(l()(),rn._41(null,["Confirm password must be shorter than 8 characters"]))],null,null)}function g(l){return rn._43(0,[(l()(),rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(16384,[[21,4]],0,tn._2,[],null,null),(l()(),rn._41(null,["Confirm password must match password"]))],null,null)}function f(l){return rn._43(0,[(l()(),rn._21(0,null,null,5,"button",[["class","form__action mat-raised-button mat-raised-button"],["color","accent"],["md-raised-button",""],["type","submit"]],[[8,"disabled",0]],null,null,an.t,an.e)),rn._19(933888,null,0,on.a,[_n.a,rn.B,rn.C,rn.q,rn.P,rn.Q],{classBase:[0,"classBase"]},null),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(180224,null,0,tn.w,[rn.Q,rn.q,sn.L,tn.g],{disabled:[0,"disabled"],color:[1,"color"]},null),rn._19(16384,null,0,tn._44,[],null,null),(l()(),rn._41(0,["Create account"]))],function(l,n){l(n,1,0,"form__action mat-raised-button");l(n,3,0,!rn._35(n.parent,2).form.valid,"accent")},function(l,n){l(n,0,0,rn._35(n,3).disabled||null)})}function h(l){return rn._43(0,[(l()(),rn._21(0,null,null,4,"md-progress-bar",[["aria-valuemax","100"],["aria-valuemin","0"],["class","progress-bar progress-bar--register mat-progress-bar"],["color","primary"],["mode","indeterminate"],["role","progressbar"]],[[2,"mat-primary",null],[2,"mat-accent",null],[2,"mat-warn",null],[1,"aria-valuenow",0],[1,"mode",0]],null,null,an.C,an.n)),rn._19(933888,null,0,on.a,[_n.a,rn.B,rn.C,rn.q,rn.P,rn.Q],{classBase:[0,"classBase"]},null),rn._19(16384,null,0,tn._35,[[2,tn.j],rn.q],null,null),rn._19(49152,null,0,tn._36,[],{color:[0,"color"],mode:[1,"mode"]},null),(l()(),rn._41(null,["\n  "]))],function(l,n){l(n,1,0,"progress-bar progress-bar--register");l(n,3,0,"primary","indeterminate")},function(l,n){l(n,0,0,"primary"==rn._35(n,3).color,"accent"==rn._35(n,3).color,"warn"==rn._35(n,3).color,rn._35(n,3).value,rn._35(n,3).mode)})}function v(l){return rn._43(0,[(l()(),rn._21(0,null,null,172,"form",[["class","form__container"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,r=l.component;if("submit"===n){e=!1!==rn._35(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==rn._35(l,2).onReset()&&e}if("ngSubmit"===n){e=!1!==r.onSubmit()&&e}return e},null,null)),rn._19(16384,null,0,cn.t,[],null,null),rn._19(16384,[["registerForm",4]],0,cn.n,[[8,null],[8,null]],null,{ngSubmit:"ngSubmit"}),rn._38(2048,null,cn.b,null,[cn.n]),rn._19(16384,null,0,cn.m,[cn.b],null,null),rn._19(737280,null,0,dn.a,[_n.a,rn.q,rn.Q],{layout:[0,"layout"]},null),rn._19(1720320,null,0,mn.a,[_n.a,rn.q,rn.Q,[2,dn.a]],{gap:[0,"gap"]},null),rn._19(933888,null,0,on.a,[_n.a,rn.B,rn.C,rn.q,rn.P,rn.Q],{classBase:[0,"classBase"]},null),(l()(),rn._41(null,["\n  \n  "])),(l()(),rn._21(0,null,null,149,"div",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),rn._19(737280,null,0,dn.a,[_n.a,rn.q,rn.Q],{layout:[0,"layout"]},null),rn._19(933888,null,0,on.a,[_n.a,rn.B,rn.C,rn.q,rn.P,rn.Q],{classBase:[0,"classBase"]},null),(l()(),rn._41(null,["\n    "])),(l()(),rn._21(0,null,null,64,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),rn._19(737280,null,0,dn.a,[_n.a,rn.q,rn.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),rn._19(1720320,null,0,mn.a,[_n.a,rn.q,rn.Q,[2,dn.a]],{gapGtSm:[0,"gapGtSm"]},null),rn._19(933888,null,0,on.a,[_n.a,rn.B,rn.C,rn.q,rn.P,rn.Q],{classBase:[0,"classBase"]},null),(l()(),rn._41(null,["\n      "])),(l()(),rn._41(null,["\n      "])),(l()(),rn._21(0,null,null,27,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==rn._35(l,22)._focusInput()&&e}return e},an.z,an.k)),rn._19(737280,null,0,pn.a,[_n.a,rn.q,rn.Q,[3,dn.a],[3,gn.a]],{flex:[0,"flex"]},null),rn._19(933888,null,0,on.a,[_n.a,rn.B,rn.C,rn.q,rn.P,rn.Q],{classBase:[0,"classBase"]},null),rn._19(7389184,null,6,tn._16,[rn.q,rn.j,[2,tn.o]],null,null),rn._39(335544320,1,{_mdInputChild:0}),rn._39(335544320,2,{_placeholderChild:0}),rn._39(603979776,3,{_errorChildren:1}),rn._39(603979776,4,{_hintChildren:1}),rn._39(603979776,5,{_prefixChildren:1}),rn._39(603979776,6,{_suffixChildren:1}),(l()(),rn._41(1,["\n        "])),(l()(),rn._21(0,null,1,9,"input",[["class","mat-input-element"],["id","name"],["mdInput",""],["minlength","4"],["name","name"],["placeholder","Name"],["required",""],["type","text"]],[[1,"required",0],[1,"minlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==rn._35(l,31)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==rn._35(l,31).onTouched()&&e}if("compositionstart"===n){e=!1!==rn._35(l,31)._compositionStart()&&e}if("compositionend"===n){e=!1!==rn._35(l,31)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==rn._35(l,39)._onBlur()&&e}if("focus"===n){e=!1!==rn._35(l,39)._onFocus()&&e}if("input"===n){e=!1!==rn._35(l,39)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.name=u)&&e}return e},null,null)),rn._19(16384,null,0,cn.c,[rn.Q,rn.q,[2,cn.a]],null,null),rn._19(16384,null,0,cn.p,[],{required:[0,"required"]},null),rn._19(540672,null,0,cn.h,[],{minlength:[0,"minlength"]},null),rn._38(1024,null,cn.i,function(l,n){return[l,n]},[cn.p,cn.h]),rn._38(1024,null,cn.j,function(l){return[l]},[cn.c]),rn._19(671744,[["name",4]],0,cn.o,[[2,cn.b],[2,cn.i],[8,null],[2,cn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),rn._38(2048,null,cn.k,null,[cn.o]),rn._19(16384,null,0,cn.l,[cn.k],null,null),rn._19(16384,[[1,4]],0,tn._17,[rn.q,rn.Q,sn.L,[2,cn.k],[2,cn.n],[2,cn.e],[2,tn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),rn._41(1,["\n\n        "])),(l()(),rn._15(16777216,null,4,1,null,t)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(1,["\n        "])),(l()(),rn._15(16777216,null,4,1,null,a)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(1,["\n      "])),(l()(),rn._41(null,["\n      \n      "])),(l()(),rn._41(null,["\n      "])),(l()(),rn._21(0,null,null,27,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==rn._35(l,52)._focusInput()&&e}return e},an.z,an.k)),rn._19(737280,null,0,pn.a,[_n.a,rn.q,rn.Q,[3,dn.a],[3,gn.a]],{flex:[0,"flex"]},null),rn._19(933888,null,0,on.a,[_n.a,rn.B,rn.C,rn.q,rn.P,rn.Q],{classBase:[0,"classBase"]},null),rn._19(7389184,null,6,tn._16,[rn.q,rn.j,[2,tn.o]],null,null),rn._39(335544320,7,{_mdInputChild:0}),rn._39(335544320,8,{_placeholderChild:0}),rn._39(603979776,9,{_errorChildren:1}),rn._39(603979776,10,{_hintChildren:1}),rn._39(603979776,11,{_prefixChildren:1}),rn._39(603979776,12,{_suffixChildren:1}),(l()(),rn._41(1,["\n        "])),(l()(),rn._21(0,null,1,9,"input",[["class","mat-input-element"],["email",""],["id","email"],["mdInput",""],["name","email"],["placeholder","Email address"],["required",""],["type","email"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==rn._35(l,61)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==rn._35(l,61).onTouched()&&e}if("compositionstart"===n){e=!1!==rn._35(l,61)._compositionStart()&&e}if("compositionend"===n){e=!1!==rn._35(l,61)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==rn._35(l,69)._onBlur()&&e}if("focus"===n){e=!1!==rn._35(l,69)._onFocus()&&e}if("input"===n){e=!1!==rn._35(l,69)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.email=u)&&e}return e},null,null)),rn._19(16384,null,0,cn.c,[rn.Q,rn.q,[2,cn.a]],null,null),rn._19(16384,null,0,cn.p,[],{required:[0,"required"]},null),rn._19(16384,null,0,cn.d,[],{email:[0,"email"]},null),rn._38(1024,null,cn.i,function(l,n){return[l,n]},[cn.p,cn.d]),rn._38(1024,null,cn.j,function(l){return[l]},[cn.c]),rn._19(671744,[["email",4]],0,cn.o,[[2,cn.b],[2,cn.i],[8,null],[2,cn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),rn._38(2048,null,cn.k,null,[cn.o]),rn._19(16384,null,0,cn.l,[cn.k],null,null),rn._19(16384,[[7,4]],0,tn._17,[rn.q,rn.Q,sn.L,[2,cn.k],[2,cn.n],[2,cn.e],[2,tn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),rn._41(1,["\n\n        "])),(l()(),rn._15(16777216,null,4,1,null,o)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(1,["\n        "])),(l()(),rn._15(16777216,null,4,1,null,i)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(1,["\n      "])),(l()(),rn._41(null,["\n    "])),(l()(),rn._41(null,["\n\n    "])),(l()(),rn._21(0,null,null,78,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),rn._19(737280,null,0,dn.a,[_n.a,rn.q,rn.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),rn._19(1720320,null,0,mn.a,[_n.a,rn.q,rn.Q,[2,dn.a]],{gapGtSm:[0,"gapGtSm"]},null),rn._19(933888,null,0,on.a,[_n.a,rn.B,rn.C,rn.q,rn.P,rn.Q],{classBase:[0,"classBase"]},null),(l()(),rn._41(null,["\n      "])),(l()(),rn._41(null,["\n      "])),(l()(),rn._21(0,null,null,32,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==rn._35(l,88)._focusInput()&&e}return e},an.z,an.k)),rn._19(737280,null,0,pn.a,[_n.a,rn.q,rn.Q,[3,dn.a],[3,gn.a]],{flex:[0,"flex"]},null),rn._19(933888,null,0,on.a,[_n.a,rn.B,rn.C,rn.q,rn.P,rn.Q],{classBase:[0,"classBase"]},null),rn._19(7389184,null,6,tn._16,[rn.q,rn.j,[2,tn.o]],null,null),rn._39(335544320,13,{_mdInputChild:0}),rn._39(335544320,14,{_placeholderChild:0}),rn._39(603979776,15,{_errorChildren:1}),rn._39(603979776,16,{_hintChildren:1}),rn._39(603979776,17,{_prefixChildren:1}),rn._39(603979776,18,{_suffixChildren:1}),(l()(),rn._41(1,["\n        "])),(l()(),rn._21(0,null,1,11,"input",[["class","mat-input-element"],["equalvalidator","passwordConfirm"],["id","password"],["maxlength","8"],["mdInput",""],["minlength","3"],["name","password"],["placeholder","Password"],["required",""],["reverse","true"],["type","password"]],[[1,"required",0],[1,"minlength",0],[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==rn._35(l,97)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==rn._35(l,97).onTouched()&&e}if("compositionstart"===n){e=!1!==rn._35(l,97)._compositionStart()&&e}if("compositionend"===n){e=!1!==rn._35(l,97)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==rn._35(l,107)._onBlur()&&e}if("focus"===n){e=!1!==rn._35(l,107)._onFocus()&&e}if("input"===n){e=!1!==rn._35(l,107)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.password=u)&&e}return e},null,null)),rn._19(16384,null,0,cn.c,[rn.Q,rn.q,[2,cn.a]],null,null),rn._19(16384,null,0,cn.p,[],{required:[0,"required"]},null),rn._19(540672,null,0,cn.h,[],{minlength:[0,"minlength"]},null),rn._19(540672,null,0,cn.g,[],{maxlength:[0,"maxlength"]},null),rn._19(16384,null,0,en,[[8,"passwordConfirm"],[8,"true"]],null,null),rn._38(1024,null,cn.i,function(l,n,u,e){return[l,n,u,e]},[cn.p,cn.h,cn.g,en]),rn._38(1024,null,cn.j,function(l){return[l]},[cn.c]),rn._19(671744,[["password",4]],0,cn.o,[[2,cn.b],[2,cn.i],[8,null],[2,cn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),rn._38(2048,null,cn.k,null,[cn.o]),rn._19(16384,null,0,cn.l,[cn.k],null,null),rn._19(16384,[[13,4]],0,tn._17,[rn.q,rn.Q,sn.L,[2,cn.k],[2,cn.n],[2,cn.e],[2,tn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),rn._41(1,["\n\n        "])),(l()(),rn._15(16777216,null,4,1,null,_)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(1,["\n        "])),(l()(),rn._15(16777216,null,4,1,null,s)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(1,["\n        "])),(l()(),rn._15(16777216,null,4,1,null,c)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(1,["\n      "])),(l()(),rn._41(null,["\n\n      "])),(l()(),rn._41(null,["\n      "])),(l()(),rn._21(0,null,null,35,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==rn._35(l,123)._focusInput()&&e}return e},an.z,an.k)),rn._19(737280,null,0,pn.a,[_n.a,rn.q,rn.Q,[3,dn.a],[3,gn.a]],{flex:[0,"flex"]},null),rn._19(933888,null,0,on.a,[_n.a,rn.B,rn.C,rn.q,rn.P,rn.Q],{classBase:[0,"classBase"]},null),rn._19(7389184,null,6,tn._16,[rn.q,rn.j,[2,tn.o]],null,null),rn._39(335544320,19,{_mdInputChild:0}),rn._39(335544320,20,{_placeholderChild:0}),rn._39(603979776,21,{_errorChildren:1}),rn._39(603979776,22,{_hintChildren:1}),rn._39(603979776,23,{_prefixChildren:1}),rn._39(603979776,24,{_suffixChildren:1}),(l()(),rn._41(1,["\n        "])),(l()(),rn._21(0,null,1,11,"input",[["class","mat-input-element"],["equalvalidator","password"],["id","passwordConfirm"],["maxlength","8"],["mdInput",""],["minlength","3"],["name","passwordConfirm"],["placeholder","Confirm password"],["required",""],["type","password"]],[[1,"required",0],[1,"minlength",0],[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==rn._35(l,132)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==rn._35(l,132).onTouched()&&e}if("compositionstart"===n){e=!1!==rn._35(l,132)._compositionStart()&&e}if("compositionend"===n){e=!1!==rn._35(l,132)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==rn._35(l,142)._onBlur()&&e}if("focus"===n){e=!1!==rn._35(l,142)._onFocus()&&e}if("input"===n){e=!1!==rn._35(l,142)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model["password-confirm"]=u)&&e}return e},null,null)),rn._19(16384,null,0,cn.c,[rn.Q,rn.q,[2,cn.a]],null,null),rn._19(16384,null,0,cn.p,[],{required:[0,"required"]},null),rn._19(540672,null,0,cn.h,[],{minlength:[0,"minlength"]},null),rn._19(540672,null,0,cn.g,[],{maxlength:[0,"maxlength"]},null),rn._19(16384,null,0,en,[[8,"password"],[8,null]],null,null),rn._38(1024,null,cn.i,function(l,n,u,e){return[l,n,u,e]},[cn.p,cn.h,cn.g,en]),rn._38(1024,null,cn.j,function(l){return[l]},[cn.c]),rn._19(671744,[["passwordConfirm",4]],0,cn.o,[[2,cn.b],[2,cn.i],[8,null],[2,cn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),rn._38(2048,null,cn.k,null,[cn.o]),rn._19(16384,null,0,cn.l,[cn.k],null,null),rn._19(16384,[[19,4]],0,tn._17,[rn.q,rn.Q,sn.L,[2,cn.k],[2,cn.n],[2,cn.e],[2,tn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),rn._41(1,["\n\n        "])),(l()(),rn._15(16777216,null,4,1,null,d)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(1,["\n        "])),(l()(),rn._15(16777216,null,4,1,null,m)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(1,["\n        "])),(l()(),rn._15(16777216,null,4,1,null,p)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(1,["\n        "])),(l()(),rn._15(16777216,null,4,1,null,g)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(1,["\n      "])),(l()(),rn._41(null,["\n      "])),(l()(),rn._41(null,["\n    "])),(l()(),rn._41(null,["\n    \n  "])),(l()(),rn._41(null,["\n  \n  "])),(l()(),rn._21(0,null,null,11,"div",[["class","form__actions"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign.gt-xs","center none"],["fxLayoutGap","10px"]],null,null,null,null,null)),rn._19(737280,null,0,dn.a,[_n.a,rn.q,rn.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),rn._19(1720320,null,0,mn.a,[_n.a,rn.q,rn.Q,[2,dn.a]],{gap:[0,"gap"]},null),rn._19(737280,null,0,hn.a,[_n.a,rn.q,rn.Q,[2,dn.a]],{alignGtXs:[0,"alignGtXs"]},null),rn._19(933888,null,0,on.a,[_n.a,rn.B,rn.C,rn.q,rn.P,rn.Q],{classBase:[0,"classBase"]},null),(l()(),rn._41(null,["\n    "])),(l()(),rn._15(16777216,null,null,1,null,f)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(null,["\n\n    "])),(l()(),rn._15(16777216,null,null,1,null,h)),rn._19(16384,null,0,fn.m,[rn._3,rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),rn._41(null,["\n  "])),(l()(),rn._41(null,["\n\n"]))],function(l,n){var u=n.component;l(n,5,0,"column");l(n,6,0,"10px");l(n,7,0,"form__container");l(n,10,0,"column");l(n,11,0,"form__fields");l(n,14,0,"column","row");l(n,15,0,"10px");l(n,16,0,"form__fields__row");l(n,20,0,"");l(n,21,0,"form__field");l(n,32,0,"");l(n,33,0,"4");l(n,36,0,"name",u.model.name);l(n,39,0,"name","Name","","text"),l(n,42,0,rn._35(n,36).invalid&&(rn._35(n,36).dirty||rn._35(n,36).touched)&&rn._35(n,36).errors.required),l(n,45,0,rn._35(n,36).invalid&&(rn._35(n,36).dirty||rn._35(n,36).touched)&&rn._35(n,36).errors.minlength);l(n,50,0,"");l(n,51,0,"form__field");l(n,62,0,"");l(n,63,0,"");l(n,66,0,"email",u.model.email);l(n,69,0,"email","Email address","","email"),l(n,72,0,rn._35(n,66).invalid&&(rn._35(n,66).dirty||rn._35(n,66).touched)&&rn._35(n,66).errors.required),l(n,75,0,rn._35(n,66).invalid&&(rn._35(n,66).dirty||rn._35(n,66).touched)&&rn._35(n,66).errors.email);l(n,80,0,"column","row");l(n,81,0,"10px");l(n,82,0,"form__fields__row");l(n,86,0,"");l(n,87,0,"form__field");l(n,98,0,"");l(n,99,0,"3");l(n,100,0,"8");l(n,104,0,"password",u.model.password);l(n,107,0,"password","Password","","password"),l(n,110,0,rn._35(n,104).invalid&&(rn._35(n,104).dirty||rn._35(n,104).touched)&&rn._35(n,104).errors.required),l(n,113,0,rn._35(n,104).invalid&&(rn._35(n,104).dirty||rn._35(n,104).touched)&&rn._35(n,104).errors.minlength),l(n,116,0,rn._35(n,104).invalid&&(rn._35(n,104).dirty||rn._35(n,104).touched)&&rn._35(n,104).errors.maxlength);l(n,121,0,"");l(n,122,0,"form__field");l(n,133,0,"");l(n,134,0,"3");l(n,135,0,"8");l(n,139,0,"passwordConfirm",u.model["password-confirm"]);l(n,142,0,"passwordConfirm","Confirm password","","password"),l(n,145,0,rn._35(n,139).invalid&&(rn._35(n,139).dirty||rn._35(n,139).touched)&&rn._35(n,139).errors.required),l(n,148,0,rn._35(n,139).invalid&&(rn._35(n,139).dirty||rn._35(n,139).touched)&&rn._35(n,139).errors.minlength),l(n,151,0,rn._35(n,139).invalid&&(rn._35(n,139).dirty||rn._35(n,139).touched)&&rn._35(n,139).errors.maxlength),l(n,154,0,rn._35(n,139).invalid&&(rn._35(n,139).dirty||rn._35(n,139).touched)&&rn._35(n,139).errors.equalvalidator);l(n,161,0,"column","row");l(n,162,0,"10px");l(n,163,0,"center none");l(n,164,0,"form__actions"),l(n,167,0,!u.registerServiceRunning),l(n,170,0,u.registerServiceRunning)},function(l,n){l(n,0,0,rn._35(n,4).ngClassUntouched,rn._35(n,4).ngClassTouched,rn._35(n,4).ngClassPristine,rn._35(n,4).ngClassDirty,rn._35(n,4).ngClassValid,rn._35(n,4).ngClassInvalid,rn._35(n,4).ngClassPending);l(n,19,0,null,rn._35(n,22)._mdInputChild._isErrorState(),rn._35(n,22)._mdInputChild.focused,rn._35(n,22)._shouldForward("untouched"),rn._35(n,22)._shouldForward("touched"),rn._35(n,22)._shouldForward("pristine"),rn._35(n,22)._shouldForward("dirty"),rn._35(n,22)._shouldForward("valid"),rn._35(n,22)._shouldForward("invalid"),rn._35(n,22)._shouldForward("pending")),l(n,30,1,[rn._35(n,32).required?"":null,rn._35(n,33).minlength?rn._35(n,33).minlength:null,rn._35(n,38).ngClassUntouched,rn._35(n,38).ngClassTouched,rn._35(n,38).ngClassPristine,rn._35(n,38).ngClassDirty,rn._35(n,38).ngClassValid,rn._35(n,38).ngClassInvalid,rn._35(n,38).ngClassPending,rn._35(n,39).id,rn._35(n,39).placeholder,rn._35(n,39).disabled,rn._35(n,39).required,rn._35(n,39).ariaDescribedby||null,rn._35(n,39)._isErrorState()]);l(n,49,0,null,rn._35(n,52)._mdInputChild._isErrorState(),rn._35(n,52)._mdInputChild.focused,rn._35(n,52)._shouldForward("untouched"),rn._35(n,52)._shouldForward("touched"),rn._35(n,52)._shouldForward("pristine"),rn._35(n,52)._shouldForward("dirty"),rn._35(n,52)._shouldForward("valid"),rn._35(n,52)._shouldForward("invalid"),rn._35(n,52)._shouldForward("pending")),l(n,60,1,[rn._35(n,62).required?"":null,rn._35(n,68).ngClassUntouched,rn._35(n,68).ngClassTouched,rn._35(n,68).ngClassPristine,rn._35(n,68).ngClassDirty,rn._35(n,68).ngClassValid,rn._35(n,68).ngClassInvalid,rn._35(n,68).ngClassPending,rn._35(n,69).id,rn._35(n,69).placeholder,rn._35(n,69).disabled,rn._35(n,69).required,rn._35(n,69).ariaDescribedby||null,rn._35(n,69)._isErrorState()]);l(n,85,0,null,rn._35(n,88)._mdInputChild._isErrorState(),rn._35(n,88)._mdInputChild.focused,rn._35(n,88)._shouldForward("untouched"),rn._35(n,88)._shouldForward("touched"),rn._35(n,88)._shouldForward("pristine"),rn._35(n,88)._shouldForward("dirty"),rn._35(n,88)._shouldForward("valid"),rn._35(n,88)._shouldForward("invalid"),rn._35(n,88)._shouldForward("pending")),l(n,96,1,[rn._35(n,98).required?"":null,rn._35(n,99).minlength?rn._35(n,99).minlength:null,rn._35(n,100).maxlength?rn._35(n,100).maxlength:null,rn._35(n,106).ngClassUntouched,rn._35(n,106).ngClassTouched,rn._35(n,106).ngClassPristine,rn._35(n,106).ngClassDirty,rn._35(n,106).ngClassValid,rn._35(n,106).ngClassInvalid,rn._35(n,106).ngClassPending,rn._35(n,107).id,rn._35(n,107).placeholder,rn._35(n,107).disabled,rn._35(n,107).required,rn._35(n,107).ariaDescribedby||null,rn._35(n,107)._isErrorState()]);l(n,120,0,null,rn._35(n,123)._mdInputChild._isErrorState(),rn._35(n,123)._mdInputChild.focused,rn._35(n,123)._shouldForward("untouched"),rn._35(n,123)._shouldForward("touched"),rn._35(n,123)._shouldForward("pristine"),rn._35(n,123)._shouldForward("dirty"),rn._35(n,123)._shouldForward("valid"),rn._35(n,123)._shouldForward("invalid"),rn._35(n,123)._shouldForward("pending")),l(n,131,1,[rn._35(n,133).required?"":null,rn._35(n,134).minlength?rn._35(n,134).minlength:null,rn._35(n,135).maxlength?rn._35(n,135).maxlength:null,rn._35(n,141).ngClassUntouched,rn._35(n,141).ngClassTouched,rn._35(n,141).ngClassPristine,rn._35(n,141).ngClassDirty,rn._35(n,141).ngClassValid,rn._35(n,141).ngClassInvalid,rn._35(n,141).ngClassPending,rn._35(n,142).id,rn._35(n,142).placeholder,rn._35(n,142).disabled,rn._35(n,142).required,rn._35(n,142).ariaDescribedby||null,rn._35(n,142)._isErrorState()])})}function y(l){return rn._43(0,[(l()(),rn._21(0,null,null,1,"users-register",[],null,null,null,v,Cn)),rn._19(114688,null,0,nn,[El,Tl,vn.k,Zl],null,null)],function(l,n){l(n,1,0)},null)}function C(l){return In._43(0,[(l()(),In._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(16384,[[3,4]],0,Bn._2,[],null,null),(l()(),In._41(null,["Email is required"]))],null,null)}function b(l){return In._43(0,[(l()(),In._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(16384,[[3,4]],0,Bn._2,[],null,null),(l()(),In._41(null,["Email must be a valid email address"]))],null,null)}function x(l){return In._43(0,[(l()(),In._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(16384,[[9,4]],0,Bn._2,[],null,null),(l()(),In._41(null,["Password is required"]))],null,null)}function q(l){return In._43(0,[(l()(),In._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(16384,[[9,4]],0,Bn._2,[],null,null),(l()(),In._41(null,["Password must be longer than 3 characters"]))],null,null)}function w(l){return In._43(0,[(l()(),In._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(16384,[[9,4]],0,Bn._2,[],null,null),(l()(),In._41(null,["Password must be shorter than 8 characters"]))],null,null)}function I(l){return In._43(0,[(l()(),In._21(0,null,null,5,"button",[["class","form__action mat-raised-button mat-raised-button"],["color","accent"],["md-raised-button",""],["type","submit"]],[[8,"disabled",0]],null,null,kn.t,kn.e)),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(180224,null,0,Bn.w,[In.Q,In.q,Qn.L,Bn.g],{disabled:[0,"disabled"],color:[1,"color"]},null),In._19(16384,null,0,Bn._44,[],null,null),(l()(),In._41(0,["Login"]))],function(l,n){l(n,1,0,"form__action mat-raised-button");l(n,3,0,!In._35(n.parent,2).form.valid,"accent")},function(l,n){l(n,0,0,In._35(n,3).disabled||null)})}function B(l){return In._43(0,[(l()(),In._21(0,null,null,4,"md-progress-bar",[["aria-valuemax","100"],["aria-valuemin","0"],["class","progress-bar progress-bar--login mat-progress-bar"],["color","primary"],["mode","indeterminate"],["role","progressbar"]],[[2,"mat-primary",null],[2,"mat-accent",null],[2,"mat-warn",null],[1,"aria-valuenow",0],[1,"mode",0]],null,null,kn.C,kn.n)),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(49152,null,0,Bn._36,[],{color:[0,"color"],mode:[1,"mode"]},null),(l()(),In._41(null,["\n    "]))],function(l,n){l(n,1,0,"progress-bar progress-bar--login");l(n,3,0,"primary","indeterminate")},function(l,n){l(n,0,0,"primary"==In._35(n,3).color,"accent"==In._35(n,3).color,"warn"==In._35(n,3).color,In._35(n,3).value,In._35(n,3).mode)})}function k(l){return In._43(0,[(l()(),In._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(16384,[[15,4]],0,Bn._2,[],null,null),(l()(),In._41(null,["Email is required"]))],null,null)}function S(l){return In._43(0,[(l()(),In._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(16384,[[15,4]],0,Bn._2,[],null,null),(l()(),In._41(null,["Email must be a valid email address"]))],null,null)}function P(l){return In._43(0,[(l()(),In._21(0,null,null,5,"button",[["class","form__action mat-raised-button mat-raised-button"],["color","accent"],["md-raised-button",""],["type","submit"]],[[8,"disabled",0]],null,null,kn.t,kn.e)),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(180224,null,0,Bn.w,[In.Q,In.q,Qn.L,Bn.g],{disabled:[0,"disabled"],color:[1,"color"]},null),In._19(16384,null,0,Bn._44,[],null,null),(l()(),In._41(0,["Send"]))],function(l,n){l(n,1,0,"form__action mat-raised-button");l(n,3,0,!In._35(n.parent,2).form.valid,"accent")},function(l,n){l(n,0,0,In._35(n,3).disabled||null)})}function Q(l){return In._43(0,[(l()(),In._21(0,null,null,4,"md-progress-bar",[["aria-valuemax","100"],["aria-valuemin","0"],["class","progress-bar progress-bar--forgot mat-progress-bar"],["color","primary"],["mode","indeterminate"],["role","progressbar"]],[[2,"mat-primary",null],[2,"mat-accent",null],[2,"mat-warn",null],[1,"aria-valuenow",0],[1,"mode",0]],null,null,kn.C,kn.n)),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(49152,null,0,Bn._36,[],{color:[0,"color"],mode:[1,"mode"]},null),(l()(),In._41(null,["\n    "]))],function(l,n){l(n,1,0,"progress-bar progress-bar--forgot");l(n,3,0,"primary","indeterminate")},function(l,n){l(n,0,0,"primary"==In._35(n,3).color,"accent"==In._35(n,3).color,"warn"==In._35(n,3).color,In._35(n,3).value,In._35(n,3).mode)})}function F(l){return In._43(0,[(l()(),In._21(0,null,null,67,"form",[["class","form__container form__forgot"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,r=l.component;if("submit"===n){e=!1!==In._35(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==In._35(l,2).onReset()&&e}if("ngSubmit"===n){e=!1!==r.onForgotSubmit()&&e}return e},null,null)),In._19(16384,null,0,Fn.t,[],null,null),In._19(16384,[["forgotForm",4]],0,Fn.n,[[8,null],[8,null]],null,{ngSubmit:"ngSubmit"}),In._38(2048,null,Fn.b,null,[Fn.n]),In._19(16384,null,0,Fn.m,[Fn.b],null,null),In._19(737280,null,0,Ln.a,[Pn.a,In.q,In.Q],{layout:[0,"layout"]},null),In._19(1720320,null,0,jn.a,[Pn.a,In.q,In.Q,[2,Ln.a]],{gap:[0,"gap"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),(l()(),In._41(null,["\n  \n  "])),(l()(),In._21(0,null,null,44,"section",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),In._19(737280,null,0,Ln.a,[Pn.a,In.q,In.Q],{layout:[0,"layout"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),(l()(),In._41(null,["\n    "])),(l()(),In._21(0,null,null,39,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),In._19(737280,null,0,Ln.a,[Pn.a,In.q,In.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),In._19(1720320,null,0,jn.a,[Pn.a,In.q,In.Q,[2,Ln.a]],{gapGtSm:[0,"gapGtSm"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),(l()(),In._41(null,["\n      "])),(l()(),In._41(null,["\n      "])),(l()(),In._21(0,null,null,32,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==In._35(l,22)._focusInput()&&e}return e},kn.z,kn.k)),In._19(737280,null,0,Mn.a,[Pn.a,In.q,In.Q,[3,Ln.a],[3,Gn.a]],{flex:[0,"flex"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),In._19(7389184,null,6,Bn._16,[In.q,In.j,[2,Bn.o]],null,null),In._39(335544320,13,{_mdInputChild:0}),In._39(335544320,14,{_placeholderChild:0}),In._39(603979776,15,{_errorChildren:1}),In._39(603979776,16,{_hintChildren:1}),In._39(603979776,17,{_prefixChildren:1}),In._39(603979776,18,{_suffixChildren:1}),(l()(),In._41(1,["\n        \n        "])),(l()(),In._21(0,null,1,9,"input",[["class","mat-input-element"],["email",""],["id","emailForgot"],["mdInput",""],["name","emailForgot"],["placeholder","Email address"],["required",""],["type","email"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==In._35(l,31)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==In._35(l,31).onTouched()&&e}if("compositionstart"===n){e=!1!==In._35(l,31)._compositionStart()&&e}if("compositionend"===n){e=!1!==In._35(l,31)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==In._35(l,39)._onBlur()&&e}if("focus"===n){e=!1!==In._35(l,39)._onFocus()&&e}if("input"===n){e=!1!==In._35(l,39)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.forgotModel.email=u)&&e}return e},null,null)),In._19(16384,null,0,Fn.c,[In.Q,In.q,[2,Fn.a]],null,null),In._19(16384,null,0,Fn.p,[],{required:[0,"required"]},null),In._19(16384,null,0,Fn.d,[],{email:[0,"email"]},null),In._38(1024,null,Fn.i,function(l,n){return[l,n]},[Fn.p,Fn.d]),In._38(1024,null,Fn.j,function(l){return[l]},[Fn.c]),In._19(671744,[["emailForgot",4]],0,Fn.o,[[2,Fn.b],[2,Fn.i],[8,null],[2,Fn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),In._38(2048,null,Fn.k,null,[Fn.o]),In._19(16384,null,0,Fn.l,[Fn.k],null,null),In._19(16384,[[13,4]],0,Bn._17,[In.q,In.Q,Qn.L,[2,Fn.k],[2,Fn.n],[2,Fn.e],[2,Bn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),In._41(1,["\n        "])),(l()(),In._21(0,null,5,3,"md-hint",[["align","start"],["class","mat-hint"]],[[2,"mat-right",null],[1,"id",0]],null,null,null,null)),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(16384,[[16,4]],0,Bn._10,[],{align:[0,"align"]},null),(l()(),In._41(null,["Type your email and we will send you an email to reset your password."])),(l()(),In._41(1,["\n        "])),(l()(),In._15(16777216,null,4,1,null,k)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null),(l()(),In._41(1,["\n        "])),(l()(),In._15(16777216,null,4,1,null,S)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null),(l()(),In._41(1,["\n      "])),(l()(),In._41(null,["\n    "])),(l()(),In._41(null,["\n  "])),(l()(),In._41(null,["\n\n  "])),(l()(),In._21(0,null,null,11,"section",[["class","form__actions"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign.gt-xs","center none"],["fxLayoutGap","10px"]],null,null,null,null,null)),In._19(737280,null,0,Ln.a,[Pn.a,In.q,In.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),In._19(1720320,null,0,jn.a,[Pn.a,In.q,In.Q,[2,Ln.a]],{gap:[0,"gap"]},null),In._19(737280,null,0,Tn.a,[Pn.a,In.q,In.Q,[2,Ln.a]],{alignGtXs:[0,"alignGtXs"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),(l()(),In._41(null,["\n    "])),(l()(),In._15(16777216,null,null,1,null,P)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null),(l()(),In._41(null,["\n\n    "])),(l()(),In._15(16777216,null,null,1,null,Q)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null),(l()(),In._41(null,["\n  "])),(l()(),In._41(null,["\n\n"]))],function(l,n){var u=n.component;l(n,5,0,"column");l(n,6,0,"10px");l(n,7,0,"form__container form__forgot");l(n,10,0,"column");l(n,11,0,"form__fields");l(n,14,0,"column","row");l(n,15,0,"10px");l(n,16,0,"form__fields__row");l(n,20,0,"");l(n,21,0,"form__field");l(n,32,0,"");l(n,33,0,"");l(n,36,0,"emailForgot",u.forgotModel.email);l(n,39,0,"emailForgot","Email address","","email");l(n,43,0,"start"),l(n,47,0,In._35(n,36).invalid&&(In._35(n,36).dirty||In._35(n,36).touched)&&In._35(n,36).errors.required),l(n,50,0,In._35(n,36).invalid&&(In._35(n,36).dirty||In._35(n,36).touched)&&In._35(n,36).errors.email);l(n,56,0,"column","row");l(n,57,0,"10px");l(n,58,0,"center none");l(n,59,0,"form__actions"),l(n,62,0,!u.forgotServiceRunning),l(n,65,0,u.forgotServiceRunning)},function(l,n){l(n,0,0,In._35(n,4).ngClassUntouched,In._35(n,4).ngClassTouched,In._35(n,4).ngClassPristine,In._35(n,4).ngClassDirty,In._35(n,4).ngClassValid,In._35(n,4).ngClassInvalid,In._35(n,4).ngClassPending);l(n,19,0,null,In._35(n,22)._mdInputChild._isErrorState(),In._35(n,22)._mdInputChild.focused,In._35(n,22)._shouldForward("untouched"),In._35(n,22)._shouldForward("touched"),In._35(n,22)._shouldForward("pristine"),In._35(n,22)._shouldForward("dirty"),In._35(n,22)._shouldForward("valid"),In._35(n,22)._shouldForward("invalid"),In._35(n,22)._shouldForward("pending")),l(n,30,1,[In._35(n,32).required?"":null,In._35(n,38).ngClassUntouched,In._35(n,38).ngClassTouched,In._35(n,38).ngClassPristine,In._35(n,38).ngClassDirty,In._35(n,38).ngClassValid,In._35(n,38).ngClassInvalid,In._35(n,38).ngClassPending,In._35(n,39).id,In._35(n,39).placeholder,In._35(n,39).disabled,In._35(n,39).required,In._35(n,39).ariaDescribedby||null,In._35(n,39)._isErrorState()]),l(n,41,0,"end"==In._35(n,43).align,In._35(n,43).id)})}function L(l){return In._43(0,[(l()(),In._21(0,null,null,122,"form",[["class","form__container form__login"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,r=l.component;if("submit"===n){e=!1!==In._35(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==In._35(l,2).onReset()&&e}if("ngSubmit"===n){e=!1!==r.onSubmit()&&e}return e},null,null)),In._19(16384,null,0,Fn.t,[],null,null),In._19(16384,[["loginForm",4]],0,Fn.n,[[8,null],[8,null]],null,{ngSubmit:"ngSubmit"}),In._38(2048,null,Fn.b,null,[Fn.n]),In._19(16384,null,0,Fn.m,[Fn.b],null,null),In._19(737280,null,0,Ln.a,[Pn.a,In.q,In.Q],{layout:[0,"layout"]},null),In._19(1720320,null,0,jn.a,[Pn.a,In.q,In.Q,[2,Ln.a]],{gap:[0,"gap"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),(l()(),In._41(null,["\n  \n  "])),(l()(),In._21(0,null,null,73,"section",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),In._19(737280,null,0,Ln.a,[Pn.a,In.q,In.Q],{layout:[0,"layout"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),(l()(),In._41(null,["\n    "])),(l()(),In._21(0,null,null,68,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),In._19(737280,null,0,Ln.a,[Pn.a,In.q,In.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),In._19(1720320,null,0,jn.a,[Pn.a,In.q,In.Q,[2,Ln.a]],{gapGtSm:[0,"gapGtSm"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),(l()(),In._41(null,["\n      "])),(l()(),In._41(null,["\n      "])),(l()(),In._21(0,null,null,27,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==In._35(l,22)._focusInput()&&e}return e},kn.z,kn.k)),In._19(737280,null,0,Mn.a,[Pn.a,In.q,In.Q,[3,Ln.a],[3,Gn.a]],{flex:[0,"flex"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),In._19(7389184,null,6,Bn._16,[In.q,In.j,[2,Bn.o]],null,null),In._39(335544320,1,{_mdInputChild:0}),In._39(335544320,2,{_placeholderChild:0}),In._39(603979776,3,{_errorChildren:1}),In._39(603979776,4,{_hintChildren:1}),In._39(603979776,5,{_prefixChildren:1}),In._39(603979776,6,{_suffixChildren:1}),(l()(),In._41(1,["\n        "])),(l()(),In._21(0,null,1,9,"input",[["class","mat-input-element"],["email",""],["id","email"],["mdInput",""],["name","email"],["placeholder","Email address"],["required",""],["type","email"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==In._35(l,31)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==In._35(l,31).onTouched()&&e}if("compositionstart"===n){e=!1!==In._35(l,31)._compositionStart()&&e}if("compositionend"===n){e=!1!==In._35(l,31)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==In._35(l,39)._onBlur()&&e}if("focus"===n){e=!1!==In._35(l,39)._onFocus()&&e}if("input"===n){e=!1!==In._35(l,39)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.email=u)&&e}return e},null,null)),In._19(16384,null,0,Fn.c,[In.Q,In.q,[2,Fn.a]],null,null),In._19(16384,null,0,Fn.p,[],{required:[0,"required"]},null),In._19(16384,null,0,Fn.d,[],{email:[0,"email"]},null),In._38(1024,null,Fn.i,function(l,n){return[l,n]},[Fn.p,Fn.d]),In._38(1024,null,Fn.j,function(l){return[l]},[Fn.c]),In._19(671744,[["email",4]],0,Fn.o,[[2,Fn.b],[2,Fn.i],[8,null],[2,Fn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),In._38(2048,null,Fn.k,null,[Fn.o]),In._19(16384,null,0,Fn.l,[Fn.k],null,null),In._19(16384,[[1,4]],0,Bn._17,[In.q,In.Q,Qn.L,[2,Fn.k],[2,Fn.n],[2,Fn.e],[2,Bn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),In._41(1,["\n  \n        "])),(l()(),In._15(16777216,null,4,1,null,C)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null),(l()(),In._41(1,["\n        "])),(l()(),In._15(16777216,null,4,1,null,b)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null),(l()(),In._41(1,["\n      "])),(l()(),In._41(null,["\n      \n      "])),(l()(),In._41(null,["\n      "])),(l()(),In._21(0,null,null,31,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==In._35(l,52)._focusInput()&&e}return e},kn.z,kn.k)),In._19(737280,null,0,Mn.a,[Pn.a,In.q,In.Q,[3,Ln.a],[3,Gn.a]],{flex:[0,"flex"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),In._19(7389184,null,6,Bn._16,[In.q,In.j,[2,Bn.o]],null,null),In._39(335544320,7,{_mdInputChild:0}),In._39(335544320,8,{_placeholderChild:0}),In._39(603979776,9,{_errorChildren:1}),In._39(603979776,10,{_hintChildren:1}),In._39(603979776,11,{_prefixChildren:1}),In._39(603979776,12,{_suffixChildren:1}),(l()(),In._41(1,["\n        "])),(l()(),In._21(0,null,1,10,"input",[["class","mat-input-element"],["id","password"],["maxlength","8"],["mdInput",""],["minlength","3"],["name","password"],["placeholder","Password"],["required",""],["type","password"]],[[1,"required",0],[1,"minlength",0],[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==In._35(l,61)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==In._35(l,61).onTouched()&&e}if("compositionstart"===n){e=!1!==In._35(l,61)._compositionStart()&&e}if("compositionend"===n){e=!1!==In._35(l,61)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==In._35(l,70)._onBlur()&&e}if("focus"===n){e=!1!==In._35(l,70)._onFocus()&&e}if("input"===n){e=!1!==In._35(l,70)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.password=u)&&e}return e},null,null)),In._19(16384,null,0,Fn.c,[In.Q,In.q,[2,Fn.a]],null,null),In._19(16384,null,0,Fn.p,[],{required:[0,"required"]},null),In._19(540672,null,0,Fn.h,[],{minlength:[0,"minlength"]},null),In._19(540672,null,0,Fn.g,[],{maxlength:[0,"maxlength"]},null),In._38(1024,null,Fn.i,function(l,n,u){return[l,n,u]},[Fn.p,Fn.h,Fn.g]),In._38(1024,null,Fn.j,function(l){return[l]},[Fn.c]),In._19(671744,[["password",4]],0,Fn.o,[[2,Fn.b],[2,Fn.i],[8,null],[2,Fn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),In._38(2048,null,Fn.k,null,[Fn.o]),In._19(16384,null,0,Fn.l,[Fn.k],null,null),In._19(16384,[[7,4]],0,Bn._17,[In.q,In.Q,Qn.L,[2,Fn.k],[2,Fn.n],[2,Fn.e],[2,Bn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),In._41(1,["\n  \n        "])),(l()(),In._15(16777216,null,4,1,null,x)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null),(l()(),In._41(1,["\n        "])),(l()(),In._15(16777216,null,4,1,null,q)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null),(l()(),In._41(1,["\n        "])),(l()(),In._15(16777216,null,4,1,null,w)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null),(l()(),In._41(1,["\n      "])),(l()(),In._41(null,["\n    "])),(l()(),In._41(null,["\n  "])),(l()(),In._41(null,["\n\n  "])),(l()(),In._21(0,null,null,22,"section",[["class","form__actions form__actions--login"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign.gt-xs","center center"],["fxLayoutGap","10px"]],null,null,null,null,null)),In._19(737280,null,0,Ln.a,[Pn.a,In.q,In.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),In._19(1720320,null,0,jn.a,[Pn.a,In.q,In.Q,[2,Ln.a]],{gap:[0,"gap"]},null),In._19(737280,null,0,Tn.a,[Pn.a,In.q,In.Q,[2,Ln.a]],{alignGtXs:[0,"alignGtXs"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),(l()(),In._41(null,["\n    "])),(l()(),In._15(16777216,null,null,1,null,I)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null),(l()(),In._41(null,["\n    \n    "])),(l()(),In._15(16777216,null,null,1,null,B)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null),(l()(),In._41(null,["\n    \n    "])),(l()(),In._21(0,null,null,9,"md-checkbox",[["class","form__action mat-checkbox"],["fxLayoutAlign.xs","center center"],["id","forgot"],["name","forgot"]],[[2,"mat-checkbox-indeterminate",null],[2,"mat-checkbox-checked",null],[2,"mat-checkbox-disabled",null],[2,"mat-checkbox-label-before",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngModelChange"]],function(l,n,u){var e=!0,r=l.component;if("ngModelChange"===n){e=!1!==(r.forgotModel.forgot=u)&&e}return e},kn.w,kn.h)),In._19(4374528,null,0,Bn.N,[In.Q,In.q,In.j,Bn.g],{id:[0,"id"],name:[1,"name"]},null),In._38(1024,null,Fn.j,function(l){return[l]},[Bn.N]),In._19(671744,null,0,Fn.o,[[2,Fn.b],[8,null],[8,null],[2,Fn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),In._38(2048,null,Fn.k,null,[Fn.o]),In._19(16384,null,0,Fn.l,[Fn.k],null,null),In._19(737280,null,0,Tn.a,[Pn.a,In.q,In.Q,[8,null]],{alignXs:[0,"alignXs"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),(l()(),In._41(0,["Forgot my password"])),(l()(),In._41(null,["\n  "])),(l()(),In._41(null,["\n\n  "])),(l()(),In._21(0,null,null,13,"section",[["class","form__actions form__actions--create-account"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign","center center"],["fxLayoutGap","10px"]],null,null,null,null,null)),In._19(737280,null,0,Ln.a,[Pn.a,In.q,In.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),In._19(1720320,null,0,jn.a,[Pn.a,In.q,In.Q,[2,Ln.a]],{gap:[0,"gap"]},null),In._19(737280,null,0,Tn.a,[Pn.a,In.q,In.Q,[2,Ln.a]],{align:[0,"align"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),(l()(),In._41(null,["\n    "])),(l()(),In._21(0,null,null,6,"a",[["class","color__almost-white ac__link mat-button"],["color","accent"],["md-button",""],["routerLink","/users/register"]],[[1,"target",0],[8,"href",4],[1,"disabled",0],[1,"aria-disabled",0],[8,"tabIndex",0]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==In._35(l,115).onClick(u.button,u.ctrlKey,u.metaKey,u.shiftKey)&&e}if("click"===n){e=!1!==In._35(l,118)._haltDisabledEvents(u)&&e}return e},kn.s,kn.d)),In._19(671744,null,0,Dn.m,[Dn.k,Dn.a,Rn.j],{routerLink:[0,"routerLink"]},null),In._19(933888,null,0,Sn.a,[Pn.a,In.B,In.C,In.q,In.P,In.Q],{classBase:[0,"classBase"]},null),In._19(16384,null,0,Bn._35,[[2,Bn.j],In.q],null,null),In._19(180224,null,0,Bn.t,[Qn.L,Bn.g,In.q,In.Q],{color:[0,"color"]},null),In._19(16384,null,0,Bn.x,[],null,null),(l()(),In._41(0,["Create an account"])),(l()(),In._41(null,["\n  "])),(l()(),In._41(null,["\n\n"])),(l()(),In._41(null,["\n\n"])),(l()(),In._15(16777216,null,null,1,null,F)),In._19(16384,null,0,Rn.m,[In._3,In.Z],{ngIf:[0,"ngIf"]},null)],function(l,n){var u=n.component;l(n,5,0,"column");l(n,6,0,"10px");l(n,7,0,"form__container form__login");l(n,10,0,"column");l(n,11,0,"form__fields");l(n,14,0,"column","row");l(n,15,0,"10px");l(n,16,0,"form__fields__row");l(n,20,0,"");l(n,21,0,"form__field");l(n,32,0,"");l(n,33,0,"");l(n,36,0,"email",u.model.email);l(n,39,0,"email","Email address","","email"),l(n,42,0,In._35(n,36).invalid&&(In._35(n,36).dirty||In._35(n,36).touched)&&In._35(n,36).errors.required),l(n,45,0,In._35(n,36).invalid&&(In._35(n,36).dirty||In._35(n,36).touched)&&In._35(n,36).errors.email);l(n,50,0,"");l(n,51,0,"form__field");l(n,62,0,"");l(n,63,0,"3");l(n,64,0,"8");l(n,67,0,"password",u.model.password);l(n,70,0,"password","Password","","password"),l(n,73,0,In._35(n,67).invalid&&(In._35(n,67).dirty||In._35(n,67).touched)&&In._35(n,67).errors.required),l(n,76,0,In._35(n,67).invalid&&(In._35(n,67).dirty||In._35(n,67).touched)&&In._35(n,67).errors.minlength),l(n,79,0,In._35(n,67).invalid&&(In._35(n,67).dirty||In._35(n,67).touched)&&In._35(n,67).errors.maxlength);l(n,85,0,"column","row");l(n,86,0,"10px");l(n,87,0,"center center");l(n,88,0,"form__actions form__actions--login"),l(n,91,0,!u.loginServiceRunning),l(n,94,0,u.loginServiceRunning);l(n,97,0,"forgot","forgot");l(n,99,0,"forgot",u.forgotModel.forgot);l(n,102,0,"center center");l(n,103,0,"form__action");l(n,109,0,"column","row");l(n,110,0,"10px");l(n,111,0,"center center");l(n,112,0,"form__actions form__actions--create-account");l(n,115,0,"/users/register");l(n,116,0,"color__almost-white ac__link");l(n,118,0,"accent"),l(n,125,0,u.forgotModel.forgot)},function(l,n){l(n,0,0,In._35(n,4).ngClassUntouched,In._35(n,4).ngClassTouched,In._35(n,4).ngClassPristine,In._35(n,4).ngClassDirty,In._35(n,4).ngClassValid,In._35(n,4).ngClassInvalid,In._35(n,4).ngClassPending);l(n,19,0,null,In._35(n,22)._mdInputChild._isErrorState(),In._35(n,22)._mdInputChild.focused,In._35(n,22)._shouldForward("untouched"),In._35(n,22)._shouldForward("touched"),In._35(n,22)._shouldForward("pristine"),In._35(n,22)._shouldForward("dirty"),In._35(n,22)._shouldForward("valid"),In._35(n,22)._shouldForward("invalid"),In._35(n,22)._shouldForward("pending")),l(n,30,1,[In._35(n,32).required?"":null,In._35(n,38).ngClassUntouched,In._35(n,38).ngClassTouched,In._35(n,38).ngClassPristine,In._35(n,38).ngClassDirty,In._35(n,38).ngClassValid,In._35(n,38).ngClassInvalid,In._35(n,38).ngClassPending,In._35(n,39).id,In._35(n,39).placeholder,In._35(n,39).disabled,In._35(n,39).required,In._35(n,39).ariaDescribedby||null,In._35(n,39)._isErrorState()]);l(n,49,0,null,In._35(n,52)._mdInputChild._isErrorState(),In._35(n,52)._mdInputChild.focused,In._35(n,52)._shouldForward("untouched"),In._35(n,52)._shouldForward("touched"),In._35(n,52)._shouldForward("pristine"),In._35(n,52)._shouldForward("dirty"),In._35(n,52)._shouldForward("valid"),In._35(n,52)._shouldForward("invalid"),In._35(n,52)._shouldForward("pending")),l(n,60,1,[In._35(n,62).required?"":null,In._35(n,63).minlength?In._35(n,63).minlength:null,In._35(n,64).maxlength?In._35(n,64).maxlength:null,In._35(n,69).ngClassUntouched,In._35(n,69).ngClassTouched,In._35(n,69).ngClassPristine,In._35(n,69).ngClassDirty,In._35(n,69).ngClassValid,In._35(n,69).ngClassInvalid,In._35(n,69).ngClassPending,In._35(n,70).id,In._35(n,70).placeholder,In._35(n,70).disabled,In._35(n,70).required,In._35(n,70).ariaDescribedby||null,In._35(n,70)._isErrorState()]),l(n,96,1,[In._35(n,97).indeterminate,In._35(n,97).checked,In._35(n,97).disabled,"before"==In._35(n,97).labelPosition,In._35(n,101).ngClassUntouched,In._35(n,101).ngClassTouched,In._35(n,101).ngClassPristine,In._35(n,101).ngClassDirty,In._35(n,101).ngClassValid,In._35(n,101).ngClassInvalid,In._35(n,101).ngClassPending]),l(n,114,0,In._35(n,115).target,In._35(n,115).href,In._35(n,118).disabled||null,In._35(n,118).disabled.toString(),In._35(n,118).tabIndex)})}function j(l){return In._43(0,[(l()(),In._21(0,null,null,1,"app-login",[],null,null,null,L,On)),In._19(114688,null,0,wn,[El,Tl,Zl,Dn.k,Dn.a],null,null)],function(l,n){l(n,1,0)},null)}function M(l){return Hn._43(0,[(l()(),Hn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hn._19(16384,null,0,Jn._35,[[2,Jn.j],Hn.q],null,null),Hn._19(16384,[[4,4]],0,Jn._2,[],null,null),(l()(),Hn._41(null,["Tax rate must be numeric, with no more than two decimal values"]))],null,null)}function G(l){return Hn._43(0,[(l()(),Hn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hn._19(16384,null,0,Jn._35,[[2,Jn.j],Hn.q],null,null),Hn._19(16384,[[10,4]],0,Jn._2,[],null,null),(l()(),Hn._41(null,["Tax rate must be numeric, with no more than two decimal values"]))],null,null)}function R(l){return Hn._43(0,[(l()(),Hn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hn._19(16384,null,0,Jn._35,[[2,Jn.j],Hn.q],null,null),Hn._19(16384,[[10,4]],0,Jn._2,[],null,null),(l()(),Hn._41(null,["Min value must be greater or equal than 0"]))],null,null)}function T(l){return Hn._43(0,[(l()(),Hn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hn._19(16384,null,0,Jn._35,[[2,Jn.j],Hn.q],null,null),Hn._19(16384,[[10,4]],0,Jn._2,[],null,null),(l()(),Hn._41(null,["Max value must be less or equal than 100"]))],null,null)}function D(l){return Hn._43(0,[(l()(),Hn._21(0,null,null,5,"button",[["class","form__action mat-raised-button mat-raised-button"],["color","accent"],["md-raised-button",""],["type","submit"]],[[8,"disabled",0]],null,null,Yn.t,Yn.e)),Hn._19(933888,null,0,Kn.a,[$n.a,Hn.B,Hn.C,Hn.q,Hn.P,Hn.Q],{classBase:[0,"classBase"]},null),Hn._19(16384,null,0,Jn._35,[[2,Jn.j],Hn.q],null,null),Hn._19(180224,null,0,Jn.w,[Hn.Q,Hn.q,lu.L,Jn.g],{disabled:[0,"disabled"],color:[1,"color"]},null),Hn._19(16384,null,0,Jn._44,[],null,null),(l()(),Hn._41(0,["Save"]))],function(l,n){l(n,1,0,"form__action mat-raised-button");l(n,3,0,!Hn._35(n.parent,3).form.valid,"accent")},function(l,n){l(n,0,0,Hn._35(n,3).disabled||null)})}function E(l){return Hn._43(0,[(l()(),Hn._21(0,null,null,4,"md-progress-bar",[["aria-valuemax","100"],["aria-valuemin","0"],["class","progress-bar progress-bar--account-finance mat-progress-bar"],["color","primary"],["mode","indeterminate"],["role","progressbar"]],[[2,"mat-primary",null],[2,"mat-accent",null],[2,"mat-warn",null],[1,"aria-valuenow",0],[1,"mode",0]],null,null,Yn.C,Yn.n)),Hn._19(933888,null,0,Kn.a,[$n.a,Hn.B,Hn.C,Hn.q,Hn.P,Hn.Q],{classBase:[0,"classBase"]},null),Hn._19(16384,null,0,Jn._35,[[2,Jn.j],Hn.q],null,null),Hn._19(49152,null,0,Jn._36,[],{color:[0,"color"],mode:[1,"mode"]},null),(l()(),Hn._41(null,["\n    "]))],function(l,n){l(n,1,0,"progress-bar progress-bar--account-finance");l(n,3,0,"primary","indeterminate")},function(l,n){l(n,0,0,"primary"==Hn._35(n,3).color,"accent"==Hn._35(n,3).color,"warn"==Hn._35(n,3).color,Hn._35(n,3).value,Hn._35(n,3).mode)})}function O(l){return Hn._43(0,[Hn._39(402653184,1,{form:0}),(l()(),Hn._21(0,null,null,127,"form",[["class","form__container form__account-finance"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,r=l.component;if("submit"===n){e=!1!==Hn._35(l,3).onSubmit(u)&&e}if("reset"===n){e=!1!==Hn._35(l,3).onReset()&&e}if("ngSubmit"===n){e=!1!==r.onSubmit()&&e}return e},null,null)),Hn._19(16384,null,0,nu.t,[],null,null),Hn._19(16384,[[1,4],["financeForm",4]],0,nu.n,[[8,null],[8,null]],null,{ngSubmit:"ngSubmit"}),Hn._38(2048,null,nu.b,null,[nu.n]),Hn._19(16384,null,0,nu.m,[nu.b],null,null),Hn._19(737280,null,0,uu.a,[$n.a,Hn.q,Hn.Q],{layout:[0,"layout"]},null),Hn._19(1720320,null,0,eu.a,[$n.a,Hn.q,Hn.Q,[2,uu.a]],{gap:[0,"gap"]},null),Hn._19(933888,null,0,Kn.a,[$n.a,Hn.B,Hn.C,Hn.q,Hn.P,Hn.Q],{classBase:[0,"classBase"]},null),(l()(),Hn._41(null,["\n\n  "])),(l()(),Hn._21(0,null,null,104,"section",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),Hn._19(737280,null,0,uu.a,[$n.a,Hn.q,Hn.Q],{layout:[0,"layout"]},null),Hn._19(933888,null,0,Kn.a,[$n.a,Hn.B,Hn.C,Hn.q,Hn.P,Hn.Q],{classBase:[0,"classBase"]},null),(l()(),Hn._41(null,["\n    "])),(l()(),Hn._21(0,null,null,99,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutGap.gt-xs","10px"]],null,null,null,null,null)),Hn._19(737280,null,0,uu.a,[$n.a,Hn.q,Hn.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),Hn._19(1720320,null,0,eu.a,[$n.a,Hn.q,Hn.Q,[2,uu.a]],{gapGtXs:[0,"gapGtXs"]},null),Hn._19(933888,null,0,Kn.a,[$n.a,Hn.B,Hn.C,Hn.q,Hn.P,Hn.Q],{classBase:[0,"classBase"]},null),(l()(),Hn._41(null,["\n      "])),(l()(),Hn._41(null,["\n      "])),(l()(),Hn._21(0,null,null,29,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Hn._35(l,23)._focusInput()&&e}return e},Yn.z,Yn.k)),Hn._19(737280,null,0,ru.a,[$n.a,Hn.q,Hn.Q,[3,uu.a],[3,tu.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),Hn._19(933888,null,0,Kn.a,[$n.a,Hn.B,Hn.C,Hn.q,Hn.P,Hn.Q],{classBase:[0,"classBase"]},null),Hn._19(7389184,null,6,Jn._16,[Hn.q,Hn.j,[2,Jn.o]],null,null),Hn._39(335544320,2,{_mdInputChild:0}),Hn._39(335544320,3,{_placeholderChild:0}),Hn._39(603979776,4,{_errorChildren:1}),Hn._39(603979776,5,{_hintChildren:1}),Hn._39(603979776,6,{_prefixChildren:1}),Hn._39(603979776,7,{_suffixChildren:1}),(l()(),Hn._41(1,["\n        "])),(l()(),Hn._21(0,null,1,9,"input",[["class","mat-input-element"],["id","activeIncome"],["mdInput",""],["name","activeIncome"],["numberValidator",""],["placeholder","Active Income"],["type","number"],["value","model.activeIncome"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Hn._35(l,32)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Hn._35(l,32).onTouched()&&e}if("compositionstart"===n){e=!1!==Hn._35(l,32)._compositionStart()&&e}if("compositionend"===n){e=!1!==Hn._35(l,32)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==Hn._35(l,33).onChange(u.target.value)&&e}if("input"===n){e=!1!==Hn._35(l,33).onChange(u.target.value)&&e}if("blur"===n){e=!1!==Hn._35(l,33).onTouched()&&e}if("blur"===n){e=!1!==Hn._35(l,40)._onBlur()&&e}if("focus"===n){e=!1!==Hn._35(l,40)._onFocus()&&e}if("input"===n){e=!1!==Hn._35(l,40)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.activeIncome=u)&&e}return e},null,null)),Hn._19(16384,null,0,nu.c,[Hn.Q,Hn.q,[2,nu.a]],null,null),Hn._19(16384,null,0,nu.s,[Hn.Q,Hn.q],null,null),Hn._19(16384,null,0,zn,[[8,""]],null,null),Hn._38(1024,null,nu.i,function(l){return[l]},[zn]),Hn._38(1024,null,nu.j,function(l,n){return[l,n]},[nu.c,nu.s]),Hn._19(671744,[["activeIncome",4]],0,nu.o,[[2,nu.b],[2,nu.i],[8,null],[2,nu.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Hn._38(2048,null,nu.k,null,[nu.o]),Hn._19(16384,null,0,nu.l,[nu.k],null,null),Hn._19(16384,[[2,4]],0,Jn._17,[Hn.q,Hn.Q,lu.L,[2,nu.k],[2,nu.n],[2,nu.e],[2,Jn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],type:[2,"type"]},null),(l()(),Hn._41(1,["\n        "])),(l()(),Hn._21(0,null,5,3,"md-hint",[["align","start"],["class","mat-hint"]],[[2,"mat-right",null],[1,"id",0]],null,null,null,null)),Hn._19(16384,null,0,Jn._35,[[2,Jn.j],Hn.q],null,null),Hn._19(16384,[[5,4]],0,Jn._10,[],{align:[0,"align"]},null),(l()(),Hn._41(null,["Annual income amount pre-tax."])),(l()(),Hn._41(1,["\n        "])),(l()(),Hn._15(16777216,null,4,1,null,M)),Hn._19(16384,null,0,au.m,[Hn._3,Hn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hn._41(1,["\n      "])),(l()(),Hn._41(null,["\n      \n      "])),(l()(),Hn._41(null,["\n      "])),(l()(),Hn._21(0,null,null,35,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Hn._35(l,55)._focusInput()&&e}return e},Yn.z,Yn.k)),Hn._19(737280,null,0,ru.a,[$n.a,Hn.q,Hn.Q,[3,uu.a],[3,tu.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),Hn._19(933888,null,0,Kn.a,[$n.a,Hn.B,Hn.C,Hn.q,Hn.P,Hn.Q],{classBase:[0,"classBase"]},null),Hn._19(7389184,null,6,Jn._16,[Hn.q,Hn.j,[2,Jn.o]],null,null),Hn._39(335544320,8,{_mdInputChild:0}),Hn._39(335544320,9,{_placeholderChild:0}),Hn._39(603979776,10,{_errorChildren:1}),Hn._39(603979776,11,{_hintChildren:1}),Hn._39(603979776,12,{_prefixChildren:1}),Hn._39(603979776,13,{_suffixChildren:1}),(l()(),Hn._41(1,["\n        "])),(l()(),Hn._21(0,null,1,9,"input",[["class","mat-input-element"],["id","incomeTaxRate"],["mdInput",""],["name","incomeTaxRate"],["numberValidator",'{"min": 0, "max": 100}'],["placeholder","Active income tax rate"],["type","number"],["value","model.incomeTaxRate"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Hn._35(l,64)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Hn._35(l,64).onTouched()&&e}if("compositionstart"===n){e=!1!==Hn._35(l,64)._compositionStart()&&e}if("compositionend"===n){e=!1!==Hn._35(l,64)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==Hn._35(l,65).onChange(u.target.value)&&e}if("input"===n){e=!1!==Hn._35(l,65).onChange(u.target.value)&&e}if("blur"===n){e=!1!==Hn._35(l,65).onTouched()&&e}if("blur"===n){e=!1!==Hn._35(l,72)._onBlur()&&e}if("focus"===n){e=!1!==Hn._35(l,72)._onFocus()&&e}if("input"===n){e=!1!==Hn._35(l,72)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.incomeTaxRate=u)&&e}return e},null,null)),Hn._19(16384,null,0,nu.c,[Hn.Q,Hn.q,[2,nu.a]],null,null),Hn._19(16384,null,0,nu.s,[Hn.Q,Hn.q],null,null),Hn._19(16384,null,0,zn,[[8,'{"min": 0, "max": 100}']],null,null),Hn._38(1024,null,nu.i,function(l){return[l]},[zn]),Hn._38(1024,null,nu.j,function(l,n){return[l,n]},[nu.c,nu.s]),Hn._19(671744,[["incomeTaxRate",4]],0,nu.o,[[2,nu.b],[2,nu.i],[8,null],[2,nu.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Hn._38(2048,null,nu.k,null,[nu.o]),Hn._19(16384,null,0,nu.l,[nu.k],null,null),Hn._19(16384,[[8,4]],0,Jn._17,[Hn.q,Hn.Q,lu.L,[2,nu.k],[2,nu.n],[2,nu.e],[2,Jn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],type:[2,"type"]},null),(l()(),Hn._41(1,["\n\n        "])),(l()(),Hn._21(0,null,5,3,"md-hint",[["align","start"],["class","mat-hint"]],[[2,"mat-right",null],[1,"id",0]],null,null,null,null)),Hn._19(16384,null,0,Jn._35,[[2,Jn.j],Hn.q],null,null),Hn._19(16384,[[11,4]],0,Jn._10,[],{align:[0,"align"]},null),(l()(),Hn._41(null,["Income tax rate (%)."])),(l()(),Hn._41(1,["\n        "])),(l()(),Hn._15(16777216,null,4,1,null,G)),Hn._19(16384,null,0,au.m,[Hn._3,Hn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hn._41(1,["\n        "])),(l()(),Hn._15(16777216,null,4,1,null,R)),Hn._19(16384,null,0,au.m,[Hn._3,Hn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hn._41(1,["\n        "])),(l()(),Hn._15(16777216,null,4,1,null,T)),Hn._19(16384,null,0,au.m,[Hn._3,Hn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hn._41(1,["\n      "])),(l()(),Hn._41(null,["\n      "])),(l()(),Hn._41(null,["\n\n      "])),(l()(),Hn._41(null,["\n      "])),(l()(),Hn._21(0,null,null,21,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Hn._35(l,94)._focusInput()&&e}return e},Yn.z,Yn.k)),Hn._19(737280,null,0,ru.a,[$n.a,Hn.q,Hn.Q,[3,uu.a],[3,tu.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),Hn._19(933888,null,0,Kn.a,[$n.a,Hn.B,Hn.C,Hn.q,Hn.P,Hn.Q],{classBase:[0,"classBase"]},null),Hn._19(7389184,null,6,Jn._16,[Hn.q,Hn.j,[2,Jn.o]],null,null),Hn._39(335544320,14,{_mdInputChild:0}),Hn._39(335544320,15,{_placeholderChild:0}),Hn._39(603979776,16,{_errorChildren:1}),Hn._39(603979776,17,{_hintChildren:1}),Hn._39(603979776,18,{_prefixChildren:1}),Hn._39(603979776,19,{_suffixChildren:1}),(l()(),Hn._41(1,["\n        "])),(l()(),Hn._21(0,null,1,9,"input",[["class","mat-input-element"],["id","netWorth"],["mdInput",""],["name","netWorth"],["numberValidator",""],["placeholder","Net worth"],["type","number"],["value","model.netWorth"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Hn._35(l,103)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Hn._35(l,103).onTouched()&&e}if("compositionstart"===n){e=!1!==Hn._35(l,103)._compositionStart()&&e}if("compositionend"===n){e=!1!==Hn._35(l,103)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==Hn._35(l,104).onChange(u.target.value)&&e}if("input"===n){e=!1!==Hn._35(l,104).onChange(u.target.value)&&e}if("blur"===n){e=!1!==Hn._35(l,104).onTouched()&&e}if("blur"===n){e=!1!==Hn._35(l,111)._onBlur()&&e}if("focus"===n){e=!1!==Hn._35(l,111)._onFocus()&&e}if("input"===n){e=!1!==Hn._35(l,111)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.netWorth=u)&&e}return e},null,null)),Hn._19(16384,null,0,nu.c,[Hn.Q,Hn.q,[2,nu.a]],null,null),Hn._19(16384,null,0,nu.s,[Hn.Q,Hn.q],null,null),Hn._19(16384,null,0,zn,[[8,""]],null,null),Hn._38(1024,null,nu.i,function(l){return[l]},[zn]),Hn._38(1024,null,nu.j,function(l,n){return[l,n]},[nu.c,nu.s]),Hn._19(671744,[["netWorth",4]],0,nu.o,[[2,nu.b],[2,nu.i],[8,null],[2,nu.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Hn._38(2048,null,nu.k,null,[nu.o]),Hn._19(16384,null,0,nu.l,[nu.k],null,null),Hn._19(16384,[[14,4]],0,Jn._17,[Hn.q,Hn.Q,lu.L,[2,nu.k],[2,nu.n],[2,nu.e],[2,Jn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],type:[2,"type"]},null),(l()(),Hn._41(1,["\n      "])),(l()(),Hn._41(null,["\n    "])),(l()(),Hn._41(null,["\n  "])),(l()(),Hn._41(null,["\n\n  "])),(l()(),Hn._21(0,null,null,11,"section",[["class","form__actions form__actions--account-finance"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign.gt-xs","center center"],["fxLayoutGap","10px"]],null,null,null,null,null)),Hn._19(737280,null,0,uu.a,[$n.a,Hn.q,Hn.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),Hn._19(1720320,null,0,eu.a,[$n.a,Hn.q,Hn.Q,[2,uu.a]],{gap:[0,"gap"]},null),Hn._19(737280,null,0,ou.a,[$n.a,Hn.q,Hn.Q,[2,uu.a]],{alignGtXs:[0,"alignGtXs"]},null),Hn._19(933888,null,0,Kn.a,[$n.a,Hn.B,Hn.C,Hn.q,Hn.P,Hn.Q],{classBase:[0,"classBase"]},null),(l()(),Hn._41(null,["\n    "])),(l()(),Hn._15(16777216,null,null,1,null,D)),Hn._19(16384,null,0,au.m,[Hn._3,Hn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hn._41(null,["\n    \n    "])),(l()(),Hn._15(16777216,null,null,1,null,E)),Hn._19(16384,null,0,au.m,[Hn._3,Hn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hn._41(null,["\n  "])),(l()(),Hn._41(null,["\n\n"]))],function(l,n){var u=n.component;l(n,6,0,"column");l(n,7,0,"10px");l(n,8,0,"form__container form__account-finance");l(n,11,0,"column");l(n,12,0,"form__fields");l(n,15,0,"column","row");l(n,16,0,"10px");l(n,17,0,"form__fields__row");l(n,21,0,"","200px");l(n,22,0,"form__field");l(n,37,0,"activeIncome",u.model.activeIncome);l(n,40,0,"activeIncome","Active Income","number");l(n,44,0,"start"),l(n,48,0,Hn._35(n,37).invalid&&(Hn._35(n,37).dirty||Hn._35(n,37).touched)&&Hn._35(n,37).errors.numberValidator);l(n,53,0,"","200px");l(n,54,0,"form__field");l(n,69,0,"incomeTaxRate",u.model.incomeTaxRate);l(n,72,0,"incomeTaxRate","Active income tax rate","number");l(n,76,0,"start"),l(n,80,0,Hn._35(n,69).invalid&&(Hn._35(n,69).dirty||Hn._35(n,69).touched)&&Hn._35(n,69).errors.numberValidator),l(n,83,0,Hn._35(n,69).invalid&&(Hn._35(n,69).dirty||Hn._35(n,69).touched)&&Hn._35(n,69).errors.numberValidatorMin),l(n,86,0,Hn._35(n,69).invalid&&(Hn._35(n,69).dirty||Hn._35(n,69).touched)&&Hn._35(n,69).errors.numberValidatorMax);l(n,92,0,"","200px");l(n,93,0,"form__field");l(n,108,0,"netWorth",u.model.netWorth);l(n,111,0,"netWorth","Net worth","number");l(n,117,0,"column","row");l(n,118,0,"10px");l(n,119,0,"center center");l(n,120,0,"form__actions form__actions--account-finance"),l(n,123,0,!u.accountFinanceServiceRunning),l(n,126,0,u.accountFinanceServiceRunning)},function(l,n){l(n,1,0,Hn._35(n,5).ngClassUntouched,Hn._35(n,5).ngClassTouched,Hn._35(n,5).ngClassPristine,Hn._35(n,5).ngClassDirty,Hn._35(n,5).ngClassValid,Hn._35(n,5).ngClassInvalid,Hn._35(n,5).ngClassPending);l(n,20,0,null,Hn._35(n,23)._mdInputChild._isErrorState(),Hn._35(n,23)._mdInputChild.focused,Hn._35(n,23)._shouldForward("untouched"),Hn._35(n,23)._shouldForward("touched"),Hn._35(n,23)._shouldForward("pristine"),Hn._35(n,23)._shouldForward("dirty"),Hn._35(n,23)._shouldForward("valid"),Hn._35(n,23)._shouldForward("invalid"),Hn._35(n,23)._shouldForward("pending")),l(n,31,1,[Hn._35(n,39).ngClassUntouched,Hn._35(n,39).ngClassTouched,Hn._35(n,39).ngClassPristine,Hn._35(n,39).ngClassDirty,Hn._35(n,39).ngClassValid,Hn._35(n,39).ngClassInvalid,Hn._35(n,39).ngClassPending,Hn._35(n,40).id,Hn._35(n,40).placeholder,Hn._35(n,40).disabled,Hn._35(n,40).required,Hn._35(n,40).ariaDescribedby||null,Hn._35(n,40)._isErrorState()]),l(n,42,0,"end"==Hn._35(n,44).align,Hn._35(n,44).id);l(n,52,0,null,Hn._35(n,55)._mdInputChild._isErrorState(),Hn._35(n,55)._mdInputChild.focused,Hn._35(n,55)._shouldForward("untouched"),Hn._35(n,55)._shouldForward("touched"),Hn._35(n,55)._shouldForward("pristine"),Hn._35(n,55)._shouldForward("dirty"),Hn._35(n,55)._shouldForward("valid"),Hn._35(n,55)._shouldForward("invalid"),Hn._35(n,55)._shouldForward("pending")),l(n,63,1,[Hn._35(n,71).ngClassUntouched,Hn._35(n,71).ngClassTouched,Hn._35(n,71).ngClassPristine,Hn._35(n,71).ngClassDirty,Hn._35(n,71).ngClassValid,Hn._35(n,71).ngClassInvalid,Hn._35(n,71).ngClassPending,Hn._35(n,72).id,Hn._35(n,72).placeholder,Hn._35(n,72).disabled,Hn._35(n,72).required,Hn._35(n,72).ariaDescribedby||null,Hn._35(n,72)._isErrorState()]),l(n,74,0,"end"==Hn._35(n,76).align,Hn._35(n,76).id);l(n,91,0,null,Hn._35(n,94)._mdInputChild._isErrorState(),Hn._35(n,94)._mdInputChild.focused,Hn._35(n,94)._shouldForward("untouched"),Hn._35(n,94)._shouldForward("touched"),Hn._35(n,94)._shouldForward("pristine"),Hn._35(n,94)._shouldForward("dirty"),Hn._35(n,94)._shouldForward("valid"),Hn._35(n,94)._shouldForward("invalid"),Hn._35(n,94)._shouldForward("pending")),l(n,102,1,[Hn._35(n,110).ngClassUntouched,Hn._35(n,110).ngClassTouched,Hn._35(n,110).ngClassPristine,Hn._35(n,110).ngClassDirty,Hn._35(n,110).ngClassValid,Hn._35(n,110).ngClassInvalid,Hn._35(n,110).ngClassPending,Hn._35(n,111).id,Hn._35(n,111).placeholder,Hn._35(n,111).disabled,Hn._35(n,111).required,Hn._35(n,111).ariaDescribedby||null,Hn._35(n,111)._isErrorState()])})}function N(l){return Hn._43(0,[(l()(),Hn._21(0,null,null,1,"account-finance-info",[],null,null,null,O,_u)),Hn._19(4308992,null,0,An,[],null,null)],function(l,n){l(n,1,0)},null)}function X(l){return su._43(0,[(l()(),su._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),su._19(16384,null,0,cu._35,[[2,cu.j],su.q],null,null),su._19(16384,[[3,4]],0,cu._2,[],null,null),(l()(),su._41(null,["Name is required"]))],null,null)}function V(l){return su._43(0,[(l()(),su._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),su._19(16384,null,0,cu._35,[[2,cu.j],su.q],null,null),su._19(16384,[[3,4]],0,cu._2,[],null,null),(l()(),su._41(null,["Name must contains more than 4 characters"]))],null,null)}function Z(l){return su._43(0,[(l()(),su._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),su._19(16384,null,0,cu._35,[[2,cu.j],su.q],null,null),su._19(16384,[[9,4]],0,cu._2,[],null,null),(l()(),su._41(null,["Email is required"]))],null,null)}function U(l){return su._43(0,[(l()(),su._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),su._19(16384,null,0,cu._35,[[2,cu.j],su.q],null,null),su._19(16384,[[9,4]],0,cu._2,[],null,null),(l()(),su._41(null,["Email must be a valid email address"]))],null,null)}function A(l){return su._43(0,[(l()(),su._21(0,null,null,5,"button",[["class","form__action mat-raised-button mat-raised-button"],["color","accent"],["md-raised-button",""],["type","submit"]],[[8,"disabled",0]],null,null,du.t,du.e)),su._19(933888,null,0,mu.a,[pu.a,su.B,su.C,su.q,su.P,su.Q],{classBase:[0,"classBase"]},null),su._19(16384,null,0,cu._35,[[2,cu.j],su.q],null,null),su._19(180224,null,0,cu.w,[su.Q,su.q,gu.L,cu.g],{disabled:[0,"disabled"],color:[1,"color"]},null),su._19(16384,null,0,cu._44,[],null,null),(l()(),su._41(0,["Save"]))],function(l,n){l(n,1,0,"form__action mat-raised-button");l(n,3,0,!su._35(n.parent,2).form.valid,"accent")},function(l,n){l(n,0,0,su._35(n,3).disabled||null)})}function W(l){return su._43(0,[(l()(),su._21(0,null,null,4,"md-progress-bar",[["aria-valuemax","100"],["aria-valuemin","0"],["class","progress-bar progress-bar--update-account mat-progress-bar"],["color","primary"],["mode","indeterminate"],["role","progressbar"]],[[2,"mat-primary",null],[2,"mat-accent",null],[2,"mat-warn",null],[1,"aria-valuenow",0],[1,"mode",0]],null,null,du.C,du.n)),su._19(933888,null,0,mu.a,[pu.a,su.B,su.C,su.q,su.P,su.Q],{classBase:[0,"classBase"]},null),su._19(16384,null,0,cu._35,[[2,cu.j],su.q],null,null),su._19(49152,null,0,cu._36,[],{color:[0,"color"],mode:[1,"mode"]},null),(l()(),su._41(null,["\n    "]))],function(l,n){l(n,1,0,"progress-bar progress-bar--update-account");l(n,3,0,"primary","indeterminate")},function(l,n){l(n,0,0,"primary"==su._35(n,3).color,"accent"==su._35(n,3).color,"warn"==su._35(n,3).color,su._35(n,3).value,su._35(n,3).mode)})}function z(l){return su._43(0,[(l()(),su._21(0,null,null,92,"form",[["class","form__container"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,r=l.component;if("submit"===n){e=!1!==su._35(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==su._35(l,2).onReset()&&e}if("ngSubmit"===n){e=!1!==r.onSubmit()&&e}return e},null,null)),su._19(16384,null,0,fu.t,[],null,null),su._19(16384,[["accountForm",4]],0,fu.n,[[8,null],[8,null]],null,{ngSubmit:"ngSubmit"}),su._38(2048,null,fu.b,null,[fu.n]),su._19(16384,null,0,fu.m,[fu.b],null,null),su._19(737280,null,0,hu.a,[pu.a,su.q,su.Q],{layout:[0,"layout"]},null),su._19(1720320,null,0,vu.a,[pu.a,su.q,su.Q,[2,hu.a]],{gap:[0,"gap"]},null),su._19(933888,null,0,mu.a,[pu.a,su.B,su.C,su.q,su.P,su.Q],{classBase:[0,"classBase"]},null),(l()(),su._41(null,["\n  \n  "])),(l()(),su._21(0,null,null,69,"div",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),su._19(737280,null,0,hu.a,[pu.a,su.q,su.Q],{layout:[0,"layout"]},null),su._19(933888,null,0,mu.a,[pu.a,su.B,su.C,su.q,su.P,su.Q],{classBase:[0,"classBase"]},null),(l()(),su._41(null,["\n    "])),(l()(),su._21(0,null,null,64,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),su._19(737280,null,0,hu.a,[pu.a,su.q,su.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),su._19(1720320,null,0,vu.a,[pu.a,su.q,su.Q,[2,hu.a]],{gapGtSm:[0,"gapGtSm"]},null),su._19(933888,null,0,mu.a,[pu.a,su.B,su.C,su.q,su.P,su.Q],{classBase:[0,"classBase"]},null),(l()(),su._41(null,["\n      "])),(l()(),su._41(null,["\n      "])),(l()(),su._21(0,null,null,27,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==su._35(l,22)._focusInput()&&e}return e},du.z,du.k)),su._19(737280,null,0,yu.a,[pu.a,su.q,su.Q,[3,hu.a],[3,Cu.a]],{flex:[0,"flex"]},null),su._19(933888,null,0,mu.a,[pu.a,su.B,su.C,su.q,su.P,su.Q],{classBase:[0,"classBase"]},null),su._19(7389184,null,6,cu._16,[su.q,su.j,[2,cu.o]],null,null),su._39(335544320,1,{_mdInputChild:0}),su._39(335544320,2,{_placeholderChild:0}),su._39(603979776,3,{_errorChildren:1}),su._39(603979776,4,{_hintChildren:1}),su._39(603979776,5,{_prefixChildren:1}),su._39(603979776,6,{_suffixChildren:1}),(l()(),su._41(1,["\n        "])),(l()(),su._21(0,null,1,9,"input",[["class","mat-input-element"],["id","name"],["mdInput",""],["minlength","4"],["name","name"],["placeholder","Name"],["required",""],["type","text"],["value","model.name"]],[[1,"required",0],[1,"minlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==su._35(l,31)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==su._35(l,31).onTouched()&&e}if("compositionstart"===n){e=!1!==su._35(l,31)._compositionStart()&&e}if("compositionend"===n){e=!1!==su._35(l,31)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==su._35(l,39)._onBlur()&&e}if("focus"===n){e=!1!==su._35(l,39)._onFocus()&&e}if("input"===n){e=!1!==su._35(l,39)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.name=u)&&e}return e},null,null)),su._19(16384,null,0,fu.c,[su.Q,su.q,[2,fu.a]],null,null),su._19(16384,null,0,fu.p,[],{required:[0,"required"]},null),su._19(540672,null,0,fu.h,[],{minlength:[0,"minlength"]},null),su._38(1024,null,fu.i,function(l,n){return[l,n]},[fu.p,fu.h]),su._38(1024,null,fu.j,function(l){return[l]},[fu.c]),su._19(671744,[["name",4]],0,fu.o,[[2,fu.b],[2,fu.i],[8,null],[2,fu.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),su._38(2048,null,fu.k,null,[fu.o]),su._19(16384,null,0,fu.l,[fu.k],null,null),su._19(16384,[[1,4]],0,cu._17,[su.q,su.Q,gu.L,[2,fu.k],[2,fu.n],[2,fu.e],[2,cu.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),su._41(1,["\n\n        "])),(l()(),su._15(16777216,null,4,1,null,X)),su._19(16384,null,0,bu.m,[su._3,su.Z],{ngIf:[0,"ngIf"]},null),(l()(),su._41(1,["\n        "])),(l()(),su._15(16777216,null,4,1,null,V)),su._19(16384,null,0,bu.m,[su._3,su.Z],{ngIf:[0,"ngIf"]},null),(l()(),su._41(1,["\n      "])),(l()(),su._41(null,["\n      \n      "])),(l()(),su._41(null,["\n      "])),(l()(),su._21(0,null,null,27,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==su._35(l,52)._focusInput()&&e}return e},du.z,du.k)),su._19(737280,null,0,yu.a,[pu.a,su.q,su.Q,[3,hu.a],[3,Cu.a]],{flex:[0,"flex"]},null),su._19(933888,null,0,mu.a,[pu.a,su.B,su.C,su.q,su.P,su.Q],{classBase:[0,"classBase"]},null),su._19(7389184,null,6,cu._16,[su.q,su.j,[2,cu.o]],null,null),su._39(335544320,7,{_mdInputChild:0}),su._39(335544320,8,{_placeholderChild:0}),su._39(603979776,9,{_errorChildren:1}),su._39(603979776,10,{_hintChildren:1}),su._39(603979776,11,{_prefixChildren:1}),su._39(603979776,12,{_suffixChildren:1}),(l()(),su._41(1,["\n        "])),(l()(),su._21(0,null,1,9,"input",[["class","mat-input-element"],["email",""],["id","email"],["mdInput",""],["name","email"],["placeholder","Email address"],["required",""],["type","email"],["value","model.email"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==su._35(l,61)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==su._35(l,61).onTouched()&&e}if("compositionstart"===n){e=!1!==su._35(l,61)._compositionStart()&&e}if("compositionend"===n){e=!1!==su._35(l,61)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==su._35(l,69)._onBlur()&&e}if("focus"===n){e=!1!==su._35(l,69)._onFocus()&&e}if("input"===n){e=!1!==su._35(l,69)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.email=u)&&e}return e},null,null)),su._19(16384,null,0,fu.c,[su.Q,su.q,[2,fu.a]],null,null),su._19(16384,null,0,fu.p,[],{required:[0,"required"]},null),su._19(16384,null,0,fu.d,[],{email:[0,"email"]},null),su._38(1024,null,fu.i,function(l,n){return[l,n]},[fu.p,fu.d]),su._38(1024,null,fu.j,function(l){return[l]},[fu.c]),su._19(671744,[["email",4]],0,fu.o,[[2,fu.b],[2,fu.i],[8,null],[2,fu.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),su._38(2048,null,fu.k,null,[fu.o]),su._19(16384,null,0,fu.l,[fu.k],null,null),su._19(16384,[[7,4]],0,cu._17,[su.q,su.Q,gu.L,[2,fu.k],[2,fu.n],[2,fu.e],[2,cu.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),su._41(1,["\n\n        "])),(l()(),su._15(16777216,null,4,1,null,Z)),su._19(16384,null,0,bu.m,[su._3,su.Z],{ngIf:[0,"ngIf"]},null),(l()(),su._41(1,["\n        "])),(l()(),su._15(16777216,null,4,1,null,U)),su._19(16384,null,0,bu.m,[su._3,su.Z],{ngIf:[0,"ngIf"]},null),(l()(),su._41(1,["\n      "])),(l()(),su._41(null,["\n    "])),(l()(),su._41(null,["\n  "])),(l()(),su._41(null,["\n\n  "])),(l()(),su._21(0,null,null,11,"div",[["class","form__actions"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign.gt-xs","center none"],["fxLayoutGap","10px"]],null,null,null,null,null)),su._19(737280,null,0,hu.a,[pu.a,su.q,su.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),su._19(1720320,null,0,vu.a,[pu.a,su.q,su.Q,[2,hu.a]],{gap:[0,"gap"]},null),su._19(737280,null,0,xu.a,[pu.a,su.q,su.Q,[2,hu.a]],{alignGtXs:[0,"alignGtXs"]},null),su._19(933888,null,0,mu.a,[pu.a,su.B,su.C,su.q,su.P,su.Q],{classBase:[0,"classBase"]},null),(l()(),su._41(null,["\n    "])),(l()(),su._15(16777216,null,null,1,null,A)),su._19(16384,null,0,bu.m,[su._3,su.Z],{ngIf:[0,"ngIf"]},null),(l()(),su._41(null,["\n\n    "])),(l()(),su._15(16777216,null,null,1,null,W)),su._19(16384,null,0,bu.m,[su._3,su.Z],{ngIf:[0,"ngIf"]},null),(l()(),su._41(null,["\n  "])),(l()(),su._41(null,["\n\n"])),(l()(),su._41(null,["\n\n"])),(l()(),su._21(0,null,null,1,"account-finance-info",[],null,null,null,O,_u)),su._19(4308992,null,0,An,[],{user:[0,"user"]},null)],function(l,n){var u=n.component;l(n,5,0,"column");l(n,6,0,"10px");l(n,7,0,"form__container");l(n,10,0,"column");l(n,11,0,"form__fields");l(n,14,0,"column","row");l(n,15,0,"10px");l(n,16,0,"form__fields__row");l(n,20,0,"");l(n,21,0,"form__field");l(n,32,0,"");l(n,33,0,"4");l(n,36,0,"name",u.model.name);l(n,39,0,"name","Name","","text"),l(n,42,0,su._35(n,36).invalid&&(su._35(n,36).dirty||su._35(n,36).touched)&&su._35(n,36).errors.required),l(n,45,0,su._35(n,36).invalid&&(su._35(n,36).dirty||su._35(n,36).touched)&&su._35(n,36).errors.minlength);l(n,50,0,"");l(n,51,0,"form__field");l(n,62,0,"");l(n,63,0,"");l(n,66,0,"email",u.model.email);l(n,69,0,"email","Email address","","email"),l(n,72,0,su._35(n,66).invalid&&(su._35(n,66).dirty||su._35(n,66).touched)&&su._35(n,66).errors.required),l(n,75,0,su._35(n,66).invalid&&(su._35(n,66).dirty||su._35(n,66).touched)&&su._35(n,66).errors.email);l(n,81,0,"column","row");l(n,82,0,"10px");l(n,83,0,"center none");l(n,84,0,"form__actions"),l(n,87,0,!u.updateAccountServiceRunning),l(n,90,0,u.updateAccountServiceRunning),l(n,95,0,u.user)},function(l,n){l(n,0,0,su._35(n,4).ngClassUntouched,su._35(n,4).ngClassTouched,su._35(n,4).ngClassPristine,su._35(n,4).ngClassDirty,su._35(n,4).ngClassValid,su._35(n,4).ngClassInvalid,su._35(n,4).ngClassPending);l(n,19,0,null,su._35(n,22)._mdInputChild._isErrorState(),su._35(n,22)._mdInputChild.focused,su._35(n,22)._shouldForward("untouched"),su._35(n,22)._shouldForward("touched"),su._35(n,22)._shouldForward("pristine"),su._35(n,22)._shouldForward("dirty"),su._35(n,22)._shouldForward("valid"),su._35(n,22)._shouldForward("invalid"),su._35(n,22)._shouldForward("pending")),l(n,30,1,[su._35(n,32).required?"":null,su._35(n,33).minlength?su._35(n,33).minlength:null,su._35(n,38).ngClassUntouched,su._35(n,38).ngClassTouched,su._35(n,38).ngClassPristine,su._35(n,38).ngClassDirty,su._35(n,38).ngClassValid,su._35(n,38).ngClassInvalid,su._35(n,38).ngClassPending,su._35(n,39).id,su._35(n,39).placeholder,su._35(n,39).disabled,su._35(n,39).required,su._35(n,39).ariaDescribedby||null,su._35(n,39)._isErrorState()]);l(n,49,0,null,su._35(n,52)._mdInputChild._isErrorState(),su._35(n,52)._mdInputChild.focused,su._35(n,52)._shouldForward("untouched"),su._35(n,52)._shouldForward("touched"),su._35(n,52)._shouldForward("pristine"),su._35(n,52)._shouldForward("dirty"),su._35(n,52)._shouldForward("valid"),su._35(n,52)._shouldForward("invalid"),su._35(n,52)._shouldForward("pending")),l(n,60,1,[su._35(n,62).required?"":null,su._35(n,68).ngClassUntouched,su._35(n,68).ngClassTouched,su._35(n,68).ngClassPristine,su._35(n,68).ngClassDirty,su._35(n,68).ngClassValid,su._35(n,68).ngClassInvalid,su._35(n,68).ngClassPending,su._35(n,69).id,su._35(n,69).placeholder,su._35(n,69).disabled,su._35(n,69).required,su._35(n,69).ariaDescribedby||null,su._35(n,69)._isErrorState()])})}function H(l){return su._43(0,[(l()(),su._21(0,null,null,1,"app-account",[],null,null,null,z,Iu)),su._19(114688,null,0,Zn,[El,Tl,Zl,qu.a],null,null)],function(l,n){l(n,1,0)},null)}function J(l){return Qu._43(0,[(l()(),Qu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Qu._19(16384,null,0,Fu._35,[[2,Fu.j],Qu.q],null,null),Qu._19(16384,[[3,4]],0,Fu._2,[],null,null),(l()(),Qu._41(null,["Password is required"]))],null,null)}function Y(l){return Qu._43(0,[(l()(),Qu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Qu._19(16384,null,0,Fu._35,[[2,Fu.j],Qu.q],null,null),Qu._19(16384,[[3,4]],0,Fu._2,[],null,null),(l()(),Qu._41(null,["Password must be longer than 3 characters"]))],null,null)}function K(l){return Qu._43(0,[(l()(),Qu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Qu._19(16384,null,0,Fu._35,[[2,Fu.j],Qu.q],null,null),Qu._19(16384,[[3,4]],0,Fu._2,[],null,null),(l()(),Qu._41(null,["Password must be shorter than 8 characters"]))],null,null)}function $(l){return Qu._43(0,[(l()(),Qu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Qu._19(16384,null,0,Fu._35,[[2,Fu.j],Qu.q],null,null),Qu._19(16384,[[9,4]],0,Fu._2,[],null,null),(l()(),Qu._41(null,["Confirm password is required"]))],null,null)}function ll(l){return Qu._43(0,[(l()(),Qu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Qu._19(16384,null,0,Fu._35,[[2,Fu.j],Qu.q],null,null),Qu._19(16384,[[9,4]],0,Fu._2,[],null,null),(l()(),Qu._41(null,["Confirm password must be longer than 3 characters"]))],null,null)}function nl(l){return Qu._43(0,[(l()(),Qu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Qu._19(16384,null,0,Fu._35,[[2,Fu.j],Qu.q],null,null),Qu._19(16384,[[9,4]],0,Fu._2,[],null,null),(l()(),Qu._41(null,["Confirm password must be shorter than 8 characters"]))],null,null)}function ul(l){return Qu._43(0,[(l()(),Qu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Qu._19(16384,null,0,Fu._35,[[2,Fu.j],Qu.q],null,null),Qu._19(16384,[[9,4]],0,Fu._2,[],null,null),(l()(),Qu._41(null,["Confirm password must match password"]))],null,null)}function el(l){return Qu._43(0,[(l()(),Qu._21(0,null,null,5,"button",[["class","form__action mat-raised-button mat-raised-button"],["color","accent"],["md-raised-button",""],["type","submit"]],[[8,"disabled",0]],null,null,Lu.t,Lu.e)),Qu._19(933888,null,0,ju.a,[Mu.a,Qu.B,Qu.C,Qu.q,Qu.P,Qu.Q],{classBase:[0,"classBase"]},null),Qu._19(16384,null,0,Fu._35,[[2,Fu.j],Qu.q],null,null),Qu._19(180224,null,0,Fu.w,[Qu.Q,Qu.q,Gu.L,Fu.g],{disabled:[0,"disabled"],color:[1,"color"]},null),Qu._19(16384,null,0,Fu._44,[],null,null),(l()(),Qu._41(0,["Reset password"]))],function(l,n){l(n,1,0,"form__action mat-raised-button");l(n,3,0,!Qu._35(n.parent,2).form.valid,"accent")},function(l,n){l(n,0,0,Qu._35(n,3).disabled||null)})}function rl(l){return Qu._43(0,[(l()(),Qu._21(0,null,null,4,"md-progress-bar",[["aria-valuemax","100"],["aria-valuemin","0"],["class","progress-bar progress-bar--reset-password mat-progress-bar"],["color","primary"],["mode","indeterminate"],["role","progressbar"]],[[2,"mat-primary",null],[2,"mat-accent",null],[2,"mat-warn",null],[1,"aria-valuenow",0],[1,"mode",0]],null,null,Lu.C,Lu.n)),Qu._19(933888,null,0,ju.a,[Mu.a,Qu.B,Qu.C,Qu.q,Qu.P,Qu.Q],{classBase:[0,"classBase"]},null),Qu._19(16384,null,0,Fu._35,[[2,Fu.j],Qu.q],null,null),Qu._19(49152,null,0,Fu._36,[],{color:[0,"color"],mode:[1,"mode"]},null),(l()(),Qu._41(null,["\n    "]))],function(l,n){l(n,1,0,"progress-bar progress-bar--reset-password");l(n,3,0,"primary","indeterminate")},function(l,n){l(n,0,0,"primary"==Qu._35(n,3).color,"accent"==Qu._35(n,3).color,"warn"==Qu._35(n,3).color,Qu._35(n,3).value,Qu._35(n,3).mode)})}function tl(l){return Qu._43(0,[(l()(),Qu._21(0,null,null,105,"form",[["class","form__container"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,r=l.component;if("submit"===n){e=!1!==Qu._35(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==Qu._35(l,2).onReset()&&e}if("ngSubmit"===n){e=!1!==r.onSubmit()&&e}return e},null,null)),Qu._19(16384,null,0,Ru.t,[],null,null),Qu._19(16384,[["resetForm",4]],0,Ru.n,[[8,null],[8,null]],null,{ngSubmit:"ngSubmit"}),Qu._38(2048,null,Ru.b,null,[Ru.n]),Qu._19(16384,null,0,Ru.m,[Ru.b],null,null),Qu._19(737280,null,0,Tu.a,[Mu.a,Qu.q,Qu.Q],{layout:[0,"layout"]},null),Qu._19(1720320,null,0,Du.a,[Mu.a,Qu.q,Qu.Q,[2,Tu.a]],{gap:[0,"gap"]},null),Qu._19(933888,null,0,ju.a,[Mu.a,Qu.B,Qu.C,Qu.q,Qu.P,Qu.Q],{classBase:[0,"classBase"]},null),(l()(),Qu._41(null,["\n  \n  "])),(l()(),Qu._21(0,null,null,82,"div",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),Qu._19(737280,null,0,Tu.a,[Mu.a,Qu.q,Qu.Q],{layout:[0,"layout"]},null),Qu._19(933888,null,0,ju.a,[Mu.a,Qu.B,Qu.C,Qu.q,Qu.P,Qu.Q],{classBase:[0,"classBase"]},null),(l()(),Qu._41(null,["\n    "])),(l()(),Qu._21(0,null,null,77,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),Qu._19(737280,null,0,Tu.a,[Mu.a,Qu.q,Qu.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),Qu._19(1720320,null,0,Du.a,[Mu.a,Qu.q,Qu.Q,[2,Tu.a]],{gapGtSm:[0,"gapGtSm"]},null),Qu._19(933888,null,0,ju.a,[Mu.a,Qu.B,Qu.C,Qu.q,Qu.P,Qu.Q],{classBase:[0,"classBase"]},null),(l()(),Qu._41(null,["\n      "])),(l()(),Qu._41(null,["\n      "])),(l()(),Qu._21(0,null,null,32,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Qu._35(l,22)._focusInput()&&e}return e},Lu.z,Lu.k)),Qu._19(737280,null,0,Eu.a,[Mu.a,Qu.q,Qu.Q,[3,Tu.a],[3,Ou.a]],{flex:[0,"flex"]},null),Qu._19(933888,null,0,ju.a,[Mu.a,Qu.B,Qu.C,Qu.q,Qu.P,Qu.Q],{classBase:[0,"classBase"]},null),Qu._19(7389184,null,6,Fu._16,[Qu.q,Qu.j,[2,Fu.o]],null,null),Qu._39(335544320,1,{_mdInputChild:0}),Qu._39(335544320,2,{_placeholderChild:0}),Qu._39(603979776,3,{_errorChildren:1}),Qu._39(603979776,4,{_hintChildren:1}),Qu._39(603979776,5,{_prefixChildren:1}),Qu._39(603979776,6,{_suffixChildren:1}),(l()(),Qu._41(1,["\n        "])),(l()(),Qu._21(0,null,1,11,"input",[["class","mat-input-element"],["equalvalidator","passwordConfirm"],["id","password"],["maxlength","8"],["mdInput",""],["minlength","3"],["name","password"],["placeholder","Password"],["required",""],["reverse","true"],["type","password"]],[[1,"required",0],[1,"minlength",0],[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Qu._35(l,31)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Qu._35(l,31).onTouched()&&e}if("compositionstart"===n){e=!1!==Qu._35(l,31)._compositionStart()&&e}if("compositionend"===n){e=!1!==Qu._35(l,31)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==Qu._35(l,41)._onBlur()&&e}if("focus"===n){e=!1!==Qu._35(l,41)._onFocus()&&e}if("input"===n){e=!1!==Qu._35(l,41)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.password=u)&&e}return e},null,null)),Qu._19(16384,null,0,Ru.c,[Qu.Q,Qu.q,[2,Ru.a]],null,null),Qu._19(16384,null,0,Ru.p,[],{required:[0,"required"]},null),Qu._19(540672,null,0,Ru.h,[],{minlength:[0,"minlength"]},null),Qu._19(540672,null,0,Ru.g,[],{maxlength:[0,"maxlength"]},null),Qu._19(16384,null,0,en,[[8,"passwordConfirm"],[8,"true"]],null,null),Qu._38(1024,null,Ru.i,function(l,n,u,e){return[l,n,u,e]},[Ru.p,Ru.h,Ru.g,en]),Qu._38(1024,null,Ru.j,function(l){return[l]},[Ru.c]),Qu._19(671744,[["password",4]],0,Ru.o,[[2,Ru.b],[2,Ru.i],[8,null],[2,Ru.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Qu._38(2048,null,Ru.k,null,[Ru.o]),Qu._19(16384,null,0,Ru.l,[Ru.k],null,null),Qu._19(16384,[[1,4]],0,Fu._17,[Qu.q,Qu.Q,Gu.L,[2,Ru.k],[2,Ru.n],[2,Ru.e],[2,Fu.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),Qu._41(1,["\n\n        "])),(l()(),Qu._15(16777216,null,4,1,null,J)),Qu._19(16384,null,0,Nu.m,[Qu._3,Qu.Z],{ngIf:[0,"ngIf"]},null),(l()(),Qu._41(1,["\n        "])),(l()(),Qu._15(16777216,null,4,1,null,Y)),Qu._19(16384,null,0,Nu.m,[Qu._3,Qu.Z],{ngIf:[0,"ngIf"]},null),(l()(),Qu._41(1,["\n        "])),(l()(),Qu._15(16777216,null,4,1,null,K)),Qu._19(16384,null,0,Nu.m,[Qu._3,Qu.Z],{ngIf:[0,"ngIf"]},null),(l()(),Qu._41(1,["\n      "])),(l()(),Qu._41(null,["\n\n      "])),(l()(),Qu._41(null,["\n      "])),(l()(),Qu._21(0,null,null,35,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Qu._35(l,57)._focusInput()&&e}return e},Lu.z,Lu.k)),Qu._19(737280,null,0,Eu.a,[Mu.a,Qu.q,Qu.Q,[3,Tu.a],[3,Ou.a]],{flex:[0,"flex"]},null),Qu._19(933888,null,0,ju.a,[Mu.a,Qu.B,Qu.C,Qu.q,Qu.P,Qu.Q],{classBase:[0,"classBase"]},null),Qu._19(7389184,null,6,Fu._16,[Qu.q,Qu.j,[2,Fu.o]],null,null),Qu._39(335544320,7,{_mdInputChild:0}),Qu._39(335544320,8,{_placeholderChild:0}),Qu._39(603979776,9,{_errorChildren:1}),Qu._39(603979776,10,{_hintChildren:1}),Qu._39(603979776,11,{_prefixChildren:1}),Qu._39(603979776,12,{_suffixChildren:1}),(l()(),Qu._41(1,["\n        "])),(l()(),Qu._21(0,null,1,11,"input",[["class","mat-input-element"],["equalvalidator","password"],["id","passwordConfirm"],["maxlength","8"],["mdInput",""],["minlength","3"],["name","passwordConfirm"],["placeholder","Confirm password"],["required",""],["type","password"]],[[1,"required",0],[1,"minlength",0],[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Qu._35(l,66)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Qu._35(l,66).onTouched()&&e}if("compositionstart"===n){e=!1!==Qu._35(l,66)._compositionStart()&&e}if("compositionend"===n){e=!1!==Qu._35(l,66)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==Qu._35(l,76)._onBlur()&&e}if("focus"===n){e=!1!==Qu._35(l,76)._onFocus()&&e}if("input"===n){e=!1!==Qu._35(l,76)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model["password-confirm"]=u)&&e}return e},null,null)),Qu._19(16384,null,0,Ru.c,[Qu.Q,Qu.q,[2,Ru.a]],null,null),Qu._19(16384,null,0,Ru.p,[],{required:[0,"required"]},null),Qu._19(540672,null,0,Ru.h,[],{minlength:[0,"minlength"]},null),Qu._19(540672,null,0,Ru.g,[],{maxlength:[0,"maxlength"]},null),Qu._19(16384,null,0,en,[[8,"password"],[8,null]],null,null),Qu._38(1024,null,Ru.i,function(l,n,u,e){return[l,n,u,e]},[Ru.p,Ru.h,Ru.g,en]),Qu._38(1024,null,Ru.j,function(l){return[l]},[Ru.c]),Qu._19(671744,[["passwordConfirm",4]],0,Ru.o,[[2,Ru.b],[2,Ru.i],[8,null],[2,Ru.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Qu._38(2048,null,Ru.k,null,[Ru.o]),Qu._19(16384,null,0,Ru.l,[Ru.k],null,null),Qu._19(16384,[[7,4]],0,Fu._17,[Qu.q,Qu.Q,Gu.L,[2,Ru.k],[2,Ru.n],[2,Ru.e],[2,Fu.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),Qu._41(1,["\n\n        "])),(l()(),Qu._15(16777216,null,4,1,null,$)),Qu._19(16384,null,0,Nu.m,[Qu._3,Qu.Z],{ngIf:[0,"ngIf"]},null),(l()(),Qu._41(1,["\n        "])),(l()(),Qu._15(16777216,null,4,1,null,ll)),Qu._19(16384,null,0,Nu.m,[Qu._3,Qu.Z],{ngIf:[0,"ngIf"]},null),(l()(),Qu._41(1,["\n        "])),(l()(),Qu._15(16777216,null,4,1,null,nl)),Qu._19(16384,null,0,Nu.m,[Qu._3,Qu.Z],{ngIf:[0,"ngIf"]},null),(l()(),Qu._41(1,["\n        "])),(l()(),Qu._15(16777216,null,4,1,null,ul)),Qu._19(16384,null,0,Nu.m,[Qu._3,Qu.Z],{ngIf:[0,"ngIf"]},null),(l()(),Qu._41(1,["\n      "])),(l()(),Qu._41(null,["\n    "])),(l()(),Qu._41(null,["\n    \n    \n    \n  "])),(l()(),Qu._41(null,["\n  \n  "])),(l()(),Qu._21(0,null,null,11,"div",[["class","form__actions"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign.gt-xs","center none"],["fxLayoutGap","10px"]],null,null,null,null,null)),Qu._19(737280,null,0,Tu.a,[Mu.a,Qu.q,Qu.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),Qu._19(1720320,null,0,Du.a,[Mu.a,Qu.q,Qu.Q,[2,Tu.a]],{gap:[0,"gap"]},null),Qu._19(737280,null,0,Xu.a,[Mu.a,Qu.q,Qu.Q,[2,Tu.a]],{alignGtXs:[0,"alignGtXs"]},null),Qu._19(933888,null,0,ju.a,[Mu.a,Qu.B,Qu.C,Qu.q,Qu.P,Qu.Q],{classBase:[0,"classBase"]},null),(l()(),Qu._41(null,["\n    "])),(l()(),Qu._15(16777216,null,null,1,null,el)),Qu._19(16384,null,0,Nu.m,[Qu._3,Qu.Z],{ngIf:[0,"ngIf"]},null),(l()(),Qu._41(null,["\n\n    "])),(l()(),Qu._15(16777216,null,null,1,null,rl)),Qu._19(16384,null,0,Nu.m,[Qu._3,Qu.Z],{ngIf:[0,"ngIf"]},null),(l()(),Qu._41(null,["\n  "])),(l()(),Qu._41(null,["\n\n"]))],function(l,n){var u=n.component;l(n,5,0,"column");l(n,6,0,"10px");l(n,7,0,"form__container");l(n,10,0,"column");l(n,11,0,"form__fields");l(n,14,0,"column","row");l(n,15,0,"10px");l(n,16,0,"form__fields__row");l(n,20,0,"");l(n,21,0,"form__field");l(n,32,0,"");l(n,33,0,"3");l(n,34,0,"8");l(n,38,0,"password",u.model.password);l(n,41,0,"password","Password","","password"),l(n,44,0,Qu._35(n,38).invalid&&(Qu._35(n,38).dirty||Qu._35(n,38).touched)&&Qu._35(n,38).errors.required),l(n,47,0,Qu._35(n,38).invalid&&(Qu._35(n,38).dirty||Qu._35(n,38).touched)&&Qu._35(n,38).errors.minlength),l(n,50,0,Qu._35(n,38).invalid&&(Qu._35(n,38).dirty||Qu._35(n,38).touched)&&Qu._35(n,38).errors.maxlength);l(n,55,0,"");l(n,56,0,"form__field");l(n,67,0,"");l(n,68,0,"3");l(n,69,0,"8");l(n,73,0,"passwordConfirm",u.model["password-confirm"]);l(n,76,0,"passwordConfirm","Confirm password","","password"),l(n,79,0,Qu._35(n,73).invalid&&(Qu._35(n,73).dirty||Qu._35(n,73).touched)&&Qu._35(n,73).errors.required),l(n,82,0,Qu._35(n,73).invalid&&(Qu._35(n,73).dirty||Qu._35(n,73).touched)&&Qu._35(n,73).errors.minlength),l(n,85,0,Qu._35(n,73).invalid&&(Qu._35(n,73).dirty||Qu._35(n,73).touched)&&Qu._35(n,73).errors.maxlength),l(n,88,0,Qu._35(n,73).invalid&&(Qu._35(n,73).dirty||Qu._35(n,73).touched)&&Qu._35(n,73).errors.equalvalidator);l(n,94,0,"column","row");l(n,95,0,"10px");l(n,96,0,"center none");l(n,97,0,"form__actions"),l(n,100,0,!u.resetPasswordServiceRunning),l(n,103,0,u.resetPasswordServiceRunning)},function(l,n){l(n,0,0,Qu._35(n,4).ngClassUntouched,Qu._35(n,4).ngClassTouched,Qu._35(n,4).ngClassPristine,Qu._35(n,4).ngClassDirty,Qu._35(n,4).ngClassValid,Qu._35(n,4).ngClassInvalid,Qu._35(n,4).ngClassPending);l(n,19,0,null,Qu._35(n,22)._mdInputChild._isErrorState(),Qu._35(n,22)._mdInputChild.focused,Qu._35(n,22)._shouldForward("untouched"),Qu._35(n,22)._shouldForward("touched"),Qu._35(n,22)._shouldForward("pristine"),Qu._35(n,22)._shouldForward("dirty"),Qu._35(n,22)._shouldForward("valid"),Qu._35(n,22)._shouldForward("invalid"),Qu._35(n,22)._shouldForward("pending")),l(n,30,1,[Qu._35(n,32).required?"":null,Qu._35(n,33).minlength?Qu._35(n,33).minlength:null,Qu._35(n,34).maxlength?Qu._35(n,34).maxlength:null,Qu._35(n,40).ngClassUntouched,Qu._35(n,40).ngClassTouched,Qu._35(n,40).ngClassPristine,Qu._35(n,40).ngClassDirty,Qu._35(n,40).ngClassValid,Qu._35(n,40).ngClassInvalid,Qu._35(n,40).ngClassPending,Qu._35(n,41).id,Qu._35(n,41).placeholder,Qu._35(n,41).disabled,Qu._35(n,41).required,Qu._35(n,41).ariaDescribedby||null,Qu._35(n,41)._isErrorState()]);l(n,54,0,null,Qu._35(n,57)._mdInputChild._isErrorState(),Qu._35(n,57)._mdInputChild.focused,Qu._35(n,57)._shouldForward("untouched"),Qu._35(n,57)._shouldForward("touched"),Qu._35(n,57)._shouldForward("pristine"),Qu._35(n,57)._shouldForward("dirty"),Qu._35(n,57)._shouldForward("valid"),Qu._35(n,57)._shouldForward("invalid"),Qu._35(n,57)._shouldForward("pending")),l(n,65,1,[Qu._35(n,67).required?"":null,Qu._35(n,68).minlength?Qu._35(n,68).minlength:null,Qu._35(n,69).maxlength?Qu._35(n,69).maxlength:null,Qu._35(n,75).ngClassUntouched,Qu._35(n,75).ngClassTouched,Qu._35(n,75).ngClassPristine,Qu._35(n,75).ngClassDirty,Qu._35(n,75).ngClassValid,Qu._35(n,75).ngClassInvalid,Qu._35(n,75).ngClassPending,Qu._35(n,76).id,Qu._35(n,76).placeholder,Qu._35(n,76).disabled,Qu._35(n,76).required,Qu._35(n,76).ariaDescribedby||null,Qu._35(n,76)._isErrorState()])})}function al(l){return Qu._43(0,[(l()(),Qu._21(0,null,null,1,"app-reset-password",[],null,null,null,tl,Uu)),Qu._19(114688,null,0,Pu,[El,Vu.k,Vu.a,Zl],null,null)],function(l,n){l(n,1,0)},null)}function ol(l){return ne._43(0,[ne._36(0,ue.c,[ne.D]),ne._36(0,ue.e,[ne.D]),ne._36(0,ue.f,[ne.D]),(l()(),ne._21(0,null,null,51,"md-card",[["class","currency-card mat-card"]],null,null,null,ee.v,ee.f)),ne._19(933888,null,0,re.a,[te.a,ne.B,ne.C,ne.q,ne.P,ne.Q],{classBase:[0,"classBase"]},null),ne._19(16384,null,0,ae._35,[[2,ae.j],ne.q],null,null),ne._19(49152,null,0,ae.F,[],null,null),(l()(),ne._41(0,["\n  "])),(l()(),ne._21(0,null,0,22,"md-card-header",[["class","mat-card-header"]],null,null,null,ee.u,ee.g)),ne._19(16384,null,0,ae._35,[[2,ae.j],ne.q],null,null),ne._19(49152,null,0,ae.I,[],null,null),(l()(),ne._41(2,["\n    "])),(l()(),ne._21(0,null,0,3,"div",[["class","header-image mat-card-avatar"],["md-card-avatar",""]],[[2,"header-image__xmr",null],[2,"header-image__btc",null]],null,null,null,null)),ne._19(933888,null,0,re.a,[te.a,ne.B,ne.C,ne.q,ne.P,ne.Q],{classBase:[0,"classBase"]},null),ne._19(16384,null,0,ae.G,[],null,null),(l()(),ne._41(null,["\n    "])),(l()(),ne._41(2,["\n    "])),(l()(),ne._21(0,null,1,3,"md-card-title",[["class","mat-card-title "]],null,null,null,null,null)),ne._19(16384,null,0,ae._35,[[2,ae.j],ne.q],null,null),ne._19(16384,null,0,ae.L,[],null,null),(l()(),ne._41(null,[""," (",")"])),(l()(),ne._41(2,["\n    "])),(l()(),ne._21(0,null,1,7,"md-card-subtitle",[["class","mat-card-subtitle "]],null,null,null,null,null)),ne._19(16384,null,0,ae._35,[[2,ae.j],ne.q],null,null),ne._19(16384,null,0,ae.K,[],null,null),(l()(),ne._41(null,["\n      today at "])),(l()(),ne._21(0,null,null,2,"strong",[],null,null,null,null,null)),(l()(),ne._41(null,["",""])),ne._37(1),(l()(),ne._41(null,["\n    "])),(l()(),ne._41(2,["\n  "])),(l()(),ne._41(0,["\n  "])),(l()(),ne._21(0,null,0,21,"md-card-content",[["class","mat-card-content"]],null,null,null,null,null)),ne._19(16384,null,0,ae._35,[[2,ae.j],ne.q],null,null),ne._19(16384,null,0,ae.H,[],null,null),(l()(),ne._41(null,["\n    Investment: "])),(l()(),ne._21(0,null,null,2,"strong",[],null,null,null,null,null)),(l()(),ne._41(null,["",""])),ne._37(1),(l()(),ne._41(null,[" \n    "])),(l()(),ne._21(0,null,null,0,"br",[],null,null,null,null,null)),(l()(),ne._41(null,["\n\n    on "," at ","\n\n    "])),ne._37(1),ne._37(1),(l()(),ne._21(0,null,null,8,"div",[],[[2,"color__green",null],[2,"color__red",null]],null,null,null,null)),(l()(),ne._41(null,["\n      "])),(l()(),ne._21(0,null,null,0,"br",[],null,null,null,null,null)),(l()(),ne._41(null,["\n      ROI: "])),(l()(),ne._21(0,null,null,2,"strong",[],null,null,null,null,null)),(l()(),ne._41(null,["",""])),ne._37(1),(l()(),ne._41(null,[" (","%)\n    "])),ne._37(2),(l()(),ne._41(null,["\n  "])),(l()(),ne._41(0,["\n"]))],function(l,n){l(n,4,0,"currency-card");l(n,13,0,"header-image")},function(l,n){var u=n.component;l(n,12,0,"xmr"===u.cryptoCurrency,"btc"===u.cryptoCurrency),l(n,20,0,"xmr"===u.cryptoCurrency?"Monero":"Bitcoin",u.cryptoCurrencyCount),l(n,27,0,ne._42(n,27,0,l(n,28,0,ne._35(n,0),u.cryptoCurrencyCurrentPrice))),l(n,37,0,ne._42(n,37,0,l(n,38,0,ne._35(n,0),u.usdFromCryptoCurrencyWhenBought))),l(n,41,0,ne._42(n,41,0,l(n,42,0,ne._35(n,1),u.cryptoCurrencyBuyDate)),ne._42(n,41,1,l(n,43,0,ne._35(n,0),u.cryptoCurrencyBuyPrice))),l(n,44,0,u.usdFromCryptoCurrency>=u.usdFromCryptoCurrencyWhenBought,u.usdFromCryptoCurrency<u.usdFromCryptoCurrencyWhenBought),l(n,49,0,ne._42(n,49,0,l(n,50,0,ne._35(n,0),u.usdFromCryptoCurrency))),l(n,51,0,ne._42(n,51,0,l(n,52,0,ne._35(n,2),u.usdFromCryptoCurrency/u.usdFromCryptoCurrencyWhenBought*100,"1.1-2")))})}function il(l){return ne._43(0,[(l()(),ne._21(0,null,null,2,"crypto-currency",[],null,null,null,ol,_e)),ne._38(512,null,Yu,Yu,[oe.e]),ne._19(114688,null,0,le,[Yu],null,null)],function(l,n){l(n,2,0)},null)}function _l(l){return de._43(0,[(l()(),de._21(0,null,null,84,"div",[["fxLayout","column"],["fxLayoutGap","10px"]],null,null,null,null,null)),de._19(737280,null,0,me.a,[pe.a,de.q,de.Q],{layout:[0,"layout"]},null),de._19(1720320,null,0,ge.a,[pe.a,de.q,de.Q,[2,me.a]],{gap:[0,"gap"]},null),(l()(),de._41(null,["\n\n    "])),(l()(),de._21(0,null,null,16,"md-card",[["class","totals-card mat-card"],["fxFlex",""]],null,null,null,fe.v,fe.f)),de._19(737280,null,0,he.a,[pe.a,de.q,de.Q,[3,me.a],[3,ve.a]],{flex:[0,"flex"]},null),de._19(933888,null,0,ye.a,[pe.a,de.B,de.C,de.q,de.P,de.Q],{classBase:[0,"classBase"]},null),de._19(16384,null,0,Ce._35,[[2,Ce.j],de.q],null,null),de._19(49152,null,0,Ce.F,[],null,null),(l()(),de._41(0,["\n      "])),(l()(),de._21(0,null,0,9,"md-card-content",[["class","mat-card-content"],["fxLayout","row"],["fxLayout.xs","column"],["fxLayoutAlign","space-around center"],["fxLayoutGap","10px"]],null,null,null,null,null)),de._19(737280,null,0,me.a,[pe.a,de.q,de.Q],{layout:[0,"layout"],layoutXs:[1,"layoutXs"]},null),de._19(1720320,null,0,ge.a,[pe.a,de.q,de.Q,[2,me.a]],{gap:[0,"gap"]},null),de._19(737280,null,0,be.a,[pe.a,de.q,de.Q,[2,me.a]],{align:[0,"align"]},null),de._19(16384,null,0,Ce._35,[[2,Ce.j],de.q],null,null),de._19(16384,null,0,Ce.H,[],null,null),(l()(),de._41(null,["\n        "])),(l()(),de._21(0,null,null,1,"p",[],null,null,null,null,null)),(l()(),de._41(null,["\n          Your expected net worth is "," but your current net worth is ","\n        "])),(l()(),de._41(null,["\n      "])),(l()(),de._41(0,["\n    "])),(l()(),de._41(null,["\n\n  "])),(l()(),de._21(0,null,null,15,"div",[["fxLayout","row"],["fxLayout.xs","column"],["fxLayoutGap","10px"]],null,null,null,null,null)),de._19(737280,null,0,me.a,[pe.a,de.q,de.Q],{layout:[0,"layout"],layoutXs:[1,"layoutXs"]},null),de._19(1720320,null,0,ge.a,[pe.a,de.q,de.Q,[2,me.a]],{gap:[0,"gap"]},null),(l()(),de._41(null,["\n    "])),(l()(),de._21(0,null,null,4,"crypto-currency",[["fxFlex",""]],null,[[null,"totalReturns"]],function(l,n,u){var e=!0,r=l.component;if("totalReturns"===n){e=!1!==r.setTotals(u)&&e}return e},ol,_e)),de._19(737280,null,0,he.a,[pe.a,de.q,de.Q,[3,me.a],[3,ve.a]],{flex:[0,"flex"]},null),de._38(512,null,Yu,Yu,[xe.e]),de._19(114688,null,0,le,[Yu],{cryptoCurrency:[0,"cryptoCurrency"],cryptoCurrencyCount:[1,"cryptoCurrencyCount"],cryptoCurrencyBuyPrice:[2,"cryptoCurrencyBuyPrice"],cryptoCurrencyBuyDate:[3,"cryptoCurrencyBuyDate"]},{totalReturns:"totalReturns"}),(l()(),de._41(null,["\n    "])),(l()(),de._41(null,["\n\n    "])),(l()(),de._21(0,null,null,4,"crypto-currency",[["fxFlex",""]],null,[[null,"totalReturns"]],function(l,n,u){var e=!0,r=l.component;if("totalReturns"===n){e=!1!==r.setTotals(u)&&e}return e},ol,_e)),de._19(737280,null,0,he.a,[pe.a,de.q,de.Q,[3,me.a],[3,ve.a]],{flex:[0,"flex"]},null),de._38(512,null,Yu,Yu,[xe.e]),de._19(114688,null,0,le,[Yu],{cryptoCurrency:[0,"cryptoCurrency"],cryptoCurrencyCount:[1,"cryptoCurrencyCount"],cryptoCurrencyBuyPrice:[2,"cryptoCurrencyBuyPrice"],cryptoCurrencyBuyDate:[3,"cryptoCurrencyBuyDate"]},{totalReturns:"totalReturns"}),(l()(),de._41(null,["\n    "])),(l()(),de._41(null,["\n  "])),(l()(),de._41(null,["\n\n  "])),(l()(),de._21(0,null,null,15,"div",[["fxLayout","row"],["fxLayout.xs","column"],["fxLayoutGap","10px"]],null,null,null,null,null)),de._19(737280,null,0,me.a,[pe.a,de.q,de.Q],{layout:[0,"layout"],layoutXs:[1,"layoutXs"]},null),de._19(1720320,null,0,ge.a,[pe.a,de.q,de.Q,[2,me.a]],{gap:[0,"gap"]},null),(l()(),de._41(null,["\n    "])),(l()(),de._21(0,null,null,4,"crypto-currency",[["fxFlex",""]],null,[[null,"totalReturns"]],function(l,n,u){var e=!0,r=l.component;if("totalReturns"===n){e=!1!==r.setTotals(u)&&e}return e},ol,_e)),de._19(737280,null,0,he.a,[pe.a,de.q,de.Q,[3,me.a],[3,ve.a]],{flex:[0,"flex"]},null),de._38(512,null,Yu,Yu,[xe.e]),de._19(114688,null,0,le,[Yu],{cryptoCurrency:[0,"cryptoCurrency"],cryptoCurrencyCount:[1,"cryptoCurrencyCount"],cryptoCurrencyBuyPrice:[2,"cryptoCurrencyBuyPrice"],cryptoCurrencyBuyDate:[3,"cryptoCurrencyBuyDate"]},{totalReturns:"totalReturns"}),(l()(),de._41(null,["\n    "])),(l()(),de._41(null,["\n\n    "])),(l()(),de._21(0,null,null,4,"crypto-currency",[["fxFlex",""]],null,[[null,"totalReturns"]],function(l,n,u){var e=!0,r=l.component;if("totalReturns"===n){e=!1!==r.setTotals(u)&&e}return e},ol,_e)),de._19(737280,null,0,he.a,[pe.a,de.q,de.Q,[3,me.a],[3,ve.a]],{flex:[0,"flex"]},null),de._38(512,null,Yu,Yu,[xe.e]),de._19(114688,null,0,le,[Yu],{cryptoCurrency:[0,"cryptoCurrency"],cryptoCurrencyCount:[1,"cryptoCurrencyCount"],cryptoCurrencyBuyPrice:[2,"cryptoCurrencyBuyPrice"],cryptoCurrencyBuyDate:[3,"cryptoCurrencyBuyDate"]},{totalReturns:"totalReturns"}),(l()(),de._41(null,["\n    "])),(l()(),de._41(null,["\n  "])),(l()(),de._41(null,["\n\n  "])),(l()(),de._21(0,null,null,27,"md-card",[["class","totals-card mat-card"],["fxFlex",""]],null,null,null,fe.v,fe.f)),de._19(737280,null,0,he.a,[pe.a,de.q,de.Q,[3,me.a],[3,ve.a]],{flex:[0,"flex"]},null),de._19(933888,null,0,ye.a,[pe.a,de.B,de.C,de.q,de.P,de.Q],{classBase:[0,"classBase"]},null),de._19(16384,null,0,Ce._35,[[2,Ce.j],de.q],null,null),de._19(49152,null,0,Ce.F,[],null,null),(l()(),de._41(0,["\n    "])),(l()(),de._21(0,null,0,20,"md-card-content",[["class","mat-card-content"],["fxLayout","row"],["fxLayout.xs","column"],["fxLayoutAlign","space-around center"],["fxLayoutGap","10px"]],null,null,null,null,null)),de._19(737280,null,0,me.a,[pe.a,de.q,de.Q],{layout:[0,"layout"],layoutXs:[1,"layoutXs"]},null),de._19(1720320,null,0,ge.a,[pe.a,de.q,de.Q,[2,me.a]],{gap:[0,"gap"]},null),de._19(737280,null,0,be.a,[pe.a,de.q,de.Q,[2,me.a]],{align:[0,"align"]},null),de._19(16384,null,0,Ce._35,[[2,Ce.j],de.q],null,null),de._19(16384,null,0,Ce.H,[],null,null),(l()(),de._41(null,["\n      "])),(l()(),de._21(0,null,null,4,"p",[],null,null,null,null,null)),(l()(),de._41(null,["Total Investments: "])),(l()(),de._21(0,null,null,2,"strong",[],null,null,null,null,null)),(l()(),de._41(null,["",""])),de._37(1),(l()(),de._41(null,["\n      "])),(l()(),de._21(0,null,null,6,"p",[],[[2,"color__green",null],[2,"color__red",null]],null,null,null,null)),(l()(),de._41(null,["\n        Total ROI: "])),(l()(),de._21(0,null,null,2,"strong",[],null,null,null,null,null)),(l()(),de._41(null,["",""])),de._37(1),(l()(),de._41(null,[" (","%)\n      "])),de._37(2),(l()(),de._41(null,["\n    "])),(l()(),de._41(0,["\n  "])),(l()(),de._41(null,["\n  \n"]))],function(l,n){var u=n.component;l(n,1,0,"column");l(n,2,0,"10px");l(n,5,0,"");l(n,6,0,"totals-card");l(n,11,0,"row","column");l(n,12,0,"10px");l(n,13,0,"space-around center");l(n,23,0,"row","column");l(n,24,0,"10px");l(n,27,0,"");l(n,29,0,"xmr",218.85627651,50,u.xmrBuyDate);l(n,33,0,"");l(n,35,0,"btc",1.28129356,2359.99,u.btcBuyDate);l(n,40,0,"row","column");l(n,41,0,"10px");l(n,44,0,"");l(n,46,0,"xmr",5.94093753,87.5282,u.xmrBuyDate2);l(n,50,0,"");l(n,52,0,"xmr",5.72806551,90.9556,u.xmrBuyDate3);l(n,57,0,"");l(n,58,0,"totals-card");l(n,63,0,"row","column");l(n,64,0,"10px");l(n,65,0,"space-around center")},function(l,n){var u=n.component;l(n,18,0,35*u.user.finance.activeIncome/10,u.user.finance.netWorth),l(n,72,0,de._42(n,72,0,l(n,73,0,de._35(n.parent,0),u.totalInvestment))),l(n,75,0,u.totalReturn>=u.totalInvestment,u.totalReturn<u.totalInvestment),l(n,78,0,de._42(n,78,0,l(n,79,0,de._35(n.parent,0),u.totalReturn))),l(n,80,0,de._42(n,80,0,l(n,81,0,de._35(n.parent,1),u.totalReturn/u.totalInvestment*100,"1.1-2")))})}function sl(l){return de._43(0,[(l()(),de._21(0,null,null,21,"div",[["fxLayout","column"],["fxLayoutGap","10px"]],null,null,null,null,null)),de._19(737280,null,0,me.a,[pe.a,de.q,de.Q],{layout:[0,"layout"]},null),de._19(1720320,null,0,ge.a,[pe.a,de.q,de.Q,[2,me.a]],{gap:[0,"gap"]},null),(l()(),de._41(null,["\n  "])),(l()(),de._21(0,null,null,16,"md-card",[["class","totals-card mat-card"],["fxFlex",""]],null,null,null,fe.v,fe.f)),de._19(737280,null,0,he.a,[pe.a,de.q,de.Q,[3,me.a],[3,ve.a]],{flex:[0,"flex"]},null),de._19(933888,null,0,ye.a,[pe.a,de.B,de.C,de.q,de.P,de.Q],{classBase:[0,"classBase"]},null),de._19(16384,null,0,Ce._35,[[2,Ce.j],de.q],null,null),de._19(49152,null,0,Ce.F,[],null,null),(l()(),de._41(0,["\n    "])),(l()(),de._21(0,null,0,9,"md-card-content",[["class","mat-card-content"],["fxLayout","row"],["fxLayout.xs","column"],["fxLayoutAlign","space-around center"],["fxLayoutGap","10px"]],null,null,null,null,null)),de._19(737280,null,0,me.a,[pe.a,de.q,de.Q],{layout:[0,"layout"],layoutXs:[1,"layoutXs"]},null),de._19(1720320,null,0,ge.a,[pe.a,de.q,de.Q,[2,me.a]],{gap:[0,"gap"]},null),de._19(737280,null,0,be.a,[pe.a,de.q,de.Q,[2,me.a]],{align:[0,"align"]},null),de._19(16384,null,0,Ce._35,[[2,Ce.j],de.q],null,null),de._19(16384,null,0,Ce.H,[],null,null),(l()(),de._41(null,["\n      "])),(l()(),de._21(0,null,null,1,"p",[],null,null,null,null,null)),(l()(),de._41(null,["\n        You do not have any investment to show\n      "])),(l()(),de._41(null,["\n    "])),(l()(),de._41(0,["\n  "])),(l()(),de._41(null,["\n  \n"]))],function(l,n){l(n,1,0,"column");l(n,2,0,"10px");l(n,5,0,"");l(n,6,0,"totals-card");l(n,11,0,"row","column");l(n,12,0,"10px");l(n,13,0,"space-around center")},null)}function cl(l){return de._43(0,[de._36(0,qe.c,[de.D]),de._36(0,qe.f,[de.D]),(l()(),de._15(16777216,null,null,1,null,_l)),de._19(16384,null,0,qe.m,[de._3,de.Z],{ngIf:[0,"ngIf"]},null),(l()(),de._41(null,["\n\n"])),(l()(),de._15(16777216,null,null,1,null,sl)),de._19(16384,null,0,qe.m,[de._3,de.Z],{ngIf:[0,"ngIf"]},null)],function(l,n){var u=n.component;l(n,3,0,u.showInvestments),l(n,6,0,!u.showInvestments)},null)}function dl(l){return de._43(0,[(l()(),de._21(0,null,null,1,"investments-dashboard",[],null,null,null,cl,Be)),de._19(114688,null,0,ce,[we.a,Zl,El],null,null)],function(l,n){l(n,1,0)},null)}function ml(l){return Qe._43(0,[],null,null)}function pl(l){return Qe._43(0,[(l()(),Qe._21(0,null,null,1,"app-calculators-dashboard",[],null,null,null,ml,Le)),Qe._19(114688,null,0,Pe,[Zl],null,null)],function(l,n){l(n,1,0)},null)}function gl(l){return Re._43(0,[(l()(),Re._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Re._19(16384,null,0,Te._35,[[2,Te.j],Re.q],null,null),Re._19(16384,[[4,4]],0,Te._2,[],null,null),(l()(),Re._41(null,["Purchase price is required"]))],null,null)}function fl(l){return Re._43(0,[(l()(),Re._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Re._19(16384,null,0,Te._35,[[2,Te.j],Re.q],null,null),Re._19(16384,[[10,4]],0,Te._2,[],null,null),(l()(),Re._41(null,["Market value is required"]))],null,null)}function hl(l){return Re._43(0,[(l()(),Re._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Re._19(16384,null,0,Te._35,[[2,Te.j],Re.q],null,null),Re._19(16384,[[16,4]],0,Te._2,[],null,null),(l()(),Re._41(null,["Loan coverage is required"]))],null,null)}function vl(l){return Re._43(0,[(l()(),Re._21(0,null,null,75,"section",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),Re._19(737280,null,0,De.a,[Ee.a,Re.q,Re.Q],{layout:[0,"layout"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),(l()(),Re._41(null,["\n    "])),(l()(),Re._21(0,null,null,70,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutGap.gt-xs","10px"]],null,null,null,null,null)),Re._19(737280,null,0,De.a,[Ee.a,Re.q,Re.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),Re._19(1720320,null,0,Ne.a,[Ee.a,Re.q,Re.Q,[2,De.a]],{gapGtXs:[0,"gapGtXs"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),(l()(),Re._41(null,["\n      "])),(l()(),Re._41(null,["\n      "])),(l()(),Re._21(0,null,null,19,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Re._35(l,13)._focusInput()&&e}return e},Xe.z,Xe.k)),Re._19(737280,null,0,Ve.a,[Ee.a,Re.q,Re.Q,[3,De.a],[3,Ze.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),Re._19(7389184,null,6,Te._16,[Re.q,Re.j,[2,Te.o]],null,null),Re._39(335544320,26,{_mdInputChild:0}),Re._39(335544320,27,{_placeholderChild:0}),Re._39(603979776,28,{_errorChildren:1}),Re._39(603979776,29,{_hintChildren:1}),Re._39(603979776,30,{_prefixChildren:1}),Re._39(603979776,31,{_suffixChildren:1}),(l()(),Re._41(1,["\n        "])),(l()(),Re._21(0,null,1,7,"input",[["class","mat-input-element"],["id","renovationCost"],["mdInput",""],["name","renovationCost"],["placeholder","Renovation cost"],["type","number"],["value","model.renovationCost"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Re._35(l,22)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,22).onTouched()&&e}if("compositionstart"===n){e=!1!==Re._35(l,22)._compositionStart()&&e}if("compositionend"===n){e=!1!==Re._35(l,22)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==Re._35(l,23).onChange(u.target.value)&&e}if("input"===n){e=!1!==Re._35(l,23).onChange(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,23).onTouched()&&e}if("blur"===n){e=!1!==Re._35(l,28)._onBlur()&&e}if("focus"===n){e=!1!==Re._35(l,28)._onFocus()&&e}if("input"===n){e=!1!==Re._35(l,28)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.renovationCost=u)&&e}return e},null,null)),Re._19(16384,null,0,Ue.c,[Re.Q,Re.q,[2,Ue.a]],null,null),Re._19(16384,null,0,Ue.s,[Re.Q,Re.q],null,null),Re._38(1024,null,Ue.j,function(l,n){return[l,n]},[Ue.c,Ue.s]),Re._19(671744,[["renovationCost",4]],0,Ue.o,[[2,Ue.b],[8,null],[8,null],[2,Ue.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Re._38(2048,null,Ue.k,null,[Ue.o]),Re._19(16384,null,0,Ue.l,[Ue.k],null,null),Re._19(16384,[[26,4]],0,Te._17,[Re.q,Re.Q,Ae.L,[2,Ue.k],[2,Ue.n],[2,Ue.e],[2,Te.m]],{id:[0,"id"],placeholder:[1,"placeholder"],type:[2,"type"]},null),(l()(),Re._41(1,["\n      "])),(l()(),Re._41(null,["\n      \n      "])),(l()(),Re._41(null,["\n      "])),(l()(),Re._21(0,null,null,19,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Re._35(l,35)._focusInput()&&e}return e},Xe.z,Xe.k)),Re._19(737280,null,0,Ve.a,[Ee.a,Re.q,Re.Q,[3,De.a],[3,Ze.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),Re._19(7389184,null,6,Te._16,[Re.q,Re.j,[2,Te.o]],null,null),Re._39(335544320,32,{_mdInputChild:0}),Re._39(335544320,33,{_placeholderChild:0}),Re._39(603979776,34,{_errorChildren:1}),Re._39(603979776,35,{_hintChildren:1}),Re._39(603979776,36,{_prefixChildren:1}),Re._39(603979776,37,{_suffixChildren:1}),(l()(),Re._41(1,["\n        "])),(l()(),Re._21(0,null,1,7,"input",[["class","mat-input-element"],["id","newMarketValue"],["mdInput",""],["name","newMarketValue"],["placeholder","After renovations market value"],["type","number"],["value","model.newMarketValue"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Re._35(l,44)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,44).onTouched()&&e}if("compositionstart"===n){e=!1!==Re._35(l,44)._compositionStart()&&e}if("compositionend"===n){e=!1!==Re._35(l,44)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==Re._35(l,45).onChange(u.target.value)&&e}if("input"===n){e=!1!==Re._35(l,45).onChange(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,45).onTouched()&&e}if("blur"===n){e=!1!==Re._35(l,50)._onBlur()&&e}if("focus"===n){e=!1!==Re._35(l,50)._onFocus()&&e}if("input"===n){e=!1!==Re._35(l,50)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.newMarketValue=u)&&e}return e},null,null)),Re._19(16384,null,0,Ue.c,[Re.Q,Re.q,[2,Ue.a]],null,null),Re._19(16384,null,0,Ue.s,[Re.Q,Re.q],null,null),Re._38(1024,null,Ue.j,function(l,n){return[l,n]},[Ue.c,Ue.s]),Re._19(671744,[["newMarketValue",4]],0,Ue.o,[[2,Ue.b],[8,null],[8,null],[2,Ue.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Re._38(2048,null,Ue.k,null,[Ue.o]),Re._19(16384,null,0,Ue.l,[Ue.k],null,null),Re._19(16384,[[32,4]],0,Te._17,[Re.q,Re.Q,Ae.L,[2,Ue.k],[2,Ue.n],[2,Ue.e],[2,Te.m]],{id:[0,"id"],placeholder:[1,"placeholder"],type:[2,"type"]},null),(l()(),Re._41(1,["\n      "])),(l()(),Re._41(null,["\n      \n      "])),(l()(),Re._41(null,["\n      "])),(l()(),Re._21(0,null,null,19,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Re._35(l,57)._focusInput()&&e}return e},Xe.z,Xe.k)),Re._19(737280,null,0,Ve.a,[Ee.a,Re.q,Re.Q,[3,De.a],[3,Ze.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),Re._19(7389184,null,6,Te._16,[Re.q,Re.j,[2,Te.o]],null,null),Re._39(335544320,38,{_mdInputChild:0}),Re._39(335544320,39,{_placeholderChild:0}),Re._39(603979776,40,{_errorChildren:1}),Re._39(603979776,41,{_hintChildren:1}),Re._39(603979776,42,{_prefixChildren:1}),Re._39(603979776,43,{_suffixChildren:1}),(l()(),Re._41(1,["\n        "])),(l()(),Re._21(0,null,1,7,"input",[["class","mat-input-element"],["id","firstYearRepayment"],["mdInput",""],["name","firstYearRepayment"],["placeholder","First year loan repayments"],["type","number"],["value","model.firstYearRepayment"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Re._35(l,66)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,66).onTouched()&&e}if("compositionstart"===n){e=!1!==Re._35(l,66)._compositionStart()&&e}if("compositionend"===n){e=!1!==Re._35(l,66)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==Re._35(l,67).onChange(u.target.value)&&e}if("input"===n){e=!1!==Re._35(l,67).onChange(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,67).onTouched()&&e}if("blur"===n){e=!1!==Re._35(l,72)._onBlur()&&e}if("focus"===n){e=!1!==Re._35(l,72)._onFocus()&&e}if("input"===n){e=!1!==Re._35(l,72)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.firstYearRepayment=u)&&e}return e},null,null)),Re._19(16384,null,0,Ue.c,[Re.Q,Re.q,[2,Ue.a]],null,null),Re._19(16384,null,0,Ue.s,[Re.Q,Re.q],null,null),Re._38(1024,null,Ue.j,function(l,n){return[l,n]},[Ue.c,Ue.s]),Re._19(671744,[["firstYearRepayment",4]],0,Ue.o,[[2,Ue.b],[8,null],[8,null],[2,Ue.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Re._38(2048,null,Ue.k,null,[Ue.o]),Re._19(16384,null,0,Ue.l,[Ue.k],null,null),Re._19(16384,[[38,4]],0,Te._17,[Re.q,Re.Q,Ae.L,[2,Ue.k],[2,Ue.n],[2,Ue.e],[2,Te.m]],{id:[0,"id"],placeholder:[1,"placeholder"],type:[2,"type"]},null),(l()(),Re._41(1,["\n      "])),(l()(),Re._41(null,["\n    "])),(l()(),Re._41(null,["\n  "]))],function(l,n){var u=n.component;l(n,1,0,"column");l(n,2,0,"form__fields");l(n,5,0,"column","row");l(n,6,0,"10px");l(n,7,0,"form__fields__row");l(n,11,0,"","200px");l(n,12,0,"form__field");l(n,25,0,"renovationCost",u.model.renovationCost);l(n,28,0,"renovationCost","Renovation cost","number");l(n,33,0,"","200px");l(n,34,0,"form__field");l(n,47,0,"newMarketValue",u.model.newMarketValue);l(n,50,0,"newMarketValue","After renovations market value","number");l(n,55,0,"","200px");l(n,56,0,"form__field");l(n,69,0,"firstYearRepayment",u.model.firstYearRepayment);l(n,72,0,"firstYearRepayment","First year loan repayments","number")},function(l,n){l(n,10,0,null,Re._35(n,13)._mdInputChild._isErrorState(),Re._35(n,13)._mdInputChild.focused,Re._35(n,13)._shouldForward("untouched"),Re._35(n,13)._shouldForward("touched"),Re._35(n,13)._shouldForward("pristine"),Re._35(n,13)._shouldForward("dirty"),Re._35(n,13)._shouldForward("valid"),Re._35(n,13)._shouldForward("invalid"),Re._35(n,13)._shouldForward("pending")),l(n,21,1,[Re._35(n,27).ngClassUntouched,Re._35(n,27).ngClassTouched,Re._35(n,27).ngClassPristine,Re._35(n,27).ngClassDirty,Re._35(n,27).ngClassValid,Re._35(n,27).ngClassInvalid,Re._35(n,27).ngClassPending,Re._35(n,28).id,Re._35(n,28).placeholder,Re._35(n,28).disabled,Re._35(n,28).required,Re._35(n,28).ariaDescribedby||null,Re._35(n,28)._isErrorState()]);l(n,32,0,null,Re._35(n,35)._mdInputChild._isErrorState(),Re._35(n,35)._mdInputChild.focused,Re._35(n,35)._shouldForward("untouched"),Re._35(n,35)._shouldForward("touched"),Re._35(n,35)._shouldForward("pristine"),Re._35(n,35)._shouldForward("dirty"),Re._35(n,35)._shouldForward("valid"),Re._35(n,35)._shouldForward("invalid"),Re._35(n,35)._shouldForward("pending")),l(n,43,1,[Re._35(n,49).ngClassUntouched,Re._35(n,49).ngClassTouched,Re._35(n,49).ngClassPristine,Re._35(n,49).ngClassDirty,Re._35(n,49).ngClassValid,Re._35(n,49).ngClassInvalid,Re._35(n,49).ngClassPending,Re._35(n,50).id,Re._35(n,50).placeholder,Re._35(n,50).disabled,Re._35(n,50).required,Re._35(n,50).ariaDescribedby||null,Re._35(n,50)._isErrorState()]);l(n,54,0,null,Re._35(n,57)._mdInputChild._isErrorState(),Re._35(n,57)._mdInputChild.focused,Re._35(n,57)._shouldForward("untouched"),Re._35(n,57)._shouldForward("touched"),Re._35(n,57)._shouldForward("pristine"),Re._35(n,57)._shouldForward("dirty"),Re._35(n,57)._shouldForward("valid"),Re._35(n,57)._shouldForward("invalid"),Re._35(n,57)._shouldForward("pending")),l(n,65,1,[Re._35(n,71).ngClassUntouched,Re._35(n,71).ngClassTouched,Re._35(n,71).ngClassPristine,Re._35(n,71).ngClassDirty,Re._35(n,71).ngClassValid,Re._35(n,71).ngClassInvalid,Re._35(n,71).ngClassPending,Re._35(n,72).id,Re._35(n,72).placeholder,Re._35(n,72).disabled,Re._35(n,72).required,Re._35(n,72).ariaDescribedby||null,Re._35(n,72)._isErrorState()])})}function yl(l){return Re._43(0,[(l()(),Re._21(0,null,null,21,"md-card",[["class","mat-card"],["fxFlex",""]],null,null,null,Xe.v,Xe.f)),Re._19(737280,null,0,Ve.a,[Ee.a,Re.q,Re.Q,[3,De.a],[3,Ze.a]],{flex:[0,"flex"]},null),Re._19(16384,null,0,Te._35,[[2,Te.j],Re.q],null,null),Re._19(49152,null,0,Te.F,[],null,null),(l()(),Re._41(0,["\n      "])),(l()(),Re._21(0,null,0,4,"md-card-title",[["class","md-card-title--ac mat-card-title "]],null,null,null,null,null)),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),Re._19(16384,null,0,Te._35,[[2,Te.j],Re.q],null,null),Re._19(16384,null,0,Te.L,[],null,null),(l()(),Re._41(null,["After renovations figures"])),(l()(),Re._41(0,["\n      "])),(l()(),Re._21(0,null,0,9,"md-card-content",[["class","mat-card-content"]],null,null,null,null,null)),Re._19(16384,null,0,Te._35,[[2,Te.j],Re.q],null,null),Re._19(16384,null,0,Te.H,[],null,null),(l()(),Re._41(null,["\n        "])),(l()(),Re._21(0,null,null,4,"div",[],null,null,null,null,null)),(l()(),Re._21(0,null,null,1,"label",[],null,null,null,null,null)),(l()(),Re._41(null,["Usable equity: "])),(l()(),Re._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),Re._41(null,["",""])),(l()(),Re._41(null,["\n      "])),(l()(),Re._41(0,["\n    "]))],function(l,n){l(n,1,0,"");l(n,6,0,"md-card-title--ac")},function(l,n){l(n,19,0,n.component.usableEquityAfterReno)})}function Cl(l){return Re._43(0,[Re._39(402653184,1,{form:0}),(l()(),Re._21(0,null,null,147,"form",[["class","form__container form__equity-calc"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0;if("submit"===n){e=!1!==Re._35(l,3).onSubmit(u)&&e}if("reset"===n){e=!1!==Re._35(l,3).onReset()&&e}return e},null,null)),Re._19(16384,null,0,Ue.t,[],null,null),Re._19(16384,[[1,4],["equityForm",4]],0,Ue.n,[[8,null],[8,null]],null,null),Re._38(2048,null,Ue.b,null,[Ue.n]),Re._19(16384,null,0,Ue.m,[Ue.b],null,null),Re._19(737280,null,0,De.a,[Ee.a,Re.q,Re.Q],{layout:[0,"layout"]},null),Re._19(1720320,null,0,Ne.a,[Ee.a,Re.q,Re.Q,[2,De.a]],{gap:[0,"gap"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),(l()(),Re._41(null,["\n  \n  "])),(l()(),Re._21(0,null,null,63,"section",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),Re._19(737280,null,0,De.a,[Ee.a,Re.q,Re.Q],{layout:[0,"layout"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),(l()(),Re._41(null,["\n    "])),(l()(),Re._21(0,null,null,58,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutGap.gt-xs","10px"]],null,null,null,null,null)),Re._19(737280,null,0,De.a,[Ee.a,Re.q,Re.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),Re._19(1720320,null,0,Ne.a,[Ee.a,Re.q,Re.Q,[2,De.a]],{gapGtXs:[0,"gapGtXs"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),(l()(),Re._41(null,["\n      "])),(l()(),Re._41(null,["\n      "])),(l()(),Re._21(0,null,null,24,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Re._35(l,23)._focusInput()&&e}return e},Xe.z,Xe.k)),Re._19(737280,null,0,Ve.a,[Ee.a,Re.q,Re.Q,[3,De.a],[3,Ze.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),Re._19(7389184,null,6,Te._16,[Re.q,Re.j,[2,Te.o]],null,null),Re._39(335544320,2,{_mdInputChild:0}),Re._39(335544320,3,{_placeholderChild:0}),Re._39(603979776,4,{_errorChildren:1}),Re._39(603979776,5,{_hintChildren:1}),Re._39(603979776,6,{_prefixChildren:1}),Re._39(603979776,7,{_suffixChildren:1}),(l()(),Re._41(1,["\n        "])),(l()(),Re._21(0,null,1,9,"input",[["class","mat-input-element"],["id","purchasePrice"],["mdInput",""],["name","purchasePrice"],["placeholder","Purchase price"],["required",""],["type","number"],["value","model.purchasePrice"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Re._35(l,32)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,32).onTouched()&&e}if("compositionstart"===n){e=!1!==Re._35(l,32)._compositionStart()&&e}if("compositionend"===n){e=!1!==Re._35(l,32)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==Re._35(l,33).onChange(u.target.value)&&e}if("input"===n){e=!1!==Re._35(l,33).onChange(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,33).onTouched()&&e}if("blur"===n){e=!1!==Re._35(l,40)._onBlur()&&e}if("focus"===n){e=!1!==Re._35(l,40)._onFocus()&&e}if("input"===n){e=!1!==Re._35(l,40)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.purchasePrice=u)&&e}return e},null,null)),Re._19(16384,null,0,Ue.c,[Re.Q,Re.q,[2,Ue.a]],null,null),Re._19(16384,null,0,Ue.s,[Re.Q,Re.q],null,null),Re._19(16384,null,0,Ue.p,[],{required:[0,"required"]},null),Re._38(1024,null,Ue.i,function(l){return[l]},[Ue.p]),Re._38(1024,null,Ue.j,function(l,n){return[l,n]},[Ue.c,Ue.s]),Re._19(671744,[["purchasePrice",4]],0,Ue.o,[[2,Ue.b],[2,Ue.i],[8,null],[2,Ue.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Re._38(2048,null,Ue.k,null,[Ue.o]),Re._19(16384,null,0,Ue.l,[Ue.k],null,null),Re._19(16384,[[2,4]],0,Te._17,[Re.q,Re.Q,Ae.L,[2,Ue.k],[2,Ue.n],[2,Ue.e],[2,Te.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),Re._41(1,["\n  \n        "])),(l()(),Re._15(16777216,null,4,1,null,gl)),Re._19(16384,null,0,We.m,[Re._3,Re.Z],{ngIf:[0,"ngIf"]},null),(l()(),Re._41(1,["\n      "])),(l()(),Re._41(null,["\n      \n      "])),(l()(),Re._41(null,["\n      "])),(l()(),Re._21(0,null,null,24,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Re._35(l,50)._focusInput()&&e}return e},Xe.z,Xe.k)),Re._19(737280,null,0,Ve.a,[Ee.a,Re.q,Re.Q,[3,De.a],[3,Ze.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),Re._19(7389184,null,6,Te._16,[Re.q,Re.j,[2,Te.o]],null,null),Re._39(335544320,8,{_mdInputChild:0}),Re._39(335544320,9,{_placeholderChild:0}),Re._39(603979776,10,{_errorChildren:1}),Re._39(603979776,11,{_hintChildren:1}),Re._39(603979776,12,{_prefixChildren:1}),Re._39(603979776,13,{_suffixChildren:1}),(l()(),Re._41(1,["\n        "])),(l()(),Re._21(0,null,1,9,"input",[["class","mat-input-element"],["id","marketValue"],["mdInput",""],["name","marketValue"],["placeholder","Market value"],["required",""],["type","number"],["value","model.marketValue"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Re._35(l,59)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,59).onTouched()&&e}if("compositionstart"===n){e=!1!==Re._35(l,59)._compositionStart()&&e}if("compositionend"===n){e=!1!==Re._35(l,59)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==Re._35(l,60).onChange(u.target.value)&&e}if("input"===n){e=!1!==Re._35(l,60).onChange(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,60).onTouched()&&e}if("blur"===n){e=!1!==Re._35(l,67)._onBlur()&&e}if("focus"===n){e=!1!==Re._35(l,67)._onFocus()&&e}if("input"===n){e=!1!==Re._35(l,67)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.marketValue=u)&&e}return e},null,null)),Re._19(16384,null,0,Ue.c,[Re.Q,Re.q,[2,Ue.a]],null,null),Re._19(16384,null,0,Ue.s,[Re.Q,Re.q],null,null),Re._19(16384,null,0,Ue.p,[],{required:[0,"required"]},null),Re._38(1024,null,Ue.i,function(l){return[l]},[Ue.p]),Re._38(1024,null,Ue.j,function(l,n){return[l,n]},[Ue.c,Ue.s]),Re._19(671744,[["marketValue",4]],0,Ue.o,[[2,Ue.b],[2,Ue.i],[8,null],[2,Ue.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Re._38(2048,null,Ue.k,null,[Ue.o]),Re._19(16384,null,0,Ue.l,[Ue.k],null,null),Re._19(16384,[[8,4]],0,Te._17,[Re.q,Re.Q,Ae.L,[2,Ue.k],[2,Ue.n],[2,Ue.e],[2,Te.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),Re._41(1,["\n  \n        "])),(l()(),Re._15(16777216,null,4,1,null,fl)),Re._19(16384,null,0,We.m,[Re._3,Re.Z],{ngIf:[0,"ngIf"]},null),(l()(),Re._41(1,["\n      "])),(l()(),Re._41(null,["\n    "])),(l()(),Re._41(null,["\n  "])),(l()(),Re._41(null,["\n\n  "])),(l()(),Re._21(0,null,null,69,"section",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),Re._19(737280,null,0,De.a,[Ee.a,Re.q,Re.Q],{layout:[0,"layout"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),(l()(),Re._41(null,["\n    "])),(l()(),Re._21(0,null,null,64,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutGap.gt-xs","10px"]],null,null,null,null,null)),Re._19(737280,null,0,De.a,[Ee.a,Re.q,Re.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),Re._19(1720320,null,0,Ne.a,[Ee.a,Re.q,Re.Q,[2,De.a]],{gapGtXs:[0,"gapGtXs"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),(l()(),Re._41(null,["\n      "])),(l()(),Re._41(null,["\n      "])),(l()(),Re._21(0,null,null,24,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Re._35(l,88)._focusInput()&&e}return e},Xe.z,Xe.k)),Re._19(737280,null,0,Ve.a,[Ee.a,Re.q,Re.Q,[3,De.a],[3,Ze.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),Re._19(7389184,null,6,Te._16,[Re.q,Re.j,[2,Te.o]],null,null),Re._39(335544320,14,{_mdInputChild:0}),Re._39(335544320,15,{_placeholderChild:0}),Re._39(603979776,16,{_errorChildren:1}),Re._39(603979776,17,{_hintChildren:1}),Re._39(603979776,18,{_prefixChildren:1}),Re._39(603979776,19,{_suffixChildren:1}),(l()(),Re._41(1,["\n        "])),(l()(),Re._21(0,null,1,9,"input",[["class","mat-input-element"],["id","loanCoverage"],["loanCoverage",""],["mdInput",""],["name","loanCoverage"],["placeholder","Loan coverage %"],["required",""],["type","number"],["value","model.loanCoverage"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Re._35(l,97)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,97).onTouched()&&e}if("compositionstart"===n){e=!1!==Re._35(l,97)._compositionStart()&&e}if("compositionend"===n){e=!1!==Re._35(l,97)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==Re._35(l,98).onChange(u.target.value)&&e}if("input"===n){e=!1!==Re._35(l,98).onChange(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,98).onTouched()&&e}if("blur"===n){e=!1!==Re._35(l,105)._onBlur()&&e}if("focus"===n){e=!1!==Re._35(l,105)._onFocus()&&e}if("input"===n){e=!1!==Re._35(l,105)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.loanCoverage=u)&&e}return e},null,null)),Re._19(16384,null,0,Ue.c,[Re.Q,Re.q,[2,Ue.a]],null,null),Re._19(16384,null,0,Ue.s,[Re.Q,Re.q],null,null),Re._19(16384,null,0,Ue.p,[],{required:[0,"required"]},null),Re._38(1024,null,Ue.i,function(l){return[l]},[Ue.p]),Re._38(1024,null,Ue.j,function(l,n){return[l,n]},[Ue.c,Ue.s]),Re._19(671744,[["loanCoverage",4]],0,Ue.o,[[2,Ue.b],[2,Ue.i],[8,null],[2,Ue.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Re._38(2048,null,Ue.k,null,[Ue.o]),Re._19(16384,null,0,Ue.l,[Ue.k],null,null),Re._19(16384,[[14,4]],0,Te._17,[Re.q,Re.Q,Ae.L,[2,Ue.k],[2,Ue.n],[2,Ue.e],[2,Te.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),Re._41(1,["\n  \n        "])),(l()(),Re._15(16777216,null,4,1,null,hl)),Re._19(16384,null,0,We.m,[Re._3,Re.Z],{ngIf:[0,"ngIf"]},null),(l()(),Re._41(1,["\n      "])),(l()(),Re._41(null,["\n\n      "])),(l()(),Re._41(null,["\n      "])),(l()(),Re._21(0,null,null,19,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Re._35(l,115)._focusInput()&&e}return e},Xe.z,Xe.k)),Re._19(737280,null,0,Ve.a,[Ee.a,Re.q,Re.Q,[3,De.a],[3,Ze.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),Re._19(7389184,null,6,Te._16,[Re.q,Re.j,[2,Te.o]],null,null),Re._39(335544320,20,{_mdInputChild:0}),Re._39(335544320,21,{_placeholderChild:0}),Re._39(603979776,22,{_errorChildren:1}),Re._39(603979776,23,{_hintChildren:1}),Re._39(603979776,24,{_prefixChildren:1}),Re._39(603979776,25,{_suffixChildren:1}),(l()(),Re._41(1,["\n        "])),(l()(),Re._21(0,null,1,7,"input",[["class","mat-input-element"],["id","savings"],["mdInput",""],["name","savings"],["placeholder","Current savings"],["type","number"],["value","model.savings"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Re._35(l,124)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,124).onTouched()&&e}if("compositionstart"===n){e=!1!==Re._35(l,124)._compositionStart()&&e}if("compositionend"===n){e=!1!==Re._35(l,124)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==Re._35(l,125).onChange(u.target.value)&&e}if("input"===n){e=!1!==Re._35(l,125).onChange(u.target.value)&&e}if("blur"===n){e=!1!==Re._35(l,125).onTouched()&&e}if("blur"===n){e=!1!==Re._35(l,130)._onBlur()&&e}if("focus"===n){e=!1!==Re._35(l,130)._onFocus()&&e}if("input"===n){e=!1!==Re._35(l,130)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.savings=u)&&e}return e},null,null)),Re._19(16384,null,0,Ue.c,[Re.Q,Re.q,[2,Ue.a]],null,null),Re._19(16384,null,0,Ue.s,[Re.Q,Re.q],null,null),Re._38(1024,null,Ue.j,function(l,n){return[l,n]},[Ue.c,Ue.s]),Re._19(671744,[["savings",4]],0,Ue.o,[[2,Ue.b],[8,null],[8,null],[2,Ue.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Re._38(2048,null,Ue.k,null,[Ue.o]),Re._19(16384,null,0,Ue.l,[Ue.k],null,null),Re._19(16384,[[20,4]],0,Te._17,[Re.q,Re.Q,Ae.L,[2,Ue.k],[2,Ue.n],[2,Ue.e],[2,Te.m]],{id:[0,"id"],placeholder:[1,"placeholder"],type:[2,"type"]},null),(l()(),Re._41(1,["\n      "])),(l()(),Re._41(null,["\n\n      "])),(l()(),Re._41(null,["\n      "])),(l()(),Re._21(0,null,null,7,"md-slide-toggle",[["class","form__field form__field__toogle form__field__toogle--add-reno mat-slide-toggle"],["color","accent"],["id","addRenovations"],["name","addRenovations"]],[[2,"mat-checked",null],[2,"mat-disabled",null],[2,"mat-slide-toggle-label-before",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngModelChange"]],function(l,n,u){var e=!0,r=l.component;if("ngModelChange"===n){e=!1!==(r.model.addRenovations=u)&&e}return e},Xe.D,Xe.o)),Re._19(1228800,null,0,Te._54,[Re.q,Re.Q,Ae.L,Te.g,Re.j],{color:[0,"color"],name:[1,"name"],id:[2,"id"]},null),Re._38(1024,null,Ue.j,function(l){return[l]},[Te._54]),Re._19(671744,null,0,Ue.o,[[2,Ue.b],[8,null],[8,null],[2,Ue.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Re._38(2048,null,Ue.k,null,[Ue.o]),Re._19(16384,null,0,Ue.l,[Ue.k],null,null),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),(l()(),Re._41(0,["\n        \n        Add renovations data\n      "])),(l()(),Re._41(null,["\n      "])),(l()(),Re._41(null,["\n    "])),(l()(),Re._41(null,["\n  "])),(l()(),Re._41(null,["\n\n  "])),(l()(),Re._15(16777216,null,null,1,null,vl)),Re._19(16384,null,0,We.m,[Re._3,Re.Z],{ngIf:[0,"ngIf"]},null),(l()(),Re._41(null,["\n\n"])),(l()(),Re._41(null,["\n\n"])),(l()(),Re._21(0,null,null,52,"section",[["class",""]],null,null,null,null,null)),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),(l()(),Re._41(null,["\n  "])),(l()(),Re._21(0,null,null,48,"div",[["fxFlex",""],["fxFlex.gt-xs","620px"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutGap","10px"]],null,null,null,null,null)),Re._19(737280,null,0,De.a,[Ee.a,Re.q,Re.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),Re._19(1720320,null,0,Ne.a,[Ee.a,Re.q,Re.Q,[2,De.a]],{gap:[0,"gap"]},null),Re._19(737280,null,0,Ve.a,[Ee.a,Re.q,Re.Q,[3,De.a],[3,Ze.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),(l()(),Re._41(null,["\n    "])),(l()(),Re._21(0,null,null,39,"md-card",[["class","mat-card"],["fxFlex",""]],null,null,null,Xe.v,Xe.f)),Re._19(737280,null,0,Ve.a,[Ee.a,Re.q,Re.Q,[3,De.a],[3,Ze.a]],{flex:[0,"flex"]},null),Re._19(16384,null,0,Te._35,[[2,Te.j],Re.q],null,null),Re._19(49152,null,0,Te.F,[],null,null),(l()(),Re._41(0,["\n      "])),(l()(),Re._21(0,null,0,4,"md-card-title",[["class","md-card-title--ac mat-card-title "]],null,null,null,null,null)),Re._19(933888,null,0,Oe.a,[Ee.a,Re.B,Re.C,Re.q,Re.P,Re.Q],{classBase:[0,"classBase"]},null),Re._19(16384,null,0,Te._35,[[2,Te.j],Re.q],null,null),Re._19(16384,null,0,Te.L,[],null,null),(l()(),Re._41(null,["Initial figures"])),(l()(),Re._41(0,["\n      "])),(l()(),Re._21(0,null,0,27,"md-card-content",[["class","mat-card-content"]],null,null,null,null,null)),Re._19(16384,null,0,Te._35,[[2,Te.j],Re.q],null,null),Re._19(16384,null,0,Te.H,[],null,null),(l()(),Re._41(null,["\n        "])),(l()(),Re._21(0,null,null,4,"div",[],null,null,null,null,null)),(l()(),Re._21(0,null,null,1,"label",[],null,null,null,null,null)),(l()(),Re._41(null,["Loan amount: "])),(l()(),Re._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),Re._41(null,["",""])),(l()(),Re._41(null,["\n        "])),(l()(),Re._21(0,null,null,4,"div",[],null,null,null,null,null)),(l()(),Re._21(0,null,null,1,"label",[],null,null,null,null,null)),(l()(),Re._41(null,["Deposit amount: "])),(l()(),Re._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),Re._41(null,["",""])),(l()(),Re._41(null,["\n        "])),(l()(),Re._21(0,null,null,4,"div",[],null,null,null,null,null)),(l()(),Re._21(0,null,null,1,"label",[],null,null,null,null,null)),(l()(),Re._41(null,["Discount: "])),(l()(),Re._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),Re._41(null,["",""])),(l()(),Re._41(null,["\n        "])),(l()(),Re._21(0,null,null,4,"div",[],null,null,null,null,null)),(l()(),Re._21(0,null,null,1,"label",[],null,null,null,null,null)),(l()(),Re._41(null,["Equity: "])),(l()(),Re._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),Re._41(null,["",""])),(l()(),Re._41(null,["\n      "])),(l()(),Re._41(0,["\n    "])),(l()(),Re._41(null,["\n\n    "])),(l()(),Re._15(16777216,null,null,1,null,yl)),Re._19(16384,null,0,We.m,[Re._3,Re.Z],{ngIf:[0,"ngIf"]},null),(l()(),Re._41(null,["\n  "])),(l()(),Re._41(null,["\n"]))],function(l,n){var u=n.component;l(n,6,0,"column");l(n,7,0,"10px");l(n,8,0,"form__container form__equity-calc");l(n,11,0,"column");l(n,12,0,"form__fields");l(n,15,0,"column","row");l(n,16,0,"10px");l(n,17,0,"form__fields__row");l(n,21,0,"","200px");l(n,22,0,"form__field");l(n,34,0,"");l(n,37,0,"purchasePrice",u.model.purchasePrice);l(n,40,0,"purchasePrice","Purchase price","","number"),l(n,43,0,Re._35(n,37).invalid&&(Re._35(n,37).dirty||Re._35(n,37).touched)&&Re._35(n,37).errors.required);l(n,48,0,"","200px");l(n,49,0,"form__field");l(n,61,0,"");l(n,64,0,"marketValue",u.model.marketValue);l(n,67,0,"marketValue","Market value","","number"),l(n,70,0,Re._35(n,64).invalid&&(Re._35(n,64).dirty||Re._35(n,64).touched)&&Re._35(n,64).errors.required);l(n,76,0,"column");l(n,77,0,"form__fields");l(n,80,0,"column","row");l(n,81,0,"10px");l(n,82,0,"form__fields__row");l(n,86,0,"","200px");l(n,87,0,"form__field");l(n,99,0,"");l(n,102,0,"loanCoverage",u.model.loanCoverage);l(n,105,0,"loanCoverage","Loan coverage %","","number"),l(n,108,0,Re._35(n,102).invalid&&(Re._35(n,102).dirty||Re._35(n,102).touched)&&Re._35(n,102).errors.required);l(n,113,0,"","200px");l(n,114,0,"form__field");l(n,127,0,"savings",u.model.savings);l(n,130,0,"savings","Current savings","number");l(n,135,0,"accent","addRenovations","addRenovations");l(n,137,0,"addRenovations",u.model.addRenovations);l(n,140,0,"form__field form__field__toogle form__field__toogle--add-reno"),l(n,147,0,u.model.addRenovations);l(n,151,0,"");l(n,154,0,"column","row");l(n,155,0,"10px");l(n,156,0,"","620px");l(n,159,0,"");l(n,164,0,"md-card-title--ac"),l(n,200,0,u.model.addRenovations)},function(l,n){var u=n.component;l(n,1,0,Re._35(n,5).ngClassUntouched,Re._35(n,5).ngClassTouched,Re._35(n,5).ngClassPristine,Re._35(n,5).ngClassDirty,Re._35(n,5).ngClassValid,Re._35(n,5).ngClassInvalid,Re._35(n,5).ngClassPending);l(n,20,0,null,Re._35(n,23)._mdInputChild._isErrorState(),Re._35(n,23)._mdInputChild.focused,Re._35(n,23)._shouldForward("untouched"),Re._35(n,23)._shouldForward("touched"),Re._35(n,23)._shouldForward("pristine"),Re._35(n,23)._shouldForward("dirty"),Re._35(n,23)._shouldForward("valid"),Re._35(n,23)._shouldForward("invalid"),Re._35(n,23)._shouldForward("pending")),l(n,31,1,[Re._35(n,34).required?"":null,Re._35(n,39).ngClassUntouched,Re._35(n,39).ngClassTouched,Re._35(n,39).ngClassPristine,Re._35(n,39).ngClassDirty,Re._35(n,39).ngClassValid,Re._35(n,39).ngClassInvalid,Re._35(n,39).ngClassPending,Re._35(n,40).id,Re._35(n,40).placeholder,Re._35(n,40).disabled,Re._35(n,40).required,Re._35(n,40).ariaDescribedby||null,Re._35(n,40)._isErrorState()]);l(n,47,0,null,Re._35(n,50)._mdInputChild._isErrorState(),Re._35(n,50)._mdInputChild.focused,Re._35(n,50)._shouldForward("untouched"),Re._35(n,50)._shouldForward("touched"),Re._35(n,50)._shouldForward("pristine"),Re._35(n,50)._shouldForward("dirty"),Re._35(n,50)._shouldForward("valid"),Re._35(n,50)._shouldForward("invalid"),Re._35(n,50)._shouldForward("pending")),l(n,58,1,[Re._35(n,61).required?"":null,Re._35(n,66).ngClassUntouched,Re._35(n,66).ngClassTouched,Re._35(n,66).ngClassPristine,Re._35(n,66).ngClassDirty,Re._35(n,66).ngClassValid,Re._35(n,66).ngClassInvalid,Re._35(n,66).ngClassPending,Re._35(n,67).id,Re._35(n,67).placeholder,Re._35(n,67).disabled,Re._35(n,67).required,Re._35(n,67).ariaDescribedby||null,Re._35(n,67)._isErrorState()]);l(n,85,0,null,Re._35(n,88)._mdInputChild._isErrorState(),Re._35(n,88)._mdInputChild.focused,Re._35(n,88)._shouldForward("untouched"),Re._35(n,88)._shouldForward("touched"),Re._35(n,88)._shouldForward("pristine"),Re._35(n,88)._shouldForward("dirty"),Re._35(n,88)._shouldForward("valid"),Re._35(n,88)._shouldForward("invalid"),Re._35(n,88)._shouldForward("pending")),l(n,96,1,[Re._35(n,99).required?"":null,Re._35(n,104).ngClassUntouched,Re._35(n,104).ngClassTouched,Re._35(n,104).ngClassPristine,Re._35(n,104).ngClassDirty,Re._35(n,104).ngClassValid,Re._35(n,104).ngClassInvalid,Re._35(n,104).ngClassPending,Re._35(n,105).id,Re._35(n,105).placeholder,Re._35(n,105).disabled,Re._35(n,105).required,Re._35(n,105).ariaDescribedby||null,Re._35(n,105)._isErrorState()]);l(n,112,0,null,Re._35(n,115)._mdInputChild._isErrorState(),Re._35(n,115)._mdInputChild.focused,Re._35(n,115)._shouldForward("untouched"),Re._35(n,115)._shouldForward("touched"),Re._35(n,115)._shouldForward("pristine"),Re._35(n,115)._shouldForward("dirty"),Re._35(n,115)._shouldForward("valid"),Re._35(n,115)._shouldForward("invalid"),Re._35(n,115)._shouldForward("pending")),l(n,123,1,[Re._35(n,129).ngClassUntouched,Re._35(n,129).ngClassTouched,Re._35(n,129).ngClassPristine,Re._35(n,129).ngClassDirty,Re._35(n,129).ngClassValid,Re._35(n,129).ngClassInvalid,Re._35(n,129).ngClassPending,Re._35(n,130).id,Re._35(n,130).placeholder,Re._35(n,130).disabled,Re._35(n,130).required,Re._35(n,130).ariaDescribedby||null,Re._35(n,130)._isErrorState()]),l(n,134,0,Re._35(n,135).checked,Re._35(n,135).disabled,"before"==Re._35(n,135).labelPosition,Re._35(n,139).ngClassUntouched,Re._35(n,139).ngClassTouched,Re._35(n,139).ngClassPristine,Re._35(n,139).ngClassDirty,Re._35(n,139).ngClassValid,Re._35(n,139).ngClassInvalid,Re._35(n,139).ngClassPending),l(n,177,0,u.loanAmount),l(n,183,0,u.depositAmount),l(n,189,0,u.discount),l(n,195,0,u.equity)})}function bl(l){return Re._43(0,[(l()(),Re._21(0,null,null,1,"app-equity",[],null,null,null,Cl,He)),Re._19(4308992,null,0,Ge,[Zl],null,null)],function(l,n){l(n,1,0)},null)}function xl(l){return lr._43(0,[(l()(),lr._21(0,null,null,4,"md-chip",[["class","mat-chip"],["role","option"],["tabindex","-1"]],[[2,"mat-chip-selected",null],[1,"disabled",0],[1,"aria-disabled",0]],[[null,"click"],[null,"focus"],[null,"blur"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==lr._35(l,1).onClick()&&e}if("click"===n){e=!1!==lr._35(l,3)._handleClick(u)&&e}if("focus"===n){e=!1!=(lr._35(l,3)._hasFocus=!0)&&e}if("blur"===n){e=!1!=(lr._35(l,3)._hasFocus=!1)&&e}return e},null,null)),lr._19(16384,null,0,nr.l,[nr.k,nr.a,[8,null],lr.Q,lr.q],{routerLink:[0,"routerLink"]},null),lr._19(16384,null,0,ur._35,[[2,ur.j],lr.q],null,null),lr._19(147456,[[1,4]],0,ur.P,[lr.Q,lr.q],{selected:[0,"selected"]},null),(l()(),lr._41(null,["",""]))],function(l,n){l(n,1,0,n.context.$implicit.url),l(n,3,0,n.context.$implicit.selected)},function(l,n){l(n,0,0,lr._35(n,3).selected,lr._35(n,3).disabled||null,lr._35(n,3).disabled.toString()),l(n,4,0,n.context.$implicit.displayName)})}function ql(l){return lr._43(0,[(l()(),lr._21(0,null,null,9,"nav",[["class","navigation--main"]],null,null,null,null,null)),(l()(),lr._41(null,["\n  "])),(l()(),lr._21(0,null,null,6,"md-chip-list",[["class","mat-chip-list"],["role","listbox"]],[[1,"tabindex",0]],[[null,"focus"],[null,"keydown"]],function(l,n,u){var e=!0;if("focus"===n){e=!1!==lr._35(l,3).focus()&&e}if("keydown"===n){e=!1!==lr._35(l,3)._keydown(u)&&e}return e},er.x,er.i)),lr._19(1228800,null,1,ur.Q,[],null,null),lr._39(603979776,1,{chips:1}),(l()(),lr._41(0,["\n    "])),(l()(),lr._15(16777216,null,0,1,null,xl)),lr._19(802816,null,0,rr.l,[lr._3,lr.Z,lr.B],{ngForOf:[0,"ngForOf"]},null),(l()(),lr._41(0,["\n  "])),(l()(),lr._41(null,["      \n"]))],function(l,n){l(n,7,0,n.component.links)},function(l,n){l(n,2,0,lr._35(n,3)._tabIndex)})}function wl(l){return lr._43(0,[(l()(),lr._21(0,null,null,1,"main-navigator",[],null,null,null,ql,ar)),lr._19(114688,null,0,$e,[Zl],null,null)],function(l,n){l(n,1,0)},null)}function Il(l){return or._43(0,[(l()(),or._21(0,null,null,9,"span",[["fxLayoutAlign"," center"]],null,null,null,null,null)),or._19(737280,null,0,ir.a,[_r.a,or.q,or.Q,[8,null]],{align:[0,"align"]},null),(l()(),or._41(null,["\n      "])),(l()(),or._21(0,null,null,5,"md-icon",[["class","toolbar__icon mat-icon"],["role","img"],["routerLink","/users/login"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==or._35(l,4).onClick()&&e}return e},sr.y,sr.j)),or._19(16384,null,0,cr.l,[cr.k,cr.a,[8,null],or.Q,or.q],{routerLink:[0,"routerLink"]},null),or._19(933888,null,0,dr.a,[_r.a,or.B,or.C,or.q,or.P,or.Q],{classBase:[0,"classBase"]},null),or._19(16384,null,0,mr._35,[[2,mr.j],or.q],null,null),or._19(638976,null,0,mr._11,[or.Q,or.q,mr._14,[8,null]],null,null),(l()(),or._41(0,["account_circle"])),(l()(),or._41(null,["\n    "]))],function(l,n){l(n,1,0," center");l(n,4,0,"/users/login");l(n,5,0,"toolbar__icon"),l(n,7,0)},null)}function Bl(l){return or._43(0,[(l()(),or._21(16777216,null,null,2,"img",[["aria-haspopup","true"],["class","toolbar__icon user__avatar"]],[[8,"src",4]],[[null,"mousedown"],[null,"click"]],function(l,n,u){var e=!0;if("mousedown"===n){e=!1!==or._35(l,2)._handleMousedown(u)&&e}if("click"===n){e=!1!==or._35(l,2).toggleMenu()&&e}return e},null,null)),or._19(933888,null,0,dr.a,[_r.a,or.B,or.C,or.q,or.P,or.Q],{classBase:[0,"classBase"]},null),or._19(4341760,null,0,mr._26,[mr._84,or.q,or._3,[2,pr.q]],{menu:[0,"menu"]},null),(l()(),or._15(0,null,null,0))],function(l,n){l(n,1,0,"toolbar__icon user__avatar"),l(n,2,0,or._35(n.parent,12))},function(l,n){l(n,0,0,n.component.usersService.user.avatar)})}function kl(l){return or._43(0,[(l()(),or._21(16777216,null,null,5,"md-icon",[["aria-haspopup","true"],["class","toolbar__icon user__icon--logged-in mat-icon"],["role","img"]],null,[[null,"mousedown"],[null,"click"]],function(l,n,u){var e=!0;if("mousedown"===n){e=!1!==or._35(l,4)._handleMousedown(u)&&e}if("click"===n){e=!1!==or._35(l,4).toggleMenu()&&e}return e},sr.y,sr.j)),or._19(933888,null,0,dr.a,[_r.a,or.B,or.C,or.q,or.P,or.Q],{classBase:[0,"classBase"]},null),or._19(16384,null,0,mr._35,[[2,mr.j],or.q],null,null),or._19(638976,null,0,mr._11,[or.Q,or.q,mr._14,[8,null]],null,null),or._19(4341760,null,0,mr._26,[mr._84,or.q,or._3,[2,pr.q]],{menu:[0,"menu"]},null),(l()(),or._41(0,["\n        account_circle\n      "])),(l()(),or._15(0,null,null,0))],function(l,n){l(n,1,0,"toolbar__icon user__icon--logged-in"),l(n,3,0),l(n,4,0,or._35(n.parent,12))},null)}function Sl(l){return or._43(0,[(l()(),or._21(0,null,null,40,"span",[["fxLayoutAlign"," center"]],null,null,null,null,null)),or._19(737280,null,0,ir.a,[_r.a,or.q,or.Q,[8,null]],{align:[0,"align"]},null),(l()(),or._41(null,["\n      "])),(l()(),or._15(16777216,null,null,1,null,Bl)),or._19(16384,null,0,gr.m,[or._3,or.Z],{ngIf:[0,"ngIf"]},null),(l()(),or._41(null,["\n      "])),(l()(),or._15(16777216,null,null,1,null,kl)),or._19(16384,null,0,gr.m,[or._3,or.Z],{ngIf:[0,"ngIf"]},null),(l()(),or._41(null,["\n      \n      "])),(l()(),or._21(0,null,null,30,"md-menu",[["class","user__menu--logged-in"]],null,null,null,sr.B,sr.l)),or._19(933888,null,0,dr.a,[_r.a,or.B,or.C,or.q,or.P,or.Q],{classBase:[0,"classBase"]},null),or._19(16384,null,0,mr._35,[[2,mr.j],or.q],null,null),or._19(1228800,[["userMenu",4]],1,mr._23,[or.q],{overlapTrigger:[0,"overlapTrigger"],classList:[1,"classList"]},null),or._39(603979776,1,{items:1}),(l()(),or._41(0,["\n        "])),(l()(),or._21(0,null,0,11,"button",[["class","mat-menu-item"],["md-menu-item",""],["role","menuitem"],["routerLink","/users/account"]],[[1,"tabindex",0],[1,"aria-disabled",0],[1,"disabled",0]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==or._35(l,16).onClick()&&e}if("click"===n){e=!1!==or._35(l,17)._checkDisabled(u)&&e}return e},sr.A,sr.m)),or._19(16384,null,0,cr.l,[cr.k,cr.a,[8,null],or.Q,or.q],{routerLink:[0,"routerLink"]},null),or._19(49152,[[1,4]],0,mr._24,[or.q],null,null),(l()(),or._41(0,["\n          "])),(l()(),or._21(0,null,0,3,"md-icon",[["class","mat-icon"],["role","img"]],null,null,null,sr.y,sr.j)),or._19(16384,null,0,mr._35,[[2,mr.j],or.q],null,null),or._19(638976,null,0,mr._11,[or.Q,or.q,mr._14,[8,null]],null,null),(l()(),or._41(0,["settings"])),(l()(),or._41(0,["\n          "])),(l()(),or._21(0,null,0,1,"span",[],null,null,null,null,null)),(l()(),or._41(null,["My account"])),(l()(),or._41(0,["\n        "])),(l()(),or._41(0,["\n        "])),(l()(),or._21(0,null,0,10,"button",[["class","mat-menu-item"],["md-menu-item",""],["role","menuitem"]],[[1,"tabindex",0],[1,"aria-disabled",0],[1,"disabled",0]],[[null,"click"]],function(l,n,u){var e=!0,r=l.component;if("click"===n){e=!1!==or._35(l,29)._checkDisabled(u)&&e}if("click"===n){e=!1!==r.logout()&&e}return e},sr.A,sr.m)),or._19(49152,[[1,4]],0,mr._24,[or.q],null,null),(l()(),or._41(0,["\n          "])),(l()(),or._21(0,null,0,3,"md-icon",[["class","mat-icon"],["role","img"]],null,null,null,sr.y,sr.j)),or._19(16384,null,0,mr._35,[[2,mr.j],or.q],null,null),or._19(638976,null,0,mr._11,[or.Q,or.q,mr._14,[8,null]],null,null),(l()(),or._41(0,["exit_to_app"])),(l()(),or._41(0,["\n          "])),(l()(),or._21(0,null,0,1,"span",[],null,null,null,null,null)),(l()(),or._41(null,["Logout"])),(l()(),or._41(0,["\n        "])),(l()(),or._41(0,["\n      "])),(l()(),or._41(null,["\n    "]))],function(l,n){var u=n.component;l(n,1,0," center"),l(n,4,0,u.usersService.user.avatar),l(n,7,0,!u.usersService.user.avatar);l(n,10,0,"user__menu--logged-in");l(n,12,0,!1,"user__menu--logged-in");l(n,16,0,"/users/account"),l(n,21,0),l(n,33,0)},function(l,n){l(n,15,0,or._35(n,17)._getTabIndex(),or._35(n,17).disabled.toString(),or._35(n,17).disabled||null),l(n,28,0,or._35(n,29)._getTabIndex(),or._35(n,29).disabled.toString(),or._35(n,29).disabled||null)})}function Pl(l){return or._43(0,[(l()(),or._41(null,["\n"])),(l()(),or._21(0,null,null,30,"div",[["class","inner mat-typography"]],null,null,null,null,null)),or._19(933888,null,0,dr.a,[_r.a,or.B,or.C,or.q,or.P,or.Q],{classBase:[0,"classBase"]},null),(l()(),or._41(null,["\n\n  "])),(l()(),or._21(0,null,null,19,"md-toolbar",[["class","toolbar mat-toolbar"],["color","primary"],["role","toolbar"]],null,null,null,sr.E,sr.p)),or._19(933888,null,0,dr.a,[_r.a,or.B,or.C,or.q,or.P,or.Q],{classBase:[0,"classBase"]},null),or._19(16384,null,0,mr._35,[[2,mr.j],or.q],null,null),or._19(49152,null,0,mr._75,[or.Q,or.q],{color:[0,"color"]},null),(l()(),or._41(0,["\n    "])),(l()(),or._21(0,null,0,4,"a",[["class","toolbar__brand-name color__almost-white"],["routerLink","/"]],[[1,"target",0],[8,"href",4]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==or._35(l,10).onClick(u.button,u.ctrlKey,u.metaKey,u.shiftKey)&&e}return e},null,null)),or._19(671744,null,0,cr.m,[cr.k,cr.a,gr.j],{routerLink:[0,"routerLink"]},null),or._19(933888,null,0,dr.a,[_r.a,or.B,or.C,or.q,or.P,or.Q],{classBase:[0,"classBase"]},null),(l()(),or._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),or._41(null,["AtomiCoconut"])),(l()(),or._41(0,["\n    "])),(l()(),or._21(0,null,0,1,"span",[["class","example-spacer"]],null,null,null,null,null)),or._19(933888,null,0,dr.a,[_r.a,or.B,or.C,or.q,or.P,or.Q],{classBase:[0,"classBase"]},null),(l()(),or._41(0,["\n    \n    "])),(l()(),or._15(16777216,null,0,1,null,Il)),or._19(16384,null,0,gr.m,[or._3,or.Z],{ngIf:[0,"ngIf"]},null),(l()(),or._41(0,["\n    "])),(l()(),or._15(16777216,null,0,1,null,Sl)),or._19(16384,null,0,gr.m,[or._3,or.Z],{ngIf:[0,"ngIf"]},null),(l()(),or._41(0,["\n    \n  "])),(l()(),or._41(null,["\n  \n  "])),(l()(),or._41(null,["\n  "])),(l()(),or._21(0,null,null,1,"main-navigator",[],null,null,null,ql,ar)),or._19(114688,null,0,$e,[Zl],null,null),(l()(),or._41(null,["\n\n  "])),(l()(),or._21(16777216,null,null,1,"router-outlet",[],null,null,null,null,null)),or._19(212992,null,0,cr.o,[cr.b,or._3,or.m,[8,null],or.j],null,null),(l()(),or._41(null,["\n"]))],function(l,n){var u=n.component;l(n,2,0,"inner mat-typography");l(n,5,0,"toolbar");l(n,7,0,"primary");l(n,10,0,"/");l(n,11,0,"toolbar__brand-name color__almost-white");l(n,16,0,"example-spacer"),l(n,19,0,!u.usersService.user),l(n,22,0,u.usersService.user),l(n,27,0),l(n,30,0)},function(l,n){l(n,9,0,or._35(n,10).target,or._35(n,10).href)})}function Ql(l){return or._43(0,[(l()(),or._21(0,null,null,2,"app-root",[],null,null,null,Pl,hr)),or._38(512,null,Zl,Zl,[]),or._19(114688,null,0,Al,[cr.k,Tl,El,Zl],null,null)],function(l,n){l(n,2,0)},null)}Object.defineProperty(n,"__esModule",{value:!0});var Fl={production:!0,apiHost:"",showLogs:!0},Ll=u("rgUS"),jl=(u.n(Ll),function(){function l(){}return l}()),Ml=u("CPp0"),Gl=u("Dqrr"),Rl=(u.n(Gl),u("Z04r")),Tl=function(){function l(l,n){this.http=l,this.snackBar=n}return l.prototype.extractData=function(l){var n=l.json();if(200===n.codeno&&"success"===n.status)return n.data;throw n},l.prototype.handleError=function(l){var n={};return n=l instanceof Ml.h?l.json()||{}:l||{},Gl.Observable.throw(n)},l.prototype.showResults=function(l,n,u){void 0===n&&(n=5e3),void 0===u&&(u="");var e=this.snackBar.open(l,u||null,{duration:n,extraClasses:["snack-bar--simple"]});e.onAction().subscribe(function(){"Close"===e.instance.action&&e.dismiss()})},l.prototype.consoleLog=function(l,n){for(var u=[],e=2;e<arguments.length;e++)u[e-2]=arguments[e];Fl.showLogs&&console[l](n,u)},l.ctorParameters=function(){return[{type:Ml.e},{type:Rl._58}]},l}(),Dl=u("CPp0"),El=function(){function l(l,n){this.http=l,this.appService=n,this.serverHost=Fl.apiHost+"/api/users",this.headers=new Dl.d({"Content-Type":"application/json"}),this.routerRedirectUrl=null,this._user=null}return l.prototype.register=function(l){return void 0===l&&(l={}),this.http.post(this.serverHost+"/register",l,{headers:this.headers}).map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.updateAccount=function(l){return void 0===l&&(l={}),this.http.post(this.serverHost+"/account",l,{headers:this.headers}).map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.getAuthenticatedUser=function(){return this.http.get(this.serverHost+"/getUser").map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.login=function(l){return void 0===l&&(l={}),console.log("login service called"),this.http.post(this.serverHost+"/login",l,{headers:this.headers}).map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.forgot=function(l){return void 0===l&&(l={}),this.http.post(this.serverHost+"/account/forgot",l,{headers:this.headers}).map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.reset=function(l,n){return void 0===n&&(n={}),this.http.post(this.serverHost+"/account/reset/"+l,n,{headers:this.headers}).map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.logout=function(){return this.http.get(this.serverHost+"/logout").map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.isLoggedIn=function(){return!(!this.user||!this.user.email)},Object.defineProperty(l.prototype,"user",{get:function(){return this._user},set:function(l){this._user=l},enumerable:!0,configurable:!0}),l.ctorParameters=function(){return[{type:Dl.e},{type:Tl}]},l}(),Ol={defaultGravatarUrl:"https://gravatar.com/avatar/7038663cc684aa330956752c7e6fe7d4?s=200"},Nl=function(){function l(l,n,u){void 0===l&&(l=0),void 0===n&&(n=0),void 0===u&&(u=0),this.activeIncome=0,this.netWorth=0,this.incomeTaxRate=0,this.activeIncome=l,this.netWorth=n,this.incomeTaxRate=u}return l}(),Xl=function(){function l(l,n,u,e,r){void 0===l&&(l=""),void 0===n&&(n=""),void 0===u&&(u=""),void 0===e&&(e=!1),void 0===r&&(r=null),this._name=l,this._email=n,this._avatar=u,this._accessToinvestments=e,this.finance=new Nl,r&&this.setAccountFinance(r)}return l.prototype.setAccountFinance=function(l){this.finance=new Nl(l.activeIncome,l.netWorth,l.incomeTaxRate)},Object.defineProperty(l.prototype,"name",{get:function(){return this._name},set:function(l){this._name=l},enumerable:!0,configurable:!0}),Object.defineProperty(l.prototype,"email",{get:function(){return this._email},set:function(l){this._email=l},enumerable:!0,configurable:!0}),Object.defineProperty(l.prototype,"avatar",{get:function(){return this._avatar},set:function(l){this._avatar=l},enumerable:!0,configurable:!0}),Object.defineProperty(l.prototype,"accessToInvestments",{get:function(){return this._accessToinvestments},set:function(l){this._accessToinvestments=l},enumerable:!0,configurable:!0}),l}(),Vl=u("gvep"),Zl=(u.n(Vl),function(){function l(){this.linksSource=new Vl.BehaviorSubject(null),this.links$=this.linksSource.asObservable()}return l.prototype.setLinks=function(l){this.linksSource.next(l)},l.ctorParameters=function(){return[]},l}()),Ul=u("BkNc"),Al=function(){function l(l,n,u,e){this.router=l,this.appService=n,this.usersService=u,this.mainNavigatorService=e,this.title="app",this.defaultGravatarUrl=Ol.defaultGravatarUrl}return l.prototype.ngOnInit=function(){var l=this,n=this.constructor.name+" > ngOnInit() > ";this.mainNavigatorService.setLinks([{displayName:"Welcome",url:null,selected:!0},{displayName:"Investments",url:"/investments",selected:!1},{displayName:"Calculators",url:"/calculators",selected:!1}]),this.usersService.getAuthenticatedUser().subscribe(function(u){if(u&&u.email){var e=new Xl(u.name,u.email,u.avatar,u.accessToInvestments);l.usersService.user=e}else l.appService.consoleLog("info",n+" User not logged in.",u),l.usersService.user=null},function(u){l.appService.consoleLog("error",n+" There was an error with the getAuthenticatedUser service.",u),l.usersService.user=null})},l.prototype.logout=function(){var l=this,n=this.constructor.name+" > logout() > ";this.usersService.logout().subscribe(function(n){l.usersService.user=null,l.router.navigate(["/"])},function(u){l.appService.consoleLog("error",n+" There was an error with the logout service.",u)})},l.ctorParameters=function(){return[{type:Ul.k},{type:Tl},{type:El},{type:Zl}]},l}(),Wl=[""],zl=function(){function l(l){this.mainNavigatorService=l}return l.prototype.ngOnInit=function(){this.mainNavigatorService.setLinks([{displayName:"Welcome",url:null,selected:!0},{displayName:"Investments",url:"/investments",selected:!1},{displayName:"Calculators",url:"/calculators",selected:!1}])},l.ctorParameters=function(){return[{type:Zl}]},l}(),Hl=u("/oeL"),Jl=[Wl],Yl=Hl._18({encapsulation:0,styles:Jl,data:{}}),Kl=Hl._16("app-welcome",zl,r,{},{},[]),$l=["form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:100%}@media screen and (min-width:600px){form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:127px}}"],ln=u("BkNc"),nn=function(){function l(l,n,u,e){this.usersService=l,this.appService=n,this.router=u,this.mainNavigatorService=e,this.model={name:"",email:"",password:"","password-confirm":""},this.registerServiceRunning=!1}return l.prototype.ngOnInit=function(){this.constructor.name;this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Login",url:"/users/login",selected:!1},{displayName:"Create account",url:null,selected:!0}])},l.prototype.onSubmit=function(){var l=this,n=this.constructor.name+" > onSubmit() > ";if(this.registerServiceRunning=!0,this.model.password!==this.model["password-confirm"])return console.error(n+" Confirm password must match password."),this.registerServiceRunning=!1,!1;this.usersService.user=null,this.usersService.register(this.model).subscribe(function(u){if(u&&u.email){var e=new Xl(u.name,u.email,u.avatar,u.accessToInvestments);l.usersService.user=e,l.router.navigate(["/"]),l.appService.showResults(e.name+" welcome to AtomiCoconut!")}else console.error(n+" Unexpected data format.",u);l.registerServiceRunning=!1},function(u){console.error(n+" There was an error with the register service.",u),400===u.codeno&&u.data&&"UserExistsError"===u.data.name&&l.appService.showResults("The submitted email was already use by another person, pick a different one please."),l.registerServiceRunning=!1})},l.ctorParameters=function(){return[{type:El},{type:Tl},{type:ln.k},{type:Zl}]},l}(),un=u("/oeL"),en=function(){function l(l,n){this.equalFormControlName=l,this.reverse=n}return Object.defineProperty(l.prototype,"isReverse",{get:function(){return!!this.reverse&&"true"===this.reverse},enumerable:!0,configurable:!0}),l.prototype.validate=function(l){var n=l.root.get(this.equalFormControlName);if(n&&n.value!==l.value){if(!this.isReverse)return{equalvalidator:!0};n.setErrors({equalvalidator:!0})}else n&&this.reverse&&(delete n.errors.equalvalidator,Object.keys(n.errors).length||n.setErrors(null));return null},l.ctorParameters=function(){return[{type:null,decorators:[{type:un.h,args:["equalvalidator"]}]},{type:null,decorators:[{type:un.h,args:["reverse"]}]}]},l}(),rn=u("/oeL"),tn=u("Z04r"),an=u("v6Q/"),on=u("TgoG"),_n=u("tcGV"),sn=u("p4Sk"),cn=u("bm2B"),dn=u("Wraf"),mn=u("rUvy"),pn=u("hDHr"),gn=u("SOm2"),fn=u("qbdv"),hn=u("IJGD"),vn=u("BkNc"),yn=[$l],Cn=rn._18({encapsulation:0,styles:yn,data:{}}),bn=rn._16("users-register",nn,y,{},{},[]),xn=["form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:100%}.form__login[_ngcontent-%COMP%]   .form__actions--create-account[_ngcontent-%COMP%]{margin:20px 0}.form__forgot[_ngcontent-%COMP%]{margin-top:50px}@media screen and (min-width:600px){form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:88px}}"],qn=u("BkNc"),wn=function(){function l(l,n,u,e,r){this.usersService=l,this.appService=n,this.mainNavigatorService=u,this.router=e,this.route=r,this.model={email:"",password:""},this.forgotModel={email:"",forgot:!1},this.loginServiceRunning=!1,this.forgotServiceRunning=!1}return l.prototype.ngOnInit=function(){var l=this;this.constructor.name;this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Login",url:null,selected:!0}]),this.route.paramMap.map(function(l){return l.get("state")}).subscribe(function(n){"reset-password-token-expired"===n&&l.appService.showResults("Reset password url has expired or is invalid. Please go to Forgot my password again to create a new one.",5e3)})},l.prototype.onSubmit=function(){var l=this,n=this.constructor.name+" > onSubmit() > ";this.loginServiceRunning=!0,this.usersService.user=null,this.usersService.login(this.model).subscribe(function(u){if(u&&u.email){var e=new Xl(u.name,u.email,u.avatar,u.accessToInvestments);l.usersService.user=e;var r=l.usersService.routerRedirectUrl?l.usersService.routerRedirectUrl:"/";l.usersService.routerRedirectUrl=null,l.router.navigate([r])}else console.error(n+" Unexpected data format."),l.loginServiceRunning=!1},function(u){console.error(n+" There was an error with the login service: ",u),451===u.codeno&&l.appService.showResults(u.msg,6e4,"Close"),l.loginServiceRunning=!1})},l.prototype.onForgotSubmit=function(){var l=this,n=this.constructor.name+" > onForgotSubmit() > ";this.forgotServiceRunning=!0,this.usersService.forgot(this.forgotModel).subscribe(function(n){l.forgotServiceRunning=!1,l.appService.showResults("You have been emailed a password reset link.")},function(u){console.error(n+" There was an error with the forgot password service: ",u),l.forgotServiceRunning=!1,455===u.codeno?l.appService.showResults(u.msg,3e3):400===u.codeno&&l.appService.showResults("There was an issue sending the reset password email, please try again in a few minutes.")})},l.ctorParameters=function(){return[{type:El},{type:Tl},{type:Zl},{type:qn.k},{type:qn.a}]},l}(),In=u("/oeL"),Bn=u("Z04r"),kn=u("v6Q/"),Sn=u("TgoG"),Pn=u("tcGV"),Qn=u("p4Sk"),Fn=u("bm2B"),Ln=u("Wraf"),jn=u("rUvy"),Mn=u("hDHr"),Gn=u("SOm2"),Rn=u("qbdv"),Tn=u("IJGD"),Dn=u("BkNc"),En=[xn],On=In._18({encapsulation:0,styles:En,data:{}}),Nn=In._16("app-login",wn,j,{},{},[]),Xn=["form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:100%}@media screen and (min-width:600px){form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:88px}}"],Vn=u("BkNc"),Zn=function(){function l(l,n,u,e){this.usersService=l,this.appService=n,this.mainNavigatorService=u,this.route=e,this.model={name:"",email:""},this.user=null,this.updateAccountServiceRunning=!1}return l.prototype.ngOnInit=function(){var l=this;this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"My account",url:null,selected:!0}]),this.route.data.subscribe(function(n){l.user=n.authUser,l.model={name:n.authUser.name,email:n.authUser.email}})},l.prototype.onSubmit=function(){var l=this,n=this.constructor.name+" > onSubmit() > ";this.updateAccountServiceRunning=!0,this.usersService.updateAccount(this.model).subscribe(function(u){if(u&&u.email){var e=new Xl(u.name,u.email,u.avatar,u.accessToInvestments);l.usersService.user=e,l.appService.showResults("Your profile was successfully updated!.")}else console.error(n+" Unexpected data format.");l.updateAccountServiceRunning=!1},function(u){console.error(n+" There was an error with the update account service > "+u),400===u.codeno&&l.appService.showResults("There was an error with the update account service, please try again in a few minutes."),l.updateAccountServiceRunning=!1})},l.ctorParameters=function(){return[{type:El},{type:Tl},{type:Zl},{type:Vn.a}]},l}(),Un=[""],An=function(){function l(){this.model=null,this.accountFinanceServiceRunning=!1}return l.prototype.ngOnInit=function(){this.constructor.name;this.model=this.user.finance},l.prototype.ngAfterViewInit=function(){},l.prototype.onSubmit=function(){console.log(this.user.finance)},l.ctorParameters=function(){return[]},l}(),Wn=u("/oeL"),zn=function(){function l(l){this.validationType=l}return l.prototype.validate=function(l){var n={};this.validationType&&(n=JSON.parse(this.validationType));var u=l.value;if(u){var e={};return new RegExp("^[+-]?[0-9]{1,9}(?:.[0-9]{1,2})?$").test(u.toString())?(!isNaN(n.min)&&u<n.min&&(e.numberValidatorMin=!0),!isNaN(n.max)&&u>n.max&&(e.numberValidatorMax=!0),Object.keys(e).length?e:null):{numberValidator:!0}}return null},l.ctorParameters=function(){return[{type:null,decorators:[{type:Wn.h,args:["numberValidator"]}]}]},l}(),Hn=u("/oeL"),Jn=u("Z04r"),Yn=u("v6Q/"),Kn=u("TgoG"),$n=u("tcGV"),lu=u("p4Sk"),nu=u("bm2B"),uu=u("Wraf"),eu=u("rUvy"),ru=u("hDHr"),tu=u("SOm2"),au=u("qbdv"),ou=u("IJGD"),iu=[Un],_u=Hn._18({encapsulation:0,styles:iu,data:{}}),su=(Hn._16("account-finance-info",An,N,{user:"user"},{},[]),u("/oeL")),cu=u("Z04r"),du=u("v6Q/"),mu=u("TgoG"),pu=u("tcGV"),gu=u("p4Sk"),fu=u("bm2B"),hu=u("Wraf"),vu=u("rUvy"),yu=u("hDHr"),Cu=u("SOm2"),bu=u("qbdv"),xu=u("IJGD"),qu=u("BkNc"),wu=[Xn],Iu=su._18({encapsulation:0,styles:wu,data:{}}),Bu=su._16("app-account",Zn,H,{},{},[]),ku=["form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:100%}@media screen and (min-width:600px){form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:127px}}"],Su=u("BkNc"),Pu=function(){function l(l,n,u,e){this.usersService=l,this.router=n,this.route=u,this.mainNavigatorService=e,this.model={password:"","password-confirm":""},this.token="",this.resetPasswordServiceRunning=!1}return l.prototype.ngOnInit=function(){var l=this,n=this.constructor.name+" > ngOnInit() > ";this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Login",url:"/users/login",selected:!1},{displayName:"Reset password",url:null,selected:!0}]),this.route.paramMap.map(function(l){return l.get("token")}).subscribe(function(u){u?l.token=u:(console.error(n+" Token must be set to reset a password."),l.router.navigate(["/"]))})},l.prototype.onSubmit=function(){var l=this,n=this.constructor.name+" > onSubmit() > ";if(this.resetPasswordServiceRunning=!0,this.model.password!==this.model["password-confirm"])return console.error(n+" Confirm password must match password."),this.resetPasswordServiceRunning=!1,!1;this.usersService.user=null,this.usersService.reset(this.token,this.model).subscribe(function(u){if(u){var e=new Xl(u.name,u.email,u.avatar,u.accessToInvestments);l.usersService.user=e,l.router.navigate(["/"])}else console.error(n+" Unexpected data format.");l.resetPasswordServiceRunning=!1},function(u){console.error(n+" There was an error with the reset password service > "+u),l.resetPasswordServiceRunning=!1})},l.ctorParameters=function(){return[{type:El},{type:Su.k},{type:Su.a},{type:Zl}]},l}(),Qu=u("/oeL"),Fu=u("Z04r"),Lu=u("v6Q/"),ju=u("TgoG"),Mu=u("tcGV"),Gu=u("p4Sk"),Ru=u("bm2B"),Tu=u("Wraf"),Du=u("rUvy"),Eu=u("hDHr"),Ou=u("SOm2"),Nu=u("qbdv"),Xu=u("IJGD"),Vu=u("BkNc"),Zu=[ku],Uu=Qu._18({encapsulation:0,styles:Zu,data:{}}),Au=Qu._16("app-reset-password",Pu,al,{},{},[]),Wu=[".totals-card[_ngcontent-%COMP%]{text-align:center}.totals-card[_ngcontent-%COMP%]   md-card-content[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{margin-bottom:0}"],zu=[".currency-card[_ngcontent-%COMP%]{text-align:center}.currency-card[_ngcontent-%COMP%]   .header-image[_ngcontent-%COMP%]{background-size:cover}.currency-card[_ngcontent-%COMP%]   .header-image.header-image__xmr[_ngcontent-%COMP%]{background-image:url(/assets/images/xmr.png)}.currency-card[_ngcontent-%COMP%]   .header-image.header-image__btc[_ngcontent-%COMP%]{background-image:url(/assets/images/btc.png)}"],Hu=u("CPp0"),Ju=u("Dqrr"),Yu=(u.n(Ju),function(){function l(l){this.http=l,this.serverUrl="https://api.cryptonator.com/api/ticker/"}return l.prototype.getPrices=function(l){return void 0===l&&(l="btc"),this.http.get(""+this.serverUrl+l+"-usd").map(this.extractData).catch(this.handleError)},l.prototype.extractData=function(l){var n=l.json();if(!0===n.success)return n.ticker;throw n},l.prototype.handleError=function(l){var n;if(l instanceof Hu.h){var u=l.json()||"",e=u.error||JSON.stringify(u);n=l.status+" - "+(l.statusText||"")+" "+e}else n=l.message?l.message:l.toString();return Ju.Observable.throw(n)},l.ctorParameters=function(){return[{type:Hu.e}]},l}()),Ku=u("/oeL"),$u=u("gvep"),le=(u.n($u),function(){function l(l){this.crytoCurrencyService=l,this.usdFromCryptoCurrency=0,this.usdFromCryptoCurrencyWhenBought=0,this.cryptoCurrencyCurrentPrice=0,this.totalReturns=new Ku.s,this.cryptoCurrency$=new $u.BehaviorSubject(null)}return l.prototype.ngOnInit=function(){var l=this,n=this.constructor.name+" > ngOnInit() > ";this.usdFromCryptoCurrencyWhenBought=this.cryptoCurrencyBuyPrice*this.cryptoCurrencyCount,this.crytoCurrencyService.getPrices(this.cryptoCurrency).subscribe(function(n){l.cryptoCurrency$.next(n),l.cryptoCurrencyCurrentPrice=n.price,l.usdFromCryptoCurrency=n.price*l.cryptoCurrencyCount,l.totalReturns.emit({usdFromCryptoCurrencyWhenBought:l.usdFromCryptoCurrencyWhenBought,usdFromCryptoCurrency:l.usdFromCryptoCurrency})},function(l){return console.error(n+" There was an error trying to load Monero prices > "+l)})},l.ctorParameters=function(){return[{type:Yu}]},l}()),ne=u("/oeL"),ue=u("qbdv"),ee=u("v6Q/"),re=u("TgoG"),te=u("tcGV"),ae=u("Z04r"),oe=u("CPp0"),ie=[zu],_e=ne._18({encapsulation:0,styles:ie,data:{}}),se=(ne._16("crypto-currency",le,il,{cryptoCurrency:"cryptoCurrency",cryptoCurrencyCount:"cryptoCurrencyCount",cryptoCurrencyBuyPrice:"cryptoCurrencyBuyPrice",cryptoCurrencyBuyDate:"cryptoCurrencyBuyDate"},{totalReturns:"totalReturns"},[]),u("BkNc")),ce=function(){function l(l,n,u){this.route=l,this.mainNavigatorService=n,this.usersService=u,this.xmrBuyDate=new Date(2017,5,23),this.xmrBuyDate2=new Date(2017,8,23),this.xmrBuyDate3=new Date(2017,8,25),this.btcBuyDate=new Date(2017,6,19),this.totalInvestment=0,this.totalReturn=0,this.showInvestments=!1,this.user=null}return l.prototype.ngOnInit=function(){var l=this;this.constructor.name;this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Investments",url:null,selected:!0}]),this.route.data.subscribe(function(n){l.user=n.authUser,l.showInvestments=n.authUser.accessToInvestments})},l.prototype.setTotals=function(l){this.totalReturn+=l.usdFromCryptoCurrency,this.totalInvestment+=l.usdFromCryptoCurrencyWhenBought},l.ctorParameters=function(){return[{type:se.a},{type:Zl},{type:El}]},l}(),de=u("/oeL"),me=u("Wraf"),pe=u("tcGV"),ge=u("rUvy"),fe=u("v6Q/"),he=u("hDHr"),ve=u("SOm2"),ye=u("TgoG"),Ce=u("Z04r"),be=u("IJGD"),xe=u("CPp0"),qe=u("qbdv"),we=u("BkNc"),Ie=[Wu],Be=de._18({encapsulation:0,styles:Ie,data:{}}),ke=de._16("investments-dashboard",ce,dl,{},{},[]),Se=[""],Pe=function(){function l(l){this.mainNavigatorService=l}return l.prototype.ngOnInit=function(){this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Calculators",url:null,selected:!0},{displayName:"Equity",url:"/calculators/equity",selected:!1}])},l.ctorParameters=function(){return[{type:Zl}]},l}(),Qe=u("/oeL"),Fe=[Se],Le=Qe._18({encapsulation:0,styles:Fe,data:{}}),je=Qe._16("app-calculators-dashboard",Pe,pl,{},{},[]),Me=[".form__equity-calc[_ngcontent-%COMP%]   .form__field__toogle--add-reno[_ngcontent-%COMP%]{margin-bottom:20px}"],Ge=function(){function l(l){this.mainNavigatorService=l,this.loanAmount=0,this.discount=0,this.equity=0,this.depositAmount=0,this.usableEquityAfterReno=0,this.model={purchasePrice:0,marketValue:0,loanCoverage:.8,savings:0,renovationCost:0,newMarketValue:0,firstYearRepayment:0,addRenovations:!1}}return l.prototype.ngOnInit=function(){this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Calculators",url:"/calculators",selected:!1},{displayName:"Equity",url:null,selected:!0}])},l.prototype.ngAfterViewInit=function(){var l=this;this.form.valueChanges.debounceTime(500).subscribe(function(n){l.loanAmount=n.purchasePrice*n.loanCoverage,l.discount=n.marketValue-n.purchasePrice,l.depositAmount=n.purchasePrice-l.loanAmount,l.equity=n.savings+l.discount+l.depositAmount,n.addRenovations&&(l.usableEquityAfterReno=.8*n.newMarketValue-l.loanAmount+n.firstYearRepayment)})},l.ctorParameters=function(){return[{type:Zl}]},l}(),Re=u("/oeL"),Te=u("Z04r"),De=u("Wraf"),Ee=u("tcGV"),Oe=u("TgoG"),Ne=u("rUvy"),Xe=u("v6Q/"),Ve=u("hDHr"),Ze=u("SOm2"),Ue=u("bm2B"),Ae=u("p4Sk"),We=u("qbdv"),ze=[Me],He=Re._18({encapsulation:0,styles:ze,data:{}}),Je=Re._16("app-equity",Ge,bl,{},{},[]),Ye=[".toolbar[_ngcontent-%COMP%]{margin-bottom:10px}.toolbar[_ngcontent-%COMP%]   .toolbar__brand-name[_ngcontent-%COMP%]{text-decoration:none}.toolbar[_ngcontent-%COMP%]   .toolbar__icon[_ngcontent-%COMP%]{padding:0 10px;cursor:pointer}.toolbar[_ngcontent-%COMP%]   .example-spacer[_ngcontent-%COMP%]{-ms-flex:1 1 auto;flex:1 1 auto}.toolbar[_ngcontent-%COMP%]   .user__avatar[_ngcontent-%COMP%]{border-radius:50%;width:30px;padding:0 10px}.toolbar[_ngcontent-%COMP%]   .user__icon--logged-in[_ngcontent-%COMP%]{color:#28fe7c}  nav.navigation--main{margin-bottom:20px}"],Ke=[""],$e=function(){function l(l){this.mainNavigatorService=l}return l.prototype.ngOnInit=function(){var l=this;this.mainNavigatorService.links$.subscribe(function(n){return l.links=n})},l.ctorParameters=function(){return[{type:Zl}]},l}(),lr=u("/oeL"),nr=u("BkNc"),ur=u("Z04r"),er=u("v6Q/"),rr=u("qbdv"),tr=[Ke],ar=lr._18({encapsulation:0,styles:tr,data:{}}),or=(lr._16("main-navigator",$e,wl,{},{},[]),u("/oeL")),ir=u("IJGD"),_r=u("tcGV"),sr=u("v6Q/"),cr=u("BkNc"),dr=u("TgoG"),mr=u("Z04r"),pr=u("p4Sk"),gr=u("qbdv"),fr=[Ye],hr=or._18({encapsulation:0,styles:fr,data:{}}),vr=or._16("app-root",Al,Ql,{},{},[]),yr=u("BkNc"),Cr=function(){function l(l,n,u){this.appService=l,this.usersService=n,this.router=u}return l.prototype.resolve=function(l,n){var u=this,e=this.constructor.name+" > resolve() > ";return this.usersService.getAuthenticatedUser().map(function(l){if(l&&l.email){var n=new Xl(l.name,l.email,l.avatar,l.accessToInvestments);return u.usersService.user=n,n}return u.appService.consoleLog("info",e+" User not logged in.",l),u.usersService.user=null,u.router.navigate(["/users/login"]),null},function(l){return u.appService.consoleLog("error",e+" There was an error with the getAuthenticatedUser service.",l),u.usersService.user=null,u.router.navigate(["/users/login"]),null})},l.ctorParameters=function(){return[{type:Tl},{type:El},{type:yr.k}]},l}(),br=u("BkNc"),xr=function(){function l(l,n,u){this.appService=l,this.usersService=n,this.router=u}return l.prototype.canActivate=function(l,n){var u=this,e=this.constructor.name+" > canActivate() > ";return this.usersService.routerRedirectUrl=n.url,this.usersService.getAuthenticatedUser().map(function(l){return l&&l.email?(u.usersService.routerRedirectUrl=null,!0):(u.appService.consoleLog("info",e+" User not logged in.",l),u.router.navigate(["/users/login"]),!1)},function(l){return u.appService.consoleLog("error",e+" There was an error with the getAuthenticatedUser service.",l),u.router.navigate(["/users/login"]),!1})},l.ctorParameters=function(){return[{type:Tl},{type:El},{type:br.k}]},l}(),qr=function(){function l(){}return l}(),wr=function(){function l(){}return l}(),Ir=function(){function l(){}return l}(),Br=function(){function l(){}return l}(),kr=function(){function l(){}return l}(),Sr=function(){function l(){}return l}(),Pr=function(){function l(){}return l}(),Qr=function(){function l(){}return l}(),Fr=function(){function l(){}return l}(),Lr=u("/oeL"),jr=u("v6Q/"),Mr=u("qbdv"),Gr=u("fc+i"),Rr=u("Z04r"),Tr=u("f9zQ"),Dr=u("fL27"),Er=u("EyWH"),Or=u("BkNc"),Nr=u("CPp0"),Xr=u("1uWg"),Vr=u("yBGh"),Zr=u("/RbK"),Ur=u("hK8s"),Ar=u("tcGV"),Wr=u("/mqM"),zr=u("M6V1"),Hr=u("dvoJ"),Jr=u("p4Sk"),Yr=u("bm2B"),Kr=u("rex9"),$r=u("ZycJ"),lt=Lr._17(jl,[Al],function(l){return Lr._32([Lr._33(512,Lr.m,Lr._13,[[8,[Kl,jr.b,jr.a,jr.r,jr.c,jr.q,bn,Nn,Bu,Au,ke,je,Je,vr]],[3,Lr.m],Lr.H]),Lr._33(5120,Lr.D,Lr._31,[[3,Lr.D]]),Lr._33(4608,Mr.o,Mr.n,[Lr.D]),Lr._33(5120,Lr.c,Lr._22,[]),Lr._33(5120,Lr.B,Lr._28,[]),Lr._33(5120,Lr.C,Lr._29,[]),Lr._33(4608,Gr.c,Gr.t,[Mr.d]),Lr._33(6144,Lr.T,null,[Gr.c]),Lr._33(4608,Gr.f,Rr.h,[]),Lr._33(5120,Gr.d,function(l,n,u,e){return[new Gr.l(l),new Gr.p(n),new Gr.o(u,e)]},[Mr.d,Mr.d,Mr.d,Gr.f]),Lr._33(4608,Gr.e,Gr.e,[Gr.d,Lr.J]),Lr._33(135680,Gr.n,Gr.n,[Mr.d]),Lr._33(4608,Gr.m,Gr.m,[Gr.e,Gr.n]),Lr._33(5120,Tr.a,Dr.d,[]),Lr._33(5120,Tr.c,Dr.e,[]),Lr._33(4608,Tr.b,Dr.c,[Tr.a,Tr.c]),Lr._33(5120,Lr.R,Dr.f,[Gr.m,Tr.b,Lr.J]),Lr._33(6144,Gr.q,null,[Gr.n]),Lr._33(4608,Lr._0,Lr._0,[Lr.J]),Lr._33(4608,Gr.h,Gr.h,[Mr.d]),Lr._33(4608,Gr.j,Gr.j,[Mr.d]),Lr._33(4608,Er.b,Dr.b,[Lr.R]),Lr._33(5120,Or.a,Or.x,[Or.k]),Lr._33(4608,Or.d,Or.d,[]),Lr._33(6144,Or.f,null,[Or.d]),Lr._33(135680,Or.p,Or.p,[Or.k,Lr.G,Lr.k,Lr.z,Or.f]),Lr._33(4608,Or.e,Or.e,[]),Lr._33(5120,Or.h,Or.A,[Or.y]),Lr._33(5120,Lr.b,function(l){return[l]},[Or.h]),Lr._33(4608,Nr.c,Nr.c,[]),Lr._33(4608,Nr.i,Nr.b,[]),Lr._33(5120,Nr.k,Nr.l,[]),Lr._33(4608,Nr.j,Nr.j,[Nr.c,Nr.i,Nr.k]),Lr._33(4608,Nr.g,Nr.a,[]),Lr._33(5120,Nr.e,Nr.m,[Nr.j,Nr.g]),Lr._33(5120,Xr.a,Vr.c,[]),Lr._33(4608,Zr.a,Zr.a,[Xr.a]),Lr._33(4608,Ur.a,Ur.a,[Lr.J]),Lr._33(5120,Ar.a,Wr.b,[[3,Ar.a],Zr.a,Ur.a]),Lr._33(5120,zr.b,Hr.b,[[3,zr.b],Ur.a,Zr.a]),Lr._33(6144,Jr.o,null,[Gr.b]),Lr._33(4608,Jr.q,Jr.q,[[2,Jr.o]]),Lr._33(4608,Jr.L,Jr.L,[]),Lr._33(5120,Rr._89,Rr._99,[[3,Rr._89],Lr.J,Jr.L]),Lr._33(5120,Rr._96,Rr._98,[[3,Rr._96],Rr._89]),Lr._33(4608,Rr._90,Rr._90,[Rr._89,Rr._96]),Lr._33(5120,Rr._85,Rr._97,[[3,Rr._85]]),Lr._33(4608,Rr._102,Rr._102,[Rr._96]),Lr._33(4608,Rr._84,Rr._84,[Rr._90,Rr._85,Lr.m,Rr._102,Lr.g,Lr.z,Lr.J]),Lr._33(5120,Rr.g,Rr.f,[[3,Rr.g],Lr.J,Jr.L]),Lr._33(4608,Yr.u,Yr.u,[]),Lr._33(5120,Rr._95,Rr._100,[[3,Rr._95]]),Lr._33(4608,Jr.G,Jr.G,[]),Lr._33(4608,Jr.z,Jr.z,[Jr.L]),Lr._33(4608,Jr.w,Jr.w,[Jr.z,Jr.L,Lr.J]),Lr._33(5120,Jr.F,Jr.D,[[3,Jr.F],[2,Jr.B],Jr.L]),Lr._33(4608,Rr.Z,Rr.Z,[Rr._84,Lr.z,[2,Mr.i],[3,Rr.Z]]),Lr._33(4608,Rr.W,Rr.W,[]),Lr._33(5120,Rr._14,Rr.i,[[3,Rr._14],[2,Nr.e],Gr.c]),Lr._33(4608,Rr._103,Rr._103,[]),Lr._33(4608,Rr._58,Rr._58,[Rr._84,Jr.F,[3,Rr._58]]),Lr._33(4608,Rr._63,Rr._63,[]),Lr._33(4608,Tl,Tl,[Nr.e,Rr._58]),Lr._33(4608,El,El,[Nr.e,Tl]),Lr._33(4608,Cr,Cr,[Tl,El,Or.k]),Lr._33(4608,xr,xr,[Tl,El,Or.k]),Lr._33(512,Mr.b,Mr.b,[]),Lr._33(1024,Lr.r,Gr.r,[]),Lr._33(1024,Lr.I,function(){return[Or.t()]},[]),Lr._33(512,Or.y,Or.y,[Lr.z]),Lr._33(1024,Lr.d,function(l,n,u){return[Gr.s(l,n),Or.z(u)]},[[2,Gr.i],[2,Lr.I],Or.y]),Lr._33(512,Lr.e,Lr.e,[[2,Lr.d]]),Lr._33(131584,Lr._20,Lr._20,[Lr.J,Lr._14,Lr.z,Lr.r,Lr.m,Lr.e]),Lr._33(2048,Lr.g,null,[Lr._20]),Lr._33(512,Lr.f,Lr.f,[Lr.g]),Lr._33(512,Gr.a,Gr.a,[[3,Gr.a]]),Lr._33(512,Dr.a,Dr.a,[]),Lr._33(1024,Or.s,Or.v,[[3,Or.k]]),Lr._33(512,Or.r,Or.c,[]),Lr._33(512,Or.b,Or.b,[]),Lr._33(256,Or.g,{},[]),Lr._33(1024,Mr.j,Or.u,[Mr.u,[2,Mr.a],Or.g]),Lr._33(512,Mr.i,Mr.i,[Mr.j]),Lr._33(512,Lr.k,Lr.k,[]),Lr._33(512,Lr.G,Lr.X,[Lr.k,[2,Lr.Y]]),Lr._33(1024,Or.i,function(){return[[{path:"",redirectTo:"welcome",pathMatch:"full"},{path:"welcome",component:zl}],[{path:"users",children:[{path:"register",component:nn},{path:"login/:state",component:wn},{path:"login",component:wn},{path:"account",component:Zn,resolve:{authUser:Cr}},{path:"account/reset/expired",redirectTo:"login/reset-password-token-expired",pathMatch:"full"},{path:"account/reset/:token",component:Pu}]}],[{path:"investments",canActivate:[xr],children:[{path:"",component:ce,resolve:{authUser:Cr}}]}],[{path:"calculators",children:[{path:"",component:Pe},{path:"equity",component:Ge}]}]]},[]),Lr._33(1024,Or.k,Or.w,[Lr.g,Or.r,Or.b,Mr.i,Lr.z,Lr.G,Lr.k,Or.i,Or.g,[2,Or.q],[2,Or.j]]),Lr._33(512,Or.n,Or.n,[[2,Or.s],[2,Or.k]]),Lr._33(512,qr,qr,[]),Lr._33(512,Nr.f,Nr.f,[]),Lr._33(512,Kr.a,Kr.a,[]),Lr._33(512,$r.a,$r.a,[]),Lr._33(512,Rr.c,Rr.c,[]),Lr._33(512,Jr.c,Jr.c,[]),Lr._33(256,Rr.k,!0,[]),Lr._33(512,Rr.S,Rr.S,[[2,Gr.b],[2,Rr.k]]),Lr._33(512,Jr.M,Jr.M,[]),Lr._33(512,Rr._88,Rr._88,[]),Lr._33(512,Rr._46,Rr._46,[]),Lr._33(512,Rr._50,Rr._50,[]),Lr._33(512,Rr._32,Rr._32,[]),Lr._33(512,Jr.O,Jr.O,[]),Lr._33(512,Rr._86,Rr._86,[]),Lr._33(512,Rr.v,Rr.v,[]),Lr._33(512,Rr._93,Rr._93,[]),Lr._33(512,Rr.y,Rr.y,[]),Lr._33(512,Yr.r,Yr.r,[]),Lr._33(512,Yr.f,Yr.f,[]),Lr._33(512,Rr.C,Rr.C,[]),Lr._33(512,Rr.J,Rr.J,[]),Lr._33(512,Rr.R,Rr.R,[]),Lr._33(512,Jr.I,Jr.I,[]),Lr._33(512,Rr.O,Rr.O,[]),Lr._33(512,Jr.a,Jr.a,[]),Lr._33(512,Rr._1,Rr._1,[]),Lr._33(512,Rr.X,Rr.X,[]),Lr._33(512,Jr.m,Jr.m,[]),Lr._33(512,Rr._73,Rr._73,[]),Lr._33(512,Rr._3,Rr._3,[]),Lr._33(512,Rr._19,Rr._19,[]),Lr._33(512,Rr._7,Rr._7,[]),Lr._33(512,Rr._13,Rr._13,[]),Lr._33(512,Rr._18,Rr._18,[]),Lr._33(512,Rr._22,Rr._22,[]),Lr._33(512,Rr._25,Rr._25,[]),Lr._33(512,Rr._49,Rr._49,[]),Lr._33(512,Rr._79,Rr._79,[]),Lr._33(512,Rr._34,Rr._34,[]),Lr._33(512,Rr._37,Rr._37,[]),Lr._33(512,Rr._39,Rr._39,[]),Lr._33(512,Rr._43,Rr._43,[]),Lr._33(512,Rr._53,Rr._53,[]),Lr._33(512,Rr._57,Rr._57,[]),Lr._33(512,Rr._55,Rr._55,[]),Lr._33(512,Rr._60,Rr._60,[]),Lr._33(512,Rr._64,Rr._64,[]),Lr._33(512,Rr._74,Rr._74,[]),Lr._33(512,Rr._76,Rr._76,[]),Lr._33(512,Rr.r,Rr.r,[]),Lr._33(512,wr,wr,[]),Lr._33(512,Ir,Ir,[]),Lr._33(512,Br,Br,[]),Lr._33(512,kr,kr,[]),Lr._33(512,Sr,Sr,[]),Lr._33(512,Pr,Pr,[]),Lr._33(512,Qr,Qr,[]),Lr._33(512,Fr,Fr,[]),Lr._33(512,jl,jl,[])])}),nt=u("/oeL"),ut=u("fc+i");Fl.production&&(Object(nt._7)(),console.log("ENV: Production")),Object(ut.k)().bootstrapModuleFactory(lt)},gFIY:function(l,n){function u(l){return new Promise(function(n,u){u(new Error("Cannot find module '"+l+"'."))})}u.keys=function(){return[]},u.resolve=u,l.exports=u,u.id="gFIY"}},[0]);
+webpackJsonp(["main"],{
+
+/***/ "../../../../../configuration.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return configuration; });
+var configuration = {
+    defaultGravatarUrl: 'https://gravatar.com/avatar/7038663cc684aa330956752c7e6fe7d4?s=200'
+};
+//# sourceMappingURL=configuration.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/$$_gendir lazy recursive":
+/***/ (function(module, exports) {
+
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <mat-toolbar class=\"toolbar\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!usersService.user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"usersService.user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"usersService.user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"usersService.user.avatar\" \r\n      />\r\n      <mat-icon *ngIf=\"!usersService.user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n    \r\n  </mat-toolbar>\r\n  \r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".toolbar {\n  margin-bottom: 10px; }\n  .toolbar .toolbar__brand-name {\n    text-decoration: none; }\n  .toolbar .toolbar__icon {\n    padding: 0 10px;\n    cursor: pointer; }\n  .toolbar .example-spacer {\n    -ms-flex: 1 1 auto;\n        flex: 1 1 auto; }\n  .toolbar .user__avatar {\n    border-radius: 50%;\n    width: 30px;\n    padding: 0 10px; }\n  .toolbar .user__icon--logged-in {\n    color: #28FE7C; }\n\n::ng-deep nav.navigation--main {\n  margin-bottom: 20px; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__configuration__ = __webpack_require__("../../../../../configuration.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var AppComponent = (function () {
+    function AppComponent(router, appService, usersService, mainNavigatorService) {
+        this.router = router;
+        this.appService = appService;
+        this.usersService = usersService;
+        this.mainNavigatorService = mainNavigatorService;
+        this.title = 'app';
+        this.defaultGravatarUrl = __WEBPACK_IMPORTED_MODULE_3__configuration__["a" /* configuration */].defaultGravatarUrl;
+    }
+    AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        //set the navigation links valid for this components
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: null, selected: true },
+            { displayName: 'Investments', url: '/investments', selected: false },
+            { displayName: 'Calculators', url: '/calculators', selected: false }
+        ]);
+        this.usersService.getAuthenticatedUser().subscribe(function (data) {
+            if (data && data.email) {
+                var user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                _this.usersService.user = user;
+            }
+            else {
+                _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
+                _this.usersService.user = null;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.usersService.user = null;
+        });
+    };
+    AppComponent.prototype.logout = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > logout() > "; //for debugging  
+        this.usersService.logout().subscribe(function (data) {
+            _this.usersService.user = null;
+            _this.router.navigate(['/']);
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the logout service.", error);
+        });
+    };
+    return AppComponent;
+}());
+AppComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-root',
+        template: __webpack_require__("../../../../../src/app/app.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/app.component.scss")],
+        providers: [__WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _d || Object])
+], AppComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/@angular/platform-browser/animations.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_hammerjs__ = __webpack_require__("../../../../hammerjs/hammer.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_hammerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_hammerjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_routing_module__ = __webpack_require__("../../../../../src/app/app.routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__auth_guard__ = __webpack_require__("../../../../../src/app/auth.guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_investments_investments_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modules_calculators_calculators_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var AppModule = (function () {
+    function AppModule() {
+    }
+    return AppModule;
+}());
+AppModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
+            __WEBPACK_IMPORTED_MODULE_6__app_routing_module__["a" /* AppRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_http__["c" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
+            __WEBPACK_IMPORTED_MODULE_11__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_12__modules_users_users_module__["a" /* UsersModule */],
+            __WEBPACK_IMPORTED_MODULE_13__modules_investments_investments_module__["a" /* InvestmentsModule */],
+            __WEBPACK_IMPORTED_MODULE_14__modules_calculators_calculators_module__["a" /* CalculatorsModule */],
+            __WEBPACK_IMPORTED_MODULE_16__modules_shared_shared_module__["a" /* SharedModule */]
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__components_welcome_welcome_component__["a" /* WelcomeComponent */]
+        ],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_9__auth_resolver_service__["a" /* AuthResolver */], __WEBPACK_IMPORTED_MODULE_10__auth_guard__["a" /* AuthGuard */]],
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
+    })
+], AppModule);
+
+//# sourceMappingURL=app.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+/**
+ * Created by mpaoluc on 13/01/2017.
+ */
+
+
+
+var appRoutes = [
+    {
+        path: '',
+        redirectTo: 'welcome',
+        pathMatch: 'full'
+    },
+    {
+        path: 'welcome',
+        component: __WEBPACK_IMPORTED_MODULE_2__components_welcome_welcome_component__["a" /* WelcomeComponent */]
+    }
+    // {
+    //   path : 'page-not-found',
+    //   component : PageNotFoundComponent
+    // },
+    // {
+    //   path : '**',
+    //   component : PageNotFoundComponent
+    // }
+];
+var AppRoutingModule = (function () {
+    function AppRoutingModule() {
+    }
+    return AppRoutingModule;
+}());
+AppRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forRoot(appRoutes)
+        ],
+        exports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]
+        ]
+    })
+], AppRoutingModule);
+
+//# sourceMappingURL=app.routing.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var AppService = (function () {
+    function AppService(http, snackBar) {
+        this.http = http;
+        this.snackBar = snackBar;
+    }
+    /**
+     * Extract data from a server response
+     * @param res
+     */
+    AppService.prototype.extractData = function (res) {
+        var body = res.json();
+        if (body.codeno === 200 && body.status === 'success') {
+            return body.data;
+        }
+        else {
+            throw body;
+        }
+    };
+    /**
+     * Handle server service errors and parse the result in an object
+     * @param error
+     */
+    AppService.prototype.handleError = function (error) {
+        // In a real world app, we might use a remote logging infrastructure
+        var errObj = {};
+        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
+            errObj = error.json() || {};
+        }
+        else {
+            errObj = error || {};
+        }
+        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].throw(errObj);
+    };
+    /**
+     * Shows messages in snackbar component
+     * @param message . The text to show
+     * @param duration . The duration in milliseconds . Optional
+     * @param actionName . An action name to close the message on click. Optional
+     */
+    AppService.prototype.showResults = function (message, duration, actionName) {
+        if (duration === void 0) { duration = 5000; }
+        if (actionName === void 0) { actionName = ''; }
+        var snackBarRef = this.snackBar.open(message, actionName ? actionName : null, {
+            duration: duration,
+            extraClasses: ['snack-bar--simple']
+        });
+        snackBarRef.onAction().subscribe(function () {
+            snackBarRef.dismiss();
+        });
+    };
+    /**
+     * Show logs in the console if enabled in the current environment
+     * @param type . Error type
+     * @param message . The message to show
+     * @param params . Any extra parameters to list in the log.
+     */
+    AppService.prototype.consoleLog = function (type, message) {
+        var params = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            params[_i - 2] = arguments[_i];
+        }
+        if (__WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].showLogs) {
+            console[type](message, params);
+        }
+    };
+    return AppService;
+}());
+AppService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["k" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["k" /* MatSnackBar */]) === "function" && _b || Object])
+], AppService);
+
+var _a, _b;
+//# sourceMappingURL=app.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/auth-resolver.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthResolver; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var AuthResolver = (function () {
+    function AuthResolver(appService, usersService, router) {
+        this.appService = appService;
+        this.usersService = usersService;
+        this.router = router;
+    }
+    AuthResolver.prototype.resolve = function (route, state) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > resolve() > "; //for debugging  
+        return this.usersService.getAuthenticatedUser().map(function (data) {
+            if (data && data.email) {
+                var user = new __WEBPACK_IMPORTED_MODULE_2__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                _this.usersService.user = user;
+                return user;
+            }
+            else {
+                _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
+                _this.usersService.user = null;
+                _this.router.navigate(['/users/login']);
+                return null;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.usersService.user = null;
+            _this.router.navigate(['/users/login']);
+            return null;
+        });
+    };
+    return AuthResolver;
+}());
+AuthResolver = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _c || Object])
+], AuthResolver);
+
+var _a, _b, _c;
+//# sourceMappingURL=auth-resolver.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/auth.guard.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthGuard; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var AuthGuard = (function () {
+    function AuthGuard(appService, usersService, router) {
+        this.appService = appService;
+        this.usersService = usersService;
+        this.router = router;
+    }
+    AuthGuard.prototype.canActivate = function (next, state) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > canActivate() > "; //for debugging
+        this.usersService.routerRedirectUrl = state.url;
+        return this.usersService.getAuthenticatedUser().map(function (data) {
+            if (data && data.email) {
+                _this.usersService.routerRedirectUrl = null; //we don't need this
+                return true;
+            }
+            else {
+                _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
+                _this.router.navigate(['/users/login']);
+                return false;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.router.navigate(['/users/login']);
+            return false;
+        });
+    };
+    return AuthGuard;
+}());
+AuthGuard = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _c || Object])
+], AuthGuard);
+
+var _a, _b, _c;
+//# sourceMappingURL=auth.guard.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/welcome/welcome.component.html":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/welcome/welcome.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/welcome/welcome.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WelcomeComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var WelcomeComponent = (function () {
+    function WelcomeComponent(mainNavigatorService) {
+        this.mainNavigatorService = mainNavigatorService;
+    }
+    WelcomeComponent.prototype.ngOnInit = function () {
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: null, selected: true },
+            { displayName: 'Investments', url: '/investments', selected: false },
+            { displayName: 'Calculators', url: '/calculators', selected: false }
+        ]);
+    };
+    return WelcomeComponent;
+}());
+WelcomeComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-welcome',
+        template: __webpack_require__("../../../../../src/app/components/welcome/welcome.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/welcome/welcome.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object])
+], WelcomeComponent);
+
+var _a;
+//# sourceMappingURL=welcome.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/directives/equal-validator.directive.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EqualValidatorDirective; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var EqualValidatorDirective = EqualValidatorDirective_1 = (function () {
+    function EqualValidatorDirective(equalFormControlName, reverse) {
+        this.equalFormControlName = equalFormControlName;
+        this.reverse = reverse;
+    }
+    Object.defineProperty(EqualValidatorDirective.prototype, "isReverse", {
+        get: function () {
+            if (!this.reverse) {
+                return false;
+            }
+            return this.reverse === 'true' ? true : false;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    EqualValidatorDirective.prototype.validate = function (control) {
+        var equalsFormControl = control.root.get(this.equalFormControlName);
+        if (equalsFormControl && equalsFormControl.value !== control.value) {
+            if (this.isReverse) {
+                equalsFormControl.setErrors({ 'equalvalidator': true });
+            }
+            else {
+                return { 'equalvalidator': true };
+            }
+        }
+        else if (equalsFormControl) {
+            //value is the same on both
+            if (this.reverse) {
+                delete equalsFormControl.errors['equalvalidator'];
+                if (!Object.keys(equalsFormControl.errors).length) {
+                    equalsFormControl.setErrors(null);
+                }
+            }
+        }
+        return null;
+    };
+    return EqualValidatorDirective;
+}());
+EqualValidatorDirective = EqualValidatorDirective_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Directive */])({
+        selector: '[equalvalidator]',
+        providers: [{ provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALIDATORS */], useExisting: EqualValidatorDirective_1, multi: true }]
+    }),
+    __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('equalvalidator')),
+    __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('reverse')),
+    __metadata("design:paramtypes", [String, String])
+], EqualValidatorDirective);
+
+var EqualValidatorDirective_1;
+//# sourceMappingURL=equal-validator.directive.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/directives/number-validator.directive.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberValidatorDirective; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var NumberValidatorDirective = NumberValidatorDirective_1 = (function () {
+    function NumberValidatorDirective(validationType) {
+        this.validationType = validationType;
+    }
+    NumberValidatorDirective.prototype.validate = function (control) {
+        var validationObj = {};
+        if (this.validationType) {
+            validationObj = JSON.parse(this.validationType);
+        }
+        var val = control.value;
+        if (val) {
+            var result = {};
+            var numberRegExp = new RegExp('^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$');
+            if (!numberRegExp.test(val.toString())) {
+                return { "numberValidator": true };
+            }
+            if (!isNaN(validationObj.min) && val < validationObj.min) {
+                result.numberValidatorMin = true;
+            }
+            if (!isNaN(validationObj.max) && val > validationObj.max) {
+                result.numberValidatorMax = true;
+            }
+            return Object.keys(result).length ? result : null;
+        }
+        return null;
+    };
+    return NumberValidatorDirective;
+}());
+NumberValidatorDirective = NumberValidatorDirective_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Directive */])({
+        selector: '[numberValidator]',
+        providers: [{ provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALIDATORS */], useExisting: NumberValidatorDirective_1, multi: true }]
+    }),
+    __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('numberValidator')),
+    __metadata("design:paramtypes", [String])
+], NumberValidatorDirective);
+
+var NumberValidatorDirective_1;
+//# sourceMappingURL=number-validator.directive.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/calculators-routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_equity_equity_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_calculators_dashboard_calculators_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var routes = [{
+        path: 'calculators',
+        children: [
+            { path: '', component: __WEBPACK_IMPORTED_MODULE_3__components_calculators_dashboard_calculators_dashboard_component__["a" /* CalculatorsDashboardComponent */] },
+            { path: 'equity', component: __WEBPACK_IMPORTED_MODULE_2__components_equity_equity_component__["a" /* EquityComponent */] }
+        ]
+    }];
+var CalculatorsRoutingModule = (function () {
+    function CalculatorsRoutingModule() {
+    }
+    return CalculatorsRoutingModule;
+}());
+CalculatorsRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+    })
+], CalculatorsRoutingModule);
+
+//# sourceMappingURL=calculators-routing.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/calculators.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__calculators_routing_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators-routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_equity_equity_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_calculators_dashboard_calculators_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+var CalculatorsModule = (function () {
+    function CalculatorsModule() {
+    }
+    return CalculatorsModule;
+}());
+CalculatorsModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_6__calculators_routing_module__["a" /* CalculatorsRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__["FlexLayoutModule"],
+            __WEBPACK_IMPORTED_MODULE_4__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_5__modules_shared_shared_module__["a" /* SharedModule */]
+        ],
+        declarations: [__WEBPACK_IMPORTED_MODULE_7__components_equity_equity_component__["a" /* EquityComponent */], __WEBPACK_IMPORTED_MODULE_8__components_calculators_dashboard_calculators_dashboard_component__["a" /* CalculatorsDashboardComponent */]]
+    })
+], CalculatorsModule);
+
+//# sourceMappingURL=calculators.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsDashboardComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var CalculatorsDashboardComponent = (function () {
+    function CalculatorsDashboardComponent(mainNavigatorService) {
+        this.mainNavigatorService = mainNavigatorService;
+    }
+    CalculatorsDashboardComponent.prototype.ngOnInit = function () {
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Calculators', url: null, selected: true },
+            { displayName: 'Equity', url: '/calculators/equity', selected: false }
+        ]);
+    };
+    return CalculatorsDashboardComponent;
+}());
+CalculatorsDashboardComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-calculators-dashboard',
+        template: __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object])
+], CalculatorsDashboardComponent);
+
+var _a;
+//# sourceMappingURL=calculators-dashboard.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container form__equity-calc\" #equityForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Purchase price -->\r\n      <mat-input-container fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\" \r\n            [(ngModel)]=\"model.purchasePrice\" \r\n            required\r\n            value=\"model.purchasePrice\"\r\n            #purchasePrice=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required\">Purchase price is required</mat-error>\r\n      </mat-input-container>\r\n      \r\n      <!-- Market value -->\r\n      <mat-input-container fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\" \r\n            [(ngModel)]=\"model.marketValue\" \r\n            required\r\n            value=\"model.marketValue\"\r\n            #marketValue=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required\">Market value is required</mat-error>\r\n      </mat-input-container>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Loan coverage -->\r\n      <mat-input-container fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"loanCoverage\" name=\"loanCoverage\" placeholder=\"Loan coverage %\" \r\n            [(ngModel)]=\"model.loanCoverage\" \r\n            required loanCoverage\r\n            value=\"model.loanCoverage\"\r\n            #loanCoverage=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required\">Loan coverage is required</mat-error>\r\n      </mat-input-container>\r\n\r\n      <!-- Savings -->\r\n      <mat-input-container fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"savings\" name=\"savings\" placeholder=\"Current savings\" \r\n            [(ngModel)]=\"model.savings\" \r\n            value=\"model.savings\"\r\n            #savings=\"ngModel\">\r\n      </mat-input-container>\r\n\r\n      <!-- Add renovations checkbox -->\r\n      <mat-slide-toggle color=\"accent\" class=\"form__field form__field__toogle form__field__toogle--add-reno\"\r\n          [(ngModel)]=\"model.addRenovations\" name=\"addRenovations\" id=\"addRenovations\">\r\n        \r\n        Add renovations data\r\n      </mat-slide-toggle>\r\n      <!-- <mat-checkbox fxFlex fxFlex.gt-xs=\"200px\" class=\"form__action\" [(ngModel)]=\"model.addRenovations\" name=\"addRenovations\" id=\"addRenovations\">Add renovations data</mat-checkbox> -->\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\" *ngIf=\"model.addRenovations\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Renovation cost -->\r\n      <mat-input-container fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\" \r\n            [(ngModel)]=\"model.renovationCost\" \r\n            value=\"model.renovationCost\"\r\n            #renovationCost=\"ngModel\">\r\n      </mat-input-container>\r\n      \r\n      <!-- New market value -->\r\n      <mat-input-container fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"newMarketValue\" name=\"newMarketValue\" placeholder=\"After renovations market value\" \r\n            [(ngModel)]=\"model.newMarketValue\" \r\n            value=\"model.newMarketValue\"\r\n            #newMarketValue=\"ngModel\">\r\n      </mat-input-container>\r\n      \r\n      <!-- First year repayment -->\r\n      <mat-input-container fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"firstYearRepayment\" name=\"firstYearRepayment\" placeholder=\"First year loan repayments\" \r\n            [(ngModel)]=\"model.firstYearRepayment\" \r\n            value=\"model.firstYearRepayment\"\r\n            #firstYearRepayment=\"ngModel\">\r\n      </mat-input-container>\r\n    </div>\r\n  </section>\r\n\r\n</form>\r\n\r\n<section  class=\"\">\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxFlex fxFlex.gt-xs=\"620px\">\r\n    <mat-card fxFlex>\r\n      <mat-card-title class=\"mat-card-title--ac\">Initial figures</mat-card-title>\r\n      <mat-card-content>\r\n        <div><label>Loan amount: </label><span>{{loanAmount}}</span></div>\r\n        <div><label>Deposit amount: </label><span>{{depositAmount}}</span></div>\r\n        <div><label>Discount: </label><span>{{discount}}</span></div>\r\n        <div><label>Equity: </label><span>{{equity}}</span></div>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n    <mat-card fxFlex *ngIf=\"model.addRenovations\">\r\n      <mat-card-title class=\"mat-card-title--ac\">After renovations figures</mat-card-title>\r\n      <mat-card-content>\r\n        <div><label>Usable equity: </label><span>{{usableEquityAfterReno}}</span></div>\r\n      </mat-card-content>\r\n    </mat-card>\r\n  </div>\r\n</section>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".form__equity-calc .form__field__toogle--add-reno {\n  margin-bottom: 20px; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EquityComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var EquityComponent = (function () {
+    function EquityComponent(mainNavigatorService) {
+        this.mainNavigatorService = mainNavigatorService;
+        this.loanAmount = 0;
+        this.discount = 0;
+        this.equity = 0;
+        this.depositAmount = 0;
+        this.usableEquityAfterReno = 0;
+        this.model = {
+            purchasePrice: 0,
+            marketValue: 0,
+            loanCoverage: 0.8,
+            savings: 0,
+            renovationCost: 0,
+            newMarketValue: 0,
+            firstYearRepayment: 0,
+            addRenovations: false
+        };
+    }
+    EquityComponent.prototype.ngOnInit = function () {
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Calculators', url: '/calculators', selected: false },
+            { displayName: 'Equity', url: null, selected: true }
+        ]);
+    };
+    EquityComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        this.form.valueChanges.debounceTime(500).subscribe(function (values) {
+            _this.loanAmount = values.purchasePrice * values.loanCoverage;
+            _this.discount = values.marketValue - values.purchasePrice;
+            _this.depositAmount = values.purchasePrice - _this.loanAmount;
+            _this.equity = values.savings + _this.discount + _this.depositAmount;
+            if (values.addRenovations) {
+                _this.usableEquityAfterReno = values.newMarketValue * 0.8 - _this.loanAmount + values.firstYearRepayment;
+            }
+        });
+    };
+    return EquityComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_17" /* ViewChild */])('equityForm'),
+    __metadata("design:type", Object)
+], EquityComponent.prototype, "form", void 0);
+EquityComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-equity',
+        template: __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object])
+], EquityComponent);
+
+var _a;
+//# sourceMappingURL=equity.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomMaterialDesignModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var CustomMaterialDesignModule = (function () {
+    function CustomMaterialDesignModule() {
+    }
+    return CustomMaterialDesignModule;
+}());
+CustomMaterialDesignModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCheckboxModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatChipsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatDatepickerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatCardModule */]
+        ],
+        exports: [
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCheckboxModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatChipsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatDatepickerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatCardModule */]
+        ]
+    })
+], CustomMaterialDesignModule);
+
+//# sourceMappingURL=custom-material-design.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar \r\n        class=\"header-image\"\r\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\r\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\r\n    </div>\r\n    <mat-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content>\r\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\r\n\r\n    <div [class.color__green]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \r\n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n  </mat-card-content>\r\n</mat-card>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".currency-card {\n  text-align: center; }\n  .currency-card .header-image {\n    background-size: cover; }\n    .currency-card .header-image.header-image__xmr {\n      background-image: url(\"/assets/images/xmr.png\"); }\n    .currency-card .header-image.header-image__btc {\n      background-image: url(\"/assets/images/btc.png\"); }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoCurrencyComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CryptoCurrencyComponent = (function () {
+    function CryptoCurrencyComponent(crytoCurrencyService) {
+        this.crytoCurrencyService = crytoCurrencyService;
+        this.usdFromCryptoCurrency = 0;
+        this.usdFromCryptoCurrencyWhenBought = 0;
+        this.cryptoCurrencyCurrentPrice = 0;
+        this.totalReturns = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.cryptoCurrency$ = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["a" /* BehaviorSubject */](null);
+    }
+    CryptoCurrencyComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.usdFromCryptoCurrencyWhenBought = this.cryptoCurrencyBuyPrice * this.cryptoCurrencyCount;
+        this.crytoCurrencyService.getPrices(this.cryptoCurrency).subscribe(function (pricesData) {
+            _this.cryptoCurrency$.next(pricesData);
+            _this.cryptoCurrencyCurrentPrice = pricesData.price;
+            _this.usdFromCryptoCurrency = pricesData.price * _this.cryptoCurrencyCount;
+            _this.totalReturns.emit({
+                usdFromCryptoCurrencyWhenBought: _this.usdFromCryptoCurrencyWhenBought,
+                usdFromCryptoCurrency: _this.usdFromCryptoCurrency
+            });
+        }, function (error) { return console.error(methodTrace + " There was an error trying to load Monero prices > " + error); });
+    };
+    return CryptoCurrencyComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CryptoCurrencyComponent.prototype, "cryptoCurrency", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", Number)
+], CryptoCurrencyComponent.prototype, "cryptoCurrencyCount", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", Number)
+], CryptoCurrencyComponent.prototype, "cryptoCurrencyBuyPrice", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", Object)
+], CryptoCurrencyComponent.prototype, "cryptoCurrencyBuyDate", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
+], CryptoCurrencyComponent.prototype, "totalReturns", void 0);
+CryptoCurrencyComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'crypto-currency',
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.scss")],
+        providers: [__WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */]]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */]) === "function" && _b || Object])
+], CryptoCurrencyComponent);
+
+var _a, _b;
+//# sourceMappingURL=crypto-currency.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CrytoCurrencyService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CrytoCurrencyService = (function () {
+    function CrytoCurrencyService(http) {
+        this.http = http;
+        this.serverUrl = 'https://api.cryptonator.com/api/ticker/';
+    }
+    CrytoCurrencyService.prototype.getPrices = function (currency) {
+        if (currency === void 0) { currency = 'btc'; }
+        return this.http.get("" + this.serverUrl + currency + "-usd")
+            .map(this.extractData)
+            .catch(this.handleError);
+    };
+    CrytoCurrencyService.prototype.extractData = function (res) {
+        var body = res.json();
+        if (body.success === true) {
+            return body.ticker;
+        }
+        else {
+            throw body;
+        }
+    };
+    CrytoCurrencyService.prototype.handleError = function (error) {
+        // In a real world app, we might use a remote logging infrastructure
+        var errMsg;
+        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
+            var body = error.json() || '';
+            var err = body.error || JSON.stringify(body);
+            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+        }
+        else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].throw(errMsg);
+    };
+    return CrytoCurrencyService;
+}());
+CrytoCurrencyService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
+], CrytoCurrencyService);
+
+var _a;
+//# sourceMappingURL=crypto-currency.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div *ngIf=\"showInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>\r\n          Your expected net worth is {{ 35 * user.finance.activeIncome / 10 }} but your current net worth is {{user.finance.netWorth}}\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"218.85627651\"\r\n      [cryptoCurrencyBuyPrice]=\"50\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex\r\n      [cryptoCurrency]=\"'btc'\"\r\n      [cryptoCurrencyCount]=\"1.28129356\"\r\n      [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n      [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.94093753\"\r\n      [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.72806551\"\r\n      [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <mat-card fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n      <p [class.color__green]=\"totalReturn >= totalInvestment\" \r\n          [class.color__red]=\"totalReturn < totalInvestment\">\r\n        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  \r\n</div>\r\n\r\n<div *ngIf=\"!showInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <mat-card fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        You do not have any investment to show\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  \r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".totals-card {\n  text-align: center; }\n  .totals-card md-card-content p {\n    margin-bottom: 0; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsDashboardComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var InvestmentsDashboardComponent = (function () {
+    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService) {
+        this.route = route;
+        this.mainNavigatorService = mainNavigatorService;
+        this.usersService = usersService;
+        this.xmrBuyDate = new Date(2017, 5, 23); //month minus 1, 5 = june
+        this.xmrBuyDate2 = new Date(2017, 8, 23);
+        this.xmrBuyDate3 = new Date(2017, 8, 25);
+        this.btcBuyDate = new Date(2017, 6, 19);
+        this.totalInvestment = 0;
+        this.totalReturn = 0;
+        this.showInvestments = false;
+        this.user = null;
+    }
+    InvestmentsDashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Investments', url: null, selected: true }
+        ]);
+        //get authUser from resolver
+        this.route.data.subscribe(function (data) {
+            _this.user = data.authUser;
+            _this.showInvestments = data.authUser.accessToInvestments;
+        });
+    };
+    InvestmentsDashboardComponent.prototype.setTotals = function (totalReturns) {
+        this.totalReturn += totalReturns.usdFromCryptoCurrency;
+        this.totalInvestment += totalReturns.usdFromCryptoCurrencyWhenBought;
+    };
+    return InvestmentsDashboardComponent;
+}());
+InvestmentsDashboardComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'investments-dashboard',
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__users_users_service__["a" /* UsersService */]) === "function" && _c || Object])
+], InvestmentsDashboardComponent);
+
+var _a, _b, _c;
+//# sourceMappingURL=investments-dashboard.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/investments-routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__auth_guard__ = __webpack_require__("../../../../../src/app/auth.guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+var routes = [
+    {
+        path: 'investments',
+        canActivate: [__WEBPACK_IMPORTED_MODULE_3__auth_guard__["a" /* AuthGuard */]],
+        children: [
+            {
+                path: '',
+                component: __WEBPACK_IMPORTED_MODULE_2__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            }
+        ]
+    }
+];
+var InvestmentsRoutingModule = (function () {
+    function InvestmentsRoutingModule() {
+    }
+    return InvestmentsRoutingModule;
+}());
+InvestmentsRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+    })
+], InvestmentsRoutingModule);
+
+//# sourceMappingURL=investments-routing.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/investments.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investments_routing_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments-routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_crypto_currency_crypto_currency_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+var InvestmentsModule = (function () {
+    function InvestmentsModule() {
+    }
+    return InvestmentsModule;
+}());
+InvestmentsModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__investments_routing_module__["a" /* InvestmentsRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
+            __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__["a" /* SharedModule */]
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_8__components_crypto_currency_crypto_currency_component__["a" /* CryptoCurrencyComponent */],
+            __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */]
+        ],
+        providers: []
+    })
+], InvestmentsModule);
+
+//# sourceMappingURL=investments.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<nav class=\"navigation--main\">\r\n  <mat-chip-list>\r\n    <mat-chip *ngFor=\"let link of links\" [routerLink]=\"link.url\" [selected]=\"link.selected\">{{link.displayName}}</mat-chip>\r\n  </mat-chip-list>      \r\n</nav>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainNavigatorComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var MainNavigatorComponent = (function () {
+    function MainNavigatorComponent(mainNavigatorService) {
+        this.mainNavigatorService = mainNavigatorService;
+    }
+    MainNavigatorComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.mainNavigatorService.links$.subscribe(function (links) { return _this.links = links; });
+    };
+    return MainNavigatorComponent;
+}());
+MainNavigatorComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'main-navigator',
+        template: __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object])
+], MainNavigatorComponent);
+
+var _a;
+//# sourceMappingURL=main-navigator.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainNavigatorService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var MainNavigatorService = (function () {
+    function MainNavigatorService() {
+        this.linksSource = new __WEBPACK_IMPORTED_MODULE_1_rxjs_BehaviorSubject__["a" /* BehaviorSubject */](null);
+        this.links$ = this.linksSource.asObservable();
+    }
+    //links source feeder
+    MainNavigatorService.prototype.setLinks = function (newLinks) {
+        this.linksSource.next(newLinks);
+    };
+    return MainNavigatorService;
+}());
+MainNavigatorService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], MainNavigatorService);
+
+//# sourceMappingURL=main-navigator.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/shared.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SharedModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_main_navigator_main_navigator_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+var SharedModule = (function () {
+    function SharedModule() {
+    }
+    return SharedModule;
+}());
+SharedModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* RouterModule */],
+            __WEBPACK_IMPORTED_MODULE_4__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
+        ],
+        exports: [__WEBPACK_IMPORTED_MODULE_3__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */]],
+        declarations: [__WEBPACK_IMPORTED_MODULE_3__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */]]
+    })
+], SharedModule);
+
+//# sourceMappingURL=shared.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container form__account-finance\" (ngSubmit)=\"onSubmit()\" #financeForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Active income -->\r\n      <mat-input-container fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"activeIncome\" name=\"activeIncome\" placeholder=\"Active Income\" \r\n            [(ngModel)]=\"model.activeIncome\" \r\n            value=\"model.activeIncome\"\r\n            numberValidator \r\n            #activeIncome=\"ngModel\">\r\n        <mat-hint align=\"start\">Annual income amount pre-tax.</mat-hint>\r\n        <mat-error *ngIf=\"activeIncome.invalid && (activeIncome.dirty || activeIncome.touched) && activeIncome.errors.numberValidator\">Tax rate must be numeric, with no more than two decimal values</mat-error>\r\n      </mat-input-container>\r\n      \r\n      <!-- Tax rate -->\r\n      <mat-input-container fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"incomeTaxRate\" name=\"incomeTaxRate\" placeholder=\"Active income tax rate\" \r\n            [(ngModel)]=\"model.incomeTaxRate\" \r\n            value=\"model.incomeTaxRate\"\r\n            numberValidator='{\"min\": 0, \"max\": 100}' \r\n            #incomeTaxRate=\"ngModel\">\r\n\r\n        <mat-hint align=\"start\">Income tax rate (%).</mat-hint>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator\">Tax rate must be numeric, with no more than two decimal values</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n      </mat-input-container>\r\n      <!-- <pre>{{incomeTaxRate.errors | json}}</pre> -->\r\n\r\n      <!-- Net worth -->\r\n      <mat-input-container fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"netWorth\" name=\"netWorth\" placeholder=\"Net worth\" \r\n            [(ngModel)]=\"model.netWorth\" \r\n            value=\"model.netWorth\"\r\n            numberValidator\r\n            #netWorth=\"ngModel\">\r\n      </mat-input-container>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-finance\">\r\n    <button *ngIf=\"!accountFinanceServiceRunning\" \r\n        class=\"form__action mat-raised-button\" \r\n        mat-raised-button \r\n        type=\"submit\" \r\n        color=\"accent\" \r\n        [disabled]=\"!financeForm.form.valid\">Save</button>\r\n    \r\n    <mat-progress-bar *ngIf=\"accountFinanceServiceRunning\"\r\n        class=\"progress-bar progress-bar--account-finance\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </section>\r\n\r\n</form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountFinanceInfoComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AccountFinanceInfoComponent = (function () {
+    function AccountFinanceInfoComponent() {
+        this.model = null;
+        this.accountFinanceServiceRunning = false;
+    }
+    AccountFinanceInfoComponent.prototype.ngOnInit = function () {
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.model = this.user.finance;
+    };
+    AccountFinanceInfoComponent.prototype.ngAfterViewInit = function () {
+    };
+    AccountFinanceInfoComponent.prototype.onSubmit = function () {
+        console.log(this.user.finance);
+    };
+    return AccountFinanceInfoComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_17" /* ViewChild */])('financeForm'),
+    __metadata("design:type", Object)
+], AccountFinanceInfoComponent.prototype, "form", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */]) === "function" && _a || Object)
+], AccountFinanceInfoComponent.prototype, "user", void 0);
+AccountFinanceInfoComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'account-finance-info',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], AccountFinanceInfoComponent);
+
+var _a;
+//# sourceMappingURL=account-finance-info.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container form__account-finance\" #personalInfoForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\n  \n    <section fxLayout=\"column\" class=\"form__fields\">\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\n        <!-- Birthday -->\n        <!-- <mat-form-field>\n          <input \n              id=\"birthday\"\n              name=\"birthday\"\n              value=\"model.birthday\"\n              matInput \n              [(ngModel)]=\"model.birthday\" \n              [matDatepicker]=\"picker\" \n              placeholder=\"Day of birth\">\n          <mat-datepicker-toggle mdSuffix [for]=\"picker\"></mat-datepicker-toggle>\n          <mat-datepicker #picker startView=\"year\" [startAt]=\"startDate\"></mat-datepicker>\n        </mat-form-field> -->\n      </div>\n    </section>\n  \n  </form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountPersonalInfoComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var AccountPersonalInfoComponent = (function () {
+    function AccountPersonalInfoComponent() {
+        this.model = { birthday: new Date(1990, 0, 1) };
+    }
+    AccountPersonalInfoComponent.prototype.ngOnInit = function () {
+    };
+    return AccountPersonalInfoComponent;
+}());
+AccountPersonalInfoComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'account-personal-info',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], AccountPersonalInfoComponent);
+
+//# sourceMappingURL=account-personal-info.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account/account.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #accountForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            value=\"model.name\"\r\n            #name=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\r\n      </mat-input-container>\r\n      \r\n      <!-- Email -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            value=\"model.email\"\r\n            #email=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-input-container>\r\n    </div>\r\n  </div>\r\n\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!updateAccountServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!accountForm.form.valid\">Save</button>\r\n\r\n    <mat-progress-bar *ngIf=\"updateAccountServiceRunning\"\r\n        class=\"progress-bar progress-bar--update-account\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </div>\r\n\r\n</form>\r\n\r\n<account-personal-info></account-personal-info>\r\n<account-finance-info [user]=\"user\"></account-finance-info>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account/account.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account/account.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var AccountComponent = (function () {
+    function AccountComponent(usersService, appService, mainNavigatorService, route) {
+        this.usersService = usersService;
+        this.appService = appService;
+        this.mainNavigatorService = mainNavigatorService;
+        this.route = route;
+        this.model = { name: '', email: '' };
+        this.user = null;
+        this.updateAccountServiceRunning = false;
+    }
+    AccountComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'My account', url: null, selected: true }
+        ]);
+        //get authUser from resolver
+        this.route.data.subscribe(function (data) {
+            _this.user = data.authUser;
+            _this.model = { name: data.authUser.name, email: data.authUser.email };
+        });
+    };
+    /**
+     * When user submits the register form.
+     */
+    AccountComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.updateAccountServiceRunning = true;
+        //call the account service
+        this.usersService.updateAccount(this.model).subscribe(function (data) {
+            if (data && data.email) {
+                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                _this.usersService.user = user;
+                _this.appService.showResults("Your profile was successfully updated!.");
+            }
+            else {
+                console.error(methodTrace + " Unexpected data format.");
+            }
+            _this.updateAccountServiceRunning = false;
+        }, function (error) {
+            console.error(methodTrace + " There was an error with the update account service > " + error);
+            if (error.codeno === 400) {
+                //the mail system failed for external reasons
+                _this.appService.showResults("There was an error with the update account service, please try again in a few minutes.");
+            }
+            _this.updateAccountServiceRunning = false;
+        });
+    };
+    return AccountComponent;
+}());
+AccountComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-account',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/account/account.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _d || Object])
+], AccountComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=account.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/login/login.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container form__login\" (ngSubmit)=\"onSubmit()\" #loginForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\">\r\n      <!-- Email -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            #email=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-input-container>\r\n      \r\n      <!-- Password -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\"\r\n            #password=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</mat-error>\r\n      </mat-input-container>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--login\">\r\n    <button *ngIf=\"!loginServiceRunning\" class=\"form__action mat-raised-button\" mat-raised-button type=\"submit\" \r\n        color=\"accent\" [disabled]=\"!loginForm.form.valid\">Login</button>\r\n    \r\n    <mat-progress-bar *ngIf=\"loginServiceRunning\"\r\n        class=\"progress-bar progress-bar--login\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n    \r\n    <mat-checkbox fxLayoutAlign.xs=\"center center\" class=\"form__action\" [(ngModel)]=\"forgotModel.forgot\" name=\"forgot\" id=\"forgot\">Forgot my password</mat-checkbox>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"center center\" class=\"form__actions form__actions--create-account\">\r\n    <a mat-button color=\"accent\" class=\"color__almost-white ac__link\" routerLink=\"/users/register\">Create an account</a>\r\n  </section>\r\n\r\n</form>\r\n\r\n<form class=\"form__container form__forgot\" (ngSubmit)=\"onForgotSubmit()\" #forgotForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" *ngIf=\"forgotModel.forgot\">\r\n  \r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\">\r\n      <!-- Email -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        \r\n        <input matInput type=\"email\" id=\"emailForgot\" name=\"emailForgot\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"forgotModel.email\" \r\n            required email\r\n            #emailForgot=\"ngModel\">\r\n        <mat-hint align=\"start\">Type your email and we will send you an email to reset your password.</mat-hint>\r\n        <mat-error *ngIf=\"emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-input-container>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!forgotServiceRunning\" class=\"form__action mat-raised-button\" \r\n        color=\"accent\" mat-raised-button type=\"submit\" [disabled]=\"!forgotForm.form.valid\">Send</button>\r\n\r\n    <mat-progress-bar *ngIf=\"forgotServiceRunning\"\r\n        class=\"progress-bar progress-bar--forgot\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </section>\r\n\r\n</form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/login/login.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.form__login .form__actions--create-account {\n  margin: 20px 0; }\n\n.form__forgot {\n  margin-top: 50px; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/login/login.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var LoginComponent = (function () {
+    function LoginComponent(usersService, appService, mainNavigatorService, router, route) {
+        this.usersService = usersService;
+        this.appService = appService;
+        this.mainNavigatorService = mainNavigatorService;
+        this.router = router;
+        this.route = route;
+        this.model = { email: '', password: '' };
+        this.forgotModel = { email: '', forgot: false };
+        this.loginServiceRunning = false;
+        this.forgotServiceRunning = false;
+    }
+    LoginComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Login', url: null, selected: true }
+        ]);
+        this.route.paramMap.map(function (params) { return params.get('state'); })
+            .subscribe(function (state) {
+            if (state === 'reset-password-token-expired') {
+                _this.appService.showResults('Reset password url has expired or is invalid. Please go to Forgot my password again to create a new one.', 5000);
+            }
+        });
+    };
+    /**
+     * When user submits the login form
+     */
+    LoginComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.loginServiceRunning = true;
+        this.usersService.user = null; //reset authenticated user. Register automatically authenticates the registered user.
+        //call the register service
+        this.usersService.login(this.model).subscribe(function (data) {
+            if (data && data.email) {
+                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                _this.usersService.user = user;
+                var redirectUrl = _this.usersService.routerRedirectUrl ? _this.usersService.routerRedirectUrl : '/';
+                _this.usersService.routerRedirectUrl = null;
+                _this.router.navigate([redirectUrl]); //go home
+            }
+            else {
+                console.error(methodTrace + " Unexpected data format.");
+                _this.loginServiceRunning = false;
+            }
+        }, function (error) {
+            console.error(methodTrace + " There was an error with the login service: ", error);
+            if (error.codeno === 451) {
+                _this.appService.showResults(error.msg, 60000, 'Close');
+            }
+            _this.loginServiceRunning = false;
+        });
+    };
+    /**
+     * When user submits the forgot password form
+     */
+    LoginComponent.prototype.onForgotSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onForgotSubmit() > "; //for debugging
+        this.forgotServiceRunning = true;
+        //call the register service
+        this.usersService.forgot(this.forgotModel).subscribe(function (data) {
+            _this.forgotServiceRunning = false;
+            _this.appService.showResults("You have been emailed a password reset link.");
+        }, function (error) {
+            console.error(methodTrace + " There was an error with the forgot password service: ", error);
+            _this.forgotServiceRunning = false;
+            if (error.codeno === 455) {
+                //invalid email
+                _this.appService.showResults(error.msg, 3000);
+            }
+            else if (error.codeno === 400) {
+                //the mail system failed for external reasons
+                _this.appService.showResults("There was an issue sending the reset password email, please try again in a few minutes.");
+            }
+        });
+    };
+    return LoginComponent;
+}());
+LoginComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-login',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/login/login.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _e || Object])
+], LoginComponent);
+
+var _a, _b, _c, _d, _e;
+//# sourceMappingURL=login.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/register/register.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #registerForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            #name=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\r\n      </mat-input-container>\r\n      \r\n      <!-- Email -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            #email=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-input-container>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"passwordConfirm\" reverse=\"true\"\r\n            #password=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</mat-error>\r\n      </mat-input-container>\r\n\r\n      <!-- Password confirm -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model['password-confirm']\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"password\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator\">Confirm password must match password</mat-error>\r\n      </mat-input-container>\r\n      <!-- <pre>{{passwordConfirm.errors | json}}</pre> -->\r\n    </div>\r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!registerServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!registerForm.form.valid\">Create account</button>\r\n\r\n    <mat-progress-bar *ngIf=\"registerServiceRunning\"\r\n        class=\"progress-bar progress-bar--register\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/register/register.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 127px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/register/register.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var RegisterComponent = (function () {
+    function RegisterComponent(usersService, appService, router, mainNavigatorService) {
+        this.usersService = usersService;
+        this.appService = appService;
+        this.router = router;
+        this.mainNavigatorService = mainNavigatorService;
+        this.model = { name: '', email: '', password: '', 'password-confirm': '' };
+        this.registerServiceRunning = false;
+    }
+    RegisterComponent.prototype.ngOnInit = function () {
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Login', url: '/users/login', selected: false },
+            { displayName: 'Create account', url: null, selected: true }
+        ]);
+    };
+    /**
+     * When user submits the register form.
+     */
+    RegisterComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.registerServiceRunning = true;
+        //chech that the password and the confirmed password are the same
+        if (this.model.password !== this.model['password-confirm']) {
+            console.error(methodTrace + " Confirm password must match password.");
+            this.registerServiceRunning = false;
+            return false;
+        }
+        this.usersService.user = null; //reset authenticated user. Register automatically authenticates the registered user.
+        //call the register service
+        this.usersService.register(this.model).subscribe(function (data) {
+            if (data && data.email) {
+                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                _this.usersService.user = user;
+                _this.router.navigate(['/']); //go home
+                _this.appService.showResults(user.name + " welcome to AtomiCoconut!");
+            }
+            else {
+                console.error(methodTrace + " Unexpected data format.", data);
+            }
+            _this.registerServiceRunning = false;
+        }, function (error) {
+            console.error(methodTrace + " There was an error with the register service.", error);
+            if (error.codeno === 400) {
+                if (error.data && error.data.name === 'UserExistsError')
+                    //the mail system failed for external reasons
+                    _this.appService.showResults("The submitted email was already use by another person, pick a different one please.");
+            }
+            _this.registerServiceRunning = false;
+        });
+    };
+    return RegisterComponent;
+}());
+RegisterComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'users-register',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/register/register.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _d || Object])
+], RegisterComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=register.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/reset-password/reset-password.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #resetForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"passwordConfirm\" reverse=\"true\"\r\n            #password=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</mat-error>\r\n      </mat-input-container>\r\n\r\n      <!-- Password confirm -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model['password-confirm']\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"password\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator\">Confirm password must match password</mat-error>\r\n      </mat-input-container>\r\n    </div>\r\n    \r\n    \r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!resetPasswordServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!resetForm.form.valid\">Reset password</button>\r\n\r\n    <mat-progress-bar *ngIf=\"resetPasswordServiceRunning\"\r\n        class=\"progress-bar progress-bar--reset-password\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/reset-password/reset-password.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 127px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/reset-password/reset-password.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ResetPasswordComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var ResetPasswordComponent = (function () {
+    function ResetPasswordComponent(usersService, router, route, mainNavigatorService) {
+        this.usersService = usersService;
+        this.router = router;
+        this.route = route;
+        this.mainNavigatorService = mainNavigatorService;
+        this.model = { password: '', 'password-confirm': '' };
+        this.token = '';
+        this.resetPasswordServiceRunning = false;
+    }
+    ResetPasswordComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Login', url: '/users/login', selected: false },
+            { displayName: 'Reset password', url: null, selected: true }
+        ]);
+        this.route.paramMap.map(function (params) { return params.get('token'); })
+            .subscribe(function (token) {
+            if (token) {
+                _this.token = token;
+            }
+            else {
+                console.error(methodTrace + " Token must be set to reset a password.");
+                _this.router.navigate(['/']);
+            }
+        });
+    };
+    ResetPasswordComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.resetPasswordServiceRunning = true;
+        //chech that the password and the confirmed password are the same
+        if (this.model.password !== this.model['password-confirm']) {
+            console.error(methodTrace + " Confirm password must match password.");
+            this.resetPasswordServiceRunning = false;
+            return false;
+        }
+        //call the reset password service.
+        this.usersService.user = null; //reset authenticated user. Reset automatically authenticates the registered user.
+        this.usersService.reset(this.token, this.model).subscribe(function (data) {
+            if (data) {
+                var user = new __WEBPACK_IMPORTED_MODULE_3__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                _this.usersService.user = user;
+                _this.router.navigate(['/']); //go home
+            }
+            else {
+                console.error(methodTrace + " Unexpected data format.");
+            }
+            _this.resetPasswordServiceRunning = false;
+        }, function (error) {
+            console.error(methodTrace + " There was an error with the reset password service > " + error);
+            _this.resetPasswordServiceRunning = false;
+        });
+    };
+    return ResetPasswordComponent;
+}());
+ResetPasswordComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-reset-password',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _d || Object])
+], ResetPasswordComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=reset-password.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/models/account-finance.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountFinance; });
+var AccountFinance = (function () {
+    function AccountFinance(activeIncome, netWorth, incomeTaxRate) {
+        if (activeIncome === void 0) { activeIncome = 0; }
+        if (netWorth === void 0) { netWorth = 0; }
+        if (incomeTaxRate === void 0) { incomeTaxRate = 0; }
+        this.activeIncome = 0; //annual pre tax
+        this.netWorth = 0;
+        this.incomeTaxRate = 0; //percentage value
+        this.activeIncome = activeIncome;
+        this.netWorth = netWorth;
+        this.incomeTaxRate = incomeTaxRate;
+    }
+    return AccountFinance;
+}());
+
+//# sourceMappingURL=account-finance.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/models/user.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__account_finance__ = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
+
+var User = (function () {
+    function User(name, email, avatar, accessToInvestments, accountFinance) {
+        if (name === void 0) { name = ''; }
+        if (email === void 0) { email = ''; }
+        if (avatar === void 0) { avatar = ''; }
+        if (accessToInvestments === void 0) { accessToInvestments = false; }
+        if (accountFinance === void 0) { accountFinance = null; }
+        this._name = name;
+        this._email = email;
+        this._avatar = avatar;
+        this._accessToinvestments = accessToInvestments;
+        this.finance = new __WEBPACK_IMPORTED_MODULE_0__account_finance__["a" /* AccountFinance */]();
+        if (accountFinance) {
+            this.setAccountFinance(accountFinance);
+        }
+    }
+    User.prototype.setAccountFinance = function (accountFinance) {
+        this.finance = new __WEBPACK_IMPORTED_MODULE_0__account_finance__["a" /* AccountFinance */](accountFinance.activeIncome, accountFinance.netWorth, accountFinance.incomeTaxRate);
+    };
+    Object.defineProperty(User.prototype, "name", {
+        get: function () {
+            return this._name;
+        },
+        set: function (name) {
+            this._name = name;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(User.prototype, "email", {
+        get: function () {
+            return this._email;
+        },
+        set: function (email) {
+            this._email = email;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(User.prototype, "avatar", {
+        get: function () {
+            return this._avatar;
+        },
+        set: function (avatar) {
+            this._avatar = avatar;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(User.prototype, "accessToInvestments", {
+        get: function () {
+            return this._accessToinvestments;
+        },
+        set: function (accessToInvestments) {
+            this._accessToinvestments = accessToInvestments;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return User;
+}());
+
+//# sourceMappingURL=user.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/users-routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_register_register_component__ = __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__ = __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_reset_password_reset_password_component__ = __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_account_account_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+var routes = [
+    {
+        path: 'users',
+        children: [
+            { path: 'register', component: __WEBPACK_IMPORTED_MODULE_2__components_register_register_component__["a" /* RegisterComponent */] },
+            { path: 'login/:state', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
+            { path: 'login', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
+            {
+                path: 'account',
+                component: __WEBPACK_IMPORTED_MODULE_5__components_account_account_component__["a" /* AccountComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_6__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            },
+            {
+                path: 'account/reset/expired',
+                redirectTo: 'login/reset-password-token-expired',
+                pathMatch: 'full'
+            },
+            { path: 'account/reset/:token', component: __WEBPACK_IMPORTED_MODULE_4__components_reset_password_reset_password_component__["a" /* ResetPasswordComponent */] }
+        ]
+    }
+];
+var UsersRoutingModule = (function () {
+    function UsersRoutingModule() {
+    }
+    return UsersRoutingModule;
+}());
+UsersRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+    })
+], UsersRoutingModule);
+
+//# sourceMappingURL=users-routing.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/users.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_routing_module__ = __webpack_require__("../../../../../src/app/modules/users/users-routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_register_register_component__ = __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_login_login_component__ = __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_reset_password_reset_password_component__ = __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__directives_equal_validator_directive__ = __webpack_require__("../../../../../src/app/directives/equal-validator.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__directives_number_validator_directive__ = __webpack_require__("../../../../../src/app/directives/number-validator.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_account_account_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_account_finance_info_account_finance_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_account_personal_info_account_personal_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var UsersModule = (function () {
+    function UsersModule() {
+    }
+    return UsersModule;
+}());
+UsersModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__users_routing_module__["a" /* UsersRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
+            __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__["a" /* SharedModule */]
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_7__components_register_register_component__["a" /* RegisterComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_login_login_component__["a" /* LoginComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__components_reset_password_reset_password_component__["a" /* ResetPasswordComponent */],
+            __WEBPACK_IMPORTED_MODULE_11__directives_equal_validator_directive__["a" /* EqualValidatorDirective */],
+            __WEBPACK_IMPORTED_MODULE_12__directives_number_validator_directive__["a" /* NumberValidatorDirective */],
+            __WEBPACK_IMPORTED_MODULE_13__components_account_account_component__["a" /* AccountComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__components_account_finance_info_account_finance_info_component__["a" /* AccountFinanceInfoComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__components_account_personal_info_account_personal_info_component__["a" /* AccountPersonalInfoComponent */]
+        ],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__users_service__["a" /* UsersService */]]
+    })
+], UsersModule);
+
+//# sourceMappingURL=users.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/users.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var UsersService = (function () {
+    function UsersService(http, appService) {
+        this.http = http;
+        this.appService = appService;
+        this.serverHost = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].apiHost + '/api/users';
+        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
+        this.routerRedirectUrl = null; //a route to redirect the user to when login is successfull
+        this._user = null;
+    }
+    /**
+     * Server call to Register a new user in the system
+     * @param postData
+     */
+    UsersService.prototype.register = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/register", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to Account to update account details
+     * @param postData
+     */
+    UsersService.prototype.updateAccount = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/account", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to retrieve the currently authenticated user, or null if nobody .
+     */
+    UsersService.prototype.getAuthenticatedUser = function () {
+        return this.http.get(this.serverHost + "/getUser")
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to login the provided user email and pass.
+     */
+    UsersService.prototype.login = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        console.log('login service called');
+        return this.http.post(this.serverHost + "/login", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to forgot with the provided user email.
+     */
+    UsersService.prototype.forgot = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/account/forgot", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to reset password api with the provided new password.
+     */
+    UsersService.prototype.reset = function (token, postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/account/reset/" + token, postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to login the provided user email and pass.
+     */
+    UsersService.prototype.logout = function () {
+        return this.http.get(this.serverHost + "/logout")
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Tells whether the user is logged in in the system. Checks the local user variable
+     */
+    UsersService.prototype.isLoggedIn = function () {
+        return this.user && this.user.email ? true : false;
+    };
+    Object.defineProperty(UsersService.prototype, "user", {
+        get: function () {
+            return this._user;
+        },
+        /**
+         * Sets the local user variable with the user provided as param
+         * @param user (User). The user to set
+         */
+        set: function (user) {
+            this._user = user;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return UsersService;
+}());
+UsersService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object])
+], UsersService);
+
+var _a, _b;
+//# sourceMappingURL=users.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/environments/environment.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
+// The file contents for the current environment will overwrite these during build.
+// The build system defaults to the dev environment which uses `environment.ts`, but if you do
+// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// The list of which env maps to which file can be found in `.angular-cli.json`.
+// The file contents for the current environment will overwrite these during build.
+var environment = {
+    production: true,
+    apiHost: '',
+    showLogs: true
+};
+//# sourceMappingURL=environment.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/main.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__("../../../platform-browser-dynamic/@angular/platform-browser-dynamic.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__("../../../../../src/app/app.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+
+
+
+
+if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_24" /* enableProdMode */])();
+    console.log('ENV: Production');
+}
+Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */]);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ 0:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("../../../../../src/main.ts");
+
+
+/***/ })
+
+},[0]);
+//# sourceMappingURL=main.bundle.js.map

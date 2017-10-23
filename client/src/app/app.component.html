@@ -1,38 +1,38 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="inner mat-typography">
 
-  <md-toolbar class="toolbar" color="primary">
+  <mat-toolbar class="toolbar" color="primary">
     <a class="toolbar__brand-name color__almost-white" routerLink="/"><span>AtomiCoconut</span></a>
     <span class="example-spacer"></span>
     
     <span *ngIf="!usersService.user" fxLayoutAlign=" center">
-      <md-icon routerLink="/users/login" class="toolbar__icon">account_circle</md-icon>
+      <mat-icon routerLink="/users/login" class="toolbar__icon">account_circle</mat-icon>
     </span>
     <span *ngIf="usersService.user" fxLayoutAlign=" center">
       <img *ngIf="usersService.user.avatar" 
-          [mdMenuTriggerFor]="userMenu" 
+          [matMenuTriggerFor]="userMenu" 
           class="toolbar__icon user__avatar" 
           [src]="usersService.user.avatar" 
       />
-      <md-icon *ngIf="!usersService.user.avatar"
+      <mat-icon *ngIf="!usersService.user.avatar"
           class="toolbar__icon user__icon--logged-in" 
-          [mdMenuTriggerFor]="userMenu">
+          [matMenuTriggerFor]="userMenu">
         account_circle
-      </md-icon>
+      </mat-icon>
       
-      <md-menu class="user__menu--logged-in" #userMenu="mdMenu" [overlapTrigger]="false">
-        <button md-menu-item routerLink="/users/account">
-          <md-icon>settings</md-icon>
+      <mat-menu class="user__menu--logged-in" #userMenu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item routerLink="/users/account">
+          <mat-icon>settings</mat-icon>
           <span>My account</span>
         </button>
-        <button md-menu-item (click)="logout()">
-          <md-icon>exit_to_app</md-icon>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
           <span>Logout</span>
         </button>
-      </md-menu>
+      </mat-menu>
     </span>
     
-  </md-toolbar>
+  </mat-toolbar>
   
   <!-- Main navigator (chips) -->
   <main-navigator></main-navigator>

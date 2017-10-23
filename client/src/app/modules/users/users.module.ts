@@ -13,6 +13,7 @@ import { EqualValidatorDirective } from '../../directives/equal-validator.direct
 import { NumberValidatorDirective } from '../../directives/number-validator.directive';
 import { AccountComponent } from './components/account/account.component';
 import { AccountFinanceInfoComponent } from './components/account-finance-info/account-finance-info.component';
+import { AccountPersonalInfoComponent } from './components/account-personal-info/account-personal-info.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { AccountFinanceInfoComponent } from './components/account-finance-info/a
     EqualValidatorDirective,
     NumberValidatorDirective,
     AccountComponent,
-    AccountFinanceInfoComponent
+    AccountFinanceInfoComponent,
+    AccountPersonalInfoComponent
   ],
   providers: [UsersService]
 })

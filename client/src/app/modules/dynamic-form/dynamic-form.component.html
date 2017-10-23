@@ -2,9 +2,9 @@
   <form (ngSubmit)="onSubmit()" [formGroup]="form" novalidate>
 
     <df-question *ngFor="let question of questions" [question]="question" [form]="form"></df-question>
-    <md-error *ngFor="let error of postSubmitErrors">{{error}}</md-error>
+    <mat-error *ngFor="let error of postSubmitErrors">{{error}}</mat-error>
     <div>
-      <button class="mat-raised-button" md-raised-button type="submit" [disabled]="!form.valid">Register</button>
+      <button class="mat-raised-button" mat-raised-button type="submit" [disabled]="!form.valid">Register</button>
     </div>
   </form>
 

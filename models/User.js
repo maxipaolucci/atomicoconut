@@ -22,7 +22,11 @@ const userSchema = new Schema({
     trim: true
   },
   resetPasswordToken : String,
-  resetPasswordExpires : Date
+  resetPasswordExpires : Date,
+  personalInfo : {
+    type : mongoose.Schema.ObjectId,
+    ref : 'PersonalInfo'
+  }
 });
 
 

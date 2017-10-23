@@ -3,42 +3,43 @@
   <div fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px" class="form__fields__row" >
       <!-- Name -->
-      <md-input-container fxFlex class="form__field">
-        <input mdInput type="text" id="name" name="name" placeholder="Name" 
+      <mat-input-container fxFlex class="form__field">
+        <input matInput type="text" id="name" name="name" placeholder="Name" 
             [(ngModel)]="model.name" 
             required minlength="4"
             value="model.name"
             #name="ngModel">
 
-        <md-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">Name is required</md-error>
-        <md-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.minlength">Name must contains more than 4 characters</md-error>
-      </md-input-container>
+        <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">Name is required</mat-error>
+        <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.minlength">Name must contains more than 4 characters</mat-error>
+      </mat-input-container>
       
       <!-- Email -->
-      <md-input-container fxFlex class="form__field">
-        <input mdInput type="email" id="email" name="email" placeholder="Email address" 
+      <mat-input-container fxFlex class="form__field">
+        <input matInput type="email" id="email" name="email" placeholder="Email address" 
             [(ngModel)]="model.email" 
             required email
             value="model.email"
             #email="ngModel">
 
-        <md-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</md-error>
-        <md-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</md-error>
-      </md-input-container>
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
+      </mat-input-container>
     </div>
   </div>
 
   <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center none" class="form__actions">
-    <button *ngIf="!updateAccountServiceRunning" class="form__action mat-raised-button" color="accent" md-raised-button type="submit" 
+    <button *ngIf="!updateAccountServiceRunning" class="form__action mat-raised-button" color="accent" mat-raised-button type="submit" 
         [disabled]="!accountForm.form.valid">Save</button>
 
-    <md-progress-bar *ngIf="updateAccountServiceRunning"
+    <mat-progress-bar *ngIf="updateAccountServiceRunning"
         class="progress-bar progress-bar--update-account"
         color="primary"
         mode="indeterminate">
-    </md-progress-bar>
+    </mat-progress-bar>
   </div>
 
 </form>
 
+<account-personal-info></account-personal-info>
 <account-finance-info [user]="user"></account-finance-info>
