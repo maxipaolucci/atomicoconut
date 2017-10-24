@@ -14,6 +14,7 @@ import { NumberValidatorDirective } from '../../directives/number-validator.dire
 import { AccountComponent } from './components/account/account.component';
 import { AccountFinanceInfoComponent } from './components/account-finance-info/account-finance-info.component';
 import { AccountPersonalInfoComponent } from './components/account-personal-info/account-personal-info.component';
+import { AccountUserInfoComponent } from './components/account-user-info/account-user-info.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { AccountPersonalInfoComponent } from './components/account-personal-info
     NumberValidatorDirective,
     AccountComponent,
     AccountFinanceInfoComponent,
-    AccountPersonalInfoComponent
+    AccountPersonalInfoComponent,
+    AccountUserInfoComponent
   ],
   providers: [UsersService]
 })

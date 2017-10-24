@@ -412,7 +412,11 @@ var AuthResolver = (function () {
     AuthResolver.prototype.resolve = function (route, state) {
         var _this = this;
         var methodTrace = this.constructor.name + " > resolve() > "; //for debugging  
-        return this.usersService.getAuthenticatedUser().map(function (data) {
+        var params = null;
+        if (state.url === '/users/account') {
+            params = { personalInfo: true, financeInfo: true };
+        }
+        return this.usersService.getAuthenticatedUser(params).map(function (data) {
             if (data && data.email) {
                 var user = new __WEBPACK_IMPORTED_MODULE_2__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
                 _this.usersService.user = user;
@@ -1008,12 +1012,13 @@ CustomMaterialDesignModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatDatepickerModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatSlideToggleModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatToolbarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatIconModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatInputModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatProgressBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCardModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatNativeDateModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatTabsModule */]
         ],
         exports: [
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatButtonModule */],
@@ -1023,13 +1028,14 @@ CustomMaterialDesignModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatDatepickerModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatSlideToggleModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatToolbarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatIconModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatInputModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatButtonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatProgressBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCardModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatNativeDateModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatTabsModule */]
         ]
     })
 ], CustomMaterialDesignModule);
@@ -1572,7 +1578,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
 
 // exports
 
@@ -1641,78 +1647,11 @@ var _a;
 /***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container form__account-finance\" #personalInfoForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n    <section fxLayout=\"column\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n        \r\n        <!-- Birthday -->\r\n        <mat-form-field >\r\n          \r\n          <input \r\n              id=\"birthday\"\r\n              name=\"birthday\"\r\n              #birthday=\"ngModel\"\r\n              matInput \r\n              [(ngModel)]=\"model.birthday\" \r\n              [matDatepicker]=\"picker\" \r\n              placeholder=\"Day of birth\">\r\n          <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\r\n          <mat-datepicker #picker startView=\"year\" [startAt]=\"model.birthday\"></mat-datepicker>\r\n          <mat-error *ngIf=\"birthday.invalid && (birthday.dirty || birthday.touched) && birthday.errors.matDatepickerParse\">Day of birth is invalid or not follow the pattern \"mm/dd/yyyy\"</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n  \r\n  </form>"
+module.exports = "<form class=\"form__container form__account-finance\" #personalInfoForm=\"ngForm\" (ngSubmit)=\"onSubmit()\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n    <section fxLayout=\"column\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n        \r\n        <!-- Birthday -->\r\n        <mat-form-field >\r\n          <input \r\n              id=\"birthday\"\r\n              name=\"birthday\"\r\n              readonly\r\n              #birthday=\"ngModel\"\r\n              matInput \r\n              [(ngModel)]=\"model.birthday\" \r\n              [matDatepicker]=\"pickerBirthday\" \r\n              placeholder=\"Day of birth\">\r\n          <mat-datepicker-toggle matSuffix [for]=\"pickerBirthday\"></mat-datepicker-toggle>\r\n          <mat-datepicker #pickerBirthday startView=\"year\" [startAt]=\"model.birthday\"></mat-datepicker>\r\n          <mat-error *ngIf=\"birthday.invalid && (birthday.dirty || birthday.touched) && birthday.errors.matDatepickerParse\">Day of birth is invalid or not follow the pattern \"mm/dd/yyyy\"</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n    \r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-personal\">\r\n      <button *ngIf=\"!accountPersonalServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!personalInfoForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"accountPersonalServiceRunning\"\r\n          class=\"progress-bar progress-bar--account-personal\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n  </form>"
 
 /***/ }),
 
 /***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountPersonalInfoComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var AccountPersonalInfoComponent = (function () {
-    function AccountPersonalInfoComponent(dateAdapter) {
-        this.dateAdapter = dateAdapter;
-        this.model = { birthday: new Date(1990, 0, 1) };
-        this.dateAdapter.setLocale('en-GB');
-    }
-    AccountPersonalInfoComponent.prototype.ngOnInit = function () {
-    };
-    return AccountPersonalInfoComponent;
-}());
-AccountPersonalInfoComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'account-personal-info',
-        template: __webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.scss")]
-    }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */]) === "function" && _a || Object])
-], AccountPersonalInfoComponent);
-
-var _a;
-//# sourceMappingURL=account-personal-info.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/users/components/account/account.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #accountForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap.gt-sm=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            value=\"model.name\"\r\n            #name=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\r\n      </mat-input-container>\r\n      \r\n      <!-- Email -->\r\n      <mat-input-container fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            value=\"model.email\"\r\n            #email=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-input-container>\r\n    </div>\r\n  </div>\r\n\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!updateAccountServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!accountForm.form.valid\">Save</button>\r\n\r\n    <mat-progress-bar *ngIf=\"updateAccountServiceRunning\"\r\n        class=\"progress-bar progress-bar--update-account\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </div>\r\n\r\n</form>\r\n\r\n<account-personal-info></account-personal-info>\r\n<account-finance-info [user]=\"user\"></account-finance-info>"
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/users/components/account/account.component.scss":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -1730,17 +1669,16 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account/account.component.ts":
+/***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountPersonalInfoComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1755,40 +1693,133 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-var AccountComponent = (function () {
-    function AccountComponent(usersService, appService, mainNavigatorService, route) {
+var AccountPersonalInfoComponent = (function () {
+    function AccountPersonalInfoComponent(dateAdapter, usersService, appService) {
+        this.dateAdapter = dateAdapter;
         this.usersService = usersService;
         this.appService = appService;
-        this.mainNavigatorService = mainNavigatorService;
-        this.route = route;
+        this.model = { birthday: null };
+        this.accountPersonalServiceRunning = false;
+        this.dateAdapter.setLocale('en-GB');
+    }
+    AccountPersonalInfoComponent.prototype.ngOnInit = function () {
+        if (this.user.personalInfo) {
+            Object.assign(this.model, this.user.personalInfo);
+        }
+    };
+    AccountPersonalInfoComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.accountPersonalServiceRunning = true;
+        //call the account service
+        this.usersService.updatePersonalInfo(this.model).subscribe(function (data) {
+            if (data && data.email) {
+                var user = new __WEBPACK_IMPORTED_MODULE_2__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                _this.usersService.user = user;
+                _this.appService.showResults("Your personal information was successfully updated!.");
+            }
+            else {
+                console.error(methodTrace + " Unexpected data format.");
+            }
+            _this.accountPersonalServiceRunning = false;
+        }, function (error) {
+            console.error(methodTrace + " There was an error with the update personal info service > " + error);
+            if (error.codeno === 400) {
+                //the mail system failed for external reasons
+                _this.appService.showResults("There was an error with the personal info service, please try again in a few minutes.");
+            }
+            _this.accountPersonalServiceRunning = false;
+        });
+    };
+    return AccountPersonalInfoComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__models_user__["a" /* User */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__models_user__["a" /* User */]) === "function" && _a || Object)
+], AccountPersonalInfoComponent.prototype, "user", void 0);
+AccountPersonalInfoComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'account-personal-info',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _d || Object])
+], AccountPersonalInfoComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=account-personal-info.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #accountForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\n  \n  <div fxLayout=\"column\" class=\"form__fields\">\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\n      <!-- Name -->\n      <mat-input-container fxFlex class=\"form__field\">\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \n            [(ngModel)]=\"model.name\" \n            required minlength=\"4\"\n            value=\"model.name\"\n            #name=\"ngModel\">\n\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\n      </mat-input-container>\n      \n      <!-- Email -->\n      <mat-input-container fxFlex class=\"form__field\">\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \n            [(ngModel)]=\"model.email\" \n            required email\n            value=\"model.email\"\n            #email=\"ngModel\">\n\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\n      </mat-input-container>\n    </div>\n  </div>\n\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\n    <button *ngIf=\"!updateAccountServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \n        [disabled]=\"!accountForm.form.valid\">Save</button>\n\n    <mat-progress-bar *ngIf=\"updateAccountServiceRunning\"\n        class=\"progress-bar progress-bar--update-account\"\n        color=\"primary\"\n        mode=\"indeterminate\">\n    </mat-progress-bar>\n  </div>\n\n</form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountUserInfoComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var AccountUserInfoComponent = (function () {
+    function AccountUserInfoComponent(usersService, appService) {
+        this.usersService = usersService;
+        this.appService = appService;
         this.model = { name: '', email: '' };
         this.user = null;
         this.updateAccountServiceRunning = false;
     }
-    AccountComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.mainNavigatorService.setLinks([
-            { displayName: 'Welcome', url: '/welcome', selected: false },
-            { displayName: 'My account', url: null, selected: true }
-        ]);
-        //get authUser from resolver
-        this.route.data.subscribe(function (data) {
-            _this.user = data.authUser;
-            _this.model = { name: data.authUser.name, email: data.authUser.email };
-        });
+    AccountUserInfoComponent.prototype.ngOnInit = function () {
+        this.model = { name: this.user.name, email: this.user.email };
     };
     /**
      * When user submits the register form.
      */
-    AccountComponent.prototype.onSubmit = function () {
+    AccountUserInfoComponent.prototype.onSubmit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
         this.updateAccountServiceRunning = true;
         //call the account service
         this.usersService.updateAccount(this.model).subscribe(function (data) {
             if (data && data.email) {
-                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                var user = new __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
                 _this.usersService.user = user;
                 _this.appService.showResults("Your profile was successfully updated!.");
             }
@@ -1805,6 +1836,88 @@ var AccountComponent = (function () {
             _this.updateAccountServiceRunning = false;
         });
     };
+    return AccountUserInfoComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */]) === "function" && _a || Object)
+], AccountUserInfoComponent.prototype, "user", void 0);
+AccountUserInfoComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'account-user-info',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _c || Object])
+], AccountUserInfoComponent);
+
+var _a, _b, _c;
+//# sourceMappingURL=account-user-info.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account/account.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<mat-tab-group>\r\n  <mat-tab label=\"Account info\">\r\n    <account-user-info [user]=\"user\"></account-user-info>\r\n  </mat-tab>\r\n  <mat-tab label=\"Personal info\">\r\n    <account-personal-info [user]=\"user\"></account-personal-info>\r\n  </mat-tab>\r\n  <mat-tab label=\"Financial info\">\r\n    <account-finance-info [user]=\"user\"></account-finance-info>\r\n  </mat-tab>\r\n</mat-tab-group>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account/account.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account/account.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AccountComponent = (function () {
+    function AccountComponent(mainNavigatorService, route) {
+        this.mainNavigatorService = mainNavigatorService;
+        this.route = route;
+        this.user = null;
+    }
+    AccountComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'My account', url: null, selected: true }
+        ]);
+        //get authUser from resolver
+        this.route.data.subscribe(function (data) {
+            _this.user = data.authUser;
+        });
+    };
     return AccountComponent;
 }());
 AccountComponent = __decorate([
@@ -1813,10 +1926,10 @@ AccountComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/users/components/account/account.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object])
 ], AccountComponent);
 
-var _a, _b, _c, _d;
+var _a, _b;
 //# sourceMappingURL=account.component.js.map
 
 /***/ }),
@@ -2232,27 +2345,56 @@ var AccountFinance = (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/modules/users/models/account-personal.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountPersonal; });
+var AccountPersonal = (function () {
+    function AccountPersonal(birthday) {
+        if (birthday === void 0) { birthday = null; }
+        this.birthday = null;
+        this.birthday = birthday;
+    }
+    return AccountPersonal;
+}());
+
+//# sourceMappingURL=account-personal.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/modules/users/models/user.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__account_finance__ = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__account_personal__ = __webpack_require__("../../../../../src/app/modules/users/models/account-personal.ts");
+
 
 var User = (function () {
-    function User(name, email, avatar, accessToInvestments, accountFinance) {
+    function User(name, email, avatar, accessToInvestments, accountFinance, personalInfo) {
         if (name === void 0) { name = ''; }
         if (email === void 0) { email = ''; }
         if (avatar === void 0) { avatar = ''; }
         if (accessToInvestments === void 0) { accessToInvestments = false; }
         if (accountFinance === void 0) { accountFinance = null; }
+        if (personalInfo === void 0) { personalInfo = null; }
         this._name = name;
         this._email = email;
         this._avatar = avatar;
         this._accessToinvestments = accessToInvestments;
-        this.finance = new __WEBPACK_IMPORTED_MODULE_0__account_finance__["a" /* AccountFinance */]();
         if (accountFinance) {
             this.setAccountFinance(accountFinance);
+        }
+        else {
+            this.finance = new __WEBPACK_IMPORTED_MODULE_0__account_finance__["a" /* AccountFinance */]();
+        }
+        if (personalInfo) {
+            this.personalInfo = personalInfo;
+        }
+        else {
+            this.personalInfo = new __WEBPACK_IMPORTED_MODULE_1__account_personal__["a" /* AccountPersonal */]();
         }
     }
     User.prototype.setAccountFinance = function (accountFinance) {
@@ -2390,12 +2532,14 @@ UsersRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_account_account_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_account_finance_info_account_finance_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_account_personal_info_account_personal_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_account_user_info_account_user_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -2435,7 +2579,8 @@ UsersModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_12__directives_number_validator_directive__["a" /* NumberValidatorDirective */],
             __WEBPACK_IMPORTED_MODULE_13__components_account_account_component__["a" /* AccountComponent */],
             __WEBPACK_IMPORTED_MODULE_14__components_account_finance_info_account_finance_info_component__["a" /* AccountFinanceInfoComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__components_account_personal_info_account_personal_info_component__["a" /* AccountPersonalInfoComponent */]
+            __WEBPACK_IMPORTED_MODULE_15__components_account_personal_info_account_personal_info_component__["a" /* AccountPersonalInfoComponent */],
+            __WEBPACK_IMPORTED_MODULE_16__components_account_user_info_account_user_info_component__["a" /* AccountUserInfoComponent */]
         ],
         providers: [__WEBPACK_IMPORTED_MODULE_8__users_service__["a" /* UsersService */]]
     })
@@ -2452,8 +2597,9 @@ UsersModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__("../../../common/@angular/common/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2467,11 +2613,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var UsersService = (function () {
     function UsersService(http, appService) {
         this.http = http;
         this.appService = appService;
-        this.serverHost = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].apiHost + '/api/users';
+        this.serverHost = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiHost + '/api/users';
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         this.routerRedirectUrl = null; //a route to redirect the user to when login is successfull
         this._user = null;
@@ -2497,10 +2644,33 @@ var UsersService = (function () {
             .catch(this.appService.handleError);
     };
     /**
-     * Server call to retrieve the currently authenticated user, or null if nobody .
+     * Server call to Account to update account details
+     * @param postData
      */
-    UsersService.prototype.getAuthenticatedUser = function () {
-        return this.http.get(this.serverHost + "/getUser")
+    UsersService.prototype.updatePersonalInfo = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/accountPersonalInfo", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to retrieve the currently authenticated user, or null if nobody .
+     * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financeInfo (boolean)
+     */
+    UsersService.prototype.getAuthenticatedUser = function (parameters) {
+        if (parameters === void 0) { parameters = null; }
+        var strParams = '';
+        var params = new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpParams */]();
+        if (parameters && Object.keys(parameters).length) {
+            for (var _i = 0, _a = Object.keys(parameters); _i < _a.length; _i++) {
+                var key = _a[_i];
+                strParams += "&" + key + "=" + parameters[key];
+            }
+            console.log(strParams.substring(1));
+            params = new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpParams */]({ fromString: strParams });
+        }
+        console.log(params);
+        return this.http.get(this.serverHost + "/getUser?" + strParams.substring(1))
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
     };
@@ -2564,7 +2734,7 @@ var UsersService = (function () {
 }());
 UsersService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _b || Object])
 ], UsersService);
 
 var _a, _b;

@@ -76,3 +76,25 @@ exports.updateAccount = async (req, res) => {
         data : { name : user.name, email : user.email, avatar : user.gravatar, accessToInvestments : accessToInvestments(user.email) }
     });
 };
+
+exports.updateAccountPersonalInfo = async (req, res) => {
+    const methodTrace = `${errorTrace} updateAccountPersonalInfo() >`;
+    const updates = {
+        birthday : req.body.birthday
+    };
+    
+    console.log(`${methodTrace} ${getMessage('message', 1019, updates.email)}`);
+    const user = await User.findOneAndUpdate(
+        { _id : req.user._id },
+        { $set : updates },
+        { new : true, runValidators : true, context : 'query' }
+    );
+
+    console.log(`${methodTrace} ${getMessage('message', 1020, user.email)}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1020, user.email),
+        data : { name : user.name, email : user.email, avatar : user.gravatar, accessToInvestments : accessToInvestments(user.email) }
+    });
+};

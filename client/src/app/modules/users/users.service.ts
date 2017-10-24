@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
 import {Observable} from "rxjs/Rx";
 import {environment} from "../../../environments/environment";
@@ -39,10 +40,28 @@ export class UsersService {
   }
 
   /**
-   * Server call to retrieve the currently authenticated user, or null if nobody .
+   * Server call to Account to update account details 
+   * @param postData 
    */
-  getAuthenticatedUser() : Observable<any> {
-    return this.http.get(`${this.serverHost}/getUser`)
+  updatePersonalInfo(postData : any = {}) : Observable<any> {
+    return this.http.post(`${this.serverHost}/accountPersonalInfo`, postData, { headers : this.headers })
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
+  }
+
+  /**
+   * Server call to retrieve the currently authenticated user, or null if nobody .
+   * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financeInfo (boolean)
+   */
+  getAuthenticatedUser(parameters : any = null) : Observable<any> {
+    let strParams = '';
+    if (parameters && Object.keys(parameters).length) {
+      for (let key of Object.keys(parameters)) {
+        strParams += `&${key}=${parameters[key]}`;
+      }
+    }
+
+    return this.http.get(`${this.serverHost}/getUser?${strParams.substring(1)}`)
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
   }

@@ -22,11 +22,7 @@ const userSchema = new Schema({
     trim: true
   },
   resetPasswordToken : String,
-  resetPasswordExpires : Date,
-  personalInfo : {
-    type : mongoose.Schema.ObjectId,
-    ref : 'PersonalInfo'
-  }
+  resetPasswordExpires : Date
 });
 
 
@@ -38,6 +34,14 @@ userSchema.virtual('gravatar').get(function() {
   const hash = md5(this.email); //gravatar uses md5
   return `https://gravatar.com/avatar/${hash}?s=200`; //if you donnot have a gravatar in your url it going to return a default image.
                 //we do this to simplify the avatar thing. But maybe you want to let the users upload their images.
+});
+
+// retrieves the personal info for a user in a virtual field (not stored in the db). 
+// This is like a innerjoin in SQL.
+userSchema.virtual('personalInfo', {
+  ref : 'PersonalInfo',
+  localField : '_id',
+  foreignField : 'user'
 });
 
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' }); //this plugin is going to add password and whatever else we need for login to our schema. 

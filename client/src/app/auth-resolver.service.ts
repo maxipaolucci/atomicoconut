@@ -11,8 +11,13 @@ export class AuthResolver implements Resolve<User> {
   
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): User | Observable<User> | Promise<User> {
     let methodTrace = `${this.constructor.name} > resolve() > `; //for debugging  
-    
-    return this.usersService.getAuthenticatedUser().map(
+
+    let params = null;
+    if (state.url === '/users/account') {
+      params = { personalInfo : true, financeInfo : true };
+    }
+
+    return this.usersService.getAuthenticatedUser(params).map(
       (data : any) => {
         if (data && data.email) {
           const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments);          

@@ -101,17 +101,38 @@ exports.isLogggedIn = (req, res, next) => {
     });
 };
 
-exports.getUser = (req, res, next) => {
+exports.getUser = async (req, res, next) => {
     const methodTrace = `${errorTrace} getUser() >`;
 
     if (req.isAuthenticated()) { //check in passport for authentication
         console.log(`${methodTrace} ${getMessage('message', 1004)}`);
 
+        const email = req.user.email;
+        console.log(`${methodTrace} ${getMessage('message', 1006, email)}`);
+        const user = await User.findOne({ email });
+        if (!user) {
+            console.log(`${methodTrace} ${getMessage('error', 455, email)}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 455,
+                msg : getMessage('error', 455, email),
+                data : null
+            });
+            return;
+        }
+
+        req.user.personalInfo = null;
+        if (req.query.personalInfo) {
+            user.populate('personalInfo');
+            req.user.personalInfo = user.personalInfo || null;
+        }
+
         res.json({
             status : 'success',
             codeno : 200,
             msg : getMessage('message', 1004),
-            data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar, accessToInvestments : accessToInvestments(req.user.email) }
+            data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar, 
+                accessToInvestments : accessToInvestments(req.user.email), personalInfo : req.user.personalInfo }
         });
         return;
     }
@@ -142,7 +163,7 @@ exports.forgot = async (req, res) => {
         });
         return;
     }
-
+    
     //2 set reset tokens and expiry on their account
     console.log(`${methodTrace} ${getMessage('message', 1007, email)}`);
     user.resetPasswordToken = crypto.randomBytes(20).toString('hex');

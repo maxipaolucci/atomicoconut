@@ -75,10 +75,6 @@ router.get('/app/calculators/equity', (req, res) => {
 //*************************************************************************** */
 //user controller
 
-router.get('/api/users/test', (req, res) => {
-  res.json({test : 'data'});
-});
-
 router.post('/api/users/login', authController.login);
 
 router.post('/api/users/register', 
@@ -87,7 +83,7 @@ router.post('/api/users/register',
     authController.login
 );
 
-router.get('/api/users/getUser', authController.getUser);
+router.get('/api/users/getUser', catchErrors(authController.getUser));
 
 router.get('/api/users/logout', authController.logout);
 
@@ -95,6 +91,12 @@ router.post('/api/users/account',
     authController.isLogggedIn, 
     catchErrors(userController.updateAccount)
 );
+
+router.post('/api/users/accountPersonalInfo', 
+  authController.isLogggedIn, 
+  catchErrors(userController.updateAccountPersonalInfo)
+);
+
 router.post('/api/users/account/forgot', catchErrors(authController.forgot));
 
 router.post('/api/users/account/reset/:token', 
