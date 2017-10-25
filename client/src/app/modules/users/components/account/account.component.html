@@ -1,4 +1,5 @@
-<mat-tab-group>
+<!-- SM and higher view -->
+<mat-tab-group *ngIf="utilService.isGtXs()">
   <mat-tab label="Account info">
     <account-user-info [user]="user"></account-user-info>
   </mat-tab>
@@ -9,3 +10,31 @@
     <account-finance-info [user]="user"></account-finance-info>
   </mat-tab>
 </mat-tab-group>
+
+<!-- XS view -->
+<mat-accordion *ngIf="utilService.isXs()">  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        Account info
+      </mat-expansion-panel-header>
+
+      <account-user-info [user]="user"></account-user-info>
+    </mat-expansion-panel>
+  
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        Personal info
+      </mat-expansion-panel-header>
+
+      <account-personal-info [user]="user"></account-personal-info>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        Financial info
+      </mat-expansion-panel-header>
+
+      <account-finance-info [user]="user"></account-finance-info>
+    </mat-expansion-panel>
+
+  </mat-accordion>

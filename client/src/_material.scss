@@ -1,12 +1,13 @@
 snack-bar-container.snack-bar--simple {
   background-color: $purple;
+  color: $almostWhite;
 }
 
 mat-chip {
-  cursor: pointer;
+  cursor: pointer !important;
 
   &.mat-chip-selected {
-    cursor: default;
+    cursor: default !important;
   }
 }
 

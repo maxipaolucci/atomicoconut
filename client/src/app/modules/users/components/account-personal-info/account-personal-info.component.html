@@ -6,6 +6,7 @@
         <!-- Birthday -->
         <mat-form-field class="form__field">
           <input 
+              placeholder="Day of birth"
               id="birthday"
               name="birthday"
               readonly
@@ -13,8 +14,8 @@
               #birthday="ngModel"
               matInput 
               [(ngModel)]="model.birthday" 
-              [matDatepicker]="pickerBirthday" 
-              placeholder="Day of birth">
+              [matDatepicker]="pickerBirthday"
+              (click)="pickerBirthday.open()">
           <mat-datepicker-toggle matSuffix [for]="pickerBirthday"></mat-datepicker-toggle>
           <mat-datepicker [touchUi]="utilService.isGtSm() ? false : true" #pickerBirthday startView="year" [startAt]="startAt"></mat-datepicker>
           <mat-error *ngIf="birthday.invalid && (birthday.dirty || birthday.touched) && birthday.errors.matDatepickerParse">Day of birth is invalid or not follow the pattern "mm/dd/yyyy"</mat-error>

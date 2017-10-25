@@ -373,7 +373,7 @@ var AppService = (function () {
 }());
 AppService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["m" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["m" /* MatSnackBar */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["n" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["n" /* MatSnackBar */]) === "function" && _b || Object])
 ], AppService);
 
 var _a, _b;
@@ -1015,35 +1015,37 @@ CustomMaterialDesignModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatButtonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatSnackBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatChipsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatSlideToggleModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatToolbarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatIconModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatInputModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatProgressBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCardModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatTabsModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatExpansionModule */]
         ],
         exports: [
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatButtonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatSnackBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatChipsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatSlideToggleModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatToolbarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatIconModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatInputModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatButtonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatProgressBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCardModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatTabsModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatExpansionModule */]
         ]
     })
 ], CustomMaterialDesignModule);
@@ -1655,7 +1657,7 @@ var _a;
 /***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container form__account-personal\" #personalInfoForm=\"ngForm\" (ngSubmit)=\"onSubmit()\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n    <section fxLayout=\"column\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n        \r\n        <!-- Birthday -->\r\n        <mat-form-field class=\"form__field\">\r\n          <input \r\n              id=\"birthday\"\r\n              name=\"birthday\"\r\n              readonly\r\n              required\r\n              #birthday=\"ngModel\"\r\n              matInput \r\n              [(ngModel)]=\"model.birthday\" \r\n              [matDatepicker]=\"pickerBirthday\" \r\n              placeholder=\"Day of birth\">\r\n          <mat-datepicker-toggle matSuffix [for]=\"pickerBirthday\"></mat-datepicker-toggle>\r\n          <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBirthday startView=\"year\" [startAt]=\"startAt\"></mat-datepicker>\r\n          <mat-error *ngIf=\"birthday.invalid && (birthday.dirty || birthday.touched) && birthday.errors.matDatepickerParse\">Day of birth is invalid or not follow the pattern \"mm/dd/yyyy\"</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n    \r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-personal\">\r\n      <button *ngIf=\"!accountPersonalServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!personalInfoForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"accountPersonalServiceRunning\"\r\n          class=\"progress-bar progress-bar--account-personal\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n  </form>"
+module.exports = "<form class=\"form__container form__account-personal\" #personalInfoForm=\"ngForm\" (ngSubmit)=\"onSubmit()\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n    <section fxLayout=\"column\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n        \r\n        <!-- Birthday -->\r\n        <mat-form-field class=\"form__field\">\r\n          <input \r\n              placeholder=\"Day of birth\"\r\n              id=\"birthday\"\r\n              name=\"birthday\"\r\n              readonly\r\n              required\r\n              #birthday=\"ngModel\"\r\n              matInput \r\n              [(ngModel)]=\"model.birthday\" \r\n              [matDatepicker]=\"pickerBirthday\"\r\n              (click)=\"pickerBirthday.open()\">\r\n          <mat-datepicker-toggle matSuffix [for]=\"pickerBirthday\"></mat-datepicker-toggle>\r\n          <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBirthday startView=\"year\" [startAt]=\"startAt\"></mat-datepicker>\r\n          <mat-error *ngIf=\"birthday.invalid && (birthday.dirty || birthday.touched) && birthday.errors.matDatepickerParse\">Day of birth is invalid or not follow the pattern \"mm/dd/yyyy\"</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n    \r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-personal\">\r\n      <button *ngIf=\"!accountPersonalServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!personalInfoForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"accountPersonalServiceRunning\"\r\n          class=\"progress-bar progress-bar--account-personal\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n  </form>"
 
 /***/ }),
 
@@ -1876,7 +1878,7 @@ var _a, _b, _c;
 /***/ "../../../../../src/app/modules/users/components/account/account.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-tab-group>\r\n  <mat-tab label=\"Account info\">\r\n    <account-user-info [user]=\"user\"></account-user-info>\r\n  </mat-tab>\r\n  <mat-tab label=\"Personal info\">\r\n    <account-personal-info [user]=\"user\"></account-personal-info>\r\n  </mat-tab>\r\n  <mat-tab label=\"Financial info\">\r\n    <account-finance-info [user]=\"user\"></account-finance-info>\r\n  </mat-tab>\r\n</mat-tab-group>"
+module.exports = "<!-- SM and higher view -->\r\n<mat-tab-group *ngIf=\"utilService.isGtXs()\">\r\n  <mat-tab label=\"Account info\">\r\n    <account-user-info [user]=\"user\"></account-user-info>\r\n  </mat-tab>\r\n  <mat-tab label=\"Personal info\">\r\n    <account-personal-info [user]=\"user\"></account-personal-info>\r\n  </mat-tab>\r\n  <mat-tab label=\"Financial info\">\r\n    <account-finance-info [user]=\"user\"></account-finance-info>\r\n  </mat-tab>\r\n</mat-tab-group>\r\n\r\n<!-- XS view -->\r\n<mat-accordion *ngIf=\"utilService.isXs()\">  \r\n    <mat-expansion-panel>\r\n      <mat-expansion-panel-header>\r\n        Account info\r\n      </mat-expansion-panel-header>\r\n\r\n      <account-user-info [user]=\"user\"></account-user-info>\r\n    </mat-expansion-panel>\r\n  \r\n    <mat-expansion-panel>\r\n      <mat-expansion-panel-header>\r\n        Personal info\r\n      </mat-expansion-panel-header>\r\n\r\n      <account-personal-info [user]=\"user\"></account-personal-info>\r\n    </mat-expansion-panel>\r\n\r\n    <mat-expansion-panel>\r\n      <mat-expansion-panel-header>\r\n        Financial info\r\n      </mat-expansion-panel-header>\r\n\r\n      <account-finance-info [user]=\"user\"></account-finance-info>\r\n    </mat-expansion-panel>\r\n\r\n  </mat-accordion>"
 
 /***/ }),
 
@@ -1905,7 +1907,8 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1918,10 +1921,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AccountComponent = (function () {
-    function AccountComponent(mainNavigatorService, route) {
+    function AccountComponent(mainNavigatorService, route, utilService) {
         this.mainNavigatorService = mainNavigatorService;
         this.route = route;
+        this.utilService = utilService;
         this.user = null;
     }
     AccountComponent.prototype.ngOnInit = function () {
@@ -1943,10 +1948,10 @@ AccountComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/users/components/account/account.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__util_service__["a" /* UtilService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__util_service__["a" /* UtilService */]) === "function" && _c || Object])
 ], AccountComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=account.component.js.map
 
 /***/ }),

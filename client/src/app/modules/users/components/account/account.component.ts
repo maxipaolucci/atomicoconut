@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-
+import { UtilService } from '../../../../util.service';
 import {User} from '../../models/user';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
@@ -14,7 +13,7 @@ export class AccountComponent implements OnInit {
 
   public user : User = null;
 
-  constructor(private mainNavigatorService : MainNavigatorService, private route : ActivatedRoute) { }
+  constructor(private mainNavigatorService : MainNavigatorService, private route : ActivatedRoute, public utilService : UtilService) { }
 
   ngOnInit() {
     this.mainNavigatorService.setLinks([
