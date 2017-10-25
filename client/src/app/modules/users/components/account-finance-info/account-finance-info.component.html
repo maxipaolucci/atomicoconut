@@ -3,7 +3,7 @@
   <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
       <!-- Active income -->
-      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input matInput type="number" id="activeIncome" name="activeIncome" placeholder="Active Income" 
             [(ngModel)]="model.activeIncome" 
             value="model.activeIncome"
@@ -11,10 +11,10 @@
             #activeIncome="ngModel">
         <mat-hint align="start">Annual income amount pre-tax.</mat-hint>
         <mat-error *ngIf="activeIncome.invalid && (activeIncome.dirty || activeIncome.touched) && activeIncome.errors.numberValidator">Tax rate must be numeric, with no more than two decimal values</mat-error>
-      </mat-input-container>
+      </mat-form-field>
       
       <!-- Tax rate -->
-      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input matInput type="number" id="incomeTaxRate" name="incomeTaxRate" placeholder="Active income tax rate" 
             [(ngModel)]="model.incomeTaxRate" 
             value="model.incomeTaxRate"
@@ -25,17 +25,17 @@
         <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator">Tax rate must be numeric, with no more than two decimal values</mat-error>
         <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
         <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
-      </mat-input-container>
+      </mat-form-field>
       <!-- <pre>{{incomeTaxRate.errors | json}}</pre> -->
 
       <!-- Net worth -->
-      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input matInput type="number" id="netWorth" name="netWorth" placeholder="Net worth" 
             [(ngModel)]="model.netWorth" 
             value="model.netWorth"
             numberValidator
             #netWorth="ngModel">
-      </mat-input-container>
+      </mat-form-field>
     </div>
   </section>
 

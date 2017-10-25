@@ -8,7 +8,7 @@
           //this is the input element
 
           .mat-input-placeholder-wrapper .mat-input-placeholder {
-            transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px)
+            
           }
         }
         
@@ -28,6 +28,7 @@
   
             .mat-input-placeholder-wrapper .mat-input-placeholder {
               color: $purpleFonts;
+              transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px);
             }
           }
         }

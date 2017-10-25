@@ -3,7 +3,7 @@
   <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
       <!-- Purchase price -->
-      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input matInput type="number" id="purchasePrice" name="purchasePrice" placeholder="Purchase price" 
             [(ngModel)]="model.purchasePrice" 
             required
@@ -11,10 +11,10 @@
             #purchasePrice="ngModel">
   
         <mat-error *ngIf="purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required">Purchase price is required</mat-error>
-      </mat-input-container>
+      </mat-form-field>
       
       <!-- Market value -->
-      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input matInput type="number" id="marketValue" name="marketValue" placeholder="Market value" 
             [(ngModel)]="model.marketValue" 
             required
@@ -22,14 +22,14 @@
             #marketValue="ngModel">
   
         <mat-error *ngIf="marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required">Market value is required</mat-error>
-      </mat-input-container>
+      </mat-form-field>
     </div>
   </section>
 
   <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
       <!-- Loan coverage -->
-      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input matInput type="number" id="loanCoverage" name="loanCoverage" placeholder="Loan coverage %" 
             [(ngModel)]="model.loanCoverage" 
             required loanCoverage
@@ -37,15 +37,15 @@
             #loanCoverage="ngModel">
   
         <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required">Loan coverage is required</mat-error>
-      </mat-input-container>
+      </mat-form-field>
 
       <!-- Savings -->
-      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input matInput type="number" id="savings" name="savings" placeholder="Current savings" 
             [(ngModel)]="model.savings" 
             value="model.savings"
             #savings="ngModel">
-      </mat-input-container>
+      </mat-form-field>
 
       <!-- Add renovations checkbox -->
       <mat-slide-toggle color="accent" class="form__field form__field__toogle form__field__toogle--add-reno"
@@ -60,28 +60,28 @@
   <section fxLayout="column" class="form__fields" *ngIf="model.addRenovations">
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
       <!-- Renovation cost -->
-      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input matInput type="number" id="renovationCost" name="renovationCost" placeholder="Renovation cost" 
             [(ngModel)]="model.renovationCost" 
             value="model.renovationCost"
             #renovationCost="ngModel">
-      </mat-input-container>
+      </mat-form-field>
       
       <!-- New market value -->
-      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input matInput type="number" id="newMarketValue" name="newMarketValue" placeholder="After renovations market value" 
             [(ngModel)]="model.newMarketValue" 
             value="model.newMarketValue"
             #newMarketValue="ngModel">
-      </mat-input-container>
+      </mat-form-field>
       
       <!-- First year repayment -->
-      <mat-input-container fxFlex fxFlex.gt-xs="200px" class="form__field">
+      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
         <input matInput type="number" id="firstYearRepayment" name="firstYearRepayment" placeholder="First year loan repayments" 
             [(ngModel)]="model.firstYearRepayment" 
             value="model.firstYearRepayment"
             #firstYearRepayment="ngModel">
-      </mat-input-container>
+      </mat-form-field>
     </div>
   </section>
 

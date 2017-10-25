@@ -3,7 +3,7 @@
   <div fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row" >
       <!-- Name -->
-      <mat-input-container fxFlex class="form__field">
+      <mat-form-field fxFlex class="form__field">
         <input matInput type="text" id="name" name="name" placeholder="Name" 
             [(ngModel)]="model.name" 
             required minlength="4"
@@ -12,10 +12,10 @@
 
         <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">Name is required</mat-error>
         <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.minlength">Name must contains more than 4 characters</mat-error>
-      </mat-input-container>
+      </mat-form-field>
       
       <!-- Email -->
-      <mat-input-container fxFlex class="form__field">
+      <mat-form-field fxFlex class="form__field">
         <input matInput type="email" id="email" name="email" placeholder="Email address" 
             [(ngModel)]="model.email" 
             required email
@@ -24,7 +24,7 @@
 
         <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
         <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
-      </mat-input-container>
+      </mat-form-field>
     </div>
   </div>
 

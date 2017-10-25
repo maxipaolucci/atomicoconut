@@ -86,7 +86,7 @@ exports.updateAccountPersonalInfo = async (req, res) => {
     //check for a user with the provided email
     const email = req.body.userEmail;
     console.log(`${methodTrace} ${getMessage('message', 1006, email)}`);
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
     if (!user) {
         console.log(`${methodTrace} ${getMessage('error', 455, email)}`);
         res.status(401).json({ 

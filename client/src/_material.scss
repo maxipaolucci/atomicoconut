@@ -2,7 +2,7 @@ snack-bar-container.snack-bar--simple {
   background-color: $purple;
 }
 
-md-chip {
+mat-chip {
   cursor: pointer;
 
   &.mat-chip-selected {
@@ -10,6 +10,10 @@ md-chip {
   }
 }
 
-md-card .mat-card-title.md-card-title--ac {
+mat-card .mat-card-title.mat-card-title--ac {
   font-size: 18px;
+}
+
+mat-tab-group mat-tab-body {
+  margin-top: 10px;
 }

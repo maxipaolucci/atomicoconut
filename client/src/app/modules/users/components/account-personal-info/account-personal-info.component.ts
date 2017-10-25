@@ -13,6 +13,7 @@ export class AccountPersonalInfoComponent implements OnInit {
 
   @Input() user : User;
   model : any = { birthday : null, userEmail : null };
+  startAt : Date = new Date(1990, 0, 1);
   accountPersonalServiceRunning : boolean = false;
 
   constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private usersService : UsersService, private appService : AppService) {
@@ -24,6 +25,10 @@ export class AccountPersonalInfoComponent implements OnInit {
     console.log(this.user);
     if (this.user.personalInfo) {
       this.model.birthday = this.user.personalInfo.birthday;
+      
+      if (this.user.personalInfo.birthday) {
+        this.startAt = this.user.personalInfo.birthday;
+      }
     }
   }
 

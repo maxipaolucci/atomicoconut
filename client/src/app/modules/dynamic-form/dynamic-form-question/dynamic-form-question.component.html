@@ -1,6 +1,6 @@
 <div [formGroup]="form" [ngSwitch]="question.controlType">
   
-  <mat-input-container *ngSwitchCase="'textbox'" class="example-full-width">
+  <mat-form-field *ngSwitchCase="'textbox'" class="example-full-width">
     <input matInput 
         [type]="question.type" 
         [id]="question.key" 
@@ -11,7 +11,7 @@
     <mat-error *ngIf="!isValid && form.get(question.key).hasError('minlength')">{{question.label}} must contains at least {{form.get(question.key).errors.minlength.requiredLength}} characters</mat-error>
     <mat-error *ngIf="!isValid && form.get(question.key).hasError('maxlength')">{{question.label}} must contains {{form.get(question.key).errors.maxlength.requiredLength}} or less characters</mat-error>
     <mat-error *ngIf="!isValid && form.get(question.key).hasError('email')">{{question.label}} must be a valid email address</mat-error>
-  </mat-input-container>
+  </mat-form-field>
   <!-- <pre>{{form.get(question.key).errors | json}}</pre> -->
 
   <mat-select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key" [placeholder]="question.label">
