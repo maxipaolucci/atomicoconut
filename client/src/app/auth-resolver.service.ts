@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { User } from './modules/users/models/user';
+import { AccountPersonal } from './modules/users/models/account-personal';
 import { UsersService } from './modules/users/users.service';
 import { AppService } from './app.service';
 
@@ -20,7 +21,11 @@ export class AuthResolver implements Resolve<User> {
     return this.usersService.getAuthenticatedUser(params).map(
       (data : any) => {
         if (data && data.email) {
-          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments);          
+          let personalInfo = null;
+          if (data.personalInfo) {
+            personalInfo = new AccountPersonal(data.personalInfo.birthday);
+          }
+          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, null, personalInfo);          
           this.usersService.user = user;
           return user;
         } else {

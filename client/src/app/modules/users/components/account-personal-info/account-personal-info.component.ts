@@ -12,7 +12,7 @@ import { AppService } from '../../../../app.service';
 export class AccountPersonalInfoComponent implements OnInit {
 
   @Input() user : User;
-  model : any = { birthday : null };
+  model : any = { birthday : null, userEmail : null };
   accountPersonalServiceRunning : boolean = false;
 
   constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private usersService : UsersService, private appService : AppService) {
@@ -20,8 +20,10 @@ export class AccountPersonalInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.model.userEmail = this.user.email;
+    console.log(this.user);
     if (this.user.personalInfo) {
-      Object.assign(this.model, this.user.personalInfo);
+      this.model.birthday = this.user.personalInfo.birthday;
     }
   }
 

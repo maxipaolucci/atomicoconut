@@ -10,7 +10,8 @@ const errorCodes = {
   455 : 'None user found with email: {{param}}.',
   456 : 'Passwords do not match!',
   457 : 'User not found with that token, it may be invalid or already expired.',
-  458 : 'The register form contains some errors: {{param}}'
+  458 : 'The register form contains some errors: {{param}}.',
+  459 : 'Failed to create and save a new record of {{param}}.'
 };
 
 const messageCodes = {
@@ -37,7 +38,12 @@ const messageCodes = {
   1020 : 'User {{param}} profile successfully updated.',
   1021 : 'User {{param}} has not got access to investments',
   1022 : 'User {{param}} has access to investments',
-  1023 : 'Checking access to investments for {{param}}...'
+  1023 : 'Checking access to investments for {{param}}...',
+  1024 : 'Searching {{param}} for {{param}} for update...',
+  1025 : '{{param}} record not found in DB. Creating one instead...',
+  1026 : 'New {{param}} record successfully created and saved.',
+  1027 : 'User {{param}} found.',
+  1028 : '{{param}} record successfully updated.'
 };
 
 /**

@@ -83,18 +83,99 @@ exports.updateAccountPersonalInfo = async (req, res) => {
         birthday : req.body.birthday
     };
     
-    console.log(`${methodTrace} ${getMessage('message', 1019, updates.email)}`);
-    const user = await User.findOneAndUpdate(
-        { _id : req.user._id },
+    //check for a user with the provided email
+    const email = req.body.userEmail;
+    console.log(`${methodTrace} ${getMessage('message', 1006, email)}`);
+    const user = await User.findOne({ email });
+    if (!user) {
+        console.log(`${methodTrace} ${getMessage('error', 455, email)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 455,
+            msg : getMessage('error', 455, email),
+            data : null
+        });
+        return;
+    }
+    console.log(`${methodTrace} ${getMessage('message', 1027, user.email)}`);
+
+    //check for a PersonalInfo record for the user found
+    console.log(`${methodTrace} ${getMessage('message', 1024, 'PersonalInfo', user.email)}`);
+    let personalInfo = await PersonalInfo.findOneAndUpdate(
+        { user : user._id },
         { $set : updates },
         { new : true, runValidators : true, context : 'query' }
     );
 
-    console.log(`${methodTrace} ${getMessage('message', 1020, user.email)}`);
-    res.json({
-        status : 'success', 
-        codeno : 200,
-        msg : getMessage('message', 1020, user.email),
-        data : { name : user.name, email : user.email, avatar : user.gravatar, accessToInvestments : accessToInvestments(user.email) }
-    });
+    if (!personalInfo) {
+        //if no personalInfo record found then create one and save
+        console.log(`${methodTrace} ${getMessage('message', 1025, 'PersonalInfo')}`);
+        personalInfo = await (new PersonalInfo({ user : user._id, birthday : req.body.birthday })).save();
+        if (personalInfo) {
+            console.log(`${methodTrace} ${getMessage('message', 1026, 'PersonalInfo')}`);
+            console.log(`${methodTrace} ${getMessage('message', 1024, 'User', updates.email)}`);
+
+            //search for the user and add the personal info id
+            user = await User.findOneAndUpdate(
+                { _id : req.user._id },
+                { $set : { personalInfo } },
+                { new : true, runValidators : true, context : 'query' }
+            );
+
+            if (!user) {
+                console.log(`${methodTrace} ${getMessage('error', 455, email)}`);
+                res.status(401).json({ 
+                    status : "error", 
+                    codeno : 455,
+                    msg : getMessage('error', 455, email),
+                    data : null
+                });
+
+                return;
+            }
+
+            console.log(`${methodTrace} ${getMessage('message', 1020, user.email)}`);
+            res.json({
+                status : 'success', 
+                codeno : 200,
+                msg : getMessage('message', 1020, user.email),
+                data : { 
+                    name : user.name, 
+                    email : user.email, 
+                    avatar : user.gravatar, 
+                    accessToInvestments : accessToInvestments(user.email),
+                    personalInfo
+                }
+            });
+
+            return;
+        }
+    } else {
+
+        //if personalInfo was successfully edited then send the message with the info
+        if (new Date(personalInfo.birthday).toDateString() == new Date(updates.birthday).toDateString()) {
+            res.json({
+                status : 'success', 
+                codeno : 200,
+                msg : getMessage('message', 1028, 'PersonalInfo'),
+                data : { 
+                    name : user.name, 
+                    email : user.email, 
+                    avatar : user.gravatar, 
+                    accessToInvestments : accessToInvestments(user.email),
+                    personalInfo
+                }
+            });
+
+            return;
+        }
+
+        console.log(`${methodTrace} ${getMessage('error', 459, 'PersonalInfo')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 459,
+            msg : getMessage('error', 459, 'PersonalInfo'),
+            data : null
+        });
+    }
 };

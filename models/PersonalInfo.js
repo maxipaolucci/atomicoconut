@@ -7,7 +7,7 @@ const personalInfoSchema = new mongoose.Schema({
     ref : 'User',
     required : 'A user is required!.'
   },
-  dateOfBirth : {
+  birthday : {
     type : Date,
     default : null
   }

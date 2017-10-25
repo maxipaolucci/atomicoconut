@@ -50,7 +50,7 @@ exports.login = (req, res, next) => {
                 });
                 return; //stop from running 
             }
-            console.log(user);
+            
             console.log(`${methodTrace}${getMessage('message', 1000)}`);
             res.json({
                 status : 'success', 
@@ -109,7 +109,16 @@ exports.getUser = async (req, res, next) => {
 
         const email = req.user.email;
         console.log(`${methodTrace} ${getMessage('message', 1006, email)}`);
-        const user = await User.findOne({ email });
+        
+        let user = null;
+        req.user.personalInfo = null;
+        if (req.query.personalInfo) {
+            user = await User.findOne({ email }).populate('personalInfo');
+            req.user.personalInfo = user.personalInfo || null;
+        } else {
+            user = await User.findOne({ email });
+        }
+        
         if (!user) {
             console.log(`${methodTrace} ${getMessage('error', 455, email)}`);
             res.status(401).json({ 
@@ -119,12 +128,6 @@ exports.getUser = async (req, res, next) => {
                 data : null
             });
             return;
-        }
-
-        req.user.personalInfo = null;
-        if (req.query.personalInfo) {
-            user.populate('personalInfo');
-            req.user.personalInfo = user.personalInfo || null;
         }
 
         res.json({
