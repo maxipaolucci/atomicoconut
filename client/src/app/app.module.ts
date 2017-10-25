@@ -8,6 +8,7 @@ import 'hammerjs';
 import { AppRoutingModule } from "./app.routing.module";
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
+import { UtilService } from './util.service';
 import { AuthResolver } from './auth-resolver.service';
 import { AuthGuard } from './auth.guard';
 import { CustomMaterialDesignModule } from './modules/custom-material-design/custom-material-design.module';
@@ -35,7 +36,7 @@ import { NumberValidatorDirective } from './directives/number-validator.directiv
     AppComponent,
     WelcomeComponent
   ],
-  providers: [AppService, AuthResolver, AuthGuard],
+  providers: [AppService, UtilService, AuthResolver, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

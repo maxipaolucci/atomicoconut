@@ -3,12 +3,13 @@
   .form__fields {
 
       .form__field {
+        width: 100%;
 
         .mat-input-flex {
           //this is the input element
 
           .mat-input-placeholder-wrapper .mat-input-placeholder {
-            
+            color: #ffffff;
           }
         }
         

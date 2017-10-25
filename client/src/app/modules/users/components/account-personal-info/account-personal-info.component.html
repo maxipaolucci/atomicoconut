@@ -16,7 +16,7 @@
               [matDatepicker]="pickerBirthday" 
               placeholder="Day of birth">
           <mat-datepicker-toggle matSuffix [for]="pickerBirthday"></mat-datepicker-toggle>
-          <mat-datepicker touchUi="true" #pickerBirthday startView="year" [startAt]="startAt"></mat-datepicker>
+          <mat-datepicker [touchUi]="utilService.isGtSm() ? false : true" #pickerBirthday startView="year" [startAt]="startAt"></mat-datepicker>
           <mat-error *ngIf="birthday.invalid && (birthday.dirty || birthday.touched) && birthday.errors.matDatepickerParse">Day of birth is invalid or not follow the pattern "mm/dd/yyyy"</mat-error>
         </mat-form-field>
       </div>
