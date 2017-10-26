@@ -4,7 +4,7 @@ const PersonalInfo = mongoose.model('PersonalInfo');
 const FinancialInfo = mongoose.model('FinancialInfo');
 const promisify = require('es6-promisify');
 const { getMessage } = require('../handlers/errorHandlers');
-const { accessToInvestments } = require('../handlers/userHandlers');
+const { getUserDataObject } = require('../handlers/userHandlers');
 
 const errorTrace = 'userController >';
 
@@ -74,34 +74,22 @@ exports.updateAccount = async (req, res) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1020, user.email),
-        data : { name : user.name, email : user.email, avatar : user.gravatar, accessToInvestments : accessToInvestments(user.email) }
+        data : getUserDataObject(user)
     });
 };
 
 exports.updateAccountPersonalInfo = async (req, res) => {
     const methodTrace = `${errorTrace} updateAccountPersonalInfo() >`;
+    
+    //get the logged in user from req
+    let user = req.user;
+
     const updates = {
         birthday : req.body.birthday
     };
-    
-    //check for a user with the provided email
-    const email = req.body.email;
-    console.log(`${methodTrace} ${getMessage('message', 1006, email)}`);
-    let user = await User.findOne({ email });
-    if (!user) {
-        console.log(`${methodTrace} ${getMessage('error', 455, email)}`);
-        res.status(401).json({ 
-            status : "error", 
-            codeno : 455,
-            msg : getMessage('error', 455, email),
-            data : null
-        });
-        return;
-    }
-    console.log(`${methodTrace} ${getMessage('message', 1027, user.email)}`);
 
     //check for a PersonalInfo record for the user found
-    console.log(`${methodTrace} ${getMessage('message', 1024, 'PersonalInfo', user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, 'PersonalInfo', 'user', user._id)}`);
     let personalInfo = await PersonalInfo.findOneAndUpdate(
         { user : user._id },
         { $set : updates },
@@ -111,12 +99,16 @@ exports.updateAccountPersonalInfo = async (req, res) => {
     if (!personalInfo) {
         //if no personalInfo record found then create one and save
         console.log(`${methodTrace} ${getMessage('message', 1025, 'PersonalInfo')}`);
-        personalInfo = await (new PersonalInfo({ user : user._id, birthday : req.body.birthday })).save();
+        personalInfo = await (new PersonalInfo({ 
+            user : user._id, 
+            birthday : req.body.birthday 
+        })).save();
+
         if (personalInfo) {
             console.log(`${methodTrace} ${getMessage('message', 1026, 'PersonalInfo')}`);
             
-            console.log(`${methodTrace} ${getMessage('message', 1024, 'User', 'email', user.email)}`);
             //search for the user and add the personal info id
+            console.log(`${methodTrace} ${getMessage('message', 1024, 'User', 'user', user._id)}`);
             user = await User.findOneAndUpdate(
                 { _id : req.user._id },
                 { $set : { personalInfo } },
@@ -128,42 +120,17 @@ exports.updateAccountPersonalInfo = async (req, res) => {
                 status : 'success', 
                 codeno : 200,
                 msg : getMessage('message', 1020, user.email),
-                data : { 
-                    name : user.name, 
-                    email : user.email, 
-                    avatar : user.gravatar, 
-                    accessToInvestments : accessToInvestments(user.email),
-                    personalInfo
-                }
+                data : null
             });
 
             return;
         }
     } else {
-
-        //if personalInfo was successfully edited then send the message with the info
-        if (new Date(personalInfo.birthday).toDateString() == new Date(updates.birthday).toDateString()) {
-            res.json({
-                status : 'success', 
-                codeno : 200,
-                msg : getMessage('message', 1028, 'PersonalInfo'),
-                data : { 
-                    name : user.name, 
-                    email : user.email, 
-                    avatar : user.gravatar, 
-                    accessToInvestments : accessToInvestments(user.email),
-                    personalInfo
-                }
-            });
-
-            return;
-        }
-
-        console.log(`${methodTrace} ${getMessage('error', 459, 'PersonalInfo')}`);
-        res.status(401).json({ 
-            status : "error", 
-            codeno : 459,
-            msg : getMessage('error', 459, 'PersonalInfo'),
+        console.log(`${methodTrace} ${getMessage('message', 1028, 'PersonalInfo')}`);
+        res.json({
+            status : 'success', 
+            codeno : 200,
+            msg : getMessage('message', 1028, 'PersonalInfo'),
             data : null
         });
     }
@@ -177,7 +144,6 @@ exports.checkLoggedInUserWithEmail = async (req, res, next) => {
     //check for a user with the provided email
     console.log(`${methodTrace} ${getMessage('message', 1029, req.body.email)}`);
     let user = await User.findOne({ email : req.body.email });
-    console.log(user);
     if (!user || user.email !== req.user.email) {
         console.log(`${methodTrace} ${getMessage('error', 460, req.body.email)}`);
         res.status(401).json({ 
@@ -196,6 +162,7 @@ exports.checkLoggedInUserWithEmail = async (req, res, next) => {
 exports.updateAccountFinancialInfo = async (req, res) => {
     const methodTrace = `${errorTrace} updateAccountFinancialInfo() >`;
     
+    //get the logged in user from req
     let user = req.user;
     
     //the fields to update
@@ -245,6 +212,7 @@ exports.updateAccountFinancialInfo = async (req, res) => {
             return;
         }
     } else {
+        console.log(`${methodTrace} ${getMessage('message', 1028, 'FinancialInfo')}`);
         res.json({
             status : 'success', 
             codeno : 200,

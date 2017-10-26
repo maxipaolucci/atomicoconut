@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { User } from './modules/users/models/user';
 import { AccountPersonal } from './modules/users/models/account-personal';
+import { AccountFinance } from './modules/users/models/account-finance';
 import { UsersService } from './modules/users/users.service';
 import { AppService } from './app.service';
 
@@ -15,7 +16,7 @@ export class AuthResolver implements Resolve<User> {
 
     let params = null;
     if (state.url === '/users/account') {
-      params = { personalInfo : true, financeInfo : true };
+      params = { personalInfo : true, financialInfo : true };
     }
 
     return this.usersService.getAuthenticatedUser(params).map(
@@ -25,7 +26,12 @@ export class AuthResolver implements Resolve<User> {
           if (data.personalInfo) {
             personalInfo = new AccountPersonal(data.personalInfo.birthday);
           }
-          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, null, personalInfo);          
+
+          let financialInfo = null;
+          if (data.financialInfo) {
+            financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.netWorth, data.financialInfo.incomeTaxRate);
+          }
+          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, financialInfo, personalInfo);          
           this.usersService.user = user;
           return user;
         } else {

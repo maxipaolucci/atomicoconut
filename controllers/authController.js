@@ -5,7 +5,7 @@ const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
-const { accessToInvestments } = require('../handlers/userHandlers');
+const { getUserDataObject } = require('../handlers/userHandlers');
 
 
 const errorTrace = 'authController >';
@@ -56,12 +56,7 @@ exports.login = (req, res, next) => {
                 status : 'success', 
                 codeno : 200,
                 msg : getMessage('message', 1000),
-                data : { 
-                    name : user.name, 
-                    email : user.email, 
-                    avatar : user.gravatar,
-                    personalInfo : user.personalInfo, 
-                    accessToInvestments : accessToInvestments(user.email) }
+                data : getUserDataObject(user)
             });
         });
     })(req, res, next);
@@ -111,10 +106,8 @@ exports.getUser = async (req, res, next) => {
         console.log(`${methodTrace} ${getMessage('message', 1006, email)}`);
         
         let user = null;
-        req.user.personalInfo = null;
-        if (req.query.personalInfo) {
-            user = await User.findOne({ email }).populate('personalInfo');
-            req.user.personalInfo = user.personalInfo || null;
+        if (Object.keys(req.query).length) {
+            user = await User.findOneAndPopulate({ email }, req.query);//await User.findOne({ email }).populate('personalInfo');
         } else {
             user = await User.findOne({ email });
         }
@@ -134,8 +127,7 @@ exports.getUser = async (req, res, next) => {
             status : 'success',
             codeno : 200,
             msg : getMessage('message', 1004),
-            data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar, 
-                accessToInvestments : accessToInvestments(req.user.email), personalInfo : req.user.personalInfo }
+            data : getUserDataObject(user, req.query)
         });
         return;
     }
@@ -241,7 +233,7 @@ exports.update = async (req, res) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1013),
-        data : { name : req.user.name, email : req.user.email, avatar : req.user.gravatar, accessToInvestments : accessToInvestments(req.user.email) }
+        data : getUserDataObject(req.user)
     });
 };
 

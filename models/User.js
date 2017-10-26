@@ -52,4 +52,22 @@ userSchema.plugin(mongodbErrorHandler); //this make mongoDB errors show a more c
                                         //We use it here cause when i.e. unique validation fails the 
                                         //error is pretty hard to understand. This plugin helps on that.
 
+
+userSchema.statics.findOneAndPopulate = function(findByFields, fieldsToPopulate = {}) {
+  let fieldsToPopulateStr = '';
+
+  if (fieldsToPopulate && Object.keys(fieldsToPopulate).length) {
+    for (let key of Object.keys(fieldsToPopulate)) {
+      if (fieldsToPopulate[key] === 'true') {
+        fieldsToPopulateStr += ` ${key}`;
+      }
+    }
+    
+    return this.findOne(findByFields).populate(fieldsToPopulateStr.substring(1));
+  } 
+  
+  return this.findOne(findByFields);
+};
+
+
 module.exports = mongoose.model('User', userSchema); //Mongo stores a table called "users" in the DB (it lowecase the model name and add an s automatically at the end)

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DateAdapter, NativeDateAdapter } from '@angular/material';
 import {User} from '../../models/user';
+import {AccountPersonal} from '../../models/account-personal';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import { UtilService } from '../../../../util.service';
@@ -41,9 +42,8 @@ export class AccountPersonalInfoComponent implements OnInit {
     //call the account service
     this.usersService.updatePersonalInfo(this.model).subscribe(
       (data : any) => {
-        if (data && data.email) {
-          const user = new User(data.name, data.email, data.avatar, data.accessToInvestments);
-          this.usersService.user = user;
+        if (data === null) {
+          this.usersService.user.personalInfo = new AccountPersonal(this.model.birthday);
           this.appService.showResults(`Your personal information was successfully updated!.`);
         } else {
           console.error(`${methodTrace} Unexpected data format.`)

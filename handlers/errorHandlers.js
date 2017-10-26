@@ -44,7 +44,7 @@ const messageCodes = {
   1025 : '{{param}} record not found in DB. Creating one instead...',
   1026 : 'New {{param}} record successfully created and saved.',
   1027 : 'User {{param}} found.',
-  1028 : '{{param}} record successfully updated.',
+  1028 : 'Record in {{param}} found and successfully updated.',
   1029 : 'Checking that the logged in user email in session matches {{param}} provided by the service consumer...',
   1030 : 'Email provided by service consumer successfully matches the user in the current server session.'
 };

@@ -6,7 +6,7 @@ const { getMessage } = require('./errorHandlers');
  * @param {*} email . The current user email
  * @return {boolean} . True if has access otherwise false.
  */
-exports.accessToInvestments = (email) => {
+const accessToInvestments = (email) => {
   const methodTrace = `${errorTrace} accessToInvestments() > `;
 
   console.log(`${methodTrace}${getMessage('message', 1023, email)}`);
@@ -20,3 +20,25 @@ exports.accessToInvestments = (email) => {
   
   return result;
 }
+
+/**
+ * Get a user object that we can send to the client that don't exposes sensible fields like ID
+ * @param {*} user . The user object to transmit
+ * @param {*} optionalFields . Optional fields to add
+ */
+exports.getUserDataObject = (user = {}, optionalFields = {}) => {
+  let dto = {
+      name : user.name, 
+      email : user.email, 
+      avatar : user.gravatar, 
+      accessToInvestments : accessToInvestments(user.email)
+  };
+
+  for (let key of Object.keys(optionalFields)) {
+      if (optionalFields[key] === 'true') {
+          dto[key] = user[key] || null;
+      }
+  }
+
+  return dto;
+};
