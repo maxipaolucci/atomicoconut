@@ -3,7 +3,10 @@ const pug = require('pug');
 const juice = require('juice'); //inline css for email clients
 const htmlToText = require('html-to-text'); //convert html to text format
 const promisify = require('es6-promisify');
-const sgMail = require('@sendgrid/mail');
+const sgMail = require('@sendgrid/mail'); //to send emails using SendGrid
+const { getMessage } = require('./errorHandlers');
+
+const errorTrace = 'handlers/mail >';
 
 //mailtrap io
 const transportMailTrap = nodemailer.createTransport({
@@ -30,7 +33,8 @@ const generateHTML = (filename, options = {}) => {
   return inlined;
 };
 
-exports.send = async (options) => {
+//sends emails with nodemailer+mailtrap (or gmail if we change the transport used)
+const sendMtMail = async (options) => {
   const html = generateHTML(options.filename, options);
   const text = htmlToText.fromString(html); 
   const mailOptions = {
@@ -45,7 +49,8 @@ exports.send = async (options) => {
   return sendMail(mailOptions);
 };
 
-exports.sendSgMail = async (options) => {
+//Sends emails using SendGrid platform
+const sendSgMail = async (options) => {
   const html = generateHTML(options.filename, options);
   const text = htmlToText.fromString(html); 
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -56,5 +61,18 @@ exports.sendSgMail = async (options) => {
     text,
     html
   };
+  
   return sgMail.send(mailOptions);
 };
+
+exports.send = async(options) => {
+  const methodTrace = `${errorTrace} send() >`;
+  
+  if (process.env.NODE_ENV === 'production') {
+    console.log(`${methodTrace} ${getMessage('message', 1021, 'SendGrid')}`);
+    return sendSgMail(options);
+  } else {
+    console.log(`${methodTrace} ${getMessage('message', 1021, 'Mailtrap')}`);
+    return sendMtMail(options);
+  }
+}
