@@ -11,7 +11,7 @@ import { AppService } from './app.service';
 import { UtilService } from './util.service';
 import { AuthResolver } from './auth-resolver.service';
 import { AuthGuard } from './auth.guard';
-import { CustomMaterialDesignModule } from './modules/custom-material-design/custom-material-design.module';
+import { CustomMaterialDesignModule } from './modules/shared/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
 import { InvestmentsModule } from './modules/investments/investments.module';
 import { CalculatorsModule } from './modules/calculators/calculators.module';

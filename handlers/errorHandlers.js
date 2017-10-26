@@ -11,7 +11,8 @@ const errorCodes = {
   456 : 'Passwords do not match!',
   457 : 'User not found with that token, it may be invalid or already expired.',
   458 : 'The register form contains some errors: {{param}}.',
-  459 : 'Failed to create and save a new record of {{param}}.'
+  459 : 'Failed to create and save a new record of {{param}}.',
+  460 : 'User email loggedin in current server session does not match {{param}} provided by the service consumer.'
 };
 
 const messageCodes = {
@@ -39,11 +40,13 @@ const messageCodes = {
   1021 : 'User {{param}} has not got access to investments',
   1022 : 'User {{param}} has access to investments',
   1023 : 'Checking access to investments for {{param}}...',
-  1024 : 'Searching {{param}} for {{param}} for update...',
+  1024 : 'Searching {{param}} with {{param}} = {{param}} to update...',
   1025 : '{{param}} record not found in DB. Creating one instead...',
   1026 : 'New {{param}} record successfully created and saved.',
   1027 : 'User {{param}} found.',
-  1028 : '{{param}} record successfully updated.'
+  1028 : '{{param}} record successfully updated.',
+  1029 : 'Checking that the logged in user email in session matches {{param}} provided by the service consumer...',
+  1030 : 'Email provided by service consumer successfully matches the user in the current server session.'
 };
 
 /**

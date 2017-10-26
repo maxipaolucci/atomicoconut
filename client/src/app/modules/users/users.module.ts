@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UsersRoutingModule } from './users-routing.module';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { CustomMaterialDesignModule } from '../../modules/custom-material-design/custom-material-design.module';
+import { CustomMaterialDesignModule } from '../../modules/shared/custom-material-design.module';
 import { SharedModule } from '../../modules/shared/shared.module';
 import { RegisterComponent } from './components/register/register.component';
 import { UsersService } from './users.service';

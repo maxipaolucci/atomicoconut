@@ -14,4 +14,4 @@ const personalInfoSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('PersonalInfo', personalInfoSchema); //Mongo stores a table called "reviews" in the DB (it lowecase the model name and add an s automatically at the end)
+module.exports = mongoose.model('PersonalInfo', personalInfoSchema);

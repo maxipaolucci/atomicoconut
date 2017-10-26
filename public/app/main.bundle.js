@@ -159,7 +159,7 @@ var _a, _b, _c, _d;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__auth_guard__ = __webpack_require__("../../../../../src/app/auth.guard.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modules_investments_investments_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__modules_calculators_calculators_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators.module.ts");
@@ -202,7 +202,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_6__app_routing_module__["a" /* AppRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_http__["c" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
-            __WEBPACK_IMPORTED_MODULE_12__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_12__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
             __WEBPACK_IMPORTED_MODULE_13__modules_users_users_module__["a" /* UsersModule */],
             __WEBPACK_IMPORTED_MODULE_14__modules_investments_investments_module__["a" /* InvestmentsModule */],
             __WEBPACK_IMPORTED_MODULE_15__modules_calculators_calculators_module__["a" /* CalculatorsModule */],
@@ -773,7 +773,7 @@ CalculatorsRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__calculators_routing_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators-routing.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_equity_equity_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.ts");
@@ -805,7 +805,7 @@ CalculatorsModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_6__calculators_routing_module__["a" /* CalculatorsRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__["FlexLayoutModule"],
-            __WEBPACK_IMPORTED_MODULE_4__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_4__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
             __WEBPACK_IMPORTED_MODULE_5__modules_shared_shared_module__["a" /* SharedModule */]
         ],
         declarations: [__WEBPACK_IMPORTED_MODULE_7__components_equity_equity_component__["a" /* EquityComponent */], __WEBPACK_IMPORTED_MODULE_8__components_calculators_dashboard_calculators_dashboard_component__["a" /* CalculatorsDashboardComponent */]]
@@ -984,73 +984,6 @@ EquityComponent = __decorate([
 
 var _a;
 //# sourceMappingURL=equity.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomMaterialDesignModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var CustomMaterialDesignModule = (function () {
-    function CustomMaterialDesignModule() {
-    }
-    return CustomMaterialDesignModule;
-}());
-CustomMaterialDesignModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
-        imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatButtonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatSnackBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatChipsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatSlideToggleModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatToolbarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatIconModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatInputModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatProgressBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCardModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatTabsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatExpansionModule */]
-        ],
-        exports: [
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatButtonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatSnackBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatChipsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatSlideToggleModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatToolbarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatIconModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatInputModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatButtonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatProgressBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCardModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatTabsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatExpansionModule */]
-        ]
-    })
-], CustomMaterialDesignModule);
-
-//# sourceMappingURL=custom-material-design.module.js.map
 
 /***/ }),
 
@@ -1380,7 +1313,7 @@ InvestmentsRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investments_routing_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments-routing.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_crypto_currency_crypto_currency_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.ts");
@@ -1411,7 +1344,7 @@ InvestmentsModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__investments_routing_module__["a" /* InvestmentsRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
-            __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
             __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__["a" /* SharedModule */]
         ],
         declarations: [
@@ -1531,6 +1464,73 @@ MainNavigatorService = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/modules/shared/custom-material-design.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomMaterialDesignModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var CustomMaterialDesignModule = (function () {
+    function CustomMaterialDesignModule() {
+    }
+    return CustomMaterialDesignModule;
+}());
+CustomMaterialDesignModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatCheckboxModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatChipsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatDatepickerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCardModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatExpansionModule */]
+        ],
+        exports: [
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatCheckboxModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatChipsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatDatepickerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["b" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatCardModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatExpansionModule */]
+        ]
+    })
+], CustomMaterialDesignModule);
+
+//# sourceMappingURL=custom-material-design.module.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/modules/shared/shared.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1540,7 +1540,7 @@ MainNavigatorService = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_main_navigator_main_navigator_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1562,7 +1562,7 @@ SharedModule = __decorate([
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* RouterModule */],
-            __WEBPACK_IMPORTED_MODULE_4__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
+            __WEBPACK_IMPORTED_MODULE_4__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
         ],
         exports: [__WEBPACK_IMPORTED_MODULE_3__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */]],
         declarations: [__WEBPACK_IMPORTED_MODULE_3__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */]]
@@ -1576,7 +1576,7 @@ SharedModule = __decorate([
 /***/ "../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container form__account-finance\" (ngSubmit)=\"onSubmit()\" #financeForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Active income -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"activeIncome\" name=\"activeIncome\" placeholder=\"Active Income\" \r\n            [(ngModel)]=\"model.activeIncome\" \r\n            value=\"model.activeIncome\"\r\n            numberValidator \r\n            #activeIncome=\"ngModel\">\r\n        <mat-hint align=\"start\">Annual income amount pre-tax.</mat-hint>\r\n        <mat-error *ngIf=\"activeIncome.invalid && (activeIncome.dirty || activeIncome.touched) && activeIncome.errors.numberValidator\">Tax rate must be numeric, with no more than two decimal values</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Tax rate -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"incomeTaxRate\" name=\"incomeTaxRate\" placeholder=\"Active income tax rate\" \r\n            [(ngModel)]=\"model.incomeTaxRate\" \r\n            value=\"model.incomeTaxRate\"\r\n            numberValidator='{\"min\": 0, \"max\": 100}' \r\n            #incomeTaxRate=\"ngModel\">\r\n\r\n        <mat-hint align=\"start\">Income tax rate (%).</mat-hint>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator\">Tax rate must be numeric, with no more than two decimal values</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n      </mat-form-field>\r\n      <!-- <pre>{{incomeTaxRate.errors | json}}</pre> -->\r\n\r\n      <!-- Net worth -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"netWorth\" name=\"netWorth\" placeholder=\"Net worth\" \r\n            [(ngModel)]=\"model.netWorth\" \r\n            value=\"model.netWorth\"\r\n            numberValidator\r\n            #netWorth=\"ngModel\">\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-finance\">\r\n    <button *ngIf=\"!accountFinanceServiceRunning\" \r\n        class=\"form__action mat-raised-button\" \r\n        mat-raised-button \r\n        type=\"submit\" \r\n        color=\"accent\" \r\n        [disabled]=\"!financeForm.form.valid\">Save</button>\r\n    \r\n    <mat-progress-bar *ngIf=\"accountFinanceServiceRunning\"\r\n        class=\"progress-bar progress-bar--account-finance\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </section>\r\n\r\n</form>"
+module.exports = "<form class=\"form__container form__account-finance\" (ngSubmit)=\"onSubmit()\" #financeForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Active income -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"33%\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"annualIncome\" name=\"annualIncome\" placeholder=\"Annual Income\" \r\n            [(ngModel)]=\"model.annualIncome\" \r\n            value=\"model.annualIncome\"\r\n            numberValidator \r\n            #annualIncome=\"ngModel\">\r\n        <mat-hint align=\"start\">Annual income amount pre-tax.</mat-hint>\r\n        <mat-error *ngIf=\"annualIncome.invalid && (annualIncome.dirty || annualIncome.touched) && annualIncome.errors.numberValidator\">Annual must be numeric, with no more than two decimal digits</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Tax rate -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"33%\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"incomeTaxRate\" name=\"incomeTaxRate\" placeholder=\"Active income tax rate\" \r\n            [(ngModel)]=\"model.incomeTaxRate\" \r\n            value=\"model.incomeTaxRate\"\r\n            numberValidator='{\"min\": 0, \"max\": 100}' \r\n            #incomeTaxRate=\"ngModel\">\r\n\r\n        <mat-hint align=\"start\">Income tax rate (%).</mat-hint>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator\">Tax rate must be numeric, with no more than two decimal digits</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n      </mat-form-field>\r\n      <!-- <pre>{{incomeTaxRate.errors | json}}</pre> -->\r\n\r\n      <!-- Net worth -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"33%\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"netWorth\" name=\"netWorth\" placeholder=\"Net worth\" \r\n            [(ngModel)]=\"model.netWorth\" \r\n            value=\"model.netWorth\"\r\n            numberValidator\r\n            #netWorth=\"ngModel\">\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-finance\">\r\n    <button *ngIf=\"!accountFinanceServiceRunning\" \r\n        class=\"form__action mat-raised-button\" \r\n        mat-raised-button \r\n        type=\"submit\" \r\n        color=\"accent\" \r\n        [disabled]=\"!financeForm.form.valid\">Save</button>\r\n    \r\n    <mat-progress-bar *ngIf=\"accountFinanceServiceRunning\"\r\n        class=\"progress-bar progress-bar--account-finance\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </section>\r\n\r\n</form>"
 
 /***/ }),
 
@@ -1605,6 +1605,9 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountFinanceInfoComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_account_finance__ = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1616,26 +1619,58 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
+
 var AccountFinanceInfoComponent = (function () {
-    function AccountFinanceInfoComponent() {
-        this.model = null;
+    function AccountFinanceInfoComponent(usersService, appService) {
+        this.usersService = usersService;
+        this.appService = appService;
+        this.model = {
+            email: null,
+            annualIncome: null,
+            incomeTaxRate: null,
+            netWorth: null
+        };
         this.accountFinanceServiceRunning = false;
     }
     AccountFinanceInfoComponent.prototype.ngOnInit = function () {
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
-        this.model = this.user.finance;
-    };
-    AccountFinanceInfoComponent.prototype.ngAfterViewInit = function () {
+        if (this.user.financialInfo) {
+            this.model = {
+                annualIncome: this.user.financialInfo.annualIncome,
+                incomeTaxRate: this.user.financialInfo.incomeTaxRate,
+                netWorth: this.user.financialInfo.netWorth
+            };
+        }
+        this.model.email = this.user.email;
     };
     AccountFinanceInfoComponent.prototype.onSubmit = function () {
-        console.log(this.user.finance);
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.accountFinanceServiceRunning = true;
+        //call the account service
+        this.usersService.updateFinancialInfo(this.model).subscribe(function (data) {
+            if (data === null) {
+                _this.usersService.user.financialInfo = new __WEBPACK_IMPORTED_MODULE_2__models_account_finance__["a" /* AccountFinance */](_this.model.annualIncome, _this.model.incomeTaxRate, _this.model.netWorth);
+                console.log(_this.usersService.user);
+                _this.appService.showResults("Your personal information was successfully updated!.");
+            }
+            else {
+                console.error(methodTrace + " Unexpected data format.");
+            }
+            _this.accountFinanceServiceRunning = false;
+        }, function (error) {
+            console.error(methodTrace + " There was an error with the update personal info service > " + error);
+            if (error.codeno === 400) {
+                //the mail system failed for external reasons
+                _this.appService.showResults("There was an error with the personal info service, please try again in a few minutes.");
+            }
+            _this.accountFinanceServiceRunning = false;
+        });
     };
     return AccountFinanceInfoComponent;
 }());
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_17" /* ViewChild */])('financeForm'),
-    __metadata("design:type", Object)
-], AccountFinanceInfoComponent.prototype, "form", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
     __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */]) === "function" && _a || Object)
@@ -1646,10 +1681,10 @@ AccountFinanceInfoComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.scss")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object])
 ], AccountFinanceInfoComponent);
 
-var _a;
+var _a, _b, _c;
 //# sourceMappingURL=account-finance-info.component.js.map
 
 /***/ }),
@@ -1711,14 +1746,13 @@ var AccountPersonalInfoComponent = (function () {
         this.usersService = usersService;
         this.appService = appService;
         this.utilService = utilService;
-        this.model = { birthday: null, userEmail: null };
+        this.model = { birthday: null, email: null };
         this.startAt = new Date(1990, 0, 1);
         this.accountPersonalServiceRunning = false;
         this.dateAdapter.setLocale('en-GB');
     }
     AccountPersonalInfoComponent.prototype.ngOnInit = function () {
-        this.model.userEmail = this.user.email;
-        console.log(this.user);
+        this.model.email = this.user.email;
         if (this.user.personalInfo) {
             this.model.birthday = this.user.personalInfo.birthday;
             if (this.user.personalInfo.birthday) {
@@ -2349,14 +2383,14 @@ var _a, _b, _c, _d;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountFinance; });
 var AccountFinance = (function () {
-    function AccountFinance(activeIncome, netWorth, incomeTaxRate) {
-        if (activeIncome === void 0) { activeIncome = 0; }
-        if (netWorth === void 0) { netWorth = 0; }
-        if (incomeTaxRate === void 0) { incomeTaxRate = 0; }
-        this.activeIncome = 0; //annual pre tax
-        this.netWorth = 0;
-        this.incomeTaxRate = 0; //percentage value
-        this.activeIncome = activeIncome;
+    function AccountFinance(annualIncome, netWorth, incomeTaxRate) {
+        if (annualIncome === void 0) { annualIncome = null; }
+        if (netWorth === void 0) { netWorth = null; }
+        if (incomeTaxRate === void 0) { incomeTaxRate = null; }
+        this.annualIncome = null; //annual pre tax
+        this.netWorth = null;
+        this.incomeTaxRate = null; //percentage value
+        this.annualIncome = annualIncome;
         this.netWorth = netWorth;
         this.incomeTaxRate = incomeTaxRate;
     }
@@ -2395,22 +2429,22 @@ var AccountPersonal = (function () {
 
 
 var User = (function () {
-    function User(name, email, avatar, accessToInvestments, accountFinance, personalInfo) {
+    function User(name, email, avatar, accessToInvestments, financialInfo, personalInfo) {
         if (name === void 0) { name = ''; }
         if (email === void 0) { email = ''; }
         if (avatar === void 0) { avatar = ''; }
         if (accessToInvestments === void 0) { accessToInvestments = false; }
-        if (accountFinance === void 0) { accountFinance = null; }
+        if (financialInfo === void 0) { financialInfo = null; }
         if (personalInfo === void 0) { personalInfo = null; }
-        this._name = name;
-        this._email = email;
-        this._avatar = avatar;
-        this._accessToinvestments = accessToInvestments;
-        if (accountFinance) {
-            this.setAccountFinance(accountFinance);
+        this.name = name;
+        this.email = email;
+        this.avatar = avatar;
+        this.accessToInvestments = accessToInvestments;
+        if (financialInfo) {
+            this.financialInfo = financialInfo;
         }
         else {
-            this.finance = new __WEBPACK_IMPORTED_MODULE_0__account_finance__["a" /* AccountFinance */]();
+            this.financialInfo = new __WEBPACK_IMPORTED_MODULE_0__account_finance__["a" /* AccountFinance */]();
         }
         if (personalInfo) {
             this.personalInfo = personalInfo;
@@ -2419,49 +2453,6 @@ var User = (function () {
             this.personalInfo = new __WEBPACK_IMPORTED_MODULE_1__account_personal__["a" /* AccountPersonal */]();
         }
     }
-    User.prototype.setAccountFinance = function (accountFinance) {
-        this.finance = new __WEBPACK_IMPORTED_MODULE_0__account_finance__["a" /* AccountFinance */](accountFinance.activeIncome, accountFinance.netWorth, accountFinance.incomeTaxRate);
-    };
-    Object.defineProperty(User.prototype, "name", {
-        get: function () {
-            return this._name;
-        },
-        set: function (name) {
-            this._name = name;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(User.prototype, "email", {
-        get: function () {
-            return this._email;
-        },
-        set: function (email) {
-            this._email = email;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(User.prototype, "avatar", {
-        get: function () {
-            return this._avatar;
-        },
-        set: function (avatar) {
-            this._avatar = avatar;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(User.prototype, "accessToInvestments", {
-        get: function () {
-            return this._accessToinvestments;
-        },
-        set: function (accessToInvestments) {
-            this._accessToinvestments = accessToInvestments;
-        },
-        enumerable: true,
-        configurable: true
-    });
     return User;
 }());
 
@@ -2543,7 +2534,7 @@ UsersRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_routing_module__ = __webpack_require__("../../../../../src/app/modules/users/users-routing.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/custom-material-design/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_register_register_component__ = __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
@@ -2590,7 +2581,7 @@ UsersModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__users_routing_module__["a" /* UsersRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
-            __WEBPACK_IMPORTED_MODULE_5__modules_custom_material_design_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
             __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__["a" /* SharedModule */]
         ],
         declarations: [
@@ -2654,7 +2645,7 @@ var UsersService = (function () {
             .catch(this.appService.handleError);
     };
     /**
-     * Server call to Account to update account details
+     * Server call to update account user details
      * @param postData
      */
     UsersService.prototype.updateAccount = function (postData) {
@@ -2664,12 +2655,22 @@ var UsersService = (function () {
             .catch(this.appService.handleError);
     };
     /**
-     * Server call to Account to update account details
+     * Server call to update account personal details
      * @param postData
      */
     UsersService.prototype.updatePersonalInfo = function (postData) {
         if (postData === void 0) { postData = {}; }
         return this.http.post(this.serverHost + "/accountPersonalInfo", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to update account financial details
+     * @param postData
+     */
+    UsersService.prototype.updateFinancialInfo = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/accountFinancialInfo", postData, { headers: this.headers })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
     };

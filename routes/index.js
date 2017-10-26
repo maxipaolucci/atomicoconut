@@ -97,6 +97,12 @@ router.post('/api/users/accountPersonalInfo',
   catchErrors(userController.updateAccountPersonalInfo)
 );
 
+router.post('/api/users/accountFinancialInfo', 
+  authController.isLogggedIn, 
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  catchErrors(userController.updateAccountFinancialInfo)
+);
+
 router.post('/api/users/account/forgot', catchErrors(authController.forgot));
 
 router.post('/api/users/account/reset/:token', 

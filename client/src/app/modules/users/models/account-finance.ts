@@ -1,11 +1,11 @@
 export class AccountFinance {
   
-    activeIncome : number = 0; //annual pre tax
-    netWorth : number = 0;
-    incomeTaxRate : number = 0; //percentage value
+    annualIncome : number = null; //annual pre tax
+    netWorth : number = null;
+    incomeTaxRate : number = null; //percentage value
   
-    constructor(activeIncome : number = 0, netWorth : number = 0, incomeTaxRate : number = 0) {
-      this.activeIncome = activeIncome; 
+    constructor(annualIncome : number = null, netWorth : number = null, incomeTaxRate : number = null) {
+      this.annualIncome = annualIncome; 
       this.netWorth = netWorth;
       this.incomeTaxRate = incomeTaxRate; 
     }

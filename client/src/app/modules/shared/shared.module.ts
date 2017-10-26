@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { MainNavigatorComponent } from './components/main-navigator/main-navigator.component';
-import { CustomMaterialDesignModule } from '../../modules/custom-material-design/custom-material-design.module';
+import { CustomMaterialDesignModule } from '../../modules/shared/custom-material-design.module';
 
 @NgModule({
   imports: [

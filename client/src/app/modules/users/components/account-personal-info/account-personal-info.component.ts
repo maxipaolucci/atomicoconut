@@ -13,7 +13,7 @@ import { UtilService } from '../../../../util.service';
 export class AccountPersonalInfoComponent implements OnInit {
 
   @Input() user : User;
-  model : any = { birthday : null, userEmail : null };
+  model : any = { birthday : null, email : null };
   startAt : Date = new Date(1990, 0, 1);
   accountPersonalServiceRunning : boolean = false;
 
@@ -23,8 +23,8 @@ export class AccountPersonalInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.model.userEmail = this.user.email;
-    console.log(this.user);
+    this.model.email = this.user.email;
+    
     if (this.user.personalInfo) {
       this.model.birthday = this.user.personalInfo.birthday;
       

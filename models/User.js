@@ -28,6 +28,11 @@ const userSchema = new Schema({
     ref : 'PersonalInfo',
     default: null  
   },
+  financialInfo : {
+    type : mongoose.Schema.ObjectId,
+    ref : 'FinancialInfo',
+    default: null  
+  }
 });
 
 

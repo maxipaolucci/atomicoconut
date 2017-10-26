@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const PersonalInfo = mongoose.model('PersonalInfo');
+const FinancialInfo = mongoose.model('FinancialInfo');
 const promisify = require('es6-promisify');
 const { getMessage } = require('../handlers/errorHandlers');
 const { accessToInvestments } = require('../handlers/userHandlers');
@@ -84,7 +85,7 @@ exports.updateAccountPersonalInfo = async (req, res) => {
     };
     
     //check for a user with the provided email
-    const email = req.body.userEmail;
+    const email = req.body.email;
     console.log(`${methodTrace} ${getMessage('message', 1006, email)}`);
     let user = await User.findOne({ email });
     if (!user) {
@@ -113,26 +114,14 @@ exports.updateAccountPersonalInfo = async (req, res) => {
         personalInfo = await (new PersonalInfo({ user : user._id, birthday : req.body.birthday })).save();
         if (personalInfo) {
             console.log(`${methodTrace} ${getMessage('message', 1026, 'PersonalInfo')}`);
-            console.log(`${methodTrace} ${getMessage('message', 1024, 'User', updates.email)}`);
-
+            
+            console.log(`${methodTrace} ${getMessage('message', 1024, 'User', 'email', user.email)}`);
             //search for the user and add the personal info id
             user = await User.findOneAndUpdate(
                 { _id : req.user._id },
                 { $set : { personalInfo } },
                 { new : true, runValidators : true, context : 'query' }
             );
-
-            if (!user) {
-                console.log(`${methodTrace} ${getMessage('error', 455, email)}`);
-                res.status(401).json({ 
-                    status : "error", 
-                    codeno : 455,
-                    msg : getMessage('error', 455, email),
-                    data : null
-                });
-
-                return;
-            }
 
             console.log(`${methodTrace} ${getMessage('message', 1020, user.email)}`);
             res.json({
@@ -175,6 +164,91 @@ exports.updateAccountPersonalInfo = async (req, res) => {
             status : "error", 
             codeno : 459,
             msg : getMessage('error', 459, 'PersonalInfo'),
+            data : null
+        });
+    }
+};
+
+/**
+ * This methods double checks that the loggedin user in the session matches the user email provided by the client service call
+ */
+exports.checkLoggedInUserWithEmail = async (req, res, next) => {
+    const methodTrace = `${errorTrace} checkLoggedInUserWithEmail() >`;
+    //check for a user with the provided email
+    console.log(`${methodTrace} ${getMessage('message', 1029, req.body.email)}`);
+    let user = await User.findOne({ email : req.body.email });
+    console.log(user);
+    if (!user || user.email !== req.user.email) {
+        console.log(`${methodTrace} ${getMessage('error', 460, req.body.email)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 460,
+            msg : getMessage('error', 460, email),
+            data : null
+        });
+        return;
+    }
+    
+    console.log(`${methodTrace} ${getMessage('message', 1030, user.email)}`);
+    next();
+};
+
+exports.updateAccountFinancialInfo = async (req, res) => {
+    const methodTrace = `${errorTrace} updateAccountFinancialInfo() >`;
+    
+    let user = req.user;
+    
+    //the fields to update
+    const updates = {
+        annualIncome : req.body.annualIncome,
+        netWorth : req.body.netWorth,
+        incomeTaxRate : req.body.incomeTaxRate
+    };
+
+    //check for a FinancialInfo record for the user
+    console.log(`${methodTrace} ${getMessage('message', 1024, 'FinancialInfo', 'user', user._id)}`);
+    let financialInfo = await FinancialInfo.findOneAndUpdate(
+        { user : user._id },
+        { $set : updates },
+        { new : true, runValidators : true, context : 'query' }
+    );
+
+    if (!financialInfo) {
+        //if no financialInfo record found then create one and save
+        console.log(`${methodTrace} ${getMessage('message', 1025, 'FinancialInfo')}`);
+        financialInfo = await (new FinancialInfo({ 
+            user : user._id, 
+            annualIncome : req.body.annualIncome,
+            netWorth : req.body.netWorth,
+            incomeTaxRate : req.body.incomeTaxRate
+        })).save();
+
+        if (financialInfo) {
+            console.log(`${methodTrace} ${getMessage('message', 1026, 'FinancialInfo')}`);
+
+            //search for the user and add the new financial info id
+            console.log(`${methodTrace} ${getMessage('message', 1024, 'User', 'id', user._id)}`);
+            user = await User.findOneAndUpdate(
+                { _id : user._id },
+                { $set : { financialInfo } },
+                { new : true, runValidators : true, context : 'query' }
+            );
+
+            console.log(`${methodTrace} ${getMessage('message', 1020, user.email)}`);
+            res.json({
+                status : 'success', 
+                codeno : 200,
+                msg : getMessage('message', 1020, user.email),
+                data : null
+            });
+
+            return;
+        }
+    } else {
+        res.json({
+            status : 'success', 
+            codeno : 200,
+            msg : getMessage('message', 1028, 'FinancialInfo'),
             data : null
         });
     }

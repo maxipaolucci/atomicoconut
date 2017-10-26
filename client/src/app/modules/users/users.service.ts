@@ -30,7 +30,7 @@ export class UsersService {
   }
 
   /**
-   * Server call to Account to update account details 
+   * Server call to update account user details 
    * @param postData 
    */
   updateAccount(postData : any = {}) : Observable<any> {
@@ -40,11 +40,21 @@ export class UsersService {
   }
 
   /**
-   * Server call to Account to update account details 
+   * Server call to update account personal details 
    * @param postData 
    */
   updatePersonalInfo(postData : any = {}) : Observable<any> {
     return this.http.post(`${this.serverHost}/accountPersonalInfo`, postData, { headers : this.headers })
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
+  }
+
+  /**
+   * Server call to update account financial details 
+   * @param postData 
+   */
+  updateFinancialInfo(postData : any = {}) : Observable<any> {
+    return this.http.post(`${this.serverHost}/accountFinancialInfo`, postData, { headers : this.headers })
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
   }
