@@ -3,6 +3,7 @@ const pug = require('pug');
 const juice = require('juice'); //inline css for email clients
 const htmlToText = require('html-to-text'); //convert html to text format
 const promisify = require('es6-promisify');
+const sgMail = require('@sendgrid/mail');
 
 //mailtrap io
 const transportMailTrap = nodemailer.createTransport({
@@ -44,7 +45,6 @@ exports.send = async (options) => {
   return sendMail(mailOptions);
 };
 
-const sgMail = require('@sendgrid/mail');
 exports.sendSgMail = async (options) => {
   const html = generateHTML(options.filename, options);
   const text = htmlToText.fromString(html); 
