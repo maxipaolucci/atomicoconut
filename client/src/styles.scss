@@ -6,7 +6,11 @@
 
 
 body {
-    color: rgba(255,255,255,.87);
+    color: $almostWhite;
+
+    &.mat-typography p {
+        margin: 0;
+    }
 }
 
 .ac__link {
@@ -31,4 +35,12 @@ body {
 
 .color__almost-white {
     color: $almostWhite;
+}
+
+.color__accent {
+    color: $accent;
+}
+
+p {
+    margin: 0;
 }

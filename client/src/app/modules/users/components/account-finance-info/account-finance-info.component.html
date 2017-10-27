@@ -10,9 +10,10 @@
             numberValidator 
             #annualIncome="ngModel">
         <mat-hint align="start">Annual income amount pre-tax.</mat-hint>
-        <mat-error *ngIf="annualIncome.invalid && (annualIncome.dirty || annualIncome.touched) && annualIncome.errors.numberValidator">Annual must be numeric, with no more than two decimal digits</mat-error>
+        <mat-error *ngIf="annualIncome.invalid && (annualIncome.dirty || annualIncome.touched) && annualIncome.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
       </mat-form-field>
-      
+      <!-- <pre>{{annualIncome.errors | json}}</pre> -->
+
       <!-- Tax rate -->
       <mat-form-field fxFlex fxFlex.gt-xs="33%" class="form__field">
         <input matInput type="number" id="incomeTaxRate" name="incomeTaxRate" placeholder="Active income tax rate" 
@@ -22,7 +23,7 @@
             #incomeTaxRate="ngModel">
 
         <mat-hint align="start">Income tax rate (%).</mat-hint>
-        <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator">Tax rate must be numeric, with no more than two decimal digits</mat-error>
+        <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
         <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
         <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
       </mat-form-field>
@@ -30,11 +31,13 @@
 
       <!-- Net worth -->
       <mat-form-field fxFlex fxFlex.gt-xs="33%" class="form__field">
-        <input matInput type="number" id="netWorth" name="netWorth" placeholder="Net worth" 
+        <input matInput type="number" id="netWorth" name="netWorth" placeholder="Savings" 
             [(ngModel)]="model.netWorth" 
             value="model.netWorth"
             numberValidator
             #netWorth="ngModel">
+
+            <mat-error *ngIf="netWorth.invalid && (netWorth.dirty || netWorth.touched) && netWorth.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
       </mat-form-field>
     </div>
   </section>

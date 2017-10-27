@@ -16,7 +16,7 @@
 
     on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}
 
-    <div [class.color__green]="usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought" 
+    <div [class.color__accent]="usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought" 
         [class.color__red]="usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought">
       <br>
       ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)

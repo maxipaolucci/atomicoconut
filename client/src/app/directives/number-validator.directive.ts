@@ -7,6 +7,8 @@ import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 })
 export class NumberValidatorDirective {
 
+  private numberRegExp = new RegExp('^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$');
+
   constructor(@Attribute('numberValidator') public validationType: string) {}
 
   validate(control : AbstractControl) : { [key : string] : any } {
@@ -17,26 +19,21 @@ export class NumberValidatorDirective {
     }
 
     const val: number = control.value;
-    if (val) {
-      let result : any = {};
-      const numberRegExp = new RegExp('^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$');
 
-      if(!numberRegExp.test(val.toString())) {
-        return {"numberValidator": true};
-      }
-      
-      if(!isNaN(validationObj.min) && val < validationObj.min) {
-        result.numberValidatorMin = true;
-      }
-      
-      if(!isNaN(validationObj.max) && val > validationObj.max) {
-        result.numberValidatorMax = true;
-      }
-
-      return Object.keys(result).length ? result : null;
+    if(!this.numberRegExp.test(val + '')) {
+      return {"numberValidator": true};
     }
     
-    return null;
+    let result : any = {};
+    if(!isNaN(validationObj.min) && val < validationObj.min) {
+      result.numberValidatorMin = true;
+    }
+    
+    if(!isNaN(validationObj.max) && val > validationObj.max) {
+      result.numberValidatorMax = true;
+    }
+
+    return Object.keys(result).length ? result : null;
   }
 
 }

@@ -44,7 +44,6 @@ export class AccountFinanceInfoComponent implements OnInit {
       (data : any) => {
         if (data === null) {
           this.usersService.user.financialInfo = new AccountFinance(this.model.annualIncome, this.model.incomeTaxRate, this.model.netWorth);
-          console.log(this.usersService.user);
           this.appService.showResults(`Your personal information was successfully updated!.`);
         } else {
           console.error(`${methodTrace} Unexpected data format.`)
