@@ -25,6 +25,8 @@ const teamSchema = new mongoose.Schema({
   }]
 });
 
+teamSchema.index({ slug : 1 }, { unique : true });
+
 //before save in the schema populates slug with name
 teamSchema.pre('save', async function(next) {
   if (!this.isModified('name')) {

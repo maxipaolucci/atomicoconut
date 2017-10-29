@@ -65,6 +65,10 @@ router.get('/app/teams', (req, res) => {
 router.get('/app/teams/create', (req, res) => {
   res.render('home', {title: 'Create Team'});
 });
+
+router.get('/app/teams/edit/:slug', (req, res) => {
+  res.render('home', {title: 'Edit Team'});
+});
 // TEST controller
 // router.get('/register', testController.registerForm);
 // router.get('/login', testController.loginForm);
@@ -124,11 +128,18 @@ router.post('/api/users/account/reset/:token',
 //*************************************************************************** */
 //****************************** TEAM API *********************************** */
 //*************************************************************************** */
+router.get('/api/teams/getBySlug', 
+  authController.isLogggedIn, 
+  catchErrors(teamController.getTeamBySlug)
+);
+
 router.post('/api/teams/create', 
   authController.isLogggedIn, 
   teamController.validateRegister,
   catchErrors(userController.checkLoggedInUserWithEmail),
   catchErrors(teamController.create)
 );
+
+
 
 module.exports = router;

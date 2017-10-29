@@ -15,6 +15,13 @@ const routes: Routes = [
         resolve : {
           authUser : AuthResolver
         } 
+      },
+      { 
+        path : 'edit/:slug', 
+        component : TeamsEditComponent,
+        resolve : {
+          authUser : AuthResolver
+        } 
       }
     ]
   }

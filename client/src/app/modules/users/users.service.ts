@@ -64,14 +64,7 @@ export class UsersService {
    * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financeInfo (boolean)
    */
   getAuthenticatedUser(parameters : any = null) : Observable<any> {
-    let strParams = '';
-    if (parameters && Object.keys(parameters).length) {
-      for (let key of Object.keys(parameters)) {
-        strParams += `&${key}=${parameters[key]}`;
-      }
-    }
-
-    return this.http.get(`${this.serverHost}/getUser?${strParams.substring(1)}`)
+    return this.http.get(`${this.serverHost}/getUser?${this.appService.getParamsAsQuerystring(parameters)}`)
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
   }
@@ -80,7 +73,6 @@ export class UsersService {
    * Server call to login the provided user email and pass.
    */
   login(postData : any = {}) : Observable<any> {
-    console.log('login service called');
     return this.http.post(`${this.serverHost}/login`, postData, { headers : this.headers })
         .map(this.appService.extractData)
         .catch(this.appService.handleError);

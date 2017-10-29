@@ -81,7 +81,7 @@ exports.create = async (req, res, next) => {
             status : 'success', 
             codeno : 200,
             msg : getMessage('message', 1020, user.email),
-            data : team
+            data : getTeamDataObject(team)
         });
     } else {
         console.log(`${methodTrace} ${getMessage('error', 459, 'Team')}`);
@@ -92,5 +92,56 @@ exports.create = async (req, res, next) => {
             data : null
         });
     }
+};
+
+/**
+ * Get a team base on the slug provided
+ */
+exports.getTeamBySlug = async (req, res) => {
+    const methodTrace = `${errorTrace} getTeamBySlug() >`;
+    //check for a team with the provided slug
+    console.log(`${methodTrace} ${getMessage('message', 1034, 'Team', 'slug', req.query.slug)}`);
+    let team = await Team.findOne({ slug : req.query.slug });
+    if (!team) {
+        console.log(`${methodTrace} ${getMessage('error', 461, 'Team')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 461,
+            msg : getMessage('error', 461, 'Team'),
+            data : null
+        });
+        return;
+    }
+    
+    console.log(`${methodTrace} ${getMessage('message', 1035, 'Team')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1035, 'Team'),
+        data : getTeamDataObject(team)
+    });
+}
+
+/**
+ * Get a user object that we can send to the client that don't exposes sensible fields like ID
+ * @param {*} rawObject . The raw db object to transmit
+ * @param {*} optionalFields . Optional fields to add
+ */
+const getTeamDataObject = (rawObject = {}, optionalFields = {}) => {
+    let dto = {
+        name : rawObject.name, 
+        slug : rawObject.slug, 
+        description : rawObject.description,
+        admin : rawObject.admin,
+        members : rawObject.teamUsers
+    };
+  
+    for (let key of Object.keys(optionalFields)) {
+        if (optionalFields[key] === 'true') {
+            dto[key] = user[key] || null;
+        }
+    }
+  
+    return dto;
 };
 

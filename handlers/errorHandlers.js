@@ -6,13 +6,14 @@ const errorCodes = {
   451 : 'No user found with the provided credentials',
   452 : 'There was an error trying to login with the recently authenticated user.',
   453 : 'User not authenticated to proceed.',
-  454 : 'this {{param}} is a {{param}} test.',
+  454 : 'This {{param}} is a {{param}} test.',
   455 : 'None user found with email: {{param}}.',
   456 : 'Passwords do not match!',
   457 : 'User not found with that token, it may be invalid or already expired.',
   458 : 'The register form contains some errors: {{param}}.',
   459 : 'Failed to create and save a new record of {{param}}.',
-  460 : 'User email loggedin in current server session does not match {{param}} provided by the service consumer.'
+  460 : 'User email loggedin in current server session does not match {{param}} provided by the service consumer.',
+  461 : 'No {{param}} found with those parameters.'
 };
 
 const messageCodes = {
@@ -49,7 +50,9 @@ const messageCodes = {
   1030 : 'Email provided by service consumer successfully matches the user in the current server session.',
   1031 : 'Saving a new record into {{param}}...',
   1032 : '{{param}} successfully updated.',
-  1033 : '{{param}} and all related data successfully created and saved.'
+  1033 : '{{param}} and all related data successfully created and saved.',
+  1034 : 'Get {{param}} by {{param}} = {{param}}...',
+  1035 : '{{Team}} found.'
 };
 
 /**

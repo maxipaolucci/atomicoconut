@@ -11,6 +11,22 @@ export class AppService {
   constructor(private http : Http, public snackBar: MatSnackBar) {}
 
   /**
+   * Receives and object of paramameters and returns it in a querystring format
+   * @param {*} parameters . Object of parameters
+   * @return {string} result as querystring
+   */
+  public getParamsAsQuerystring(parameters : any = null) {
+    let strParams = '';
+    if (parameters && Object.keys(parameters).length) {
+      for (let key of Object.keys(parameters)) {
+        strParams += `&${key}=${parameters[key]}`;
+      }
+    }
+
+    return strParams.substring(1);
+  }
+
+  /**
    * Extract data from a server response
    * @param res
    */
