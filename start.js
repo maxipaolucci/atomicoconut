@@ -22,7 +22,8 @@ mongoose.connection.on('error', (err) => {
 require('./models/User');
 require('./models/PersonalInfo');
 require('./models/FinancialInfo');
-
+require('./models/Team');
+require('./models/Team_User');
 
 // Start our app!
 const app = require('./app');

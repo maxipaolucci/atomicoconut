@@ -32,7 +32,11 @@ const userSchema = new Schema({
     type : mongoose.Schema.ObjectId,
     ref : 'FinancialInfo',
     default: null  
-  }
+  },
+  teamUsers : [{
+    type : mongoose.Schema.ObjectId,
+    ref : 'TeamUser'
+  }]
 });
 
 

@@ -1,0 +1,42 @@
+<form class="form__container form__edit-team" (ngSubmit)="onSubmit()" #editTeamForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
+  
+    <section fxLayout="column" class="form__fields">
+      <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
+        <!-- Team name -->
+        <mat-form-field fxFlex class="form__field">
+          <input matInput type="tezt" id="name" name="name" placeholder="Team name" 
+              [(ngModel)]="model.name" 
+              value="model.name"
+              required
+              minlength="4"
+              #name="ngModel">
+          <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">Name is required</mat-error>
+          <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.minlength">Value must be longer than 3 characters</mat-error>
+        </mat-form-field>
+
+        <!-- Description -->
+        <mat-form-field fxFlex class="form__field">
+          <textarea matInput id="description" name="description" placeholder="Description"
+              [(ngModel)]="model.description" 
+              value="model.description"
+              #description="ngModel"></textarea>
+        </mat-form-field>
+      </div>
+    </section>
+  
+    <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--edit-team">
+      <button *ngIf="!editTeamServiceRunning" 
+          class="form__action mat-raised-button" 
+          mat-raised-button 
+          type="submit" 
+          color="accent" 
+          [disabled]="!editTeamForm.form.valid">Save</button>
+      
+      <mat-progress-bar *ngIf="editTeamServiceRunning"
+          class="progress-bar progress-bar--edit-team"
+          color="primary"
+          mode="indeterminate">
+      </mat-progress-bar>
+    </section>
+  
+  </form>

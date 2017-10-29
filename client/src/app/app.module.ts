@@ -13,6 +13,7 @@ import { AuthResolver } from './auth-resolver.service';
 import { AuthGuard } from './auth.guard';
 import { CustomMaterialDesignModule } from './modules/shared/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
+import { TeamsModule } from './modules/teams/teams.module'; 
 import { InvestmentsModule } from './modules/investments/investments.module';
 import { CalculatorsModule } from './modules/calculators/calculators.module';
 import { WelcomeComponent } from './components/welcome/welcome.component';
@@ -28,6 +29,7 @@ import { NumberValidatorDirective } from './directives/number-validator.directiv
     FlexLayoutModule,
     CustomMaterialDesignModule,
     UsersModule,
+    TeamsModule,
     InvestmentsModule,
     CalculatorsModule,
     SharedModule

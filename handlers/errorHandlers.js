@@ -46,7 +46,10 @@ const messageCodes = {
   1027 : 'User {{param}} found.',
   1028 : 'Record in {{param}} found and successfully updated.',
   1029 : 'Checking that the logged in user email in session matches {{param}} provided by the service consumer...',
-  1030 : 'Email provided by service consumer successfully matches the user in the current server session.'
+  1030 : 'Email provided by service consumer successfully matches the user in the current server session.',
+  1031 : 'Saving a new record into {{param}}...',
+  1032 : '{{param}} successfully updated.',
+  1033 : '{{param}} and all related data successfully created and saved.'
 };
 
 /**

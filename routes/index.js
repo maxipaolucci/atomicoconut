@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const teamController = require('../controllers/teamController');
 const authController = require('../controllers/authController');
 const testController = require('../controllers/testController');
 const { catchErrors, catchApiErrors } = require('../handlers/errorHandlers');
@@ -56,6 +57,14 @@ router.get('/app/calculators/equity', (req, res) => {
   res.render('home', {title: 'Equity calculator'});
 });
 
+/** Teams */
+router.get('/app/teams', (req, res) => {
+  res.render('home', {title: 'Teams'});
+});
+
+router.get('/app/teams/create', (req, res) => {
+  res.render('home', {title: 'Create Team'});
+});
 // TEST controller
 // router.get('/register', testController.registerForm);
 // router.get('/login', testController.loginForm);
@@ -94,6 +103,7 @@ router.post('/api/users/account',
 
 router.post('/api/users/accountPersonalInfo', 
   authController.isLogggedIn, 
+  catchErrors(userController.checkLoggedInUserWithEmail),
   catchErrors(userController.updateAccountPersonalInfo)
 );
 
@@ -106,8 +116,19 @@ router.post('/api/users/accountFinancialInfo',
 router.post('/api/users/account/forgot', catchErrors(authController.forgot));
 
 router.post('/api/users/account/reset/:token', 
-    authController.confirmedPasswords,
-    catchErrors(authController.update)
+  authController.confirmedPasswords,
+  catchErrors(authController.update)
+);
+
+
+//*************************************************************************** */
+//****************************** TEAM API *********************************** */
+//*************************************************************************** */
+router.post('/api/teams/create', 
+  authController.isLogggedIn, 
+  teamController.validateRegister,
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  catchErrors(teamController.create)
 );
 
 module.exports = router;

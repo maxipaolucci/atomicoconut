@@ -122,18 +122,26 @@ exports.updateAccountPersonalInfo = async (req, res) => {
                 msg : getMessage('message', 1020, user.email),
                 data : null
             });
-
-            return;
+        } else {
+            console.log(`${methodTrace} ${getMessage('error', 459, 'PersonalInfo')}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 459,
+                msg : getMessage('error', 459, 'PersonalInfo'),
+                data : null
+            });
         }
-    } else {
-        console.log(`${methodTrace} ${getMessage('message', 1028, 'PersonalInfo')}`);
-        res.json({
-            status : 'success', 
-            codeno : 200,
-            msg : getMessage('message', 1028, 'PersonalInfo'),
-            data : null
-        });
+
+        return;
     }
+
+    console.log(`${methodTrace} ${getMessage('message', 1028, 'PersonalInfo')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1028, 'PersonalInfo'),
+        data : null
+    });
 };
 
 /**
@@ -208,16 +216,24 @@ exports.updateAccountFinancialInfo = async (req, res) => {
                 msg : getMessage('message', 1020, user.email),
                 data : null
             });
-
-            return;
+        } else {
+            console.log(`${methodTrace} ${getMessage('error', 459, 'FinancialInfo')}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 459,
+                msg : getMessage('error', 459, 'FinancialInfo'),
+                data : null
+            });
         }
-    } else {
-        console.log(`${methodTrace} ${getMessage('message', 1028, 'FinancialInfo')}`);
-        res.json({
-            status : 'success', 
-            codeno : 200,
-            msg : getMessage('message', 1028, 'FinancialInfo'),
-            data : null
-        });
+
+        return;
     }
+        
+    console.log(`${methodTrace} ${getMessage('message', 1028, 'FinancialInfo')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1028, 'FinancialInfo'),
+        data : null
+    });
 };
