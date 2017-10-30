@@ -1605,7 +1605,7 @@ SharedModule = __decorate([
 /***/ "../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <section fxLayout=\"column\">\r\n\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab routerLink=\"create\">\r\n      <mat-icon class=\"md-24\" aria-label=\"Create team\">group_add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>\r\n"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\">\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n    <mat-card *ngFor=\"let team of teams\"\n        fxFlex class=\"\">\n      <mat-card-content routerLink=\"/teams/edit/{{team.slug}}\" fxLayoutAlign=\"space-around center\">\n        <p>{{team.name}}</p>\n      </mat-card-content>\n    </mat-card>\n  </section>\n\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\n    <button mat-fab routerLink=\"create\">\n      <mat-icon class=\"md-24\" aria-label=\"Create team\">group_add</mat-icon>\n    </button>\n  </section>\n</div>\n"
 
 /***/ }),
 
@@ -1634,6 +1634,10 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsDashboardComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1645,16 +1649,60 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
+
+
 var TeamsDashboardComponent = (function () {
-    function TeamsDashboardComponent(mainNavigatorService) {
+    function TeamsDashboardComponent(route, mainNavigatorService, teamsService, appService, router) {
+        this.route = route;
         this.mainNavigatorService = mainNavigatorService;
+        this.teamsService = teamsService;
+        this.appService = appService;
+        this.router = router;
+        this.user = null;
+        this.getTeamsServiceRunning = false;
+        this.teams = [];
     }
     TeamsDashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Teams', url: null, selected: true }
         ]);
+        //get authUser from resolver
+        this.route.data.subscribe(function (data) {
+            _this.user = data.authUser;
+        });
+        this.getTeams();
+    };
+    /**
+     * Get my teams from server
+     */
+    TeamsDashboardComponent.prototype.getTeams = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        this.getTeamsServiceRunning = true;
+        this.teamsService.getTeams(this.user.email).subscribe(function (data) {
+            if (data && data.length) {
+                for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
+                    var item = data_1[_i];
+                    _this.teams.push(new __WEBPACK_IMPORTED_MODULE_5__models_team__["a" /* Team */](item.name, item.description || null, item.slug, null, null));
+                }
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+                _this.getTeamsServiceRunning = false;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the get team service.", error);
+            if (error.codeno === 400) {
+                //the mail system failed for external reasons
+                _this.appService.showResults("There was an error with the team services, please try again in a few minutes.");
+            }
+            _this.getTeamsServiceRunning = false;
+        });
     };
     return TeamsDashboardComponent;
 }());
@@ -1664,10 +1712,10 @@ TeamsDashboardComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _e || Object])
 ], TeamsDashboardComponent);
 
-var _a;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=teams-dashboard.component.js.map
 
 /***/ }),
@@ -1675,7 +1723,7 @@ var _a;
 /***/ "../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container form__edit-team\" (ngSubmit)=\"onSubmit()\" #editTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  \r\n    <section fxLayout=\"column\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n        <!-- Team name -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <input matInput type=\"tezt\" id=\"name\" name=\"name\" placeholder=\"Team name\" \r\n              [(ngModel)]=\"model.name\" \r\n              value=\"model.name\"\r\n              required\r\n              minlength=\"4\"\r\n              #name=\"ngModel\">\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Value must be longer than 3 characters</mat-error>\r\n        </mat-form-field>\r\n\r\n        <!-- Description -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\r\n              [(ngModel)]=\"model.description\" \r\n              value=\"model.description\"\r\n              #description=\"ngModel\"></textarea>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n  \r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-team\">\r\n      <button *ngIf=\"!editTeamServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!editTeamForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"editTeamServiceRunning\"\r\n          class=\"progress-bar progress-bar--edit-team\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n  \r\n  </form>"
+module.exports = "<form class=\"form__container form__edit-team\" (ngSubmit)=\"onSubmit()\" #editTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\n  \n    <section fxLayout=\"column\" class=\"form__fields\">\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\n        <!-- Team name -->\n        <mat-form-field fxFlex class=\"form__field\">\n          <input matInput type=\"tezt\" id=\"name\" name=\"name\" placeholder=\"Team name\" \n              [(ngModel)]=\"model.name\" \n              value=\"model.name\"\n              required\n              minlength=\"4\"\n              #name=\"ngModel\">\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Value must be longer than 3 characters</mat-error>\n        </mat-form-field>\n\n        <!-- Description -->\n        <mat-form-field fxFlex class=\"form__field\">\n          <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\n              [(ngModel)]=\"model.description\" \n              value=\"model.description\"\n              #description=\"ngModel\"></textarea>\n        </mat-form-field>\n      </div>\n    </section>\n  \n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-team\">\n      <button *ngIf=\"!editTeamServiceRunning\" \n          class=\"form__action mat-raised-button\" \n          mat-raised-button \n          type=\"submit\" \n          color=\"accent\" \n          [disabled]=\"!editTeamForm.form.valid\">Save</button>\n      \n      <mat-progress-bar *ngIf=\"editTeamServiceRunning\"\n          class=\"progress-bar progress-bar--edit-team\"\n          color=\"primary\"\n          mode=\"indeterminate\">\n      </mat-progress-bar>\n    </section>\n  \n  </form>"
 
 /***/ }),
 
@@ -1747,6 +1795,11 @@ var TeamsEditComponent = (function () {
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Teams', url: '/teams', selected: false }
         ]);
+        //get authUser from resolver
+        this.route.data.subscribe(function (data) {
+            _this.user = data.authUser;
+            _this.model.email = _this.user.email;
+        });
         this.route.paramMap.map(function (params) { return params.get('slug'); })
             .subscribe(function (slug) {
             if (!slug) {
@@ -1758,11 +1811,6 @@ var TeamsEditComponent = (function () {
                 _this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected: true });
                 _this.getTeam(slug);
             }
-        });
-        //get authUser from resolver
-        this.route.data.subscribe(function (data) {
-            _this.user = data.authUser;
-            _this.model.email = _this.user.email;
         });
     };
     TeamsEditComponent.prototype.onSubmit = function () {
@@ -1800,7 +1848,7 @@ var TeamsEditComponent = (function () {
             return false;
         }
         this.getTeamServiceRunning = true;
-        this.teamsService.getTeamBySlug(slug).subscribe(function (data) {
+        this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(function (data) {
             if (data && data.slug) {
                 console.log(data);
                 _this.team = new __WEBPACK_IMPORTED_MODULE_5__models_team__["a" /* Team */](data.name, data.description || null, data.slug, null, null);
@@ -1886,7 +1934,14 @@ var routes = [
     {
         path: 'teams',
         children: [
-            { path: '', component: __WEBPACK_IMPORTED_MODULE_2__components_teams_dashboard_teams_dashboard_component__["a" /* TeamsDashboardComponent */] },
+            {
+                path: '',
+                pathMatch: 'full',
+                component: __WEBPACK_IMPORTED_MODULE_2__components_teams_dashboard_teams_dashboard_component__["a" /* TeamsDashboardComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            },
             {
                 path: 'create',
                 component: __WEBPACK_IMPORTED_MODULE_3__components_teams_edit_teams_edit_component__["a" /* TeamsEditComponent */],
@@ -2015,13 +2070,23 @@ var TeamsService = (function () {
      * Server call to Get a team from the server based on its slug
      * @param {string} slug . The team slug
      */
-    TeamsService.prototype.getTeamBySlug = function (slug) {
+    TeamsService.prototype.getTeamBySlug = function (email, slug) {
         var methodTrace = this.constructor.name + " > getTeamBySlug() > "; //for debugging
         if (!slug) {
             this.appService.consoleLog('error', methodTrace + " Slug parameter must be provided, but was: ", slug);
             return null;
         }
-        return this.http.get(this.serverHost + "/getbySlug?" + this.appService.getParamsAsQuerystring({ slug: slug }))
+        return this.http.get(this.serverHost + "/getbySlug?" + this.appService.getParamsAsQuerystring({ slug: slug, email: email }))
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to Get all the teams for the current user from the server
+     * @param {string} slug . The team slug
+     */
+    TeamsService.prototype.getTeams = function (email) {
+        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        return this.http.get(this.serverHost + "/getAll?" + this.appService.getParamsAsQuerystring({ email: email }))
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
     };

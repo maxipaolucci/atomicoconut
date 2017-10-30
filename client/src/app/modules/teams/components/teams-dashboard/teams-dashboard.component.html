@@ -1,6 +1,11 @@
 <div fxLayout="column" fxLayoutGap="10px">
-  <section fxLayout="column">
-
+  <section fxLayout="column" fxLayout.gt-xs="row">
+    <mat-card *ngFor="let team of teams"
+        fxFlex class="">
+      <mat-card-content routerLink="/teams/edit/{{team.slug}}" fxLayoutAlign="space-around center">
+        <p>{{team.name}}</p>
+      </mat-card-content>
+    </mat-card>
   </section>
 
   <section fxLayout="column" fxLayoutAlign="start end">

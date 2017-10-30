@@ -129,8 +129,15 @@ router.post('/api/users/account/reset/:token',
 //****************************** TEAM API *********************************** */
 //*************************************************************************** */
 router.get('/api/teams/getBySlug', 
-  authController.isLogggedIn, 
+  authController.isLogggedIn,
+  catchErrors(userController.checkLoggedInUserWithEmail),
   catchErrors(teamController.getTeamBySlug)
+);
+
+router.get('/api/teams/getAll', 
+  authController.isLogggedIn,
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  catchErrors(teamController.getAllTeams)
 );
 
 router.post('/api/teams/create', 

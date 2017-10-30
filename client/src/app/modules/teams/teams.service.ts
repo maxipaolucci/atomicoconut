@@ -29,7 +29,7 @@ export class TeamsService {
    * Server call to Get a team from the server based on its slug
    * @param {string} slug . The team slug
    */
-  getTeamBySlug(slug : string) : Observable<any> {
+  getTeamBySlug(email : string, slug : string) : Observable<any> {
     let methodTrace = `${this.constructor.name} > getTeamBySlug() > `; //for debugging
 
     if (!slug) {
@@ -37,7 +37,19 @@ export class TeamsService {
       return null;
     }
 
-    return this.http.get(`${this.serverHost}/getbySlug?${this.appService.getParamsAsQuerystring({slug})}`)
+    return this.http.get(`${this.serverHost}/getbySlug?${this.appService.getParamsAsQuerystring({slug, email})}`)
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
+  }
+
+  /**
+   * Server call to Get all the teams for the current user from the server
+   * @param {string} slug . The team slug
+   */
+  getTeams(email : string) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+
+    return this.http.get(`${this.serverHost}/getAll?${this.appService.getParamsAsQuerystring({email})}`)
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
   }

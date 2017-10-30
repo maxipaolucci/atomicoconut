@@ -8,7 +8,14 @@ const routes: Routes = [
   {
     path : 'teams',
     children : [
-      { path : '', component : TeamsDashboardComponent },
+      { 
+        path : '', 
+        pathMatch : 'full',
+        component : TeamsDashboardComponent,
+        resolve : {
+          authUser : AuthResolver
+        }
+      },
       { 
         path : 'create', 
         component : TeamsEditComponent,

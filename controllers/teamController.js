@@ -123,6 +123,55 @@ exports.getTeamBySlug = async (req, res) => {
 }
 
 /**
+ * Get all teams for the authenticated user
+ */
+exports.getAllTeams = async (req, res) => {
+    const methodTrace = `${errorTrace} getAllTeams() >`;
+    //check for a team with the provided slug
+    console.log(`${methodTrace} ${getMessage('message', 1034, 'all Teams', 'user', req.user.email)}`);
+    let teamUsers = await TeamUser.find({ _id : req.user.teamUsers });
+    
+    let teamIds = [];
+    for (let teamUser of teamUsers) {
+        teamIds.push(teamUser.team);
+    }
+
+    let teams = [];
+    // teams = await TeamUser.aggregate([
+    //     { $match : { _id : { $in : req.user.teamUsers } } },
+    //     { $lookup : { from : 'Team', localField : 'team', foreignField : 'id', as : 'aaateams' } },
+    //     { $project : {
+    //         team : '$aaateams.name'
+    //     }}
+    // ]);
+
+    //POOR SOLUTION DUE that lookup is not working
+    teams = await Team.find({ _id : teamIds });
+    
+    console.log(`${methodTrace} ${getMessage('message', 1036, teams.length, 'Team(s)')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1036, teams.length, 'Team(s)'),
+        data : getTeamDataObjects(teams)
+    });
+}
+
+/**
+ * Get an array of team DTOs from and array of raw teams
+ * @param {*} rawArr . Raw teams array from DB
+ * @param {*} optionalFields . Optional fields to populate
+ */
+const getTeamDataObjects = (rawArr = [], optionalFields = {}) => {
+    let result = [];
+    for (let dto of rawArr) {
+        result.push(getTeamDataObject(dto, optionalFields));
+    }
+
+    return result;
+};
+
+/**
  * Get a user object that we can send to the client that don't exposes sensible fields like ID
  * @param {*} rawObject . The raw db object to transmit
  * @param {*} optionalFields . Optional fields to add

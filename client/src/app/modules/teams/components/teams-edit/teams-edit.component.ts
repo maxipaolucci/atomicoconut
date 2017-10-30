@@ -34,6 +34,12 @@ export class TeamsEditComponent implements OnInit {
       { displayName: 'Teams', url: '/teams', selected: false }
     ]);
 
+    //get authUser from resolver
+    this.route.data.subscribe((data: { authUser: User }) => {
+      this.user = data.authUser;
+      this.model.email = this.user.email;
+    });
+
     this.route.paramMap.map((params: ParamMap) => params.get('slug'))
       .subscribe(slug => { 
         if (!slug) {
@@ -46,12 +52,6 @@ export class TeamsEditComponent implements OnInit {
           this.getTeam(slug);
         }
       });
-
-    //get authUser from resolver
-    this.route.data.subscribe((data: { authUser: User }) => {
-      this.user = data.authUser;
-      this.model.email = this.user.email;
-    });
   }
 
   onSubmit() {
@@ -95,7 +95,7 @@ export class TeamsEditComponent implements OnInit {
 
     this.getTeamServiceRunning = true;
 
-    this.teamsService.getTeamBySlug(slug).subscribe(
+    this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(
       (data : any) => {
         if (data && data.slug) {
           console.log(data);

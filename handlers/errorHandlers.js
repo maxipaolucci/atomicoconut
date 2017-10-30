@@ -52,7 +52,8 @@ const messageCodes = {
   1032 : '{{param}} successfully updated.',
   1033 : '{{param}} and all related data successfully created and saved.',
   1034 : 'Get {{param}} by {{param}} = {{param}}...',
-  1035 : '{{Team}} found.'
+  1035 : '{{param}} found.',
+  1036 : '{{param}} {{param}} found.'
 };
 
 /**

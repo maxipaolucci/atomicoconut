@@ -149,11 +149,13 @@ exports.updateAccountPersonalInfo = async (req, res) => {
  */
 exports.checkLoggedInUserWithEmail = async (req, res, next) => {
     const methodTrace = `${errorTrace} checkLoggedInUserWithEmail() >`;
+
+    const email = req.body.email ? req.body.email : req.query.email;
     //check for a user with the provided email
-    console.log(`${methodTrace} ${getMessage('message', 1029, req.body.email)}`);
-    let user = await User.findOne({ email : req.body.email });
+    console.log(`${methodTrace} ${getMessage('message', 1029, email)}`);
+    let user = await User.findOne({ email });
     if (!user || user.email !== req.user.email) {
-        console.log(`${methodTrace} ${getMessage('error', 460, req.body.email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 460, email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 460,
