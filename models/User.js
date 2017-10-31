@@ -73,5 +73,4 @@ userSchema.statics.findOneAndPopulate = function(findByFields, fieldsToPopulate 
   return this.findOne(findByFields);
 };
 
-
 module.exports = mongoose.model('User', userSchema); //Mongo stores a table called "users" in the DB (it lowecase the model name and add an s automatically at the end)

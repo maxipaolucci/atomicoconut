@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const md5 = require('md5');
 const User = mongoose.model('User');
 const Team = mongoose.model('Team');
 const TeamUser = mongoose.model('TeamUser');
@@ -127,35 +128,107 @@ exports.getTeamBySlug = async (req, res) => {
  */
 exports.getAllTeams = async (req, res) => {
     const methodTrace = `${errorTrace} getAllTeams() >`;
-    //check for a team with the provided slug
+    //1 - Get all the teams where I am a member
     console.log(`${methodTrace} ${getMessage('message', 1034, 'all Teams', 'user', req.user.email)}`);
-    let teamUsers = await TeamUser.find({ _id : req.user.teamUsers });
+    //let teamUsers = await TeamUser.find({ _id : req.user.teamUsers });
     
-    let teamIds = [];
-    for (let teamUser of teamUsers) {
-        teamIds.push(teamUser.team);
+    //2 - Get teams with members
+    let teams = await TeamUser.aggregate([
+        { $match : { _id : { $in : req.user.teamUsers } } },
+        { $lookup : { from : 'teams', localField : 'team', foreignField : '_id', as : 'teamInfo' } },
+        { 
+            $project : {
+                userId : '$$ROOT.user',
+                isAdmin : '$$ROOT.isAdmin',
+                teamId : '$$ROOT.team',
+                teamSlug : '$teamInfo.slug',
+                teamName : '$teamInfo.name',
+                teamDescription : '$teamInfo.description'
+            }
+        },
+        { $lookup : { from : 'users', localField : 'userId', foreignField : '_id', as : 'userInfo' } },
+        { 
+            $addFields : {
+                memberId : '$userInfo._id',
+                memberName : '$userInfo.name',
+                memberEmail : '$userInfo.email'
+            }
+        }
+
+    ]);
+
+    //Parse the recordset from DB and organize the info better.
+    let teamsObj = {};
+    for (team of teams) {
+        if (!teamsObj[team.teamId]) {
+            teamsObj[team.teamId] = {
+                slug : team.teamSlug[0],
+                name : team.teamName[0],
+                description : team.teamDescription[0]
+            };
+
+            teamsObj[team.teamId].members = [{
+                isAdmin : team.userId.toString() === team.memberId[0].toString(),
+                name : team.memberName[0],
+                email : team.memberEmail[0],
+                gravatar : 'https://gravatar.com/avatar/' + md5(team.memberEmail[0]) + '?s=200'
+            }];
+        } else {
+            teamsObj[team.teamId].members.push({
+                isAdmin : team.userId.toString() === team.memberId[0].toString(),
+                name : team.memberName[0],
+                email : team.memberEmail[0],
+                gravatar : 'https://gravatar.com/avatar/' + md5(team.memberEmail[0]) + '?s=200'
+            });
+        }
     }
 
-    let teams = [];
-    // teams = await TeamUser.aggregate([
-    //     { $match : { _id : { $in : req.user.teamUsers } } },
-    //     { $lookup : { from : 'Team', localField : 'team', foreignField : 'id', as : 'aaateams' } },
-    //     { $project : {
-    //         team : '$aaateams.name'
-    //     }}
-    // ]);
+    //Generate a pretty result for the service response
+    let result = [];
+    for (let teamId of Object.keys(teamsObj)) {
+        result.push(teamsObj[teamId]);
+    }
 
-    //POOR SOLUTION DUE that lookup is not working
-    teams = await Team.find({ _id : teamIds });
-    
+    //Return teams info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, teams.length, 'Team(s)')}`);
     res.json({
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1036, teams.length, 'Team(s)'),
-        data : getTeamDataObjects(teams)
+        data : result
     });
 }
+
+/**
+ * Get the members of a team
+ * @param {*} teamId . The id of the team we want members back
+ * 
+ * @return {array} . An array of team members
+ */
+const getMembers = async (teamId = null) => {
+    members = await TeamUser.aggregate([
+        { $match : { team : teamId } },
+        { $lookup : { from : 'users', localField : 'user', foreignField : '_id', as : 'userInfo' } },
+        { $project : {
+            _id : false,
+            isAdmin : '$$ROOT.isAdmin',
+            name : '$userInfo.name',
+            email : '$userInfo.email'
+        }}
+    ]);
+
+    let result = [];
+    for (let member of members) {
+        result.push({
+            isAdmin : member.isAdmin,
+            name : member.name[0],
+            email : member.email[0],
+            gravatar : 'https://gravatar.com/avatar/' + md5(member.email[0]) + '?s=200'
+        })
+    }
+    
+    return result;
+};
 
 /**
  * Get an array of team DTOs from and array of raw teams
