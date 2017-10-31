@@ -105,8 +105,9 @@ export class TeamsEditComponent implements OnInit {
           this.model.description = data.description;
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-          this.getTeamServiceRunning = false;
         }
+
+        this.getTeamServiceRunning = false;
       },
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the get team service.`, error);

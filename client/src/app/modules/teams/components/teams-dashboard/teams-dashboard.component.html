@@ -1,16 +1,49 @@
-<div fxLayout="column" fxLayoutGap="10px">
-  <section fxLayout="column" fxLayout.gt-xs="row">
-    <mat-card *ngFor="let team of teams"
-        fxFlex class="">
-      <mat-card-content routerLink="/teams/edit/{{team.slug}}" fxLayoutAlign="space-around center">
-        <p>{{team.name}}</p>
-      </mat-card-content>
-    </mat-card>
+<div fxLayout="column" fxLayoutGap="10px" class="container__teams">
+  <section fxLayoutWrap 
+      fxLayout="row" fxLayout.xs="column" 
+      fxLayoutGap.xs="10px" 
+      fxLayoutAlign="space-around center" fxLayoutAlign.xs="none none" >
+    
+    <!-- Team Cards -->
+    <mat-expansion-panel *ngFor="let team of teams"
+        fxFlex.sm="45" fxFlex.gt-sm="30" 
+        class="team-card">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{team.name}}
+        </mat-panel-title>
+        <mat-panel-description>
+          <!-- some description -->
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      
+      <div fxLayout="column" class="team-card__content">
+        <section class="members">
+          <p>Maxi Paolucci</p>
+          <p>Fefi Ezquerra</p>
+          <p>Pepito Perez</p>
+        </section>
+        <section fxLayout="column" fxLayoutAlign="start end">
+          <button mat-mini-fab routerLink="/teams/edit/{{team.slug}}" color="primary">
+            <mat-icon class="mat-24" aria-label="Edit team">edit</mat-icon>
+          </button>
+        </section>
+      </div>
+      
+    </mat-expansion-panel>
+    <!-- EOF Team Cards -->
   </section>
+
+  <mat-progress-bar *ngIf="getTeamsServiceRunning"
+      fxFlexAlign="center"
+      class="progress-bar progress-bar--get-teams"
+      color="primary"
+      mode="indeterminate">
+  </mat-progress-bar>
 
   <section fxLayout="column" fxLayoutAlign="start end">
     <button mat-fab routerLink="create">
-      <mat-icon class="md-24" aria-label="Create team">group_add</mat-icon>
+      <mat-icon class="mat-24" aria-label="Create team">group_add</mat-icon>
     </button>
   </section>
 </div>

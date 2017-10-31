@@ -1605,7 +1605,7 @@ SharedModule = __decorate([
 /***/ "../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\">\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n    <mat-card *ngFor=\"let team of teams\"\n        fxFlex class=\"\">\n      <mat-card-content routerLink=\"/teams/edit/{{team.slug}}\" fxLayoutAlign=\"space-around center\">\n        <p>{{team.name}}</p>\n      </mat-card-content>\n    </mat-card>\n  </section>\n\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\n    <button mat-fab routerLink=\"create\">\n      <mat-icon class=\"md-24\" aria-label=\"Create team\">group_add</mat-icon>\n    </button>\n  </section>\n</div>\n"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__teams\">\n  <section fxLayoutWrap \n      fxLayout=\"row\" fxLayout.xs=\"column\" \n      fxLayoutGap.xs=\"10px\" \n      fxLayoutAlign=\"space-around center\" fxLayoutAlign.xs=\"none none\" >\n    <!-- Team Cards -->\n    <!-- <mat-card *ngFor=\"let team of teams\"\n        fxFlex.sm=\"45\" fxFlex.gt-sm=\"30\" \n        class=\"team-card\"\n        routerLink=\"/teams/edit/{{team.slug}}\">\n      <mat-card-content fxLayoutAlign=\"space-around center\">\n        <p>{{team.name}}</p>\n      </mat-card-content>\n    </mat-card> -->\n\n    <mat-expansion-panel *ngFor=\"let team of teams\"\n        fxFlex.sm=\"45\" fxFlex.gt-sm=\"30\" \n        class=\"team-card\">\n      <mat-expansion-panel-header>\n        <mat-panel-title>\n          {{team.name}}\n        </mat-panel-title>\n        <mat-panel-description>\n          <!-- some description -->\n        </mat-panel-description>\n      </mat-expansion-panel-header>\n      \n      <div fxLayout=\"column\" class=\"team-card__content\">\n        <section class=\"members\">\n          <p>Maxi Paolucci</p>\n          <p>Fefi Ezquerra</p>\n          <p>Pepito Perez</p>\n        </section>\n        <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\n          <button mat-mini-fab routerLink=\"/teams/edit/{{team.slug}}\" color=\"primary\">\n            <mat-icon class=\"mat-24\" aria-label=\"Edit team\">edit</mat-icon>\n          </button>\n        </section>\n      </div>\n      \n    </mat-expansion-panel>\n    <!-- EOF Team Cards -->\n  </section>\n\n  <mat-progress-bar *ngIf=\"getTeamsServiceRunning\"\n      fxFlexAlign=\"center\"\n      class=\"progress-bar progress-bar--get-teams\"\n      color=\"primary\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\n    <button mat-fab routerLink=\"create\">\n      <mat-icon class=\"mat-24\" aria-label=\"Create team\">group_add</mat-icon>\n    </button>\n  </section>\n</div>\n"
 
 /***/ }),
 
@@ -1617,7 +1617,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".container__teams .progress-bar--get-teams {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  .container__teams .team-card {\n    margin-bottom: 10px; }\n  .container__teams .progress-bar--get-teams {\n    width: 300px; } }\n", ""]);
 
 // exports
 
@@ -1693,8 +1693,8 @@ var TeamsDashboardComponent = (function () {
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
-                _this.getTeamsServiceRunning = false;
             }
+            _this.getTeamsServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the get team service.", error);
             if (error.codeno === 400) {
@@ -1735,7 +1735,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.form__edit-team .form__actions--edit-team {\n  margin: 20px 0; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
 
 // exports
 
@@ -1857,8 +1857,8 @@ var TeamsEditComponent = (function () {
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
-                _this.getTeamServiceRunning = false;
             }
+            _this.getTeamServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the get team service.", error);
             if (error.codeno === 400) {

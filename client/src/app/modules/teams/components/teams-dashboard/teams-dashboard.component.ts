@@ -52,8 +52,9 @@ export class TeamsDashboardComponent implements OnInit {
           }
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-          this.getTeamsServiceRunning = false;
         }
+
+        this.getTeamsServiceRunning = false;
       },
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the get team service.`, error);

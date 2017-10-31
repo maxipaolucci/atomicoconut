@@ -1,0 +1,26 @@
+@import '../../../../../variables';
+
+.container__teams {
+
+  .team-card {
+
+  }
+
+  .progress-bar--get-teams {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: $screenGtXs) {
+  
+  .container__teams {
+
+    .team-card {
+      margin-bottom: 10px;
+    }
+    
+    .progress-bar--get-teams {
+      width: 300px;
+    }
+  }
+}
