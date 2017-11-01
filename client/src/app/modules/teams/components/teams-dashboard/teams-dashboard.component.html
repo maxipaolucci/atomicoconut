@@ -13,19 +13,28 @@
           {{team.name}}
         </mat-panel-title>
         <mat-panel-description>
-          <!-- some description -->
+          
         </mat-panel-description>
       </mat-expansion-panel-header>
       
-      <div fxLayout="column" class="team-card__content">
-        <section class="members">
-          <p>Maxi Paolucci</p>
-          <p>Fefi Ezquerra</p>
-          <p>Pepito Perez</p>
+      <div fxLayout="column" fxLayoutGap="10px" class="team-card__content">
+        <section *ngIf="team.description" class="description">
+          <p>{{team.description}}</p>
         </section>
-        <section fxLayout="column" fxLayoutAlign="start end">
+
+        <section class="members">
+          <div *ngFor="let member of team.members" fxLayout="row" class="member">
+            <img class="member__avatar" [src]="member.avatar"/>
+            <div class="member__info" fxLayout="column" matTooltip="Administrator" matTooltipPosition="right">
+              <p >{{member.name}} <mat-icon *ngIf="member.email === team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
+              <p>{{member.email}}</p>
+            </div>
+          </div>
+        </section>
+
+        <section *ngIf="team.admin.email === user.email" class="edit" fxLayout="column" fxLayoutAlign="start end">
           <button mat-mini-fab routerLink="/teams/edit/{{team.slug}}" color="primary">
-            <mat-icon class="mat-24" aria-label="Edit team">edit</mat-icon>
+            <mat-icon aria-label="Edit team">edit</mat-icon>
           </button>
         </section>
       </div>

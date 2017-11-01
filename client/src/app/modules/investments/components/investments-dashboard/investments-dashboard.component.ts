@@ -18,7 +18,7 @@ export class InvestmentsDashboardComponent implements OnInit {
   private totalInvestment = 0;
   private totalReturn = 0;
   public showInvestments = false;
-  private user : User = null;
+  user : User = null;
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private usersService : UsersService) { }
 

@@ -32,7 +32,7 @@ export class TeamsDashboardComponent implements OnInit {
     this.route.data.subscribe((data: { authUser: User }) => {
       this.user = data.authUser;
     });
-
+    
     this.getTeams();
   }
 
@@ -48,7 +48,16 @@ export class TeamsDashboardComponent implements OnInit {
       (data : any) => {
         if (data && data.length) {
           for (let item of data) {
-            this.teams.push(new Team(item.name, item.description || null, item.slug, null, null));
+            let admin = null;
+            let members = [];
+            for (let member of item.members) {
+              const newMember = new User(member.name, member.email, member.gravatar);
+              members.push(newMember);
+              if (member.isAdmin) {
+                admin = newMember;
+              }
+            }
+            this.teams.push(new Team(item.name, item.description || null, item.slug, admin, members));
           }
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
