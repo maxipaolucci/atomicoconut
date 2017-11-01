@@ -33,7 +33,9 @@ export class TeamsDashboardComponent implements OnInit {
       this.user = data.authUser;
     });
     
-    this.getTeams();
+    if (!this.teams.length) {
+      this.getTeams();
+    }
   }
 
   /**
@@ -42,11 +44,12 @@ export class TeamsDashboardComponent implements OnInit {
   getTeams() {
     const methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
 
+    this.teams = [];
     this.getTeamsServiceRunning = true;
 
     this.teamsService.getTeams(this.user.email).subscribe(
       (data : any) => {
-        if (data && data.length) {
+        if (data && data instanceof Array) {
           for (let item of data) {
             let admin = null;
             let members = [];

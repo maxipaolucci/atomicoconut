@@ -17,6 +17,10 @@ form {
   }
 }
 
+.progress-bar--get-team {
+  width: 100%;
+}
+
 @media screen and (min-width: $screenGtXs) {
   
   form {
@@ -27,5 +31,9 @@ form {
         width: 88px;
       }
     }
+  }
+
+  .progress-bar--get-team {
+    width: 300px;
   }
 }

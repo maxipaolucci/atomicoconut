@@ -98,7 +98,7 @@ exports.create = async (req, res, next) => {
 /**
  * Get a team base on the slug provided
  */
-exports.getTeamBySlug = async (req, res) => {
+exports.zzz = async (req, res) => {
     const methodTrace = `${errorTrace} getTeamBySlug() >`;
     //check for a team with the provided slug
     console.log(`${methodTrace} ${getMessage('message', 1034, 'Team', 'slug', req.query.slug)}`);
@@ -196,6 +196,100 @@ exports.getAllTeams = async (req, res) => {
         codeno : 200,
         msg : getMessage('message', 1036, teams.length, 'Team(s)'),
         data : result
+    });
+}
+
+/**
+ * Get all teams for the authenticated user
+ */
+exports.getTeamBySlug = async (req, res) => {
+    const methodTrace = `${errorTrace} getTeamBySlug() >`;
+    //check for a team with the provided slug
+    console.log(`${methodTrace} ${getMessage('message', 1034, 'Team', 'slug', req.query.slug)}`);
+    
+    //get the team with members
+    let teams = await Team.aggregate([
+        { $match : { slug : req.query.slug } },
+        { $lookup : { from : 'users', localField : 'admin', foreignField : '_id', as : 'adminInfo' } },
+        { 
+            $addFields : {
+                admin : {
+                    name : '$adminInfo.name',
+                    email : '$adminInfo.email'
+                }
+            }
+        }, 
+        { $unwind : '$teamUsers'},
+        { $lookup : { from : 'teamusers', localField : 'teamUsers', foreignField : '_id', as : 'teamUserInfo' } },
+        { 
+            $addFields : {
+                teamUserUserId : '$teamUserInfo.user'
+            }
+        },
+        { $lookup : { from : 'users', localField : 'teamUserUserId', foreignField : '_id', as : 'memberInfo' } },
+        { 
+            $addFields : {
+                member : {
+                    name : '$memberInfo.name',
+                    email : '$memberInfo.email'
+                }
+            }
+        },
+        {
+            $project : {
+                adminInfo : false,
+                _id : false,
+                __v : false,
+                memberInfo : false,
+                teamUserInfo : false,
+                teamUsers : false,
+                teamUserUserId : false
+            }
+        }
+    ]);
+
+    //Parse the recordset from DB and organize the info better.
+    let result = {};
+    for (team of teams) {
+        if (!Object.keys(result).length) {
+            //we just populate this once because all the teams in this recordset are the same, the only field that changes is the member
+            //this is like these because of the use of unwind in the mongoDB query above
+            result.name = team.name;
+            result.slug = team.slug,
+            result.description = team.description,
+            result.admin = {
+                name : team.admin.name[0],
+                email : team.admin.email[0],
+                gravatar : 'https://gravatar.com/avatar/' + md5(team.admin.email[0]) + '?s=200'
+            };
+        }
+
+        if (result.members) {
+            result.members.push({
+                isAdmin : team.member.email[0] === team.admin.email[0],
+                name : team.member.name[0],
+                email : team.member.email[0],
+                gravatar : 'https://gravatar.com/avatar/' + md5(team.member.email[0]) + '?s=200'
+            });
+        } else {
+            result.members = [{
+                isAdmin : team.member.email[0] === team.admin.email[0],
+                name : team.member.name[0],
+                email : team.member.email[0],
+                gravatar : 'https://gravatar.com/avatar/' + md5(team.member.email[0]) + '?s=200'
+            }];
+        }
+        
+    }
+    
+
+    //Return teams info to the user.
+    console.log(`${methodTrace} ${getMessage('message', 1036, teams.length, 'Team(s)')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1036, teams.length, 'Team(s)'),
+        data : Object.keys(result).length ? result : null
     });
 }
 

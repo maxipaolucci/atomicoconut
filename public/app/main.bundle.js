@@ -1607,7 +1607,7 @@ SharedModule = __decorate([
 /***/ "../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__teams\">\r\n  <section fxLayoutWrap \r\n      fxLayout=\"row\" fxLayout.xs=\"column\" \r\n      fxLayoutGap.xs=\"10px\" \r\n      fxLayoutAlign=\"space-around center\" fxLayoutAlign.xs=\"none none\" >\r\n    \r\n    <!-- Team Cards -->\r\n    <mat-expansion-panel *ngFor=\"let team of teams\"\r\n        fxFlex.sm=\"45\" fxFlex.gt-sm=\"30\" \r\n        class=\"team-card\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-card__content\">\r\n        <section *ngIf=\"team.description\" class=\"description\">\r\n          <p>{{team.description}}</p>\r\n        </section>\r\n\r\n        <section class=\"members\">\r\n          <div *ngFor=\"let member of team.members\" fxLayout=\"row\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n            <div class=\"member__info\" fxLayout=\"column\" matTooltip=\"Administrator\" matTooltipPosition=\"right\">\r\n              <p >{{member.name}} <mat-icon *ngIf=\"member.email === team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n              <p>{{member.email}}</p>\r\n            </div>\r\n          </div>\r\n        </section>\r\n\r\n        <section *ngIf=\"team.admin.email === user.email\" class=\"edit\" fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n          <button mat-mini-fab routerLink=\"/teams/edit/{{team.slug}}\" color=\"primary\">\r\n            <mat-icon aria-label=\"Edit team\">edit</mat-icon>\r\n          </button>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team Cards -->\r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getTeamsServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-teams\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab routerLink=\"create\">\r\n      <mat-icon class=\"mat-24\" aria-label=\"Create team\">group_add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>\r\n"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__teams\">\r\n  <section fxLayoutWrap \r\n      fxLayout=\"row\" fxLayout.xs=\"column\" \r\n      fxLayoutGap.xs=\"10px\" \r\n      fxLayoutAlign=\"space-around center\" fxLayoutAlign.xs=\"none none\" >\r\n    \r\n    <div *ngIf=\"!teams.length && !getTeamsServiceRunning\" fxFlexAlign=\"center\">You are not member of any team yet.</div>\r\n    <!-- Team Cards -->\r\n    <mat-expansion-panel *ngFor=\"let team of teams\"\r\n        fxFlex.sm=\"45\" fxFlex.gt-sm=\"30\" \r\n        class=\"team-card\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-card__content\">\r\n        <section *ngIf=\"team.description\" class=\"description\">\r\n          <p>{{team.description}}</p>\r\n        </section>\r\n\r\n        <section class=\"members\">\r\n          <div *ngFor=\"let member of team.members\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n            <div class=\"member__info\" fxLayout=\"column\" matTooltip=\"Administrator\" matTooltipPosition=\"right\">\r\n              <p >{{member.name}} <mat-icon *ngIf=\"member.email === team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n              <p>{{member.email}}</p>\r\n            </div>\r\n          </div>\r\n        </section>\r\n\r\n        <section *ngIf=\"team.admin.email === user.email\" class=\"edit\" fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n          <button mat-mini-fab routerLink=\"/teams/edit/{{team.slug}}\" color=\"primary\">\r\n            <mat-icon aria-label=\"Edit team\">edit</mat-icon>\r\n          </button>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team Cards -->\r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getTeamsServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-teams\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab routerLink=\"create\">\r\n      <mat-icon class=\"mat-24\" aria-label=\"Create team\">group_add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1679,7 +1679,9 @@ var TeamsDashboardComponent = (function () {
         this.route.data.subscribe(function (data) {
             _this.user = data.authUser;
         });
-        this.getTeams();
+        if (!this.teams.length) {
+            this.getTeams();
+        }
     };
     /**
      * Get my teams from server
@@ -1687,9 +1689,10 @@ var TeamsDashboardComponent = (function () {
     TeamsDashboardComponent.prototype.getTeams = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        this.teams = [];
         this.getTeamsServiceRunning = true;
         this.teamsService.getTeams(this.user.email).subscribe(function (data) {
-            if (data && data.length) {
+            if (data && data instanceof Array) {
                 for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
                     var item = data_1[_i];
                     var admin = null;
@@ -1737,7 +1740,7 @@ var _a, _b, _c, _d, _e;
 /***/ "../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container form__edit-team\" (ngSubmit)=\"onSubmit()\" #editTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  \r\n    <section fxLayout=\"column\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n        <!-- Team name -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <input matInput type=\"tezt\" id=\"name\" name=\"name\" placeholder=\"Team name\" \r\n              [(ngModel)]=\"model.name\" \r\n              value=\"model.name\"\r\n              required\r\n              minlength=\"4\"\r\n              #name=\"ngModel\">\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Value must be longer than 3 characters</mat-error>\r\n        </mat-form-field>\r\n\r\n        <!-- Description -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\r\n              [(ngModel)]=\"model.description\" \r\n              value=\"model.description\"\r\n              #description=\"ngModel\"></textarea>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n  \r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-team\">\r\n      <button *ngIf=\"!editTeamServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!editTeamForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"editTeamServiceRunning\"\r\n          class=\"progress-bar progress-bar--edit-team\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n  \r\n  </form>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-team\">\r\n  <form *ngIf=\"!getTeamServiceRunning\" \r\n      class=\"form__container form__edit-team\" (ngSubmit)=\"onSubmit()\" #editTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <section fxLayout=\"column\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n        <!-- Team name -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <input matInput type=\"tezt\" id=\"name\" name=\"name\" placeholder=\"Team name\" \r\n              [(ngModel)]=\"model.name\" \r\n              value=\"model.name\"\r\n              required\r\n              minlength=\"4\"\r\n              #name=\"ngModel\">\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Value must be longer than 3 characters</mat-error>\r\n        </mat-form-field>\r\n\r\n        <!-- Description -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\r\n              [(ngModel)]=\"model.description\" \r\n              value=\"model.description\"\r\n              #description=\"ngModel\"></textarea>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n\r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-team\">\r\n      <button *ngIf=\"!editTeamServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!editTeamForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"editTeamServiceRunning\"\r\n          class=\"progress-bar progress-bar--edit-team\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n    \r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getTeamServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-team\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
 
 /***/ }),
 
@@ -1749,7 +1752,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.form__edit-team .form__actions--edit-team {\n  margin: 20px 0; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.form__edit-team .form__actions--edit-team {\n  margin: 20px 0; }\n\n.progress-bar--get-team {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-team {\n    width: 300px; } }\n", ""]);
 
 // exports
 
@@ -1767,9 +1770,10 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1779,6 +1783,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1864,10 +1869,17 @@ var TeamsEditComponent = (function () {
         this.getTeamServiceRunning = true;
         this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(function (data) {
             if (data && data.slug) {
-                console.log(data);
-                _this.team = new __WEBPACK_IMPORTED_MODULE_5__models_team__["a" /* Team */](data.name, data.description || null, data.slug, null, null);
-                _this.model.name = data.name;
-                _this.model.description = data.description;
+                var admin = new __WEBPACK_IMPORTED_MODULE_3__users_models_user__["a" /* User */](data.admin.name, data.admin.email, data.admin.gravatar);
+                var members = [];
+                for (var _i = 0, _a = data.members; _i < _a.length; _i++) {
+                    var member = _a[_i];
+                    var newMember = new __WEBPACK_IMPORTED_MODULE_3__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
+                    members.push(newMember);
+                }
+                _this.team = new __WEBPACK_IMPORTED_MODULE_6__models_team__["a" /* Team */](data.name, data.description || null, data.slug, admin, members);
+                console.log(_this.team);
+                _this.model.name = _this.team.name;
+                _this.model.description = _this.team.description;
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
@@ -1890,7 +1902,7 @@ TeamsEditComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _e || Object])
 ], TeamsEditComponent);
 
 var _a, _b, _c, _d, _e;

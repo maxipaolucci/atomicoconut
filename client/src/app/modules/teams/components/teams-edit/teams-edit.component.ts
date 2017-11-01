@@ -98,11 +98,17 @@ export class TeamsEditComponent implements OnInit {
     this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(
       (data : any) => {
         if (data && data.slug) {
-          console.log(data);
-          this.team = new Team(data.name, data.description || null, data.slug, null, null);
+          const admin = new User(data.admin.name, data.admin.email, data.admin.gravatar);
+          let members = [];
+          for (let member of data.members) {
+            const newMember = new User(member.name, member.email, member.gravatar);
+            members.push(newMember);
+          }
 
-          this.model.name = data.name;
-          this.model.description = data.description;
+          this.team = new Team(data.name, data.description || null, data.slug, admin, members);
+          console.log(this.team);
+          this.model.name = this.team.name;
+          this.model.description = this.team.description;
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }

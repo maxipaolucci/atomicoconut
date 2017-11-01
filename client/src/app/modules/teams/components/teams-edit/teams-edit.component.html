@@ -1,5 +1,7 @@
-<form class="form__container form__edit-team" (ngSubmit)="onSubmit()" #editTeamForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
-  
+<div fxLayout="column" fxLayoutGap="10px" class="container__edit-team">
+  <form *ngIf="!getTeamServiceRunning" 
+      class="form__container form__edit-team" (ngSubmit)="onSubmit()" #editTeamForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
+    
     <section fxLayout="column" class="form__fields">
       <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
         <!-- Team name -->
@@ -23,7 +25,7 @@
         </mat-form-field>
       </div>
     </section>
-  
+
     <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--edit-team">
       <button *ngIf="!editTeamServiceRunning" 
           class="form__action mat-raised-button" 
@@ -38,5 +40,13 @@
           mode="indeterminate">
       </mat-progress-bar>
     </section>
-  
+    
   </form>
+
+  <mat-progress-bar *ngIf="getTeamServiceRunning"
+      fxFlexAlign="center"
+      class="progress-bar progress-bar--get-team"
+      color="primary"
+      mode="indeterminate">
+  </mat-progress-bar>
+</div>

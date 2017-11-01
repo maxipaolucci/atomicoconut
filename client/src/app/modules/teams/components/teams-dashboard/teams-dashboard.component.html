@@ -4,6 +4,7 @@
       fxLayoutGap.xs="10px" 
       fxLayoutAlign="space-around center" fxLayoutAlign.xs="none none" >
     
+    <div *ngIf="!teams.length && !getTeamsServiceRunning" fxFlexAlign="center">You are not member of any team yet.</div>
     <!-- Team Cards -->
     <mat-expansion-panel *ngFor="let team of teams"
         fxFlex.sm="45" fxFlex.gt-sm="30" 
@@ -23,7 +24,7 @@
         </section>
 
         <section class="members">
-          <div *ngFor="let member of team.members" fxLayout="row" class="member">
+          <div *ngFor="let member of team.members" fxLayout="row" fxLayoutGap="10px" class="member">
             <img class="member__avatar" [src]="member.avatar"/>
             <div class="member__info" fxLayout="column" matTooltip="Administrator" matTooltipPosition="right">
               <p >{{member.name}} <mat-icon *ngIf="member.email === team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
