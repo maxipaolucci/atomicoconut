@@ -27,8 +27,8 @@
           <div *ngFor="let member of team.members" fxLayout="row" fxLayoutGap="10px" class="member">
             <img class="member__avatar" [src]="member.avatar"/>
             <div class="member__info" fxLayout="column" matTooltip="Administrator" matTooltipPosition="right">
-              <p >{{member.name}} <mat-icon *ngIf="member.email === team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
-              <p>{{member.email}}</p>
+              <p class="member__name">{{member.name}} <mat-icon *ngIf="member.email === team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
+              <p class="member__email">{{member.email}}</p>
             </div>
           </div>
         </section>

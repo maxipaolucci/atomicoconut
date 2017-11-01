@@ -17,6 +17,30 @@ form {
   }
 }
 
+.members .member {
+  padding: 14px;
+  border-radius: 50px; 
+
+  .member__avatar {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+
+  .member__info {
+    
+    .admin-icon {
+      font-size: 14px;
+      height: auto;
+      width: auto;
+    }
+
+    .member__email {
+      font-size: 11px;
+    }
+  }
+}
+
 .progress-bar--get-team {
   width: 100%;
 }
