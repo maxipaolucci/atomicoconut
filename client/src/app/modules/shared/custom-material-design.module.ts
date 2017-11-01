@@ -16,7 +16,8 @@ import {
   MatNativeDateModule,
   MatTabsModule,
   MatExpansionModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatDialogModule
 } from '@angular/material';
 
 @NgModule({
@@ -37,7 +38,8 @@ import {
     MatNativeDateModule,
     MatTabsModule,
     MatExpansionModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule
   ],
   exports: [
     MatButtonModule, 
@@ -56,7 +58,8 @@ import {
     MatNativeDateModule,
     MatTabsModule,
     MatExpansionModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule
   ]
 })
 export class CustomMaterialDesignModule { }

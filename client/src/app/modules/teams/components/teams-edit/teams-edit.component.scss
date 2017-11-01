@@ -39,6 +39,18 @@ form {
       font-size: 11px;
     }
   }
+
+  &.not-saved-yet {
+    
+    .member__avatar--default {
+      font-size: 40px;
+      color : $warn;
+    }
+
+    .member__email {
+      padding-top: 10px;
+    }
+  }
 }
 
 .progress-bar--get-team {

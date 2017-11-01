@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
+import { AddPersonToTeamDialogComponent } from '../../components/add-person-to-team-dialog/add-person-to-team-dialog.component';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { User } from '../../../users/models/user';
 import { TeamsService } from '../../teams.service';
@@ -13,6 +15,7 @@ import { Team } from '../../models/team';
 })
 export class TeamsEditComponent implements OnInit {
 
+  editMode : boolean = false;
   user : User = null;
   team : Team = null;
   editTeamServiceRunning : boolean = false;
@@ -24,7 +27,7 @@ export class TeamsEditComponent implements OnInit {
   };
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private teamsService : TeamsService,
-      private appService : AppService, private router : Router) { }
+      private appService : AppService, private router : Router, public dialog: MatDialog) { }
 
   ngOnInit() {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
@@ -43,10 +46,12 @@ export class TeamsEditComponent implements OnInit {
     this.route.paramMap.map((params: ParamMap) => params.get('slug'))
       .subscribe(slug => { 
         if (!slug) {
-          //we are creating a team
+          //we are creating a new team
+          this.editMode = false;
           this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
         } else {
-          //we are editing a team
+          //we are editing an existing team
+          this.editMode = true;
           this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
 
           this.getTeam(slug);
@@ -125,5 +130,20 @@ export class TeamsEditComponent implements OnInit {
         this.getTeamServiceRunning = false;
       }
     );
+  }
+
+  openAddPersonDialog() {
+    let addPersonDialogRef = this.dialog.open(AddPersonToTeamDialogComponent, {
+      width: '250px',
+      data: {}
+    });
+
+    addPersonDialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      const newMember = new User('', result);
+      this.team.members.push(newMember);
+    });
+
+    return false;
   }
 }

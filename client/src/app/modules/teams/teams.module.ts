@@ -7,6 +7,7 @@ import { TeamsDashboardComponent } from './components/teams-dashboard/teams-dash
 import { CustomMaterialDesignModule } from '../../modules/shared/custom-material-design.module';
 import { TeamsEditComponent } from './components/teams-edit/teams-edit.component';
 import { TeamsService } from './teams.service';
+import { AddPersonToTeamDialogComponent } from './components/add-person-to-team-dialog/add-person-to-team-dialog.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,14 @@ import { TeamsService } from './teams.service';
     FormsModule,
     FlexLayoutModule
   ],
-  declarations: [TeamsDashboardComponent, TeamsEditComponent],
+  declarations: [
+    TeamsDashboardComponent, 
+    TeamsEditComponent, 
+    AddPersonToTeamDialogComponent
+  ],
+  entryComponents: [
+    AddPersonToTeamDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
+  ],
   providers : [ TeamsService ]
 })
 export class TeamsModule { }

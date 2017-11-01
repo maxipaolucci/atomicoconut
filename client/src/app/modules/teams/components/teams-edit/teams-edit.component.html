@@ -26,16 +26,23 @@
       </div>
     </section>
 
-    <section class="members" fxLayout="row" fxLayoutGap="10px">
-      <mat-card *ngFor="let member of team.members" class="member">
+    <section *ngIf="editMode" class="members" fxLayout="row" fxLayoutGap="10px">
+      <mat-card *ngFor="let member of team.members" class="member" [class.not-saved-yet]="!member.name && !member.avatar">
         <mat-card-content fxLayout="row" fxLayoutGap="10px">
-          <img class="member__avatar" [src]="member.avatar"/>
+          <img *ngIf="member.avatar" class="member__avatar" [src]="member.avatar"/>
+          <mat-icon *ngIf="!member.avatar" class="member__avatar member__avatar--default">account_circle</mat-icon>
           <div class="member__info" fxLayout="column" [matTooltip]="member.email === team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
-            <p class="member__name">{{member.name}} <mat-icon *ngIf="member.email === team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
+            <p *ngIf="member.name" class="member__name">{{member.name}} <mat-icon *ngIf="member.email === team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
             <p class="member__email">{{member.email}}</p>
           </div>
         </mat-card-content>
       </mat-card>
+    </section>
+
+    <section *ngIf="editMode" class="add-members" fxLayout="column" fxLayoutAlign="start end">
+      <button mat-fab color="warn" type="button" (click)="openAddPersonDialog()">
+        <mat-icon aria-label="Add new member">person_add</mat-icon>
+      </button>
     </section>
 
     <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--edit-team">
