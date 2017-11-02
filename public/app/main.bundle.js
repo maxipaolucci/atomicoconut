@@ -1609,7 +1609,7 @@ SharedModule = __decorate([
 /***/ "../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n\n<h2 mat-dialog-title>Add team member</h2>\n\n<mat-dialog-content>\n  <div fxLayout=\"column\" class=\"container__add-person-to-team\">\n    <form class=\"form__container form__add-person-to-team\" #addPersonToTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\n      \n      <section fxLayout=\"column\" class=\"form__fields\">\n        <div fxLayout=\"column\" class=\"form__fields__row\">\n          <!-- Member email -->\n          <mat-form-field fxFlex class=\"form__field\">\n            <input matInput type=\"tezt\" id=\"email\" name=\"email\" placeholder=\"Member email\" \n                [(ngModel)]=\"model.email\"\n                required \n                email\n                #email=\"ngModel\">\n            <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\n            <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\n          </mat-form-field>\n        </div>\n      </section>\n    </form>\n  </div>\n</mat-dialog-content>\n\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\n  <button mat-mini-fab color=\"warn\" mat-dialog-close>\n    <mat-icon aria-label=\"Cancel\">clear</mat-icon>\n  </button>\n  <button mat-mini-fab color=\"accent\" [mat-dialog-close]=\"email.value || null\" [disabled]=\"!addPersonToTeamForm.form.valid\">\n    <mat-icon aria-label=\"Add\">done</mat-icon>\n  </button>\n</mat-dialog-actions>"
+module.exports = "\r\n\r\n<h2 mat-dialog-title>Add team member</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__add-person-to-team\">\r\n    <form class=\"form__container form__add-person-to-team\" #addPersonToTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n      \r\n      <section fxLayout=\"column\" class=\"form__fields\">\r\n        <div fxLayout=\"column\" class=\"form__fields__row\">\r\n          <!-- Member email -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <input matInput type=\"tezt\" id=\"email\" name=\"email\" placeholder=\"Member email\" \r\n                [(ngModel)]=\"model.email\"\r\n                required \r\n                email\r\n                #email=\"ngModel\">\r\n            <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n            <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n      </section>\r\n    </form>\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" mat-dialog-close>\r\n    <mat-icon aria-label=\"Cancel\">clear</mat-icon>\r\n  </button>\r\n  <button mat-mini-fab color=\"accent\" [mat-dialog-close]=\"email.value || null\" [disabled]=\"!addPersonToTeamForm.form.valid\">\r\n    <mat-icon aria-label=\"Add\">done</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
 
 /***/ }),
 
@@ -1816,7 +1816,7 @@ var _a, _b, _c, _d, _e;
 /***/ "../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-team\">\r\n  <form *ngIf=\"!getTeamServiceRunning\" \r\n      class=\"form__container form__edit-team\" (ngSubmit)=\"onSubmit()\" #editTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <section fxLayout=\"column\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" fxLayoutAlign.gt-xs=\"none end\" class=\"form__fields__row\">\r\n        <!-- Team name -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <input matInput type=\"tezt\" id=\"name\" name=\"name\" placeholder=\"Team name\" \r\n              [(ngModel)]=\"model.name\" \r\n              value=\"model.name\"\r\n              required\r\n              minlength=\"4\"\r\n              #name=\"ngModel\">\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Value must be longer than 3 characters</mat-error>\r\n        </mat-form-field>\r\n\r\n        <!-- Description -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\r\n              [(ngModel)]=\"model.description\" \r\n              value=\"model.description\"\r\n              #description=\"ngModel\"></textarea>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n\r\n    <section *ngIf=\"editMode\" class=\"members\" fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n      <mat-card *ngFor=\"let member of team.members\" class=\"member\" [class.not-saved-yet]=\"!member.name && !member.avatar\">\r\n        <mat-card-content fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n          <img *ngIf=\"member.avatar\" class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n          <mat-icon *ngIf=\"!member.avatar\" class=\"member__avatar member__avatar--default\">account_circle</mat-icon>\r\n          <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n            <p *ngIf=\"member.name\" class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n            <p class=\"member__email\">{{member.email}}</p>\r\n          </div>\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </section>\r\n\r\n    <section *ngIf=\"editMode\" class=\"add-members\" fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n      <button mat-fab color=\"warn\" type=\"button\" (click)=\"openAddPersonDialog()\">\r\n        <mat-icon aria-label=\"Add new member\">person_add</mat-icon>\r\n      </button>\r\n    </section>\r\n\r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-team\">\r\n      <button *ngIf=\"!editTeamServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!editTeamForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"editTeamServiceRunning\"\r\n          class=\"progress-bar progress-bar--edit-team\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n    \r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getTeamServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-team\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-team\">\r\n  <form *ngIf=\"!getTeamServiceRunning\" \r\n      class=\"form__container form__edit-team\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <section fxLayout=\"column\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" fxLayoutAlign.gt-xs=\"none end\" class=\"form__fields__row\">\r\n        <!-- Team name -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <input matInput type=\"tezt\" id=\"name\" name=\"name\" placeholder=\"Team name\" \r\n              [(ngModel)]=\"model.name\" \r\n              value=\"model.name\"\r\n              required\r\n              minlength=\"4\"\r\n              #name=\"ngModel\">\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Value must be longer than 3 characters</mat-error>\r\n        </mat-form-field>\r\n\r\n        <!-- Description -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\r\n              [(ngModel)]=\"model.description\" \r\n              value=\"model.description\"\r\n              #description=\"ngModel\"></textarea>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n\r\n    <section *ngIf=\"editMode\" class=\"members\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutWrap>\r\n      <mat-card *ngFor=\"let member of team.members\" class=\"member\" [class.not-saved-yet]=\"!member.name && !member.avatar\">\r\n        <mat-card-content fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"none center\">\r\n          \r\n          <img *ngIf=\"member.avatar\" class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n          <mat-icon *ngIf=\"!member.avatar\" class=\"member__avatar member__avatar--default\">account_circle</mat-icon>\r\n          \r\n          <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n            <p *ngIf=\"member.name\" class=\"member__name\">\r\n              {{member.name}}\r\n              <mat-icon *ngIf=\"member.email === team.admin.email\" class=\"icon__admin\" aria-label=\"Admin\" >lock</mat-icon>\r\n            </p>\r\n            <p class=\"member__email\">{{member.email}}</p>\r\n          </div>\r\n\r\n          <mat-icon *ngIf=\"member.email !== team.admin.email\" matTooltip=\"Remove\" class=\"icon__remove-member\" (click)=\"removeMember(member.email)\">clear</mat-icon>\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </section>\r\n\r\n    <section *ngIf=\"editMode\" class=\"add-members\" fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n      <button mat-fab color=\"warn\" type=\"button\" (click)=\"openAddPersonDialog()\">\r\n        <mat-icon aria-label=\"Add new member\">person_add</mat-icon>\r\n      </button>\r\n    </section>\r\n\r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-team\">\r\n      <button *ngIf=\"!editTeamServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!editTeamForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"editTeamServiceRunning\"\r\n          class=\"progress-bar progress-bar--edit-team\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n    \r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getTeamServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-team\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
 
 /***/ }),
 
@@ -1828,7 +1828,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.form__edit-team .form__actions--edit-team {\n  margin: 20px 0; }\n\n.members .member {\n  padding: 14px;\n  border-radius: 50px; }\n  .members .member .member__avatar {\n    border-radius: 50%;\n    width: 40px;\n    height: 40px; }\n  .members .member .member__info .admin-icon {\n    font-size: 14px;\n    height: auto;\n    width: auto; }\n  .members .member .member__info .member__email {\n    font-size: 11px; }\n  .members .member.not-saved-yet .member__avatar--default {\n    font-size: 40px;\n    color: #f44336; }\n  .members .member.not-saved-yet .member__email {\n    padding-top: 10px; }\n\n.progress-bar--get-team {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-team {\n    width: 300px; } }\n", ""]);
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.form__edit-team .form__actions--edit-team {\n  margin: 20px 0; }\n\n.members .member {\n  margin-bottom: 10px;\n  padding: 14px;\n  border-radius: 50px;\n  cursor: default; }\n  .members .member .member__avatar {\n    border-radius: 50%;\n    width: 40px;\n    height: 40px; }\n  .members .member .member__info .icon__admin {\n    font-size: 14px;\n    height: auto;\n    width: auto; }\n  .members .member .member__info .member__email {\n    font-size: 11px; }\n  .members .member .icon__remove-member {\n    font-size: 16px;\n    height: auto;\n    width: auto;\n    cursor: pointer; }\n  .members .member.not-saved-yet .member__avatar--default {\n    font-size: 40px;\n    color: #f44336; }\n\n.progress-bar--get-team {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-team {\n    width: 300px; } }\n", ""]);
 
 // exports
 
@@ -1886,8 +1886,10 @@ var TeamsEditComponent = (function () {
         this.model = {
             name: null,
             description: null,
-            email: null //user email for api check
+            email: null,
+            members: []
         };
+        this.slug = null;
     }
     TeamsEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1905,11 +1907,13 @@ var TeamsEditComponent = (function () {
             .subscribe(function (slug) {
             if (!slug) {
                 //we are creating a new team
+                _this.slug = null;
                 _this.editMode = false;
                 _this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected: true });
             }
             else {
                 //we are editing an existing team
+                _this.slug = slug;
                 _this.editMode = true;
                 _this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected: true });
                 _this.getTeam(slug);
@@ -1920,7 +1924,7 @@ var TeamsEditComponent = (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
         this.editTeamServiceRunning = true;
-        //call the account service
+        //call the team create service
         this.teamsService.create(this.model).subscribe(function (data) {
             if (data && data.slug) {
                 _this.appService.showResults("Team " + data.name + " successfully created!");
@@ -1930,6 +1934,36 @@ var TeamsEditComponent = (function () {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
                 _this.editTeamServiceRunning = false;
             }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit team service.", error);
+            if (error.codeno === 400) {
+                //the mail system failed for external reasons
+                _this.appService.showResults("There was an error with the team services, please try again in a few minutes.");
+            }
+            _this.editTeamServiceRunning = false;
+        });
+    };
+    TeamsEditComponent.prototype.onUpdate = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onUpdate() > "; //for debugging
+        this.editTeamServiceRunning = true;
+        //add slug and members to service payload
+        this.model.slug = this.slug;
+        this.model.members = []; //reset the members array
+        for (var _i = 0, _a = this.team.members; _i < _a.length; _i++) {
+            var member = _a[_i];
+            this.model.members.push(member.email);
+        }
+        //call the team update service
+        this.teamsService.update(this.model).subscribe(function (data) {
+            if (data && data.slug) {
+                _this.appService.showResults("Team " + data.name + " successfully updated!");
+                //update the members card with data from server.
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            _this.editTeamServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit team service.", error);
             if (error.codeno === 400) {
@@ -1953,15 +1987,18 @@ var TeamsEditComponent = (function () {
         this.getTeamServiceRunning = true;
         this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(function (data) {
             if (data && data.slug) {
+                //populate admin
                 var admin = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](data.admin.name, data.admin.email, data.admin.gravatar);
+                //populate members
                 var members = [];
                 for (var _i = 0, _a = data.members; _i < _a.length; _i++) {
                     var member = _a[_i];
                     var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
                     members.push(newMember);
                 }
+                //create team
                 _this.team = new __WEBPACK_IMPORTED_MODULE_8__models_team__["a" /* Team */](data.name, data.description || null, data.slug, admin, members);
-                console.log(_this.team);
+                //populate the model
                 _this.model.name = _this.team.name;
                 _this.model.description = _this.team.description;
             }
@@ -1975,6 +2012,10 @@ var TeamsEditComponent = (function () {
                 //the mail system failed for external reasons
                 _this.appService.showResults("There was an error with the team services, please try again in a few minutes.");
             }
+            else if (error.codeno === 462) {
+                _this.appService.showResults(error.msg);
+                _this.router.navigate(['/welcome']);
+            }
             _this.getTeamServiceRunning = false;
         });
     };
@@ -1986,10 +2027,23 @@ var TeamsEditComponent = (function () {
         });
         addPersonDialogRef.afterClosed().subscribe(function (result) {
             console.log('The dialog was closed', result);
-            var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */]('', result);
-            _this.team.members.push(newMember);
+            if (result) {
+                var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */]('', result);
+                _this.team.members.push(newMember);
+            }
         });
         return false;
+    };
+    TeamsEditComponent.prototype.removeMember = function (email) {
+        var index = 0;
+        for (var _i = 0, _a = this.team.members; _i < _a.length; _i++) {
+            var member = _a[_i];
+            if (member.email === email) {
+                break;
+            }
+            index += 1;
+        }
+        this.team.members.splice(index, 1);
     };
     return TeamsEditComponent;
 }());
@@ -2195,6 +2249,16 @@ var TeamsService = (function () {
     TeamsService.prototype.create = function (postData) {
         if (postData === void 0) { postData = {}; }
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to Update a team in the system
+     * @param postData
+     */
+    TeamsService.prototype.update = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
     };

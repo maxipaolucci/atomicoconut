@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__edit-team">
   <form *ngIf="!getTeamServiceRunning" 
-      class="form__container form__edit-team" (ngSubmit)="onSubmit()" #editTeamForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
+      class="form__container form__edit-team" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editTeamForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
     
     <section fxLayout="column" class="form__fields">
       <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" fxLayoutAlign.gt-xs="none end" class="form__fields__row">
@@ -26,15 +26,22 @@
       </div>
     </section>
 
-    <section *ngIf="editMode" class="members" fxLayout="row" fxLayoutGap="10px">
+    <section *ngIf="editMode" class="members" fxLayout="row" fxLayoutGap="10px" fxLayoutWrap>
       <mat-card *ngFor="let member of team.members" class="member" [class.not-saved-yet]="!member.name && !member.avatar">
-        <mat-card-content fxLayout="row" fxLayoutGap="10px">
+        <mat-card-content fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="none center">
+          
           <img *ngIf="member.avatar" class="member__avatar" [src]="member.avatar"/>
           <mat-icon *ngIf="!member.avatar" class="member__avatar member__avatar--default">account_circle</mat-icon>
+          
           <div class="member__info" fxLayout="column" [matTooltip]="member.email === team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
-            <p *ngIf="member.name" class="member__name">{{member.name}} <mat-icon *ngIf="member.email === team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
+            <p *ngIf="member.name" class="member__name">
+              {{member.name}}
+              <mat-icon *ngIf="member.email === team.admin.email" class="icon__admin" aria-label="Admin" >lock</mat-icon>
+            </p>
             <p class="member__email">{{member.email}}</p>
           </div>
+
+          <mat-icon *ngIf="member.email !== team.admin.email" matTooltip="Remove" class="icon__remove-member" (click)="removeMember(member.email)">clear</mat-icon>
         </mat-card-content>
       </mat-card>
     </section>

@@ -23,8 +23,10 @@ export class TeamsEditComponent implements OnInit {
   model : any = {
     name : null,
     description : null,
-    email : null //user email for api check
+    email : null, //user email for api check
+    members : []
   };
+  slug : string = null;
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private teamsService : TeamsService,
       private appService : AppService, private router : Router, public dialog: MatDialog) { }
@@ -47,13 +49,14 @@ export class TeamsEditComponent implements OnInit {
       .subscribe(slug => { 
         if (!slug) {
           //we are creating a new team
+          this.slug = null;
           this.editMode = false;
           this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
         } else {
           //we are editing an existing team
+          this.slug = slug;
           this.editMode = true;
           this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
-
           this.getTeam(slug);
         }
       });
@@ -63,7 +66,7 @@ export class TeamsEditComponent implements OnInit {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
 
     this.editTeamServiceRunning = true;
-    //call the account service
+    //call the team create service
     this.teamsService.create(this.model).subscribe(
       (data : any) => {
         if (data && data.slug) {
@@ -73,6 +76,42 @@ export class TeamsEditComponent implements OnInit {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
           this.editTeamServiceRunning = false;
         }
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit team service.`, error);
+        if (error.codeno === 400) {
+          //the mail system failed for external reasons
+          this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`);
+        }
+
+        this.editTeamServiceRunning = false;
+      }
+    );
+  }
+
+  onUpdate() {
+    const methodTrace = `${this.constructor.name} > onUpdate() > `; //for debugging
+    
+    this.editTeamServiceRunning = true;
+
+    //add slug and members to service payload
+    this.model.slug = this.slug;
+    this.model.members = []; //reset the members array
+    for (let member of this.team.members) {
+      this.model.members.push(member.email);
+    }
+
+    //call the team update service
+    this.teamsService.update(this.model).subscribe(
+      (data : any) => {
+        if (data && data.slug) {
+          this.appService.showResults(`Team ${data.name} successfully updated!`);
+          //update the members card with data from server.
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        }
+
+        this.editTeamServiceRunning = false;
       },
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit team service.`, error);
@@ -103,15 +142,17 @@ export class TeamsEditComponent implements OnInit {
     this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(
       (data : any) => {
         if (data && data.slug) {
+          //populate admin
           const admin = new User(data.admin.name, data.admin.email, data.admin.gravatar);
+          //populate members
           let members = [];
           for (let member of data.members) {
             const newMember = new User(member.name, member.email, member.gravatar);
             members.push(newMember);
           }
-
+          //create team
           this.team = new Team(data.name, data.description || null, data.slug, admin, members);
-          console.log(this.team);
+          //populate the model
           this.model.name = this.team.name;
           this.model.description = this.team.description;
         } else {
@@ -125,6 +166,9 @@ export class TeamsEditComponent implements OnInit {
         if (error.codeno === 400) {
           //the mail system failed for external reasons
           this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`);
+        } else if (error.codeno === 462) {
+          this.appService.showResults(error.msg);
+          this.router.navigate(['/welcome']);
         }
 
         this.getTeamServiceRunning = false;
@@ -140,10 +184,25 @@ export class TeamsEditComponent implements OnInit {
 
     addPersonDialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      const newMember = new User('', result);
-      this.team.members.push(newMember);
+      if (result) {
+        const newMember = new User('', result);
+        this.team.members.push(newMember);
+      }
     });
 
     return false;
+  }
+
+  removeMember(email : string) {
+    let index = 0;
+    for (let member of this.team.members) {
+      if (member.email === email) {
+        break;
+      }
+
+      index += 1; 
+    }
+
+    this.team.members.splice(index, 1);
   }
 }

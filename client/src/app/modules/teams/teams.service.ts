@@ -23,7 +23,17 @@ export class TeamsService {
     return this.http.post(`${this.serverHost}/create`, postData, { headers : this.headers })
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
-  }  
+  } 
+  
+  /**
+   * Server call to Update a team in the system 
+   * @param postData 
+   */
+  update(postData : any = {}) : Observable<any> {
+    return this.http.post(`${this.serverHost}/update`, postData, { headers : this.headers })
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
+  } 
 
   /**
    * Server call to Get a team from the server based on its slug

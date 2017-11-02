@@ -147,6 +147,11 @@ router.post('/api/teams/create',
   catchErrors(teamController.create)
 );
 
-
+router.post('/api/teams/update', 
+  authController.isLogggedIn, 
+  teamController.validateRegister,
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  catchErrors(teamController.update)
+);
 
 module.exports = router;

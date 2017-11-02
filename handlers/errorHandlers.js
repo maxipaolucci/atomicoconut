@@ -13,7 +13,8 @@ const errorCodes = {
   458 : 'The register form contains some errors: {{param}}.',
   459 : 'Failed to create and save a new record of {{param}}.',
   460 : 'User email loggedin in current server session does not match {{param}} provided by the service consumer.',
-  461 : 'No {{param}} found with those parameters.'
+  461 : 'No {{param}} found with those parameters.',
+  462 : 'The {{param}} information requested it is not available for you.'
 };
 
 const messageCodes = {

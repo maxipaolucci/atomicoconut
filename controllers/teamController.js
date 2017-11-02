@@ -95,33 +95,36 @@ exports.create = async (req, res, next) => {
     }
 };
 
-/**
- * Get a team base on the slug provided
- */
-exports.zzz = async (req, res) => {
-    const methodTrace = `${errorTrace} getTeamBySlug() >`;
-    //check for a team with the provided slug
-    console.log(`${methodTrace} ${getMessage('message', 1034, 'Team', 'slug', req.query.slug)}`);
-    let team = await Team.findOne({ slug : req.query.slug });
-    if (!team) {
-        console.log(`${methodTrace} ${getMessage('error', 461, 'Team')}`);
+exports.update = async (req, res, next) => {
+    const methodTrace = `${errorTrace} update() >`;
+
+    //get the logged in user from req
+    let user = req.user;
+
+    const team = await getTeamBySlugObject(req.body.slug);
+    
+    if (team && team.admin && team.admin.email !== req.body.email) {
+        //the client is not the admin of the team requested
+        console.log(`${methodTrace} ${getMessage('error', 462, 'Team')}`);
         res.status(401).json({ 
             status : "error", 
-            codeno : 461,
-            msg : getMessage('error', 461, 'Team'),
+            codeno : 462,
+            msg : getMessage('error', 462, 'Team'),
             data : null
         });
+
         return;
     }
-    
-    console.log(`${methodTrace} ${getMessage('message', 1035, 'Team')}`);
+
+    //Pending here eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee to do find and updatesssss
+    //this is dummy response
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1035, 'Team'),
-        data : getTeamDataObject(team)
+        msg : getMessage('message', 1036, 1, 'Team(s)'),
+        data : team
     });
-}
+};
 
 /**
  * Get all teams for the authenticated user
@@ -199,17 +202,20 @@ exports.getAllTeams = async (req, res) => {
     });
 }
 
+
 /**
- * Get all teams for the authenticated user
+ * Get a team by slug
+ * @param {*} slug 
  */
-exports.getTeamBySlug = async (req, res) => {
-    const methodTrace = `${errorTrace} getTeamBySlug() >`;
+const getTeamBySlugObject = async (slug) => {
+    const methodTrace = `${errorTrace} getTeamBySlugObject() >`;
+
     //check for a team with the provided slug
-    console.log(`${methodTrace} ${getMessage('message', 1034, 'Team', 'slug', req.query.slug)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1034, 'Team', 'slug', slug)}`);
     
     //get the team with members
     let teams = await Team.aggregate([
-        { $match : { slug : req.query.slug } },
+        { $match : { slug } },
         { $lookup : { from : 'users', localField : 'admin', foreignField : '_id', as : 'adminInfo' } },
         { 
             $addFields : {
@@ -279,17 +285,39 @@ exports.getTeamBySlug = async (req, res) => {
                 gravatar : 'https://gravatar.com/avatar/' + md5(team.member.email[0]) + '?s=200'
             }];
         }
-        
     }
-    
 
     //Return teams info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, teams.length, 'Team(s)')}`);
+    return Object.keys(result).length ? result : null;
+}
+
+/**
+ * Get a team by slug and send it back to client
+ */
+exports.getTeamBySlug = async (req, res) => {
+    const methodTrace = `${errorTrace} getTeamBySlug() >`;
+
+    const result = await getTeamBySlugObject(req.query.slug);
+    
+    if (result && result.admin && result.admin.email !== req.user.email) {
+        //the client is not the admin of the team requested
+        console.log(`${methodTrace} ${getMessage('error', 462, 'Team')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 462,
+            msg : getMessage('error', 462, 'Team'),
+            data : null
+        });
+
+        return;
+    }
+
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1036, teams.length, 'Team(s)'),
-        data : Object.keys(result).length ? result : null
+        msg : getMessage('message', 1036, 1, 'Team(s)'),
+        data : result
     });
 }
 

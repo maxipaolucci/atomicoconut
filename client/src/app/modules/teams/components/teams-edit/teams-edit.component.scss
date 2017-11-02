@@ -18,8 +18,10 @@ form {
 }
 
 .members .member {
+  margin-bottom: 10px;
   padding: 14px;
-  border-radius: 50px; 
+  border-radius: 50px;
+  cursor: default;
 
   .member__avatar {
     border-radius: 50%;
@@ -29,7 +31,7 @@ form {
 
   .member__info {
     
-    .admin-icon {
+    .icon__admin {
       font-size: 14px;
       height: auto;
       width: auto;
@@ -40,15 +42,19 @@ form {
     }
   }
 
+    
+  .icon__remove-member {
+    font-size: 16px;
+    height: auto;
+    width: auto;
+    cursor: pointer;
+  }
+
   &.not-saved-yet {
     
     .member__avatar--default {
       font-size: 40px;
       color : $warn;
-    }
-
-    .member__email {
-      padding-top: 10px;
     }
   }
 }
