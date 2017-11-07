@@ -51,31 +51,32 @@ exports.create = async (req, res, next) => {
     if (team) {
         console.log(`${methodTrace} ${getMessage('message', 1026, 'Team')}`);
         
-        console.log(`${methodTrace} ${getMessage('message', 1031, 'TeamUser')}`);
-        let teamUser = await (new TeamUser({
-            team,
-            user : user._id,
-            isAdmin : true
-        })).save();
-        console.log(`${methodTrace} ${getMessage('message', 1026, 'TeamUser')}`);
+        await addMemberToTeam(user, team);
+        // console.log(`${methodTrace} ${getMessage('message', 1031, 'TeamUser')}`);
+        // let teamUser = await (new TeamUser({
+        //     team,
+        //     user : user._id,
+        //     isAdmin : true
+        // })).save();
+        // console.log(`${methodTrace} ${getMessage('message', 1026, 'TeamUser')}`);
 
-        //search for the user and add the personal info id
-        console.log(`${methodTrace} ${getMessage('message', 1024, 'User', '_id', user._id)}`);
-        user = await User.findOneAndUpdate(
-            { _id : req.user._id },
-            { $addToSet : { teamUsers : teamUser } },
-            { new : true }
-        );
-        console.log(`${methodTrace} ${getMessage('message', 1032, 'User')}`);
+        // //search for the user and add the personal info id
+        // console.log(`${methodTrace} ${getMessage('message', 1024, 'User', '_id', user._id)}`);
+        // user = await User.findOneAndUpdate(
+        //     { _id : req.user._id },
+        //     { $addToSet : { teamUsers : teamUser } },
+        //     { new : true }
+        // );
+        // console.log(`${methodTrace} ${getMessage('message', 1032, 'User')}`);
 
-        //update the team with the teamUser info
-        console.log(`${methodTrace} ${getMessage('message', 1024, 'Team', '_id', team._id)}`);
-        team = await Team.findOneAndUpdate(
-            { _id : team._id },
-            { $addToSet : { teamUsers : teamUser } },
-            { new : true }
-        );
-        console.log(`${methodTrace} ${getMessage('message', 1032, 'Team')}`);
+        // //update the team with the teamUser info
+        // console.log(`${methodTrace} ${getMessage('message', 1024, 'Team', '_id', team._id)}`);
+        // team = await Team.findOneAndUpdate(
+        //     { _id : team._id },
+        //     { $addToSet : { teamUsers : teamUser } },
+        //     { new : true }
+        // );
+        // console.log(`${methodTrace} ${getMessage('message', 1032, 'Team')}`);
 
         console.log(`${methodTrace} ${getMessage('message', 1033, 'Team')}`);
         res.json({
@@ -95,15 +96,81 @@ exports.create = async (req, res, next) => {
     }
 };
 
+/**
+ * Adds a user to a team.
+ * @param {*} user . The user to add to the team as parameter
+ * @param {*} team . The team where to add the user
+ */
+const addMemberToTeam = async (user, team) => {
+    console.log(`${methodTrace} ${getMessage('message', 1031, 'TeamUser')}`);
+    let teamUser = await (new TeamUser({
+        team,
+        user : user._id,
+        isAdmin : true
+    })).save();
+    console.log(`${methodTrace} ${getMessage('message', 1026, 'TeamUser')}`);
+
+    //search for the user and add the personal info id
+    console.log(`${methodTrace} ${getMessage('message', 1024, 'User', '_id', user._id)}`);
+    user = await User.findOneAndUpdate(
+        { _id : user._id },
+        { $addToSet : { teamUsers : teamUser } },
+        { new : true }
+    );
+    console.log(`${methodTrace} ${getMessage('message', 1032, 'User')}`);
+
+    //update the team with the teamUser info
+    console.log(`${methodTrace} ${getMessage('message', 1024, 'Team', '_id', team._id)}`);
+    team = await Team.findOneAndUpdate(
+        { _id : team._id },
+        { $addToSet : { teamUsers : teamUser } },
+        { new : true }
+    );
+    console.log(`${methodTrace} ${getMessage('message', 1032, 'Team')}`);
+};
+
+/**
+ * Deletes a user from a team.
+ * @param {*} user . The user to delete from the team as parameter
+ * @param {*} team . The team where to remove the user
+ */
+const deleteMemberFromTeam = async (user, team) => {
+    console.log(`${methodTrace} ${getMessage('message', 1037, 'TeamUser', `with teamID : ${team._id} and userID : ${user._id}`)}`);
+    let teamUser = await TeamUser.findOne({ team : team._id, user : user._id });
+    if (teamUser) {
+        console.log(`${methodTrace} ${getMessage('message', 1035, 'TeamUser')}`);
+    } else {
+        console.log(`${methodTrace} ${getMessage('message', 461, 'TeamUser')}`);
+        return false;
+    }
+
+    console.log(`${methodTrace} ${getMessage('message', 1024, 'User', '_id', user._id)}`);
+    user = await User.findOneAndUpdate(
+        { _id : user._id },
+        { $addToSet : { teamUsers : teamUser } },
+        { new : true }
+    );
+    console.log(`${methodTrace} ${getMessage('message', 1032, 'User')}`);
+
+    //update the team with the teamUser info
+    console.log(`${methodTrace} ${getMessage('message', 1024, 'Team', '_id', team._id)}`);
+    team = await Team.findOneAndUpdate(
+        { _id : team._id },
+        { $addToSet : { teamUsers : teamUser } },
+        { new : true }
+    );
+    console.log(`${methodTrace} ${getMessage('message', 1032, 'Team')}`);
+};
+
 exports.update = async (req, res, next) => {
     const methodTrace = `${errorTrace} update() >`;
 
     //get the logged in user from req
     let user = req.user;
 
+    //get the team by slug and check that the admin is the same user asking for update
     const team = await getTeamBySlugObject(req.body.slug);
-    
-    if (team && team.admin && team.admin.email !== req.body.email) {
+    if (team && team.admin && team.admin.email !== user.email) {
         //the client is not the admin of the team requested
         console.log(`${methodTrace} ${getMessage('error', 462, 'Team')}`);
         res.status(401).json({ 
@@ -116,7 +183,66 @@ exports.update = async (req, res, next) => {
         return;
     }
 
-    //Pending here eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee to do find and updatesssss
+    //compare the stored members in DB for this team with the members coming in the service call payload
+    let memberState = {};
+    for (let oldMember of team.members) {
+        memberState[oldMember.email] = req.body.members.includes(oldMember.email) ? 'keep' : 'remove';
+        if (memberState[oldMember.email] === 'remove' && oldMember.isAdmin) {
+            console.log(`${methodTrace} ${getMessage('error', 463)}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 463,
+                msg : getMessage('error', 463),
+                data : null
+            });
+    
+            return;
+        } 
+    }
+
+    for (let newMember of req.body.members) {
+        memberState[newMember] = memberState[newMember] ? memberState[newMember] : 'add';
+    }
+
+    //get the team and update fields
+    //the fields to update
+    const updates = {
+        name : req.body.name,
+        description : req.body.description,
+        slug : req.body.slug
+    };
+
+    console.log(memberState);
+
+    let usersNotRegisterd = []; //store email of users to add to a team that there are not users in AtomiCoconut yet.
+    //iterate memberState object and add the new members
+    for (memberEmail of Object.keys(memberState)) {
+        const state = memberState[memberEmail];
+        const user = await User.findOne({ email : memberEmail});
+        if (state === 'add') {
+            if (user) {
+                await addMemberToTeam(user, team);
+            } else {
+                usersNotRegisterd.push(memberEmail);
+            }
+        } else if (state === 'remove' && user) {
+            //TODO check the member has not got any investment/activity in that team. otherwise deny the operation
+            
+            //removes member from team
+            await deleteMemberFromTeam(user, team);
+        }
+    }
+    
+
+    //check for a FinancialInfo record for the user
+    console.log(`${methodTrace} ${getMessage('message', 1024, 'FinancialInfo', 'user', user._id)}`);
+    let financialInfo = await FinancialInfo.findOneAndUpdate(
+        { user : user._id },
+        { $set : updates },
+        { new : true, runValidators : true, context : 'query' }
+    );
+
+
     //this is dummy response
     res.json({
         status : 'success', 

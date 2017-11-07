@@ -14,7 +14,8 @@ const errorCodes = {
   459 : 'Failed to create and save a new record of {{param}}.',
   460 : 'User email loggedin in current server session does not match {{param}} provided by the service consumer.',
   461 : 'No {{param}} found with those parameters.',
-  462 : 'The {{param}} information requested it is not available for you.'
+  462 : 'The {{param}} information requested it is not available for you.',
+  463: 'You cannot remove the administrator of a Team.'
 };
 
 const messageCodes = {
@@ -54,7 +55,8 @@ const messageCodes = {
   1033 : '{{param}} and all related data successfully created and saved.',
   1034 : 'Get {{param}} by {{param}} = {{param}}...',
   1035 : '{{param}} found.',
-  1036 : '{{param}} {{param}} found.'
+  1036 : '{{param}} {{param}} found.',
+  1037 : 'Searching one {{param}} with {{param}}...'
 };
 
 /**

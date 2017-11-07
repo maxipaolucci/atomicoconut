@@ -1954,11 +1954,14 @@ var TeamsEditComponent = (function () {
             var member = _a[_i];
             this.model.members.push(member.email);
         }
+        console.log(this.model);
+        //TODO check the new members are not duplicated, especially the admin
         //call the team update service
         this.teamsService.update(this.model).subscribe(function (data) {
             if (data && data.slug) {
                 _this.appService.showResults("Team " + data.name + " successfully updated!");
-                //update the members card with data from server.
+                //TODO update the members card with data from server.
+                //TODO redirect to the new team slug name if changed
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");

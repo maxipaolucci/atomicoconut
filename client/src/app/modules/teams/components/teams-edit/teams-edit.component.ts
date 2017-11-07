@@ -101,12 +101,17 @@ export class TeamsEditComponent implements OnInit {
       this.model.members.push(member.email);
     }
 
+    console.log(this.model);
+    //TODO check the new members are not duplicated, especially the admin
+
     //call the team update service
     this.teamsService.update(this.model).subscribe(
       (data : any) => {
         if (data && data.slug) {
           this.appService.showResults(`Team ${data.name} successfully updated!`);
-          //update the members card with data from server.
+          //TODO update the members card with data from server.
+
+          //TODO redirect to the new team slug name if changed
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
