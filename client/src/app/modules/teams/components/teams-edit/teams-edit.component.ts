@@ -101,13 +101,13 @@ export class TeamsEditComponent implements OnInit {
       this.model.members.push(member.email);
     }
 
-    console.log(this.model);
     //TODO check the new members are not duplicated, especially the admin
 
     //call the team update service
     this.teamsService.update(this.model).subscribe(
       (data : any) => {
-        if (data && data.slug) {
+        if (data && data.team && data.team.slug) {
+          this.populateTeam(data.team);
           this.appService.showResults(`Team ${data.name} successfully updated!`);
           //TODO update the members card with data from server.
 
@@ -147,19 +147,7 @@ export class TeamsEditComponent implements OnInit {
     this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(
       (data : any) => {
         if (data && data.slug) {
-          //populate admin
-          const admin = new User(data.admin.name, data.admin.email, data.admin.gravatar);
-          //populate members
-          let members = [];
-          for (let member of data.members) {
-            const newMember = new User(member.name, member.email, member.gravatar);
-            members.push(newMember);
-          }
-          //create team
-          this.team = new Team(data.name, data.description || null, data.slug, admin, members);
-          //populate the model
-          this.model.name = this.team.name;
-          this.model.description = this.team.description;
+          this.populateTeam(data);
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
@@ -179,6 +167,27 @@ export class TeamsEditComponent implements OnInit {
         this.getTeamServiceRunning = false;
       }
     );
+  }
+
+  /**
+   * Populates the team and model with a team object coming from a service
+   * @param {*} team . Team object retrieved from a service
+   */
+  populateTeam(team : any) {
+    console.log(team);
+    //populate admin
+    const admin = new User(team.admin.name, team.admin.email, team.admin.gravatar);
+    //populate members
+    let members = [];
+    for (let member of team.members) {
+      const newMember = new User(member.name, member.email, member.gravatar);
+      members.push(newMember);
+    }
+    //create team
+    this.team = new Team(team.name, team.description || null, team.slug, admin, members);
+    //populate the model
+    this.model.name = this.team.name;
+    this.model.description = this.team.description;
   }
 
   openAddPersonDialog() {

@@ -102,11 +102,13 @@ exports.create = async (req, res, next) => {
  * @param {*} team . The team where to add the user
  */
 const addMemberToTeam = async (user, team) => {
+    const methodTrace = `${errorTrace} addMemberToTeam() >`;
+
     console.log(`${methodTrace} ${getMessage('message', 1031, 'TeamUser')}`);
     let teamUser = await (new TeamUser({
-        team,
+        team : team._id,
         user : user._id,
-        isAdmin : true
+        isAdmin : false
     })).save();
     console.log(`${methodTrace} ${getMessage('message', 1026, 'TeamUser')}`);
 
@@ -135,6 +137,8 @@ const addMemberToTeam = async (user, team) => {
  * @param {*} team . The team where to remove the user
  */
 const deleteMemberFromTeam = async (user, team) => {
+    const methodTrace = `${errorTrace} deleteMemberFromTeam() >`;
+
     console.log(`${methodTrace} ${getMessage('message', 1037, 'TeamUser', `with teamID : ${team._id} and userID : ${user._id}`)}`);
     let teamUser = await TeamUser.findOne({ team : team._id, user : user._id });
     if (teamUser) {
@@ -145,21 +149,29 @@ const deleteMemberFromTeam = async (user, team) => {
     }
 
     console.log(`${methodTrace} ${getMessage('message', 1024, 'User', '_id', user._id)}`);
-    user = await User.findOneAndUpdate(
-        { _id : user._id },
-        { $addToSet : { teamUsers : teamUser } },
+    user = await User.findByIdAndUpdate(
+        { _id : teamUser.user },
+        { $pull : { teamUsers : teamUser._id } },
         { new : true }
     );
     console.log(`${methodTrace} ${getMessage('message', 1032, 'User')}`);
 
     //update the team with the teamUser info
     console.log(`${methodTrace} ${getMessage('message', 1024, 'Team', '_id', team._id)}`);
-    team = await Team.findOneAndUpdate(
-        { _id : team._id },
-        { $addToSet : { teamUsers : teamUser } },
+    team = await Team.findByIdAndUpdate(
+        { _id : teamUser.team },
+        { $pull : { teamUsers : teamUser._id } },
         { new : true }
     );
     console.log(`${methodTrace} ${getMessage('message', 1032, 'Team')}`);
+
+    console.log(`${methodTrace} ${getMessage('message', 1038, 'TeamUser', '_id', teamUser._id)}`);
+    const writeResult = await TeamUser.remove({ _id : teamUser._id });
+    if (writeResult.result.n > 0) {
+        console.log(`${methodTrace} ${getMessage('message', 1039, 'TeamUser')}`);
+    } else {
+        console.log(`${methodTrace} ${getMessage('error', 464, 'TeamUser', '_id', teamUser._id)}`);
+    }
 };
 
 exports.update = async (req, res, next) => {
@@ -169,7 +181,7 @@ exports.update = async (req, res, next) => {
     let user = req.user;
 
     //get the team by slug and check that the admin is the same user asking for update
-    const team = await getTeamBySlugObject(req.body.slug);
+    let team = await getTeamBySlugObject(req.body.slug, true);
     if (team && team.admin && team.admin.email !== user.email) {
         //the client is not the admin of the team requested
         console.log(`${methodTrace} ${getMessage('error', 462, 'Team')}`);
@@ -204,51 +216,63 @@ exports.update = async (req, res, next) => {
         memberState[newMember] = memberState[newMember] ? memberState[newMember] : 'add';
     }
 
-    //get the team and update fields
-    //the fields to update
+    let usersNotRegistered = []; //store email of users to add to a team that there are not users in AtomiCoconut yet.
+    //iterate memberState object and add the new members
+    for (memberEmail of Object.keys(memberState)) {
+        const state = memberState[memberEmail];
+        
+        if (state !== 'keep') {
+            const user = await User.findOne({ email : memberEmail});
+            
+            if (state === 'add') {
+                if (user) {
+                    await addMemberToTeam(user, team);
+                } else {
+                    usersNotRegistered.push(memberEmail);
+                }
+            } else if (state === 'remove' && user) {
+                //TODO check the member has not got any investment/activity in that team. otherwise deny the operation
+                
+                //removes member from team
+                await deleteMemberFromTeam(user, team);
+            }
+        }
+    }
+
+    //update the team
     const updates = {
         name : req.body.name,
         description : req.body.description,
         slug : req.body.slug
     };
 
-    console.log(memberState);
-
-    let usersNotRegisterd = []; //store email of users to add to a team that there are not users in AtomiCoconut yet.
-    //iterate memberState object and add the new members
-    for (memberEmail of Object.keys(memberState)) {
-        const state = memberState[memberEmail];
-        const user = await User.findOne({ email : memberEmail});
-        if (state === 'add') {
-            if (user) {
-                await addMemberToTeam(user, team);
-            } else {
-                usersNotRegisterd.push(memberEmail);
-            }
-        } else if (state === 'remove' && user) {
-            //TODO check the member has not got any investment/activity in that team. otherwise deny the operation
-            
-            //removes member from team
-            await deleteMemberFromTeam(user, team);
-        }
-    }
-    
-
-    //check for a FinancialInfo record for the user
-    console.log(`${methodTrace} ${getMessage('message', 1024, 'FinancialInfo', 'user', user._id)}`);
-    let financialInfo = await FinancialInfo.findOneAndUpdate(
-        { user : user._id },
+    console.log(`${methodTrace} ${getMessage('message', 1024, 'Team', '_id', team._id)}`);
+    team = await Team.findOneAndUpdate(
+        { slug : team.slug },
         { $set : updates },
         { new : true, runValidators : true, context : 'query' }
     );
+    
+    if (!team) {
+        console.log(`${methodTrace} ${getMessage('message', 465, 'Team', 'slug', req.body.slug)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 465,
+            msg : getMessage('error', 465),
+            data : null
+        });
 
+        return;
+    }
+    
+    console.log(`${methodTrace} ${getMessage('message', 1032, 'Team')}`);
+    team = await getTeamBySlugObject(team.slug);
 
-    //this is dummy response
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1036, 1, 'Team(s)'),
-        data : team
+        msg : getMessage('message', 1032, 'Team'),
+        data : { team, usersNotRegistered }
     });
 };
 
@@ -275,40 +299,45 @@ exports.getAllTeams = async (req, res) => {
                 teamDescription : '$teamInfo.description'
             }
         },
-        { $lookup : { from : 'users', localField : 'userId', foreignField : '_id', as : 'userInfo' } },
+        { $lookup : { from : 'teamusers', localField : 'teamId', foreignField : 'team', as : 'teamUsersOfMyTeams' } },
         { 
             $addFields : {
-                memberId : '$userInfo._id',
-                memberName : '$userInfo.name',
-                memberEmail : '$userInfo.email'
+                teamMembersId : '$teamUsersOfMyTeams.user'
+            }
+        },
+        { $lookup : { from : 'users', localField : 'teamMembersId', foreignField : '_id', as : 'userInfo' } },
+        { 
+            $addFields : {
+                membersId : '$userInfo._id',
+                membersName : '$userInfo.name',
+                membersEmail : '$userInfo.email'
             }
         }
 
     ]);
 
+    console.log(teams);
+
     //Parse the recordset from DB and organize the info better.
     let teamsObj = {};
     for (team of teams) {
-        if (!teamsObj[team.teamId]) {
-            teamsObj[team.teamId] = {
-                slug : team.teamSlug[0],
-                name : team.teamName[0],
-                description : team.teamDescription[0]
+        
+        teamsObj[team.teamId] = {
+            slug : team.teamSlug[0],
+            name : team.teamName[0],
+            description : team.teamDescription[0]
+        };
+
+        teamsObj[team.teamId].members = [];
+        for (let i = 0; i < team.membersId.length; i++) {
+            const member = {
+                isAdmin : team.userId.toString() === team.membersId[i].toString(),
+                name : team.membersName[i],
+                email : team.membersEmail[i],
+                gravatar : 'https://gravatar.com/avatar/' + md5(team.membersEmail[i]) + '?s=200'
             };
 
-            teamsObj[team.teamId].members = [{
-                isAdmin : team.userId.toString() === team.memberId[0].toString(),
-                name : team.memberName[0],
-                email : team.memberEmail[0],
-                gravatar : 'https://gravatar.com/avatar/' + md5(team.memberEmail[0]) + '?s=200'
-            }];
-        } else {
-            teamsObj[team.teamId].members.push({
-                isAdmin : team.userId.toString() === team.memberId[0].toString(),
-                name : team.memberName[0],
-                email : team.memberEmail[0],
-                gravatar : 'https://gravatar.com/avatar/' + md5(team.memberEmail[0]) + '?s=200'
-            });
+            teamsObj[team.teamId].members.push(member);
         }
     }
 
@@ -317,6 +346,8 @@ exports.getAllTeams = async (req, res) => {
     for (let teamId of Object.keys(teamsObj)) {
         result.push(teamsObj[teamId]);
     }
+
+
 
     //Return teams info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, teams.length, 'Team(s)')}`);
@@ -333,7 +364,7 @@ exports.getAllTeams = async (req, res) => {
  * Get a team by slug
  * @param {*} slug 
  */
-const getTeamBySlugObject = async (slug) => {
+const getTeamBySlugObject = async (slug, withId = false) => {
     const methodTrace = `${errorTrace} getTeamBySlugObject() >`;
 
     //check for a team with the provided slug
@@ -370,7 +401,6 @@ const getTeamBySlugObject = async (slug) => {
         {
             $project : {
                 adminInfo : false,
-                _id : false,
                 __v : false,
                 memberInfo : false,
                 teamUserInfo : false,
@@ -386,6 +416,9 @@ const getTeamBySlugObject = async (slug) => {
         if (!Object.keys(result).length) {
             //we just populate this once because all the teams in this recordset are the same, the only field that changes is the member
             //this is like these because of the use of unwind in the mongoDB query above
+            if (withId) {
+                result._id = team._id;
+            }
             result.name = team.name;
             result.slug = team.slug,
             result.description = team.description,
@@ -416,7 +449,7 @@ const getTeamBySlugObject = async (slug) => {
     //Return teams info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, teams.length, 'Team(s)')}`);
     return Object.keys(result).length ? result : null;
-}
+};
 
 /**
  * Get a team by slug and send it back to client
@@ -445,7 +478,7 @@ exports.getTeamBySlug = async (req, res) => {
         msg : getMessage('message', 1036, 1, 'Team(s)'),
         data : result
     });
-}
+};
 
 /**
  * Get the members of a team
