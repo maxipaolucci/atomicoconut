@@ -17,7 +17,8 @@ const errorCodes = {
   462 : 'The {{param}} information requested it is not available for you.',
   463 : 'You cannot remove the administrator of a Team.',
   464 : 'Error trying to remove a record from {{param}} with {{param}} = {{param}}',
-  465 : 'Failed to update record from {{param}} with {{param}} = {{param}}'
+  465 : 'Failed to update record from {{param}} with {{param}} = {{param}}',
+  466 : '{{param}} already member of Team: {{param}}.'
 };
 
 const messageCodes = {
@@ -60,7 +61,9 @@ const messageCodes = {
   1036 : '{{param}} {{param}} found.',
   1037 : 'Searching one {{param}} with {{param}}...',
   1038 : 'Removing from {{param}} where {{param}} = {{param}}...',
-  1039 : '{{param}} record successfully removed.'
+  1039 : '{{param}} record successfully removed.',
+  1040 : '{{param}} is not a user of AtomiCoconut. Sending email to join the app...',
+  1041 : 'Sending email via {{param}}...'
 };
 
 /**

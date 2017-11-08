@@ -4,6 +4,7 @@ const User = mongoose.model('User');
 const Team = mongoose.model('Team');
 const TeamUser = mongoose.model('TeamUser');
 const promisify = require('es6-promisify');
+const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
 const { getUserDataObject } = require('../handlers/userHandlers');
 
@@ -52,31 +53,6 @@ exports.create = async (req, res, next) => {
         console.log(`${methodTrace} ${getMessage('message', 1026, 'Team')}`);
         
         await addMemberToTeam(user, team);
-        // console.log(`${methodTrace} ${getMessage('message', 1031, 'TeamUser')}`);
-        // let teamUser = await (new TeamUser({
-        //     team,
-        //     user : user._id,
-        //     isAdmin : true
-        // })).save();
-        // console.log(`${methodTrace} ${getMessage('message', 1026, 'TeamUser')}`);
-
-        // //search for the user and add the personal info id
-        // console.log(`${methodTrace} ${getMessage('message', 1024, 'User', '_id', user._id)}`);
-        // user = await User.findOneAndUpdate(
-        //     { _id : req.user._id },
-        //     { $addToSet : { teamUsers : teamUser } },
-        //     { new : true }
-        // );
-        // console.log(`${methodTrace} ${getMessage('message', 1032, 'User')}`);
-
-        // //update the team with the teamUser info
-        // console.log(`${methodTrace} ${getMessage('message', 1024, 'Team', '_id', team._id)}`);
-        // team = await Team.findOneAndUpdate(
-        //     { _id : team._id },
-        //     { $addToSet : { teamUsers : teamUser } },
-        //     { new : true }
-        // );
-        // console.log(`${methodTrace} ${getMessage('message', 1032, 'Team')}`);
 
         console.log(`${methodTrace} ${getMessage('message', 1033, 'Team')}`);
         res.json({
@@ -104,8 +80,14 @@ exports.create = async (req, res, next) => {
 const addMemberToTeam = async (user, team) => {
     const methodTrace = `${errorTrace} addMemberToTeam() >`;
 
+    let teamUser = await TeamUser.findOne({user : user._id, team : team._id});
+    if (teamUser) {
+        console.log(`${methodTrace} ${getMessage('error', 466, user.email, team.name)}`);
+        return false;
+    }
+
     console.log(`${methodTrace} ${getMessage('message', 1031, 'TeamUser')}`);
-    let teamUser = await (new TeamUser({
+    teamUser = await (new TeamUser({
         team : team._id,
         user : user._id,
         isAdmin : false
@@ -129,6 +111,8 @@ const addMemberToTeam = async (user, team) => {
         { new : true }
     );
     console.log(`${methodTrace} ${getMessage('message', 1032, 'Team')}`);
+
+    return true;
 };
 
 /**
@@ -169,8 +153,10 @@ const deleteMemberFromTeam = async (user, team) => {
     const writeResult = await TeamUser.remove({ _id : teamUser._id });
     if (writeResult.result.n > 0) {
         console.log(`${methodTrace} ${getMessage('message', 1039, 'TeamUser')}`);
+        return true;
     } else {
         console.log(`${methodTrace} ${getMessage('error', 464, 'TeamUser', '_id', teamUser._id)}`);
+        return false;
     }
 };
 
@@ -217,6 +203,8 @@ exports.update = async (req, res, next) => {
     }
 
     let usersNotRegistered = []; //store email of users to add to a team that there are not users in AtomiCoconut yet.
+    let duplicatedMembers = []; //store all the members requested to add to a team where they already belong to.
+    let membersNotInTeam = []; //store all the members requested to delete from a team they doesn't belong to.
     //iterate memberState object and add the new members
     for (memberEmail of Object.keys(memberState)) {
         const state = memberState[memberEmail];
@@ -226,15 +214,32 @@ exports.update = async (req, res, next) => {
             
             if (state === 'add') {
                 if (user) {
-                    await addMemberToTeam(user, team);
+                    const result = await addMemberToTeam(user, team);
+                    if (!result) {
+                        duplicatedMembers.push(user.email);
+                    }
                 } else {
                     usersNotRegistered.push(memberEmail);
+                    
+                    console.log(`${methodTrace} ${getMessage('message', 1040, memberEmail)}`);
+                    const registerURL = `http://${req.headers.host}/app/users/register`;
+                    mail.send({
+                        toEmail : memberEmail,
+                        subject : `AtomiCoconut - ${team.name} team invitation to join`,
+                        registerURL,
+                        teamName : team.name,
+                        adminName : team.admin.name,
+                        filename : 'invite-to-join-aco-team' //this is going to be the mail template file
+                    });
                 }
             } else if (state === 'remove' && user) {
                 //TODO check the member has not got any investment/activity in that team. otherwise deny the operation
                 
                 //removes member from team
-                await deleteMemberFromTeam(user, team);
+                const result = await deleteMemberFromTeam(user, team);
+                if (!result) {
+                    membersNotInTeam.push(user.email);
+                }
             }
         }
     }
@@ -272,7 +277,7 @@ exports.update = async (req, res, next) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1032, 'Team'),
-        data : { team, usersNotRegistered }
+        data : { team, usersNotRegistered, duplicatedMembers, membersNotInTeam }
     });
 };
 
@@ -315,8 +320,6 @@ exports.getAllTeams = async (req, res) => {
         }
 
     ]);
-
-    console.log(teams);
 
     //Parse the recordset from DB and organize the info better.
     let teamsObj = {};
@@ -447,7 +450,7 @@ const getTeamBySlugObject = async (slug, withId = false) => {
     }
 
     //Return teams info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, teams.length, 'Team(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, Object.keys(result).length ? 1 : 0, 'Team(s)')}`);
     return Object.keys(result).length ? result : null;
 };
 

@@ -168,7 +168,7 @@ exports.forgot = async (req, res) => {
     console.log(`${methodTrace} ${getMessage('message', 1008, email)}`);
     const resetURL = `http://${req.headers.host}/app/users/account/reset/${user.resetPasswordToken}`;
     await mail.send({
-        user,
+        toEmail : user.email,
         subject : 'AtomiCoconut - Password reset',
         resetURL,
         filename : 'password-reset' //this is going to be the mail template file
