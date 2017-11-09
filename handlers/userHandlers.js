@@ -9,13 +9,13 @@ const { getMessage } = require('./errorHandlers');
 const accessToInvestments = (email) => {
   const methodTrace = `${errorTrace} accessToInvestments() > `;
 
-  console.log(`${methodTrace}${getMessage('message', 1023, email)}`);
+  console.log(`${methodTrace}${getMessage('message', 1023, email, true, email)}`);
   const result = email === 'maxipaolucci@gmail.com' || email === 'stefaniaezquerra@gmail.com';
   
   if (result) {
-    console.log(`${methodTrace}${getMessage('message', 1022, email)}`);
+    console.log(`${methodTrace}${getMessage('message', 1022, email, true, email)}`);
   } else {
-    console.log(`${methodTrace}${getMessage('message', 1021, email)}`);
+    console.log(`${methodTrace}${getMessage('message', 1021, email, true, email)}`);
   }
   
   return result;
@@ -31,6 +31,7 @@ exports.getUserDataObject = (user = {}, optionalFields = {}) => {
       name : user.name, 
       email : user.email, 
       avatar : user.gravatar, 
+      currency : user.currency || 'USD',
       accessToInvestments : accessToInvestments(user.email)
   };
 

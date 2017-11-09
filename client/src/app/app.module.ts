@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { UtilService } from './util.service';
 import { AuthResolver } from './auth-resolver.service';
+import { CurrencyExchangeService } from './currency-exchange.service';
 import { AuthGuard } from './auth.guard';
 import { CustomMaterialDesignModule } from './modules/shared/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
@@ -38,7 +39,7 @@ import { NumberValidatorDirective } from './directives/number-validator.directiv
     AppComponent,
     WelcomeComponent
   ],
-  providers: [AppService, UtilService, AuthResolver, AuthGuard],
+  providers: [AppService, UtilService, CurrencyExchangeService, AuthResolver, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

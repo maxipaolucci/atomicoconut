@@ -69,10 +69,10 @@ exports.send = async(options) => {
   const methodTrace = `${errorTrace} send() >`;
   
   if (process.env.NODE_ENV === 'production') {
-    console.log(`${methodTrace} ${getMessage('message', 1041, 'SendGrid')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1041, null, true, 'SendGrid')}`);
     return sendSgMail(options);
   } else {
-    console.log(`${methodTrace} ${getMessage('message', 1041, 'Mailtrap')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1041, null, true, 'Mailtrap')}`);
     return sendMtMail(options);
   }
 }

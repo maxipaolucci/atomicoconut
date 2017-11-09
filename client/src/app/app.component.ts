@@ -7,6 +7,7 @@ import { configuration } from "../../configuration";
 import { User } from './modules/users/models/user';
 import { Router } from '@angular/router';
 import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
+import { CurrencyExchangeService } from './currency-exchange.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
   title = 'app';
   defaultGravatarUrl = configuration.defaultGravatarUrl;
 
-  constructor(private router : Router, private appService: AppService, public usersService : UsersService,
+  constructor(private router : Router, private appService: AppService, public usersService : UsersService, public currencyExchangeService : CurrencyExchangeService,
     private mainNavigatorService : MainNavigatorService) { }
 
   ngOnInit(): void {
@@ -33,7 +34,7 @@ export class AppComponent implements OnInit {
     this.usersService.getAuthenticatedUser().subscribe(
       (data : any) => {
         if (data && data.email) {
-          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments);
+          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
           this.usersService.user = user;
         } else {
           this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);

@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     this.usersService.login(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
-          const user = new User(data.name, data.email, data.avatar, data.accessToInvestments);
+          const user = new User(data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
           this.usersService.user = user;
           const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
           this.usersService.routerRedirectUrl = null;

@@ -10,14 +10,14 @@ import { AppService } from '../../../../app.service';
 })
 export class AccountUserInfoComponent implements OnInit {
 
-  public model : any = {name : '', email : ''};
+  public model : any = {name : '', email : '', currency : 'USD'};
   @Input() user : User = null;
   public updateAccountServiceRunning : boolean = false;
 
   constructor(private usersService : UsersService, private appService : AppService) {}
 
   ngOnInit() {
-    this.model = { name : this.user.name, email : this.user.email };
+    this.model = { name : this.user.name, email : this.user.email, currency : this.user.currency };
   }
 
   /**
@@ -31,11 +31,12 @@ export class AccountUserInfoComponent implements OnInit {
     this.usersService.updateAccount(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
-          const user = new User(data.name, data.email, data.avatar, data.accessToInvestments);
-          this.usersService.user = user;
+          this.usersService.user.name = data.name;
+          this.usersService.user.email = data.email;
+          this.usersService.user.currency = data.currency;
           this.appService.showResults(`Your profile was successfully updated!.`);
         } else {
-          console.error(`${methodTrace} Unexpected data format.`)
+          console.error(`${methodTrace} Unexpected data format.`);
         }
 
         this.updateAccountServiceRunning = false;

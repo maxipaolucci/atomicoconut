@@ -66,6 +66,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__ = __webpack_require__("../../../../../src/app/currency-exchange.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -82,11 +83,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AppComponent = (function () {
-    function AppComponent(router, appService, usersService, mainNavigatorService) {
+    function AppComponent(router, appService, usersService, currencyExchangeService, mainNavigatorService) {
         this.router = router;
         this.appService = appService;
         this.usersService = usersService;
+        this.currencyExchangeService = currencyExchangeService;
         this.mainNavigatorService = mainNavigatorService;
         this.title = 'app';
         this.defaultGravatarUrl = __WEBPACK_IMPORTED_MODULE_3__configuration__["a" /* configuration */].defaultGravatarUrl;
@@ -102,7 +105,7 @@ var AppComponent = (function () {
         ]);
         this.usersService.getAuthenticatedUser().subscribe(function (data) {
             if (data && data.email) {
-                var user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                var user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
                 _this.usersService.user = user;
             }
             else {
@@ -133,10 +136,10 @@ AppComponent = __decorate([
         styles: [__webpack_require__("../../../../../src/app/app.component.scss")],
         providers: [__WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__["a" /* CurrencyExchangeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__["a" /* CurrencyExchangeService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _e || Object])
 ], AppComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -158,20 +161,22 @@ var _a, _b, _c, _d;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__auth_guard__ = __webpack_require__("../../../../../src/app/auth.guard.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modules_teams_teams_module__ = __webpack_require__("../../../../../src/app/modules/teams/teams.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__modules_investments_investments_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__modules_calculators_calculators_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__currency_exchange_service__ = __webpack_require__("../../../../../src/app/currency-exchange.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__auth_guard__ = __webpack_require__("../../../../../src/app/auth.guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__modules_teams_teams_module__ = __webpack_require__("../../../../../src/app/modules/teams/teams.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__modules_investments_investments_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__modules_calculators_calculators_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -204,18 +209,18 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_6__app_routing_module__["a" /* AppRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_http__["c" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
-            __WEBPACK_IMPORTED_MODULE_12__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
-            __WEBPACK_IMPORTED_MODULE_13__modules_users_users_module__["a" /* UsersModule */],
-            __WEBPACK_IMPORTED_MODULE_14__modules_teams_teams_module__["a" /* TeamsModule */],
-            __WEBPACK_IMPORTED_MODULE_15__modules_investments_investments_module__["a" /* InvestmentsModule */],
-            __WEBPACK_IMPORTED_MODULE_16__modules_calculators_calculators_module__["a" /* CalculatorsModule */],
-            __WEBPACK_IMPORTED_MODULE_18__modules_shared_shared_module__["a" /* SharedModule */]
+            __WEBPACK_IMPORTED_MODULE_13__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_14__modules_users_users_module__["a" /* UsersModule */],
+            __WEBPACK_IMPORTED_MODULE_15__modules_teams_teams_module__["a" /* TeamsModule */],
+            __WEBPACK_IMPORTED_MODULE_16__modules_investments_investments_module__["a" /* InvestmentsModule */],
+            __WEBPACK_IMPORTED_MODULE_17__modules_calculators_calculators_module__["a" /* CalculatorsModule */],
+            __WEBPACK_IMPORTED_MODULE_19__modules_shared_shared_module__["a" /* SharedModule */]
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_17__components_welcome_welcome_component__["a" /* WelcomeComponent */]
+            __WEBPACK_IMPORTED_MODULE_18__components_welcome_welcome_component__["a" /* WelcomeComponent */]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_9__util_service__["a" /* UtilService */], __WEBPACK_IMPORTED_MODULE_10__auth_resolver_service__["a" /* AuthResolver */], __WEBPACK_IMPORTED_MODULE_11__auth_guard__["a" /* AuthGuard */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_9__util_service__["a" /* UtilService */], __WEBPACK_IMPORTED_MODULE_11__currency_exchange_service__["a" /* CurrencyExchangeService */], __WEBPACK_IMPORTED_MODULE_10__auth_resolver_service__["a" /* AuthResolver */], __WEBPACK_IMPORTED_MODULE_12__auth_guard__["a" /* AuthGuard */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -392,7 +397,7 @@ var AppService = (function () {
 }());
 AppService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["r" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["r" /* MatSnackBar */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["s" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["s" /* MatSnackBar */]) === "function" && _b || Object])
 ], AppService);
 
 var _a, _b;
@@ -452,7 +457,7 @@ var AuthResolver = (function () {
                 if (data.financialInfo) {
                     financialInfo = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_account_finance__["a" /* AccountFinance */](data.financialInfo.annualIncome, data.financialInfo.netWorth, data.financialInfo.incomeTaxRate);
                 }
-                var user = new __WEBPACK_IMPORTED_MODULE_2__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, financialInfo, personalInfo);
+                var user = new __WEBPACK_IMPORTED_MODULE_2__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, financialInfo, personalInfo, data.currency);
                 _this.usersService.user = user;
                 return user;
             }
@@ -608,6 +613,59 @@ WelcomeComponent = __decorate([
 
 var _a;
 //# sourceMappingURL=welcome.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/currency-exchange.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyExchangeService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CurrencyExchangeService = (function () {
+    function CurrencyExchangeService(http, appService) {
+        this.http = http;
+        this.appService = appService;
+        this.serviceUrl = 'https://api.fixer.io/latest';
+    }
+    CurrencyExchangeService.prototype.getRates = function (base) {
+        if (base === void 0) { base = 'USD'; }
+        return this.http.get(this.serviceUrl + "?base=" + base)
+            .map(this.extractData)
+            .catch(this.appService.handleError);
+    };
+    CurrencyExchangeService.prototype.extractData = function (res) {
+        var body = res.json();
+        if (Object.keys(body.rates).length > 0) {
+            return body.rates;
+        }
+        else {
+            throw body;
+        }
+    };
+    return CurrencyExchangeService;
+}());
+CurrencyExchangeService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_service__["a" /* AppService */]) === "function" && _b || Object])
+], CurrencyExchangeService);
+
+var _a, _b;
+//# sourceMappingURL=currency-exchange.service.js.map
 
 /***/ }),
 
@@ -1521,41 +1579,43 @@ CustomMaterialDesignModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatButtonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatSnackBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatChipsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatSlideToggleModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatToolbarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatIconModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatInputModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatProgressBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatCardModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatTabsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatExpansionModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatTooltipModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDialogModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["w" /* MatTooltipModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDialogModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatSelectModule */]
         ],
         exports: [
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatButtonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatSnackBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatChipsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatSlideToggleModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatToolbarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatIconModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatInputModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatButtonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatProgressBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatCardModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatTabsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatExpansionModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatTooltipModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDialogModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["w" /* MatTooltipModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDialogModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatSelectModule */]
         ]
     })
 ], CustomMaterialDesignModule);
@@ -2543,7 +2603,7 @@ var _a, _b, _c, _d, _e;
 /***/ "../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #accountForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            value=\"model.name\"\r\n            #name=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            value=\"model.email\"\r\n            #email=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n  </div>\r\n\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!updateAccountServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!accountForm.form.valid\">Save</button>\r\n\r\n    <mat-progress-bar *ngIf=\"updateAccountServiceRunning\"\r\n        class=\"progress-bar progress-bar--update-account\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #accountForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            value=\"model.name\"\r\n            #name=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            value=\"model.email\"\r\n            #email=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Preferred currency -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"33\" class=\"form__field\">\r\n        <mat-select id=\"curreny\" name=\"currency\" placeholder=\"Preferred currency\" [(ngModel)]=\"model.currency\">\r\n          <mat-option value=\"USD\">US Dollar</mat-option>\r\n          <mat-option value=\"AUD\">Australian Dollar</mat-option>\r\n          <mat-option value=\"NZD\">New Zealand Dollar</mat-option>\r\n          <mat-option value=\"EUR\">Euro</mat-option>\r\n        </mat-select>\r\n        \r\n        <mat-hint align=\"start\">Your preferred currency format to use accross the application</mat-hint>\r\n      </mat-form-field>\r\n    </div>\r\n  </div>\r\n\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!updateAccountServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!accountForm.form.valid\">Save</button>\r\n\r\n    <mat-progress-bar *ngIf=\"updateAccountServiceRunning\"\r\n        class=\"progress-bar progress-bar--update-account\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
 
 /***/ }),
 
@@ -2591,12 +2651,12 @@ var AccountUserInfoComponent = (function () {
     function AccountUserInfoComponent(usersService, appService) {
         this.usersService = usersService;
         this.appService = appService;
-        this.model = { name: '', email: '' };
+        this.model = { name: '', email: '', currency: 'USD' };
         this.user = null;
         this.updateAccountServiceRunning = false;
     }
     AccountUserInfoComponent.prototype.ngOnInit = function () {
-        this.model = { name: this.user.name, email: this.user.email };
+        this.model = { name: this.user.name, email: this.user.email, currency: this.user.currency };
     };
     /**
      * When user submits the register form.
@@ -2608,8 +2668,9 @@ var AccountUserInfoComponent = (function () {
         //call the account service
         this.usersService.updateAccount(this.model).subscribe(function (data) {
             if (data && data.email) {
-                var user = new __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
-                _this.usersService.user = user;
+                _this.usersService.user.name = data.name;
+                _this.usersService.user.email = data.email;
+                _this.usersService.user.currency = data.currency;
                 _this.appService.showResults("Your profile was successfully updated!.");
             }
             else {
@@ -2814,7 +2875,7 @@ var LoginComponent = (function () {
         //call the register service
         this.usersService.login(this.model).subscribe(function (data) {
             if (data && data.email) {
-                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
                 _this.usersService.user = user;
                 var redirectUrl = _this.usersService.routerRedirectUrl ? _this.usersService.routerRedirectUrl : '/';
                 _this.usersService.routerRedirectUrl = null;
@@ -2957,7 +3018,7 @@ var RegisterComponent = (function () {
         //call the register service
         this.usersService.register(this.model).subscribe(function (data) {
             if (data && data.email) {
-                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
                 _this.usersService.user = user;
                 _this.router.navigate(['/']); //go home
                 _this.appService.showResults(user.name + " welcome to AtomiCoconut!");
@@ -3084,7 +3145,7 @@ var ResetPasswordComponent = (function () {
         this.usersService.user = null; //reset authenticated user. Reset automatically authenticates the registered user.
         this.usersService.reset(this.token, this.model).subscribe(function (data) {
             if (data) {
-                var user = new __WEBPACK_IMPORTED_MODULE_3__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments);
+                var user = new __WEBPACK_IMPORTED_MODULE_3__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
                 _this.usersService.user = user;
                 _this.router.navigate(['/']); //go home
             }
@@ -3177,17 +3238,19 @@ var AccountPersonal = (function () {
 
 
 var User = (function () {
-    function User(name, email, avatar, accessToInvestments, financialInfo, personalInfo) {
+    function User(name, email, avatar, accessToInvestments, financialInfo, personalInfo, currency) {
         if (name === void 0) { name = ''; }
         if (email === void 0) { email = ''; }
         if (avatar === void 0) { avatar = ''; }
         if (accessToInvestments === void 0) { accessToInvestments = false; }
         if (financialInfo === void 0) { financialInfo = null; }
         if (personalInfo === void 0) { personalInfo = null; }
+        if (currency === void 0) { currency = 'USD'; }
         this.name = name;
         this.email = email;
         this.avatar = avatar;
         this.accessToInvestments = accessToInvestments;
+        this.currency = currency;
         if (financialInfo) {
             this.financialInfo = financialInfo;
         }

@@ -18,7 +18,9 @@ const errorCodes = {
   463 : 'You cannot remove the administrator of a Team.',
   464 : 'Error trying to remove a record from {{param}} with {{param}} = {{param}}',
   465 : 'Failed to update record from {{param}} with {{param}} = {{param}}',
-  466 : '{{param}} already member of Team: {{param}}.'
+  466 : '{{param}} already member of Team: {{param}}.',
+  467 : 'Something went wrong.',
+  468 : 'Route not found.'
 };
 
 const messageCodes = {
@@ -71,7 +73,7 @@ const messageCodes = {
  * @param {*} codeno . The number of message to get back
  * @param {*} params . The params to configure the message
  */
-const getMessage = (type = 'error', codeno = -1, ...params) => {
+const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = false,...params) => {
   if (codeno === -1) {
     return '';
   }
@@ -88,7 +90,16 @@ const getMessage = (type = 'error', codeno = -1, ...params) => {
     }
   }
   
-  return `${new Date(Date.now())}: ${message}`;
+  let prefix = '';
+  if (userEmail) {
+    prefix += `[${userEmail}`;
+  }
+
+  if (showDate) {
+    prefix += prefix.length ? ` on ${new Date(Date.now())}]` : `[on ${new Date(Date.now())}]`;
+  }
+
+  return `${prefix} ${message}`;
 };
 
 exports.getMessage = getMessage;
@@ -104,7 +115,7 @@ exports.getMessage = getMessage;
 exports.catchErrors = (fn) => {
   const methodTrace = `${errorTrace} catchErrors() >`;
 
-  console.log(`${methodTrace} Something went wrong.`);
+  console.log(`${methodTrace} ${getMessage('error', 467, null, true)}`);
   return function(req, res, next) {
     return fn(req, res, next).catch(next);
   };
@@ -118,7 +129,7 @@ exports.catchErrors = (fn) => {
 exports.notFound = (req, res, next) => {
   const methodTrace = `${errorTrace} notFound() >`;
   
-  console.log(`${methodTrace} Route not found.`);
+  console.log(`${methodTrace} ${getMessage('error', 468, req.user ? req.user.email : null, true)}`);
   const err = new Error('Not Found');
   err.status = 'error';
   err.codeno = 404;
@@ -150,11 +161,11 @@ exports.notFound = (req, res, next) => {
 exports.developmentErrors = (err, req, res, next) => {
   const methodTrace = `${errorTrace} developmentErrors() >`;
 
-  console.log(`${methodTrace} Something went wrong: ${err.message}`);
+  console.log(`${methodTrace} ${getMessage('error', 467, req.user ? req.user.email : null, true)} ${err.message}`);
   err.stack = err.stack || '';
   //console.log(err);
   const errorDetails = {
-    msg: `${getMessage('error', 400)} ${err.message || err.msg}`,
+    msg: `${getMessage('error', 400, null, false)} ${err.message || err.msg}`,
     status: 'error',
     codeno: 400,
     data: err
@@ -183,7 +194,7 @@ exports.developmentErrors = (err, req, res, next) => {
 exports.productionErrors = (err, req, res, next) => {
   const methodTrace = `${errorTrace} productionErrors() >`;
   
-  console.log(`${methodTrace} Something went wrong.`);
+  console.log(`${methodTrace} ${getMessage('error', 467, req.user ? req.user.email : null, true)} ${err.message}`);
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,

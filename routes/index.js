@@ -142,15 +142,15 @@ router.get('/api/teams/getAll',
 
 router.post('/api/teams/create', 
   authController.isLogggedIn, 
-  teamController.validateRegister,
   catchErrors(userController.checkLoggedInUserWithEmail),
+  teamController.validateRegister,
   catchErrors(teamController.create)
 );
 
 router.post('/api/teams/update', 
   authController.isLogggedIn, 
-  teamController.validateRegister,
   catchErrors(userController.checkLoggedInUserWithEmail),
+  teamController.validateRegister,
   catchErrors(teamController.update)
 );
 

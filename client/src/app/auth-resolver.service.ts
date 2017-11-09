@@ -32,7 +32,7 @@ export class AuthResolver implements Resolve<User> {
           if (data.financialInfo) {
             financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.netWorth, data.financialInfo.incomeTaxRate);
           }
-          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, financialInfo, personalInfo);          
+          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, financialInfo, personalInfo, data.currency);          
           this.usersService.user = user;
           return user;
         } else {

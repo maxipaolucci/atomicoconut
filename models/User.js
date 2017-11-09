@@ -21,6 +21,11 @@ const userSchema = new Schema({
     required: 'Please supply a name',
     trim: true
   },
+  currency: {
+    type: String,
+    default : 'USD',
+    trim: true
+  },
   resetPasswordToken : String,
   resetPasswordExpires : Date,
   personalInfo : {

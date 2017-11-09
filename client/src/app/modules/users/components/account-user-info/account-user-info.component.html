@@ -26,6 +26,20 @@
         <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
       </mat-form-field>
     </div>
+
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row" >
+      <!-- Preferred currency -->
+      <mat-form-field fxFlex fxFlex.gt-xs="33" class="form__field">
+        <mat-select id="curreny" name="currency" placeholder="Preferred currency" [(ngModel)]="model.currency">
+          <mat-option value="USD">US Dollar</mat-option>
+          <mat-option value="AUD">Australian Dollar</mat-option>
+          <mat-option value="NZD">New Zealand Dollar</mat-option>
+          <mat-option value="EUR">Euro</mat-option>
+        </mat-select>
+        
+        <mat-hint align="start">Your preferred currency format to use accross the application</mat-hint>
+      </mat-form-field>
+    </div>
   </div>
 
   <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center none" class="form__actions">
