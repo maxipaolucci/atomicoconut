@@ -25,7 +25,7 @@ body {
     color: $red;
 }
 
-.color__purple {
+.color__purple, .color__primary {
     color : $purple;
 }
 
@@ -39,6 +39,10 @@ body {
 
 .color__accent {
     color: $accent;
+}
+
+.color__secondary {
+    color: $secondary
 }
 
 p {

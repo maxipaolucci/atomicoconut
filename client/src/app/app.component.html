@@ -36,6 +36,11 @@
       </mat-menu>
     </span>
     
+    <mat-toolbar-row class="secondary-row" *ngIf="usersService.user && usersService.user.currency !== 'USD' && currencyExchangeService.rates">
+      <span>Your preferred currency is <a class="color__almost-white" routerLink="/users/account" matTooltip="Change..."><strong>{{usersService.user.currency}}</strong></a></span>
+      <span class="example-spacer"></span>
+      <span>Today rate is 1 USD = {{currencyExchangeService.rates[usersService.user.currency]}} {{usersService.user.currency}}</span>
+    </mat-toolbar-row>
   </mat-toolbar>
   
   <!-- Main navigator (chips) -->

@@ -16,7 +16,7 @@ import { CurrencyExchangeService } from './currency-exchange.service';
 })
 export class AppComponent implements OnInit {
   
-  title = 'app';
+  title : string = 'AtomiCoconut';
   defaultGravatarUrl = configuration.defaultGravatarUrl;
 
   constructor(private router : Router, private appService: AppService, public usersService : UsersService, public currencyExchangeService : CurrencyExchangeService,
@@ -46,6 +46,16 @@ export class AppComponent implements OnInit {
         this.usersService.user = null;
       }
     );
+
+    if (!this.currencyExchangeService.rates) {
+      this.currencyExchangeService.getRates().subscribe(
+        (data : any) => {
+          this.currencyExchangeService.rates = data;
+          this.appService.consoleLog('info', `${methodTrace} Currency exchange rates successfully loaded!`);
+        },
+        (error : any) => this.appService.consoleLog('error', `${methodTrace} Currency exchange rates API failed.`)
+      );
+    }
   }
 
   logout() : void {

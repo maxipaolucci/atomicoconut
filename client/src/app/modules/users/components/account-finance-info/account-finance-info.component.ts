@@ -3,6 +3,7 @@ import {User} from '../../models/user';
 import {AccountFinance} from '../../models/account-finance';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
+import { CurrencyExchangeService } from '../../../../currency-exchange.service';
 
 @Component({
   selector: 'account-finance-info',
@@ -19,16 +20,16 @@ export class AccountFinanceInfoComponent implements OnInit {
   };
   accountFinanceServiceRunning : boolean = false;
 
-  constructor(private usersService : UsersService, private appService : AppService) {}
+  constructor(private usersService : UsersService, private appService : AppService, public currencyExchangeService : CurrencyExchangeService) {}
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     
     if (this.user.financialInfo) {
       this.model = {
-        annualIncome : this.user.financialInfo.annualIncome,
+        annualIncome : this.user.financialInfo.annualIncome * this.currencyExchangeService.rates[this.user.currency],
         incomeTaxRate : this.user.financialInfo.incomeTaxRate,
-        netWorth : this.user.financialInfo.netWorth
+        netWorth : this.user.financialInfo.netWorth * this.currencyExchangeService.rates[this.user.currency]
       };
     }
 
@@ -39,8 +40,14 @@ export class AccountFinanceInfoComponent implements OnInit {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
 
     this.accountFinanceServiceRunning = true;
+
+    let modelToSubmit = Object.assign({}, this.model);
+
+    modelToSubmit.annualIncome /= this.currencyExchangeService.rates[this.user.currency];
+    modelToSubmit.netWorth /= this.currencyExchangeService.rates[this.user.currency];
+
     //call the account service
-    this.usersService.updateFinancialInfo(this.model).subscribe(
+    this.usersService.updateFinancialInfo(modelToSubmit).subscribe(
       (data : any) => {
         if (data === null) {
           this.usersService.user.financialInfo = new AccountFinance(this.model.annualIncome, this.model.incomeTaxRate, this.model.netWorth);
