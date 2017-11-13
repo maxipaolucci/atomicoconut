@@ -179,7 +179,9 @@ exports.updateAccountFinancialInfo = async (req, res) => {
     //the fields to update
     const updates = {
         annualIncome : req.body.annualIncome,
+        annualIncomeUnit : req.body.annualIncomeUnit,
         netWorth : req.body.netWorth,
+        savingsUnit : req.body.savingsUnit,
         incomeTaxRate : req.body.incomeTaxRate
     };
 
@@ -197,7 +199,9 @@ exports.updateAccountFinancialInfo = async (req, res) => {
         financialInfo = await (new FinancialInfo({ 
             user : user._id, 
             annualIncome : req.body.annualIncome,
+            annualIncomeUnit : req.body.annualIncomeUnit,
             netWorth : req.body.netWorth,
+            savingsUnit : req.body.savingsUnit,
             incomeTaxRate : req.body.incomeTaxRate
         })).save();
 

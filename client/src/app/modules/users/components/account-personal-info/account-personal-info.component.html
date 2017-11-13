@@ -1,10 +1,10 @@
 <form class="form__container form__account-personal" #personalInfoForm="ngForm" (ngSubmit)="onSubmit()" novalidate fxLayout="column" fxLayoutGap="10px" >
   
-    <section fxLayout="column" class="form__fields">
+    <section fxLayout="column" fxLayoutAlign.gt-xs="center center" class="form__fields">
       <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
         
         <!-- Birthday -->
-        <mat-form-field class="form__field">
+        <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
           <input 
               placeholder="Day of birth"
               id="birthday"

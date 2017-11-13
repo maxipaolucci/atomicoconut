@@ -11,6 +11,10 @@ const financialInfoSchema = new mongoose.Schema({
     type : Number,
     default : null
   },
+  annualIncomeUnit : {
+    type : String,
+    default : 'USD'
+  },
   incomeTaxRate : {
     type : Number,
     default : null
@@ -18,6 +22,10 @@ const financialInfoSchema = new mongoose.Schema({
   netWorth : {
     type : Number,
     default : null
+  },
+  savingsUnit : {
+    type : String,
+    default : 'USD'
   }
 });
 

@@ -10,6 +10,7 @@ export class CurrencyUnitComponent implements OnInit {
 
   @Input() id : string;
   @Input() hint : string;
+  @Input() view : string;
   @Input() placeHolder : string;
   @Input() value : string;
   @Output() newValue: EventEmitter<MatSelectChange> = new EventEmitter();
