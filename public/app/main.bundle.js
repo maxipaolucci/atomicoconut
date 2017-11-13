@@ -32,7 +32,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <mat-toolbar class=\"toolbar\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!usersService.user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"usersService.user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"usersService.user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"usersService.user.avatar\" \r\n      />\r\n      <mat-icon *ngIf=\"!usersService.user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n    \r\n    <mat-toolbar-row class=\"secondary-row\" *ngIf=\"usersService.user && usersService.user.currency !== 'USD' && currencyExchangeService.rates\">\r\n      <span>Your preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{usersService.user.currency}}</strong></a></span>\r\n      <span class=\"example-spacer\"></span>\r\n      <span>Today rate is 1 USD = {{currencyExchangeService.rates[usersService.user.currency]}} {{usersService.user.currency}}</span>\r\n    </mat-toolbar-row>\r\n  </mat-toolbar>\r\n  \r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <mat-toolbar class=\"toolbar\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!usersService.user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"usersService.user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"usersService.user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"usersService.user.avatar\" \r\n      />\r\n      <mat-icon *ngIf=\"!usersService.user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n    \r\n    <mat-toolbar-row class=\"secondary-row\" *ngIf=\"usersService.user && usersService.user.currency !== 'USD' && currencyExchangeService.rates\">\r\n      <span>Preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{usersService.user.currency}}</strong></a></span>\r\n      <span class=\"example-spacer\"></span>\r\n      <span>1 USD = {{currencyExchangeService.rates[usersService.user.currency]}} {{usersService.user.currency}}</span>\r\n    </mat-toolbar-row>\r\n  </mat-toolbar>\r\n  \r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
 
 /***/ }),
 
@@ -1459,6 +1459,92 @@ InvestmentsModule = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<mat-form-field class=\"form__field\">\n  <mat-select id=\"{{id}}\" placeholder=\"{{placeHolder}}\" value=\"{{value}}\" (change)=\"onChange($event)\">\n    <mat-option value=\"USD\">US Dollar</mat-option>\n    <mat-option value=\"AUD\">Australian Dollar</mat-option>\n    <mat-option value=\"NZD\">New Zealand Dollar</mat-option>\n    <mat-option value=\"EUR\">Euro</mat-option>\n  </mat-select>\n  \n  <mat-hint align=\"start\">{{hint}}</mat-hint>\n</mat-form-field>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyUnitComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var CurrencyUnitComponent = (function () {
+    function CurrencyUnitComponent() {
+        this.newValue = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.model = {};
+    }
+    CurrencyUnitComponent.prototype.ngOnInit = function () { };
+    CurrencyUnitComponent.prototype.onChange = function (matSelectChange) {
+        this.newValue.emit(matSelectChange);
+    };
+    return CurrencyUnitComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CurrencyUnitComponent.prototype, "id", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CurrencyUnitComponent.prototype, "hint", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CurrencyUnitComponent.prototype, "placeHolder", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CurrencyUnitComponent.prototype, "value", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
+], CurrencyUnitComponent.prototype, "newValue", void 0);
+CurrencyUnitComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'currency-unit',
+        template: __webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], CurrencyUnitComponent);
+
+var _a;
+//# sourceMappingURL=currency-unit.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.html":
 /***/ (function(module, exports) {
 
@@ -1651,14 +1737,18 @@ CustomMaterialDesignModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_main_navigator_main_navigator_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_main_navigator_main_navigator_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_currency_unit_currency_unit_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -1674,10 +1764,11 @@ SharedModule = __decorate([
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* RouterModule */],
-            __WEBPACK_IMPORTED_MODULE_4__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_6__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
         ],
-        exports: [__WEBPACK_IMPORTED_MODULE_3__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */]],
-        declarations: [__WEBPACK_IMPORTED_MODULE_3__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */]]
+        exports: [__WEBPACK_IMPORTED_MODULE_4__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_5__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */]],
+        declarations: [__WEBPACK_IMPORTED_MODULE_4__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_5__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */]]
     })
 ], SharedModule);
 
@@ -2628,7 +2719,7 @@ var _a, _b, _c, _d, _e;
 /***/ "../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #accountForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            value=\"model.name\"\r\n            #name=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            value=\"model.email\"\r\n            #email=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Preferred currency -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"33\" class=\"form__field\">\r\n        <mat-select id=\"curreny\" name=\"currency\" placeholder=\"Preferred currency\" [(ngModel)]=\"model.currency\">\r\n          <mat-option value=\"USD\">US Dollar</mat-option>\r\n          <mat-option value=\"AUD\">Australian Dollar</mat-option>\r\n          <mat-option value=\"NZD\">New Zealand Dollar</mat-option>\r\n          <mat-option value=\"EUR\">Euro</mat-option>\r\n        </mat-select>\r\n        \r\n        <mat-hint align=\"start\">Your preferred currency format to use accross the application</mat-hint>\r\n      </mat-form-field>\r\n    </div>\r\n  </div>\r\n\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!updateAccountServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!accountForm.form.valid\">Save</button>\r\n\r\n    <mat-progress-bar *ngIf=\"updateAccountServiceRunning\"\r\n        class=\"progress-bar progress-bar--update-account\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #accountForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            value=\"model.name\"\r\n            #name=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            value=\"model.email\"\r\n            #email=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Preferred currency -->\r\n      <!-- <mat-form-field fxFlex fxFlex.gt-xs=\"33\" class=\"form__field\">\r\n        <mat-select id=\"currency\" name=\"currency\" placeholder=\"Preferred currency\" [(ngModel)]=\"model.currency\">\r\n          <mat-option value=\"USD\">US Dollar</mat-option>\r\n          <mat-option value=\"AUD\">Australian Dollar</mat-option>\r\n          <mat-option value=\"NZD\">New Zealand Dollar</mat-option>\r\n          <mat-option value=\"EUR\">Euro</mat-option>\r\n        </mat-select>\r\n        \r\n        <mat-hint align=\"start\">Your preferred currency format to use accross the application</mat-hint>\r\n      </mat-form-field> -->\r\n      <currency-unit field fxFlex fxFlex.gt-xs=\"33\"\r\n          [id]=\"'preferredCurrency'\"\r\n          [hint]=\"'Your preferred currency format to use accross the application'\" \r\n          [placeHolder]=\"'Preferred currency'\" \r\n          [value]=\"model.currency\"\r\n          (newValue)=\"onCurrencyUnitChange($event)\"></currency-unit>\r\n    </div>\r\n  </div>\r\n\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!updateAccountServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!accountForm.form.valid\">Save</button>\r\n\r\n    <mat-progress-bar *ngIf=\"updateAccountServiceRunning\"\r\n        class=\"progress-bar progress-bar--update-account\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
 
 /***/ }),
 
@@ -2676,12 +2767,17 @@ var AccountUserInfoComponent = (function () {
     function AccountUserInfoComponent(usersService, appService) {
         this.usersService = usersService;
         this.appService = appService;
-        this.model = { name: '', email: '', currency: 'USD' };
         this.user = null;
+        this.model = { name: '', email: '', currency: '' };
         this.updateAccountServiceRunning = false;
     }
     AccountUserInfoComponent.prototype.ngOnInit = function () {
         this.model = { name: this.user.name, email: this.user.email, currency: this.user.currency };
+    };
+    AccountUserInfoComponent.prototype.onCurrencyUnitChange = function ($event) {
+        if ($event.source.id === 'preferredCurrency') {
+            this.model.currency = $event.value;
+        }
     };
     /**
      * When user submits the register form.

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import {User} from '../../models/user';
-import {AccountFinance} from '../../models/account-finance';
+import { Component, OnInit, Input } from '@angular/core';
+import { User } from '../../models/user';
+import { AccountFinance } from '../../models/account-finance';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import { CurrencyExchangeService } from '../../../../currency-exchange.service';
@@ -11,6 +11,7 @@ import { CurrencyExchangeService } from '../../../../currency-exchange.service';
   styleUrls: ['./account-finance-info.component.scss']
 })
 export class AccountFinanceInfoComponent implements OnInit {
+
   @Input() user : User;
   model : any = { 
     email : null, 
@@ -20,6 +21,7 @@ export class AccountFinanceInfoComponent implements OnInit {
   };
   accountFinanceServiceRunning : boolean = false;
 
+  
   constructor(private usersService : UsersService, private appService : AppService, public currencyExchangeService : CurrencyExchangeService) {}
 
   ngOnInit() {

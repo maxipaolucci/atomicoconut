@@ -29,8 +29,8 @@
 
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row" >
       <!-- Preferred currency -->
-      <mat-form-field fxFlex fxFlex.gt-xs="33" class="form__field">
-        <mat-select id="curreny" name="currency" placeholder="Preferred currency" [(ngModel)]="model.currency">
+      <!-- <mat-form-field fxFlex fxFlex.gt-xs="33" class="form__field">
+        <mat-select id="currency" name="currency" placeholder="Preferred currency" [(ngModel)]="model.currency">
           <mat-option value="USD">US Dollar</mat-option>
           <mat-option value="AUD">Australian Dollar</mat-option>
           <mat-option value="NZD">New Zealand Dollar</mat-option>
@@ -38,7 +38,13 @@
         </mat-select>
         
         <mat-hint align="start">Your preferred currency format to use accross the application</mat-hint>
-      </mat-form-field>
+      </mat-form-field> -->
+      <currency-unit field fxFlex fxFlex.gt-xs="33"
+          [id]="'preferredCurrency'"
+          [hint]="'Your preferred currency format to use accross the application'" 
+          [placeHolder]="'Preferred currency'" 
+          [value]="model.currency"
+          (newValue)="onCurrencyUnitChange($event)"></currency-unit>
     </div>
   </div>
 

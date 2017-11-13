@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MatSelectChange } from '@angular/material';
 import {User} from '../../models/user';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
@@ -10,14 +11,21 @@ import { AppService } from '../../../../app.service';
 })
 export class AccountUserInfoComponent implements OnInit {
 
-  public model : any = {name : '', email : '', currency : 'USD'};
   @Input() user : User = null;
+  public model : any = {name : '', email : '', currency : ''};
   public updateAccountServiceRunning : boolean = false;
 
+  
   constructor(private usersService : UsersService, private appService : AppService) {}
 
   ngOnInit() {
     this.model = { name : this.user.name, email : this.user.email, currency : this.user.currency };
+  }
+
+  onCurrencyUnitChange($event : MatSelectChange) {
+    if ($event.source.id === 'preferredCurrency') {
+      this.model.currency = $event.value;
+    }
   }
 
   /**

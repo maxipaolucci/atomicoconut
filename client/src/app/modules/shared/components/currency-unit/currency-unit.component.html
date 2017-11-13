@@ -1,0 +1,10 @@
+<mat-form-field class="form__field">
+  <mat-select id="{{id}}" placeholder="{{placeHolder}}" value="{{value}}" (change)="onChange($event)">
+    <mat-option value="USD">US Dollar</mat-option>
+    <mat-option value="AUD">Australian Dollar</mat-option>
+    <mat-option value="NZD">New Zealand Dollar</mat-option>
+    <mat-option value="EUR">Euro</mat-option>
+  </mat-select>
+  
+  <mat-hint align="start">{{hint}}</mat-hint>
+</mat-form-field>
