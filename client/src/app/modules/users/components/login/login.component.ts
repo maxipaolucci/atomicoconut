@@ -43,13 +43,13 @@ export class LoginComponent implements OnInit {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
 
     this.loginServiceRunning = true;
-    this.usersService.user = null; //reset authenticated user. Register automatically authenticates the registered user.
+    this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
     //call the register service
     this.usersService.login(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
           const user = new User(data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
-          this.usersService.user = user;
+          this.usersService.setUser(user);
           const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
           this.usersService.routerRedirectUrl = null;
           this.router.navigate([redirectUrl]); //go home

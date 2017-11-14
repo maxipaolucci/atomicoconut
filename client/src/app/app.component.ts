@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from "rxjs/Rx";
 import { AppService } from './app.service';
 import { UsersService } from './modules/users/users.service';
-
-import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { configuration } from "../../configuration";
 import { User } from './modules/users/models/user';
 import { Router } from '@angular/router';
@@ -17,6 +16,7 @@ import { CurrencyExchangeService } from './currency-exchange.service';
 export class AppComponent implements OnInit {
   
   title : string = 'AtomiCoconut';
+  user : User = null;
   defaultGravatarUrl = configuration.defaultGravatarUrl;
 
   constructor(private router : Router, private appService: AppService, public usersService : UsersService, public currencyExchangeService : CurrencyExchangeService,
@@ -31,21 +31,9 @@ export class AppComponent implements OnInit {
       { displayName: 'Investments', url: '/investments', selected: false },
       { displayName: 'Calculators', url: '/calculators', selected: false }]);
 
-    this.usersService.getAuthenticatedUser().subscribe(
-      (data : any) => {
-        if (data && data.email) {
-          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
-          this.usersService.user = user;
-        } else {
-          this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
-          this.usersService.user = null;
-        }
-      }, 
-      (error : any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
-        this.usersService.user = null;
-      }
-    );
+    this.usersService.user$.subscribe((user : User) => this.user = user); //start listening the source of user
+      
+    this.setUser();
 
     if (!this.currencyExchangeService.rates) {
       this.currencyExchangeService.getRates().subscribe(
@@ -58,12 +46,32 @@ export class AppComponent implements OnInit {
     }
   }
 
+  setUser() {
+    let methodTrace = `${this.constructor.name} > setUser() > `; //for debugging
+
+    this.usersService.getAuthenticatedUser().subscribe(
+      (data : any) => {
+        if (data && data.email) {
+          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
+          this.usersService.setUser(user);
+        } else {
+          this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
+          this.usersService.setUser(null);
+        }
+      }, 
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
+        this.usersService.setUser(null);
+      }
+    );
+  }
+
   logout() : void {
     let methodTrace = `${this.constructor.name} > logout() > `; //for debugging  
     
     this.usersService.logout().subscribe(
       (data : any) => {
-        this.usersService.user = null;
+        this.usersService.setUser(null);
         this.router.navigate(['/']);
       },
       (error : any) =>  {

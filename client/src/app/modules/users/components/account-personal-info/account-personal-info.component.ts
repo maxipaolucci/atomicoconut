@@ -43,7 +43,10 @@ export class AccountPersonalInfoComponent implements OnInit {
     this.usersService.updatePersonalInfo(this.model).subscribe(
       (data : any) => {
         if (data === null) {
-          this.usersService.user.personalInfo = new AccountPersonal(this.model.birthday);
+          let user = this.usersService.getUser();
+          user.personalInfo = new AccountPersonal(this.model.birthday);
+          this.usersService.setUser(user);
+
           this.appService.showResults(`Your personal information was successfully updated!.`);
         } else {
           console.error(`${methodTrace} Unexpected data format.`)

@@ -49,13 +49,13 @@
         </currency-unit>
         
         <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
-          <input matInput type="number" id="netWorth" name="netWorth" placeholder="Current savings" 
-              [(ngModel)]="model.netWorth" 
-              value="model.netWorth"
+          <input matInput type="number" id="savings" name="savings" placeholder="Current savings" 
+              [(ngModel)]="model.savings" 
+              value="model.savings"
               numberValidator
-              #netWorth="ngModel">
+              #savings="ngModel">
 
-          <mat-error *ngIf="netWorth.invalid && (netWorth.dirty || netWorth.touched) && netWorth.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+          <mat-error *ngIf="savings.invalid && (savings.dirty || savings.touched) && savings.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
         </mat-form-field>
       </div>
 

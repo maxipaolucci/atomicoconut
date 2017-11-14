@@ -19,7 +19,7 @@ const financialInfoSchema = new mongoose.Schema({
     type : Number,
     default : null
   },
-  netWorth : {
+  savings : {
     type : Number,
     default : null
   },

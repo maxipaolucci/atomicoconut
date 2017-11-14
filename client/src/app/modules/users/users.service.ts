@@ -1,22 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import {Observable} from "rxjs/Rx";
-import {environment} from "../../../environments/environment";
-import {AppService} from "../../app.service";
-import {User} from "./models/user";
+import { Observable } from "rxjs/Rx";
+import { environment } from "../../../environments/environment";
+import { AppService } from "../../app.service";
+import { User } from "./models/user";
 
 @Injectable()
 export class UsersService {
 
   private serverHost : string = environment.apiHost + '/api/users';
   private headers = new Headers({'Content-Type': 'application/json'});
-  private _user : User;
+  private userSource : BehaviorSubject<User>; //Observable user source
+  user$ : Observable<User>; //Observable user stream
   routerRedirectUrl : string = null; //a route to redirect the user to when login is successfull
 
   constructor(private http : Http, private appService : AppService) {
-    this._user = null;
+    this.userSource = new BehaviorSubject<User>(null);
+    this.user$ = this.userSource.asObservable();
+  }
+
+  /**
+   * user source feeder
+   */
+  setUser(user : User = null) {
+    this.userSource.next(user);
+  }
+
+  /**
+   * get the current user from the source
+   */
+  getUser() : User {
+    return this.userSource.getValue();
   }
 
   /**
@@ -103,24 +120,5 @@ export class UsersService {
     return this.http.get(`${this.serverHost}/logout`)
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
-  }
-  
-  /**
-   * Tells whether the user is logged in in the system. Checks the local user variable
-   */
-  isLoggedIn() : boolean {
-    return this.user && this.user.email ? true : false;
-  }
-
-  /**
-   * Sets the local user variable with the user provided as param
-   * @param user (User). The user to set
-   */
-  set user(user : User) {
-    this._user = user;
-  }
-
-  get user() {
-    return this._user;
   }
 }

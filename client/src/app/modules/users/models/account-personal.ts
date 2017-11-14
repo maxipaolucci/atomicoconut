@@ -6,7 +6,7 @@ export class AccountPersonal {
       this.birthday = birthday;
     }
 
-    get age() : number {
+     get age() : number {
       if (this.birthday) {
         let ageDifMs = Date.now() - new Date(this.birthday).getTime();
         let ageDate = new Date(ageDifMs); // miliseconds from epoch

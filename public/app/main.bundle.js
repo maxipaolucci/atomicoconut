@@ -32,7 +32,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <mat-toolbar class=\"toolbar\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!usersService.user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"usersService.user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"usersService.user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"usersService.user.avatar\" \r\n      />\r\n      <mat-icon *ngIf=\"!usersService.user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n    \r\n    <mat-toolbar-row class=\"secondary-row\" *ngIf=\"usersService.user && usersService.user.currency !== 'USD' && currencyExchangeService.rates\">\r\n      <span>Preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{usersService.user.currency}}</strong></a></span>\r\n      <span class=\"example-spacer\"></span>\r\n      <span>1 USD = {{currencyExchangeService.rates[usersService.user.currency]}} {{usersService.user.currency}}</span>\r\n    </mat-toolbar-row>\r\n  </mat-toolbar>\r\n  \r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <mat-toolbar class=\"toolbar\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"user.avatar\" \r\n      />\r\n      <mat-icon *ngIf=\"!user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n    \r\n    <mat-toolbar-row class=\"secondary-row\" *ngIf=\"user && user.currency !== 'USD' && currencyExchangeService.rates\">\r\n      <span>Preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{user.currency}}</strong></a></span>\r\n      <span class=\"example-spacer\"></span>\r\n      <span>1 USD = {{currencyExchangeService.rates[user.currency]}} {{user.currency}}</span>\r\n    </mat-toolbar-row>\r\n  </mat-toolbar>\r\n  \r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
 
 /***/ }),
 
@@ -92,6 +92,7 @@ var AppComponent = (function () {
         this.currencyExchangeService = currencyExchangeService;
         this.mainNavigatorService = mainNavigatorService;
         this.title = 'AtomiCoconut';
+        this.user = null;
         this.defaultGravatarUrl = __WEBPACK_IMPORTED_MODULE_3__configuration__["a" /* configuration */].defaultGravatarUrl;
     }
     AppComponent.prototype.ngOnInit = function () {
@@ -103,19 +104,8 @@ var AppComponent = (function () {
             { displayName: 'Investments', url: '/investments', selected: false },
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
-        this.usersService.getAuthenticatedUser().subscribe(function (data) {
-            if (data && data.email) {
-                var user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
-                _this.usersService.user = user;
-            }
-            else {
-                _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
-                _this.usersService.user = null;
-            }
-        }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
-            _this.usersService.user = null;
-        });
+        this.usersService.user$.subscribe(function (user) { return _this.user = user; }); //start listening the source of user
+        this.setUser();
         if (!this.currencyExchangeService.rates) {
             this.currencyExchangeService.getRates().subscribe(function (data) {
                 _this.currencyExchangeService.rates = data;
@@ -123,11 +113,28 @@ var AppComponent = (function () {
             }, function (error) { return _this.appService.consoleLog('error', methodTrace + " Currency exchange rates API failed."); });
         }
     };
+    AppComponent.prototype.setUser = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > setUser() > "; //for debugging
+        this.usersService.getAuthenticatedUser().subscribe(function (data) {
+            if (data && data.email) {
+                var user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
+                _this.usersService.setUser(user);
+            }
+            else {
+                _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
+                _this.usersService.setUser(null);
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.usersService.setUser(null);
+        });
+    };
     AppComponent.prototype.logout = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > logout() > "; //for debugging  
         this.usersService.logout().subscribe(function (data) {
-            _this.usersService.user = null;
+            _this.usersService.setUser(null);
             _this.router.navigate(['/']);
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the logout service.", error);
@@ -461,21 +468,21 @@ var AuthResolver = (function () {
                 }
                 var financialInfo = null;
                 if (data.financialInfo) {
-                    financialInfo = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_account_finance__["a" /* AccountFinance */](data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.netWorth, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
+                    financialInfo = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_account_finance__["a" /* AccountFinance */](data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
                 }
                 var user = new __WEBPACK_IMPORTED_MODULE_2__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, financialInfo, personalInfo, data.currency);
-                _this.usersService.user = user;
+                _this.usersService.setUser(user);
                 return user;
             }
             else {
                 _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
-                _this.usersService.user = null;
+                _this.usersService.setUser(null);
                 _this.router.navigate(['/users/login']);
                 return null;
             }
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
-            _this.usersService.user = null;
+            _this.usersService.setUser(null);
             _this.router.navigate(['/users/login']);
             return null;
         });
@@ -555,7 +562,7 @@ var _a, _b, _c;
 /***/ "../../../../../src/app/components/welcome/welcome.component.html":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "<div *ngIf=\"user\" class=\"container__net-worth\">\r\n  <!-- Net Worth Card -->\r\n  <mat-card *ngIf=\"user.financialInfo.annualIncome !== null && user.personalInfo.birthday\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p class=\"accent\">\r\n        Your expected Net Worth at your age ({{user.personalInfo.age}}) is <strong>{{ user.personalInfo.age * (user.financialInfo.annualIncome || 0) / 10 }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings !== null\"\r\n          [class.color__accent]=\"user.financialInfo.savings >= user.financialInfo.annualIncome\" \r\n          [class.color__red]=\"user.financialInfo.savings < user.financialInfo.annualIncome\">\r\n        Your current net worth is <strong>{{ user.financialInfo.savings || 0 }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings === null\">\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete Financial Info to see your current state\r\n          \r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n    <!-- EOF Net Worth Card -->\r\n\r\n  <!-- Net Worth Card when Personal and Financial info is incomplete -->\r\n  <mat-card *ngIf=\"user.financialInfo.annualIncome === null || !user.personalInfo.birthday\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete your Personal and Financial Info to see expected and current Net Worth\r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  <!-- EOF Net Worth Card when Personal and Financial info is incomplete -->\r\n</div>"
 
 /***/ }),
 
@@ -567,7 +574,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".container__net-worth {\n  margin-bottom: 10px; }\n  .container__net-worth .icon--arrow_forward {\n    float: left; }\n", ""]);
 
 // exports
 
@@ -583,7 +590,13 @@ module.exports = module.exports.toString();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WelcomeComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_users_models_account_personal__ = __webpack_require__("../../../../../src/app/modules/users/models/account-personal.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_users_models_account_finance__ = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -595,9 +608,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
+
+
+
+
 var WelcomeComponent = (function () {
-    function WelcomeComponent(mainNavigatorService) {
+    function WelcomeComponent(mainNavigatorService, usersService, appService) {
         this.mainNavigatorService = mainNavigatorService;
+        this.usersService = usersService;
+        this.appService = appService;
+        this.user = null;
     }
     WelcomeComponent.prototype.ngOnInit = function () {
         this.mainNavigatorService.setLinks([
@@ -605,19 +627,64 @@ var WelcomeComponent = (function () {
             { displayName: 'Investments', url: '/investments', selected: false },
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
+        this.setUser();
+    };
+    /**
+     * Sets the user property with the current user or null of nobody logged in yet
+     */
+    WelcomeComponent.prototype.setUser = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > setUser() > "; //for debugging
+        var parseNewData = false;
+        var user$ = this.usersService.user$.switchMap(function (user) {
+            if (!user) {
+                return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of(null);
+            }
+            else if (user.financialInfo) {
+                return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of(user);
+            }
+            else {
+                parseNewData = true;
+                return _this.usersService.getAuthenticatedUser({ personalInfo: true, financialInfo: true });
+            }
+        });
+        user$.subscribe(function (user) {
+            if (user && user.email) {
+                if (parseNewData) {
+                    parseNewData = false; //prevent cycles when we feed the user source setting the new user
+                    var personalInfo = null;
+                    if (user.personalInfo) {
+                        personalInfo = new __WEBPACK_IMPORTED_MODULE_6__modules_users_models_account_personal__["a" /* AccountPersonal */](user.personalInfo.birthday);
+                    }
+                    var financialInfo = null;
+                    if (user.financialInfo) {
+                        financialInfo = new __WEBPACK_IMPORTED_MODULE_7__modules_users_models_account_finance__["a" /* AccountFinance */](user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
+                    }
+                    user = new __WEBPACK_IMPORTED_MODULE_5__modules_users_models_user__["a" /* User */](user.name, user.email, user.avatar, user.accessToInvestments, financialInfo, personalInfo, user.currency);
+                    _this.usersService.setUser(user);
+                }
+                _this.user = user;
+            }
+            else {
+                _this.user = null;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.user = null;
+        });
     };
     return WelcomeComponent;
 }());
 WelcomeComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-welcome',
+        selector: 'welcome',
         template: __webpack_require__("../../../../../src/app/components/welcome/welcome.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/welcome/welcome.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object])
 ], WelcomeComponent);
 
-var _a;
+var _a, _b, _c;
 //# sourceMappingURL=welcome.component.js.map
 
 /***/ }),
@@ -1260,7 +1327,7 @@ var _a;
 /***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container__net-worth\">\r\n  <!-- Net Worth Card -->\r\n  <mat-card *ngIf=\"user.financialInfo.annualIncome !== null && user.personalInfo.birthday\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p class=\"accent\">\r\n        Your expected Net Worth at your age ({{user.personalInfo.age}}) is <strong>{{ user.personalInfo.age * (user.financialInfo.annualIncome || 0) / 10 }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.netWorth !== null\"\r\n          [class.color__accent]=\"user.financialInfo.netWorth >= user.financialInfo.annualIncome\" \r\n          [class.color__red]=\"user.financialInfo.netWorth < user.financialInfo.annualIncome\">\r\n        Your current net worth is <strong>{{ user.financialInfo.netWorth || 0 }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.netWorth === null\">\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete Financial Info to see your current state\r\n          \r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n    <!-- EOF Net Worth Card -->\r\n\r\n  <!-- Net Worth Card when Personal and Financial info is incomplete -->\r\n  <mat-card *ngIf=\"user.financialInfo.annualIncome === null || !user.personalInfo.birthday\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete your Personal and Financial Info to see expected and current Net Worth\r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  <!-- EOF Net Worth Card when Personal and Financial info is incomplete -->\r\n</div>\r\n\r\n<div *ngIf=\"showInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"218.85627651\"\r\n      [cryptoCurrencyBuyPrice]=\"50\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex\r\n      [cryptoCurrency]=\"'btc'\"\r\n      [cryptoCurrencyCount]=\"1.28129356\"\r\n      [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n      [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.94093753\"\r\n      [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.72806551\"\r\n      [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <mat-card fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n      <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n          [class.color__red]=\"totalReturn < totalInvestment\">\r\n        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  \r\n</div>\r\n\r\n<div *ngIf=\"!showInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <mat-card fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        You do not have any investment to show.\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  \r\n</div>"
+module.exports = "<div *ngIf=\"showInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"218.85627651\"\r\n      [cryptoCurrencyBuyPrice]=\"50\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex\r\n      [cryptoCurrency]=\"'btc'\"\r\n      [cryptoCurrencyCount]=\"1.28129356\"\r\n      [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n      [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.94093753\"\r\n      [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.72806551\"\r\n      [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <mat-card fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n      <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n          [class.color__red]=\"totalReturn < totalInvestment\">\r\n        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  \r\n</div>\r\n\r\n<div *ngIf=\"!showInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <mat-card fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        You do not have any investment to show.\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  \r\n</div>"
 
 /***/ }),
 
@@ -1272,7 +1339,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".container__net-worth {\n  margin-bottom: 10px; }\n  .container__net-worth .icon--arrow_forward {\n    float: left; }\n\n.totals-card {\n  text-align: center; }\n  .totals-card md-card-content p {\n    margin-bottom: 0; }\n", ""]);
+exports.push([module.i, ".totals-card {\n  text-align: center; }\n  .totals-card md-card-content p {\n    margin-bottom: 0; }\n", ""]);
 
 // exports
 
@@ -2486,7 +2553,7 @@ var _a, _b;
 /***/ "../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container form__account-finance\" (ngSubmit)=\"onSubmit()\" #financeForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Active income -->\r\n      <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n        <currency-unit fxFlex=\"50px\"\r\n            [id]=\"'annualIncomeUnit'\" \r\n            [value]=\"model.annualIncomeUnit\"\r\n            [view]=\"'narrow'\"\r\n            (newValue)=\"onCurrencyUnitChange($event)\">\r\n        </currency-unit>\r\n        \r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n          <input matInput type=\"number\" id=\"annualIncome\" name=\"annualIncome\" placeholder=\"Annual Income\"\r\n              [(ngModel)]=\"model.annualIncome\" \r\n              value=\"model.annualIncome\"\r\n              numberValidator \r\n              #annualIncome=\"ngModel\">\r\n          <mat-hint align=\"start\">Annual income amount pre-tax.</mat-hint>\r\n          <mat-error *ngIf=\"annualIncome.invalid && (annualIncome.dirty || annualIncome.touched) && annualIncome.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        </mat-form-field>\r\n        <!-- <pre>{{annualIncome.errors | json}}</pre> -->\r\n      </div>\r\n\r\n      <!-- Tax rate -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"150px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"incomeTaxRate\" name=\"incomeTaxRate\" placeholder=\"Income tax rate (%)\" \r\n            [(ngModel)]=\"model.incomeTaxRate\" \r\n            value=\"model.incomeTaxRate\"\r\n            numberValidator='{\"min\": 0, \"max\": 100}' \r\n            #incomeTaxRate=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n      </mat-form-field>\r\n      <!-- <pre>{{incomeTaxRate.errors | json}}</pre> -->\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Savings -->\r\n      <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n        <currency-unit fxFlex=\"50px\"\r\n            [id]=\"'savingsUnit'\" \r\n            [value]=\"model.savingsUnit\"\r\n            [view]=\"'narrow'\"\r\n            (newValue)=\"onCurrencyUnitChange($event)\">\r\n        </currency-unit>\r\n        \r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n          <input matInput type=\"number\" id=\"netWorth\" name=\"netWorth\" placeholder=\"Current savings\" \r\n              [(ngModel)]=\"model.netWorth\" \r\n              value=\"model.netWorth\"\r\n              numberValidator\r\n              #netWorth=\"ngModel\">\r\n\r\n          <mat-error *ngIf=\"netWorth.invalid && (netWorth.dirty || netWorth.touched) && netWorth.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n\r\n      <div fxFlex fxFlex.gt-xs=\"150px\" class=\"form__spacer\"></div>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-finance\">\r\n    <button *ngIf=\"!accountFinanceServiceRunning\" \r\n        class=\"form__action mat-raised-button\" \r\n        mat-raised-button \r\n        type=\"submit\" \r\n        color=\"accent\" \r\n        [disabled]=\"!financeForm.form.valid\">Save</button>\r\n    \r\n    <mat-progress-bar *ngIf=\"accountFinanceServiceRunning\"\r\n        class=\"progress-bar progress-bar--account-finance\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </section>\r\n\r\n</form>"
+module.exports = "<form class=\"form__container form__account-finance\" (ngSubmit)=\"onSubmit()\" #financeForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Active income -->\r\n      <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n        <currency-unit fxFlex=\"50px\"\r\n            [id]=\"'annualIncomeUnit'\" \r\n            [value]=\"model.annualIncomeUnit\"\r\n            [view]=\"'narrow'\"\r\n            (newValue)=\"onCurrencyUnitChange($event)\">\r\n        </currency-unit>\r\n        \r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n          <input matInput type=\"number\" id=\"annualIncome\" name=\"annualIncome\" placeholder=\"Annual Income\"\r\n              [(ngModel)]=\"model.annualIncome\" \r\n              value=\"model.annualIncome\"\r\n              numberValidator \r\n              #annualIncome=\"ngModel\">\r\n          <mat-hint align=\"start\">Annual income amount pre-tax.</mat-hint>\r\n          <mat-error *ngIf=\"annualIncome.invalid && (annualIncome.dirty || annualIncome.touched) && annualIncome.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        </mat-form-field>\r\n        <!-- <pre>{{annualIncome.errors | json}}</pre> -->\r\n      </div>\r\n\r\n      <!-- Tax rate -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"150px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"incomeTaxRate\" name=\"incomeTaxRate\" placeholder=\"Income tax rate (%)\" \r\n            [(ngModel)]=\"model.incomeTaxRate\" \r\n            value=\"model.incomeTaxRate\"\r\n            numberValidator='{\"min\": 0, \"max\": 100}' \r\n            #incomeTaxRate=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n      </mat-form-field>\r\n      <!-- <pre>{{incomeTaxRate.errors | json}}</pre> -->\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Savings -->\r\n      <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n        <currency-unit fxFlex=\"50px\"\r\n            [id]=\"'savingsUnit'\" \r\n            [value]=\"model.savingsUnit\"\r\n            [view]=\"'narrow'\"\r\n            (newValue)=\"onCurrencyUnitChange($event)\">\r\n        </currency-unit>\r\n        \r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n          <input matInput type=\"number\" id=\"savings\" name=\"savings\" placeholder=\"Current savings\" \r\n              [(ngModel)]=\"model.savings\" \r\n              value=\"model.savings\"\r\n              numberValidator\r\n              #savings=\"ngModel\">\r\n\r\n          <mat-error *ngIf=\"savings.invalid && (savings.dirty || savings.touched) && savings.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n\r\n      <div fxFlex fxFlex.gt-xs=\"150px\" class=\"form__spacer\"></div>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-finance\">\r\n    <button *ngIf=\"!accountFinanceServiceRunning\" \r\n        class=\"form__action mat-raised-button\" \r\n        mat-raised-button \r\n        type=\"submit\" \r\n        color=\"accent\" \r\n        [disabled]=\"!financeForm.form.valid\">Save</button>\r\n    \r\n    <mat-progress-bar *ngIf=\"accountFinanceServiceRunning\"\r\n        class=\"progress-bar progress-bar--account-finance\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </section>\r\n\r\n</form>"
 
 /***/ }),
 
@@ -2544,7 +2611,7 @@ var AccountFinanceInfoComponent = (function () {
             annualIncome: null,
             annualIncomeUnit: null,
             incomeTaxRate: null,
-            netWorth: null,
+            savings: null,
             savingsUnit: null
         };
         this.accountFinanceServiceRunning = false;
@@ -2556,7 +2623,7 @@ var AccountFinanceInfoComponent = (function () {
                 annualIncome: this.user.financialInfo.annualIncome,
                 annualIncomeUnit: this.user.financialInfo.annualIncomeUnit,
                 incomeTaxRate: this.user.financialInfo.incomeTaxRate,
-                netWorth: this.user.financialInfo.netWorth,
+                savings: this.user.financialInfo.savings,
                 savingsUnit: this.user.financialInfo.savingsUnit
             };
         }
@@ -2577,7 +2644,9 @@ var AccountFinanceInfoComponent = (function () {
         //call the account service
         this.usersService.updateFinancialInfo(this.model).subscribe(function (data) {
             if (data === null) {
-                _this.usersService.user.financialInfo = new __WEBPACK_IMPORTED_MODULE_2__models_account_finance__["a" /* AccountFinance */](_this.model.annualIncome, _this.model.annualIncomeUnit, _this.model.netWorth, _this.model.savingsUnit, _this.model.incomeTaxRate);
+                var user = _this.usersService.getUser();
+                user.financialInfo = new __WEBPACK_IMPORTED_MODULE_2__models_account_finance__["a" /* AccountFinance */](_this.model.annualIncome, _this.model.annualIncomeUnit, _this.model.savings, _this.model.savingsUnit, _this.model.incomeTaxRate);
+                _this.usersService.setUser(user);
                 _this.appService.showResults("Your personal information was successfully updated!.");
             }
             else {
@@ -2693,7 +2762,9 @@ var AccountPersonalInfoComponent = (function () {
         //call the account service
         this.usersService.updatePersonalInfo(this.model).subscribe(function (data) {
             if (data === null) {
-                _this.usersService.user.personalInfo = new __WEBPACK_IMPORTED_MODULE_3__models_account_personal__["a" /* AccountPersonal */](_this.model.birthday);
+                var user = _this.usersService.getUser();
+                user.personalInfo = new __WEBPACK_IMPORTED_MODULE_3__models_account_personal__["a" /* AccountPersonal */](_this.model.birthday);
+                _this.usersService.setUser(user);
                 _this.appService.showResults("Your personal information was successfully updated!.");
             }
             else {
@@ -2802,9 +2873,11 @@ var AccountUserInfoComponent = (function () {
         //call the account service
         this.usersService.updateAccount(this.model).subscribe(function (data) {
             if (data && data.email) {
-                _this.usersService.user.name = data.name;
-                _this.usersService.user.email = data.email;
-                _this.usersService.user.currency = data.currency;
+                var user = _this.usersService.getUser();
+                user.name = data.name;
+                user.email = data.email;
+                user.currency = data.currency;
+                _this.usersService.setUser(user);
                 _this.appService.showResults("Your profile was successfully updated!.");
             }
             else {
@@ -3005,12 +3078,12 @@ var LoginComponent = (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
         this.loginServiceRunning = true;
-        this.usersService.user = null; //reset authenticated user. Register automatically authenticates the registered user.
+        this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
         //call the register service
         this.usersService.login(this.model).subscribe(function (data) {
             if (data && data.email) {
                 var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
-                _this.usersService.user = user;
+                _this.usersService.setUser(user);
                 var redirectUrl = _this.usersService.routerRedirectUrl ? _this.usersService.routerRedirectUrl : '/';
                 _this.usersService.routerRedirectUrl = null;
                 _this.router.navigate([redirectUrl]); //go home
@@ -3148,12 +3221,12 @@ var RegisterComponent = (function () {
             this.registerServiceRunning = false;
             return false;
         }
-        this.usersService.user = null; //reset authenticated user. Register automatically authenticates the registered user.
+        this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
         //call the register service
         this.usersService.register(this.model).subscribe(function (data) {
             if (data && data.email) {
                 var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
-                _this.usersService.user = user;
+                _this.usersService.setUser(user);
                 _this.router.navigate(['/']); //go home
                 _this.appService.showResults(user.name + " welcome to AtomiCoconut!");
             }
@@ -3276,11 +3349,11 @@ var ResetPasswordComponent = (function () {
             return false;
         }
         //call the reset password service.
-        this.usersService.user = null; //reset authenticated user. Reset automatically authenticates the registered user.
+        this.usersService.setUser(null); //reset authenticated user. Reset automatically authenticates the registered user.
         this.usersService.reset(this.token, this.model).subscribe(function (data) {
             if (data) {
                 var user = new __WEBPACK_IMPORTED_MODULE_3__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
-                _this.usersService.user = user;
+                _this.usersService.setUser(user);
                 _this.router.navigate(['/']); //go home
             }
             else {
@@ -3314,15 +3387,15 @@ var _a, _b, _c, _d;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountFinance; });
 var AccountFinance = (function () {
-    function AccountFinance(annualIncome, annualIncomeUnit, netWorth, savingsUnit, incomeTaxRate) {
+    function AccountFinance(annualIncome, annualIncomeUnit, savings, savingsUnit, incomeTaxRate) {
         if (annualIncome === void 0) { annualIncome = null; }
         if (annualIncomeUnit === void 0) { annualIncomeUnit = 'USD'; }
-        if (netWorth === void 0) { netWorth = null; }
+        if (savings === void 0) { savings = null; }
         if (savingsUnit === void 0) { savingsUnit = 'USD'; }
         if (incomeTaxRate === void 0) { incomeTaxRate = null; }
         this.annualIncome = annualIncome;
         this.annualIncomeUnit = annualIncomeUnit;
-        this.netWorth = netWorth;
+        this.savings = savings;
         this.savingsUnit = savingsUnit;
         this.incomeTaxRate = incomeTaxRate;
     }
@@ -3368,10 +3441,6 @@ var AccountPersonal = (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__account_finance__ = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__account_personal__ = __webpack_require__("../../../../../src/app/modules/users/models/account-personal.ts");
-
-
 var User = (function () {
     function User(name, email, avatar, accessToInvestments, financialInfo, personalInfo, currency) {
         if (name === void 0) { name = ''; }
@@ -3390,13 +3459,13 @@ var User = (function () {
             this.financialInfo = financialInfo;
         }
         else {
-            this.financialInfo = new __WEBPACK_IMPORTED_MODULE_0__account_finance__["a" /* AccountFinance */]();
+            this.financialInfo = null;
         }
         if (personalInfo) {
             this.personalInfo = personalInfo;
         }
         else {
-            this.personalInfo = new __WEBPACK_IMPORTED_MODULE_1__account_personal__["a" /* AccountPersonal */]();
+            this.personalInfo = null;
         }
     }
     return User;
@@ -3556,8 +3625,9 @@ UsersModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3571,15 +3641,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var UsersService = (function () {
     function UsersService(http, appService) {
         this.http = http;
         this.appService = appService;
-        this.serverHost = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].apiHost + '/api/users';
+        this.serverHost = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiHost + '/api/users';
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         this.routerRedirectUrl = null; //a route to redirect the user to when login is successfull
-        this._user = null;
+        this.userSource = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["a" /* BehaviorSubject */](null);
+        this.user$ = this.userSource.asObservable();
     }
+    /**
+     * user source feeder
+     */
+    UsersService.prototype.setUser = function (user) {
+        if (user === void 0) { user = null; }
+        this.userSource.next(user);
+    };
+    /**
+     * get the current user from the source
+     */
+    UsersService.prototype.getUser = function () {
+        return this.userSource.getValue();
+    };
     /**
      * Server call to Register a new user in the system
      * @param postData
@@ -3665,31 +3750,11 @@ var UsersService = (function () {
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
     };
-    /**
-     * Tells whether the user is logged in in the system. Checks the local user variable
-     */
-    UsersService.prototype.isLoggedIn = function () {
-        return this.user && this.user.email ? true : false;
-    };
-    Object.defineProperty(UsersService.prototype, "user", {
-        get: function () {
-            return this._user;
-        },
-        /**
-         * Sets the local user variable with the user provided as param
-         * @param user (User). The user to set
-         */
-        set: function (user) {
-            this._user = user;
-        },
-        enumerable: true,
-        configurable: true
-    });
     return UsersService;
 }());
 UsersService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _b || Object])
 ], UsersService);
 
 var _a, _b;

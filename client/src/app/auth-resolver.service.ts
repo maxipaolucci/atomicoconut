@@ -31,21 +31,21 @@ export class AuthResolver implements Resolve<User> {
           let financialInfo = null;
           if (data.financialInfo) {
             financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
-                data.financialInfo.netWorth, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
+                data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
           }
           const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, financialInfo, personalInfo, data.currency);          
-          this.usersService.user = user;
+          this.usersService.setUser(user);
           return user;
         } else {
           this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
-          this.usersService.user = null;
+          this.usersService.setUser(null);
           this.router.navigate(['/users/login']);
           return null;
         }
       }, 
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
-        this.usersService.user = null;
+        this.usersService.setUser(null);
         this.router.navigate(['/users/login']);
         return null;
       }

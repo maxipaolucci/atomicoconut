@@ -19,7 +19,7 @@ export class AccountFinanceInfoComponent implements OnInit {
     annualIncome : null,
     annualIncomeUnit : null,
     incomeTaxRate : null, 
-    netWorth : null,
+    savings : null,
     savingsUnit : null
   };
   accountFinanceServiceRunning : boolean = false;
@@ -35,14 +35,14 @@ export class AccountFinanceInfoComponent implements OnInit {
         annualIncome : this.user.financialInfo.annualIncome,
         annualIncomeUnit : this.user.financialInfo.annualIncomeUnit,
         incomeTaxRate : this.user.financialInfo.incomeTaxRate,
-        netWorth : this.user.financialInfo.netWorth,
+        savings : this.user.financialInfo.savings,
         savingsUnit : this.user.financialInfo.savingsUnit
       };
     }
 
     this.model.email = this.user.email;
   }
-  
+
   onCurrencyUnitChange($event : MatSelectChange) {
     if ($event.source.id === 'annualIncomeUnit') {
       this.model.annualIncomeUnit = $event.value;
@@ -60,8 +60,11 @@ export class AccountFinanceInfoComponent implements OnInit {
     this.usersService.updateFinancialInfo(this.model).subscribe(
       (data : any) => {
         if (data === null) {
-          this.usersService.user.financialInfo = new AccountFinance(this.model.annualIncome, this.model.annualIncomeUnit, 
-              this.model.netWorth, this.model.savingsUnit, this.model.incomeTaxRate);
+          let user = this.usersService.getUser();
+          user.financialInfo = new AccountFinance(this.model.annualIncome, this.model.annualIncomeUnit, 
+            this.model.savings, this.model.savingsUnit, this.model.incomeTaxRate);
+          this.usersService.setUser(user);
+          
           this.appService.showResults(`Your personal information was successfully updated!.`);
         } else {
           console.error(`${methodTrace} Unexpected data format.`)

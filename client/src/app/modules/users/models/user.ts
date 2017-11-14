@@ -22,13 +22,13 @@ export class User {
     if (financialInfo) {
       this.financialInfo = financialInfo;
     } else {
-      this.financialInfo = new AccountFinance();
+      this.financialInfo = null;
     }
 
     if (personalInfo) {
       this.personalInfo = personalInfo;
     } else {
-      this.personalInfo = new AccountPersonal();
+      this.personalInfo = null;
     }
   }
 }

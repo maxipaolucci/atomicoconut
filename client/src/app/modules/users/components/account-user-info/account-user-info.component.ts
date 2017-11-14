@@ -39,9 +39,12 @@ export class AccountUserInfoComponent implements OnInit {
     this.usersService.updateAccount(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
-          this.usersService.user.name = data.name;
-          this.usersService.user.email = data.email;
-          this.usersService.user.currency = data.currency;
+          let user = this.usersService.getUser();
+          user.name = data.name;
+          user.email = data.email;
+          user.currency = data.currency;
+          this.usersService.setUser(user);
+
           this.appService.showResults(`Your profile was successfully updated!.`);
         } else {
           console.error(`${methodTrace} Unexpected data format.`);

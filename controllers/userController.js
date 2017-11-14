@@ -180,7 +180,7 @@ exports.updateAccountFinancialInfo = async (req, res) => {
     const updates = {
         annualIncome : req.body.annualIncome,
         annualIncomeUnit : req.body.annualIncomeUnit,
-        netWorth : req.body.netWorth,
+        savings : req.body.savings,
         savingsUnit : req.body.savingsUnit,
         incomeTaxRate : req.body.incomeTaxRate
     };
@@ -200,7 +200,7 @@ exports.updateAccountFinancialInfo = async (req, res) => {
             user : user._id, 
             annualIncome : req.body.annualIncome,
             annualIncomeUnit : req.body.annualIncomeUnit,
-            netWorth : req.body.netWorth,
+            savings : req.body.savings,
             savingsUnit : req.body.savingsUnit,
             incomeTaxRate : req.body.incomeTaxRate
         })).save();
