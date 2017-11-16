@@ -27,7 +27,7 @@
     </section>
 
     <section *ngIf="editMode" class="members" fxLayout="row" fxLayoutGap="10px" fxLayoutWrap>
-      <mat-card *ngFor="let member of team.members" class="member" [class.not-saved-yet]="!member.name && !member.avatar">
+      <mat-card *ngFor="let member of team.members; index as memberIndex" class="member" [class.not-saved-yet]="!member.name && !member.avatar">
         <mat-card-content fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="none center">
           
           <img *ngIf="member.avatar" class="member__avatar" [src]="member.avatar"/>
@@ -41,13 +41,13 @@
             <p class="member__email">{{member.email}}</p>
           </div>
 
-          <mat-icon *ngIf="member.email !== team.admin.email" matTooltip="Remove" class="icon__remove-member" (click)="removeMember(member.email)">clear</mat-icon>
+          <mat-icon *ngIf="member.email !== team.admin.email" matTooltip="Remove" class="icon__remove-member" (click)="removeMember(memberIndex)">clear</mat-icon>
         </mat-card-content>
       </mat-card>
     </section>
 
     <section *ngIf="editMode" class="add-members" fxLayout="column" fxLayoutAlign="start end">
-      <button mat-fab color="warn" type="button" (click)="openAddPersonDialog()">
+      <button mat-fab color="accent" type="button" (click)="openAddPersonDialog()">
         <mat-icon aria-label="Add new member">person_add</mat-icon>
       </button>
     </section>

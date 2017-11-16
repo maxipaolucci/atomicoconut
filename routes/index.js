@@ -154,4 +154,9 @@ router.post('/api/teams/update',
   catchErrors(teamController.update)
 );
 
+router.delete('/api/teams/delete/:slug',  
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  catchErrors(teamController.delete)
+);
+
 module.exports = router;

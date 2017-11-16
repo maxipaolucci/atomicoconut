@@ -20,7 +20,8 @@ const errorCodes = {
   465 : 'Failed to update record from {{param}} with {{param}} = {{param}}',
   466 : '{{param}} already member of Team: {{param}}.',
   467 : 'Something went wrong.',
-  468 : 'Route not found.'
+  468 : 'Route not found.',
+  469 : 'Failed to remove {{param}} from {{param}}.'
 };
 
 const messageCodes = {

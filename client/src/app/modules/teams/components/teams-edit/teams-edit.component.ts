@@ -207,16 +207,7 @@ export class TeamsEditComponent implements OnInit {
     return false;
   }
 
-  removeMember(email : string) {
-    let index = 0;
-    for (let member of this.team.members) {
-      if (member.email === email) {
-        break;
-      }
-
-      index += 1; 
-    }
-
+  removeMember(index : number) {
     this.team.members.splice(index, 1);
   }
 }

@@ -63,4 +63,17 @@ export class TeamsService {
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
   }
+
+  /**
+   * Server call to Get all the teams for the current user from the server
+   * @param {string} slug . The team slug
+   * @param {string} email . The current user email.
+   */
+  delete(slug : string, email : string) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > delete() > `; //for debugging
+
+    return this.http.delete(`${this.serverHost}/delete/${slug}`, {headers : this.headers, body : { email } } )
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
+  }
 }

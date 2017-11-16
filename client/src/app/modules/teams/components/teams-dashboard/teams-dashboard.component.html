@@ -6,7 +6,7 @@
     
     <div *ngIf="!teams.length && !getTeamsServiceRunning" fxFlexAlign="center">You are not member of any team yet.</div>
     <!-- Team Cards -->
-    <mat-expansion-panel *ngFor="let team of teams"
+    <mat-expansion-panel *ngFor="let team of teams; index as teamIndex"
         fxFlex.sm="45" fxFlex.gt-sm="30" 
         class="team-card">
       <mat-expansion-panel-header>
@@ -33,10 +33,21 @@
           </div>
         </section>
 
-        <section *ngIf="team.admin.email === user.email" class="edit" fxLayout="column" fxLayoutAlign="start end">
-          <button mat-mini-fab routerLink="/teams/edit/{{team.slug}}" color="primary">
+        <section *ngIf="team.admin.email === user.email" class="actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
+          <button *ngIf="!deleteTeamServiceRunning" mat-mini-fab routerLink="/teams/edit/{{team.slug}}" color="primary" (click)="deleteTeamServiceRunning = true">
             <mat-icon aria-label="Edit team">edit</mat-icon>
           </button>
+
+          <button *ngIf="!deleteTeamServiceRunning" mat-mini-fab color="warn" (click)="delete(teamIndex, team)">
+            <mat-icon aria-label="Delete team">delete</mat-icon>
+          </button>
+
+          <mat-progress-spinner *ngIf="deleteTeamServiceRunning"
+            class="progress-spinner progress-spinner--delete-team"
+            color="warn"
+            [diameter]="40" [strokeWidth]="7"
+            mode="indeterminate">
+          </mat-progress-spinner>
         </section>
       </div>
       
@@ -52,7 +63,7 @@
   </mat-progress-bar>
 
   <section fxLayout="column" fxLayoutAlign="start end">
-    <button mat-fab routerLink="create" color="warn">
+    <button mat-fab routerLink="create" color="accent">
       <mat-icon class="mat-24" aria-label="Create team">group_add</mat-icon>
     </button>
   </section>

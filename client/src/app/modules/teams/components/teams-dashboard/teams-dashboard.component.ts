@@ -15,6 +15,7 @@ export class TeamsDashboardComponent implements OnInit {
 
   user : User = null;
   getTeamsServiceRunning : boolean = false;
+  deleteTeamServiceRunning : boolean = false;
   teams : Team[] = [];
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private teamsService : TeamsService,
@@ -76,6 +77,39 @@ export class TeamsDashboardComponent implements OnInit {
         }
 
         this.getTeamsServiceRunning = false;
+      }
+    );
+  }
+
+  delete(index : number, team : Team = null) {
+    const methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+
+    if (!team) {
+      this.appService.consoleLog('error', `${methodTrace} Team is required for delete.`);
+      return false;
+    }
+
+    this.deleteTeamServiceRunning = true;
+
+    this.teamsService.delete(team.slug, this.user.email).subscribe(
+      (data : any) => {
+        if (data && data.removed > 0) {
+          this.teams.splice(index, 1);
+          this.appService.showResults(`Team "${team.name}" successfully removed!`);
+        } else {
+          this.appService.showResults(`Team "${team.name}" could not be remove, please try again.`);
+        }
+
+        this.deleteTeamServiceRunning = false;
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error with the delete team service.`, error);
+        if (error.codeno === 400) {
+          //the mail system failed for external reasons
+          this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`);
+        }
+
+        this.deleteTeamServiceRunning = false;
       }
     );
   }
