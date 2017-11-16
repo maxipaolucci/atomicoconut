@@ -1727,6 +1727,78 @@ MainNavigatorService = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<h2 mat-dialog-title>Delete team</h2>\n\n<mat-dialog-content>\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\n    {{data.message}}\n  </div>\n</mat-dialog-content>\n\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\n  <button mat-mini-fab color=\"warn\" mat-dialog-close=\"no\">\n    <mat-icon aria-label=\"No\">clear</mat-icon>\n  </button>\n  <button mat-mini-fab color=\"accent\" mat-dialog-close=\"yes\">\n    <mat-icon aria-label=\"Yes\">done</mat-icon>\n  </button>\n</mat-dialog-actions>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YesNoDialogComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var YesNoDialogComponent = (function () {
+    function YesNoDialogComponent(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+    }
+    YesNoDialogComponent.prototype.ngOnInit = function () { };
+    YesNoDialogComponent.prototype.onNoClick = function () {
+        this.dialogRef.close();
+    };
+    return YesNoDialogComponent;
+}());
+YesNoDialogComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-yes-no-dialog',
+        template: __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.scss")]
+    }),
+    __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialogRef */]) === "function" && _a || Object, Object])
+], YesNoDialogComponent);
+
+var _a;
+//# sourceMappingURL=yes-no-dialog.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/modules/shared/custom-material-design.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1811,15 +1883,19 @@ CustomMaterialDesignModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_main_navigator_main_navigator_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_currency_unit_currency_unit_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -1838,10 +1914,14 @@ SharedModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* RouterModule */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_6__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
+            __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
+            __WEBPACK_IMPORTED_MODULE_7__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
         ],
-        exports: [__WEBPACK_IMPORTED_MODULE_4__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_5__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */]],
-        declarations: [__WEBPACK_IMPORTED_MODULE_4__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_5__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */]]
+        exports: [__WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */], __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */]],
+        declarations: [__WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */], __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */]],
+        entryComponents: [
+            __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */] //added as material doc suggest to allow AOT on this on the fly created class
+        ]
     })
 ], SharedModule);
 
@@ -1901,8 +1981,7 @@ var AddPersonToTeamDialogComponent = (function () {
         this.data = data;
         this.model = { email: null };
     }
-    AddPersonToTeamDialogComponent.prototype.ngOnInit = function () {
-    };
+    AddPersonToTeamDialogComponent.prototype.ngOnInit = function () { };
     AddPersonToTeamDialogComponent.prototype.onNoClick = function () {
         this.dialogRef.close();
     };
@@ -1926,7 +2005,7 @@ var _a;
 /***/ "../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__teams\">\r\n  <section fxLayoutWrap \r\n      fxLayout=\"row\" fxLayout.xs=\"column\" \r\n      fxLayoutGap.xs=\"10px\" \r\n      fxLayoutAlign=\"space-around center\" fxLayoutAlign.xs=\"none none\" >\r\n    \r\n    <div *ngIf=\"!teams.length && !getTeamsServiceRunning\" fxFlexAlign=\"center\">You are not member of any team yet.</div>\r\n    <!-- Team Cards -->\r\n    <mat-expansion-panel *ngFor=\"let team of teams; index as teamIndex\"\r\n        fxFlex.sm=\"45\" fxFlex.gt-sm=\"30\" \r\n        class=\"team-card\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-card__content\">\r\n        <section *ngIf=\"team.description\" class=\"description\">\r\n          <p>{{team.description}}</p>\r\n        </section>\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let member of team.members\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n            <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n              <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n              <p class=\"member__email\">{{member.email}}</p>\r\n            </div>\r\n          </div>\r\n        </section>\r\n\r\n        <section *ngIf=\"team.admin.email === user.email\" class=\"actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n          <button *ngIf=\"!deleteTeamServiceRunning\" mat-mini-fab routerLink=\"/teams/edit/{{team.slug}}\" color=\"primary\" (click)=\"deleteTeamServiceRunning = true\">\r\n            <mat-icon aria-label=\"Edit team\">edit</mat-icon>\r\n          </button>\r\n\r\n          <button *ngIf=\"!deleteTeamServiceRunning\" mat-mini-fab color=\"warn\" (click)=\"delete(teamIndex, team)\">\r\n            <mat-icon aria-label=\"Delete team\">delete</mat-icon>\r\n          </button>\r\n\r\n          <mat-progress-spinner *ngIf=\"deleteTeamServiceRunning\"\r\n            class=\"progress-spinner progress-spinner--delete-team\"\r\n            color=\"warn\"\r\n            [diameter]=\"40\" [strokeWidth]=\"7\"\r\n            mode=\"indeterminate\">\r\n          </mat-progress-spinner>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team Cards -->\r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getTeamsServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-teams\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab routerLink=\"create\" color=\"accent\">\r\n      <mat-icon class=\"mat-24\" aria-label=\"Create team\">group_add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__teams\">\r\n  <section fxLayoutWrap \r\n      fxLayout=\"row\" fxLayout.xs=\"column\" \r\n      fxLayoutGap.xs=\"10px\" \r\n      fxLayoutAlign=\"space-around center\" fxLayoutAlign.xs=\"none none\" >\r\n    \r\n    <div *ngIf=\"!teams.length && !getTeamsServiceRunning\" fxFlexAlign=\"center\">You are not member of any team yet.</div>\r\n    <!-- Team Cards -->\r\n    <mat-expansion-panel *ngFor=\"let team of teams; index as teamIndex\"\r\n        fxFlex.sm=\"45\" fxFlex.gt-sm=\"30\" \r\n        class=\"team-card\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-card__content\">\r\n        <section *ngIf=\"team.description\" class=\"description\">\r\n          <p>{{team.description}}</p>\r\n        </section>\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let member of team.members\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n            <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n              <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n              <p class=\"member__email\">{{member.email}}</p>\r\n            </div>\r\n          </div>\r\n        </section>\r\n\r\n        <section *ngIf=\"team.admin.email === user.email\" class=\"actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n          <button *ngIf=\"!teamActionRunning[teamIndex]\" mat-mini-fab routerLink=\"/teams/edit/{{team.slug}}\" color=\"primary\" (click)=\"teamActionRunning[teamIndex] = true\">\r\n            <mat-icon aria-label=\"Edit team\">edit</mat-icon>\r\n          </button>\r\n\r\n          <button *ngIf=\"!teamActionRunning[teamIndex]\" mat-mini-fab color=\"warn\" (click)=\"openDeleteTeamDialog(teamIndex, team)\">\r\n            <mat-icon aria-label=\"Delete team\">delete</mat-icon>\r\n          </button>\r\n\r\n          <mat-progress-spinner *ngIf=\"teamActionRunning[teamIndex]\"\r\n            class=\"progress-spinner progress-spinner--delete-team\"\r\n            color=\"warn\"\r\n            [diameter]=\"40\" [strokeWidth]=\"7\"\r\n            mode=\"indeterminate\">\r\n          </mat-progress-spinner>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team Cards -->\r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getTeamsServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-teams\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab routerLink=\"create\" color=\"accent\">\r\n      <mat-icon class=\"mat-24\" aria-label=\"Create team\">group_add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -1954,12 +2033,14 @@ module.exports = module.exports.toString();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsDashboardComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1976,16 +2057,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var TeamsDashboardComponent = (function () {
-    function TeamsDashboardComponent(route, mainNavigatorService, teamsService, appService, router) {
+    function TeamsDashboardComponent(route, mainNavigatorService, teamsService, appService, router, dialog) {
         this.route = route;
         this.mainNavigatorService = mainNavigatorService;
         this.teamsService = teamsService;
         this.appService = appService;
         this.router = router;
+        this.dialog = dialog;
         this.user = null;
         this.getTeamsServiceRunning = false;
-        this.deleteTeamServiceRunning = false;
+        this.teamActionRunning = [];
         this.teams = [];
     }
     TeamsDashboardComponent.prototype.ngOnInit = function () {
@@ -2013,19 +2097,22 @@ var TeamsDashboardComponent = (function () {
         this.getTeamsServiceRunning = true;
         this.teamsService.getTeams(this.user.email).subscribe(function (data) {
             if (data && data instanceof Array) {
+                var index = 0;
                 for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
                     var item = data_1[_i];
                     var admin = null;
                     var members = [];
                     for (var _a = 0, _b = item.members; _a < _b.length; _a++) {
                         var member = _b[_a];
-                        var newMember = new __WEBPACK_IMPORTED_MODULE_3__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
+                        var newMember = new __WEBPACK_IMPORTED_MODULE_4__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
                         members.push(newMember);
                         if (member.isAdmin) {
                             admin = newMember;
                         }
                     }
-                    _this.teams.push(new __WEBPACK_IMPORTED_MODULE_6__models_team__["a" /* Team */](item.name, item.description || null, item.slug, admin, members));
+                    _this.teams.push(new __WEBPACK_IMPORTED_MODULE_7__models_team__["a" /* Team */](item.name, item.description || null, item.slug, admin, members));
+                    _this.teamActionRunning[index] = false;
+                    index += 1;
                 }
             }
             else {
@@ -2041,31 +2128,51 @@ var TeamsDashboardComponent = (function () {
             _this.getTeamsServiceRunning = false;
         });
     };
-    TeamsDashboardComponent.prototype.delete = function (index, team) {
+    TeamsDashboardComponent.prototype.openDeleteTeamDialog = function (index, team) {
         var _this = this;
         if (team === void 0) { team = null; }
-        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        var methodTrace = this.constructor.name + " > openYesNoDialog() > "; //for debugging
         if (!team) {
             this.appService.consoleLog('error', methodTrace + " Team is required for delete.");
             return false;
         }
-        this.deleteTeamServiceRunning = true;
+        this.teamActionRunning[index] = true;
+        var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_8__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
+            width: '250px',
+            data: { message: "Are you sure you want to delete forever the team \"" + team.name + "\"" }
+        });
+        yesNoDialogRef.afterClosed().subscribe(function (result) {
+            if (result === 'yes') {
+                _this.delete(index, team);
+            }
+            else {
+                _this.teamActionRunning[index] = false;
+            }
+        });
+        return false;
+    };
+    TeamsDashboardComponent.prototype.delete = function (index, team) {
+        var _this = this;
+        if (team === void 0) { team = null; }
+        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        this.teamActionRunning[index] = true;
         this.teamsService.delete(team.slug, this.user.email).subscribe(function (data) {
             if (data && data.removed > 0) {
                 _this.teams.splice(index, 1);
+                _this.teamActionRunning.splice(index, 1);
                 _this.appService.showResults("Team \"" + team.name + "\" successfully removed!");
             }
             else {
                 _this.appService.showResults("Team \"" + team.name + "\" could not be remove, please try again.");
             }
-            _this.deleteTeamServiceRunning = false;
+            _this.teamActionRunning[index] = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the delete team service.", error);
             if (error.codeno === 400) {
                 //the mail system failed for external reasons
                 _this.appService.showResults("There was an error with the team services, please try again in a few minutes.");
             }
-            _this.deleteTeamServiceRunning = false;
+            _this.teamActionRunning[index] = false;
         });
     };
     return TeamsDashboardComponent;
@@ -2076,10 +2183,10 @@ TeamsDashboardComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialog */]) === "function" && _f || Object])
 ], TeamsDashboardComponent);
 
-var _a, _b, _c, _d, _e;
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=teams-dashboard.component.js.map
 
 /***/ }),
@@ -2285,7 +2392,6 @@ var TeamsEditComponent = (function () {
      * @param {*} team . Team object retrieved from a service
      */
     TeamsEditComponent.prototype.populateTeam = function (team) {
-        console.log(team);
         //populate admin
         var admin = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](team.admin.name, team.admin.email, team.admin.gravatar);
         //populate members
@@ -2308,7 +2414,6 @@ var TeamsEditComponent = (function () {
             data: {}
         });
         addPersonDialogRef.afterClosed().subscribe(function (result) {
-            console.log('The dialog was closed', result);
             if (result) {
                 var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */]('', result);
                 _this.team.members.push(newMember);

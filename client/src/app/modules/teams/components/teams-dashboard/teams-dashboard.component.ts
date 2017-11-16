@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { User } from '../../../users/models/user';
 import { TeamsService } from '../../teams.service';
 import { AppService } from "../../../../app.service";
 import { Team } from '../../models/team';
+import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 
 @Component({
   selector: 'app-teams-dashboard',
@@ -15,11 +17,11 @@ export class TeamsDashboardComponent implements OnInit {
 
   user : User = null;
   getTeamsServiceRunning : boolean = false;
-  deleteTeamServiceRunning : boolean = false;
+  teamActionRunning : boolean[] = [];
   teams : Team[] = [];
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private teamsService : TeamsService,
-    private appService : AppService, private router : Router) { }
+    private appService : AppService, private router : Router, public dialog: MatDialog) { }
 
   ngOnInit() {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
@@ -51,6 +53,7 @@ export class TeamsDashboardComponent implements OnInit {
     this.teamsService.getTeams(this.user.email).subscribe(
       (data : any) => {
         if (data && data instanceof Array) {
+          let index = 0;
           for (let item of data) {
             let admin = null;
             let members = [];
@@ -62,6 +65,8 @@ export class TeamsDashboardComponent implements OnInit {
               }
             }
             this.teams.push(new Team(item.name, item.description || null, item.slug, admin, members));
+            this.teamActionRunning[index] = false;
+            index += 1;
           }
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
@@ -81,26 +86,47 @@ export class TeamsDashboardComponent implements OnInit {
     );
   }
 
-  delete(index : number, team : Team = null) {
-    const methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
-
+  openDeleteTeamDialog(index : number, team : Team = null) {
+    const methodTrace = `${this.constructor.name} > openYesNoDialog() > `; //for debugging
+    
     if (!team) {
       this.appService.consoleLog('error', `${methodTrace} Team is required for delete.`);
       return false;
     }
 
-    this.deleteTeamServiceRunning = true;
+    this.teamActionRunning[index] = true;
+    let yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
+      width: '250px',
+      data: { message : `Are you sure you want to delete forever the team "${team.name}"`}
+    });
+
+    yesNoDialogRef.afterClosed().subscribe(result => {
+      if (result === 'yes') {
+        this.delete(index, team);
+      } else {
+        this.teamActionRunning[index] = false;
+      }
+    });
+
+    return false;
+  }
+
+  delete(index : number, team : Team = null) {
+    const methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+
+    this.teamActionRunning[index] = true;
 
     this.teamsService.delete(team.slug, this.user.email).subscribe(
       (data : any) => {
         if (data && data.removed > 0) {
           this.teams.splice(index, 1);
+          this.teamActionRunning.splice(index, 1);
           this.appService.showResults(`Team "${team.name}" successfully removed!`);
         } else {
           this.appService.showResults(`Team "${team.name}" could not be remove, please try again.`);
         }
 
-        this.deleteTeamServiceRunning = false;
+        this.teamActionRunning[index] = false;
       },
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the delete team service.`, error);
@@ -109,7 +135,7 @@ export class TeamsDashboardComponent implements OnInit {
           this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`);
         }
 
-        this.deleteTeamServiceRunning = false;
+        this.teamActionRunning[index] = false;
       }
     );
   }

@@ -12,8 +12,7 @@ export class AddPersonToTeamDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AddPersonToTeamDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   onNoClick(): void {
     this.dialogRef.close();

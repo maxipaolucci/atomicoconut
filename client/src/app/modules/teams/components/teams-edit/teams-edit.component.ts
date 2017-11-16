@@ -174,7 +174,6 @@ export class TeamsEditComponent implements OnInit {
    * @param {*} team . Team object retrieved from a service
    */
   populateTeam(team : any) {
-    console.log(team);
     //populate admin
     const admin = new User(team.admin.name, team.admin.email, team.admin.gravatar);
     //populate members
@@ -197,7 +196,6 @@ export class TeamsEditComponent implements OnInit {
     });
 
     addPersonDialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
       if (result) {
         const newMember = new User('', result);
         this.team.members.push(newMember);

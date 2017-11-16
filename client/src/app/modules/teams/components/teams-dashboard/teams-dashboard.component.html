@@ -34,15 +34,15 @@
         </section>
 
         <section *ngIf="team.admin.email === user.email" class="actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
-          <button *ngIf="!deleteTeamServiceRunning" mat-mini-fab routerLink="/teams/edit/{{team.slug}}" color="primary" (click)="deleteTeamServiceRunning = true">
+          <button *ngIf="!teamActionRunning[teamIndex]" mat-mini-fab routerLink="/teams/edit/{{team.slug}}" color="primary" (click)="teamActionRunning[teamIndex] = true">
             <mat-icon aria-label="Edit team">edit</mat-icon>
           </button>
 
-          <button *ngIf="!deleteTeamServiceRunning" mat-mini-fab color="warn" (click)="delete(teamIndex, team)">
+          <button *ngIf="!teamActionRunning[teamIndex]" mat-mini-fab color="warn" (click)="openDeleteTeamDialog(teamIndex, team)">
             <mat-icon aria-label="Delete team">delete</mat-icon>
           </button>
 
-          <mat-progress-spinner *ngIf="deleteTeamServiceRunning"
+          <mat-progress-spinner *ngIf="teamActionRunning[teamIndex]"
             class="progress-spinner progress-spinner--delete-team"
             color="warn"
             [diameter]="40" [strokeWidth]="7"
