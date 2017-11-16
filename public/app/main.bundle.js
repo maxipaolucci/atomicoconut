@@ -1730,7 +1730,7 @@ MainNavigatorService = __decorate([
 /***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>Delete team</h2>\n\n<mat-dialog-content>\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\n    {{data.message}}\n  </div>\n</mat-dialog-content>\n\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\n  <button mat-mini-fab color=\"warn\" mat-dialog-close=\"no\">\n    <mat-icon aria-label=\"No\">clear</mat-icon>\n  </button>\n  <button mat-mini-fab color=\"accent\" mat-dialog-close=\"yes\">\n    <mat-icon aria-label=\"Yes\">done</mat-icon>\n  </button>\n</mat-dialog-actions>"
+module.exports = "<h2 mat-dialog-title>Delete team</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\r\n    {{data.message}}\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" mat-dialog-close=\"no\">\r\n    <mat-icon aria-label=\"No\">clear</mat-icon>\r\n  </button>\r\n  <button mat-mini-fab color=\"accent\" mat-dialog-close=\"yes\">\r\n    <mat-icon aria-label=\"Yes\">done</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
 
 /***/ }),
 
@@ -2337,9 +2337,14 @@ var TeamsEditComponent = (function () {
         this.teamsService.update(this.model).subscribe(function (data) {
             if (data && data.team && data.team.slug) {
                 _this.populateTeam(data.team);
-                _this.appService.showResults("Team " + data.name + " successfully updated!");
-                //TODO update the members card with data from server.
+                _this.appService.showResults("Team \"" + data.team.name + "\" successfully updated!");
                 //TODO redirect to the new team slug name if changed
+                if (_this.slug !== data.team.slug) {
+                    //this means that the team name was update and therefore the slug too
+                    _this.router.navigate(["/teams/edit/" + data.team.slug]); //go home 
+                }
+                //TODO something with duplicated emails 
+                //TODO something with not registered users
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
@@ -2348,7 +2353,6 @@ var TeamsEditComponent = (function () {
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit team service.", error);
             if (error.codeno === 400) {
-                //the mail system failed for external reasons
                 _this.appService.showResults("There was an error with the team services, please try again in a few minutes.");
             }
             _this.editTeamServiceRunning = false;

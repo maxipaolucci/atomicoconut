@@ -108,10 +108,14 @@ export class TeamsEditComponent implements OnInit {
       (data : any) => {
         if (data && data.team && data.team.slug) {
           this.populateTeam(data.team);
-          this.appService.showResults(`Team ${data.name} successfully updated!`);
-          //TODO update the members card with data from server.
-
+          this.appService.showResults(`Team "${data.team.name}" successfully updated!`);
           //TODO redirect to the new team slug name if changed
+          if (this.slug !== data.team.slug) {
+            //this means that the team name was update and therefore the slug too
+            this.router.navigate([`/teams/edit/${data.team.slug}`]); //go home 
+          }
+          //TODO something with duplicated emails 
+          //TODO something with not registered users
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
@@ -121,7 +125,6 @@ export class TeamsEditComponent implements OnInit {
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit team service.`, error);
         if (error.codeno === 400) {
-          //the mail system failed for external reasons
           this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`);
         }
 

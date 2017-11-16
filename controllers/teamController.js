@@ -227,12 +227,12 @@ exports.update = async (req, res, next) => {
                         duplicatedMembers.push(member.email);
                     }
                 } else {
-                    usersNotRegistered.push(member.email);
+                    usersNotRegistered.push(memberEmail);
                     
-                    console.log(`${methodTrace} ${getMessage('message', 1040, user.email, true, member.email)}`);
+                    console.log(`${methodTrace} ${getMessage('message', 1040, user.email, true, memberEmail)}`);
                     const registerURL = `http://${req.headers.host}/app/users/register`;
                     mail.send({
-                        toEmail : member.email,
+                        toEmail : memberEmail,
                         subject : `AtomiCoconut - ${team.name} team invitation to join`,
                         registerURL,
                         teamName : team.name,
