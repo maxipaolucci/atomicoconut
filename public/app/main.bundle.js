@@ -2304,7 +2304,6 @@ var TeamsEditComponent = (function () {
                 _this.getTeam(slug);
             }
         });
-        console.log(this.route);
     };
     TeamsEditComponent.prototype.onSubmit = function () {
         var _this = this;
