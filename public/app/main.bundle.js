@@ -2281,8 +2281,9 @@ var TeamsEditComponent = (function () {
             _this.user = data.authUser;
             _this.model.email = _this.user.email;
         });
-        this.route.paramMap.map(function (params) { return params.get('slug'); })
-            .subscribe(function (slug) {
+        this.route.paramMap.map(function (params) { return params.get('slug'); }).subscribe(function (slug) {
+            _this.editTeamServiceRunning = false;
+            _this.getTeamServiceRunning = false;
             if (!slug) {
                 //we are creating a new team
                 _this.slug = null;
@@ -2290,13 +2291,20 @@ var TeamsEditComponent = (function () {
                 _this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected: true });
             }
             else {
+                if (_this.slug) {
+                    //if this is true means the user updated the name and we refresh the page to update the slug in the url
+                    //in this case we don't want to append the edit team link to the navigation component because it is already there.
+                }
+                else {
+                    _this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected: true });
+                }
                 //we are editing an existing team
-                _this.slug = slug;
+                _this.slug = slug; //the new slug
                 _this.editMode = true;
-                _this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected: true });
                 _this.getTeam(slug);
             }
         });
+        console.log(this.route);
     };
     TeamsEditComponent.prototype.onSubmit = function () {
         var _this = this;
@@ -2341,15 +2349,18 @@ var TeamsEditComponent = (function () {
                 //TODO redirect to the new team slug name if changed
                 if (_this.slug !== data.team.slug) {
                     //this means that the team name was update and therefore the slug too
-                    _this.router.navigate(["/teams/edit/" + data.team.slug]); //go home 
+                    _this.router.navigate(['/teams/edit', data.team.slug]); //go home 
+                }
+                else {
+                    _this.editTeamServiceRunning = false;
                 }
                 //TODO something with duplicated emails 
                 //TODO something with not registered users
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+                _this.editTeamServiceRunning = false;
             }
-            _this.editTeamServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit team service.", error);
             if (error.codeno === 400) {

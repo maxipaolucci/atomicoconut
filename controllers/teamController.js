@@ -253,11 +253,16 @@ exports.update = async (req, res, next) => {
     }
 
     //update the team
-    const updates = {
-        name : req.body.name,
-        description : req.body.description,
-        slug : req.body.slug
+    const oldSlug = team.slug;
+    let updates = {
+        description : req.body.description
     };
+    if (team.name !== req.body.name) {
+        updates.name = req.body.name; //we do in this way to just add the name if it changed therefore we need to change the slug. So if property name is present then
+                                    //we know we need a new slug. To capture the change in findOneAndUpdate pre hook (in schema) we cannot do this.isModified as in save hook
+                                    //so we check if the property is there to konw it changed.
+    }
+
 
     console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'Team', '_id', team._id)}`);
     team = await Team.findOneAndUpdate(
@@ -267,7 +272,7 @@ exports.update = async (req, res, next) => {
     );
     
     if (!team) {
-        console.log(`${methodTrace} ${getMessage('message', 465, user.email, true, 'Team', 'slug', req.body.slug)}`);
+        console.log(`${methodTrace} ${getMessage('message', 465, user.email, true, 'Team', 'slug', oldSlug)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 465,

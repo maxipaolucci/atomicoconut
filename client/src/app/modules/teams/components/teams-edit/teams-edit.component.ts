@@ -45,21 +45,31 @@ export class TeamsEditComponent implements OnInit {
       this.model.email = this.user.email;
     });
 
-    this.route.paramMap.map((params: ParamMap) => params.get('slug'))
-      .subscribe(slug => { 
-        if (!slug) {
-          //we are creating a new team
-          this.slug = null;
-          this.editMode = false;
-          this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
+    this.route.paramMap.map((params: ParamMap) => params.get('slug')).subscribe(slug => {
+      this.editTeamServiceRunning = false;
+      this.getTeamServiceRunning = false;
+      
+      if (!slug) {
+        //we are creating a new team
+        this.slug = null;
+        this.editMode = false;
+        this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
+      } else {
+        if (this.slug) {
+          //if this is true means the user updated the name and we refresh the page to update the slug in the url
+          //in this case we don't want to append the edit team link to the navigation component because it is already there.
         } else {
-          //we are editing an existing team
-          this.slug = slug;
-          this.editMode = true;
           this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
-          this.getTeam(slug);
         }
-      });
+        //we are editing an existing team
+        this.slug = slug; //the new slug
+        this.editMode = true;
+        
+        this.getTeam(slug);
+      }
+    });
+
+    console.log(this.route);
   }
 
   onSubmit() {
@@ -112,15 +122,16 @@ export class TeamsEditComponent implements OnInit {
           //TODO redirect to the new team slug name if changed
           if (this.slug !== data.team.slug) {
             //this means that the team name was update and therefore the slug too
-            this.router.navigate([`/teams/edit/${data.team.slug}`]); //go home 
+            this.router.navigate(['/teams/edit', data.team.slug]); //go home 
+          } else {
+            this.editTeamServiceRunning = false;  
           }
           //TODO something with duplicated emails 
           //TODO something with not registered users
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.editTeamServiceRunning = false;
         }
-
-        this.editTeamServiceRunning = false;
       },
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit team service.`, error);
