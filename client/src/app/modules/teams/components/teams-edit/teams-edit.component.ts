@@ -68,8 +68,6 @@ export class TeamsEditComponent implements OnInit {
         this.getTeam(slug);
       }
     });
-
-    console.log(this.route);
   }
 
   onSubmit() {
