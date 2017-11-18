@@ -1,6 +1,6 @@
 <div *ngIf="user" class="container__net-worth">
   <!-- Net Worth Card -->
-  <mat-card *ngIf="user.financialInfo.annualIncome !== null && user.personalInfo.birthday"
+  <mat-card *ngIf="user.financialInfo && user.personalInfo"
       fxFlex class="totals-card">
     <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
         fxLayoutAlign="space-around center">
@@ -10,7 +10,7 @@
       <p *ngIf="user.financialInfo.savings !== null"
           [class.color__accent]="user.financialInfo.savings >= user.financialInfo.annualIncome" 
           [class.color__red]="user.financialInfo.savings < user.financialInfo.annualIncome">
-        Your current net worth is <strong>{{ user.financialInfo.savings || 0 }}</strong>
+        Your current net worth is <strong>{{ user.financialInfo.savings }}</strong>
       </p>
       <p *ngIf="user.financialInfo.savings === null">
         <a class="color__almost-white" routerLink="/users/account">
@@ -24,7 +24,7 @@
     <!-- EOF Net Worth Card -->
 
   <!-- Net Worth Card when Personal and Financial info is incomplete -->
-  <mat-card *ngIf="user.financialInfo.annualIncome === null || !user.personalInfo.birthday"
+  <mat-card *ngIf="!user.financialInfo || !user.personalInfo"
       fxFlex class="totals-card">
     <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
         fxLayoutAlign="space-around center">

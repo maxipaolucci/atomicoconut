@@ -30,6 +30,10 @@ export class AccountFinanceInfoComponent implements OnInit {
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     
+    this.model.email = this.user.email;
+    this.model.annualIncomeUnit = this.user.currency;
+    this.model.savingsUnit = this.user.currency;
+
     if (this.user.financialInfo) {
       this.model = {
         annualIncome : this.user.financialInfo.annualIncome,
@@ -39,8 +43,6 @@ export class AccountFinanceInfoComponent implements OnInit {
         savingsUnit : this.user.financialInfo.savingsUnit
       };
     }
-
-    this.model.email = this.user.email;
   }
 
   onCurrencyUnitChange($event : MatSelectChange) {

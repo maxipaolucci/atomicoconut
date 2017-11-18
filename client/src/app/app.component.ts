@@ -52,16 +52,19 @@ export class AppComponent implements OnInit {
     this.usersService.getAuthenticatedUser().subscribe(
       (data : any) => {
         if (data && data.email) {
-          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
-          this.usersService.setUser(user);
+          this.user = new User(data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
+          console.log(this.user);
+          this.usersService.setUser(this.user);
         } else {
           this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
           this.usersService.setUser(null);
+          this.user = null;
         }
       }, 
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
         this.usersService.setUser(null);
+        this.user = null;
       }
     );
   }
@@ -72,6 +75,7 @@ export class AppComponent implements OnInit {
     this.usersService.logout().subscribe(
       (data : any) => {
         this.usersService.setUser(null);
+        this.user = null;
         this.router.navigate(['/']);
       },
       (error : any) =>  {

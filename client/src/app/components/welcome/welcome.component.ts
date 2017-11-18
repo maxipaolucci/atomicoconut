@@ -33,37 +33,37 @@ export class WelcomeComponent implements OnInit {
   setUser() {
     let methodTrace = `${this.constructor.name} > setUser() > `; //for debugging
 
-    let parseNewData = false;
+    let gotAuthenticatedUserFromServer = false;
     const user$ = this.usersService.user$.switchMap((user : User) => {
       if (!user) {
         return Observable.of(null);
-      } else if (user.financialInfo) {
-        return Observable.of(user); 
-      } else {
-        parseNewData = true;
+      } else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
+        gotAuthenticatedUserFromServer = true;
         return this.usersService.getAuthenticatedUser({ personalInfo : true, financialInfo : true });
+      } else {
+        return Observable.of(user);
       }
     });
 
     user$.subscribe(user => {
       if (user && user.email) {
-        if (parseNewData) {
-          parseNewData = false; //prevent cycles when we feed the user source setting the new user
-          let personalInfo = null;
-          if (user.personalInfo) {
-            personalInfo = new AccountPersonal(user.personalInfo.birthday);
-          }
-  
-          let financialInfo = null;
-          if (user.financialInfo) {
-            financialInfo = new AccountFinance(user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, 
-                user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
-          }
-          user = new User(user.name, user.email, user.avatar, user.accessToInvestments, financialInfo, personalInfo, user.currency);          
+        let personalInfo = null;
+        if (user.personalInfo) {
+          personalInfo = new AccountPersonal(user.personalInfo.birthday);
+        }
+
+        let financialInfo = null;
+        if (user.financialInfo) {
+          financialInfo = new AccountFinance(user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, 
+              user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
+        }
+        user = new User(user.name, user.email, user.avatar, user.accessToInvestments, financialInfo, personalInfo, user.currency);          
+        this.user = user;
+        if (gotAuthenticatedUserFromServer) {
+          gotAuthenticatedUserFromServer = null; //shut down the flag
+          //we just got updated information from server, let's update the current user source
           this.usersService.setUser(user);
         }
-        
-        this.user = user;
       } else {
         this.user = null;
       }

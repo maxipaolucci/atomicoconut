@@ -118,16 +118,19 @@ var AppComponent = (function () {
         var methodTrace = this.constructor.name + " > setUser() > "; //for debugging
         this.usersService.getAuthenticatedUser().subscribe(function (data) {
             if (data && data.email) {
-                var user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
-                _this.usersService.setUser(user);
+                _this.user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
+                console.log(_this.user);
+                _this.usersService.setUser(_this.user);
             }
             else {
                 _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
                 _this.usersService.setUser(null);
+                _this.user = null;
             }
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
             _this.usersService.setUser(null);
+            _this.user = null;
         });
     };
     AppComponent.prototype.logout = function () {
@@ -135,6 +138,7 @@ var AppComponent = (function () {
         var methodTrace = this.constructor.name + " > logout() > "; //for debugging  
         this.usersService.logout().subscribe(function (data) {
             _this.usersService.setUser(null);
+            _this.user = null;
             _this.router.navigate(['/']);
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the logout service.", error);
@@ -562,7 +566,7 @@ var _a, _b, _c;
 /***/ "../../../../../src/app/components/welcome/welcome.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"user\" class=\"container__net-worth\">\r\n  <!-- Net Worth Card -->\r\n  <mat-card *ngIf=\"user.financialInfo.annualIncome !== null && user.personalInfo.birthday\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p class=\"accent\">\r\n        Your expected Net Worth at your age ({{user.personalInfo.age}}) is <strong>{{ user.personalInfo.age * (user.financialInfo.annualIncome || 0) / 10 }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings !== null\"\r\n          [class.color__accent]=\"user.financialInfo.savings >= user.financialInfo.annualIncome\" \r\n          [class.color__red]=\"user.financialInfo.savings < user.financialInfo.annualIncome\">\r\n        Your current net worth is <strong>{{ user.financialInfo.savings || 0 }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings === null\">\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete Financial Info to see your current state\r\n          \r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n    <!-- EOF Net Worth Card -->\r\n\r\n  <!-- Net Worth Card when Personal and Financial info is incomplete -->\r\n  <mat-card *ngIf=\"user.financialInfo.annualIncome === null || !user.personalInfo.birthday\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete your Personal and Financial Info to see expected and current Net Worth\r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  <!-- EOF Net Worth Card when Personal and Financial info is incomplete -->\r\n</div>"
+module.exports = "<div *ngIf=\"user\" class=\"container__net-worth\">\r\n  <!-- Net Worth Card -->\r\n  <mat-card *ngIf=\"user.financialInfo && user.personalInfo\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p class=\"accent\">\r\n        Your expected Net Worth at your age ({{user.personalInfo.age}}) is <strong>{{ user.personalInfo.age * (user.financialInfo.annualIncome || 0) / 10 }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings !== null\"\r\n          [class.color__accent]=\"user.financialInfo.savings >= user.financialInfo.annualIncome\" \r\n          [class.color__red]=\"user.financialInfo.savings < user.financialInfo.annualIncome\">\r\n        Your current net worth is <strong>{{ user.financialInfo.savings }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings === null\">\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete Financial Info to see your current state\r\n          \r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n    <!-- EOF Net Worth Card -->\r\n\r\n  <!-- Net Worth Card when Personal and Financial info is incomplete -->\r\n  <mat-card *ngIf=\"!user.financialInfo || !user.personalInfo\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete your Personal and Financial Info to see expected and current Net Worth\r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  <!-- EOF Net Worth Card when Personal and Financial info is incomplete -->\r\n</div>"
 
 /***/ }),
 
@@ -635,35 +639,36 @@ var WelcomeComponent = (function () {
     WelcomeComponent.prototype.setUser = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > setUser() > "; //for debugging
-        var parseNewData = false;
+        var gotAuthenticatedUserFromServer = false;
         var user$ = this.usersService.user$.switchMap(function (user) {
             if (!user) {
                 return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of(null);
             }
-            else if (user.financialInfo) {
-                return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of(user);
+            else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
+                gotAuthenticatedUserFromServer = true;
+                return _this.usersService.getAuthenticatedUser({ personalInfo: true, financialInfo: true });
             }
             else {
-                parseNewData = true;
-                return _this.usersService.getAuthenticatedUser({ personalInfo: true, financialInfo: true });
+                return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of(user);
             }
         });
         user$.subscribe(function (user) {
             if (user && user.email) {
-                if (parseNewData) {
-                    parseNewData = false; //prevent cycles when we feed the user source setting the new user
-                    var personalInfo = null;
-                    if (user.personalInfo) {
-                        personalInfo = new __WEBPACK_IMPORTED_MODULE_6__modules_users_models_account_personal__["a" /* AccountPersonal */](user.personalInfo.birthday);
-                    }
-                    var financialInfo = null;
-                    if (user.financialInfo) {
-                        financialInfo = new __WEBPACK_IMPORTED_MODULE_7__modules_users_models_account_finance__["a" /* AccountFinance */](user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
-                    }
-                    user = new __WEBPACK_IMPORTED_MODULE_5__modules_users_models_user__["a" /* User */](user.name, user.email, user.avatar, user.accessToInvestments, financialInfo, personalInfo, user.currency);
+                var personalInfo = null;
+                if (user.personalInfo) {
+                    personalInfo = new __WEBPACK_IMPORTED_MODULE_6__modules_users_models_account_personal__["a" /* AccountPersonal */](user.personalInfo.birthday);
+                }
+                var financialInfo = null;
+                if (user.financialInfo) {
+                    financialInfo = new __WEBPACK_IMPORTED_MODULE_7__modules_users_models_account_finance__["a" /* AccountFinance */](user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
+                }
+                user = new __WEBPACK_IMPORTED_MODULE_5__modules_users_models_user__["a" /* User */](user.name, user.email, user.avatar, user.accessToInvestments, financialInfo, personalInfo, user.currency);
+                _this.user = user;
+                if (gotAuthenticatedUserFromServer) {
+                    gotAuthenticatedUserFromServer = null; //shut down the flag
+                    //we just got updated information from server, let's update the current user source
                     _this.usersService.setUser(user);
                 }
-                _this.user = user;
             }
             else {
                 _this.user = null;
@@ -2770,6 +2775,9 @@ var AccountFinanceInfoComponent = (function () {
     }
     AccountFinanceInfoComponent.prototype.ngOnInit = function () {
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.model.email = this.user.email;
+        this.model.annualIncomeUnit = this.user.currency;
+        this.model.savingsUnit = this.user.currency;
         if (this.user.financialInfo) {
             this.model = {
                 annualIncome: this.user.financialInfo.annualIncome,
@@ -2779,7 +2787,6 @@ var AccountFinanceInfoComponent = (function () {
                 savingsUnit: this.user.financialInfo.savingsUnit
             };
         }
-        this.model.email = this.user.email;
     };
     AccountFinanceInfoComponent.prototype.onCurrencyUnitChange = function ($event) {
         if ($event.source.id === 'annualIncomeUnit') {
