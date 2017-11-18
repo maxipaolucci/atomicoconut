@@ -53,7 +53,6 @@ export class AppComponent implements OnInit {
       (data : any) => {
         if (data && data.email) {
           this.user = new User(data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
-          console.log(this.user);
           this.usersService.setUser(this.user);
         } else {
           this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
