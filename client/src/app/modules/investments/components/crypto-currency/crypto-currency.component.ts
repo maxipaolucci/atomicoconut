@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CrytoCurrencyService } from './crypto-currency.service';
 
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
-
+import { AppService } from '../../../../app.service';
 @Component({
   selector: 'crypto-currency',
   templateUrl: './crypto-currency.component.html',
@@ -21,7 +21,7 @@ export class CryptoCurrencyComponent implements OnInit {
   public cryptoCurrencyCurrentPrice : number = 0;
   @Output() totalReturns: EventEmitter<any> = new EventEmitter();
 
-  constructor(private crytoCurrencyService: CrytoCurrencyService) {
+  constructor(private crytoCurrencyService: CrytoCurrencyService, private appService : AppService) {
     this.cryptoCurrency$ = new BehaviorSubject<any>(null);
   }
 
@@ -39,7 +39,10 @@ export class CryptoCurrencyComponent implements OnInit {
           usdFromCryptoCurrency : this.usdFromCryptoCurrency
         }); 
       },
-      (error : any) =>  console.error(`${methodTrace} There was an error trying to load Monero prices > ${error}`)
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error trying to get crypto currency rates data > ${error}`);
+        this.appService.showResults(`There was an error trying to get crypto currency rates data, please try again in a few minutes.`, 'error');
+      }
     );
   }
 }

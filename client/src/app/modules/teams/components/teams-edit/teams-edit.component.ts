@@ -78,7 +78,7 @@ export class TeamsEditComponent implements OnInit {
     this.teamsService.create(this.model).subscribe(
       (data : any) => {
         if (data && data.slug) {
-          this.appService.showResults(`Team ${data.name} successfully created!`);
+          this.appService.showResults(`Team ${data.name} successfully created!`, 'success');
           this.router.navigate(['/teams/edit', data.slug]);
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
@@ -89,7 +89,7 @@ export class TeamsEditComponent implements OnInit {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit team service.`, error);
         if (error.codeno === 400) {
           //the mail system failed for external reasons
-          this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`);
+          this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`, 'error');
         }
 
         this.editTeamServiceRunning = false;
@@ -116,7 +116,7 @@ export class TeamsEditComponent implements OnInit {
       (data : any) => {
         if (data && data.team && data.team.slug) {
           this.populateTeam(data.team);
-          this.appService.showResults(`Team "${data.team.name}" successfully updated!`);
+          this.appService.showResults(`Team "${data.team.name}" successfully updated!`, 'success');
           //TODO redirect to the new team slug name if changed
           if (this.slug !== data.team.slug) {
             //this means that the team name was update and therefore the slug too
@@ -132,9 +132,11 @@ export class TeamsEditComponent implements OnInit {
         }
       },
       (error : any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit team service.`, error);
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`);
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
         }
 
         this.editTeamServiceRunning = false;
@@ -167,13 +169,14 @@ export class TeamsEditComponent implements OnInit {
         this.getTeamServiceRunning = false;
       },
       (error : any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the get team service.`, error);
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          //the mail system failed for external reasons
-          this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`);
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
         } else if (error.codeno === 462) {
-          this.appService.showResults(error.msg);
+          this.appService.showResults(error.msg, 'error');
           this.router.navigate(['/welcome']);
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
         }
 
         this.getTeamServiceRunning = false;

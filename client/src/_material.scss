@@ -1,6 +1,28 @@
-snack-bar-container.snack-bar--simple {
-  background-color: $purple;
-  color: $almostWhite;
+
+
+snack-bar-container {
+  &.snack-bar--simple {
+    background-color: $purple;
+    color: $almostWhite;
+  }
+
+  &.snackbar--simple {
+    padding : 10px;
+    color: $almostWhite;
+  }
+
+  &.snackbar--success {
+    background-color: $accent;
+    color: $almostBlack;
+  }
+
+  &.snackbar--error {
+    background-color: $warn;
+  }
+
+  &.snackbar--info {
+    background-color: $purple;
+  }
 }
 
 mat-chip {

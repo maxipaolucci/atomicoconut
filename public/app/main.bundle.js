@@ -110,7 +110,10 @@ var AppComponent = (function () {
             this.currencyExchangeService.getRates().subscribe(function (data) {
                 _this.currencyExchangeService.rates = data;
                 _this.appService.consoleLog('info', methodTrace + " Currency exchange rates successfully loaded!");
-            }, function (error) { return _this.appService.consoleLog('error', methodTrace + " Currency exchange rates API failed."); });
+            }, function (error) {
+                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > " + error);
+                _this.appService.showResults("There was an error trying to get currency rates data.", 'error');
+            });
         }
     };
     AppComponent.prototype.setUser = function () {
@@ -119,7 +122,6 @@ var AppComponent = (function () {
         this.usersService.getAuthenticatedUser().subscribe(function (data) {
             if (data && data.email) {
                 _this.user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
-                console.log(_this.user);
                 _this.usersService.setUser(_this.user);
             }
             else {
@@ -315,6 +317,7 @@ AppRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_components_snackbar_simple_snackbar_simple_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -324,6 +327,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -384,15 +388,16 @@ var AppService = (function () {
      * @param duration . The duration in milliseconds . Optional
      * @param actionName . An action name to close the message on click. Optional
      */
-    AppService.prototype.showResults = function (message, duration, actionName) {
+    AppService.prototype.showResults = function (message, type, duration) {
+        if (type === void 0) { type = 'info'; }
         if (duration === void 0) { duration = 5000; }
-        if (actionName === void 0) { actionName = ''; }
-        var snackBarRef = this.snackBar.open(message, actionName ? actionName : null, {
+        var snackBarRef = this.snackBar.openFromComponent(__WEBPACK_IMPORTED_MODULE_5__modules_shared_components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */], {
+            data: {
+                type: type,
+                message: message
+            },
             duration: duration,
-            extraClasses: ['snack-bar--simple']
-        });
-        snackBarRef.onAction().subscribe(function () {
-            snackBarRef.dismiss();
+            extraClasses: ['snackbar--simple', "snackbar--" + type]
         });
     };
     /**
@@ -414,7 +419,7 @@ var AppService = (function () {
 }());
 AppService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["t" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["t" /* MatSnackBar */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["u" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["u" /* MatSnackBar */]) === "function" && _b || Object])
 ], AppService);
 
 var _a, _b;
@@ -1192,6 +1197,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1204,9 +1210,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var CryptoCurrencyComponent = (function () {
-    function CryptoCurrencyComponent(crytoCurrencyService) {
+    function CryptoCurrencyComponent(crytoCurrencyService, appService) {
         this.crytoCurrencyService = crytoCurrencyService;
+        this.appService = appService;
         this.usdFromCryptoCurrency = 0;
         this.usdFromCryptoCurrencyWhenBought = 0;
         this.cryptoCurrencyCurrentPrice = 0;
@@ -1225,7 +1233,10 @@ var CryptoCurrencyComponent = (function () {
                 usdFromCryptoCurrencyWhenBought: _this.usdFromCryptoCurrencyWhenBought,
                 usdFromCryptoCurrency: _this.usdFromCryptoCurrency
             });
-        }, function (error) { return console.error(methodTrace + " There was an error trying to load Monero prices > " + error); });
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get crypto currency rates data > " + error);
+            _this.appService.showResults("There was an error trying to get crypto currency rates data, please try again in a few minutes.", 'error');
+        });
     };
     return CryptoCurrencyComponent;
 }());
@@ -1256,10 +1267,10 @@ CryptoCurrencyComponent = __decorate([
         styles: [__webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.scss")],
         providers: [__WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */]]
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _c || Object])
 ], CryptoCurrencyComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=crypto-currency.component.js.map
 
 /***/ }),
@@ -1732,6 +1743,78 @@ MainNavigatorService = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutWrap fxLayoutAlign=\"space-around center\" class=\"snackbar--simple\">\n  <p fxFlex class=\"message\">{{data.message}}</p>\n  <mat-icon class=\"icon\" aria-label=\"Close\" (click)=\"actionClicked()\">clear</mat-icon>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".snackbar--simple {\n  font-size: 12px;\n  cursor: default; }\n  .snackbar--simple .icon {\n    cursor: pointer; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SnackbarSimpleComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var SnackbarSimpleComponent = (function () {
+    function SnackbarSimpleComponent(snackBarRef, data) {
+        this.snackBarRef = snackBarRef;
+        this.data = data;
+    }
+    SnackbarSimpleComponent.prototype.ngOnInit = function () { };
+    SnackbarSimpleComponent.prototype.actionClicked = function () {
+        this.snackBarRef.dismiss();
+    };
+    return SnackbarSimpleComponent;
+}());
+SnackbarSimpleComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-snackbar-simple',
+        template: __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.scss")]
+    }),
+    __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MAT_SNACK_BAR_DATA */])),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatSnackBarRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatSnackBarRef */]) === "function" && _a || Object, Object])
+], SnackbarSimpleComponent);
+
+var _a;
+//# sourceMappingURL=snackbar-simple.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html":
 /***/ (function(module, exports) {
 
@@ -1796,7 +1879,7 @@ YesNoDialogComponent = __decorate([
         styles: [__webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.scss")]
     }),
     __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialogRef */]) === "function" && _a || Object, Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatDialogRef */]) === "function" && _a || Object, Object])
 ], YesNoDialogComponent);
 
 var _a;
@@ -1830,47 +1913,47 @@ CustomMaterialDesignModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatButtonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatSnackBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatChipsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatSlideToggleModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["w" /* MatToolbarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatIconModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatInputModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatProgressBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatProgressSpinnerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatCardModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatTabsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatExpansionModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatTooltipModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDialogModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatSelectModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatCheckboxModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatChipsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatDatepickerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["y" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatProgressSpinnerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatCardModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatExpansionModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatTooltipModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialogModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatSelectModule */]
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatButtonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatSnackBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatChipsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatSlideToggleModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["w" /* MatToolbarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatIconModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatInputModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatButtonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatProgressBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatProgressSpinnerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatCardModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatTabsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatExpansionModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatTooltipModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDialogModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatSelectModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatCheckboxModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatChipsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatDatepickerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["y" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatProgressSpinnerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatCardModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatExpansionModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatTooltipModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialogModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatSelectModule */]
         ]
     })
 ], CustomMaterialDesignModule);
@@ -1893,12 +1976,14 @@ CustomMaterialDesignModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1922,10 +2007,11 @@ SharedModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
             __WEBPACK_IMPORTED_MODULE_7__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
         ],
-        exports: [__WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */], __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */]],
-        declarations: [__WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */], __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */]],
+        exports: [__WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */], __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */]],
+        declarations: [__WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */], __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */]],
         entryComponents: [
-            __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */] //added as material doc suggest to allow AOT on this on the fly created class
+            __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */]
         ]
     })
 ], SharedModule);
@@ -1999,7 +2085,7 @@ AddPersonToTeamDialogComponent = __decorate([
         styles: [__webpack_require__("../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.scss")]
     }),
     __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialogRef */]) === "function" && _a || Object, Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatDialogRef */]) === "function" && _a || Object, Object])
 ], AddPersonToTeamDialogComponent);
 
 var _a;
@@ -2125,10 +2211,12 @@ var TeamsDashboardComponent = (function () {
             }
             _this.getTeamsServiceRunning = false;
         }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error with the get team service.", error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
-                //the mail system failed for external reasons
-                _this.appService.showResults("There was an error with the team services, please try again in a few minutes.");
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
             _this.getTeamsServiceRunning = false;
         });
@@ -2165,17 +2253,19 @@ var TeamsDashboardComponent = (function () {
             if (data && data.removed > 0) {
                 _this.teams.splice(index, 1);
                 _this.teamActionRunning.splice(index, 1);
-                _this.appService.showResults("Team \"" + team.name + "\" successfully removed!");
+                _this.appService.showResults("Team \"" + team.name + "\" successfully removed!", 'success');
             }
             else {
-                _this.appService.showResults("Team \"" + team.name + "\" could not be remove, please try again.");
+                _this.appService.showResults("Team \"" + team.name + "\" could not be removed, please try again.", 'error');
             }
             _this.teamActionRunning[index] = false;
         }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error with the delete team service.", error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
-                //the mail system failed for external reasons
-                _this.appService.showResults("There was an error with the team services, please try again in a few minutes.");
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
             _this.teamActionRunning[index] = false;
         });
@@ -2188,7 +2278,7 @@ TeamsDashboardComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialog */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatDialog */]) === "function" && _f || Object])
 ], TeamsDashboardComponent);
 
 var _a, _b, _c, _d, _e, _f;
@@ -2317,7 +2407,7 @@ var TeamsEditComponent = (function () {
         //call the team create service
         this.teamsService.create(this.model).subscribe(function (data) {
             if (data && data.slug) {
-                _this.appService.showResults("Team " + data.name + " successfully created!");
+                _this.appService.showResults("Team " + data.name + " successfully created!", 'success');
                 _this.router.navigate(['/teams/edit', data.slug]);
             }
             else {
@@ -2328,7 +2418,7 @@ var TeamsEditComponent = (function () {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit team service.", error);
             if (error.codeno === 400) {
                 //the mail system failed for external reasons
-                _this.appService.showResults("There was an error with the team services, please try again in a few minutes.");
+                _this.appService.showResults("There was an error with the team services, please try again in a few minutes.", 'error');
             }
             _this.editTeamServiceRunning = false;
         });
@@ -2349,7 +2439,7 @@ var TeamsEditComponent = (function () {
         this.teamsService.update(this.model).subscribe(function (data) {
             if (data && data.team && data.team.slug) {
                 _this.populateTeam(data.team);
-                _this.appService.showResults("Team \"" + data.team.name + "\" successfully updated!");
+                _this.appService.showResults("Team \"" + data.team.name + "\" successfully updated!", 'success');
                 //TODO redirect to the new team slug name if changed
                 if (_this.slug !== data.team.slug) {
                     //this means that the team name was update and therefore the slug too
@@ -2366,9 +2456,12 @@ var TeamsEditComponent = (function () {
                 _this.editTeamServiceRunning = false;
             }
         }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit team service.", error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
-                _this.appService.showResults("There was an error with the team services, please try again in a few minutes.");
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
             _this.editTeamServiceRunning = false;
         });
@@ -2394,14 +2487,16 @@ var TeamsEditComponent = (function () {
             }
             _this.getTeamServiceRunning = false;
         }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error with the get team service.", error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
-                //the mail system failed for external reasons
-                _this.appService.showResults("There was an error with the team services, please try again in a few minutes.");
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
             }
             else if (error.codeno === 462) {
-                _this.appService.showResults(error.msg);
+                _this.appService.showResults(error.msg, 'error');
                 _this.router.navigate(['/welcome']);
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
             _this.getTeamServiceRunning = false;
         });
@@ -2451,7 +2546,7 @@ TeamsEditComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialog */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatDialog */]) === "function" && _f || Object])
 ], TeamsEditComponent);
 
 var _a, _b, _c, _d, _e, _f;
@@ -2779,13 +2874,13 @@ var AccountFinanceInfoComponent = (function () {
         this.model.annualIncomeUnit = this.user.currency;
         this.model.savingsUnit = this.user.currency;
         if (this.user.financialInfo) {
-            this.model = {
+            Object.assign(this.model, {
                 annualIncome: this.user.financialInfo.annualIncome,
                 annualIncomeUnit: this.user.financialInfo.annualIncomeUnit,
                 incomeTaxRate: this.user.financialInfo.incomeTaxRate,
                 savings: this.user.financialInfo.savings,
                 savingsUnit: this.user.financialInfo.savingsUnit
-            };
+            });
         }
     };
     AccountFinanceInfoComponent.prototype.onCurrencyUnitChange = function ($event) {
@@ -2806,17 +2901,19 @@ var AccountFinanceInfoComponent = (function () {
                 var user = _this.usersService.getUser();
                 user.financialInfo = new __WEBPACK_IMPORTED_MODULE_2__models_account_finance__["a" /* AccountFinance */](_this.model.annualIncome, _this.model.annualIncomeUnit, _this.model.savings, _this.model.savingsUnit, _this.model.incomeTaxRate);
                 _this.usersService.setUser(user);
-                _this.appService.showResults("Your personal information was successfully updated!.");
+                _this.appService.showResults("Your personal information was successfully updated!.", 'success');
             }
             else {
-                console.error(methodTrace + " Unexpected data format.");
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
             _this.accountFinanceServiceRunning = false;
         }, function (error) {
-            console.error(methodTrace + " There was an error with the update personal info service > " + error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
-                //the mail system failed for external reasons
-                _this.appService.showResults("There was an error with the personal info service, please try again in a few minutes.");
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
             _this.accountFinanceServiceRunning = false;
         });
@@ -2924,17 +3021,19 @@ var AccountPersonalInfoComponent = (function () {
                 var user = _this.usersService.getUser();
                 user.personalInfo = new __WEBPACK_IMPORTED_MODULE_3__models_account_personal__["a" /* AccountPersonal */](_this.model.birthday);
                 _this.usersService.setUser(user);
-                _this.appService.showResults("Your personal information was successfully updated!.");
+                _this.appService.showResults("Your personal information was successfully updated!.", 'success');
             }
             else {
-                console.error(methodTrace + " Unexpected data format.");
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
             _this.accountPersonalServiceRunning = false;
         }, function (error) {
-            console.error(methodTrace + " There was an error with the update personal info service > " + error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
-                //the mail system failed for external reasons
-                _this.appService.showResults("There was an error with the personal info service, please try again in a few minutes.");
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
             _this.accountPersonalServiceRunning = false;
         });
@@ -3037,17 +3136,19 @@ var AccountUserInfoComponent = (function () {
                 user.email = data.email;
                 user.currency = data.currency;
                 _this.usersService.setUser(user);
-                _this.appService.showResults("Your profile was successfully updated!.");
+                _this.appService.showResults("Your profile was successfully updated!.", 'success');
             }
             else {
-                console.error(methodTrace + " Unexpected data format.");
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
             _this.updateAccountServiceRunning = false;
         }, function (error) {
-            console.error(methodTrace + " There was an error with the update account service > " + error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
-                //the mail system failed for external reasons
-                _this.appService.showResults("There was an error with the update account service, please try again in a few minutes.");
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
             _this.updateAccountServiceRunning = false;
         });
@@ -3226,7 +3327,7 @@ var LoginComponent = (function () {
         this.route.paramMap.map(function (params) { return params.get('state'); })
             .subscribe(function (state) {
             if (state === 'reset-password-token-expired') {
-                _this.appService.showResults('Reset password url has expired or is invalid. Please go to Forgot my password again to create a new one.', 5000);
+                _this.appService.showResults('Reset password url has expired or is invalid. Please go to Forgot my password again to create a new one.', 'error');
             }
         });
     };
@@ -3248,13 +3349,19 @@ var LoginComponent = (function () {
                 _this.router.navigate([redirectUrl]); //go home
             }
             else {
-                console.error(methodTrace + " Unexpected data format.");
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
                 _this.loginServiceRunning = false;
             }
         }, function (error) {
-            console.error(methodTrace + " There was an error with the login service: ", error);
-            if (error.codeno === 451) {
-                _this.appService.showResults(error.msg, 60000, 'Close');
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 451) {
+                _this.appService.showResults(error.msg, 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
             _this.loginServiceRunning = false;
         });
@@ -3269,18 +3376,20 @@ var LoginComponent = (function () {
         //call the register service
         this.usersService.forgot(this.forgotModel).subscribe(function (data) {
             _this.forgotServiceRunning = false;
-            _this.appService.showResults("You have been emailed a password reset link.");
+            _this.appService.showResults("You have been emailed a password reset link.", 'info');
         }, function (error) {
-            console.error(methodTrace + " There was an error with the forgot password service: ", error);
-            _this.forgotServiceRunning = false;
-            if (error.codeno === 455) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 455) {
                 //invalid email
-                _this.appService.showResults(error.msg, 3000);
+                _this.appService.showResults(error.msg, 'error');
             }
-            else if (error.codeno === 400) {
-                //the mail system failed for external reasons
-                _this.appService.showResults("There was an issue sending the reset password email, please try again in a few minutes.");
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
+            _this.forgotServiceRunning = false;
         });
     };
     return LoginComponent;
@@ -3376,7 +3485,7 @@ var RegisterComponent = (function () {
         this.registerServiceRunning = true;
         //chech that the password and the confirmed password are the same
         if (this.model.password !== this.model['password-confirm']) {
-            console.error(methodTrace + " Confirm password must match password.");
+            this.appService.consoleLog('error', methodTrace + " Confirm password must match password.");
             this.registerServiceRunning = false;
             return false;
         }
@@ -3387,18 +3496,25 @@ var RegisterComponent = (function () {
                 var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
                 _this.usersService.setUser(user);
                 _this.router.navigate(['/']); //go home
-                _this.appService.showResults(user.name + " welcome to AtomiCoconut!");
+                _this.appService.showResults(user.name + " welcome to AtomiCoconut!", 'success');
             }
             else {
-                console.error(methodTrace + " Unexpected data format.", data);
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.", data);
             }
             _this.registerServiceRunning = false;
         }, function (error) {
-            console.error(methodTrace + " There was an error with the register service.", error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
-                if (error.data && error.data.name === 'UserExistsError')
+                if (error.data && error.data.name === 'UserExistsError') {
                     //the mail system failed for external reasons
-                    _this.appService.showResults("The submitted email was already use by another person, pick a different one please.");
+                    _this.appService.showResults("The selected email address already in use by another person, pick a different one please.", 'error');
+                }
+                else {
+                    _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+                }
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
             _this.registerServiceRunning = false;
         });
@@ -3454,6 +3570,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3468,8 +3585,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ResetPasswordComponent = (function () {
-    function ResetPasswordComponent(usersService, router, route, mainNavigatorService) {
+    function ResetPasswordComponent(appService, usersService, router, route, mainNavigatorService) {
+        this.appService = appService;
         this.usersService = usersService;
         this.router = router;
         this.route = route;
@@ -3492,7 +3611,7 @@ var ResetPasswordComponent = (function () {
                 _this.token = token;
             }
             else {
-                console.error(methodTrace + " Token must be set to reset a password.");
+                _this.appService.consoleLog('error', methodTrace + " Token must be set to reset a password.");
                 _this.router.navigate(['/']);
             }
         });
@@ -3503,7 +3622,7 @@ var ResetPasswordComponent = (function () {
         this.resetPasswordServiceRunning = true;
         //chech that the password and the confirmed password are the same
         if (this.model.password !== this.model['password-confirm']) {
-            console.error(methodTrace + " Confirm password must match password.");
+            this.appService.consoleLog('error', methodTrace + " Confirm password must match password.");
             this.resetPasswordServiceRunning = false;
             return false;
         }
@@ -3513,14 +3632,21 @@ var ResetPasswordComponent = (function () {
             if (data) {
                 var user = new __WEBPACK_IMPORTED_MODULE_3__models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency);
                 _this.usersService.setUser(user);
+                _this.appService.showResults('Your password was successfully updated!', 'success');
                 _this.router.navigate(['/']); //go home
             }
             else {
-                console.error(methodTrace + " Unexpected data format.");
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
             _this.resetPasswordServiceRunning = false;
         }, function (error) {
-            console.error(methodTrace + " There was an error with the reset password service > " + error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
             _this.resetPasswordServiceRunning = false;
         });
     };
@@ -3532,10 +3658,10 @@ ResetPasswordComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _e || Object])
 ], ResetPasswordComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=reset-password.component.js.map
 
 /***/ }),

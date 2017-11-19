@@ -1,0 +1,10 @@
+@import '../../../../../variables';
+
+.snackbar--simple {
+  font-size: 12px;
+  cursor: default;
+
+  .icon {
+    cursor: pointer;
+  }
+}

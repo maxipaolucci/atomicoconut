@@ -47,18 +47,19 @@ export class AccountPersonalInfoComponent implements OnInit {
           user.personalInfo = new AccountPersonal(this.model.birthday);
           this.usersService.setUser(user);
 
-          this.appService.showResults(`Your personal information was successfully updated!.`);
+          this.appService.showResults(`Your personal information was successfully updated!.`, 'success');
         } else {
-          console.error(`${methodTrace} Unexpected data format.`)
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`)
         }
 
         this.accountPersonalServiceRunning = false;
       },
       (error : any) => {
-        console.error(`${methodTrace} There was an error with the update personal info service > ${error}`);
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          //the mail system failed for external reasons
-          this.appService.showResults(`There was an error with the personal info service, please try again in a few minutes.`);
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
         }
 
         this.accountPersonalServiceRunning = false;

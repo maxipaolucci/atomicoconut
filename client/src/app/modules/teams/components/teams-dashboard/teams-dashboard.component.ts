@@ -75,10 +75,11 @@ export class TeamsDashboardComponent implements OnInit {
         this.getTeamsServiceRunning = false;
       },
       (error : any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the get team service.`, error);
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          //the mail system failed for external reasons
-          this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`);
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
         }
 
         this.getTeamsServiceRunning = false;
@@ -121,18 +122,19 @@ export class TeamsDashboardComponent implements OnInit {
         if (data && data.removed > 0) {
           this.teams.splice(index, 1);
           this.teamActionRunning.splice(index, 1);
-          this.appService.showResults(`Team "${team.name}" successfully removed!`);
+          this.appService.showResults(`Team "${team.name}" successfully removed!`, 'success');
         } else {
-          this.appService.showResults(`Team "${team.name}" could not be remove, please try again.`);
+          this.appService.showResults(`Team "${team.name}" could not be removed, please try again.`, 'error');
         }
 
         this.teamActionRunning[index] = false;
       },
       (error : any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the delete team service.`, error);
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          //the mail system failed for external reasons
-          this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`);
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
         }
 
         this.teamActionRunning[index] = false;

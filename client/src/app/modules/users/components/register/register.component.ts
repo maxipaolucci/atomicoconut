@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
 
     //chech that the password and the confirmed password are the same
     if (this.model.password !== this.model['password-confirm']) {
-      console.error(`${methodTrace} Confirm password must match password.`);
+      this.appService.consoleLog('error', `${methodTrace} Confirm password must match password.`);
       this.registerServiceRunning = false;
       return false;
     }
@@ -51,19 +51,24 @@ export class RegisterComponent implements OnInit {
           const user = new User(data.name, data.email, data.avatar, data.accessToInvestments, null, null, data.currency)
           this.usersService.setUser(user);
           this.router.navigate(['/']); //go home
-          this.appService.showResults(`${user.name} welcome to AtomiCoconut!`);
+          this.appService.showResults(`${user.name} welcome to AtomiCoconut!`, 'success');
         } else {
-          console.error(`${methodTrace} Unexpected data format.`, data);
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`, data);
         }
 
         this.registerServiceRunning = false;
       },
       (error : any) => {
-        console.error(`${methodTrace} There was an error with the register service.`, error);
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          if (error.data && error.data.name === 'UserExistsError')
-          //the mail system failed for external reasons
-          this.appService.showResults(`The submitted email was already use by another person, pick a different one please.`);
+          if (error.data && error.data.name === 'UserExistsError') {
+            //the mail system failed for external reasons
+            this.appService.showResults(`The selected email address already in use by another person, pick a different one please.`, 'error');
+          } else {
+            this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+          }
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
         }
 
         this.registerServiceRunning = false;

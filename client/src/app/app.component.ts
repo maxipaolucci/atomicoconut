@@ -41,7 +41,10 @@ export class AppComponent implements OnInit {
           this.currencyExchangeService.rates = data;
           this.appService.consoleLog('info', `${methodTrace} Currency exchange rates successfully loaded!`);
         },
-        (error : any) => this.appService.consoleLog('error', `${methodTrace} Currency exchange rates API failed.`)
+        (error : any) => {
+          this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > ${error}`);
+          this.appService.showResults(`There was an error trying to get currency rates data.`, 'error');
+        }
       );
     }
   }

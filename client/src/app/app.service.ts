@@ -4,6 +4,7 @@ import { Http, Response } from '@angular/http';
 import {Observable} from "rxjs/Rx";
 import { MatSnackBar } from '@angular/material';
 import { environment } from '../environments/environment';
+import { SnackbarSimpleComponent } from './modules/shared/components/snackbar-simple/snackbar-simple.component';
 
 @Injectable()
 export class AppService {
@@ -62,14 +63,14 @@ export class AppService {
    * @param duration . The duration in milliseconds . Optional
    * @param actionName . An action name to close the message on click. Optional
    */
-  showResults(message : string, duration : number = 5000, actionName : string = '') {
-    let snackBarRef = this.snackBar.open(message, actionName ? actionName : null, {
+  showResults(message : string, type : string = 'info', duration : number = 5000) {
+    let snackBarRef = this.snackBar.openFromComponent(SnackbarSimpleComponent, {
+      data : {
+        type,
+        message
+      },
       duration,
-      extraClasses: ['snack-bar--simple']
-    });
-
-    snackBarRef.onAction().subscribe(() => {
-      snackBarRef.dismiss();
+      extraClasses : ['snackbar--simple', `snackbar--${type}`]
     });
   }
 

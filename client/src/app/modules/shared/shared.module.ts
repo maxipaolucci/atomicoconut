@@ -7,6 +7,7 @@ import { MainNavigatorComponent } from './components/main-navigator/main-navigat
 import { CurrencyUnitComponent } from './components/currency-unit/currency-unit.component';
 import { CustomMaterialDesignModule } from '../../modules/shared/custom-material-design.module';
 import { YesNoDialogComponent } from './components/yes-no-dialog/yes-no-dialog.component';
+import { SnackbarSimpleComponent } from './components/snackbar-simple/snackbar-simple.component';
 
 @NgModule({
   imports: [
@@ -16,10 +17,11 @@ import { YesNoDialogComponent } from './components/yes-no-dialog/yes-no-dialog.c
     FlexLayoutModule,
     CustomMaterialDesignModule
   ],
-  exports: [ MainNavigatorComponent, CurrencyUnitComponent, YesNoDialogComponent ],
-  declarations: [ MainNavigatorComponent, CurrencyUnitComponent, YesNoDialogComponent ],
+  exports: [ MainNavigatorComponent, CurrencyUnitComponent, YesNoDialogComponent, SnackbarSimpleComponent ],
+  declarations: [ MainNavigatorComponent, CurrencyUnitComponent, YesNoDialogComponent, SnackbarSimpleComponent ],
   entryComponents: [
-    YesNoDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
+    YesNoDialogComponent, //added as material doc suggest to allow AOT on this on the fly created class
+    SnackbarSimpleComponent
   ]
 })
 export class SharedModule { }
