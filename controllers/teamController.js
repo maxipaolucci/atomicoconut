@@ -224,7 +224,7 @@ exports.update = async (req, res, next) => {
                 if (member) {
                     const result = await addMemberToTeam(member, team, user.email);
                     if (!result) {
-                        duplicatedMembers.push(member.email);
+                        duplicatedMembers.push({name : member.name, email : member.email});
                     }
                 } else {
                     usersNotRegistered.push(memberEmail);

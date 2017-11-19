@@ -62,8 +62,10 @@ export class AppService {
    * @param message . The text to show
    * @param duration . The duration in milliseconds . Optional
    * @param actionName . An action name to close the message on click. Optional
+   * 
+   * @return {MatSnackBar} . The snackbar ref
    */
-  showResults(message : string, type : string = 'info', duration : number = 5000) {
+  showResults(message : string, type : string = 'info', duration : number = 5000) : any {
     let snackBarRef = this.snackBar.openFromComponent(SnackbarSimpleComponent, {
       data : {
         type,
@@ -72,6 +74,28 @@ export class AppService {
       duration,
       extraClasses : ['snackbar--simple', `snackbar--${type}`]
     });
+
+    return snackBarRef;
+  }
+
+  /**
+   * Shows multiple messages in snackbar component one after another
+   * @param {any[]} messages . The array of messages to show
+   * @param {number} index . The index where to start iterating the messages array
+   * 
+   * @return {MatSnackBar} . The snackbar Ref
+   */
+  showManyResults(messages : any[], index : number = 0) {
+    let snackBarRef = null;
+    if (index < messages.length) {
+      snackBarRef = this.showResults(messages[index].message, messages[index].type, messages[index].duration);
+
+      snackBarRef.afterDismissed().subscribe(() => {
+        this.showManyResults(messages, index += 1);
+      });
+    } else {
+      return snackBarRef;
+    }
   }
 
   /**

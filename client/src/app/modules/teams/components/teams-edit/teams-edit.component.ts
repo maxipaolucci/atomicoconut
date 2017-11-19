@@ -115,17 +115,39 @@ export class TeamsEditComponent implements OnInit {
     this.teamsService.update(this.model).subscribe(
       (data : any) => {
         if (data && data.team && data.team.slug) {
-          this.populateTeam(data.team);
-          this.appService.showResults(`Team "${data.team.name}" successfully updated!`, 'success');
+          let messages : any[] = [
+            {
+              message : `Team "${data.team.name}" successfully updated!`,
+              type : 'success'
+            }
+          ];
+
+          if (data.usersNotRegistered.length) {
+            //handle not registered users
+            let message = {
+              message : `The following emails added to the team are not registered users in AtomiCoconut: `,
+              duration : 8000
+            };
+            
+            for (const email of data.usersNotRegistered) {
+              message.message += `"${email}", `;
+            }
+
+            message.message = message.message.slice(0, -2); //remove last comma char
+            message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
+
+            messages.push(message);
+          }
+
+          this.appService.showManyResults(messages);
           //TODO redirect to the new team slug name if changed
           if (this.slug !== data.team.slug) {
             //this means that the team name was update and therefore the slug too
             this.router.navigate(['/teams/edit', data.team.slug]); //go home 
           } else {
+            this.populateTeam(data.team);
             this.editTeamServiceRunning = false;  
           }
-          //TODO something with duplicated emails 
-          //TODO something with not registered users
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
           this.editTeamServiceRunning = false;

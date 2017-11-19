@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.route.paramMap.map((params: ParamMap) => params.get('state'))
         .subscribe(state => {
           if (state === 'reset-password-token-expired') {
-            this.appService.showResults('Reset password url has expired or is invalid. Please go to Forgot my password again to create a new one.', 'error');
+            this.appService.showResults('Reset password token has expired or is invalid. Click on "Forgot my password" again to create a new one.', 'error', 10000);
           }
         });
   }

@@ -387,6 +387,8 @@ var AppService = (function () {
      * @param message . The text to show
      * @param duration . The duration in milliseconds . Optional
      * @param actionName . An action name to close the message on click. Optional
+     *
+     * @return {MatSnackBar} . The snackbar ref
      */
     AppService.prototype.showResults = function (message, type, duration) {
         if (type === void 0) { type = 'info'; }
@@ -399,6 +401,28 @@ var AppService = (function () {
             duration: duration,
             extraClasses: ['snackbar--simple', "snackbar--" + type]
         });
+        return snackBarRef;
+    };
+    /**
+     * Shows multiple messages in snackbar component one after another
+     * @param {any[]} messages . The array of messages to show
+     * @param {number} index . The index where to start iterating the messages array
+     *
+     * @return {MatSnackBar} . The snackbar Ref
+     */
+    AppService.prototype.showManyResults = function (messages, index) {
+        var _this = this;
+        if (index === void 0) { index = 0; }
+        var snackBarRef = null;
+        if (index < messages.length) {
+            snackBarRef = this.showResults(messages[index].message, messages[index].type, messages[index].duration);
+            snackBarRef.afterDismissed().subscribe(function () {
+                _this.showManyResults(messages, index += 1);
+            });
+        }
+        else {
+            return snackBarRef;
+        }
     };
     /**
      * Show logs in the console if enabled in the current environment
@@ -1746,7 +1770,7 @@ MainNavigatorService = __decorate([
 /***/ "../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutWrap fxLayoutAlign=\"space-around center\" class=\"snackbar--simple\">\n  <p fxFlex class=\"message\">{{data.message}}</p>\n  <mat-icon class=\"icon\" aria-label=\"Close\" (click)=\"actionClicked()\">clear</mat-icon>\n</div>\n"
+module.exports = "<div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutWrap fxLayoutAlign=\"space-around center\" class=\"snackbar--simple\">\r\n  <p fxFlex class=\"message\">{{data.message}}</p>\r\n  <mat-icon class=\"icon\" aria-label=\"Close\" (click)=\"actionClicked()\">clear</mat-icon>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -2438,18 +2462,36 @@ var TeamsEditComponent = (function () {
         //call the team update service
         this.teamsService.update(this.model).subscribe(function (data) {
             if (data && data.team && data.team.slug) {
-                _this.populateTeam(data.team);
-                _this.appService.showResults("Team \"" + data.team.name + "\" successfully updated!", 'success');
+                var messages = [
+                    {
+                        message: "Team \"" + data.team.name + "\" successfully updated!",
+                        type: 'success'
+                    }
+                ];
+                if (data.usersNotRegistered.length) {
+                    //handle not registered users
+                    var message = {
+                        message: "The following emails added to the team are not registered users in AtomiCoconut: ",
+                        duration: 8000
+                    };
+                    for (var _i = 0, _a = data.usersNotRegistered; _i < _a.length; _i++) {
+                        var email = _a[_i];
+                        message.message += "\"" + email + "\", ";
+                    }
+                    message.message = message.message.slice(0, -2); //remove last comma char
+                    message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
+                    messages.push(message);
+                }
+                _this.appService.showManyResults(messages);
                 //TODO redirect to the new team slug name if changed
                 if (_this.slug !== data.team.slug) {
                     //this means that the team name was update and therefore the slug too
                     _this.router.navigate(['/teams/edit', data.team.slug]); //go home 
                 }
                 else {
+                    _this.populateTeam(data.team);
                     _this.editTeamServiceRunning = false;
                 }
-                //TODO something with duplicated emails 
-                //TODO something with not registered users
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
@@ -3327,7 +3369,7 @@ var LoginComponent = (function () {
         this.route.paramMap.map(function (params) { return params.get('state'); })
             .subscribe(function (state) {
             if (state === 'reset-password-token-expired') {
-                _this.appService.showResults('Reset password url has expired or is invalid. Please go to Forgot my password again to create a new one.', 'error');
+                _this.appService.showResults('Reset password token has expired or is invalid. Click on "Forgot my password" again to create a new one.', 'error', 10000);
             }
         });
     };
