@@ -6,15 +6,17 @@ const jsonfile = require('jsonfile');
 function specificEnvironment(element) {
   return element === 'dev' || element === 'test' || element === 'prod';
 }
-const environment = process.argv.find(specificEnvironment) || null;
+let environment = process.argv.find(specificEnvironment) || null;
 if (!environment) {
-  environment = 'DEV';
-} else {
-  environment = environment.toUpperCase();
+  environment = 'dev';
 }
 
 const mongoose = require('mongoose');
-mongoose.connect(process.env.DATABASE);
+if (environment === 'dev'){
+  mongoose.connect(process.env.DATABASE);
+} else {
+  mongoose.connect(process.env[`DATABASE_${environment.toUpperCase()}`]);  
+}
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 
 // import all of our models - they need to be imported only once
@@ -25,34 +27,55 @@ const Team = require('../models/Team');
 const TeamUser = require('../models/Team_User');
 
 async function deleteData() {
-  console.log('😢😢 Goodbye Data...');
-  await FinancialInfo.remove();
-  await PersonalInfo.remove();
-  await TeamUser.remove();
-  await Team.remove();
-  await User.remove();
-  console.log('Data Deleted. To load sample data, run\n\n\t npm run loadData\n\n');
-  process.exit();
+  console.log(`Started deleting data from ${environment.toUpperCase()}...`);
+
+  try {
+    await FinancialInfo.remove();
+    console.log(`FinancialInfo table is empty.`)
+    await PersonalInfo.remove();
+    console.log(`PersonalInfo table is empty.`)
+    await TeamUser.remove();
+    console.log(`TeamUser table is empty.`)
+    await Team.remove();
+    console.log(`Team table is empty.`)
+    await User.remove();
+    console.log(`User table is empty.`)
+
+    console.log('\n\n👍👍👍👍👍👍👍👍 Done!. To load sample data, run\n\n\t npm run loadData [prod|test|dev]\n\n');
+    process.exit();
+  } catch(e) {
+    console.log(`\n\n👎👎👎👎👎👎👎👎 Error! deleting data from \n\n\t ${environment.toUpperCase()} \n\n\n`);
+    console.log(e);
+    process.exit();
+  }
 }
 
 async function loadData() {
   
   try {
-    const financialinfos = jsonfile.readFileSync(__dirname + '/financialinfos.json');
-    const personalinfos = jsonfile.readFileSync(__dirname + '/personalinfos.json');
-    const users = jsonfile.readFileSync(__dirname + '/users.json');
-    const teams = jsonfile.readFileSync(__dirname + '/teams.json');
-    const teamusers = jsonfile.readFileSync(__dirname + '/teamusers.json');
-  
+    console.log(`Started loading data to ${environment.toUpperCase()}...`);
+
+    const financialinfos = jsonfile.readFileSync(`${__dirname}/${environment}/financialinfos.json`);
+    const personalinfos = jsonfile.readFileSync(`${__dirname}/${environment}/personalinfos.json`);
+    const users = jsonfile.readFileSync(`${__dirname}/${environment}/users.json`);
+    const teams = jsonfile.readFileSync(`${__dirname}/${environment}/teams.json`);
+    const teamusers = jsonfile.readFileSync(`${__dirname}/${environment}/teamusers.json`);
+    
     await User.insertMany(users);
+    console.log(`${users.length} Users loaded successfully.`);
     await Team.insertMany(teams);
+    console.log(`${users.length} Teams loaded successfully.`);
     await TeamUser.insertMany(teamusers);
+    console.log(`${users.length} TeamUsers loaded successfully.`);
     await FinancialInfo.insertMany(financialinfos);
+    console.log(`${users.length} FinancialInfos loaded successfully.`);
     await PersonalInfo.insertMany(personalinfos);
-    console.log('👍👍👍👍👍👍👍👍 Done!');
+    console.log(`${users.length} PersonalInfos loaded successfully.`);
+
+    console.log('\n\n👍👍👍👍👍👍👍👍 Done!');
     process.exit();
   } catch(e) {
-    console.log('\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n');
+    console.log(`\n\n👎👎👎👎👎👎👎👎 Error! loading data to \n\n\t ${environment.toUpperCase()} \n\n\n`);
     console.log(e);
     process.exit();
   }
@@ -60,25 +83,32 @@ async function loadData() {
 
 async function dumpData() {
   try {
+    console.log(`Started dumping data from ${environment.toUpperCase()}...`);
+
     const users = await User.find({}, { __v : false });
-    jsonfile.writeFileSync(__dirname + '/users.json', users);
+    jsonfile.writeFileSync(`${__dirname}/${environment}/users.json`, users);
+    console.log(`${users.length} Users exported to json successfully.`);
 
     const teams = await Team.find({}, { __v : false });
-    jsonfile.writeFileSync(__dirname + '/teams.json', teams);
+    jsonfile.writeFileSync(`${__dirname}/${environment}/teams.json`, teams);
+    console.log(`${users.length} Teams exported to json successfully.`);
 
     const teamusers = await TeamUser.find({}, { __v : false });
-    jsonfile.writeFileSync(__dirname + '/teamusers.json', teamusers);
+    jsonfile.writeFileSync(`${__dirname}/${environment}/teamusers.json`, teamusers);
+    console.log(`${users.length} TeamUsers exported to json successfully.`);
 
     const financialinfos = await FinancialInfo.find({}, { __v : false });
-    jsonfile.writeFileSync(__dirname + '/financialinfos.json', financialinfos);
+    jsonfile.writeFileSync(`${__dirname}/${environment}/financialinfos.json`, financialinfos);
+    console.log(`${users.length} FinancialInfos exported to json successfully.`);
 
     const personalinfos = await PersonalInfo.find({}, { __v : false });
-    jsonfile.writeFileSync(__dirname + '/personalinfos.json', personalinfos);
+    jsonfile.writeFileSync(`${__dirname}/${environment}/personalinfos.json`, personalinfos);
+    console.log(`${users.length} PersonalInfos exported to json successfully.`);
 
-    console.log('👍👍👍👍👍👍👍👍 Done!');
+    console.log(`\n\n👍👍👍👍👍👍👍👍 Done!. To load the data, run\n\n\t npm run loadData [prod|test|dev]\n\n`);
     process.exit();
   } catch(e) {
-    console.log('\n👎👎👎👎👎👎👎👎 Error! The Error info is below but if you are importing sample data make sure to drop the existing database first with.\n\n\t npm run blowitallaway\n\n\n');
+    console.log(`\n\n👎👎👎👎👎👎👎👎 Error! dumping data from \n\n\t ${environment.toUpperCase()} \n\n\n`);
     console.log(e);
     process.exit();
   }
@@ -87,12 +117,9 @@ async function dumpData() {
 
 
 if (process.argv.includes('--delete')) {
-  //deleteData();
+  deleteData();
 } else if (process.argv.includes('--load')) {
-  //loadData();
+  loadData();
 } else {
-  //dumpData();
-  
+  dumpData();
 }
-console.log(process.argv);
-process.exit();
