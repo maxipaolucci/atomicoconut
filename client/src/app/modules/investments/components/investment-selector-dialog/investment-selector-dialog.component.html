@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Create investment</h2>
+
+<mat-dialog-content>
+  <h4>Choose type</h4>
+  <mat-button-toggle-group fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="selector__investment-type" #investmentTypesGroup="">
+    <mat-button-toggle class="option__investment-type" value="currency" matTooltip="Currency exchange">
+      <img src="/assets/images/exchange.png" alt="currency" />
+    </mat-button-toggle>
+    <mat-button-toggle class="option__investment-type" value="cryptocurrency" matTooltip="Crypto currency">
+      <img src="/assets/images/cryptocurrency.png" alt="Crypto currency" />
+    </mat-button-toggle>
+    <mat-button-toggle class="option__investment-type" value="property" matTooltip="Property">
+      <img src="/assets/images/house.png" alt="Property" />
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</mat-dialog-content>
