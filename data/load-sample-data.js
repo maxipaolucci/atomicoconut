@@ -50,32 +50,46 @@ async function deleteData() {
   }
 }
 
-async function loadData() {
+async function loadData(source = 'dev') {
   
   try {
-    console.log(`Started loading data to ${environment.toUpperCase()}...`);
+    console.log(`Started loading data to ${environment.toUpperCase()} from ${source.toUpperCase()}...`);
 
-    const financialinfos = jsonfile.readFileSync(`${__dirname}/${environment}/financialinfos.json`);
-    const personalinfos = jsonfile.readFileSync(`${__dirname}/${environment}/personalinfos.json`);
-    const users = jsonfile.readFileSync(`${__dirname}/${environment}/users.json`);
-    const teams = jsonfile.readFileSync(`${__dirname}/${environment}/teams.json`);
-    const teamusers = jsonfile.readFileSync(`${__dirname}/${environment}/teamusers.json`);
+    const financialinfos = jsonfile.readFileSync(`${__dirname}/${source}/financialinfos.json`);
+    const personalinfos = jsonfile.readFileSync(`${__dirname}/${source}/personalinfos.json`);
+    const users = jsonfile.readFileSync(`${__dirname}/${source}/users.json`);
+    const teams = jsonfile.readFileSync(`${__dirname}/${source}/teams.json`);
+    const teamusers = jsonfile.readFileSync(`${__dirname}/${source}/teamusers.json`);
     
-    await User.insertMany(users);
-    console.log(`${users.length} Users loaded successfully.`);
-    await Team.insertMany(teams);
-    console.log(`${users.length} Teams loaded successfully.`);
-    await TeamUser.insertMany(teamusers);
-    console.log(`${users.length} TeamUsers loaded successfully.`);
-    await FinancialInfo.insertMany(financialinfos);
-    console.log(`${users.length} FinancialInfos loaded successfully.`);
-    await PersonalInfo.insertMany(personalinfos);
-    console.log(`${users.length} PersonalInfos loaded successfully.`);
-
+    if (users.length) {
+      await User.insertMany(users);
+      console.log(`${users.length} Users loaded successfully.`);
+    }
+    
+    if (teams.length) {
+      await Team.insertMany(teams);
+      console.log(`${teams.length} Teams loaded successfully.`);
+    }
+    
+    if (teamusers.length) {
+      await TeamUser.insertMany(teamusers);
+      console.log(`${teamusers.length} TeamUsers loaded successfully.`);
+    }
+    
+    if (financialinfos.length) {
+      await FinancialInfo.insertMany(financialinfos);
+      console.log(`${financialinfos.length} FinancialInfos loaded successfully.`);
+    }
+    
+    if (personalinfos.length) {
+      await PersonalInfo.insertMany(personalinfos);
+      console.log(`${personalinfos.length} PersonalInfos loaded successfully.`);
+    }
+    
     console.log('\n\n👍👍👍👍👍👍👍👍 Done!');
     process.exit();
   } catch(e) {
-    console.log(`\n\n👎👎👎👎👎👎👎👎 Error! loading data to \n\n\t ${environment.toUpperCase()} \n\n\n`);
+    console.log(`\n\n👎👎👎👎👎👎👎👎 Error! loading data to \n\n\t ${environment.toUpperCase()} from ${source.toUpperCase()} \n\n\n`);
     console.log(e);
     process.exit();
   }
@@ -91,19 +105,19 @@ async function dumpData() {
 
     const teams = await Team.find({}, { __v : false });
     jsonfile.writeFileSync(`${__dirname}/${environment}/teams.json`, teams);
-    console.log(`${users.length} Teams exported to json successfully.`);
+    console.log(`${teams.length} Teams exported to json successfully.`);
 
     const teamusers = await TeamUser.find({}, { __v : false });
     jsonfile.writeFileSync(`${__dirname}/${environment}/teamusers.json`, teamusers);
-    console.log(`${users.length} TeamUsers exported to json successfully.`);
+    console.log(`${teamusers.length} TeamUsers exported to json successfully.`);
 
     const financialinfos = await FinancialInfo.find({}, { __v : false });
     jsonfile.writeFileSync(`${__dirname}/${environment}/financialinfos.json`, financialinfos);
-    console.log(`${users.length} FinancialInfos exported to json successfully.`);
+    console.log(`${financialinfos.length} FinancialInfos exported to json successfully.`);
 
     const personalinfos = await PersonalInfo.find({}, { __v : false });
     jsonfile.writeFileSync(`${__dirname}/${environment}/personalinfos.json`, personalinfos);
-    console.log(`${users.length} PersonalInfos exported to json successfully.`);
+    console.log(`${personalinfos.length} PersonalInfos exported to json successfully.`);
 
     console.log(`\n\n👍👍👍👍👍👍👍👍 Done!. To load the data, run\n\n\t npm run loadData [prod|test|dev]\n\n`);
     process.exit();
@@ -119,7 +133,11 @@ async function dumpData() {
 if (process.argv.includes('--delete')) {
   deleteData();
 } else if (process.argv.includes('--load')) {
-  loadData();
+  let source = environment;
+  if (process.argv.length > 4 && ['dev', 'test', 'prod'].includes(process.argv[4])) {
+    source = process.argv[4];
+  }
+  loadData(source);
 } else {
   dumpData();
 }
