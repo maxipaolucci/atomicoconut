@@ -443,7 +443,7 @@ var AppService = (function () {
 }());
 AppService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["u" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["u" /* MatSnackBar */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["v" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["v" /* MatSnackBar */]) === "function" && _b || Object])
 ], AppService);
 
 var _a, _b;
@@ -1220,8 +1220,7 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoCurrencyComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1234,23 +1233,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var CryptoCurrencyComponent = (function () {
-    function CryptoCurrencyComponent(crytoCurrencyService, appService) {
-        this.crytoCurrencyService = crytoCurrencyService;
+    function CryptoCurrencyComponent(cryptoCurrencyService, appService) {
+        this.cryptoCurrencyService = cryptoCurrencyService;
         this.appService = appService;
         this.usdFromCryptoCurrency = 0;
         this.usdFromCryptoCurrencyWhenBought = 0;
         this.cryptoCurrencyCurrentPrice = 0;
         this.totalReturns = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.cryptoCurrency$ = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["a" /* BehaviorSubject */](null);
     }
     CryptoCurrencyComponent.prototype.ngOnInit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
         this.usdFromCryptoCurrencyWhenBought = this.cryptoCurrencyBuyPrice * this.cryptoCurrencyCount;
-        this.crytoCurrencyService.getPrices(this.cryptoCurrency).subscribe(function (pricesData) {
-            _this.cryptoCurrency$.next(pricesData);
+        this.cryptoCurrencyService.getPrices(this.cryptoCurrency).subscribe(function (pricesData) {
             _this.cryptoCurrencyCurrentPrice = pricesData.price;
             _this.usdFromCryptoCurrency = pricesData.price * _this.cryptoCurrencyCount;
             _this.totalReturns.emit({
@@ -1288,10 +1284,9 @@ CryptoCurrencyComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
         selector: 'crypto-currency',
         template: __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.scss")],
-        providers: [__WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */]]
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CrytoCurrencyService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CryptoCurrencyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CryptoCurrencyService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_service__["a" /* AppService */]) === "function" && _c || Object])
 ], CryptoCurrencyComponent);
 
 var _a, _b, _c;
@@ -1303,7 +1298,7 @@ var _a, _b, _c;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CrytoCurrencyService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoCurrencyService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
@@ -1319,18 +1314,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var CrytoCurrencyService = (function () {
-    function CrytoCurrencyService(http) {
+var CryptoCurrencyService = (function () {
+    function CryptoCurrencyService(http) {
         this.http = http;
         this.serverUrl = 'https://api.cryptonator.com/api/ticker/';
+        this.rates = {};
     }
-    CrytoCurrencyService.prototype.getPrices = function (currency) {
+    CryptoCurrencyService.prototype.getPrices = function (currency) {
+        var _this = this;
         if (currency === void 0) { currency = 'btc'; }
+        if (this.rates[currency.toUpperCase()]) {
+            return this.rates[currency.toUpperCase()].asObservable();
+        }
         return this.http.get("" + this.serverUrl + currency + "-usd")
-            .map(this.extractData)
+            .map(function (res) {
+            _this.rates[currency.toUpperCase()] = _this.extractData(res);
+            return _this.rates[currency.toUpperCase()];
+        })
             .catch(this.handleError);
     };
-    CrytoCurrencyService.prototype.extractData = function (res) {
+    CryptoCurrencyService.prototype.extractData = function (res) {
         var body = res.json();
         if (body.success === true) {
             return body.ticker;
@@ -1339,7 +1342,7 @@ var CrytoCurrencyService = (function () {
             throw body;
         }
     };
-    CrytoCurrencyService.prototype.handleError = function (error) {
+    CryptoCurrencyService.prototype.handleError = function (error) {
         // In a real world app, we might use a remote logging infrastructure
         var errMsg;
         if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
@@ -1352,22 +1355,94 @@ var CrytoCurrencyService = (function () {
         }
         return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].throw(errMsg);
     };
-    return CrytoCurrencyService;
+    return CryptoCurrencyService;
 }());
-CrytoCurrencyService = __decorate([
+CryptoCurrencyService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
-], CrytoCurrencyService);
+], CryptoCurrencyService);
 
 var _a;
 //# sourceMappingURL=crypto-currency.service.js.map
 
 /***/ }),
 
+/***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<h2 mat-dialog-title>Create investment</h2>\n\n<mat-dialog-content>\n  <h4>Choose type</h4>\n  <mat-button-toggle-group fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"selector__investment-type\" #investmentTypesGroup=\"\">\n    <mat-button-toggle class=\"option__investment-type\" value=\"currency\" matTooltip=\"Currency exchange\">\n      <img src=\"/assets/images/exchange.png\" alt=\"currency\" />\n    </mat-button-toggle>\n    <mat-button-toggle class=\"option__investment-type\" value=\"cryptocurrency\" matTooltip=\"Crypto currency\">\n      <img src=\"/assets/images/cryptocurrency.png\" alt=\"Crypto currency\" />\n    </mat-button-toggle>\n    <mat-button-toggle class=\"option__investment-type\" value=\"property\" matTooltip=\"Property\">\n      <img src=\"/assets/images/house.png\" alt=\"Property\" />\n    </mat-button-toggle>\n  </mat-button-toggle-group>\n</mat-dialog-content>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ":host {\n  text-align: center; }\n  :host .selector__investment-type .option__investment-type {\n    padding: 10px; }\n    :host .selector__investment-type .option__investment-type img {\n      width: 90px; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentSelectorDialogComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var InvestmentSelectorDialogComponent = (function () {
+    function InvestmentSelectorDialogComponent(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+    }
+    InvestmentSelectorDialogComponent.prototype.ngOnInit = function () { };
+    InvestmentSelectorDialogComponent.prototype.onNoClick = function () {
+        this.dialogRef.close();
+    };
+    return InvestmentSelectorDialogComponent;
+}());
+InvestmentSelectorDialogComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'investment-selector-dialog',
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.scss")]
+    }),
+    __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */]) === "function" && _a || Object, Object])
+], InvestmentSelectorDialogComponent);
+
+var _a;
+//# sourceMappingURL=investment-selector-dialog.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"showInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"218.85627651\"\r\n      [cryptoCurrencyBuyPrice]=\"50\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex\r\n      [cryptoCurrency]=\"'btc'\"\r\n      [cryptoCurrencyCount]=\"1.28129356\"\r\n      [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n      [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.94093753\"\r\n      [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n\r\n    <crypto-currency fxFlex \r\n      [cryptoCurrency]=\"'xmr'\"\r\n      [cryptoCurrencyCount]=\"5.72806551\"\r\n      [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n      [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n      (totalReturns)=\"setTotals($event)\">\r\n    </crypto-currency>\r\n  </div>\r\n\r\n  <mat-card fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n      <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n          [class.color__red]=\"totalReturn < totalInvestment\">\r\n        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  \r\n</div>\r\n\r\n<div *ngIf=\"!showInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <mat-card fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        You do not have any investment to show.\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  \r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section fxLayout=\"column\" fxLayoutGap=\"10px\" *ngIf=\"user.accessToInvestments\" >\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"218.85627651\"\r\n        [cryptoCurrencyBuyPrice]=\"50\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex\r\n        [cryptoCurrency]=\"'btc'\"\r\n        [cryptoCurrencyCount]=\"1.28129356\"\r\n        [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n        [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.94093753\"\r\n        [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.72806551\"\r\n        [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n        <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n            [class.color__red]=\"totalReturn < totalInvestment\">\r\n          Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!user.accessToInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>\r\n          You do not have any investment to show.\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab color=\"accent\">\r\n      <mat-icon matTooltip=\"Create new investment\" matTooltipPosition=\"left\" aria-label=\"Create new investemt\" (click)=\"openNewInvestmentDialog()\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -1396,8 +1471,10 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsDashboardComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1411,19 +1488,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var InvestmentsDashboardComponent = (function () {
-    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService) {
+    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog) {
         this.route = route;
         this.mainNavigatorService = mainNavigatorService;
         this.usersService = usersService;
+        this.dialog = dialog;
         this.xmrBuyDate = new Date(2017, 5, 23); //month minus 1, 5 = june
         this.xmrBuyDate2 = new Date(2017, 8, 23);
         this.xmrBuyDate3 = new Date(2017, 8, 25);
         this.btcBuyDate = new Date(2017, 6, 19);
         this.totalInvestment = 0;
         this.totalReturn = 0;
-        this.showInvestments = false;
         this.user = null;
+        this.getInvestmentsServiceRunning = false;
     }
     InvestmentsDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1435,12 +1515,21 @@ var InvestmentsDashboardComponent = (function () {
         //get authUser from resolver
         this.route.data.subscribe(function (data) {
             _this.user = data.authUser;
-            _this.showInvestments = data.authUser.accessToInvestments;
         });
     };
     InvestmentsDashboardComponent.prototype.setTotals = function (totalReturns) {
         this.totalReturn += totalReturns.usdFromCryptoCurrency;
         this.totalInvestment += totalReturns.usdFromCryptoCurrencyWhenBought;
+    };
+    InvestmentsDashboardComponent.prototype.openNewInvestmentDialog = function () {
+        var addPersonDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_5__investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */], {
+            //width: '250px',
+            data: {}
+        });
+        addPersonDialogRef.afterClosed().subscribe(function (result) {
+            console.log(result);
+        });
+        return false;
     };
     return InvestmentsDashboardComponent;
 }());
@@ -1450,10 +1539,10 @@ InvestmentsDashboardComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__users_users_service__["a" /* UsersService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */]) === "function" && _d || Object])
 ], InvestmentsDashboardComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=investments-dashboard.component.js.map
 
 /***/ }),
@@ -1524,12 +1613,16 @@ InvestmentsRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_crypto_currency_crypto_currency_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_crypto_currency_crypto_currency_service__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -1556,9 +1649,13 @@ InvestmentsModule = __decorate([
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_8__components_crypto_currency_crypto_currency_component__["a" /* CryptoCurrencyComponent */],
-            __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */]
+            __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */]
         ],
-        providers: []
+        entryComponents: [
+            __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */] //added as material doc suggest to allow AOT on this on the fly created class
+        ],
+        providers: [__WEBPACK_IMPORTED_MODULE_9__components_crypto_currency_crypto_currency_service__["a" /* CryptoCurrencyService */]]
     })
 ], InvestmentsModule);
 
@@ -1831,7 +1928,7 @@ SnackbarSimpleComponent = __decorate([
         styles: [__webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.scss")]
     }),
     __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MAT_SNACK_BAR_DATA */])),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatSnackBarRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatSnackBarRef */]) === "function" && _a || Object, Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatSnackBarRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatSnackBarRef */]) === "function" && _a || Object, Object])
 ], SnackbarSimpleComponent);
 
 var _a;
@@ -1903,7 +2000,7 @@ YesNoDialogComponent = __decorate([
         styles: [__webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.scss")]
     }),
     __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatDialogRef */]) === "function" && _a || Object, Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */]) === "function" && _a || Object, Object])
 ], YesNoDialogComponent);
 
 var _a;
@@ -1938,46 +2035,48 @@ CustomMaterialDesignModule = __decorate([
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatSnackBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatChipsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatSlideToggleModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["y" /* MatToolbarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatIconModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatInputModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatProgressBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatProgressSpinnerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatCardModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatTabsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatExpansionModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatTooltipModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialogModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatSelectModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatCheckboxModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["w" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatChipsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDatepickerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatProgressSpinnerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatCardModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["y" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatExpansionModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["A" /* MatTooltipModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatDialogModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatSelectModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatButtonToggleModule */]
         ],
         exports: [
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatSnackBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatChipsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatSlideToggleModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["y" /* MatToolbarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatIconModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatCheckboxModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["w" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatChipsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDatepickerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatInputModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatProgressBarModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatProgressSpinnerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatCardModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatTabsModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatExpansionModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatTooltipModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialogModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatSelectModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatProgressSpinnerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatCardModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["y" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatExpansionModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["A" /* MatTooltipModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatDialogModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatSelectModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatButtonToggleModule */]
         ]
     })
 ], CustomMaterialDesignModule);
@@ -2109,7 +2208,7 @@ AddPersonToTeamDialogComponent = __decorate([
         styles: [__webpack_require__("../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.scss")]
     }),
     __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatDialogRef */]) === "function" && _a || Object, Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */]) === "function" && _a || Object, Object])
 ], AddPersonToTeamDialogComponent);
 
 var _a;
@@ -2302,7 +2401,7 @@ TeamsDashboardComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatDialog */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */]) === "function" && _f || Object])
 ], TeamsDashboardComponent);
 
 var _a, _b, _c, _d, _e, _f;
@@ -2588,7 +2687,7 @@ TeamsEditComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatDialog */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */]) === "function" && _f || Object])
 ], TeamsEditComponent);
 
 var _a, _b, _c, _d, _e, _f;

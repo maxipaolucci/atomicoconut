@@ -4,17 +4,25 @@ import { Http, Response } from '@angular/http';
 import {Observable} from "rxjs/Rx";
 
 @Injectable()
-export class CrytoCurrencyService {
+export class CryptoCurrencyService {
 
   private serverUrl : string = 'https://api.cryptonator.com/api/ticker/';
+  rates : any = {};
   
 
   constructor(private http : Http) {}
 
-  getPrices(currency = 'btc') : Observable<any> {
+  getPrices(currency : string = 'btc') : Observable<any> {
+    if (this.rates[currency.toUpperCase()]) {
+      
+      return this.rates[currency.toUpperCase()].asObservable();
+    }
     
     return this.http.get(`${this.serverUrl}${currency}-usd`)
-        .map(this.extractData)
+        .map((res: Response) => {
+          this.rates[currency.toUpperCase()] = this.extractData(res);
+          return this.rates[currency.toUpperCase()];
+        })
         .catch(this.handleError);
   }
 

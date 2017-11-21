@@ -1,62 +1,76 @@
-<div *ngIf="showInvestments" fxLayout="column" fxLayoutGap="10px">
+<div fxLayout="column" fxLayoutGap="10px" class="container__investments">
+  <section fxLayout="column" fxLayoutGap="10px" *ngIf="user.accessToInvestments" >
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+      <crypto-currency fxFlex 
+        [cryptoCurrency]="'xmr'"
+        [cryptoCurrencyCount]="218.85627651"
+        [cryptoCurrencyBuyPrice]="50"
+        [cryptoCurrencyBuyDate]="xmrBuyDate"
+        (totalReturns)="setTotals($event)">
+      </crypto-currency>
 
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
-    <crypto-currency fxFlex 
-      [cryptoCurrency]="'xmr'"
-      [cryptoCurrencyCount]="218.85627651"
-      [cryptoCurrencyBuyPrice]="50"
-      [cryptoCurrencyBuyDate]="xmrBuyDate"
-      (totalReturns)="setTotals($event)">
-    </crypto-currency>
+      <crypto-currency fxFlex
+        [cryptoCurrency]="'btc'"
+        [cryptoCurrencyCount]="1.28129356"
+        [cryptoCurrencyBuyPrice]="2359.99"
+        [cryptoCurrencyBuyDate]="btcBuyDate"
+        (totalReturns)="setTotals($event)">
+      </crypto-currency>
+    </div>
 
-    <crypto-currency fxFlex
-      [cryptoCurrency]="'btc'"
-      [cryptoCurrencyCount]="1.28129356"
-      [cryptoCurrencyBuyPrice]="2359.99"
-      [cryptoCurrencyBuyDate]="btcBuyDate"
-      (totalReturns)="setTotals($event)">
-    </crypto-currency>
-  </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+      <crypto-currency fxFlex 
+        [cryptoCurrency]="'xmr'"
+        [cryptoCurrencyCount]="5.94093753"
+        [cryptoCurrencyBuyPrice]="87.5282"
+        [cryptoCurrencyBuyDate]="xmrBuyDate2"
+        (totalReturns)="setTotals($event)">
+      </crypto-currency>
 
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
-    <crypto-currency fxFlex 
-      [cryptoCurrency]="'xmr'"
-      [cryptoCurrencyCount]="5.94093753"
-      [cryptoCurrencyBuyPrice]="87.5282"
-      [cryptoCurrencyBuyDate]="xmrBuyDate2"
-      (totalReturns)="setTotals($event)">
-    </crypto-currency>
+      <crypto-currency fxFlex 
+        [cryptoCurrency]="'xmr'"
+        [cryptoCurrencyCount]="5.72806551"
+        [cryptoCurrencyBuyPrice]="90.9556"
+        [cryptoCurrencyBuyDate]="xmrBuyDate3"
+        (totalReturns)="setTotals($event)">
+      </crypto-currency>
+    </div>
 
-    <crypto-currency fxFlex 
-      [cryptoCurrency]="'xmr'"
-      [cryptoCurrencyCount]="5.72806551"
-      [cryptoCurrencyBuyPrice]="90.9556"
-      [cryptoCurrencyBuyDate]="xmrBuyDate3"
-      (totalReturns)="setTotals($event)">
-    </crypto-currency>
-  </div>
+    <mat-card fxFlex class="totals-card">
+      <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+          fxLayoutAlign="space-around center">
+        <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>
+        <p [class.color__accent]="totalReturn >= totalInvestment" 
+            [class.color__red]="totalReturn < totalInvestment">
+          Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
+        </p>
+      </mat-card-content>
+    </mat-card>
 
-  <mat-card fxFlex class="totals-card">
-    <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
-        fxLayoutAlign="space-around center">
-      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>
-      <p [class.color__accent]="totalReturn >= totalInvestment" 
-          [class.color__red]="totalReturn < totalInvestment">
-        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
-      </p>
-    </mat-card-content>
-  </mat-card>
-  
-</div>
+  </section>
 
-<div *ngIf="!showInvestments" fxLayout="column" fxLayoutGap="10px">
-  <mat-card fxFlex class="totals-card">
-    <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
-        fxLayoutAlign="space-around center">
-      <p>
-        You do not have any investment to show.
-      </p>
-    </mat-card-content>
-  </mat-card>
-  
+  <section *ngIf="!user.accessToInvestments" fxLayout="column" fxLayoutGap="10px">
+    <mat-card fxFlex class="totals-card">
+      <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+          fxLayoutAlign="space-around center">
+        <p>
+          You do not have any investment to show.
+        </p>
+      </mat-card-content>
+    </mat-card>
+    
+  </section>
+
+  <mat-progress-bar *ngIf="getInvestmentsServiceRunning"
+    fxFlexAlign="center"
+    class="progress-bar progress-bar--get-investments"
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-bar>
+
+  <section fxLayout="column" fxLayoutAlign="start end">
+    <button mat-fab color="accent">
+      <mat-icon matTooltip="Create new investment" matTooltipPosition="left" aria-label="Create new investemt" (click)="openNewInvestmentDialog()">add</mat-icon>
+    </button>
+  </section>
 </div>

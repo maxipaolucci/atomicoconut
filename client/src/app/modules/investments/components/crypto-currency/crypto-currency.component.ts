@@ -1,17 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CrytoCurrencyService } from './crypto-currency.service';
 
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import { CryptoCurrencyService } from './crypto-currency.service';
 import { AppService } from '../../../../app.service';
 @Component({
   selector: 'crypto-currency',
   templateUrl: './crypto-currency.component.html',
-  styleUrls: ['./crypto-currency.component.scss'],
-  providers: [ CrytoCurrencyService ]
+  styleUrls: ['./crypto-currency.component.scss']
 })
 export class CryptoCurrencyComponent implements OnInit {
 
-  private cryptoCurrency$ : BehaviorSubject<any>;
   @Input() cryptoCurrency : string;
   @Input() cryptoCurrencyCount : number;
   @Input() cryptoCurrencyBuyPrice : number; //USD
@@ -21,17 +18,14 @@ export class CryptoCurrencyComponent implements OnInit {
   public cryptoCurrencyCurrentPrice : number = 0;
   @Output() totalReturns: EventEmitter<any> = new EventEmitter();
 
-  constructor(private crytoCurrencyService: CrytoCurrencyService, private appService : AppService) {
-    this.cryptoCurrency$ = new BehaviorSubject<any>(null);
-  }
+  constructor(private cryptoCurrencyService: CryptoCurrencyService, private appService : AppService) {}
 
   ngOnInit() : void {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     
     this.usdFromCryptoCurrencyWhenBought = this.cryptoCurrencyBuyPrice * this.cryptoCurrencyCount;
-    this.crytoCurrencyService.getPrices(this.cryptoCurrency).subscribe(
+    this.cryptoCurrencyService.getPrices(this.cryptoCurrency).subscribe(
       (pricesData : any) => {
-        this.cryptoCurrency$.next(pricesData);
         this.cryptoCurrencyCurrentPrice = pricesData.price; 
         this.usdFromCryptoCurrency = pricesData.price * this.cryptoCurrencyCount;
         this.totalReturns.emit({

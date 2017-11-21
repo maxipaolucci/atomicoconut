@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { AddPersonToTeamDialogComponent } from '../../components/add-person-to-team-dialog/add-person-to-team-dialog.component';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';

@@ -9,6 +9,8 @@ import { CustomMaterialDesignModule } from '../../modules/shared/custom-material
 import { SharedModule } from '../../modules/shared/shared.module';
 import { InvestmentsDashboardComponent } from './components/investments-dashboard/investments-dashboard.component';
 import { CryptoCurrencyComponent } from './components/crypto-currency/crypto-currency.component';
+import { CryptoCurrencyService } from './components/crypto-currency/crypto-currency.service';
+import { InvestmentSelectorDialogComponent } from './components/investment-selector-dialog/investment-selector-dialog.component';
 
 @NgModule({
   imports: [
@@ -21,8 +23,12 @@ import { CryptoCurrencyComponent } from './components/crypto-currency/crypto-cur
   ],
   declarations: [
     CryptoCurrencyComponent,
-    InvestmentsDashboardComponent
+    InvestmentsDashboardComponent,
+    InvestmentSelectorDialogComponent
   ],
-  providers: []
+  entryComponents: [
+    InvestmentSelectorDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
+  ],
+  providers: [ CryptoCurrencyService ]
 })
 export class InvestmentsModule {}
