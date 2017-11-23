@@ -14,6 +14,7 @@ export class AuthResolver implements Resolve<User> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): User | Observable<User> | Promise<User> {
     let methodTrace = `${this.constructor.name} > resolve() > `; //for debugging  
 
+    this.usersService.routerRedirectUrl = state.url;
     const urlsForCompleteUserData : Array<string> = ['/investments', '/users/account'];
     let params : any = null;
     if (urlsForCompleteUserData.includes(state.url)) {
@@ -35,6 +36,8 @@ export class AuthResolver implements Resolve<User> {
           }
           const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, financialInfo, personalInfo, data.currency);          
           this.usersService.setUser(user);
+          this.usersService.routerRedirectUrl = null;
+
           return user;
         } else {
           this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);

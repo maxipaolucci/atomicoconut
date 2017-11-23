@@ -488,6 +488,7 @@ var AuthResolver = (function () {
     AuthResolver.prototype.resolve = function (route, state) {
         var _this = this;
         var methodTrace = this.constructor.name + " > resolve() > "; //for debugging  
+        this.usersService.routerRedirectUrl = state.url;
         var urlsForCompleteUserData = ['/investments', '/users/account'];
         var params = null;
         if (urlsForCompleteUserData.includes(state.url)) {
@@ -505,6 +506,7 @@ var AuthResolver = (function () {
                 }
                 var user = new __WEBPACK_IMPORTED_MODULE_2__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, data.accessToInvestments, financialInfo, personalInfo, data.currency);
                 _this.usersService.setUser(user);
+                _this.usersService.routerRedirectUrl = null;
                 return user;
             }
             else {
@@ -1370,7 +1372,7 @@ var _a;
 /***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>Create investment</h2>\n\n<mat-dialog-content>\n  <h4>Choose type</h4>\n  <mat-button-toggle-group fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"selector__investment-type\" #investmentTypesGroup=\"\">\n    <mat-button-toggle class=\"option__investment-type\" value=\"currency\" matTooltip=\"Currency exchange\">\n      <img src=\"/assets/images/exchange.png\" alt=\"currency\" />\n    </mat-button-toggle>\n    <mat-button-toggle class=\"option__investment-type\" value=\"cryptocurrency\" matTooltip=\"Crypto currency\">\n      <img src=\"/assets/images/cryptocurrency.png\" alt=\"Crypto currency\" />\n    </mat-button-toggle>\n    <mat-button-toggle class=\"option__investment-type\" value=\"property\" matTooltip=\"Property\">\n      <img src=\"/assets/images/house.png\" alt=\"Property\" />\n    </mat-button-toggle>\n  </mat-button-toggle-group>\n</mat-dialog-content>\n"
+module.exports = "<h2 mat-dialog-title>Create investment</h2>\r\n\r\n<mat-dialog-content>\r\n  <mat-button-toggle-group fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"selector__investment-type\" #investmentTypesGroup routerLink=\"currency/create\">\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"currency\" matTooltip=\"Currency exchange\">\r\n      <img src=\"/assets/images/exchange.png\" alt=\"currency\" />\r\n    </mat-button-toggle>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"cryptocurrency\" matTooltip=\"Crypto currency\" routerLink=\"crypto/create\">\r\n      <img src=\"/assets/images/cryptocurrency.png\" alt=\"Crypto currency\" />\r\n    </mat-button-toggle>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"property\" matTooltip=\"Property\" routerLink=\"property/create\">\r\n      <img src=\"/assets/images/house.png\" alt=\"Property\" />\r\n    </mat-button-toggle>\r\n  </mat-button-toggle-group>\r\n</mat-dialog-content>\r\n"
 
 /***/ }),
 
@@ -1382,7 +1384,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ":host {\n  text-align: center; }\n  :host .selector__investment-type .option__investment-type {\n    padding: 10px; }\n    :host .selector__investment-type .option__investment-type img {\n      width: 90px; }\n", ""]);
+exports.push([module.i, ":host {\n  text-align: center; }\n  :host .selector__investment-type .option__investment-type {\n    padding: 10px; }\n    :host .selector__investment-type .option__investment-type img {\n      width: 50px; }\n  @media screen and (min-width: 600px) {\n    :host .selector__investment-type .option__investment-type img {\n      width: 90px; } }\n", ""]);
 
 // exports
 
@@ -1442,7 +1444,7 @@ var _a;
 /***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section fxLayout=\"column\" fxLayoutGap=\"10px\" *ngIf=\"user.accessToInvestments\" >\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"218.85627651\"\r\n        [cryptoCurrencyBuyPrice]=\"50\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex\r\n        [cryptoCurrency]=\"'btc'\"\r\n        [cryptoCurrencyCount]=\"1.28129356\"\r\n        [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n        [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.94093753\"\r\n        [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.72806551\"\r\n        [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n        <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n            [class.color__red]=\"totalReturn < totalInvestment\">\r\n          Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!user.accessToInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>\r\n          You do not have any investment to show.\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab color=\"accent\">\r\n      <mat-icon matTooltip=\"Create new investment\" matTooltipPosition=\"left\" aria-label=\"Create new investemt\" (click)=\"openNewInvestmentDialog()\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section fxLayout=\"column\" fxLayoutGap=\"10px\" *ngIf=\"user.accessToInvestments\" >\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"218.85627651\"\r\n        [cryptoCurrencyBuyPrice]=\"50\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex\r\n        [cryptoCurrency]=\"'btc'\"\r\n        [cryptoCurrencyCount]=\"1.28129356\"\r\n        [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n        [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.94093753\"\r\n        [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.72806551\"\r\n        [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n        <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n            [class.color__red]=\"totalReturn < totalInvestment\">\r\n          Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!user.accessToInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>\r\n          You do not have any investment to show.\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab class=\"mat-elevation-z12\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -1547,6 +1549,126 @@ var _a, _b, _c, _d;
 
 /***/ }),
 
+/***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  investments-edit works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsEditComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__teams_teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var InvestmentsEditComponent = (function () {
+    function InvestmentsEditComponent(route, mainNavigatorService, teamsService, appService, router) {
+        this.route = route;
+        this.mainNavigatorService = mainNavigatorService;
+        this.teamsService = teamsService;
+        this.appService = appService;
+        this.router = router;
+        this.editMode = false;
+        this.user = null;
+        this.editInvestmentServiceRunning = false;
+        this.getInvestmentServiceRunning = false;
+        this.model = {
+            email: null,
+        };
+        this.id = null; //investment id
+        this.type = null; //investment type
+    }
+    InvestmentsEditComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Investments', url: '/investments', selected: false }
+        ]);
+        //get authUser from resolver
+        this.route.data.subscribe(function (data) {
+            _this.user = data.authUser;
+            _this.model.email = _this.user.email;
+        });
+        this.route.paramMap.map(function (params) { return params.get('id'); }).subscribe(function (id) {
+            _this.editInvestmentServiceRunning = false;
+            _this.getInvestmentServiceRunning = false;
+            if (!id) {
+                //we are creating a new team
+                _this.id = null;
+                _this.editMode = false;
+                _this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected: true });
+            }
+            else {
+                _this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected: true });
+                //we are editing an existing investment
+                _this.id = id; //the new slug
+                _this.editMode = true;
+                //this.getInvestment(); //get data
+            }
+        });
+        this.route.paramMap.map(function (params) { return params.get('type'); }).subscribe(function (type) {
+            if (!['currency', 'crypto', 'property'].includes(type)) {
+                _this.appService.showResults('You must provide a valid investment type to continue.');
+                _this.router.navigate(['welcome']);
+            }
+            else {
+                console.log(type);
+            }
+        });
+    };
+    return InvestmentsEditComponent;
+}());
+InvestmentsEditComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'investments-edit',
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__teams_teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__teams_teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _e || Object])
+], InvestmentsEditComponent);
+
+var _a, _b, _c, _d, _e;
+//# sourceMappingURL=investments-edit.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/modules/investments/investments-routing.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1555,7 +1677,7 @@ var _a, _b, _c, _d;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__auth_guard__ = __webpack_require__("../../../../../src/app/auth.guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1571,11 +1693,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var routes = [
     {
         path: 'investments',
-        canActivate: [__WEBPACK_IMPORTED_MODULE_3__auth_guard__["a" /* AuthGuard */]],
         children: [
             {
                 path: '',
                 component: __WEBPACK_IMPORTED_MODULE_2__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            },
+            {
+                path: ':type/create',
+                component: __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            },
+            {
+                path: ':type/edit/:id',
+                component: __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
                 resolve: {
                     authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
                 }
@@ -1615,12 +1750,14 @@ InvestmentsRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_crypto_currency_crypto_currency_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_crypto_currency_crypto_currency_service__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_investments_edit_investments_edit_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1650,7 +1787,8 @@ InvestmentsModule = __decorate([
         declarations: [
             __WEBPACK_IMPORTED_MODULE_8__components_crypto_currency_crypto_currency_component__["a" /* CryptoCurrencyComponent */],
             __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */],
-            __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */]
+            __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */],
+            __WEBPACK_IMPORTED_MODULE_11__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */]
         ],
         entryComponents: [
             __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */] //added as material doc suggest to allow AOT on this on the fly created class

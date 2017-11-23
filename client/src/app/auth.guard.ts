@@ -12,6 +12,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<boolean> | Promise<boolean> | boolean {
     let methodTrace = `${this.constructor.name} > canActivate() > `; //for debugging
+    
     this.usersService.routerRedirectUrl = state.url;
 
     return this.usersService.getAuthenticatedUser().map(
@@ -22,7 +23,6 @@ export class AuthGuard implements CanActivate {
         } else {
           this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
           this.router.navigate(['/users/login']);
-
           return false;
         }
       }, 
