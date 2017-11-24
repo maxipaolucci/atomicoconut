@@ -5,6 +5,8 @@ import { HttpParams } from '@angular/common/http';
 import {Observable} from "rxjs/Rx";
 import {environment} from "../../../environments/environment";
 import {AppService} from "../../app.service";
+import { Team } from './models/team';
+import { User } from '../users/models/user';
 
 
 @Injectable()
@@ -59,9 +61,32 @@ export class TeamsService {
   getTeams(email : string) : Observable<any> {
     let methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
 
-    return this.http.get(`${this.serverHost}/getAll?${this.appService.getParamsAsQuerystring({email})}`)
+    const teamsData$ = this.http.get(`${this.serverHost}/getAll?${this.appService.getParamsAsQuerystring({email})}`)
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
+    
+    return teamsData$.switchMap((teamsData) => {
+      let teams : Team[] = [];
+
+      if (teamsData && teamsData instanceof Array) {
+        for (let item of teamsData) {
+          let admin = null;
+          let members = [];
+          for (let member of item.members) {
+            const newMember = new User(member.name, member.email, member.gravatar);
+            members.push(newMember);
+            if (member.isAdmin) {
+              admin = newMember;
+            }
+          }
+          teams.push(new Team(item.name, item.description || null, item.slug, admin, members));
+        }
+      } else {
+        this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+      }
+
+      return Observable.of(teams);
+    });
   }
 
   /**

@@ -15,14 +15,18 @@ export class InvestmentsEditComponent implements OnInit {
 
   editMode : boolean = false;
   user : User = null;
-  editInvestmentServiceRunning : boolean = false;
-  getInvestmentServiceRunning : boolean = false;
+  teams : Team[] = [];
   model : any = {
     email : null, //user email for api check
   };
   id : string = null; //investment id
   type : string = null; //investment type
+  //services flags
+  editInvestmentServiceRunning : boolean = false;
+  getInvestmentServiceRunning : boolean = false;
+  getTeamsServiceRunning : boolean = false;
 
+  
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private teamsService : TeamsService,
     private appService : AppService, private router : Router) { }
 
@@ -32,17 +36,23 @@ export class InvestmentsEditComponent implements OnInit {
       { displayName: 'Investments', url: '/investments', selected: false }
     ]);
 
-    //get authUser from resolver
-    this.route.data.subscribe((data: { authUser: User }) => {
-      this.user = data.authUser;
-      this.model.email = this.user.email;
-    });
+    //generates a user source object from authUser from resolver
+    const user$ = this.route.data.map((data: { authUser: User }) => data.authUser);
 
-    this.route.paramMap.map((params: ParamMap) => params.get('id')).subscribe(id => {
+    //generates an investment id source from id parameter in url
+    const id$ = this.route.paramMap.map((params: ParamMap) => params.get('id'));
+    
+    //combine user$ and id$ sources into one object and start listen to it for changes
+    user$.combineLatest(id$, (user, id) => { 
+      return { user, investmentId : id } 
+    }).subscribe(data => {
+      this.user = data.user;
+      this.model.email = data.user.email;
+
       this.editInvestmentServiceRunning = false;
       this.getInvestmentServiceRunning = false;
       
-      if (!id) {
+      if (!data.investmentId) {
         //we are creating a new team
         this.id = null;
         this.editMode = false;
@@ -50,21 +60,56 @@ export class InvestmentsEditComponent implements OnInit {
       } else {
         this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected : true });
         //we are editing an existing investment
-        this.id = id; //the new slug
+        this.id = data.investmentId; //the new slug
         this.editMode = true;
         
-        //this.getInvestment(); //get data
+        this.getInvestment(data.investmentId); //get data
       }
     });
 
+    //get TYPE parameter
     this.route.paramMap.map((params: ParamMap) => params.get('type')).subscribe(type => {
       if (!['currency', 'crypto', 'property'].includes(type)) {
         this.appService.showResults('You must provide a valid investment type to continue.');
         this.router.navigate(['welcome']);
       } else {
-        console.log(type);
+        this.type = type;
       }
     });
+
+    //get user teams
+    this.getTeams();
   }
 
+  /**
+   * Get my teams from server
+   */
+  getTeams() {
+    const methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+
+    this.teams = [];
+    this.getTeamsServiceRunning = true;
+
+    this.teamsService.getTeams(this.user.email).subscribe(
+      (teams : Team[]) => {
+        this.teams = teams;
+        console.log(teams);
+        this.getTeamsServiceRunning = false;
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+        }
+
+        this.getTeamsServiceRunning = false;
+      }
+    );
+  }
+
+  getInvestment(id : string) {
+    console.log(id);
+  }
 }

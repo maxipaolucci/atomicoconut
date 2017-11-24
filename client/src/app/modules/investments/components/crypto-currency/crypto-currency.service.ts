@@ -14,16 +14,14 @@ export class CryptoCurrencyService {
 
   getPrices(currency : string = 'btc') : Observable<any> {
     if (this.rates[currency.toUpperCase()]) {
-      
-      return this.rates[currency.toUpperCase()].asObservable();
+      return Observable.of(this.rates[currency.toUpperCase()]);
     }
     
     return this.http.get(`${this.serverUrl}${currency}-usd`)
         .map((res: Response) => {
           this.rates[currency.toUpperCase()] = this.extractData(res);
           return this.rates[currency.toUpperCase()];
-        })
-        .catch(this.handleError);
+        }).catch(this.handleError);
   }
 
   private extractData(res: Response) : any {

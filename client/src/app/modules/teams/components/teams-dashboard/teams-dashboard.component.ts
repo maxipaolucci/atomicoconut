@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { User } from '../../../users/models/user';
 import { TeamsService } from '../../teams.service';
 import { AppService } from "../../../../app.service";
 import { Team } from '../../models/team';
+import { User } from '../../../users/models/user';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 
 @Component({
@@ -51,25 +51,12 @@ export class TeamsDashboardComponent implements OnInit {
     this.getTeamsServiceRunning = true;
 
     this.teamsService.getTeams(this.user.email).subscribe(
-      (data : any) => {
-        if (data && data instanceof Array) {
-          let index = 0;
-          for (let item of data) {
-            let admin = null;
-            let members = [];
-            for (let member of item.members) {
-              const newMember = new User(member.name, member.email, member.gravatar);
-              members.push(newMember);
-              if (member.isAdmin) {
-                admin = newMember;
-              }
-            }
-            this.teams.push(new Team(item.name, item.description || null, item.slug, admin, members));
-            this.teamActionRunning[index] = false;
-            index += 1;
-          }
-        } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+      (teams : Team[]) => {
+        let index = 0;
+        this.teams = teams;
+        for (let item of teams) {
+          this.teamActionRunning[index] = false;
+          index += 1;
         }
 
         this.getTeamsServiceRunning = false;

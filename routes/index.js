@@ -25,6 +25,14 @@ router.get('/app/investments', (req, res) => {
   res.render('home', {title: 'Investements'});
 });
 
+router.get('/app/investments/:type/create', (req, res) => {
+  res.render('home', {title: 'Create Investment'});
+});
+
+router.get('/app/investments/:type/edit/:id', (req, res) => {
+  res.render('home', {title: 'Edit Investment'});
+});
+
 /** Users */
 router.get('/app/users/login', (req, res) => {
   res.render('home', {title: 'Login'});
@@ -69,6 +77,8 @@ router.get('/app/teams/create', (req, res) => {
 router.get('/app/teams/edit/:slug', (req, res) => {
   res.render('home', {title: 'Edit Team'});
 });
+
+
 // TEST controller
 // router.get('/register', testController.registerForm);
 // router.get('/login', testController.loginForm);

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatButtonToggleChange} from '@angular/material';
 
 @Component({
   selector: 'investment-selector-dialog',
@@ -16,4 +16,7 @@ export class InvestmentSelectorDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  onChange(event : MatButtonToggleChange) {
+    this.dialogRef.close();
+  }
 }

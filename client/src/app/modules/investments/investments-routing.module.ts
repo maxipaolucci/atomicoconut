@@ -11,13 +11,6 @@ const routes: Routes = [
     path : 'investments',
     children : [
       { 
-        path : '', 
-        component : InvestmentsDashboardComponent,
-        resolve : {
-          authUser : AuthResolver
-        }
-      },
-      { 
         path : ':type/create', 
         component : InvestmentsEditComponent,
         resolve : {
@@ -30,6 +23,14 @@ const routes: Routes = [
         resolve : {
           authUser : AuthResolver
         } 
+      },
+      { 
+        path : '', 
+        pathMatch : 'full',
+        component : InvestmentsDashboardComponent,
+        resolve : {
+          authUser : AuthResolver
+        }
       }
     ]
   }

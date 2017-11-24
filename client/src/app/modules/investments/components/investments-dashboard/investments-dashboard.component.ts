@@ -44,15 +44,7 @@ export class InvestmentsDashboardComponent implements OnInit {
   }
 
   openNewInvestmentDialog() {
-    let addPersonDialogRef = this.dialog.open(InvestmentSelectorDialogComponent, {
-      //width: '250px',
-      data: {}
-    });
-
-    addPersonDialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
-
+    let addPersonDialogRef = this.dialog.open(InvestmentSelectorDialogComponent, {});
     return false;
   }
 }

@@ -1326,14 +1326,13 @@ var CryptoCurrencyService = (function () {
         var _this = this;
         if (currency === void 0) { currency = 'btc'; }
         if (this.rates[currency.toUpperCase()]) {
-            return this.rates[currency.toUpperCase()].asObservable();
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(this.rates[currency.toUpperCase()]);
         }
         return this.http.get("" + this.serverUrl + currency + "-usd")
             .map(function (res) {
             _this.rates[currency.toUpperCase()] = _this.extractData(res);
             return _this.rates[currency.toUpperCase()];
-        })
-            .catch(this.handleError);
+        }).catch(this.handleError);
     };
     CryptoCurrencyService.prototype.extractData = function (res) {
         var body = res.json();
@@ -1372,7 +1371,7 @@ var _a;
 /***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>Create investment</h2>\r\n\r\n<mat-dialog-content>\r\n  <mat-button-toggle-group fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"selector__investment-type\" #investmentTypesGroup routerLink=\"currency/create\">\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"currency\" matTooltip=\"Currency exchange\">\r\n      <img src=\"/assets/images/exchange.png\" alt=\"currency\" />\r\n    </mat-button-toggle>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"cryptocurrency\" matTooltip=\"Crypto currency\" routerLink=\"crypto/create\">\r\n      <img src=\"/assets/images/cryptocurrency.png\" alt=\"Crypto currency\" />\r\n    </mat-button-toggle>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"property\" matTooltip=\"Property\" routerLink=\"property/create\">\r\n      <img src=\"/assets/images/house.png\" alt=\"Property\" />\r\n    </mat-button-toggle>\r\n  </mat-button-toggle-group>\r\n</mat-dialog-content>\r\n"
+module.exports = "<h2 mat-dialog-title>Create investment</h2>\r\n\r\n<mat-dialog-content>\r\n  <mat-button-toggle-group fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"selector__investment-type\" (change)=\"onChange($event)\" #investmentTypesGroup>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"currency\" matTooltip=\"Currency exchange\" routerLink=\"investments/currency/create\">\r\n      <img src=\"/assets/images/exchange.png\" alt=\"currency\" />\r\n    </mat-button-toggle>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"cryptocurrency\" matTooltip=\"Crypto currency\" routerLink=\"investments/crypto/create\">\r\n      <img src=\"/assets/images/cryptocurrency.png\" alt=\"Crypto currency\" />\r\n    </mat-button-toggle>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"property\" matTooltip=\"Property\" routerLink=\"investments/property/create\">\r\n      <img src=\"/assets/images/house.png\" alt=\"Property\" />\r\n    </mat-button-toggle>\r\n  </mat-button-toggle-group>\r\n</mat-dialog-content>\r\n"
 
 /***/ }),
 
@@ -1422,6 +1421,9 @@ var InvestmentSelectorDialogComponent = (function () {
     }
     InvestmentSelectorDialogComponent.prototype.ngOnInit = function () { };
     InvestmentSelectorDialogComponent.prototype.onNoClick = function () {
+        this.dialogRef.close();
+    };
+    InvestmentSelectorDialogComponent.prototype.onChange = function (event) {
         this.dialogRef.close();
     };
     return InvestmentSelectorDialogComponent;
@@ -1524,13 +1526,7 @@ var InvestmentsDashboardComponent = (function () {
         this.totalInvestment += totalReturns.usdFromCryptoCurrencyWhenBought;
     };
     InvestmentsDashboardComponent.prototype.openNewInvestmentDialog = function () {
-        var addPersonDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_5__investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */], {
-            //width: '250px',
-            data: {}
-        });
-        addPersonDialogRef.afterClosed().subscribe(function (result) {
-            console.log(result);
-        });
+        var addPersonDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_5__investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */], {});
         return false;
     };
     return InvestmentsDashboardComponent;
@@ -1552,7 +1548,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  investments-edit works!\n</p>\n"
+module.exports = "<p>\r\n  investments-edit works!\r\n</p>\r\n"
 
 /***/ }),
 
@@ -1607,13 +1603,16 @@ var InvestmentsEditComponent = (function () {
         this.router = router;
         this.editMode = false;
         this.user = null;
-        this.editInvestmentServiceRunning = false;
-        this.getInvestmentServiceRunning = false;
+        this.teams = [];
         this.model = {
             email: null,
         };
         this.id = null; //investment id
         this.type = null; //investment type
+        //services flags
+        this.editInvestmentServiceRunning = false;
+        this.getInvestmentServiceRunning = false;
+        this.getTeamsServiceRunning = false;
     }
     InvestmentsEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1621,15 +1620,19 @@ var InvestmentsEditComponent = (function () {
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Investments', url: '/investments', selected: false }
         ]);
-        //get authUser from resolver
-        this.route.data.subscribe(function (data) {
-            _this.user = data.authUser;
-            _this.model.email = _this.user.email;
-        });
-        this.route.paramMap.map(function (params) { return params.get('id'); }).subscribe(function (id) {
+        //generates a user source object from authUser from resolver
+        var user$ = this.route.data.map(function (data) { return data.authUser; });
+        //generates an investment id source from id parameter in url
+        var id$ = this.route.paramMap.map(function (params) { return params.get('id'); });
+        //combine user$ and id$ sources into one object and start listen to it for changes
+        user$.combineLatest(id$, function (user, id) {
+            return { user: user, investmentId: id };
+        }).subscribe(function (data) {
+            _this.user = data.user;
+            _this.model.email = data.user.email;
             _this.editInvestmentServiceRunning = false;
             _this.getInvestmentServiceRunning = false;
-            if (!id) {
+            if (!data.investmentId) {
                 //we are creating a new team
                 _this.id = null;
                 _this.editMode = false;
@@ -1638,20 +1641,49 @@ var InvestmentsEditComponent = (function () {
             else {
                 _this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected: true });
                 //we are editing an existing investment
-                _this.id = id; //the new slug
+                _this.id = data.investmentId; //the new slug
                 _this.editMode = true;
-                //this.getInvestment(); //get data
+                _this.getInvestment(data.investmentId); //get data
             }
         });
+        //get TYPE parameter
         this.route.paramMap.map(function (params) { return params.get('type'); }).subscribe(function (type) {
             if (!['currency', 'crypto', 'property'].includes(type)) {
                 _this.appService.showResults('You must provide a valid investment type to continue.');
                 _this.router.navigate(['welcome']);
             }
             else {
-                console.log(type);
+                _this.type = type;
             }
         });
+        //get user teams
+        this.getTeams();
+    };
+    /**
+     * Get my teams from server
+     */
+    InvestmentsEditComponent.prototype.getTeams = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        this.teams = [];
+        this.getTeamsServiceRunning = true;
+        this.teamsService.getTeams(this.user.email).subscribe(function (teams) {
+            _this.teams = teams;
+            console.log(teams);
+            _this.getTeamsServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getTeamsServiceRunning = false;
+        });
+    };
+    InvestmentsEditComponent.prototype.getInvestment = function (id) {
+        console.log(id);
     };
     return InvestmentsEditComponent;
 }());
@@ -1695,13 +1727,6 @@ var routes = [
         path: 'investments',
         children: [
             {
-                path: '',
-                component: __WEBPACK_IMPORTED_MODULE_2__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */],
-                resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
-                }
-            },
-            {
                 path: ':type/create',
                 component: __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
                 resolve: {
@@ -1711,6 +1736,14 @@ var routes = [
             {
                 path: ':type/edit/:id',
                 component: __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            },
+            {
+                path: '',
+                pathMatch: 'full',
+                component: __WEBPACK_IMPORTED_MODULE_2__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */],
                 resolve: {
                     authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
                 }
@@ -2388,11 +2421,9 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__shared_components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2402,8 +2433,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
 
 
 
@@ -2447,28 +2476,13 @@ var TeamsDashboardComponent = (function () {
         var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
         this.teams = [];
         this.getTeamsServiceRunning = true;
-        this.teamsService.getTeams(this.user.email).subscribe(function (data) {
-            if (data && data instanceof Array) {
-                var index = 0;
-                for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
-                    var item = data_1[_i];
-                    var admin = null;
-                    var members = [];
-                    for (var _a = 0, _b = item.members; _a < _b.length; _a++) {
-                        var member = _b[_a];
-                        var newMember = new __WEBPACK_IMPORTED_MODULE_4__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
-                        members.push(newMember);
-                        if (member.isAdmin) {
-                            admin = newMember;
-                        }
-                    }
-                    _this.teams.push(new __WEBPACK_IMPORTED_MODULE_7__models_team__["a" /* Team */](item.name, item.description || null, item.slug, admin, members));
-                    _this.teamActionRunning[index] = false;
-                    index += 1;
-                }
-            }
-            else {
-                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+        this.teamsService.getTeams(this.user.email).subscribe(function (teams) {
+            var index = 0;
+            _this.teams = teams;
+            for (var _i = 0, teams_1 = teams; _i < teams_1.length; _i++) {
+                var item = teams_1[_i];
+                _this.teamActionRunning[index] = false;
+                index += 1;
             }
             _this.getTeamsServiceRunning = false;
         }, function (error) {
@@ -2491,7 +2505,7 @@ var TeamsDashboardComponent = (function () {
             return false;
         }
         this.teamActionRunning[index] = true;
-        var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_8__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
+        var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_6__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
             width: '250px',
             data: { message: "Are you sure you want to delete forever the team \"" + team.name + "\"" }
         });
@@ -2539,7 +2553,7 @@ TeamsDashboardComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */]) === "function" && _f || Object])
 ], TeamsDashboardComponent);
 
 var _a, _b, _c, _d, _e, _f;
@@ -2884,14 +2898,6 @@ var routes = [
         path: 'teams',
         children: [
             {
-                path: '',
-                pathMatch: 'full',
-                component: __WEBPACK_IMPORTED_MODULE_2__components_teams_dashboard_teams_dashboard_component__["a" /* TeamsDashboardComponent */],
-                resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
-                }
-            },
-            {
                 path: 'create',
                 component: __WEBPACK_IMPORTED_MODULE_3__components_teams_edit_teams_edit_component__["a" /* TeamsEditComponent */],
                 resolve: {
@@ -2901,6 +2907,14 @@ var routes = [
             {
                 path: 'edit/:slug',
                 component: __WEBPACK_IMPORTED_MODULE_3__components_teams_edit_teams_edit_component__["a" /* TeamsEditComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            },
+            {
+                path: '',
+                pathMatch: 'full',
+                component: __WEBPACK_IMPORTED_MODULE_2__components_teams_dashboard_teams_dashboard_component__["a" /* TeamsDashboardComponent */],
                 resolve: {
                     authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
                 }
@@ -2992,8 +3006,11 @@ TeamsModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3007,11 +3024,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 var TeamsService = (function () {
     function TeamsService(http, appService) {
         this.http = http;
         this.appService = appService;
-        this.serverHost = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].apiHost + '/api/teams';
+        this.serverHost = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiHost + '/api/teams';
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
     }
     /**
@@ -3053,10 +3073,34 @@ var TeamsService = (function () {
      * @param {string} slug . The team slug
      */
     TeamsService.prototype.getTeams = function (email) {
+        var _this = this;
         var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
-        return this.http.get(this.serverHost + "/getAll?" + this.appService.getParamsAsQuerystring({ email: email }))
+        var teamsData$ = this.http.get(this.serverHost + "/getAll?" + this.appService.getParamsAsQuerystring({ email: email }))
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
+        return teamsData$.switchMap(function (teamsData) {
+            var teams = [];
+            if (teamsData && teamsData instanceof Array) {
+                for (var _i = 0, teamsData_1 = teamsData; _i < teamsData_1.length; _i++) {
+                    var item = teamsData_1[_i];
+                    var admin = null;
+                    var members = [];
+                    for (var _a = 0, _b = item.members; _a < _b.length; _a++) {
+                        var member = _b[_a];
+                        var newMember = new __WEBPACK_IMPORTED_MODULE_6__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
+                        members.push(newMember);
+                        if (member.isAdmin) {
+                            admin = newMember;
+                        }
+                    }
+                    teams.push(new __WEBPACK_IMPORTED_MODULE_5__models_team__["a" /* Team */](item.name, item.description || null, item.slug, admin, members));
+                }
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(teams);
+        });
     };
     /**
      * Server call to Get all the teams for the current user from the server
@@ -3073,7 +3117,7 @@ var TeamsService = (function () {
 }());
 TeamsService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _b || Object])
 ], TeamsService);
 
 var _a, _b;

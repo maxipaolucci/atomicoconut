@@ -9,14 +9,6 @@ const routes: Routes = [
     path : 'teams',
     children : [
       { 
-        path : '', 
-        pathMatch : 'full',
-        component : TeamsDashboardComponent,
-        resolve : {
-          authUser : AuthResolver
-        }
-      },
-      { 
         path : 'create', 
         component : TeamsEditComponent,
         resolve : {
@@ -29,6 +21,14 @@ const routes: Routes = [
         resolve : {
           authUser : AuthResolver
         } 
+      },
+      { 
+        path : '', 
+        pathMatch : 'full',
+        component : TeamsDashboardComponent,
+        resolve : {
+          authUser : AuthResolver
+        }
       }
     ]
   }
