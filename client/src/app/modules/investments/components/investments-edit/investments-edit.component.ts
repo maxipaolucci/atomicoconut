@@ -1,23 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { User } from '../../../users/models/user';
 import { TeamsService } from '../../../teams/teams.service';
 import { AppService } from "../../../../app.service";
 import { Team } from '../../../teams/models/team';
+import { Subscription } from 'rxjs/Subscription';
+import { MatSelectChange, MatRadioChange } from '@angular/material';
 
 @Component({
   selector: 'investments-edit',
   templateUrl: './investments-edit.component.html',
   styleUrls: ['./investments-edit.component.scss']
 })
-export class InvestmentsEditComponent implements OnInit {
+export class InvestmentsEditComponent implements OnInit, OnDestroy {
 
   editMode : boolean = false;
   user : User = null;
   teams : Team[] = [];
   model : any = {
     email : null, //user email for api check
+    owner : 'me',
+    team : null,
+    teamSlug : null,
+    membersPercentage : {}
   };
   id : string = null; //investment id
   type : string = null; //investment type
@@ -25,6 +31,7 @@ export class InvestmentsEditComponent implements OnInit {
   editInvestmentServiceRunning : boolean = false;
   getInvestmentServiceRunning : boolean = false;
   getTeamsServiceRunning : boolean = false;
+  subscription : Subscription = new Subscription();
 
   
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private teamsService : TeamsService,
@@ -43,7 +50,7 @@ export class InvestmentsEditComponent implements OnInit {
     const id$ = this.route.paramMap.map((params: ParamMap) => params.get('id'));
     
     //combine user$ and id$ sources into one object and start listen to it for changes
-    user$.combineLatest(id$, (user, id) => { 
+    this.subscription = user$.combineLatest(id$, (user, id) => { 
       return { user, investmentId : id } 
     }).subscribe(data => {
       this.user = data.user;
@@ -65,6 +72,9 @@ export class InvestmentsEditComponent implements OnInit {
         
         this.getInvestment(data.investmentId); //get data
       }
+
+      //get user teams
+      this.getTeams();
     });
 
     //get TYPE parameter
@@ -76,9 +86,13 @@ export class InvestmentsEditComponent implements OnInit {
         this.type = type;
       }
     });
+  }
 
-    //get user teams
-    this.getTeams();
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    
+    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
   }
 
   /**
@@ -90,7 +104,7 @@ export class InvestmentsEditComponent implements OnInit {
     this.teams = [];
     this.getTeamsServiceRunning = true;
 
-    this.teamsService.getTeams(this.user.email).subscribe(
+    const newSubscription = this.teamsService.getTeams(this.user.email).subscribe(
       (teams : Team[]) => {
         this.teams = teams;
         console.log(teams);
@@ -107,9 +121,22 @@ export class InvestmentsEditComponent implements OnInit {
         this.getTeamsServiceRunning = false;
       }
     );
+
+    this.subscription.add(newSubscription);
   }
 
   getInvestment(id : string) {
     console.log(id);
+  }
+
+  onSelectChange(matSelectChange : MatSelectChange) {
+    this.model.teamSlug = matSelectChange.value.slug;
+  }
+
+  onRadioChange(matRadioChange : MatRadioChange) {
+    if (matRadioChange.value === 'me') {
+      this.model.team = this.model.teamSlug = null;
+    }
+    
   }
 }

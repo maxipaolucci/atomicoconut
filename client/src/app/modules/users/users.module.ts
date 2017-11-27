@@ -9,8 +9,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { UsersService } from './users.service';
 import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { EqualValidatorDirective } from '../../directives/equal-validator.directive';
-import { NumberValidatorDirective } from '../../directives/number-validator.directive';
 import { AccountComponent } from './components/account/account.component';
 import { AccountFinanceInfoComponent } from './components/account-finance-info/account-finance-info.component';
 import { AccountPersonalInfoComponent } from './components/account-personal-info/account-personal-info.component';
@@ -29,8 +27,6 @@ import { AccountUserInfoComponent } from './components/account-user-info/account
     RegisterComponent,
     LoginComponent,
     ResetPasswordComponent,
-    EqualValidatorDirective,
-    NumberValidatorDirective,
     AccountComponent,
     AccountFinanceInfoComponent,
     AccountPersonalInfoComponent,

@@ -8,6 +8,8 @@ import { CurrencyUnitComponent } from './components/currency-unit/currency-unit.
 import { CustomMaterialDesignModule } from '../../modules/shared/custom-material-design.module';
 import { YesNoDialogComponent } from './components/yes-no-dialog/yes-no-dialog.component';
 import { SnackbarSimpleComponent } from './components/snackbar-simple/snackbar-simple.component';
+import { EqualValidatorDirective } from '../../directives/equal-validator.directive';
+import { NumberValidatorDirective } from '../../directives/number-validator.directive';
 
 @NgModule({
   imports: [
@@ -17,8 +19,22 @@ import { SnackbarSimpleComponent } from './components/snackbar-simple/snackbar-s
     FlexLayoutModule,
     CustomMaterialDesignModule
   ],
-  exports: [ MainNavigatorComponent, CurrencyUnitComponent, YesNoDialogComponent, SnackbarSimpleComponent ],
-  declarations: [ MainNavigatorComponent, CurrencyUnitComponent, YesNoDialogComponent, SnackbarSimpleComponent ],
+  declarations: [ 
+    MainNavigatorComponent, 
+    CurrencyUnitComponent, 
+    YesNoDialogComponent, 
+    SnackbarSimpleComponent, 
+    EqualValidatorDirective, 
+    NumberValidatorDirective 
+  ],
+  exports: [ 
+    MainNavigatorComponent, 
+    CurrencyUnitComponent, 
+    YesNoDialogComponent, 
+    SnackbarSimpleComponent,
+    EqualValidatorDirective,
+    NumberValidatorDirective
+  ],
   entryComponents: [
     YesNoDialogComponent, //added as material doc suggest to allow AOT on this on the fly created class
     SnackbarSimpleComponent

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { AddPersonToTeamDialogComponent } from '../../components/add-person-to-team-dialog/add-person-to-team-dialog.component';
@@ -7,13 +7,14 @@ import { User } from '../../../users/models/user';
 import { TeamsService } from '../../teams.service';
 import { AppService } from "../../../../app.service";
 import { Team } from '../../models/team';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-teams-edit',
   templateUrl: './teams-edit.component.html',
   styleUrls: ['./teams-edit.component.scss']
 })
-export class TeamsEditComponent implements OnInit {
+export class TeamsEditComponent implements OnInit, OnDestroy {
 
   editMode : boolean = false;
   user : User = null;
@@ -27,6 +28,7 @@ export class TeamsEditComponent implements OnInit {
     members : []
   };
   slug : string = null;
+  subscription : Subscription = new Subscription();
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private teamsService : TeamsService,
       private appService : AppService, private router : Router, public dialog: MatDialog) { }
@@ -46,7 +48,7 @@ export class TeamsEditComponent implements OnInit {
     const slug$ = this.route.paramMap.map((params: ParamMap) => params.get('slug'));
 
     //combine user$ and id$ sources into one object and start listen to it for changes
-    user$.combineLatest(slug$, (user, slug) => { 
+    this.subscription = user$.combineLatest(slug$, (user, slug) => { 
       return { user, teamSlug : slug } 
     }).subscribe(data => {
       this.user = data.user;
@@ -76,12 +78,19 @@ export class TeamsEditComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+
+    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
+  }
+
   onSubmit() {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
 
     this.editTeamServiceRunning = true;
     //call the team create service
-    this.teamsService.create(this.model).subscribe(
+    const newSubscription = this.teamsService.create(this.model).subscribe(
       (data : any) => {
         if (data && data.slug) {
           this.appService.showResults(`Team ${data.name} successfully created!`, 'success');
@@ -101,6 +110,8 @@ export class TeamsEditComponent implements OnInit {
         this.editTeamServiceRunning = false;
       }
     );
+
+    this.subscription.add(newSubscription);
   }
 
   onUpdate() {
@@ -118,7 +129,7 @@ export class TeamsEditComponent implements OnInit {
     //TODO check the new members are not duplicated, especially the admin
 
     //call the team update service
-    this.teamsService.update(this.model).subscribe(
+    const newSubscription = this.teamsService.update(this.model).subscribe(
       (data : any) => {
         if (data && data.team && data.team.slug) {
           let messages : any[] = [
@@ -170,6 +181,8 @@ export class TeamsEditComponent implements OnInit {
         this.editTeamServiceRunning = false;
       }
     );
+
+    this.subscription.add(newSubscription);
   }
 
   /**
@@ -186,7 +199,7 @@ export class TeamsEditComponent implements OnInit {
 
     this.getTeamServiceRunning = true;
 
-    this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(
+    const newSubscription = this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(
       (data : any) => {
         if (data && data.slug) {
           this.populateTeam(data);
@@ -210,6 +223,8 @@ export class TeamsEditComponent implements OnInit {
         this.getTeamServiceRunning = false;
       }
     );
+
+    this.subscription.add(newSubscription);
   }
 
   /**
@@ -238,12 +253,14 @@ export class TeamsEditComponent implements OnInit {
       data: {}
     });
 
-    addPersonDialogRef.afterClosed().subscribe(result => {
+    const newSubscription = addPersonDialogRef.afterClosed().subscribe(result => {
       if (result) {
         const newMember = new User('', result);
         this.team.members.push(newMember);
       }
     });
+
+    this.subscription.add(newSubscription);
 
     return false;
   }

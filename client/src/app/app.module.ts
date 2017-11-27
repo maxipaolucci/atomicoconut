@@ -19,7 +19,6 @@ import { InvestmentsModule } from './modules/investments/investments.module';
 import { CalculatorsModule } from './modules/calculators/calculators.module';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SharedModule } from './modules/shared/shared.module';
-import { NumberValidatorDirective } from './directives/number-validator.directive';
 
 @NgModule({
   imports: [

@@ -1,3 +1,89 @@
-<p>
-  investments-edit works!
-</p>
+<div fxLayout="column" fxLayoutGap="10px" class="container__edit-investment">
+  <form *ngIf="!getInvestmentServiceRunning" 
+      class="form__container form__edit-investment" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editInvestmentForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
+    
+    <section fxLayout="column" class="form__fields">
+      <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" fxLayoutAlign.gt-xs="none end" class="form__fields__row">
+        
+        <mat-radio-group *ngIf="teams.length" 
+            [(ngModel)]="model.owner" 
+            name="owner" 
+            id="owner" 
+            #owner="ngModel"
+            (change)="onRadioChange($event)">
+          <mat-radio-button value="me">Just me</mat-radio-button>
+          <mat-radio-button value="team">My team investment</mat-radio-button>
+        </mat-radio-group>
+        
+        
+        <mat-form-field *ngIf="teams.length && model.owner === 'team'">
+          <mat-select [(ngModel)]="model.team"
+              name="team" 
+              id="team" 
+              #team="ngModel" 
+              placeholder="Select a team"
+              (change)="onSelectChange($event)"
+              required>
+            <mat-option *ngFor="let team of teams" [value]="team">
+              {{team.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="team.invalid && (team.dirty || team.touched) && team.errors.required">Please choose a team</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="model.team" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" fxLayoutAlign.gt-xs="none end" class="form__fields__row team-members">
+        <div *ngFor="let member of model.team.members; index as memberIndex" fxLayout="column" fxLayoutGap="10px" class="member">
+          
+          <div class="member-details" fxLayout="row" fxLayoutGap="10px">
+            <img class="member__avatar" [src]="member.avatar"/>
+            <div class="member__info" fxLayout="column" [matTooltip]="member.email === model.team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
+              <p class="member__name">{{member.name}} <mat-icon *ngIf="member.email === model.team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
+              <p class="member__email">{{member.email}}</p>
+            </div>
+          </div>
+
+          <div class="member-percentage">
+            <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
+              <input matInput type="number" id="memberPercentage_{{member.email}}" name="memberPercentage_{{member.email}}" placeholder="Percentage"
+                  [(ngModel)]="model.membersPercentage[member.email]" 
+                  value="model.membersPercentage[member.email]"
+                  numberValidator='{"min": 0, "max": 100}'
+                  required
+                  #memberPercentage="ngModel">
+              <mat-hint align="start">Investment portion for {{member.email}}.</mat-hint>
+              <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+              <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
+              <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    
+    <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--edit-investment">
+      <button *ngIf="!editInvestmentServiceRunning" 
+          class="form__action mat-raised-button" 
+          mat-raised-button 
+          type="submit" 
+          color="accent" 
+          [disabled]="!editInvestmentForm.form.valid">Save</button>
+      
+      <mat-progress-bar *ngIf="editInvestmentServiceRunning"
+          class="progress-bar progress-bar--edit-investment"
+          color="primary"
+          mode="indeterminate">
+      </mat-progress-bar>
+    </section>
+    <pre>{{model | json}}</pre>
+  </form>
+
+  <mat-progress-bar *ngIf="getInvestmentServiceRunning"
+      fxFlexAlign="center"
+      class="progress-bar progress-bar--get-investment"
+      color="primary"
+      mode="indeterminate">
+  </mat-progress-bar>
+</div>

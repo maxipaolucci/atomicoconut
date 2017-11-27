@@ -443,7 +443,7 @@ var AppService = (function () {
 }());
 AppService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["v" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["v" /* MatSnackBar */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["w" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["w" /* MatSnackBar */]) === "function" && _b || Object])
 ], AppService);
 
 var _a, _b;
@@ -1548,7 +1548,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  investments-edit works!\n</p>\n"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-investment\">\n  <form *ngIf=\"!getInvestmentServiceRunning\" \n      class=\"form__container form__edit-investment\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\n    \n    <section fxLayout=\"column\" class=\"form__fields\">\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" fxLayoutAlign.gt-xs=\"none end\" class=\"form__fields__row\">\n        \n        <mat-radio-group *ngIf=\"teams.length\" \n            [(ngModel)]=\"model.owner\" \n            name=\"owner\" \n            id=\"owner\" \n            #owner=\"ngModel\"\n            (change)=\"onRadioChange($event)\">\n          <mat-radio-button value=\"me\">Just me</mat-radio-button>\n          <mat-radio-button value=\"team\">My team investment</mat-radio-button>\n        </mat-radio-group>\n        \n        \n        <mat-form-field *ngIf=\"teams.length && model.owner === 'team'\">\n          <mat-select [(ngModel)]=\"model.team\"\n              name=\"team\" \n              id=\"team\" \n              #team=\"ngModel\" \n              placeholder=\"Select a team\"\n              (change)=\"onSelectChange($event)\"\n              required>\n            <mat-option *ngFor=\"let team of teams\" [value]=\"team\">\n              {{team.name}}\n            </mat-option>\n          </mat-select>\n          <mat-error *ngIf=\"team.invalid && (team.dirty || team.touched) && team.errors.required\">Please choose a team</mat-error>\n        </mat-form-field>\n      </div>\n\n      <div *ngIf=\"model.team\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" fxLayoutAlign.gt-xs=\"none end\" class=\"form__fields__row team-members\">\n        <div *ngFor=\"let member of model.team.members; index as memberIndex\" fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"member\">\n          \n          <div class=\"member-details\" fxLayout=\"row\" fxLayoutGap=\"10px\">\n            <img class=\"member__avatar\" [src]=\"member.avatar\"/>\n            <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === model.team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\n              <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === model.team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\n              <p class=\"member__email\">{{member.email}}</p>\n            </div>\n          </div>\n\n          <div class=\"member-percentage\">\n            <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\n              <input matInput type=\"number\" id=\"memberPercentage_{{member.email}}\" name=\"memberPercentage_{{member.email}}\" placeholder=\"Percentage\"\n                  [(ngModel)]=\"model.membersPercentage[member.email]\" \n                  value=\"model.membersPercentage[member.email]\"\n                  numberValidator='{\"min\": 0, \"max\": 100}'\n                  required\n                  #memberPercentage=\"ngModel\">\n              <mat-hint align=\"start\">Investment portion for {{member.email}}.</mat-hint>\n              <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\n              <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\n              <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\n            </mat-form-field>\n          </div>\n        </div>\n      </div>\n    </section>\n\n    \n    \n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-investment\">\n      <button *ngIf=\"!editInvestmentServiceRunning\" \n          class=\"form__action mat-raised-button\" \n          mat-raised-button \n          type=\"submit\" \n          color=\"accent\" \n          [disabled]=\"!editInvestmentForm.form.valid\">Save</button>\n      \n      <mat-progress-bar *ngIf=\"editInvestmentServiceRunning\"\n          class=\"progress-bar progress-bar--edit-investment\"\n          color=\"primary\"\n          mode=\"indeterminate\">\n      </mat-progress-bar>\n    </section>\n    <pre>{{model | json}}</pre>\n  </form>\n\n  <mat-progress-bar *ngIf=\"getInvestmentServiceRunning\"\n      fxFlexAlign=\"center\"\n      class=\"progress-bar progress-bar--get-investment\"\n      color=\"primary\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n</div>\n"
 
 /***/ }),
 
@@ -1560,7 +1560,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".container__edit-investment .team-members .member .member__avatar {\n  border-radius: 50%;\n  width: 40px;\n  height: 40px;\n  padding: 0 10px 0 0; }\n\n.container__edit-investment .team-members .member .member__info .admin-icon {\n  font-size: 14px;\n  height: auto;\n  width: auto; }\n\n.container__edit-investment .team-members .member .member__info .member__email {\n  font-size: 11px; }\n", ""]);
 
 // exports
 
@@ -1580,6 +1580,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__teams_teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1589,6 +1590,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1606,6 +1608,10 @@ var InvestmentsEditComponent = (function () {
         this.teams = [];
         this.model = {
             email: null,
+            owner: 'me',
+            team: null,
+            teamSlug: null,
+            membersPercentage: {}
         };
         this.id = null; //investment id
         this.type = null; //investment type
@@ -1613,6 +1619,7 @@ var InvestmentsEditComponent = (function () {
         this.editInvestmentServiceRunning = false;
         this.getInvestmentServiceRunning = false;
         this.getTeamsServiceRunning = false;
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_5_rxjs_Subscription__["a" /* Subscription */]();
     }
     InvestmentsEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1625,7 +1632,7 @@ var InvestmentsEditComponent = (function () {
         //generates an investment id source from id parameter in url
         var id$ = this.route.paramMap.map(function (params) { return params.get('id'); });
         //combine user$ and id$ sources into one object and start listen to it for changes
-        user$.combineLatest(id$, function (user, id) {
+        this.subscription = user$.combineLatest(id$, function (user, id) {
             return { user: user, investmentId: id };
         }).subscribe(function (data) {
             _this.user = data.user;
@@ -1645,6 +1652,8 @@ var InvestmentsEditComponent = (function () {
                 _this.editMode = true;
                 _this.getInvestment(data.investmentId); //get data
             }
+            //get user teams
+            _this.getTeams();
         });
         //get TYPE parameter
         this.route.paramMap.map(function (params) { return params.get('type'); }).subscribe(function (type) {
@@ -1656,8 +1665,11 @@ var InvestmentsEditComponent = (function () {
                 _this.type = type;
             }
         });
-        //get user teams
-        this.getTeams();
+    };
+    InvestmentsEditComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
     };
     /**
      * Get my teams from server
@@ -1667,7 +1679,7 @@ var InvestmentsEditComponent = (function () {
         var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
         this.teams = [];
         this.getTeamsServiceRunning = true;
-        this.teamsService.getTeams(this.user.email).subscribe(function (teams) {
+        var newSubscription = this.teamsService.getTeams(this.user.email).subscribe(function (teams) {
             _this.teams = teams;
             console.log(teams);
             _this.getTeamsServiceRunning = false;
@@ -1681,9 +1693,18 @@ var InvestmentsEditComponent = (function () {
             }
             _this.getTeamsServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     InvestmentsEditComponent.prototype.getInvestment = function (id) {
         console.log(id);
+    };
+    InvestmentsEditComponent.prototype.onSelectChange = function (matSelectChange) {
+        this.model.teamSlug = matSelectChange.value.slug;
+    };
+    InvestmentsEditComponent.prototype.onRadioChange = function (matRadioChange) {
+        if (matRadioChange.value === 'me') {
+            this.model.team = this.model.teamSlug = null;
+        }
     };
     return InvestmentsEditComponent;
 }());
@@ -1956,6 +1977,8 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainNavigatorComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1967,13 +1990,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 var MainNavigatorComponent = (function () {
-    function MainNavigatorComponent(mainNavigatorService) {
+    function MainNavigatorComponent(mainNavigatorService, appService) {
         this.mainNavigatorService = mainNavigatorService;
+        this.appService = appService;
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__["a" /* Subscription */]();
     }
     MainNavigatorComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.mainNavigatorService.links$.subscribe(function (links) { return _this.links = links; });
+        this.subscription = this.mainNavigatorService.links$.subscribe(function (links) { return _this.links = links; });
+    };
+    MainNavigatorComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
     };
     return MainNavigatorComponent;
 }());
@@ -1983,10 +2015,10 @@ MainNavigatorComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object])
 ], MainNavigatorComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=main-navigator.component.js.map
 
 /***/ }),
@@ -2099,7 +2131,7 @@ SnackbarSimpleComponent = __decorate([
         styles: [__webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.scss")]
     }),
     __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MAT_SNACK_BAR_DATA */])),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatSnackBarRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatSnackBarRef */]) === "function" && _a || Object, Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["y" /* MatSnackBarRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["y" /* MatSnackBarRef */]) === "function" && _a || Object, Object])
 ], SnackbarSimpleComponent);
 
 var _a;
@@ -2207,34 +2239,35 @@ CustomMaterialDesignModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["w" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatSnackBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatChipsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatSlideToggleModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["A" /* MatToolbarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatIconModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatInputModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatProgressBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatProgressSpinnerModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatCardModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["y" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatTabsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatExpansionModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["A" /* MatTooltipModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["B" /* MatTooltipModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatDialogModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatSelectModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatButtonToggleModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatSelectModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatButtonToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatRadioModule */]
         ],
         exports: [
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatCheckboxModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["w" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatSnackBarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatChipsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDatepickerModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatSlideToggleModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatMenuModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["A" /* MatToolbarModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatIconModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatInputModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
@@ -2242,12 +2275,13 @@ CustomMaterialDesignModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatProgressSpinnerModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatCardModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatNativeDateModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["y" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatTabsModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatExpansionModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["A" /* MatTooltipModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["B" /* MatTooltipModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatDialogModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatSelectModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatButtonToggleModule */]
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatSelectModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatButtonToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatRadioModule */]
         ]
     })
 ], CustomMaterialDesignModule);
@@ -2271,12 +2305,16 @@ CustomMaterialDesignModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__directives_equal_validator_directive__ = __webpack_require__("../../../../../src/app/directives/equal-validator.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__directives_number_validator_directive__ = __webpack_require__("../../../../../src/app/directives/number-validator.directive.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -2301,8 +2339,22 @@ SharedModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
             __WEBPACK_IMPORTED_MODULE_7__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
         ],
-        exports: [__WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */], __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */]],
-        declarations: [__WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */], __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */], __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */]],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */],
+            __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */],
+            __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__directives_equal_validator_directive__["a" /* EqualValidatorDirective */],
+            __WEBPACK_IMPORTED_MODULE_11__directives_number_validator_directive__["a" /* NumberValidatorDirective */]
+        ],
+        exports: [
+            __WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */],
+            __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */],
+            __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__directives_equal_validator_directive__["a" /* EqualValidatorDirective */],
+            __WEBPACK_IMPORTED_MODULE_11__directives_number_validator_directive__["a" /* NumberValidatorDirective */]
+        ],
         entryComponents: [
             __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */],
             __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */]
@@ -2600,6 +2652,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2609,6 +2662,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -2638,6 +2692,7 @@ var TeamsEditComponent = (function () {
             members: []
         };
         this.slug = null;
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__["a" /* Subscription */]();
     }
     TeamsEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -2651,7 +2706,7 @@ var TeamsEditComponent = (function () {
         //generates an investment id source from id parameter in url
         var slug$ = this.route.paramMap.map(function (params) { return params.get('slug'); });
         //combine user$ and id$ sources into one object and start listen to it for changes
-        user$.combineLatest(slug$, function (user, slug) {
+        this.subscription = user$.combineLatest(slug$, function (user, slug) {
             return { user: user, teamSlug: slug };
         }).subscribe(function (data) {
             _this.user = data.user;
@@ -2679,12 +2734,17 @@ var TeamsEditComponent = (function () {
             }
         });
     };
+    TeamsEditComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
     TeamsEditComponent.prototype.onSubmit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
         this.editTeamServiceRunning = true;
         //call the team create service
-        this.teamsService.create(this.model).subscribe(function (data) {
+        var newSubscription = this.teamsService.create(this.model).subscribe(function (data) {
             if (data && data.slug) {
                 _this.appService.showResults("Team " + data.name + " successfully created!", 'success');
                 _this.router.navigate(['/teams/edit', data.slug]);
@@ -2701,6 +2761,7 @@ var TeamsEditComponent = (function () {
             }
             _this.editTeamServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     TeamsEditComponent.prototype.onUpdate = function () {
         var _this = this;
@@ -2715,7 +2776,7 @@ var TeamsEditComponent = (function () {
         }
         //TODO check the new members are not duplicated, especially the admin
         //call the team update service
-        this.teamsService.update(this.model).subscribe(function (data) {
+        var newSubscription = this.teamsService.update(this.model).subscribe(function (data) {
             if (data && data.team && data.team.slug) {
                 var messages = [
                     {
@@ -2762,6 +2823,7 @@ var TeamsEditComponent = (function () {
             }
             _this.editTeamServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     /**
      * Get a team from server based on the slug provided
@@ -2775,7 +2837,7 @@ var TeamsEditComponent = (function () {
             return false;
         }
         this.getTeamServiceRunning = true;
-        this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(function (data) {
+        var newSubscription = this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(function (data) {
             if (data && data.slug) {
                 _this.populateTeam(data);
             }
@@ -2797,6 +2859,7 @@ var TeamsEditComponent = (function () {
             }
             _this.getTeamServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     /**
      * Populates the team and model with a team object coming from a service
@@ -2824,12 +2887,13 @@ var TeamsEditComponent = (function () {
             width: '250px',
             data: {}
         });
-        addPersonDialogRef.afterClosed().subscribe(function (result) {
+        var newSubscription = addPersonDialogRef.afterClosed().subscribe(function (result) {
             if (result) {
                 var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */]('', result);
                 _this.team.members.push(newMember);
             }
         });
+        this.subscription.add(newSubscription);
         return false;
     };
     TeamsEditComponent.prototype.removeMember = function (index) {
@@ -4167,20 +4231,16 @@ UsersRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_login_login_component__ = __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_reset_password_reset_password_component__ = __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__directives_equal_validator_directive__ = __webpack_require__("../../../../../src/app/directives/equal-validator.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__directives_number_validator_directive__ = __webpack_require__("../../../../../src/app/directives/number-validator.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_account_account_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_account_finance_info_account_finance_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_account_personal_info_account_personal_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_account_user_info_account_user_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_account_account_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_account_finance_info_account_finance_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_account_personal_info_account_personal_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_account_user_info_account_user_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
 
 
 
@@ -4215,12 +4275,10 @@ UsersModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_7__components_register_register_component__["a" /* RegisterComponent */],
             __WEBPACK_IMPORTED_MODULE_9__components_login_login_component__["a" /* LoginComponent */],
             __WEBPACK_IMPORTED_MODULE_10__components_reset_password_reset_password_component__["a" /* ResetPasswordComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__directives_equal_validator_directive__["a" /* EqualValidatorDirective */],
-            __WEBPACK_IMPORTED_MODULE_12__directives_number_validator_directive__["a" /* NumberValidatorDirective */],
-            __WEBPACK_IMPORTED_MODULE_13__components_account_account_component__["a" /* AccountComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__components_account_finance_info_account_finance_info_component__["a" /* AccountFinanceInfoComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__components_account_personal_info_account_personal_info_component__["a" /* AccountPersonalInfoComponent */],
-            __WEBPACK_IMPORTED_MODULE_16__components_account_user_info_account_user_info_component__["a" /* AccountUserInfoComponent */]
+            __WEBPACK_IMPORTED_MODULE_11__components_account_account_component__["a" /* AccountComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__components_account_finance_info_account_finance_info_component__["a" /* AccountFinanceInfoComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__components_account_personal_info_account_personal_info_component__["a" /* AccountPersonalInfoComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__components_account_user_info_account_user_info_component__["a" /* AccountUserInfoComponent */]
         ],
         providers: [__WEBPACK_IMPORTED_MODULE_8__users_service__["a" /* UsersService */]]
     })
