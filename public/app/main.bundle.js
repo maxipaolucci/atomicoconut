@@ -1548,7 +1548,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  investments-edit works!\r\n</p>\r\n"
+module.exports = "<p>\n  investments-edit works!\n</p>\n"
 
 /***/ }),
 
@@ -2646,15 +2646,19 @@ var TeamsEditComponent = (function () {
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Teams', url: '/teams', selected: false }
         ]);
-        //get authUser from resolver
-        this.route.data.subscribe(function (data) {
-            _this.user = data.authUser;
-            _this.model.email = _this.user.email;
-        });
-        this.route.paramMap.map(function (params) { return params.get('slug'); }).subscribe(function (slug) {
+        //generates a user source object from authUser from resolver
+        var user$ = this.route.data.map(function (data) { return data.authUser; });
+        //generates an investment id source from id parameter in url
+        var slug$ = this.route.paramMap.map(function (params) { return params.get('slug'); });
+        //combine user$ and id$ sources into one object and start listen to it for changes
+        user$.combineLatest(slug$, function (user, slug) {
+            return { user: user, teamSlug: slug };
+        }).subscribe(function (data) {
+            _this.user = data.user;
+            _this.model.email = data.user.email;
             _this.editTeamServiceRunning = false;
             _this.getTeamServiceRunning = false;
-            if (!slug) {
+            if (!data.teamSlug) {
                 //we are creating a new team
                 _this.slug = null;
                 _this.editMode = false;
@@ -2668,10 +2672,10 @@ var TeamsEditComponent = (function () {
                 else {
                     _this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected: true });
                 }
-                //we are editing an existing team
-                _this.slug = slug; //the new slug
+                //we are editing an existing investment
+                _this.slug = data.teamSlug; //the new slug
                 _this.editMode = true;
-                _this.getTeam(slug);
+                _this.getTeam(data.teamSlug); //get data
             }
         });
     };

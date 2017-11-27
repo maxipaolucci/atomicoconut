@@ -39,17 +39,23 @@ export class TeamsEditComponent implements OnInit {
       { displayName: 'Teams', url: '/teams', selected: false }
     ]);
 
-    //get authUser from resolver
-    this.route.data.subscribe((data: { authUser: User }) => {
-      this.user = data.authUser;
-      this.model.email = this.user.email;
-    });
+    //generates a user source object from authUser from resolver
+    const user$ = this.route.data.map((data: { authUser: User }) => data.authUser);
+    
+    //generates an investment id source from id parameter in url
+    const slug$ = this.route.paramMap.map((params: ParamMap) => params.get('slug'));
 
-    this.route.paramMap.map((params: ParamMap) => params.get('slug')).subscribe(slug => {
+    //combine user$ and id$ sources into one object and start listen to it for changes
+    user$.combineLatest(slug$, (user, slug) => { 
+      return { user, teamSlug : slug } 
+    }).subscribe(data => {
+      this.user = data.user;
+      this.model.email = data.user.email;
+
       this.editTeamServiceRunning = false;
       this.getTeamServiceRunning = false;
       
-      if (!slug) {
+      if (!data.teamSlug) {
         //we are creating a new team
         this.slug = null;
         this.editMode = false;
@@ -61,11 +67,11 @@ export class TeamsEditComponent implements OnInit {
         } else {
           this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
         }
-        //we are editing an existing team
-        this.slug = slug; //the new slug
+        //we are editing an existing investment
+        this.slug = data.teamSlug; //the new slug
         this.editMode = true;
         
-        this.getTeam(slug);
+        this.getTeam(data.teamSlug); //get data
       }
     });
   }
