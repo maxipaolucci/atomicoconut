@@ -1,24 +1,38 @@
 .container__edit-investment {
   
-  .team-members .member {
-    
-    .member__avatar {
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      padding: 0 10px 0 0;
-    }
+  .form__fields {
 
-    .member__info {
-      
-      .admin-icon {
-        font-size: 14px;
-        height: auto;
-        width: auto;
+    .radiogroup__owner .owner__option {
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0;
       }
+    }
+  }
 
-      .member__email {
-        font-size: 11px;
+  .team-members {
+
+    .member {
+      
+      .member__avatar {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        padding: 0 10px 0 0;
+      }
+  
+      .member__info {
+        
+        .admin-icon {
+          font-size: 14px;
+          height: auto;
+          width: auto;
+        }
+  
+        .member__email {
+          font-size: 11px;
+        }
       }
     }
   }

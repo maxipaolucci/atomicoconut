@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { User } from '../../../users/models/user';
@@ -13,8 +13,9 @@ import { MatSelectChange, MatRadioChange } from '@angular/material';
   templateUrl: './investments-edit.component.html',
   styleUrls: ['./investments-edit.component.scss']
 })
-export class InvestmentsEditComponent implements OnInit, OnDestroy {
+export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  @ViewChild('editInvestmentForm') form;
   editMode : boolean = false;
   user : User = null;
   teams : Team[] = [];
@@ -84,6 +85,23 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy {
         this.router.navigate(['welcome']);
       } else {
         this.type = type;
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.form.valueChanges.debounceTime(500).subscribe(values => {
+      
+      if (values.owner === 'team' && values.team) {
+        //calculates the percentage acum from all the members
+        const percentageAcum = values.team.members.reduce((total, member) => {
+          return total + (values[`memberPercentage_${member.email}`] || 0);
+        }, 0);
+
+        if (percentageAcum > 100) {
+          const lastMember = values.team.members[values.team.members.length - 1];
+          values[`memberPercentage_${lastMember.email}`] = 0;
+        }
       }
     });
   }
