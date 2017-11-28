@@ -791,140 +791,6 @@ var _a;
 
 /***/ }),
 
-/***/ "../../../../../src/app/directives/equal-validator.directive.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EqualValidatorDirective; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-
-
-var EqualValidatorDirective = EqualValidatorDirective_1 = (function () {
-    function EqualValidatorDirective(equalFormControlName, reverse) {
-        this.equalFormControlName = equalFormControlName;
-        this.reverse = reverse;
-    }
-    Object.defineProperty(EqualValidatorDirective.prototype, "isReverse", {
-        get: function () {
-            if (!this.reverse) {
-                return false;
-            }
-            return this.reverse === 'true' ? true : false;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    EqualValidatorDirective.prototype.validate = function (control) {
-        var equalsFormControl = control.root.get(this.equalFormControlName);
-        if (equalsFormControl && equalsFormControl.value !== control.value) {
-            if (this.isReverse) {
-                equalsFormControl.setErrors({ 'equalvalidator': true });
-            }
-            else {
-                return { 'equalvalidator': true };
-            }
-        }
-        else if (equalsFormControl) {
-            //value is the same on both
-            if (this.reverse) {
-                delete equalsFormControl.errors['equalvalidator'];
-                if (!Object.keys(equalsFormControl.errors).length) {
-                    equalsFormControl.setErrors(null);
-                }
-            }
-        }
-        return null;
-    };
-    return EqualValidatorDirective;
-}());
-EqualValidatorDirective = EqualValidatorDirective_1 = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Directive */])({
-        selector: '[equalvalidator]',
-        providers: [{ provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALIDATORS */], useExisting: EqualValidatorDirective_1, multi: true }]
-    }),
-    __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('equalvalidator')),
-    __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('reverse')),
-    __metadata("design:paramtypes", [String, String])
-], EqualValidatorDirective);
-
-var EqualValidatorDirective_1;
-//# sourceMappingURL=equal-validator.directive.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/directives/number-validator.directive.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberValidatorDirective; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
-
-
-var NumberValidatorDirective = NumberValidatorDirective_1 = (function () {
-    function NumberValidatorDirective(validationType) {
-        this.validationType = validationType;
-        this.numberRegExp = new RegExp('^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$');
-    }
-    NumberValidatorDirective.prototype.validate = function (control) {
-        var validationObj = {};
-        if (this.validationType) {
-            validationObj = JSON.parse(this.validationType);
-        }
-        var val = control.value;
-        if (!this.numberRegExp.test(val + '')) {
-            return { "numberValidator": true };
-        }
-        var result = {};
-        if (!isNaN(validationObj.min) && val < validationObj.min) {
-            result.numberValidatorMin = true;
-        }
-        if (!isNaN(validationObj.max) && val > validationObj.max) {
-            result.numberValidatorMax = true;
-        }
-        return Object.keys(result).length ? result : null;
-    };
-    return NumberValidatorDirective;
-}());
-NumberValidatorDirective = NumberValidatorDirective_1 = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Directive */])({
-        selector: '[numberValidator]',
-        providers: [{ provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALIDATORS */], useExisting: NumberValidatorDirective_1, multi: true }]
-    }),
-    __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('numberValidator')),
-    __metadata("design:paramtypes", [String])
-], NumberValidatorDirective);
-
-var NumberValidatorDirective_1;
-//# sourceMappingURL=number-validator.directive.js.map
-
-/***/ }),
-
 /***/ "../../../../../src/app/modules/calculators/calculators-routing.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1548,7 +1414,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-investment\">\n  <form *ngIf=\"!getInvestmentServiceRunning\" \n      class=\"form__container form__edit-investment\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\n    \n    <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\n        \n        <mat-radio-group fxFlex.gt-xs=\"230px\" *ngIf=\"teams.length\" class=\"form__field radiogroup__owner\"\n            [(ngModel)]=\"model.owner\" \n            name=\"owner\" \n            id=\"owner\" \n            #owner=\"ngModel\"\n            (change)=\"onRadioChange($event)\">\n          <mat-radio-button class=\"owner__option\" value=\"me\">Just me</mat-radio-button>\n          <mat-radio-button class=\"owner__option\" value=\"team\">Team investment</mat-radio-button>\n        </mat-radio-group>\n\n        <mat-form-field *ngIf=\"teams.length && model.owner === 'team'\" fxFlex fxFlex.gt-xs=\"350px\" class=\"form__field\">\n          <mat-select [(ngModel)]=\"model.team\"\n              name=\"team\" \n              id=\"team\" \n              #team=\"ngModel\" \n              placeholder=\"Select a team\"\n              (change)=\"onSelectChange($event)\"\n              required>\n            <mat-option *ngFor=\"let team of teams\" [value]=\"team\">\n              {{team.name}}\n            </mat-option>\n          </mat-select>\n          <mat-error *ngIf=\"team.invalid && (team.dirty || team.touched) && team.errors.required\">Please choose a team</mat-error>\n        </mat-form-field>\n      </div>\n\n      <div *ngIf=\"model.team\" fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row team-members\">\n        <h3 class=\"title\">\n          Split between team members\n          <p class=\"mat-caption\">Specify how to split the returns setting a percentage of the total investment amount to each member</p>\n        </h3>\n        \n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"20px\">\n          <div *ngFor=\"let member of model.team.members; index as memberIndex\" fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"member\">\n            <div class=\"member-details\" fxLayout=\"row\" fxLayoutGap=\"10px\">\n              <img class=\"member__avatar\" [src]=\"member.avatar\"/>\n              <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === model.team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\n                <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === model.team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\n                <p class=\"member__email\">{{member.email}}</p>\n              </div>\n            </div>\n  \n            <div class=\"member-percentage\">\n              <mat-form-field class=\"form__field\">\n                <input matInput type=\"number\" id=\"memberPercentage_{{member.email}}\" name=\"memberPercentage_{{member.email}}\" placeholder=\"Percentage\"\n                    [(ngModel)]=\"model.membersPercentage[member.email]\" \n                    value=\"model.membersPercentage[member.email]\"\n                    numberValidator='{\"min\": 0, \"max\": 100}'\n                    required\n                    #memberPercentage=\"ngModel\">\n                <mat-hint align=\"start\">Investment portion for {{member.email}}.</mat-hint>\n                <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\n                <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\n                <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\n              </mat-form-field>\n            </div>\n          </div>\n        </div>\n        \n      </div>\n    </section>\n\n    \n    \n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-investment\">\n      <button *ngIf=\"!editInvestmentServiceRunning\" \n          class=\"form__action mat-raised-button\" \n          mat-raised-button \n          type=\"submit\" \n          color=\"accent\" \n          [disabled]=\"!editInvestmentForm.form.valid\">Save</button>\n      \n      <mat-progress-bar *ngIf=\"editInvestmentServiceRunning\"\n          class=\"progress-bar progress-bar--edit-investment\"\n          color=\"primary\"\n          mode=\"indeterminate\">\n      </mat-progress-bar>\n    </section>\n    <pre>{{model | json}}</pre>\n  </form>\n\n  <mat-progress-bar *ngIf=\"getInvestmentServiceRunning\"\n      fxFlexAlign=\"center\"\n      class=\"progress-bar progress-bar--get-investment\"\n      color=\"primary\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n</div>\n"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-investment\">\r\n  <form *ngIf=\"!getInvestmentServiceRunning\" \r\n      class=\"form__container form__edit-investment\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n        \r\n        <mat-radio-group fxFlex.gt-xs=\"230px\" *ngIf=\"teams.length\" class=\"form__field radiogroup__owner\"\r\n            [(ngModel)]=\"model.owner\" \r\n            name=\"owner\" \r\n            id=\"owner\" \r\n            #owner=\"ngModel\"\r\n            (change)=\"onRadioChange($event)\">\r\n          <mat-radio-button class=\"owner__option\" value=\"me\">Just me</mat-radio-button>\r\n          <mat-radio-button class=\"owner__option\" value=\"team\">Team investment</mat-radio-button>\r\n        </mat-radio-group>\r\n\r\n        <mat-form-field *ngIf=\"teams.length && model.owner === 'team'\" fxFlex fxFlex.gt-xs=\"350px\" class=\"form__field\">\r\n          <mat-select [(ngModel)]=\"model.team\"\r\n              name=\"team\" \r\n              id=\"team\" \r\n              #team=\"ngModel\" \r\n              placeholder=\"Select a team\"\r\n              (change)=\"onSelectChange($event)\"\r\n              required>\r\n            <mat-option *ngFor=\"let team of teams\" [value]=\"team\">\r\n              {{team.name}}\r\n            </mat-option>\r\n          </mat-select>\r\n          <mat-error *ngIf=\"team.invalid && (team.dirty || team.touched) && team.errors.required\">Please choose a team</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n\r\n      <div *ngIf=\"model.team\" fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row team-members\">\r\n        <h3 class=\"title\">\r\n          Split between team members\r\n          <p class=\"mat-caption\">Specify how to split the returns setting a percentage of the total investment amount to each member</p>\r\n        </h3>\r\n        \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"20px\">\r\n          <div *ngFor=\"let member of model.team.members; index as memberIndex\" fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <div class=\"member-details\" fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n              <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n              <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === model.team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n                <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === model.team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n                <p class=\"member__email\">{{member.email}}</p>\r\n              </div>\r\n            </div>\r\n  \r\n            <div class=\"member-percentage\">\r\n              <mat-form-field class=\"form__field\">\r\n                <input matInput type=\"number\" id=\"memberPercentage_{{member.email}}\" name=\"memberPercentage_{{member.email}}\" placeholder=\"Percentage of investment\"\r\n                    [(ngModel)]=\"model.membersPercentage[member.email]\" \r\n                    value=\"model.membersPercentage[member.email]\"\r\n                    numberValidator='{\"min\": 0, \"max\": 100}'\r\n                    required\r\n                    #memberPercentage=\"ngModel\">\r\n                <mat-hint align=\"start\">(%) Investment portion for {{member.email}}.</mat-hint>\r\n                <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n                <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n              </mat-form-field>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        \r\n      </div>\r\n    </section>\r\n\r\n    \r\n    \r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-investment\">\r\n      <button *ngIf=\"!editInvestmentServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!editInvestmentForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"editInvestmentServiceRunning\"\r\n          class=\"progress-bar progress-bar--edit-investment\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n    <pre>{{model | json}}</pre>\r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-investment\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1576,11 +1442,12 @@ module.exports = module.exports.toString();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsEditComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__teams_teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1590,6 +1457,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1619,7 +1487,7 @@ var InvestmentsEditComponent = (function () {
         this.editInvestmentServiceRunning = false;
         this.getInvestmentServiceRunning = false;
         this.getTeamsServiceRunning = false;
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_5_rxjs_Subscription__["a" /* Subscription */]();
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_6_rxjs_Subscription__["a" /* Subscription */]();
     }
     InvestmentsEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1667,15 +1535,25 @@ var InvestmentsEditComponent = (function () {
         });
     };
     InvestmentsEditComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
         this.form.valueChanges.debounceTime(500).subscribe(function (values) {
-            if (values.owner === 'team' && values.team) {
+            if (values.owner === 'team' && values.team && _this.model.team) {
                 //calculates the percentage acum from all the members
-                var percentageAcum = values.team.members.reduce(function (total, member) {
-                    return total + (values["memberPercentage_" + member.email] || 0);
+                var percentageAcum = _this.model.team.members.reduce(function (total, member) {
+                    return total + (_this.model.membersPercentage[member.email] || 0);
                 }, 0);
                 if (percentageAcum > 100) {
-                    var lastMember = values.team.members[values.team.members.length - 1];
-                    values["memberPercentage_" + lastMember.email] = 0;
+                    var lastMember = _this.model.team.members.slice(-1)[0];
+                    var diff = percentageAcum - 100;
+                    var newValue = Number(__WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DecimalPipe */].prototype.transform(_this.model.membersPercentage[lastMember.email] - diff, '1.0-2'));
+                    if (newValue < 0) {
+                        _this.setDefaultInvestmentPercentages();
+                        _this.appService.showResults("The sum of percentages must not exceed 100%, we reset the values to make it valid.", 'warn');
+                    }
+                    else {
+                        _this.model.membersPercentage[lastMember.email] = newValue <= 100 ? newValue : 0;
+                        _this.appService.showResults("The sum of percentages must not exceed 100%, we reset the last values to make it valid.", 'warn');
+                    }
                 }
             }
         });
@@ -1714,10 +1592,24 @@ var InvestmentsEditComponent = (function () {
     };
     InvestmentsEditComponent.prototype.onSelectChange = function (matSelectChange) {
         this.model.teamSlug = matSelectChange.value.slug;
+        this.setDefaultInvestmentPercentages();
     };
     InvestmentsEditComponent.prototype.onRadioChange = function (matRadioChange) {
         if (matRadioChange.value === 'me') {
+            //reset team values from model
             this.model.team = this.model.teamSlug = null;
+            this.model.membersPercentage = {};
+        }
+    };
+    /**
+     * Splits equally the percentage of an investment to all the team members
+     */
+    InvestmentsEditComponent.prototype.setDefaultInvestmentPercentages = function () {
+        //set the default percentage of the investment to each member
+        var defaultPercentage = Number(__WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DecimalPipe */].prototype.transform(100 / this.model.team.members.length, '1.0-2'));
+        for (var _i = 0, _a = this.model.team.members; _i < _a.length; _i++) {
+            var member = _a[_i];
+            this.model.membersPercentage[member.email] = defaultPercentage;
         }
     };
     return InvestmentsEditComponent;
@@ -1732,7 +1624,7 @@ InvestmentsEditComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__teams_teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__teams_teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _e || Object])
 ], InvestmentsEditComponent);
 
 var _a, _b, _c, _d, _e;
@@ -2308,6 +2200,140 @@ CustomMaterialDesignModule = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/modules/shared/directives/equal-validator.directive.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EqualValidatorDirective; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var EqualValidatorDirective = EqualValidatorDirective_1 = (function () {
+    function EqualValidatorDirective(equalFormControlName, reverse) {
+        this.equalFormControlName = equalFormControlName;
+        this.reverse = reverse;
+    }
+    Object.defineProperty(EqualValidatorDirective.prototype, "isReverse", {
+        get: function () {
+            if (!this.reverse) {
+                return false;
+            }
+            return this.reverse === 'true' ? true : false;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    EqualValidatorDirective.prototype.validate = function (control) {
+        var equalsFormControl = control.root.get(this.equalFormControlName);
+        if (equalsFormControl && equalsFormControl.value !== control.value) {
+            if (this.isReverse) {
+                equalsFormControl.setErrors({ 'equalvalidator': true });
+            }
+            else {
+                return { 'equalvalidator': true };
+            }
+        }
+        else if (equalsFormControl) {
+            //value is the same on both
+            if (this.reverse) {
+                delete equalsFormControl.errors['equalvalidator'];
+                if (!Object.keys(equalsFormControl.errors).length) {
+                    equalsFormControl.setErrors(null);
+                }
+            }
+        }
+        return null;
+    };
+    return EqualValidatorDirective;
+}());
+EqualValidatorDirective = EqualValidatorDirective_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Directive */])({
+        selector: '[equalvalidator]',
+        providers: [{ provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALIDATORS */], useExisting: EqualValidatorDirective_1, multi: true }]
+    }),
+    __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('equalvalidator')),
+    __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('reverse')),
+    __metadata("design:paramtypes", [String, String])
+], EqualValidatorDirective);
+
+var EqualValidatorDirective_1;
+//# sourceMappingURL=equal-validator.directive.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/directives/number-validator.directive.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberValidatorDirective; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var NumberValidatorDirective = NumberValidatorDirective_1 = (function () {
+    function NumberValidatorDirective(validationType) {
+        this.validationType = validationType;
+        this.numberRegExp = new RegExp('^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$');
+    }
+    NumberValidatorDirective.prototype.validate = function (control) {
+        var validationObj = {};
+        if (this.validationType) {
+            validationObj = JSON.parse(this.validationType);
+        }
+        var val = control.value;
+        if (!this.numberRegExp.test(val + '')) {
+            return { "numberValidator": true };
+        }
+        var result = {};
+        if (!isNaN(validationObj.min) && val < validationObj.min) {
+            result.numberValidatorMin = true;
+        }
+        if (!isNaN(validationObj.max) && val > validationObj.max) {
+            result.numberValidatorMax = true;
+        }
+        return Object.keys(result).length ? result : null;
+    };
+    return NumberValidatorDirective;
+}());
+NumberValidatorDirective = NumberValidatorDirective_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Directive */])({
+        selector: '[numberValidator]',
+        providers: [{ provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALIDATORS */], useExisting: NumberValidatorDirective_1, multi: true }]
+    }),
+    __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('numberValidator')),
+    __metadata("design:paramtypes", [String])
+], NumberValidatorDirective);
+
+var NumberValidatorDirective_1;
+//# sourceMappingURL=number-validator.directive.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/modules/shared/shared.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2323,8 +2349,8 @@ CustomMaterialDesignModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__directives_equal_validator_directive__ = __webpack_require__("../../../../../src/app/directives/equal-validator.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__directives_number_validator_directive__ = __webpack_require__("../../../../../src/app/directives/number-validator.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__directives_equal_validator_directive__ = __webpack_require__("../../../../../src/app/modules/shared/directives/equal-validator.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__directives_number_validator_directive__ = __webpack_require__("../../../../../src/app/modules/shared/directives/number-validator.directive.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);

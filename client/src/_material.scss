@@ -20,6 +20,11 @@ snack-bar-container {
     background-color: $warn;
   }
 
+  &.snackbar--warn {
+    background-color: $lightOrange;
+    color: $almostBlack;
+  }
+
   &.snackbar--info {
     background-color: $purple;
   }

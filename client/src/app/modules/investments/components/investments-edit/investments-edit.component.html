@@ -49,13 +49,13 @@
   
             <div class="member-percentage">
               <mat-form-field class="form__field">
-                <input matInput type="number" id="memberPercentage_{{member.email}}" name="memberPercentage_{{member.email}}" placeholder="Percentage"
+                <input matInput type="number" id="memberPercentage_{{member.email}}" name="memberPercentage_{{member.email}}" placeholder="Percentage of investment"
                     [(ngModel)]="model.membersPercentage[member.email]" 
                     value="model.membersPercentage[member.email]"
                     numberValidator='{"min": 0, "max": 100}'
                     required
                     #memberPercentage="ngModel">
-                <mat-hint align="start">Investment portion for {{member.email}}.</mat-hint>
+                <mat-hint align="start">(%) Investment portion for {{member.email}}.</mat-hint>
                 <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
                 <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
                 <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>

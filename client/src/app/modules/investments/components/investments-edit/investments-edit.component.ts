@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { User } from '../../../users/models/user';
@@ -92,15 +93,23 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   ngAfterViewInit(): void {
     this.form.valueChanges.debounceTime(500).subscribe(values => {
       
-      if (values.owner === 'team' && values.team) {
+      if (values.owner === 'team' && values.team && this.model.team) {
         //calculates the percentage acum from all the members
-        const percentageAcum = values.team.members.reduce((total, member) => {
-          return total + (values[`memberPercentage_${member.email}`] || 0);
+        const percentageAcum = this.model.team.members.reduce((total, member) => {
+          return total + (this.model.membersPercentage[member.email] || 0);
         }, 0);
 
         if (percentageAcum > 100) {
-          const lastMember = values.team.members[values.team.members.length - 1];
-          values[`memberPercentage_${lastMember.email}`] = 0;
+          const [lastMember] = this.model.team.members.slice(-1);
+          const diff = percentageAcum - 100;
+          const newValue = Number(DecimalPipe.prototype.transform(this.model.membersPercentage[lastMember.email] - diff, '1.0-2'));
+          if (newValue < 0) {
+            this.setDefaultInvestmentPercentages();
+            this.appService.showResults(`The sum of percentages must not exceed 100%, we reset the values to make it valid.`, 'warn');
+          } else {
+            this.model.membersPercentage[lastMember.email] = newValue <= 100 ? newValue : 0;
+            this.appService.showResults(`The sum of percentages must not exceed 100%, we reset the last values to make it valid.`, 'warn');
+          }
         }
       }
     });
@@ -149,12 +158,27 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
 
   onSelectChange(matSelectChange : MatSelectChange) {
     this.model.teamSlug = matSelectChange.value.slug;
+
+    this.setDefaultInvestmentPercentages();
   }
 
   onRadioChange(matRadioChange : MatRadioChange) {
     if (matRadioChange.value === 'me') {
+      //reset team values from model
       this.model.team = this.model.teamSlug = null;
+      this.model.membersPercentage = {};
     }
     
+  }
+
+  /**
+   * Splits equally the percentage of an investment to all the team members
+   */
+  setDefaultInvestmentPercentages() {
+    //set the default percentage of the investment to each member
+    const defaultPercentage = Number(DecimalPipe.prototype.transform(100 / this.model.team.members.length, '1.0-2'));
+    for (let member of this.model.team.members) {
+      this.model.membersPercentage[member.email] = defaultPercentage;
+    }
   }
 }
