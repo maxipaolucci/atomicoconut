@@ -3,67 +3,109 @@
       class="form__container form__edit-investment" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editInvestmentForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
     
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
-      <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
-        
-        <mat-radio-group fxFlex.gt-xs="230px" *ngIf="teams.length" class="form__field radiogroup__owner"
-            [(ngModel)]="model.owner" 
-            name="owner" 
-            id="owner" 
-            #owner="ngModel"
-            (change)="onRadioChange($event)">
-          <mat-radio-button class="owner__option" value="me">Just me</mat-radio-button>
-          <mat-radio-button class="owner__option" value="team">Team investment</mat-radio-button>
-        </mat-radio-group>
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          Owner
+          <p class="mat-caption">Specify the owner of this investment</p>
+        </h3>
 
-        <mat-form-field *ngIf="teams.length && model.owner === 'team'" fxFlex fxFlex.gt-xs="350px" class="form__field">
-          <mat-select [(ngModel)]="model.team"
-              name="team" 
-              id="team" 
-              #team="ngModel" 
-              placeholder="Select a team"
-              (change)="onSelectChange($event)"
-              required>
-            <mat-option *ngFor="let team of teams" [value]="team">
-              {{team.name}}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="team.invalid && (team.dirty || team.touched) && team.errors.required">Please choose a team</mat-error>
-        </mat-form-field>
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <mat-radio-group fxFlex.gt-xs="230px" *ngIf="teams.length" class="form__field radiogroup__owner"
+              [(ngModel)]="model.owner" 
+              name="owner" 
+              id="owner" 
+              #owner="ngModel"
+              (change)="onRadioChange($event)">
+            <mat-radio-button class="owner__option" value="me">Just me</mat-radio-button>
+            <mat-radio-button class="owner__option" value="team">My team</mat-radio-button>
+          </mat-radio-group>
+  
+          <mat-form-field *ngIf="teams.length && model.owner === 'team'" fxFlex fxFlex.gt-xs="350px" class="form__field">
+            <mat-select [(ngModel)]="model.team"
+                name="team" 
+                id="team" 
+                #team="ngModel" 
+                placeholder="Select a team"
+                (change)="onSelectChange($event)"
+                required>
+              <mat-option *ngFor="let team of teams" [value]="team">
+                {{team.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="team.invalid && (team.dirty || team.touched) && team.errors.required">Please choose a team</mat-error>
+          </mat-form-field>
+        </div>
       </div>
-
-      <div *ngIf="model.team" fxLayout="column" fxLayoutGap="20px" class="form__fields__row team-members">
+      
+      <div *ngIf="model.team" fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <h3 class="title">
           Split between team members
           <p class="mat-caption">Specify how to split the returns setting a percentage of the total investment amount to each member</p>
         </h3>
-        
-        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="20px">
-          <div *ngFor="let member of model.team.members; index as memberIndex" fxLayout="column" fxLayoutGap="10px" class="member">
-            <div class="member-details" fxLayout="row" fxLayoutGap="10px">
-              <img class="member__avatar" [src]="member.avatar"/>
-              <div class="member__info" fxLayout="column" [matTooltip]="member.email === model.team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
-                <p class="member__name">{{member.name}} <mat-icon *ngIf="member.email === model.team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
-                <p class="member__email">{{member.email}}</p>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="form__fields__row">         
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="20px" class="team-members">
+            <div *ngFor="let member of model.team.members; index as memberIndex" fxLayout="column" fxLayoutGap="10px" class="member">
+              <div class="member-details" fxLayout="row" fxLayoutGap="10px">
+                <img class="member__avatar" [src]="member.avatar"/>
+                <div class="member__info" fxLayout="column" [matTooltip]="member.email === model.team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
+                  <p class="member__name">{{member.name}} <mat-icon *ngIf="member.email === model.team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
+                  <p class="member__email">{{member.email}}</p>
+                </div>
+              </div>
+    
+              <div class="member-percentage">
+                <mat-form-field class="form__field">
+                  <input matInput type="number" id="memberPercentage_{{member.email}}" name="memberPercentage_{{member.email}}" placeholder="Percentage of investment"
+                      [(ngModel)]="model.membersPercentage[member.email]" 
+                      value="model.membersPercentage[member.email]"
+                      numberValidator='{"min": 0, "max": 100}'
+                      required
+                      #memberPercentage="ngModel">
+                  <mat-hint align="start">(%) Investment portion for {{member.email}}.</mat-hint>
+                  <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+                  <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
+                  <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
+                </mat-form-field>
               </div>
             </div>
-  
-            <div class="member-percentage">
-              <mat-form-field class="form__field">
-                <input matInput type="number" id="memberPercentage_{{member.email}}" name="memberPercentage_{{member.email}}" placeholder="Percentage of investment"
-                    [(ngModel)]="model.membersPercentage[member.email]" 
-                    value="model.membersPercentage[member.email]"
-                    numberValidator='{"min": 0, "max": 100}'
-                    required
-                    #memberPercentage="ngModel">
-                <mat-hint align="start">(%) Investment portion for {{member.email}}.</mat-hint>
-                <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-                <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
-                <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
+          </div>
+          
+        </div>
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title title__investment-amount">
+          Investment amount
+        </h3>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="form__fields__row">
+          <div fxLayout="row" fxLayoutGap="10px">
+              <currency-unit fxFlex="50px"
+                  [id]="'investmentAmountUnit'" 
+                  [value]="model.investmentAmountUnit"
+                  [view]="'narrow'"
+                  (newValue)="onCurrencyUnitChange($event)">
+              </currency-unit>
+              
+              <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
+                <input matInput type="number" id="investmentAmount" name="investmentAmount" placeholder="Investment amount"
+                    [(ngModel)]="model.investmentAmount" 
+                    value="model.investmentAmount"
+                    numberValidator 
+                    #investmentAmount="ngModel">
+                <mat-hint align="start">Set the amount of money to invest.</mat-hint>
+                <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
               </mat-form-field>
             </div>
-          </div>
         </div>
-        
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <currency-investment [type]="type"
+            [unit]="type ==='currency' ? 'USD' : 'BTC'"
+            (values)="onCurrencyInvestmentChange($event)">
+        </currency-investment>
       </div>
     </section>
 

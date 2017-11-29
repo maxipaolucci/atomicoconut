@@ -25,7 +25,11 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     owner : 'me',
     team : null,
     teamSlug : null,
-    membersPercentage : {}
+    membersPercentage : {},
+    investmentAmount : null,
+    investmentAmountUnit : null,
+    type : null,
+    investmentData : {} //specific data related to the investment type
   };
   id : string = null; //investment id
   type : string = null; //investment type
@@ -57,6 +61,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     }).subscribe(data => {
       this.user = data.user;
       this.model.email = data.user.email;
+      this.model.investmentAmountUnit = this.user.currency;
 
       this.editInvestmentServiceRunning = false;
       this.getInvestmentServiceRunning = false;
@@ -82,16 +87,17 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     //get TYPE parameter
     this.route.paramMap.map((params: ParamMap) => params.get('type')).subscribe(type => {
       if (!['currency', 'crypto', 'property'].includes(type)) {
-        this.appService.showResults('You must provide a valid investment type to continue.');
+        this.appService.showResults('You must provide a valid investment type to continue.', 'error');
         this.router.navigate(['welcome']);
       } else {
         this.type = type;
+        this.model.type = type;
       }
     });
   }
 
   ngAfterViewInit(): void {
-    this.form.valueChanges.debounceTime(500).subscribe(values => {
+    const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
       
       if (values.owner === 'team' && values.team && this.model.team) {
         //calculates the percentage acum from all the members
@@ -113,6 +119,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         }
       }
     });
+
+    this.subscription.add(newSubscription);
   }
 
   ngOnDestroy() {
@@ -168,7 +176,16 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       this.model.team = this.model.teamSlug = null;
       this.model.membersPercentage = {};
     }
-    
+  }
+
+  onCurrencyUnitChange($event : MatSelectChange) {
+    if ($event.source.id === 'investmentAmountUnit') {
+      this.model.investmentAmountUnit = $event.value;
+    }
+  }
+
+  onCurrencyInvestmentChange($event : any) {
+    this.model.investmentData = $event.value;
   }
 
   /**

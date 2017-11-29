@@ -2,13 +2,22 @@
   
   .form__fields {
 
-    .radiogroup__owner .owner__option {
-      margin-right: 10px;
+    .form__fields__row__container {
 
-      &:last-child {
-        margin-right: 0;
+      .radiogroup__owner .owner__option {
+        margin-right: 10px;
+  
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .title__investment-amount {
+        margin-bottom: 5px !important;
       }
     }
+
+    
   }
 
   .team-members {

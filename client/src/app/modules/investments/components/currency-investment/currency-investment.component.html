@@ -1,0 +1,21 @@
+<div fxLayout="column" fxLayoutGap="10px" class="container__edit-currency-investment">
+    <form class="form__container form__edit-currency-investment" #editCurrencyInvestmentForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
+      
+      <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
+        <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="form__fields__row">
+            <currency-unit fxFlex fxFlex.gt-xs="200px"
+                [id]="'currencyInvestmentUnit'" 
+                [value]="model.unit"
+                [type]="model.type"
+                [hint]="'Choose the desired currency to invest on...'"
+                [placeHolder]="'Desired currency'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+          </div>
+        </div>
+      </section>
+      <pre>{{model | json}}</pre>
+    </form>
+  </div>
+  

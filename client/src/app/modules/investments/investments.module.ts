@@ -12,6 +12,7 @@ import { CryptoCurrencyComponent } from './components/crypto-currency/crypto-cur
 import { CryptoCurrencyService } from './components/crypto-currency/crypto-currency.service';
 import { InvestmentSelectorDialogComponent } from './components/investment-selector-dialog/investment-selector-dialog.component';
 import { InvestmentsEditComponent } from './components/investments-edit/investments-edit.component';
+import { CurrencyInvestmentComponent } from './components/currency-investment/currency-investment.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { InvestmentsEditComponent } from './components/investments-edit/investme
     CryptoCurrencyComponent,
     InvestmentsDashboardComponent,
     InvestmentSelectorDialogComponent,
-    InvestmentsEditComponent
+    InvestmentsEditComponent,
+    CurrencyInvestmentComponent
   ],
   entryComponents: [
     InvestmentSelectorDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
