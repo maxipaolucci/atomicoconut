@@ -38,6 +38,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   getInvestmentServiceRunning : boolean = false;
   getTeamsServiceRunning : boolean = false;
   subscription : Subscription = new Subscription();
+  investmentDataValid : boolean = false; //this value is set when investment data form is updated
 
   
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private teamsService : TeamsService,
@@ -108,7 +109,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         if (percentageAcum > 100) {
           const [lastMember] = this.model.team.members.slice(-1);
           const diff = percentageAcum - 100;
-          const newValue = Number(DecimalPipe.prototype.transform(this.model.membersPercentage[lastMember.email] - diff, '1.0-2'));
+          const decimalPipe = new DecimalPipe('en');
+          const newValue = Number(decimalPipe.transform(this.model.membersPercentage[lastMember.email] - diff, '1.0-2'));
           if (newValue < 0) {
             this.setDefaultInvestmentPercentages();
             this.appService.showResults(`The sum of percentages must not exceed 100%, we reset the values to make it valid.`, 'warn');
@@ -142,7 +144,6 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     const newSubscription = this.teamsService.getTeams(this.user.email).subscribe(
       (teams : Team[]) => {
         this.teams = teams;
-        console.log(teams);
         this.getTeamsServiceRunning = false;
       },
       (error : any) => {
@@ -184,16 +185,18 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     }
   }
 
-  onCurrencyInvestmentChange($event : any) {
-    this.model.investmentData = $event.value;
+  onInvestmentDataChange($event : any) {
+    this.model.investmentData = $event.value.model;
+    this.investmentDataValid = $event.value.valid;
   }
 
   /**
    * Splits equally the percentage of an investment to all the team members
    */
   setDefaultInvestmentPercentages() {
+    const decimalPipe = new DecimalPipe('en');
     //set the default percentage of the investment to each member
-    const defaultPercentage = Number(DecimalPipe.prototype.transform(100 / this.model.team.members.length, '1.0-2'));
+    const defaultPercentage = Number(decimalPipe.transform(100 / this.model.team.members.length, '1.0-2'));
     for (let member of this.model.team.members) {
       this.model.membersPercentage[member.email] = defaultPercentage;
     }

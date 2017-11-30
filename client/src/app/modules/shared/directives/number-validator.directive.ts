@@ -1,5 +1,6 @@
 import { Directive, Input, Attribute } from '@angular/core';
 import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
+import { validateConfig } from '@angular/router/src/config';
 
 @Directive({
   selector: '[numberValidator]',
@@ -7,7 +8,7 @@ import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
 })
 export class NumberValidatorDirective {
 
-  private numberRegExp = new RegExp('^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$');
+  
 
   constructor(@Attribute('numberValidator') public validationType: string) {}
 
@@ -18,9 +19,18 @@ export class NumberValidatorDirective {
       validationObj = JSON.parse(this.validationType);
     }
 
+    //original pattern: ^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$
+    let pattern = '^[+-]?[0-9]{1,';
+    pattern += !isNaN(validationObj.maxIntegerDigits) && validationObj.maxIntegerDigits > 1 ? validationObj.maxIntegerDigits : 9;
+    pattern += '}(?:\.[0-9]{1,';
+    pattern += !isNaN(validationObj.maxFractionDigits) && validationObj.maxFractionDigits > 1 ? validationObj.maxFractionDigits : 2;
+    pattern += '})?$';
+
+    const numberRegExp = new RegExp(pattern);
+
     const val: number = control.value;
 
-    if(!this.numberRegExp.test(val + '')) {
+    if(!numberRegExp.test(val + '')) {
       return {"numberValidator": true};
     }
     

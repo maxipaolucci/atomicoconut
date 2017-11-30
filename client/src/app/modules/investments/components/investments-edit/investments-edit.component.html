@@ -63,6 +63,7 @@
                       required
                       #memberPercentage="ngModel">
                   <mat-hint align="start">(%) Investment portion for {{member.email}}.</mat-hint>
+                  <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.required">Percentage of investment is required.</mat-error>
                   <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
                   <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
                   <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
@@ -93,8 +94,10 @@
                     [(ngModel)]="model.investmentAmount" 
                     value="model.investmentAmount"
                     numberValidator 
+                    required
                     #investmentAmount="ngModel">
                 <mat-hint align="start">Set the amount of money to invest.</mat-hint>
+                <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required">Investment amount is required.</mat-error>
                 <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
               </mat-form-field>
             </div>
@@ -104,7 +107,7 @@
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <currency-investment [type]="type"
             [unit]="type ==='currency' ? 'USD' : 'BTC'"
-            (values)="onCurrencyInvestmentChange($event)">
+            (values)="onInvestmentDataChange($event)">
         </currency-investment>
       </div>
     </section>
@@ -117,7 +120,7 @@
           mat-raised-button 
           type="submit" 
           color="accent" 
-          [disabled]="!editInvestmentForm.form.valid">Save</button>
+          [disabled]="!editInvestmentForm.form.valid || !investmentDataValid">Save</button>
       
       <mat-progress-bar *ngIf="editInvestmentServiceRunning"
           class="progress-bar progress-bar--edit-investment"
