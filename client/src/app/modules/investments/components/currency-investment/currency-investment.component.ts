@@ -21,6 +21,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy, AfterView
     unit : null, //e.g. : US Dollar, Australian Dollar, Monero, Bitcoin , depends on the type
     amount : null, //the amount bought,
     buyingPrice : null,
+    buyingPriceUnit : null,
     buyingDate : null
   }
   subscription : Subscription = new Subscription();
@@ -35,6 +36,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy, AfterView
     this.model.type = this.type;
     this.model.unit = this.unit;
     this.model.buyingDate = new Date(Date.now());
+    this.model.buyingPriceUnit = this.unit;
   }
 
   ngOnDestroy() {
@@ -47,8 +49,16 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy, AfterView
   onCurrencyUnitChange($event : MatSelectChange) {
     if ($event.source.id === 'currencyInvestmentUnit') {
       this.model.unit = $event.value;
-      this.values.emit({ value : this.model });
+    } else if ($event.source.id === 'buyingPriceUnit') {
+      this.model.buyingPriceUnit = $event.value;
     }
+    
+    this.values.emit({ 
+      value : {
+        model : this.model,
+        valid : this.form.valid
+      } 
+    });
   }
 
   ngAfterViewInit(): void {
