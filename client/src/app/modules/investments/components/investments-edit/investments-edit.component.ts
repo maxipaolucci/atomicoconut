@@ -8,6 +8,7 @@ import { AppService } from "../../../../app.service";
 import { Team } from '../../../teams/models/team';
 import { Subscription } from 'rxjs/Subscription';
 import { MatSelectChange, MatRadioChange } from '@angular/material';
+import { InvestmentsService } from '../../investments.service';
 
 @Component({
   selector: 'investments-edit',
@@ -41,8 +42,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   investmentDataValid : boolean = false; //this value is set when investment data form is updated
 
   
-  constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private teamsService : TeamsService,
-    private appService : AppService, private router : Router) { }
+  constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private investmentsService : InvestmentsService,
+    private teamsService : TeamsService, private appService : AppService, private router : Router) { }
 
   ngOnInit() {
     this.mainNavigatorService.setLinks([
@@ -130,6 +131,34 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     
     //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
+  }
+
+  onSubmit() {
+    const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
+
+    this.editInvestmentServiceRunning = true;
+    //call the investment create service
+    const newSubscription = this.investmentsService.create(this.model).subscribe(
+      (data : any) => {
+        if (data && data.id) {
+          this.appService.showResults(`Investment successfully created!`, 'success');
+          this.router.navigate(['/investments/', data.type, '/edit/', data.id]);
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.editInvestmentServiceRunning = false;
+        }
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit investment service.`, error);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, 'error');
+        }
+
+        this.editInvestmentServiceRunning = false;
+      }
+    );
+
+    this.subscription.add(newSubscription);
   }
 
   /**

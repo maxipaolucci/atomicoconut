@@ -8,8 +8,7 @@ export class Team {
   members : User[];
   admin : User;
 
-  constructor(name : string = null, description : string = null, 
-        slug : string = null, admin : User = null, members : User[] = null) {
+  constructor(name : string = null, description : string = null, slug : string = null, admin : User = null, members : User[] = null) {
     this.name = name;
     this.slug = slug;
     this.description = description;

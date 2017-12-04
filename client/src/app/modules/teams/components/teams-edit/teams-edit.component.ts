@@ -103,7 +103,6 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit team service.`, error);
         if (error.codeno === 400) {
-          //the mail system failed for external reasons
           this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`, 'error');
         }
 

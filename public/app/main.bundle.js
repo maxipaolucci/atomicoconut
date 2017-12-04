@@ -1592,6 +1592,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1608,10 +1609,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var InvestmentsEditComponent = (function () {
-    function InvestmentsEditComponent(route, mainNavigatorService, teamsService, appService, router) {
+    function InvestmentsEditComponent(route, mainNavigatorService, investmentsService, teamsService, appService, router) {
         this.route = route;
         this.mainNavigatorService = mainNavigatorService;
+        this.investmentsService = investmentsService;
         this.teamsService = teamsService;
         this.appService = appService;
         this.router = router;
@@ -1716,6 +1719,29 @@ var InvestmentsEditComponent = (function () {
         //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
+    InvestmentsEditComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.editInvestmentServiceRunning = true;
+        //call the investment create service
+        var newSubscription = this.investmentsService.create(this.model).subscribe(function (data) {
+            if (data && data.id) {
+                _this.appService.showResults("Investment successfully created!", 'success');
+                _this.router.navigate(['/investments/', data.type, '/edit/', data.id]);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+                _this.editInvestmentServiceRunning = false;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit investment service.", error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error with the investment services, please try again in a few minutes.", 'error');
+            }
+            _this.editInvestmentServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
     /**
      * Get my teams from server
      */
@@ -1786,10 +1812,10 @@ InvestmentsEditComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__["a" /* TeamsService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _f || Object])
 ], InvestmentsEditComponent);
 
-var _a, _b, _c, _d, _e;
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=investments-edit.component.js.map
 
 /***/ }),
@@ -1878,12 +1904,14 @@ InvestmentsRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_investments_edit_investments_edit_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_currency_investment_currency_investment_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1922,11 +1950,127 @@ InvestmentsModule = __decorate([
         entryComponents: [
             __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */] //added as material doc suggest to allow AOT on this on the fly created class
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_9__components_crypto_currency_crypto_currency_service__["a" /* CryptoCurrencyService */]]
+        providers: [__WEBPACK_IMPORTED_MODULE_9__components_crypto_currency_crypto_currency_service__["a" /* CryptoCurrencyService */], __WEBPACK_IMPORTED_MODULE_13__investments_service__["a" /* InvestmentsService */]]
     })
 ], InvestmentsModule);
 
 //# sourceMappingURL=investments.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/investments.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var InvestmentsService = (function () {
+    function InvestmentsService(http, appService) {
+        this.http = http;
+        this.appService = appService;
+        this.serverHost = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].apiHost + '/api/investments';
+        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
+    }
+    /**
+     * Server call to Create a new investment in the system
+     * @param postData
+     */
+    InvestmentsService.prototype.create = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to Update an investment in the system
+     * @param postData
+     */
+    InvestmentsService.prototype.update = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    // /**
+    //  * Server call to Get a team from the server based on its slug
+    //  * @param {string} slug . The team slug
+    //  */
+    // getTeamBySlug(email : string, slug : string) : Observable<any> {
+    //   let methodTrace = `${this.constructor.name} > getTeamBySlug() > `; //for debugging
+    //   if (!slug) {
+    //     this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
+    //     return null;
+    //   }
+    //   return this.http.get(`${this.serverHost}/getbySlug?${this.appService.getParamsAsQuerystring({slug, email})}`)
+    //       .map(this.appService.extractData)
+    //       .catch(this.appService.handleError);
+    // }
+    // /**
+    //  * Server call to Get all the teams for the current user from the server
+    //  * @param {string} slug . The team slug
+    //  */
+    // getTeams(email : string) : Observable<any> {
+    //   let methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+    //   const teamsData$ = this.http.get(`${this.serverHost}/getAll?${this.appService.getParamsAsQuerystring({email})}`)
+    //       .map(this.appService.extractData)
+    //       .catch(this.appService.handleError);
+    //   return teamsData$.switchMap((teamsData) => {
+    //     let teams : Team[] = [];
+    //     if (teamsData && teamsData instanceof Array) {
+    //       for (let item of teamsData) {
+    //         let admin = null;
+    //         let members = [];
+    //         for (let member of item.members) {
+    //           const newMember = new User(member.name, member.email, member.gravatar);
+    //           members.push(newMember);
+    //           if (member.isAdmin) {
+    //             admin = newMember;
+    //           }
+    //         }
+    //         teams.push(new Team(item.name, item.description || null, item.slug, admin, members));
+    //       }
+    //     } else {
+    //       this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+    //     }
+    //     return Observable.of(teams);
+    //   });
+    // }
+    /**
+     * Server call to delete an investment from the server
+     * @param {string} id . The team slug
+     * @param {string} email . The current user email.
+     */
+    InvestmentsService.prototype.delete = function (id, email) {
+        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, body: { email: email } })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    return InvestmentsService;
+}());
+InvestmentsService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object])
+], InvestmentsService);
+
+var _a, _b;
+//# sourceMappingURL=investments.service.js.map
 
 /***/ }),
 
@@ -2977,7 +3121,6 @@ var TeamsEditComponent = (function () {
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit team service.", error);
             if (error.codeno === 400) {
-                //the mail system failed for external reasons
                 _this.appService.showResults("There was an error with the team services, please try again in a few minutes.", 'error');
             }
             _this.editTeamServiceRunning = false;
