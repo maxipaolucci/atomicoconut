@@ -483,18 +483,7 @@ const getTeamBySlugObject = async (slug, withId = false, userEmail = null) => {
     console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, Object.keys(result).length ? 1 : 0, 'Team(s)')}`);
     return Object.keys(result).length ? result : null;
 };
-
-/**
- * Returns a team by it slug. Exportable method
- * @param {string} slug 
- * @param {boolean} withId . If true adds the id to the result
- * @param {string} userEmail . Just for debug in console purposes.
- * 
- * @return {object} . The team looked for or null
- */
-exports.teamBySlug = async (slug, withId = false, userEmail = null) => {
-    return await getTeamBySlugObject(slug, withId, userEmail);
-}
+exports.getTeamBySlugObject = getTeamBySlugObject;
 
 /**
  * Get a team by slug and send it back to client

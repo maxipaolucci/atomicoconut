@@ -25,7 +25,7 @@ exports.create = async (req, res, next) => {
     //get the team if provided
     let team = null;
     if (req.body.team) {
-        team = teamController.teamBySlug(req.body.team.slug, true, user.email);
+        team = teamController.getTeamBySlugObject(req.body.team.slug, true, user.email);
     }
 
     //save a new investment record in DB
