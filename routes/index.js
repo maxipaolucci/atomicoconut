@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const teamController = require('../controllers/teamController');
 const authController = require('../controllers/authController');
+const investmentController = require('../controllers/investmentController');
 const testController = require('../controllers/testController');
 const { catchErrors, catchApiErrors } = require('../handlers/errorHandlers');
 
@@ -138,10 +139,10 @@ router.post('/api/users/account/reset/:token',
 //*************************************************************************** */
 //****************************** TEAM API *********************************** */
 //*************************************************************************** */
-router.get('/api/teams/getBySlug', 
+router.get('/api/teams/getMyTeamBySlug', 
   authController.isLogggedIn,
   catchErrors(userController.checkLoggedInUserWithEmail),
-  catchErrors(teamController.getTeamBySlug)
+  catchErrors(teamController.getMyTeamBySlug)
 );
 
 router.get('/api/teams/getAll', 
@@ -173,5 +174,23 @@ router.delete('/api/teams/delete/:slug',
 //*************************************************************************** */
 //************************** INVESTMENTS API ******************************** */
 //*************************************************************************** */
+router.post('/api/investments/create', 
+  authController.isLogggedIn, 
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  investmentController.validateRegister,
+  catchErrors(investmentController.create)
+);
+
+// router.post('/api/investments/update', 
+//   authController.isLogggedIn, 
+//   catchErrors(userController.checkLoggedInUserWithEmail),
+//   investmentController.validateRegister,
+//   catchErrors(investmentController.update)
+// );
+
+// router.delete('/api/investments/delete/:id',  
+//   catchErrors(userController.checkLoggedInUserWithEmail),
+//   catchErrors(investmentController.delete)
+// );
 
 module.exports = router;

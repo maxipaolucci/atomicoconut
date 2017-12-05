@@ -24,6 +24,8 @@ require('./models/PersonalInfo');
 require('./models/FinancialInfo');
 require('./models/Team');
 require('./models/Team_User');
+require('./models/Investment');
+require('./models/CurrencyInvestment');
 
 // Start our app!
 const app = require('./app');

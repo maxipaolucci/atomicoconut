@@ -41,7 +41,7 @@ exports.create = async (req, res, next) => {
     let user = req.user;
     
 
-    //if no team record found then create one and save
+    //save a new team record in DB
     console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'Team')}`);
     let team = await (new Team({
         name : req.body.name,
@@ -58,7 +58,7 @@ exports.create = async (req, res, next) => {
         res.json({
             status : 'success', 
             codeno : 200,
-            msg : getMessage('message', 1020, null, false, user.email),
+            msg : getMessage('message', 1033, null, false, 'Team'),
             data : getTeamDataObject(team)
         });
     } else {
@@ -391,7 +391,11 @@ exports.getAllTeams = async (req, res) => {
 
 /**
  * Get a team by slug
- * @param {*} slug 
+ * @param {string} slug 
+ * @param {boolean} withId . If true adds the id to the result
+ * @param {string} userEmail . Just for debug in console purposes.
+ * 
+ * @return {object} . The team looked for or null
  */
 const getTeamBySlugObject = async (slug, withId = false, userEmail = null) => {
     const methodTrace = `${errorTrace} getTeamBySlugObject() >`;
@@ -481,9 +485,21 @@ const getTeamBySlugObject = async (slug, withId = false, userEmail = null) => {
 };
 
 /**
+ * Returns a team by it slug. Exportable method
+ * @param {string} slug 
+ * @param {boolean} withId . If true adds the id to the result
+ * @param {string} userEmail . Just for debug in console purposes.
+ * 
+ * @return {object} . The team looked for or null
+ */
+exports.teamBySlug = async (slug, withId = false, userEmail = null) => {
+    return await getTeamBySlugObject(slug, withId, userEmail);
+}
+
+/**
  * Get a team by slug and send it back to client
  */
-exports.getTeamBySlug = async (req, res) => {
+exports.getMyTeamBySlug = async (req, res) => {
     const methodTrace = `${errorTrace} getTeamBySlug() >`;
 
     const result = await getTeamBySlugObject(req.query.slug, false, req.user.email);

@@ -198,7 +198,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
 
     this.getTeamServiceRunning = true;
 
-    const newSubscription = this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(
+    const newSubscription = this.teamsService.getMyTeamBySlug(this.user.email, slug).subscribe(
       (data : any) => {
         if (data && data.slug) {
           this.populateTeam(data);

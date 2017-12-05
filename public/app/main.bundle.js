@@ -3201,7 +3201,7 @@ var TeamsEditComponent = (function () {
             return false;
         }
         this.getTeamServiceRunning = true;
-        var newSubscription = this.teamsService.getTeamBySlug(this.user.email, slug).subscribe(function (data) {
+        var newSubscription = this.teamsService.getMyTeamBySlug(this.user.email, slug).subscribe(function (data) {
             if (data && data.slug) {
                 _this.populateTeam(data);
             }
@@ -3490,13 +3490,13 @@ var TeamsService = (function () {
      * Server call to Get a team from the server based on its slug
      * @param {string} slug . The team slug
      */
-    TeamsService.prototype.getTeamBySlug = function (email, slug) {
-        var methodTrace = this.constructor.name + " > getTeamBySlug() > "; //for debugging
+    TeamsService.prototype.getMyTeamBySlug = function (email, slug) {
+        var methodTrace = this.constructor.name + " > getMyTeamBySlug() > "; //for debugging
         if (!slug) {
             this.appService.consoleLog('error', methodTrace + " Slug parameter must be provided, but was: ", slug);
             return null;
         }
-        return this.http.get(this.serverHost + "/getbySlug?" + this.appService.getParamsAsQuerystring({ slug: slug, email: email }))
+        return this.http.get(this.serverHost + "/getMyTeamBySlug?" + this.appService.getParamsAsQuerystring({ slug: slug, email: email }))
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
     };

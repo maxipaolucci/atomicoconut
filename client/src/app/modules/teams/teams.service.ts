@@ -41,15 +41,15 @@ export class TeamsService {
    * Server call to Get a team from the server based on its slug
    * @param {string} slug . The team slug
    */
-  getTeamBySlug(email : string, slug : string) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > getTeamBySlug() > `; //for debugging
+  getMyTeamBySlug(email : string, slug : string) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > getMyTeamBySlug() > `; //for debugging
 
     if (!slug) {
       this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
       return null;
     }
 
-    return this.http.get(`${this.serverHost}/getbySlug?${this.appService.getParamsAsQuerystring({slug, email})}`)
+    return this.http.get(`${this.serverHost}/getMyTeamBySlug?${this.appService.getParamsAsQuerystring({slug, email})}`)
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
   }
