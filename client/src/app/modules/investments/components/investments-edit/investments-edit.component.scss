@@ -1,3 +1,15 @@
+@import '../../../../../variables';
+
+form {
+  
+  .form__actions {
+
+    .progress-bar {
+      width: 100%;
+    }
+  }
+}
+
 .container__edit-investment {
   
   .form__fields {
@@ -42,6 +54,19 @@
         .member__email {
           font-size: 11px;
         }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: $screenGtXs) {
+  
+  form {
+    
+    .form__actions {
+  
+      .progress-bar {
+        width: 88px;
       }
     }
   }

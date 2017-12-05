@@ -32,20 +32,18 @@ const investmentSchema = new mongoose.Schema({
     ref : 'Team',
     default : null
   },
-  membersPercentage : {
-    default : {},
+  investmentDistribution : [{
     email: {
       type: String,
       lowercase: true,
       trim: true,
-      validate: [validator.isEmail, 'Invalid member email address'],
-      required: 'Please Supply a member email address'
+      validate: [validator.isEmail, 'Invalid member email address']
     },
     percentage : {
       type: Number,
       default : 0
     }
-  }
+  }]
   
 });
 

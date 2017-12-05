@@ -30,7 +30,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     investmentAmount : null,
     investmentAmountUnit : null,
     type : null,
-    investmentData : {} //specific data related to the investment type
+    investmentData : {}, //specific data related to the investment type
+    investmentDistribution : [] //how the investment would be distributed into its owners
   };
   id : string = null; //investment id
   type : string = null; //investment type
@@ -137,12 +138,14 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
 
     this.editInvestmentServiceRunning = true;
+
+    this.model.investmentDistribution = this.populateInvestmentDistributionArray();
     //call the investment create service
     const newSubscription = this.investmentsService.create(this.model).subscribe(
       (data : any) => {
-        if (data && data.id) {
+        if (data && data.id && data.type) {
           this.appService.showResults(`Investment successfully created!`, 'success');
-          this.router.navigate(['/investments/', data.type, '/edit/', data.id]);
+          this.router.navigate(['/investments/', data.type, 'edit', data.id]);
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
           this.editInvestmentServiceRunning = false;
@@ -188,6 +191,25 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     );
 
     this.subscription.add(newSubscription);
+  }
+
+  /**
+   * Populates an array that specifies the distribution of the investment between its owners and returns it.
+   * 
+   * @return {array} The distribution of the investment
+   */
+  populateInvestmentDistributionArray() : any[] {
+    let result = [];
+
+    if (!this.model.team) {
+      result.push({ email : this.user.email, percentage : 100 });
+    } else {
+      for (let email of Object.keys(this.model.membersPercentage)) {
+        result.push({ email, percentage : this.model.membersPercentage[email] });
+      }
+    }
+
+    return result;
   }
 
   getInvestment(id : string) {

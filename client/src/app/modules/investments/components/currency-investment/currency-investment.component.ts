@@ -36,7 +36,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy, AfterView
     this.model.type = this.type;
     this.model.unit = this.unit;
     this.model.buyingDate = new Date(Date.now());
-    this.model.buyingPriceUnit = this.unit;
+    this.model.buyingPriceUnit = 'USD';
   }
 
   ngOnDestroy() {

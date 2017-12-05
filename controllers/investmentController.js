@@ -12,8 +12,21 @@ const errorTrace = 'investmentController >';
 exports.validateRegister = (req, res, next) => {
     const methodTrace = `${errorTrace} validateRegister() >`;
 
-    console.log(`${methodTrace} ${getMessage('message', 1015, req.user.email, true)}`);
+    const errors = req.validationErrors();
+    if (errors) {
+        const errorsArr = errors.map(err => err.msg);
+        console.log(`${methodTrace} ${getMessage('error', 458, req.user.email, true, errorsArr)}`);
+        res.status(400).json({ 
+            status : "error", 
+            codeno : 400,
+            msg : errorsArr
+        });
+        return; //stop from running
+    }
+
     
+    console.log(`${methodTrace} ${getMessage('message', 1016, req.user.email, true)}`);
+    next(); //call next middleware
 };
 
 exports.create = async (req, res, next) => {
@@ -25,7 +38,7 @@ exports.create = async (req, res, next) => {
     //get the team if provided
     let team = null;
     if (req.body.team) {
-        team = teamController.getTeamBySlugObject(req.body.team.slug, true, user.email);
+        team = await teamController.getTeamBySlugObject(req.body.team.slug, true, user.email);
     }
 
     //save a new investment record in DB
@@ -36,7 +49,7 @@ exports.create = async (req, res, next) => {
         amount : req.body.investmentAmount,
         amountUnit : req.body.investmentAmountUnit,
         team : team ? team._id : null,
-        membersPercentage : team && team.members.length && membersPercentage && Object.keys(membersPercentage).length ? membersPercentage : {}
+        investmentDistribution : req.body.investmentDistribution
     })).save();
 
     if (investment) {
@@ -45,7 +58,7 @@ exports.create = async (req, res, next) => {
             currencyType : req.body.type,
             parent : investment._id,
             amount : req.body.investmentData.amount,
-            amountUnit : req.body.investmentData.amountUnit,
+            amountUnit : req.body.investmentData.unit,
             buyingPrice : req.body.investmentData.buyingPrice,
             buyingPriceUnit : req.body.investmentData.buyingPriceUnit,
             buyingDate : req.body.investmentData.buyingDate
@@ -59,7 +72,7 @@ exports.create = async (req, res, next) => {
                 status : 'success', 
                 codeno : 200,
                 msg : getMessage('message', 1033, null, false, 'Investment'),
-                data : {investment, currencyInvestment}
+                data : { type : investment.investmentType, id : investment.id }
             });
         } else {
             console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'CurrencyInvestment')}`);
