@@ -344,7 +344,7 @@ exports.getAllTeams = async (req, res) => {
 
     ]);
 
-    //Parse the recordset from DB and organize the info better.
+    //3 - Parse the recordset from DB and organize the info better.
     let teamsObj = {};
     for (team of teams) {
         
@@ -372,13 +372,13 @@ exports.getAllTeams = async (req, res) => {
         }
     }
 
-    //Generate a pretty result for the service response
+    //4 - Generate a pretty result for the service response
     let result = [];
     for (let teamId of Object.keys(teamsObj)) {
         result.push(teamsObj[teamId]);
     }
 
-    //Return teams info to the user.
+    //5 - Return teams info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
     res.json({
         status : 'success', 
@@ -386,7 +386,7 @@ exports.getAllTeams = async (req, res) => {
         msg : getMessage('message', 1036, null, false, teams.length, 'Team(s)'),
         data : result
     });
-}
+};
 
 
 /**

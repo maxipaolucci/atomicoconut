@@ -1489,6 +1489,8 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1504,12 +1506,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var InvestmentsDashboardComponent = (function () {
-    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog) {
+    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog, appService, investmentsService) {
         this.route = route;
         this.mainNavigatorService = mainNavigatorService;
         this.usersService = usersService;
         this.dialog = dialog;
+        this.appService = appService;
+        this.investmentsService = investmentsService;
+        this.investments = [];
         this.xmrBuyDate = new Date(2017, 5, 23); //month minus 1, 5 = june
         this.xmrBuyDate2 = new Date(2017, 8, 23);
         this.xmrBuyDate3 = new Date(2017, 8, 25);
@@ -1518,6 +1525,7 @@ var InvestmentsDashboardComponent = (function () {
         this.totalReturn = 0;
         this.user = null;
         this.getInvestmentsServiceRunning = false;
+        this.investmentActionRunning = [];
     }
     InvestmentsDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1529,6 +1537,38 @@ var InvestmentsDashboardComponent = (function () {
         //get authUser from resolver
         this.route.data.subscribe(function (data) {
             _this.user = data.authUser;
+        });
+        if (!this.investments.length) {
+            this.getInvestments();
+        }
+    };
+    /**
+     * Get my investments from server
+     */
+    InvestmentsDashboardComponent.prototype.getInvestments = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getInvestments() > "; //for debugging
+        this.investments = [];
+        this.getInvestmentsServiceRunning = true;
+        this.investmentsService.getInvestments(this.user.email).subscribe(function (investments) {
+            var index = 0;
+            _this.investments = investments;
+            for (var _i = 0, investments_1 = investments; _i < investments_1.length; _i++) {
+                var item = investments_1[_i];
+                _this.investmentActionRunning[index] = false;
+                index += 1;
+            }
+            console.log(_this.investments);
+            _this.getInvestmentsServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getInvestmentsServiceRunning = false;
         });
     };
     InvestmentsDashboardComponent.prototype.setTotals = function (totalReturns) {
@@ -1547,10 +1587,10 @@ InvestmentsDashboardComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */]) === "function" && _f || Object])
 ], InvestmentsDashboardComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=investments-dashboard.component.js.map
 
 /***/ }),
@@ -1985,8 +2025,12 @@ InvestmentsModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_currencyInvestment__ = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__teams_models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2000,11 +2044,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
+
 var InvestmentsService = (function () {
     function InvestmentsService(http, appService) {
         this.http = http;
         this.appService = appService;
-        this.serverHost = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].apiHost + '/api/investments';
+        this.serverHost = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiHost + '/api/investments';
         this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
     }
     /**
@@ -2041,36 +2089,34 @@ var InvestmentsService = (function () {
     //       .map(this.appService.extractData)
     //       .catch(this.appService.handleError);
     // }
-    // /**
-    //  * Server call to Get all the teams for the current user from the server
-    //  * @param {string} slug . The team slug
-    //  */
-    // getTeams(email : string) : Observable<any> {
-    //   let methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
-    //   const teamsData$ = this.http.get(`${this.serverHost}/getAll?${this.appService.getParamsAsQuerystring({email})}`)
-    //       .map(this.appService.extractData)
-    //       .catch(this.appService.handleError);
-    //   return teamsData$.switchMap((teamsData) => {
-    //     let teams : Team[] = [];
-    //     if (teamsData && teamsData instanceof Array) {
-    //       for (let item of teamsData) {
-    //         let admin = null;
-    //         let members = [];
-    //         for (let member of item.members) {
-    //           const newMember = new User(member.name, member.email, member.gravatar);
-    //           members.push(newMember);
-    //           if (member.isAdmin) {
-    //             admin = newMember;
-    //           }
-    //         }
-    //         teams.push(new Team(item.name, item.description || null, item.slug, admin, members));
-    //       }
-    //     } else {
-    //       this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-    //     }
-    //     return Observable.of(teams);
-    //   });
-    // }
+    /**
+     * Server call to Get all the Investments for the current user from the server
+     * @param {string} email . The team slug
+     */
+    InvestmentsService.prototype.getInvestments = function (email) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        var investmentsData$ = this.http.get(this.serverHost + "/getAll?" + this.appService.getParamsAsQuerystring({ email: email }))
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+        return investmentsData$.switchMap(function (investmentsData) {
+            var investments = [];
+            if (investmentsData && investmentsData instanceof Array) {
+                for (var _i = 0, investmentsData_1 = investmentsData; _i < investmentsData_1.length; _i++) {
+                    var item = investmentsData_1[_i];
+                    var createdBy = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
+                    var team = item.team ? new __WEBPACK_IMPORTED_MODULE_7__teams_models_team__["a" /* Team */](item.team.name, item.team.description, item.team.slug) : null;
+                    if (item.investmentType === 'currency' || item.investmentType === 'crypto') {
+                        investments.push(new __WEBPACK_IMPORTED_MODULE_6__models_currencyInvestment__["a" /* CurrencyInvestment */](item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.currencyInvestmentData.amountUnit, item.currencyInvestmentData.amount, item.currencyInvestmentData.buyingPrice, item.currencyInvestmentData.buyingPriceUnit, item.currencyInvestmentData.buyingDate, item.investmentType));
+                    }
+                }
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(investments);
+        });
+    };
     /**
      * Server call to delete an investment from the server
      * @param {string} id . The team slug
@@ -2086,11 +2132,72 @@ var InvestmentsService = (function () {
 }());
 InvestmentsService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _b || Object])
 ], InvestmentsService);
 
 var _a, _b;
 //# sourceMappingURL=investments.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/models/currencyInvestment.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyInvestment; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__investment__ = __webpack_require__("../../../../../src/app/modules/investments/models/investment.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var CurrencyInvestment = (function (_super) {
+    __extends(CurrencyInvestment, _super);
+    function CurrencyInvestment(investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, unit, amount, buyingPrice, buyingPriceUnit, buyingDate, type) {
+        if (team === void 0) { team = null; }
+        if (investmentDistribution === void 0) { investmentDistribution = []; }
+        if (type === void 0) { type = 'currency'; }
+        var _this = _super.call(this, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) || this;
+        _this.type = type;
+        _this.unit = unit;
+        _this.amount = amount;
+        _this.buyingDate = buyingDate;
+        _this.buyingPrice = buyingPrice;
+        _this.buyingPriceUnit = buyingPriceUnit;
+        return _this;
+    }
+    return CurrencyInvestment;
+}(__WEBPACK_IMPORTED_MODULE_0__investment__["a" /* Investment */]));
+
+//# sourceMappingURL=currencyInvestment.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/models/investment.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Investment; });
+var Investment = (function () {
+    function Investment(investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) {
+        if (team === void 0) { team = null; }
+        if (investmentDistribution === void 0) { investmentDistribution = []; }
+        this.investmentAmount = investmentAmount;
+        this.investmentAmountUnit = investmentAmountUnit;
+        this.team = team;
+        this.investmentDistribution = investmentDistribution;
+        this.createdBy = createdBy;
+    }
+    return Investment;
+}());
+
+//# sourceMappingURL=investment.js.map
 
 /***/ }),
 

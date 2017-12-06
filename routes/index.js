@@ -4,7 +4,6 @@ const userController = require('../controllers/userController');
 const teamController = require('../controllers/teamController');
 const authController = require('../controllers/authController');
 const investmentController = require('../controllers/investmentController');
-const testController = require('../controllers/testController');
 const { catchErrors, catchApiErrors } = require('../handlers/errorHandlers');
 
 // Do work here
@@ -80,24 +79,18 @@ router.get('/app/teams/edit/:slug', (req, res) => {
 });
 
 
-// TEST controller
-// router.get('/register', testController.registerForm);
-// router.get('/login', testController.loginForm);
-// router.get('/logout', testController.logoutForm);
-// router.get('/account', 
-//     authController.isLogggedIn, 
-//     testController.account
-// );
-// router.get('/account/reset/:token', catchErrors(testController.reset));
+//*************************************************************************** */
+//*************************************************************************** */
+//*******************************         *********************************** */
+//*******************************  A P I  *********************************** */
+//*******************************         *********************************** */
+//*************************************************************************** */
+//*************************************************************************** */
 
-//*************************************************************************** */
-//******************************** API ************************************** */
-//*************************************************************************** */
 
 //*************************************************************************** */
 //****************************** USERS API ********************************** */
 //*************************************************************************** */
-//user controller
 
 router.post('/api/users/login', authController.login);
 
@@ -179,6 +172,12 @@ router.post('/api/investments/create',
   catchErrors(userController.checkLoggedInUserWithEmail),
   investmentController.validateRegister,
   catchErrors(investmentController.create)
+);
+
+router.get('/api/investments/getAll', 
+  authController.isLogggedIn,
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  catchErrors(investmentController.getAllInvestments)
 );
 
 // router.post('/api/investments/update', 

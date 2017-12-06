@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const md5 = require('md5');
 const Investment = mongoose.model('Investment');
 const CurrencyInvestment = mongoose.model('CurrencyInvestment');
 const promisify = require('es6-promisify');
@@ -53,6 +53,7 @@ exports.create = async (req, res, next) => {
     })).save();
 
     if (investment) {
+        //save a new currency investment record in DB
         console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Investment')}`);
         let currencyInvestment = await (new CurrencyInvestment({
             currencyType : req.body.type,
@@ -94,4 +95,86 @@ exports.create = async (req, res, next) => {
             data : null
         });
     }
+};
+
+/**
+ * Get all investments for the authenticated user
+ */
+exports.getAllInvestments = async (req, res) => {
+    const methodTrace = `${errorTrace} getAllInvestments() >`;
+    //1 - Get all the teams where I am a member
+    console.log(`${methodTrace} ${getMessage('message', 1034, req.user.email, true, 'all Investments', 'user', req.user.email)}`);
+    
+
+
+    //2 - Get teams with members
+    let investments = await Investment.aggregate([
+        { $match : { investmentDistribution : { $elemMatch : { email : req.user.email } } } },
+        { $lookup : { from : 'users', localField : 'createdBy', foreignField : '_id', as : 'creatorData' } },
+        { 
+            $addFields : {
+                createdBy : { //replaces the exitent createdBy field with this
+                    name : '$creatorData.name',
+                    email : '$creatorData.email'
+                }
+            }
+        },
+        { $lookup : { from : 'teams', localField : 'team', foreignField : '_id', as : 'teamData' } },
+        { 
+            $addFields : {
+                team : { //replaces the exitent createdBy field with this
+                    name : '$teamData.name',
+                    slug : '$teamData.slug',
+                    description : '$teamData.description'
+                }
+            }
+        },
+        { $lookup : { from : 'currencyinvestments', localField : '_id', foreignField : 'parent', as : 'currencyInvestmentData' } }, //for currency investments
+        //{ $lookup : { from : 'propertyinvestments', localField : '_id', foreignField : 'parent', as : 'propertyInvestmentData' } } //For property investments
+        {
+            $project : {
+                __v : false,
+                creatorData : false,
+                teamData : false,
+                currencyInvestmentData : { 
+                    __v : false, 
+                    _id : false
+                },
+                "investmentDistribution._id" : false
+            }
+        },
+        { $sort : { "currencyInvestmentData.buyingDate" : 1 } }
+    ]);
+
+    //2 - Parse the recordset from DB and organize the info better.
+    let result = [];
+    for (let investment of investments) {
+        //created by data
+        investment.createdBy.name = investment.createdBy.name[0];
+        investment.createdBy.email = investment.createdBy.email[0];
+        investment.createdBy.gravatar = 'https://gravatar.com/avatar/' + md5(investment.createdBy.email) + '?s=200'
+
+        //team data
+        if (investment.team && investment.team.name && investment.team.name.length) {
+            investment.team.name = investment.team.name[0];
+            investment.team.slug = investment.team.slug[0];
+            investment.team.description = investment.team.description[0];
+        } else {
+            investment.team = null;
+        }
+
+        //investment data
+        investment.currencyInvestmentData = investment.currencyInvestmentData[0];
+        
+        result.push(investment);
+    }
+
+    //Return investments info to the user.
+    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, result.length, 'Investment(s)')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1036, null, false, result.length, 'Investment(s)'),
+        data : result
+    });
 };

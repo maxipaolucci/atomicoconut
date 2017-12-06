@@ -4,8 +4,10 @@ import { HttpParams } from '@angular/common/http';
 import { Observable } from "rxjs/Rx";
 import { environment } from "../../../environments/environment";
 import { AppService } from "../../app.service";
-import { Team } from '../teams/models/team';
 import { User } from '../users/models/user';
+import { Investment } from './models/investment';
+import { CurrencyInvestment } from './models/currencyInvestment';
+import { Team } from '../teams/models/team';
 
 
 @Injectable()
@@ -53,40 +55,37 @@ export class InvestmentsService {
   //       .catch(this.appService.handleError);
   // }
 
-  // /**
-  //  * Server call to Get all the teams for the current user from the server
-  //  * @param {string} slug . The team slug
-  //  */
-  // getTeams(email : string) : Observable<any> {
-  //   let methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+  /**
+   * Server call to Get all the Investments for the current user from the server
+   * @param {string} email . The team slug
+   */
+  getInvestments(email : string) : Observable<Investment[]> {
+    let methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
 
-  //   const teamsData$ = this.http.get(`${this.serverHost}/getAll?${this.appService.getParamsAsQuerystring({email})}`)
-  //       .map(this.appService.extractData)
-  //       .catch(this.appService.handleError);
+    const investmentsData$ = this.http.get(`${this.serverHost}/getAll?${this.appService.getParamsAsQuerystring({email})}`)
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
     
-  //   return teamsData$.switchMap((teamsData) => {
-  //     let teams : Team[] = [];
+    return investmentsData$.switchMap((investmentsData) => {
+      let investments : Investment[] = [];
+      
+      if (investmentsData && investmentsData instanceof Array) {
+        for (let item of investmentsData) {
+          const createdBy = new User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
+          const team = item.team ? new Team(item.team.name, item.team.description, item.team.slug) : null;
 
-  //     if (teamsData && teamsData instanceof Array) {
-  //       for (let item of teamsData) {
-  //         let admin = null;
-  //         let members = [];
-  //         for (let member of item.members) {
-  //           const newMember = new User(member.name, member.email, member.gravatar);
-  //           members.push(newMember);
-  //           if (member.isAdmin) {
-  //             admin = newMember;
-  //           }
-  //         }
-  //         teams.push(new Team(item.name, item.description || null, item.slug, admin, members));
-  //       }
-  //     } else {
-  //       this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-  //     }
+          if (item.investmentType === 'currency' || item.investmentType === 'crypto') {
+            investments.push(new CurrencyInvestment(item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.currencyInvestmentData.amountUnit, 
+                item.currencyInvestmentData.amount, item.currencyInvestmentData.buyingPrice, item.currencyInvestmentData.buyingPriceUnit, item.currencyInvestmentData.buyingDate, item.investmentType));
+          }
+        }
+      } else {
+        this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+      }
 
-  //     return Observable.of(teams);
-  //   });
-  // }
+      return Observable.of(investments);
+    });
+  }
 
   /**
    * Server call to delete an investment from the server
