@@ -75,17 +75,17 @@ export class TeamsDashboardComponent implements OnInit {
   }
 
   openDeleteTeamDialog(index : number, team : Team = null) {
-    const methodTrace = `${this.constructor.name} > openYesNoDialog() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > openDeleteTeamDialog() > `; //for debugging
     
     if (!team) {
-      this.appService.consoleLog('error', `${methodTrace} Team is required for delete.`);
+      this.appService.consoleLog('error', `${methodTrace} Team is required to delete.`);
       return false;
     }
 
     this.teamActionRunning[index] = true;
     let yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
       width: '250px',
-      data: { message : `Are you sure you want to delete forever the team "${team.name}"`}
+      data: { message : `Are you sure you want to delete forever the team "${team.name}"?`}
     });
 
     yesNoDialogRef.afterClosed().subscribe(result => {

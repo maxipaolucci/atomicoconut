@@ -17,6 +17,7 @@ import { InvestmentsService } from '../../investments.service';
 })
 export class InvestmentsDashboardComponent implements OnInit {
   investments : Investment[] = [];
+  investmentsUI : any[] = []; //this is a structure to use in the view an make the rendering easier organizing the info in rows
   xmrBuyDate : Date = new Date(2017, 5, 23); //month minus 1, 5 = june
   xmrBuyDate2 : Date = new Date(2017, 8, 23);
   xmrBuyDate3 : Date = new Date(2017, 8, 25);
@@ -25,7 +26,6 @@ export class InvestmentsDashboardComponent implements OnInit {
   totalReturn = 0;
   user : User = null;
   getInvestmentsServiceRunning : boolean = false;
-  investmentActionRunning : boolean[] = [];
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private usersService : UsersService, public dialog: MatDialog, 
       private appService : AppService, private investmentsService : InvestmentsService) { }
@@ -59,13 +59,22 @@ export class InvestmentsDashboardComponent implements OnInit {
 
     this.investmentsService.getInvestments(this.user.email).subscribe(
       (investments : Investment[]) => {
-        let index = 0;
         this.investments = investments;
+
+        //organize investments in rows of n-items to show in the view
+        let investmentsRow : any[] = [];
         for (let item of investments) {
-          this.investmentActionRunning[index] = false;
-          index += 1;
+          if (investmentsRow.length < 2) {
+            investmentsRow.push(item);
+          } else {
+            this.investmentsUI.push(investmentsRow);
+            investmentsRow = [item];
+          }
         }
-        console.log(this.investments);
+
+        if (investmentsRow.length) {
+          this.investmentsUI.push(investmentsRow);
+        }
 
         this.getInvestmentsServiceRunning = false;
       },

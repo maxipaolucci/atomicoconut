@@ -180,6 +180,12 @@ router.get('/api/investments/getAll',
   catchErrors(investmentController.getAllInvestments)
 );
 
+router.get('/api/investments/getById', 
+  authController.isLogggedIn,
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  catchErrors(investmentController.getById)
+);
+
 // router.post('/api/investments/update', 
 //   authController.isLogggedIn, 
 //   catchErrors(userController.checkLoggedInUserWithEmail),

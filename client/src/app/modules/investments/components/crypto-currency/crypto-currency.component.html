@@ -10,7 +10,7 @@
       today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>
     </mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="card__content">
     Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> 
     <br>
 
@@ -21,5 +21,22 @@
       <br>
       ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)
     </div>
+
+    <section class="actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
+      <button *ngIf="!actionRunning" mat-mini-fab routerLink="/investments/crypto/edit/{{id}}" color="primary" (click)="actionRunning = true">
+        <mat-icon aria-label="Edit Investment">edit</mat-icon>
+      </button>
+
+      <button *ngIf="!actionRunning" mat-mini-fab color="warn" (click)="openDeleteDialog()">
+        <mat-icon aria-label="Delete investment">delete</mat-icon>
+      </button>
+
+      <mat-progress-spinner *ngIf="actionRunning"
+        class="progress-spinner progress-spinner--action"
+        color="warn"
+        [diameter]="40" [strokeWidth]="7"
+        mode="indeterminate">
+      </mat-progress-spinner>
+    </section>
   </mat-card-content>
 </mat-card>

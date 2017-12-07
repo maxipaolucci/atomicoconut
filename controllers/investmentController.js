@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 const md5 = require('md5');
 const Investment = mongoose.model('Investment');
 const CurrencyInvestment = mongoose.model('CurrencyInvestment');
@@ -102,14 +103,30 @@ exports.create = async (req, res, next) => {
  */
 exports.getAllInvestments = async (req, res) => {
     const methodTrace = `${errorTrace} getAllInvestments() >`;
-    //1 - Get all the teams where I am a member
+    //1 - Get all the investments where user is involved
     console.log(`${methodTrace} ${getMessage('message', 1034, req.user.email, true, 'all Investments', 'user', req.user.email)}`);
-    
+    const aggregationStagesArr = [{ $match : { investmentDistribution : { $elemMatch : { email : req.user.email } } } }].concat(aggregationStages(), 
+            { $sort : { "currencyInvestmentData.buyingDate" : 1 } });
+    let investments = await Investment.aggregate(aggregationStagesArr);
 
+    //2 - Parse the recordset from DB and organize the info better.
+    let result = beautifyInvestmentsFormat(investments);
 
-    //2 - Get teams with members
-    let investments = await Investment.aggregate([
-        { $match : { investmentDistribution : { $elemMatch : { email : req.user.email } } } },
+    //3- Return investments info to the user.
+    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, result.length, 'Investment(s)')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1036, null, false, result.length, 'Investment(s)'),
+        data : result
+    });
+};
+
+/**
+ * Return the basic aggregation stages to populate investments results
+ */
+const aggregationStages = () => {
+    return [
         { $lookup : { from : 'users', localField : 'createdBy', foreignField : '_id', as : 'creatorData' } },
         { 
             $addFields : {
@@ -142,11 +159,18 @@ exports.getAllInvestments = async (req, res) => {
                 },
                 "investmentDistribution._id" : false
             }
-        },
-        { $sort : { "currencyInvestmentData.buyingDate" : 1 } }
-    ]);
+        }
+    ];
+};
 
-    //2 - Parse the recordset from DB and organize the info better.
+/**
+ * Organize the information for investment retrieved from DB in a better format to send back to the client
+ * 
+ * @param {array} investments . The result from the DB query for investments
+ * 
+ * @return {array} . The formatted result
+ */
+const beautifyInvestmentsFormat = (investments) => {
     let result = [];
     for (let investment of investments) {
         //created by data
@@ -169,12 +193,91 @@ exports.getAllInvestments = async (req, res) => {
         result.push(investment);
     }
 
-    //Return investments info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, result.length, 'Investment(s)')}`);
-    res.json({
-        status : 'success', 
-        codeno : 200,
-        msg : getMessage('message', 1036, null, false, result.length, 'Investment(s)'),
-        data : result
+    return result;
+};
+
+/**
+ * Get a team by ID
+ * @param {string} id
+ * @param {string} userEmail . Just for debug in console purposes.
+ * 
+ * @return {object} . The investment looked for or null
+ */
+const getByIdObject = async (id, userEmail = null) => {
+    const methodTrace = `${errorTrace} getByIdObject() >`;
+
+    //1- check for an investment with the provided id
+    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'Investment', 'id', id)}`); 
+    try {
+        id = ObjectId(id);    
+    } catch(error) {
+        id = null; //this is going to make the query do not return anything
+    }
+
+    const aggregationStagesArr = [{ $match : { _id : id } }].concat(aggregationStages());
+    let investments = await Investment.aggregate(aggregationStagesArr);
+
+    //2 - Parse the recordset from DB and organize the info better.
+    let result = beautifyInvestmentsFormat(investments);
+    
+    //3 - Get the first result
+    result = result.length ? result[0] : null;
+    
+    //4 - Return investment info to the user.
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, result ? 1 : 0, 'Investment(s)')}`);
+    return result;
+};
+exports.getByIdObject = getByIdObject;
+
+/**
+ * Get an investment by ID and sends it back to client
+ */
+exports.getById = async (req, res) => {
+    const methodTrace = `${errorTrace} getById() >`;
+
+    //1 - get the investment by ID
+    const result = await getByIdObject(req.query.id, req.user.email);
+    
+    //2 - check that the user is part of the invesment
+    if (result && result.investmentDistribution) {
+        let found = false;
+        for (let member of result.investmentDistribution) {
+            if (req.user.email === member.email) {
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            //3.1 - The user is member of the investment, send it back to the client
+            res.json({
+                status : 'success', 
+                codeno : 200,
+                msg : getMessage('message', 1036, null, false, 1, 'Investment(s)'),
+                data : result
+            });
+
+            return;
+        }
+    } else if (!result){
+    //Nothing found for that ID
+        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Investment')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 461,
+            msg : getMessage('error', 461, null, false, 'Investment'),
+            data : null
+        });
+
+        return;
+    }
+
+    //3.2 - the client is not member of the investment requested
+    console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Investment', req.user.email)}`);
+    res.status(401).json({ 
+        status : "error", 
+        codeno : 462,
+        msg : getMessage('error', 462, null, false, 'Investment', req.user.email),
+        data : null
     });
 };

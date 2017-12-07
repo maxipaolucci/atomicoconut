@@ -212,8 +212,47 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     return result;
   }
 
+  /**
+   * Get a team from server based on the id provided
+   * @param {string} id 
+   */
   getInvestment(id : string) {
-    console.log(id);
+    const methodTrace = `${this.constructor.name} > getInvestment() > `; //for debugging
+    
+        if (!id) {
+          this.appService.showResults(`Invalid investment ID`, 'error');
+          this.appService.consoleLog('error', `${methodTrace} ID parameter must be provided, but was: `, id);
+          return false;
+        }
+    
+        this.getInvestmentServiceRunning = true;
+    
+        const newSubscription = this.investmentsService.getInvestmentById(this.user.email, id).subscribe(
+          (data : any) => {
+            if (data && data._id) {
+              console.log(data);
+            } else {
+              this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+            }
+    
+            this.getInvestmentServiceRunning = false;
+          },
+          (error : any) => {
+            this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+            if (error.codeno === 400) {
+              this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+            } else if (error.codeno === 462) {
+              this.appService.showResults(error.msg, 'error');
+              this.router.navigate(['/welcome']);
+            } else {
+              this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+            }
+    
+            this.getInvestmentServiceRunning = false;
+          }
+        );
+    
+        this.subscription.add(newSubscription);
   }
 
   onSelectChange(matSelectChange : MatSelectChange) {

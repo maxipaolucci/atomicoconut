@@ -178,11 +178,11 @@ exports.update = async (req, res, next) => {
     let team = await getTeamBySlugObject(req.body.slug, true, user.email);
     if (team && team.admin && team.admin.email !== user.email) {
         //the client is not the admin of the team requested
-        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Team')}`);
+        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Team', user.email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 462,
-            msg : getMessage('error', 462, null, false, 'Team'),
+            msg : getMessage('error', 462, null, false, 'Team', user.email),
             data : null
         });
 
@@ -495,11 +495,11 @@ exports.getMyTeamBySlug = async (req, res) => {
     
     if (result && result.admin && result.admin.email !== req.user.email) {
         //the client is not the admin of the team requested
-        console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Team')}`);
+        console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Team', req.user.email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 462,
-            msg : getMessage('error', 462, null, false, 'Team'),
+            msg : getMessage('error', 462, null, false, 'Team', req.user.email),
             data : null
         });
 
@@ -522,11 +522,11 @@ exports.delete = async (req, res) => {
 
     if (team && team.admin && team.admin.email !== req.body.email) {
         //the client is not the admin of the team requested
-        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Team')}`);
+        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Team', user.email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 462,
-            msg : getMessage('error', 462, null, false, 'Team'),
+            msg : getMessage('error', 462, null, false, 'Team', user.email),
             data : null
         });
 
@@ -560,8 +560,8 @@ exports.delete = async (req, res) => {
             console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Team', '_id', team._id)}`);
             res.status(401).json({ 
                 status : "error", 
-                codeno : 462,
-                msg : getMessage('error', 462, null, false, 'Team'),
+                codeno : 464,
+                msg : getMessage('error', 464, null, false, 'Team', '_id', team._id),
                 data : null
             });
 

@@ -192,6 +192,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > getTeam() > `; //for debugging
 
     if (!slug) {
+      this.appService.showResults(`Invalid team ID`, 'error');
       this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
       return false;
     }

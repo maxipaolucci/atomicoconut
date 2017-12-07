@@ -1059,7 +1059,7 @@ var _a;
 /***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar \r\n        class=\"header-image\"\r\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\r\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\r\n    </div>\r\n    <mat-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content>\r\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\r\n\r\n    <div [class.color__accent]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \r\n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n  </mat-card-content>\r\n</mat-card>"
+module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar \r\n        class=\"header-image\"\r\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\r\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\r\n    </div>\r\n    <mat-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\r\n\r\n    <div [class.color__accent]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \r\n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <section class=\"actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/crypto/edit/{{id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
 
 /***/ }),
 
@@ -1071,7 +1071,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".currency-card {\n  text-align: center; }\n  .currency-card .header-image {\n    background-size: cover; }\n    .currency-card .header-image.header-image__xmr {\n      background-image: url(\"/assets/images/xmr.png\"); }\n    .currency-card .header-image.header-image__btc {\n      background-image: url(\"/assets/images/btc.png\"); }\n", ""]);
+exports.push([module.i, ".currency-card {\n  text-align: center; }\n  .currency-card .header-image {\n    background-size: cover; }\n    .currency-card .header-image.header-image__xmr {\n      background-image: url(\"/assets/images/xmr.png\"); }\n    .currency-card .header-image.header-image__btc {\n      background-image: url(\"/assets/images/btc.png\"); }\n  .currency-card .card__content .actions {\n    margin: 0 8px 8px 0; }\n", ""]);
 
 // exports
 
@@ -1087,8 +1087,10 @@ module.exports = module.exports.toString();
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoCurrencyComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__crypto_currency_service__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1101,14 +1103,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var CryptoCurrencyComponent = (function () {
-    function CryptoCurrencyComponent(cryptoCurrencyService, appService) {
+    function CryptoCurrencyComponent(cryptoCurrencyService, appService, dialog) {
         this.cryptoCurrencyService = cryptoCurrencyService;
         this.appService = appService;
+        this.dialog = dialog;
+        this.totalReturns = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
         this.usdFromCryptoCurrency = 0;
         this.usdFromCryptoCurrencyWhenBought = 0;
         this.cryptoCurrencyCurrentPrice = 0;
-        this.totalReturns = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.actionRunning = false;
     }
     CryptoCurrencyComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1126,8 +1132,37 @@ var CryptoCurrencyComponent = (function () {
             _this.appService.showResults("There was an error trying to get crypto currency rates data, please try again in a few minutes.", 'error');
         });
     };
+    CryptoCurrencyComponent.prototype.openDeleteDialog = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > openDeleteDialog() > "; //for debugging
+        if (!this.id) {
+            this.appService.consoleLog('error', methodTrace + " Investment ID is required to delete.");
+            return false;
+        }
+        this.actionRunning = true;
+        var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_2__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
+            width: '250px',
+            data: { message: "Are you sure you want to delete forever this investment?" }
+        });
+        yesNoDialogRef.afterClosed().subscribe(function (result) {
+            if (result === 'yes') {
+                _this.delete();
+            }
+            else {
+                _this.actionRunning = false;
+            }
+        });
+        return false;
+    };
+    CryptoCurrencyComponent.prototype.delete = function () {
+        console.log('Delete investment');
+    };
     return CryptoCurrencyComponent;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CryptoCurrencyComponent.prototype, "id", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
     __metadata("design:type", String)
@@ -1154,10 +1189,10 @@ CryptoCurrencyComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CryptoCurrencyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__crypto_currency_service__["a" /* CryptoCurrencyService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__app_service__["a" /* AppService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__crypto_currency_service__["a" /* CryptoCurrencyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__crypto_currency_service__["a" /* CryptoCurrencyService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */]) === "function" && _d || Object])
 ], CryptoCurrencyComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=crypto-currency.component.js.map
 
 /***/ }),
@@ -1456,7 +1491,7 @@ var _a;
 /***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section fxLayout=\"column\" fxLayoutGap=\"10px\" *ngIf=\"user.accessToInvestments\" >\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"218.85627651\"\r\n        [cryptoCurrencyBuyPrice]=\"50\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex\r\n        [cryptoCurrency]=\"'btc'\"\r\n        [cryptoCurrencyCount]=\"1.28129356\"\r\n        [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n        [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.94093753\"\r\n        [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.72806551\"\r\n        [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n        <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n            [class.color__red]=\"totalReturn < totalInvestment\">\r\n          Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!user.accessToInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>\r\n          You do not have any investment to show.\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab class=\"mat-elevation-z12\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section fxLayout=\"column\" fxLayoutGap=\"10px\" *ngIf=\"user.accessToInvestments\" >\r\n    \r\n    <div *ngFor=\"let row of investmentsUI\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <crypto-currency *ngFor=\"let investment of row\" fxFlex\r\n        [id]=\"investment.id\" \r\n        [cryptoCurrency]=\"investment.unit | lowercase\"\r\n        [cryptoCurrencyCount]=\"investment.amount\"\r\n        [cryptoCurrencyBuyPrice]=\"investment.buyingPrice\"\r\n        [cryptoCurrencyBuyDate]=\"investment.buyingDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n    \r\n    <!-- <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"218.85627651\"\r\n        [cryptoCurrencyBuyPrice]=\"50\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex\r\n        [cryptoCurrency]=\"'btc'\"\r\n        [cryptoCurrencyCount]=\"1.28129356\"\r\n        [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n        [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.94093753\"\r\n        [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.72806551\"\r\n        [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div> -->\r\n\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n        <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n            [class.color__red]=\"totalReturn < totalInvestment\">\r\n          Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!user.accessToInvestments\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>\r\n          You do not have any investment to show.\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab class=\"mat-elevation-z12\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -1517,6 +1552,7 @@ var InvestmentsDashboardComponent = (function () {
         this.appService = appService;
         this.investmentsService = investmentsService;
         this.investments = [];
+        this.investmentsUI = []; //this is a structure to use in the view an make the rendering easier organizing the info in rows
         this.xmrBuyDate = new Date(2017, 5, 23); //month minus 1, 5 = june
         this.xmrBuyDate2 = new Date(2017, 8, 23);
         this.xmrBuyDate3 = new Date(2017, 8, 25);
@@ -1525,7 +1561,6 @@ var InvestmentsDashboardComponent = (function () {
         this.totalReturn = 0;
         this.user = null;
         this.getInvestmentsServiceRunning = false;
-        this.investmentActionRunning = [];
     }
     InvestmentsDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1551,14 +1586,22 @@ var InvestmentsDashboardComponent = (function () {
         this.investments = [];
         this.getInvestmentsServiceRunning = true;
         this.investmentsService.getInvestments(this.user.email).subscribe(function (investments) {
-            var index = 0;
             _this.investments = investments;
+            //organize investments in rows of n-items to show in the view
+            var investmentsRow = [];
             for (var _i = 0, investments_1 = investments; _i < investments_1.length; _i++) {
                 var item = investments_1[_i];
-                _this.investmentActionRunning[index] = false;
-                index += 1;
+                if (investmentsRow.length < 2) {
+                    investmentsRow.push(item);
+                }
+                else {
+                    _this.investmentsUI.push(investmentsRow);
+                    investmentsRow = [item];
+                }
             }
-            console.log(_this.investments);
+            if (investmentsRow.length) {
+                _this.investmentsUI.push(investmentsRow);
+            }
             _this.getInvestmentsServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
@@ -1825,8 +1868,42 @@ var InvestmentsEditComponent = (function () {
         }
         return result;
     };
+    /**
+     * Get a team from server based on the id provided
+     * @param {string} id
+     */
     InvestmentsEditComponent.prototype.getInvestment = function (id) {
-        console.log(id);
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getInvestment() > "; //for debugging
+        if (!id) {
+            this.appService.showResults("Invalid investment ID", 'error');
+            this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
+            return false;
+        }
+        this.getInvestmentServiceRunning = true;
+        var newSubscription = this.investmentsService.getInvestmentById(this.user.email, id).subscribe(function (data) {
+            if (data && data._id) {
+                console.log(data);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            _this.getInvestmentServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 462) {
+                _this.appService.showResults(error.msg, 'error');
+                _this.router.navigate(['/welcome']);
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getInvestmentServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
     };
     InvestmentsEditComponent.prototype.onSelectChange = function (matSelectChange) {
         this.model.teamSlug = matSelectChange.value.slug;
@@ -2075,20 +2152,20 @@ var InvestmentsService = (function () {
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
     };
-    // /**
-    //  * Server call to Get a team from the server based on its slug
-    //  * @param {string} slug . The team slug
-    //  */
-    // getTeamBySlug(email : string, slug : string) : Observable<any> {
-    //   let methodTrace = `${this.constructor.name} > getTeamBySlug() > `; //for debugging
-    //   if (!slug) {
-    //     this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
-    //     return null;
-    //   }
-    //   return this.http.get(`${this.serverHost}/getbySlug?${this.appService.getParamsAsQuerystring({slug, email})}`)
-    //       .map(this.appService.extractData)
-    //       .catch(this.appService.handleError);
-    // }
+    /**
+     * Server call to Get an investment from the server based on its ID
+     * @param {string} id . The investment id
+     */
+    InvestmentsService.prototype.getInvestmentById = function (email, id) {
+        var methodTrace = this.constructor.name + " > getInvestmentById() > "; //for debugging
+        if (!id) {
+            this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
+            return null;
+        }
+        return this.http.get(this.serverHost + "/getbyId?" + this.appService.getParamsAsQuerystring({ id: id, email: email }))
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
     /**
      * Server call to Get all the Investments for the current user from the server
      * @param {string} email . The team slug
@@ -2107,7 +2184,7 @@ var InvestmentsService = (function () {
                     var createdBy = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
                     var team = item.team ? new __WEBPACK_IMPORTED_MODULE_7__teams_models_team__["a" /* Team */](item.team.name, item.team.description, item.team.slug) : null;
                     if (item.investmentType === 'currency' || item.investmentType === 'crypto') {
-                        investments.push(new __WEBPACK_IMPORTED_MODULE_6__models_currencyInvestment__["a" /* CurrencyInvestment */](item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.currencyInvestmentData.amountUnit, item.currencyInvestmentData.amount, item.currencyInvestmentData.buyingPrice, item.currencyInvestmentData.buyingPriceUnit, item.currencyInvestmentData.buyingDate, item.investmentType));
+                        investments.push(new __WEBPACK_IMPORTED_MODULE_6__models_currencyInvestment__["a" /* CurrencyInvestment */](item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.currencyInvestmentData.amountUnit, item.currencyInvestmentData.amount, item.currencyInvestmentData.buyingPrice, item.currencyInvestmentData.buyingPriceUnit, item.currencyInvestmentData.buyingDate, item.investmentType));
                     }
                 }
             }
@@ -2159,11 +2236,11 @@ var __extends = (this && this.__extends) || (function () {
 
 var CurrencyInvestment = (function (_super) {
     __extends(CurrencyInvestment, _super);
-    function CurrencyInvestment(investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, unit, amount, buyingPrice, buyingPriceUnit, buyingDate, type) {
+    function CurrencyInvestment(id, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, unit, amount, buyingPrice, buyingPriceUnit, buyingDate, type) {
         if (team === void 0) { team = null; }
         if (investmentDistribution === void 0) { investmentDistribution = []; }
         if (type === void 0) { type = 'currency'; }
-        var _this = _super.call(this, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) || this;
+        var _this = _super.call(this, id, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) || this;
         _this.type = type;
         _this.unit = unit;
         _this.amount = amount;
@@ -2185,7 +2262,7 @@ var CurrencyInvestment = (function (_super) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Investment; });
 var Investment = (function () {
-    function Investment(investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) {
+    function Investment(id, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) {
         if (team === void 0) { team = null; }
         if (investmentDistribution === void 0) { investmentDistribution = []; }
         this.investmentAmount = investmentAmount;
@@ -2193,6 +2270,7 @@ var Investment = (function () {
         this.team = team;
         this.investmentDistribution = investmentDistribution;
         this.createdBy = createdBy;
+        this.id = id;
     }
     return Investment;
 }());
@@ -3043,15 +3121,15 @@ var TeamsDashboardComponent = (function () {
     TeamsDashboardComponent.prototype.openDeleteTeamDialog = function (index, team) {
         var _this = this;
         if (team === void 0) { team = null; }
-        var methodTrace = this.constructor.name + " > openYesNoDialog() > "; //for debugging
+        var methodTrace = this.constructor.name + " > openDeleteTeamDialog() > "; //for debugging
         if (!team) {
-            this.appService.consoleLog('error', methodTrace + " Team is required for delete.");
+            this.appService.consoleLog('error', methodTrace + " Team is required to delete.");
             return false;
         }
         this.teamActionRunning[index] = true;
         var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_6__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
             width: '250px',
-            data: { message: "Are you sure you want to delete forever the team \"" + team.name + "\"" }
+            data: { message: "Are you sure you want to delete forever the team \"" + team.name + "\"?" }
         });
         yesNoDialogRef.afterClosed().subscribe(function (result) {
             if (result === 'yes') {
@@ -3324,6 +3402,7 @@ var TeamsEditComponent = (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > getTeam() > "; //for debugging
         if (!slug) {
+            this.appService.showResults("Invalid team ID", 'error');
             this.appService.consoleLog('error', methodTrace + " Slug parameter must be provided, but was: ", slug);
             return false;
         }

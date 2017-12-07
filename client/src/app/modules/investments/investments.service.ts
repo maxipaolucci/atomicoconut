@@ -38,22 +38,22 @@ export class InvestmentsService {
         .catch(this.appService.handleError);
   } 
 
-  // /**
-  //  * Server call to Get a team from the server based on its slug
-  //  * @param {string} slug . The team slug
-  //  */
-  // getTeamBySlug(email : string, slug : string) : Observable<any> {
-  //   let methodTrace = `${this.constructor.name} > getTeamBySlug() > `; //for debugging
+  /**
+   * Server call to Get an investment from the server based on its ID
+   * @param {string} id . The investment id
+   */
+  getInvestmentById(email : string, id : string) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > getInvestmentById() > `; //for debugging
 
-  //   if (!slug) {
-  //     this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
-  //     return null;
-  //   }
+    if (!id) {
+      this.appService.consoleLog('error', `${methodTrace} ID parameter must be provided, but was: `, id);
+      return null;
+    }
 
-  //   return this.http.get(`${this.serverHost}/getbySlug?${this.appService.getParamsAsQuerystring({slug, email})}`)
-  //       .map(this.appService.extractData)
-  //       .catch(this.appService.handleError);
-  // }
+    return this.http.get(`${this.serverHost}/getbyId?${this.appService.getParamsAsQuerystring({id, email})}`)
+        .map(this.appService.extractData)
+        .catch(this.appService.handleError);
+  }
 
   /**
    * Server call to Get all the Investments for the current user from the server
@@ -68,14 +68,14 @@ export class InvestmentsService {
     
     return investmentsData$.switchMap((investmentsData) => {
       let investments : Investment[] = [];
-      
+
       if (investmentsData && investmentsData instanceof Array) {
         for (let item of investmentsData) {
           const createdBy = new User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
           const team = item.team ? new Team(item.team.name, item.team.description, item.team.slug) : null;
 
           if (item.investmentType === 'currency' || item.investmentType === 'crypto') {
-            investments.push(new CurrencyInvestment(item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.currencyInvestmentData.amountUnit, 
+            investments.push(new CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.currencyInvestmentData.amountUnit, 
                 item.currencyInvestmentData.amount, item.currencyInvestmentData.buyingPrice, item.currencyInvestmentData.buyingPriceUnit, item.currencyInvestmentData.buyingDate, item.investmentType));
           }
         }

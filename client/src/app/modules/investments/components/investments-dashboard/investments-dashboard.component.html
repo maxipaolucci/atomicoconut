@@ -1,6 +1,18 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__investments">
   <section fxLayout="column" fxLayoutGap="10px" *ngIf="user.accessToInvestments" >
-    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+    
+    <div *ngFor="let row of investmentsUI" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
+      <crypto-currency *ngFor="let investment of row" fxFlex
+        [id]="investment.id" 
+        [cryptoCurrency]="investment.unit | lowercase"
+        [cryptoCurrencyCount]="investment.amount"
+        [cryptoCurrencyBuyPrice]="investment.buyingPrice"
+        [cryptoCurrencyBuyDate]="investment.buyingDate"
+        (totalReturns)="setTotals($event)">
+      </crypto-currency>
+    </div>
+    
+    <!-- <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
       <crypto-currency fxFlex 
         [cryptoCurrency]="'xmr'"
         [cryptoCurrencyCount]="218.85627651"
@@ -34,7 +46,7 @@
         [cryptoCurrencyBuyDate]="xmrBuyDate3"
         (totalReturns)="setTotals($event)">
       </crypto-currency>
-    </div>
+    </div> -->
 
     <mat-card fxFlex class="totals-card">
       <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"

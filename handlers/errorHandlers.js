@@ -14,7 +14,7 @@ const errorCodes = {
   459 : 'Failed to create and save a new record of {{param}}.',
   460 : 'User email loggedin in current server session does not match "{{param}}" provided by the service consumer.',
   461 : 'No {{param}} found with those parameters.',
-  462 : 'The {{param}} information requested it is not available for you.',
+  462 : 'The {{param}} information requested it is not available for {{param}}.',
   463 : 'You cannot remove the administrator of a Team.',
   464 : 'Error trying to remove a record from {{param}} with {{param}} = {{param}}',
   465 : 'Failed to update record from {{param}} with {{param}} = {{param}}',
