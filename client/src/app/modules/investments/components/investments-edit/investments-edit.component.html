@@ -105,8 +105,7 @@
       </div>
 
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
-        <currency-investment [type]="type"
-            [unit]="type ==='currency' ? 'USD' : 'BTC'"
+        <currency-investment [defaultValues]="model.investmentData"
             (values)="onInvestmentDataChange($event)">
         </currency-investment>
       </div>
@@ -128,7 +127,7 @@
           mode="indeterminate">
       </mat-progress-bar>
     </section>
-    <!-- <pre>{{model | json}}</pre> -->
+    <pre>{{model | json}}</pre>
   </form>
 
   <mat-progress-bar *ngIf="getInvestmentServiceRunning"

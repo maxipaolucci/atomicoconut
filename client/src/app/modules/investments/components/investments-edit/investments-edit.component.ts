@@ -9,6 +9,8 @@ import { Team } from '../../../teams/models/team';
 import { Subscription } from 'rxjs/Subscription';
 import { MatSelectChange, MatRadioChange } from '@angular/material';
 import { InvestmentsService } from '../../investments.service';
+import { Investment } from '../../models/investment';
+import { CurrencyInvestment } from '../../models/currencyInvestment';
 
 @Component({
   selector: 'investments-edit',
@@ -21,6 +23,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   editMode : boolean = false;
   user : User = null;
   teams : Team[] = [];
+  investment : Investment = null;
   model : any = {
     email : null, //user email for api check
     owner : 'me',
@@ -95,6 +98,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       } else {
         this.type = type;
         this.model.type = type;
+        this.model.investmentData.type = type;
+        console.log(this.model.investmentData);
       }
     });
   }
@@ -228,11 +233,28 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         this.getInvestmentServiceRunning = true;
     
         const newSubscription = this.investmentsService.getInvestmentById(this.user.email, id).subscribe(
-          (data : any) => {
-            if (data && data._id) {
-              console.log(data);
-            } else {
-              this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          (investment : Investment) => {
+            this.investment = investment;
+            //populate the model
+            this.model.owner = investment.team ? 'team' : 'me';
+            this.model.team = investment.team;
+            this.model.teamSlug = investment.team ? investment.team.slug : null;
+            this.model.investmentDistribution = investment.investmentDistribution;
+            for (let portion of investment.investmentDistribution) {
+              this.model.membersPercentage[portion.email] = portion.percentage;
+            }
+            this.model.investmentAmount = investment.investmentAmount;
+            this.model.investmentAmountUnit = investment.investmentAmountUnit;
+            this.model.type = investment.type;
+            if (investment instanceof CurrencyInvestment) {
+              this.model.investmentData = {
+                type : investment.type,
+                unit : investment.unit,
+                amount : investment.amount,
+                buyingPrice : investment.buyingPrice,
+                buyingPriceUnit : investment.buyingPriceUnit,
+                buyingDate : investment.buyingDate
+              };
             }
     
             this.getInvestmentServiceRunning = false;
@@ -241,7 +263,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
             this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
             if (error.codeno === 400) {
               this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-            } else if (error.codeno === 462) {
+            } else if (error.codeno === 461 || error.codeno === 462) {
               this.appService.showResults(error.msg, 'error');
               this.router.navigate(['/welcome']);
             } else {

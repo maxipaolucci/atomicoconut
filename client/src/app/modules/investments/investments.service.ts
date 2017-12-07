@@ -50,9 +50,27 @@ export class InvestmentsService {
       return null;
     }
 
-    return this.http.get(`${this.serverHost}/getbyId?${this.appService.getParamsAsQuerystring({id, email})}`)
+    const investmentData$ = this.http.get(`${this.serverHost}/getbyId?${this.appService.getParamsAsQuerystring({id, email})}`)
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
+
+    return investmentData$.switchMap((investmentData) => {
+      let investment : Investment = null;
+      if (investmentData && investmentData._id) {
+        const createdBy = new User(investmentData.createdBy.name, investmentData.createdBy.email, investmentData.createdBy.gravatar);
+        const team = investmentData.team ? new Team(investmentData.team.name, investmentData.team.description, investmentData.team.slug) : null;
+
+        if (investmentData.investmentType === 'currency' || investmentData.investmentType === 'crypto') {
+          investment = new CurrencyInvestment(investmentData._id, investmentData.amount, investmentData.amountUnit, createdBy, team, investmentData.investmentDistribution, 
+              investmentData.currencyInvestmentData.amountUnit, investmentData.currencyInvestmentData.amount, investmentData.currencyInvestmentData.buyingPrice, 
+              investmentData.currencyInvestmentData.buyingPriceUnit, investmentData.currencyInvestmentData.buyingDate, investmentData.investmentType);
+        }
+      } else {
+        this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+      }
+
+      return Observable.of(investment);
+    });
   }
 
   /**

@@ -13,8 +13,7 @@ import { AppService } from '../../../../app.service';
 export class CurrencyInvestmentComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('editCurrencyInvestmentForm') form;
-  @Input() type : string = 'currency'; //currency type. e.g: currency | crypto
-  @Input() unit : string; //e.g. : US Dollar, Australian Dollar, Monero, Bitcoin , depends on the type
+  @Input() defaultValues : any = null; //the default values of the component model  
   @Output() values: EventEmitter<any> = new EventEmitter();
   model : any = {
     type : null, // currency type. e.g: currency | crypto
@@ -33,10 +32,11 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy, AfterView
   }
 
   ngOnInit() {
-    this.model.type = this.type;
-    this.model.unit = this.unit;
+    console.log(this.model.type);
+    this.model.unit = this.model.type === 'currency' ? 'USD' : 'BTC';
     this.model.buyingDate = new Date(Date.now());
     this.model.buyingPriceUnit = 'USD';
+    Object.assign(this.model, this.defaultValues);
   }
 
   ngOnDestroy() {

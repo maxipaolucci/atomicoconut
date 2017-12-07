@@ -1323,7 +1323,7 @@ var CurrencyInvestmentComponent = (function () {
         this.dateAdapter = dateAdapter;
         this.appService = appService;
         this.utilService = utilService;
-        this.type = 'currency'; //currency type. e.g: currency | crypto
+        this.defaultValues = null; //the default values of the component model  
         this.values = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
         this.model = {
             type: null,
@@ -1337,10 +1337,11 @@ var CurrencyInvestmentComponent = (function () {
         this.dateAdapter.setLocale('en-GB');
     }
     CurrencyInvestmentComponent.prototype.ngOnInit = function () {
-        this.model.type = this.type;
-        this.model.unit = this.unit;
+        console.log(this.model.type);
+        this.model.unit = this.model.type === 'currency' ? 'USD' : 'BTC';
         this.model.buyingDate = new Date(Date.now());
         this.model.buyingPriceUnit = 'USD';
+        Object.assign(this.model, this.defaultValues);
     };
     CurrencyInvestmentComponent.prototype.ngOnDestroy = function () {
         var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
@@ -1389,12 +1390,8 @@ __decorate([
 ], CurrencyInvestmentComponent.prototype, "form", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", String)
-], CurrencyInvestmentComponent.prototype, "type", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", String)
-], CurrencyInvestmentComponent.prototype, "unit", void 0);
+    __metadata("design:type", Object)
+], CurrencyInvestmentComponent.prototype, "defaultValues", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
     __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
@@ -1641,7 +1638,7 @@ var _a, _b, _c, _d, _e, _f;
 /***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-investment\">\r\n  <form *ngIf=\"!getInvestmentServiceRunning\" \r\n      class=\"form__container form__edit-investment\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          Owner\r\n          <p class=\"mat-caption\">Specify the owner of this investment</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <mat-radio-group fxFlex.gt-xs=\"230px\" *ngIf=\"teams.length\" class=\"form__field radiogroup__owner\"\r\n              [(ngModel)]=\"model.owner\" \r\n              name=\"owner\" \r\n              id=\"owner\" \r\n              #owner=\"ngModel\"\r\n              (change)=\"onRadioChange($event)\">\r\n            <mat-radio-button class=\"owner__option\" value=\"me\">Just me</mat-radio-button>\r\n            <mat-radio-button class=\"owner__option\" value=\"team\">My team</mat-radio-button>\r\n          </mat-radio-group>\r\n  \r\n          <mat-form-field *ngIf=\"teams.length && model.owner === 'team'\" fxFlex fxFlex.gt-xs=\"350px\" class=\"form__field\">\r\n            <mat-select [(ngModel)]=\"model.team\"\r\n                name=\"team\" \r\n                id=\"team\" \r\n                #team=\"ngModel\" \r\n                placeholder=\"Select a team\"\r\n                (change)=\"onSelectChange($event)\"\r\n                required>\r\n              <mat-option *ngFor=\"let team of teams\" [value]=\"team\">\r\n                {{team.name}}\r\n              </mat-option>\r\n            </mat-select>\r\n            <mat-error *ngIf=\"team.invalid && (team.dirty || team.touched) && team.errors.required\">Please choose a team</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n      \r\n      <div *ngIf=\"model.team\" fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          Split between team members\r\n          <p class=\"mat-caption\">Specify how to split the returns setting a percentage of the total investment amount to each member</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">         \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"20px\" class=\"team-members\">\r\n            <div *ngFor=\"let member of model.team.members; index as memberIndex\" fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"member\">\r\n              <div class=\"member-details\" fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n                <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n                <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === model.team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n                  <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === model.team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n                  <p class=\"member__email\">{{member.email}}</p>\r\n                </div>\r\n              </div>\r\n    \r\n              <div class=\"member-percentage\">\r\n                <mat-form-field class=\"form__field\">\r\n                  <input matInput type=\"number\" id=\"memberPercentage_{{member.email}}\" name=\"memberPercentage_{{member.email}}\" placeholder=\"Percentage of investment\"\r\n                      [(ngModel)]=\"model.membersPercentage[member.email]\" \r\n                      value=\"model.membersPercentage[member.email]\"\r\n                      numberValidator='{\"min\": 0, \"max\": 100}'\r\n                      required\r\n                      #memberPercentage=\"ngModel\">\r\n                  <mat-hint align=\"start\">(%) Investment portion for {{member.email}}.</mat-hint>\r\n                  <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.required\">Percentage of investment is required.</mat-error>\r\n                  <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                  <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n                  <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n                </mat-form-field>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          \r\n        </div>\r\n      </div>\r\n\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title title__investment-amount\">\r\n          Investment amount\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n              <currency-unit fxFlex=\"50px\"\r\n                  [id]=\"'investmentAmountUnit'\" \r\n                  [value]=\"model.investmentAmountUnit\"\r\n                  [view]=\"'narrow'\"\r\n                  (newValue)=\"onCurrencyUnitChange($event)\">\r\n              </currency-unit>\r\n              \r\n              <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n                <input matInput type=\"number\" id=\"investmentAmount\" name=\"investmentAmount\" placeholder=\"Investment amount\"\r\n                    [(ngModel)]=\"model.investmentAmount\" \r\n                    value=\"model.investmentAmount\"\r\n                    numberValidator \r\n                    required\r\n                    #investmentAmount=\"ngModel\">\r\n                <mat-hint align=\"start\">Set the amount of money to invest.</mat-hint>\r\n                <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required\">Investment amount is required.</mat-error>\r\n                <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n              </mat-form-field>\r\n            </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <currency-investment [type]=\"type\"\r\n            [unit]=\"type ==='currency' ? 'USD' : 'BTC'\"\r\n            (values)=\"onInvestmentDataChange($event)\">\r\n        </currency-investment>\r\n      </div>\r\n    </section>\r\n\r\n    \r\n    \r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-investment\">\r\n      <button *ngIf=\"!editInvestmentServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!editInvestmentForm.form.valid || !investmentDataValid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"editInvestmentServiceRunning\"\r\n          class=\"progress-bar progress-bar--edit-investment\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n    <!-- <pre>{{model | json}}</pre> -->\r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-investment\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>\r\n"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-investment\">\r\n  <form *ngIf=\"!getInvestmentServiceRunning\" \r\n      class=\"form__container form__edit-investment\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          Owner\r\n          <p class=\"mat-caption\">Specify the owner of this investment</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <mat-radio-group fxFlex.gt-xs=\"230px\" *ngIf=\"teams.length\" class=\"form__field radiogroup__owner\"\r\n              [(ngModel)]=\"model.owner\" \r\n              name=\"owner\" \r\n              id=\"owner\" \r\n              #owner=\"ngModel\"\r\n              (change)=\"onRadioChange($event)\">\r\n            <mat-radio-button class=\"owner__option\" value=\"me\">Just me</mat-radio-button>\r\n            <mat-radio-button class=\"owner__option\" value=\"team\">My team</mat-radio-button>\r\n          </mat-radio-group>\r\n  \r\n          <mat-form-field *ngIf=\"teams.length && model.owner === 'team'\" fxFlex fxFlex.gt-xs=\"350px\" class=\"form__field\">\r\n            <mat-select [(ngModel)]=\"model.team\"\r\n                name=\"team\" \r\n                id=\"team\" \r\n                #team=\"ngModel\" \r\n                placeholder=\"Select a team\"\r\n                (change)=\"onSelectChange($event)\"\r\n                required>\r\n              <mat-option *ngFor=\"let team of teams\" [value]=\"team\">\r\n                {{team.name}}\r\n              </mat-option>\r\n            </mat-select>\r\n            <mat-error *ngIf=\"team.invalid && (team.dirty || team.touched) && team.errors.required\">Please choose a team</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n      \r\n      <div *ngIf=\"model.team\" fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          Split between team members\r\n          <p class=\"mat-caption\">Specify how to split the returns setting a percentage of the total investment amount to each member</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">         \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"20px\" class=\"team-members\">\r\n            <div *ngFor=\"let member of model.team.members; index as memberIndex\" fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"member\">\r\n              <div class=\"member-details\" fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n                <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n                <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === model.team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n                  <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === model.team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n                  <p class=\"member__email\">{{member.email}}</p>\r\n                </div>\r\n              </div>\r\n    \r\n              <div class=\"member-percentage\">\r\n                <mat-form-field class=\"form__field\">\r\n                  <input matInput type=\"number\" id=\"memberPercentage_{{member.email}}\" name=\"memberPercentage_{{member.email}}\" placeholder=\"Percentage of investment\"\r\n                      [(ngModel)]=\"model.membersPercentage[member.email]\" \r\n                      value=\"model.membersPercentage[member.email]\"\r\n                      numberValidator='{\"min\": 0, \"max\": 100}'\r\n                      required\r\n                      #memberPercentage=\"ngModel\">\r\n                  <mat-hint align=\"start\">(%) Investment portion for {{member.email}}.</mat-hint>\r\n                  <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.required\">Percentage of investment is required.</mat-error>\r\n                  <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                  <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n                  <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n                </mat-form-field>\r\n              </div>\r\n            </div>\r\n          </div>\r\n          \r\n        </div>\r\n      </div>\r\n\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title title__investment-amount\">\r\n          Investment amount\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n              <currency-unit fxFlex=\"50px\"\r\n                  [id]=\"'investmentAmountUnit'\" \r\n                  [value]=\"model.investmentAmountUnit\"\r\n                  [view]=\"'narrow'\"\r\n                  (newValue)=\"onCurrencyUnitChange($event)\">\r\n              </currency-unit>\r\n              \r\n              <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n                <input matInput type=\"number\" id=\"investmentAmount\" name=\"investmentAmount\" placeholder=\"Investment amount\"\r\n                    [(ngModel)]=\"model.investmentAmount\" \r\n                    value=\"model.investmentAmount\"\r\n                    numberValidator \r\n                    required\r\n                    #investmentAmount=\"ngModel\">\r\n                <mat-hint align=\"start\">Set the amount of money to invest.</mat-hint>\r\n                <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required\">Investment amount is required.</mat-error>\r\n                <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n              </mat-form-field>\r\n            </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <currency-investment [defaultValues]=\"model.investmentData\"\r\n            (values)=\"onInvestmentDataChange($event)\">\r\n        </currency-investment>\r\n      </div>\r\n    </section>\r\n\r\n    \r\n    \r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-investment\">\r\n      <button *ngIf=\"!editInvestmentServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!editInvestmentForm.form.valid || !investmentDataValid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"editInvestmentServiceRunning\"\r\n          class=\"progress-bar progress-bar--edit-investment\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n    <pre>{{model | json}}</pre>\r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-investment\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1676,6 +1673,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__ = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1685,6 +1683,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1704,6 +1703,7 @@ var InvestmentsEditComponent = (function () {
         this.editMode = false;
         this.user = null;
         this.teams = [];
+        this.investment = null;
         this.model = {
             email: null,
             owner: 'me',
@@ -1769,6 +1769,8 @@ var InvestmentsEditComponent = (function () {
             else {
                 _this.type = type;
                 _this.model.type = type;
+                _this.model.investmentData.type = type;
+                console.log(_this.model.investmentData);
             }
         });
     };
@@ -1881,12 +1883,29 @@ var InvestmentsEditComponent = (function () {
             return false;
         }
         this.getInvestmentServiceRunning = true;
-        var newSubscription = this.investmentsService.getInvestmentById(this.user.email, id).subscribe(function (data) {
-            if (data && data._id) {
-                console.log(data);
+        var newSubscription = this.investmentsService.getInvestmentById(this.user.email, id).subscribe(function (investment) {
+            _this.investment = investment;
+            //populate the model
+            _this.model.owner = investment.team ? 'team' : 'me';
+            _this.model.team = investment.team;
+            _this.model.teamSlug = investment.team ? investment.team.slug : null;
+            _this.model.investmentDistribution = investment.investmentDistribution;
+            for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
+                var portion = _a[_i];
+                _this.model.membersPercentage[portion.email] = portion.percentage;
             }
-            else {
-                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            _this.model.investmentAmount = investment.investmentAmount;
+            _this.model.investmentAmountUnit = investment.investmentAmountUnit;
+            _this.model.type = investment.type;
+            if (investment instanceof __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__["a" /* CurrencyInvestment */]) {
+                _this.model.investmentData = {
+                    type: investment.type,
+                    unit: investment.unit,
+                    amount: investment.amount,
+                    buyingPrice: investment.buyingPrice,
+                    buyingPriceUnit: investment.buyingPriceUnit,
+                    buyingDate: investment.buyingDate
+                };
             }
             _this.getInvestmentServiceRunning = false;
         }, function (error) {
@@ -1894,7 +1913,7 @@ var InvestmentsEditComponent = (function () {
             if (error.codeno === 400) {
                 _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
             }
-            else if (error.codeno === 462) {
+            else if (error.codeno === 461 || error.codeno === 462) {
                 _this.appService.showResults(error.msg, 'error');
                 _this.router.navigate(['/welcome']);
             }
@@ -2157,14 +2176,29 @@ var InvestmentsService = (function () {
      * @param {string} id . The investment id
      */
     InvestmentsService.prototype.getInvestmentById = function (email, id) {
+        var _this = this;
         var methodTrace = this.constructor.name + " > getInvestmentById() > "; //for debugging
         if (!id) {
             this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
             return null;
         }
-        return this.http.get(this.serverHost + "/getbyId?" + this.appService.getParamsAsQuerystring({ id: id, email: email }))
+        var investmentData$ = this.http.get(this.serverHost + "/getbyId?" + this.appService.getParamsAsQuerystring({ id: id, email: email }))
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
+        return investmentData$.switchMap(function (investmentData) {
+            var investment = null;
+            if (investmentData && investmentData._id) {
+                var createdBy = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](investmentData.createdBy.name, investmentData.createdBy.email, investmentData.createdBy.gravatar);
+                var team = investmentData.team ? new __WEBPACK_IMPORTED_MODULE_7__teams_models_team__["a" /* Team */](investmentData.team.name, investmentData.team.description, investmentData.team.slug) : null;
+                if (investmentData.investmentType === 'currency' || investmentData.investmentType === 'crypto') {
+                    investment = new __WEBPACK_IMPORTED_MODULE_6__models_currencyInvestment__["a" /* CurrencyInvestment */](investmentData._id, investmentData.amount, investmentData.amountUnit, createdBy, team, investmentData.investmentDistribution, investmentData.currencyInvestmentData.amountUnit, investmentData.currencyInvestmentData.amount, investmentData.currencyInvestmentData.buyingPrice, investmentData.currencyInvestmentData.buyingPriceUnit, investmentData.currencyInvestmentData.buyingDate, investmentData.investmentType);
+                }
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(investment);
+        });
     };
     /**
      * Server call to Get all the Investments for the current user from the server
@@ -2240,8 +2274,7 @@ var CurrencyInvestment = (function (_super) {
         if (team === void 0) { team = null; }
         if (investmentDistribution === void 0) { investmentDistribution = []; }
         if (type === void 0) { type = 'currency'; }
-        var _this = _super.call(this, id, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) || this;
-        _this.type = type;
+        var _this = _super.call(this, id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) || this;
         _this.unit = unit;
         _this.amount = amount;
         _this.buyingDate = buyingDate;
@@ -2262,7 +2295,7 @@ var CurrencyInvestment = (function (_super) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Investment; });
 var Investment = (function () {
-    function Investment(id, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) {
+    function Investment(id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) {
         if (team === void 0) { team = null; }
         if (investmentDistribution === void 0) { investmentDistribution = []; }
         this.investmentAmount = investmentAmount;
@@ -2271,6 +2304,7 @@ var Investment = (function () {
         this.investmentDistribution = investmentDistribution;
         this.createdBy = createdBy;
         this.id = id;
+        this.type = type;
     }
     return Investment;
 }());
