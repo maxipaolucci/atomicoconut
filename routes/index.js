@@ -186,12 +186,12 @@ router.get('/api/investments/getById',
   catchErrors(investmentController.getById)
 );
 
-// router.post('/api/investments/update', 
-//   authController.isLogggedIn, 
-//   catchErrors(userController.checkLoggedInUserWithEmail),
-//   investmentController.validateRegister,
-//   catchErrors(investmentController.update)
-// );
+router.post('/api/investments/update', 
+  authController.isLogggedIn, 
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  investmentController.validateRegister,
+  catchErrors(investmentController.update)
+);
 
 // router.delete('/api/investments/delete/:id',  
 //   catchErrors(userController.checkLoggedInUserWithEmail),

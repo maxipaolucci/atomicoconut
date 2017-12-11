@@ -43,6 +43,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   getInvestmentServiceRunning : boolean = false;
   getTeamsServiceRunning : boolean = false;
   subscription : Subscription = new Subscription();
+  formChangesSubscription : any = null;
   investmentDataValid : boolean = false; //this value is set when investment data form is updated
 
   
@@ -105,7 +106,17 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   ngAfterViewInit(): void {
-    const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
+    if (this.form && !this.formChangesSubscription) {
+      this.subscribeFormValueChanges();
+    }
+  }
+
+  /**
+   * This methods subscribes to changes on the main form in the view. We do it in a separate method because when the page loads for edition the form it is not defined in the
+   * view until an investment is retrived from the server. We save an instance of the subscription to avoid subscriwe twice or more times.
+   */
+  subscribeFormValueChanges() {
+    this.formChangesSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
       
       if (values.owner === 'team' && values.team && this.model.team) {
         //calculates the percentage acum from all the members
@@ -129,7 +140,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       }
     });
 
-    this.subscription.add(newSubscription);
+    this.subscription.add(this.formChangesSubscription);
   }
 
   ngOnDestroy() {
@@ -155,6 +166,36 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
           this.editInvestmentServiceRunning = false;
         }
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit investment service.`, error);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, 'error');
+        }
+
+        this.editInvestmentServiceRunning = false;
+      }
+    );
+
+    this.subscription.add(newSubscription);
+  }
+
+  onUpdate() {
+    const methodTrace = `${this.constructor.name} > onUpdate() > `; //for debugging
+
+    this.editInvestmentServiceRunning = true;
+
+    this.model.investmentDistribution = this.populateInvestmentDistributionArray();
+    //call the investment create service
+    const newSubscription = this.investmentsService.update(this.model).subscribe(
+      (data : any) => {
+        if (data && data.id && data.type) {
+          this.appService.showResults(`Investment successfully updated!`, 'success');
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        }
+
+        this.editInvestmentServiceRunning = false;
       },
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit investment service.`, error);
@@ -258,6 +299,10 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
             }
     
             this.getInvestmentServiceRunning = false;
+
+            if (this.form && !this.formChangesSubscription) {
+              this.subscribeFormValueChanges();
+            }
           },
           (error : any) => {
             this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);

@@ -1723,6 +1723,7 @@ var InvestmentsEditComponent = (function () {
         this.getInvestmentServiceRunning = false;
         this.getTeamsServiceRunning = false;
         this.subscription = new __WEBPACK_IMPORTED_MODULE_6_rxjs_Subscription__["a" /* Subscription */]();
+        this.formChangesSubscription = null;
         this.investmentDataValid = false; //this value is set when investment data form is updated
     }
     InvestmentsEditComponent.prototype.ngOnInit = function () {
@@ -1775,8 +1776,17 @@ var InvestmentsEditComponent = (function () {
         });
     };
     InvestmentsEditComponent.prototype.ngAfterViewInit = function () {
+        if (this.form && !this.formChangesSubscription) {
+            this.subscribeFormValueChanges();
+        }
+    };
+    /**
+     * This methods subscribes to changes on the main form in the view. We do it in a separate method because when the page loads for edition the form it is not defined in the
+     * view until an investment is retrived from the server. We save an instance of the subscription to avoid subscriwe twice or more times.
+     */
+    InvestmentsEditComponent.prototype.subscribeFormValueChanges = function () {
         var _this = this;
-        var newSubscription = this.form.valueChanges.debounceTime(500).subscribe(function (values) {
+        this.formChangesSubscription = this.form.valueChanges.debounceTime(500).subscribe(function (values) {
             if (values.owner === 'team' && values.team && _this.model.team) {
                 //calculates the percentage acum from all the members
                 var percentageAcum = _this.model.team.members.reduce(function (total, member) {
@@ -1798,7 +1808,7 @@ var InvestmentsEditComponent = (function () {
                 }
             }
         });
-        this.subscription.add(newSubscription);
+        this.subscription.add(this.formChangesSubscription);
     };
     InvestmentsEditComponent.prototype.ngOnDestroy = function () {
         var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
@@ -1820,6 +1830,29 @@ var InvestmentsEditComponent = (function () {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
                 _this.editInvestmentServiceRunning = false;
             }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit investment service.", error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error with the investment services, please try again in a few minutes.", 'error');
+            }
+            _this.editInvestmentServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    InvestmentsEditComponent.prototype.onUpdate = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onUpdate() > "; //for debugging
+        this.editInvestmentServiceRunning = true;
+        this.model.investmentDistribution = this.populateInvestmentDistributionArray();
+        //call the investment create service
+        var newSubscription = this.investmentsService.update(this.model).subscribe(function (data) {
+            if (data && data.id && data.type) {
+                _this.appService.showResults("Investment successfully updated!", 'success');
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            _this.editInvestmentServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit investment service.", error);
             if (error.codeno === 400) {
@@ -1908,6 +1941,9 @@ var InvestmentsEditComponent = (function () {
                 };
             }
             _this.getInvestmentServiceRunning = false;
+            if (_this.form && !_this.formChangesSubscription) {
+                _this.subscribeFormValueChanges();
+            }
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {

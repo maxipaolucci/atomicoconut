@@ -98,6 +98,8 @@ exports.create = async (req, res, next) => {
     }
 };
 
+exports.update = async (req, res, next) => {}
+
 /**
  * Get all investments for the authenticated user
  */
