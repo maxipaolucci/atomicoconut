@@ -193,9 +193,9 @@ router.post('/api/investments/update',
   catchErrors(investmentController.update)
 );
 
-// router.delete('/api/investments/delete/:id',  
-//   catchErrors(userController.checkLoggedInUserWithEmail),
-//   catchErrors(investmentController.delete)
-// );
+router.delete('/api/investments/delete/:id',  
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  catchErrors(investmentController.delete)
+);
 
 module.exports = router;

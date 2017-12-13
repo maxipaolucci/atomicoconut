@@ -100,7 +100,7 @@ export class TeamsDashboardComponent implements OnInit {
   }
 
   delete(index : number, team : Team = null) {
-    const methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > delete() > `; //for debugging
 
     this.teamActionRunning[index] = true;
 

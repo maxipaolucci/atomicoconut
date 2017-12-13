@@ -122,7 +122,7 @@ export class InvestmentsService {
 
   /**
    * Server call to delete an investment from the server
-   * @param {string} id . The team slug
+   * @param {string} id . The investment id
    * @param {string} email . The current user email.
    */
   delete(id : string, email : string) : Observable<any> {

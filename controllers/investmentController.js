@@ -262,6 +262,15 @@ const aggregationStages = () => {
                 }
             }
         },
+        { $lookup : { from : 'users', localField : 'updatedBy', foreignField : '_id', as : 'updatorData' } },
+        { 
+            $addFields : {
+                updatedBy : { //replaces the exitent createdBy field with this
+                    name : '$updatorData.name',
+                    email : '$updatorData.email'
+                }
+            }
+        },
         { $lookup : { from : 'teams', localField : 'team', foreignField : '_id', as : 'teamData' } },
         { 
             $addFields : {
@@ -278,6 +287,7 @@ const aggregationStages = () => {
             $project : {
                 __v : false,
                 creatorData : false,
+                updatorData : false,
                 teamData : false,
                 currencyInvestmentData : { 
                     __v : false
@@ -302,7 +312,12 @@ const beautifyInvestmentsFormat = async (investments, options = null) => {
         //created by data
         investment.createdBy.name = investment.createdBy.name[0];
         investment.createdBy.email = investment.createdBy.email[0];
-        investment.createdBy.gravatar = 'https://gravatar.com/avatar/' + md5(investment.createdBy.email) + '?s=200'
+        investment.createdBy.gravatar = 'https://gravatar.com/avatar/' + md5(investment.createdBy.email) + '?s=200';
+
+        //created by data
+        investment.updatedBy.name = investment.updatedBy.name[0];
+        investment.updatedBy.email = investment.updatedBy.email[0];
+        investment.updatedBy.gravatar = 'https://gravatar.com/avatar/' + md5(investment.updatedBy.email) + '?s=200';
 
         //team data
         if (investment.team && investment.team.slug && investment.team.slug.length) {
@@ -416,4 +431,116 @@ exports.getById = async (req, res) => {
         msg : getMessage('error', 462, null, false, 'Investment', req.user.email),
         data : null
     });
+};
+
+exports.delete = async (req, res) => {
+    const methodTrace = `${errorTrace} delete() >`;
+
+    const user = req.user;
+    //1 - get the investment by ID
+    const investment = await getByIdObject(req.params.id, user.email, {
+        investmentDataId : true
+    });
+    
+    //2 - check that the user is part of the invesment
+    if (investment && investment.investmentDistribution) {
+        let found = false;
+        for (let member of investment.investmentDistribution) {
+            if (user.email === member.email) {
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            //3.1 - The user is member of the investment, proceed to delete
+            let writeResult = null;
+            let investmentDataId = null;
+            let investmentDataModel = null;
+            if (investment.investmentType === 'currency' || investment.investmentType === 'crypto') {
+                investmentDataModel = 'CurrencyInvestment';
+                investmentDataId = investment.currencyInvestmentData._id;
+                writeResult = await deleteCurrencyInvestment(investmentDataId, user.email);
+            } //else delete property investment
+            
+            if (writeResult.result.n > 0) {
+                writeResult = null;
+                console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Investment', '_id', investment._id)}`);
+                writeResult = await Investment.remove({ _id : investment._id });
+                if (writeResult.result.n > 0) {
+                    //Success deleting investment
+                    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Investment')}`);
+                    res.json({
+                        status : 'success', 
+                        codeno : 200,
+                        msg : getMessage('message', 1039, null, false, 'Investment'),
+                        data : { removed : writeResult.result.n }
+                    });
+    
+                    return;
+                } else {
+                    //Failed to delete investment
+                    console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Investment', '_id', investment._id)}`);
+                    res.status(401).json({ 
+                        status : "error", 
+                        codeno : 464,
+                        msg : getMessage('error', 464, null, false, 'Investment', '_id', investment._id),
+                        data : null
+                    });
+    
+                    return;
+                }
+            } else {
+                //Failed to delete investment data
+                res.status(401).json({ 
+                    status : "error", 
+                    codeno : 464,
+                    msg : getMessage('error', 464, null, false, investmentDataModel, '_id', investmentDataId),
+                    data : null
+                });
+
+                return;
+            }
+            
+        }
+    } else if (!investment){
+        //Nothing found for that ID
+        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Investment')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 461,
+            msg : getMessage('error', 461, null, false, 'Investment'),
+            data : null
+        });
+
+        return;
+    }
+
+    //3.2 - the client is not member of the investment requested
+    console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Investment', req.user.email)}`);
+    res.status(401).json({ 
+        status : "error", 
+        codeno : 462,
+        msg : getMessage('error', 462, null, false, 'Investment', req.user.email),
+        data : null
+    });
+};
+
+/**
+ * Deletes a currency investment record from db
+ * @param {string} id . The record id
+ * @param {string} userEmail . The user email for debug purposes 
+ */
+const deleteCurrencyInvestment = async (id, userEmail) => {
+    const methodTrace = `${errorTrace} deleteCurrencyInvestment() >`;
+    
+    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'CurrencyInvestment', '_id', id)}`);
+    const writeResult = await CurrencyInvestment.remove({ _id : id });
+    if (writeResult.result.n > 0) {
+        console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'CurrencyInvestment')}`);
+    } else {
+        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, 'CurrencyInvestment', '_id', id)}`);
+    }
+    
+    return writeResult;
 };

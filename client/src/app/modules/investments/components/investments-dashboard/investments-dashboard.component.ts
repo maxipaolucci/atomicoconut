@@ -96,6 +96,28 @@ export class InvestmentsDashboardComponent implements OnInit {
     this.totalInvestment += totalReturns.usdFromCryptoCurrencyWhenBought;
   }
 
+  removeInvestment(deletedId : string) : void {
+    if (deletedId) {
+      let index = 0;
+      console.log(deletedId);
+      for (let investment of this.investments) {
+        if (investment.id === deletedId) {
+          break;
+        }
+
+        index += 1;
+      }
+      console.log('index', index);
+      
+      const row = Math.floor((index + 1) / 2) - 1;
+      const pos = (index) % 2;
+
+      console.log(row, pos);
+      this.investmentsUI[row].splice(pos, 1);
+      this.investments.splice(index, 1);
+    }
+  }
+
   openNewInvestmentDialog() {
     let addPersonDialogRef = this.dialog.open(InvestmentSelectorDialogComponent, {});
     return false;

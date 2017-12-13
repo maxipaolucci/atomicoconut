@@ -8,7 +8,8 @@
         [cryptoCurrencyCount]="investment.amount"
         [cryptoCurrencyBuyPrice]="investment.buyingPrice"
         [cryptoCurrencyBuyDate]="investment.buyingDate"
-        (totalReturns)="setTotals($event)">
+        (totalReturns)="setTotals($event)"
+        (deletedId)="removeInvestment($event)">
       </crypto-currency>
     </div>
     
