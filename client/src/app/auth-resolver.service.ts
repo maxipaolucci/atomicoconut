@@ -34,7 +34,7 @@ export class AuthResolver implements Resolve<User> {
             financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
                 data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
           }
-          const user : User = new User(data.name, data.email, data.avatar, data.accessToInvestments, financialInfo, personalInfo, data.currency);          
+          const user : User = new User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);          
           this.usersService.setUser(user);
           this.usersService.routerRedirectUrl = null;
 

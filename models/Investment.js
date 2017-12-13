@@ -18,6 +18,15 @@ const investmentSchema = new mongoose.Schema({
     type : Date,
     default: Date.now
   },
+  updatedBy: {
+    type : mongoose.Schema.ObjectId,
+    ref : 'User',
+    default: null
+  },
+  updatedOn : {
+    type : Date,
+    default: Date.now
+  },
   amount : {
     type : Number,
     default : 0,

@@ -6,17 +6,15 @@ export class User {
   name : string;
   email : string;
   avatar : string;
-  accessToInvestments : boolean;
   financialInfo : AccountFinance;
   personalInfo : AccountPersonal;
   currency : string;
 
-  constructor(name : string = '', email : string = '', avatar : string = '', accessToInvestments = false, financialInfo : AccountFinance = null, 
+  constructor(name : string = '', email : string = '', avatar : string = '', financialInfo : AccountFinance = null, 
       personalInfo : AccountPersonal = null, currency : string = 'USD') {
     this.name = name;
     this.email = email;
     this.avatar = avatar;
-    this.accessToInvestments = accessToInvestments;
     this.currency = currency;
     
     if (financialInfo) {

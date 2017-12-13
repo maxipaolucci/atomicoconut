@@ -10,6 +10,10 @@ form {
   }
 }
 
+.progress-bar--get-investment {
+  width: 100%;
+}
+
 .container__edit-investment {
   
   .form__fields {
@@ -69,5 +73,9 @@ form {
         width: 88px;
       }
     }
+  }
+
+  .progress-bar--get-investment {
+    width: 300px;
   }
 }

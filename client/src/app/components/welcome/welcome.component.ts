@@ -57,7 +57,7 @@ export class WelcomeComponent implements OnInit {
           financialInfo = new AccountFinance(user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, 
               user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
         }
-        user = new User(user.name, user.email, user.avatar, user.accessToInvestments, financialInfo, personalInfo, user.currency);          
+        user = new User(user.name, user.email, user.avatar, financialInfo, personalInfo, user.currency);          
         this.user = user;
         if (gotAuthenticatedUserFromServer) {
           gotAuthenticatedUserFromServer = null; //shut down the flag

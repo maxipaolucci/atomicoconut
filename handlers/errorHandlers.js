@@ -21,7 +21,8 @@ const errorCodes = {
   466 : '{{param}} already member of Team: {{param}}.',
   467 : 'Something went wrong.',
   468 : 'Route not found.',
-  469 : 'Failed to remove {{param}} from {{param}}.'
+  469 : 'Failed to remove {{param}} from {{param}}.',
+  470 : 'Sorry. You are not allowed to update this {{param}}.'
 };
 
 const messageCodes = {
@@ -66,7 +67,8 @@ const messageCodes = {
   1038 : 'Removing from {{param}} where {{param}} = {{param}}...',
   1039 : '{{param}} record successfully removed.',
   1040 : '{{param}} is not a user of AtomiCoconut. Sending email to join the app...',
-  1041 : 'Sending email via {{param}}...'
+  1041 : 'Sending email via {{param}}...',
+  1042 : '{{param}} and all related data successfully updated.'
 };
 
 /**

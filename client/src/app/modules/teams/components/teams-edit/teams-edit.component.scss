@@ -10,6 +10,10 @@ form {
   }
 }
 
+.progress-bar--get-team {
+  width: 100%;
+}
+
 .form__edit-team {
 
   .form__actions--edit-team {
@@ -57,10 +61,6 @@ form {
       color : $warn;
     }
   }
-}
-
-.progress-bar--get-team {
-  width: 100%;
 }
 
 @media screen and (min-width: $screenGtXs) {

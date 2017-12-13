@@ -47,6 +47,9 @@ exports.create = async (req, res, next) => {
     let investment = await (new Investment({
         investmentType : req.body.type,
         createdBy: user._id,
+        updatedBy: user._id,
+        createdOn : req.body.createdOn,
+        updatedOn : req.body.updatedOn,
         amount : req.body.investmentAmount,
         amountUnit : req.body.investmentAmountUnit,
         team : team ? team._id : null,
@@ -74,7 +77,7 @@ exports.create = async (req, res, next) => {
                 status : 'success', 
                 codeno : 200,
                 msg : getMessage('message', 1033, null, false, 'Investment'),
-                data : { type : investment.investmentType, id : investment.id }
+                data : { type : investment.investmentType, id : investment._id }
             });
         } else {
             console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'CurrencyInvestment')}`);
@@ -98,7 +101,128 @@ exports.create = async (req, res, next) => {
     }
 };
 
-exports.update = async (req, res, next) => {}
+exports.update = async (req, res, next) => {
+    const methodTrace = `${errorTrace} update() >`;
+    
+    //get the logged in user from req
+    let user = req.user;
+
+    //1 - get the investment by ID
+    let investment = await getByIdObject(req.body.id, user.email, {
+        investmentDataId : true
+    });
+    if (!investment) {
+        //no investment found with that id
+        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true,'Investment')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 461,
+            msg : getMessage('error', 461, null, false, 'Investment'),
+            data : null
+        });
+
+        return;
+    } else {
+        //check the client is part of this investment
+        let found = false;
+        for (let portion of investment.investmentDistribution) {
+            if (user.email === portion.email) {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            //the client is not an owner  of the investment requested
+            console.log(`${methodTrace} ${getMessage('error', 470, user.email, true, 'Investment')}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 470,
+                msg : getMessage('error', 470, null, false, 'Investment'),
+                data : null
+            });
+
+            return;
+        }
+    }
+
+
+    //get the team if provided
+    let team = null;
+    if (req.body.team) {
+        team = await teamController.getTeamBySlugObject(req.body.team.slug, true, user.email);
+    }
+
+    //fields to update
+    const originalInvestment = investment; //we save the investmen id for logs
+    const updates = {
+        updatedBy: user._id,
+        updatedOn : req.body.updatedOn,
+        amount : req.body.investmentAmount,
+        amountUnit : req.body.investmentAmountUnit,
+        team : team ? team._id : null,
+        investmentDistribution : req.body.investmentDistribution
+    };
+
+    const investmentDataUpdates = {
+        amount : req.body.investmentData.amount,
+        amountUnit : req.body.investmentData.unit,
+        buyingPrice : req.body.investmentData.buyingPrice,
+        buyingPriceUnit : req.body.investmentData.buyingPriceUnit,
+        buyingDate : req.body.investmentData.buyingDate
+    };
+
+    //update investment
+    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'Investment', '_id', investment._id)}`);
+    investment = await Investment.findOneAndUpdate(
+        { _id : investment._id },
+        { $set : updates },
+        { new : true, runValidators : true, context : 'query' }
+    );
+
+    if (investment) {
+        //update investment data
+        console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Investment')}`);
+        const investmentData = await CurrencyInvestment.findOneAndUpdate(
+            { _id : originalInvestment.currencyInvestmentData._id },
+            { $set : investmentDataUpdates },
+            { new : true, runValidators : true, context : 'query' }
+        );
+
+        if (investmentData) {
+            //success
+            console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'CurrencyInvestment')}`);
+            
+            console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Investment')}`);
+            res.json({
+                status : 'success', 
+                codeno : 200,
+                msg : getMessage('message', 1042, null, false, 'Investment'),
+                data : { type : investment.investmentType, id : investment._id }
+            });
+
+            return;
+        }
+        
+        //failed to update investment data
+        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'CurrencyInvestment', '_id', investment.currencyInvestmentData._id)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 465,
+            msg : getMessage('error', 465, null, false, 'CurrencyInvestment', '_id', investment.currencyInvestmentData._id),
+            data : null
+        });
+    }
+
+    //failed to update investment
+    console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'Investment', '_id', originalInvestment._id)}`);
+    res.status(401).json({ 
+        status : "error", 
+        codeno : 465,
+        msg : getMessage('error', 465, null, false, 'Investment', '_id', originalInvestment._id),
+        data : null
+    });
+};
 
 /**
  * Get all investments for the authenticated user
@@ -112,7 +236,7 @@ exports.getAllInvestments = async (req, res) => {
     let investments = await Investment.aggregate(aggregationStagesArr);
 
     //2 - Parse the recordset from DB and organize the info better.
-    let result = beautifyInvestmentsFormat(investments);
+    let result = await beautifyInvestmentsFormat(investments);
 
     //3- Return investments info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, result.length, 'Investment(s)')}`);
@@ -156,8 +280,7 @@ const aggregationStages = () => {
                 creatorData : false,
                 teamData : false,
                 currencyInvestmentData : { 
-                    __v : false, 
-                    _id : false
+                    __v : false
                 },
                 "investmentDistribution._id" : false
             }
@@ -169,10 +292,11 @@ const aggregationStages = () => {
  * Organize the information for investment retrieved from DB in a better format to send back to the client
  * 
  * @param {array} investments . The result from the DB query for investments
+ * @param {object} options . Specific options to populate the result with
  * 
  * @return {array} . The formatted result
  */
-const beautifyInvestmentsFormat = (investments) => {
+const beautifyInvestmentsFormat = async (investments, options = null) => {
     let result = [];
     for (let investment of investments) {
         //created by data
@@ -181,16 +305,23 @@ const beautifyInvestmentsFormat = (investments) => {
         investment.createdBy.gravatar = 'https://gravatar.com/avatar/' + md5(investment.createdBy.email) + '?s=200'
 
         //team data
-        if (investment.team && investment.team.name && investment.team.name.length) {
-            investment.team.name = investment.team.name[0];
-            investment.team.slug = investment.team.slug[0];
-            investment.team.description = investment.team.description[0];
+        if (investment.team && investment.team.slug && investment.team.slug.length) {
+            if (options && options.teamMembers) {
+                investment.team = await teamController.getTeamBySlugObject(investment.team.slug[0], false, null);
+            } else {
+                investment.team.name = investment.team.name[0];
+                investment.team.slug = investment.team.slug[0];
+                investment.team.description = investment.team.description[0];
+            }
         } else {
             investment.team = null;
         }
 
         //investment data
         investment.currencyInvestmentData = investment.currencyInvestmentData[0];
+        if (!(options && options.investmentDataId)) {
+            delete investment.currencyInvestmentData['_id'];
+        }
         
         result.push(investment);
     }
@@ -199,13 +330,13 @@ const beautifyInvestmentsFormat = (investments) => {
 };
 
 /**
- * Get a team by ID
+ * Get an investment by ID
  * @param {string} id
  * @param {string} userEmail . Just for debug in console purposes.
- * 
+ * @param {object} options . Object with specific options to populate on the result
  * @return {object} . The investment looked for or null
  */
-const getByIdObject = async (id, userEmail = null) => {
+const getByIdObject = async (id, userEmail = null, options = null) => {
     const methodTrace = `${errorTrace} getByIdObject() >`;
 
     //1- check for an investment with the provided id
@@ -220,7 +351,7 @@ const getByIdObject = async (id, userEmail = null) => {
     let investments = await Investment.aggregate(aggregationStagesArr);
 
     //2 - Parse the recordset from DB and organize the info better.
-    let result = beautifyInvestmentsFormat(investments);
+    let result = await beautifyInvestmentsFormat(investments, options);
     
     //3 - Get the first result
     result = result.length ? result[0] : null;
@@ -238,7 +369,10 @@ exports.getById = async (req, res) => {
     const methodTrace = `${errorTrace} getById() >`;
 
     //1 - get the investment by ID
-    const result = await getByIdObject(req.query.id, req.user.email);
+    const result = await getByIdObject(req.query.id, req.user.email, {
+        investmentDataId : false,
+        teamMembers : true
+    });
     
     //2 - check that the user is part of the invesment
     if (result && result.investmentDistribution) {

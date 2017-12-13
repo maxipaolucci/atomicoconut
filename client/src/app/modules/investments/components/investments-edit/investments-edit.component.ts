@@ -25,6 +25,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   teams : Team[] = [];
   investment : Investment = null;
   model : any = {
+    id : null,
     email : null, //user email for api check
     owner : 'me',
     team : null,
@@ -69,12 +70,16 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       this.user = data.user;
       this.model.email = data.user.email;
       this.model.investmentAmountUnit = this.user.currency;
+      this.model.id = data.investmentId || null;
 
       this.editInvestmentServiceRunning = false;
       this.getInvestmentServiceRunning = false;
       
+      //get user teams
+      this.getTeams();
+
       if (!data.investmentId) {
-        //we are creating a new team
+        //we are creating a new investment
         this.id = null;
         this.editMode = false;
         this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected : true });
@@ -87,8 +92,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         this.getInvestment(data.investmentId); //get data
       }
 
-      //get user teams
-      this.getTeams();
+      
     });
 
     //get TYPE parameter
@@ -100,7 +104,6 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         this.type = type;
         this.model.type = type;
         this.model.investmentData.type = type;
-        console.log(this.model.investmentData);
       }
     });
   }
@@ -117,7 +120,6 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    */
   subscribeFormValueChanges() {
     this.formChangesSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
-      
       if (values.owner === 'team' && values.team && this.model.team) {
         //calculates the percentage acum from all the members
         const percentageAcum = this.model.team.members.reduce((total, member) => {
@@ -156,6 +158,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.editInvestmentServiceRunning = true;
 
     this.model.investmentDistribution = this.populateInvestmentDistributionArray();
+    this.model.createdOn = new Date(Date.now());
+    this.model.updatedOn = new Date(Date.now());
     //call the investment create service
     const newSubscription = this.investmentsService.create(this.model).subscribe(
       (data : any) => {
@@ -186,6 +190,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.editInvestmentServiceRunning = true;
 
     this.model.investmentDistribution = this.populateInvestmentDistributionArray();
+    this.model.updatedOn = new Date(Date.now());
     //call the investment create service
     const newSubscription = this.investmentsService.update(this.model).subscribe(
       (data : any) => {
@@ -222,6 +227,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     const newSubscription = this.teamsService.getTeams(this.user.email).subscribe(
       (teams : Team[]) => {
         this.teams = teams;
+        this.getSelectedTeam();
         this.getTeamsServiceRunning = false;
       },
       (error : any) => {
@@ -237,6 +243,19 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     );
 
     this.subscription.add(newSubscription);
+  }
+
+  /**
+   * Get the selected team . This is going to works when teams and investment is here (so we are in edit mode) and the investment has a team selected
+   */
+  getSelectedTeam() {
+    if (this.teams && this.investment && this.investment.team) {
+      for (let team of this.teams) {
+        if (this.investment.team.slug === team.slug) {
+          this.model.team = team;
+        }
+      }
+    }
   }
 
   /**
@@ -279,6 +298,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
             //populate the model
             this.model.owner = investment.team ? 'team' : 'me';
             this.model.team = investment.team;
+            this.getSelectedTeam(); //this is necesary to make the selectbox in ui set a team
             this.model.teamSlug = investment.team ? investment.team.slug : null;
             this.model.investmentDistribution = investment.investmentDistribution;
             for (let portion of investment.investmentDistribution) {
@@ -299,7 +319,6 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
             }
     
             this.getInvestmentServiceRunning = false;
-
             if (this.form && !this.formChangesSubscription) {
               this.subscribeFormValueChanges();
             }
@@ -332,8 +351,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     if (matRadioChange.value === 'me') {
       //reset team values from model
       this.model.team = this.model.teamSlug = null;
-      this.model.membersPercentage = {};
     }
+
+    this.model.membersPercentage = {};
   }
 
   onCurrencyUnitChange($event : MatSelectChange) {
@@ -352,6 +372,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    */
   setDefaultInvestmentPercentages() {
     const decimalPipe = new DecimalPipe('en');
+    this.model.membersPercentage = {};
     //set the default percentage of the investment to each member
     const defaultPercentage = Number(decimalPipe.transform(100 / this.model.team.members.length, '1.0-2'));
     for (let member of this.model.team.members) {

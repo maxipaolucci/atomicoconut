@@ -1,8 +1,8 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__investments">
-  <section fxLayout="column" fxLayoutGap="10px" *ngIf="user.accessToInvestments" >
+  <section *ngIf="!getInvestmentsServiceRunning && investments.length" fxLayout="column" fxLayoutGap="10px">
     
     <div *ngFor="let row of investmentsUI" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
-      <crypto-currency *ngFor="let investment of row" fxFlex
+      <crypto-currency *ngFor="let investment of row" fxFlex fxFlex.gt-xs="50"
         [id]="investment.id" 
         [cryptoCurrency]="investment.unit | lowercase"
         [cryptoCurrencyCount]="investment.amount"
@@ -61,12 +61,12 @@
 
   </section>
 
-  <section *ngIf="!user.accessToInvestments" fxLayout="column" fxLayoutGap="10px">
+  <section *ngIf="!getInvestmentsServiceRunning && !investments.length" fxLayout="column" fxLayoutGap="10px">
     <mat-card fxFlex class="totals-card">
       <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
           fxLayoutAlign="space-around center">
         <p>
-          You do not have any investment to show.
+          You do not have investments yet.
         </p>
       </mat-card-content>
     </mat-card>

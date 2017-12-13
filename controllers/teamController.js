@@ -264,7 +264,7 @@ exports.update = async (req, res, next) => {
     }
 
 
-    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'Team', '_id', team._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'Team', 'slug', team.slug)}`);
     team = await Team.findOneAndUpdate(
         { slug : team.slug },
         { $set : updates },
@@ -272,11 +272,11 @@ exports.update = async (req, res, next) => {
     );
     
     if (!team) {
-        console.log(`${methodTrace} ${getMessage('message', 465, user.email, true, 'Team', 'slug', oldSlug)}`);
+        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'Team', 'slug', oldSlug)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 465,
-            msg : getMessage('error', 465, null, false),
+            msg : getMessage('error', 465, null, false, 'Team', 'slug', oldSlug),
             data : null
         });
 

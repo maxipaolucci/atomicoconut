@@ -58,7 +58,22 @@ export class InvestmentsService {
       let investment : Investment = null;
       if (investmentData && investmentData._id) {
         const createdBy = new User(investmentData.createdBy.name, investmentData.createdBy.email, investmentData.createdBy.gravatar);
-        const team = investmentData.team ? new Team(investmentData.team.name, investmentData.team.description, investmentData.team.slug) : null;
+        
+        let team : Team = null;
+        if (investmentData.team) {
+          //fill team members
+          let admin : User = null;
+          let members : User[] = [];
+          for (let member of investmentData.team.members) {
+            const newMember = new User(member.name, member.email, member.gravatar);
+            members.push(newMember);
+            if (member.isAdmin) {
+              admin = newMember;
+            }
+          }
+          team = new Team(investmentData.team.name, investmentData.team.description, investmentData.team.slug, admin, members);
+        }
+        
 
         if (investmentData.investmentType === 'currency' || investmentData.investmentType === 'crypto') {
           investment = new CurrencyInvestment(investmentData._id, investmentData.amount, investmentData.amountUnit, createdBy, team, investmentData.investmentDistribution, 
