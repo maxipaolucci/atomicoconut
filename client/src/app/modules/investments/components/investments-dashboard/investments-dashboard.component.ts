@@ -99,7 +99,6 @@ export class InvestmentsDashboardComponent implements OnInit {
   removeInvestment(deletedId : string) : void {
     if (deletedId) {
       let index = 0;
-      console.log(deletedId);
       for (let investment of this.investments) {
         if (investment.id === deletedId) {
           break;
@@ -107,7 +106,6 @@ export class InvestmentsDashboardComponent implements OnInit {
 
         index += 1;
       }
-      console.log('index', index);
       
       const row = Math.floor(index / 2);
       const offset = index % 2 === 0 ? 0 : 1;
