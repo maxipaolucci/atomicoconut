@@ -96,6 +96,9 @@ export class InvestmentsDashboardComponent implements OnInit {
     this.totalInvestment += totalReturns.usdFromCryptoCurrencyWhenBought;
   }
 
+  /**
+   * Removes the investment from the investments array and from the investmentUI array used in view
+   */
   removeInvestment(deletedId : string) : void {
     if (deletedId) {
       let index = 0;
@@ -109,10 +112,6 @@ export class InvestmentsDashboardComponent implements OnInit {
       
       const row = Math.floor(index / 2);
       const offset = index % 2;
-
-      console.log(this.investmentsUI, row, offset);
-
-      
       this.investmentsUI[row].splice(offset, 1);
       this.investments.splice(index, 1);
     }

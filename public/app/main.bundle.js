@@ -1658,10 +1658,12 @@ var InvestmentsDashboardComponent = (function () {
         this.totalReturn += totalReturns.usdFromCryptoCurrency;
         this.totalInvestment += totalReturns.usdFromCryptoCurrencyWhenBought;
     };
+    /**
+     * Removes the investment from the investments array and from the investmentUI array used in view
+     */
     InvestmentsDashboardComponent.prototype.removeInvestment = function (deletedId) {
         if (deletedId) {
             var index = 0;
-            console.log(deletedId);
             for (var _i = 0, _a = this.investments; _i < _a.length; _i++) {
                 var investment = _a[_i];
                 if (investment.id === deletedId) {
@@ -1669,11 +1671,9 @@ var InvestmentsDashboardComponent = (function () {
                 }
                 index += 1;
             }
-            console.log('index', index);
-            var row = Math.floor((index + 1) / 2) - 1;
-            var pos = (index) % 2;
-            console.log(row, pos);
-            this.investmentsUI[row].splice(pos, 1);
+            var row = Math.floor(index / 2);
+            var offset = index % 2;
+            this.investmentsUI[row].splice(offset, 1);
             this.investments.splice(index, 1);
         }
     };
