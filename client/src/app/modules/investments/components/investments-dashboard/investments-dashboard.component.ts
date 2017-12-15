@@ -109,11 +109,10 @@ export class InvestmentsDashboardComponent implements OnInit {
       }
       console.log('index', index);
       
-      const row = Math.floor((index + 1) / 2) - 1;
-      const pos = (index) % 2;
+      const row = Math.floor(index / 2);
+      const offset = index % 2 === 0 ? 0 : 1;
 
-      console.log(row, pos);
-      this.investmentsUI[row].splice(pos, 1);
+      this.investmentsUI[row].splice(offset, 1);
       this.investments.splice(index, 1);
     }
   }
