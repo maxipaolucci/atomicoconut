@@ -108,8 +108,11 @@ export class InvestmentsDashboardComponent implements OnInit {
       }
       
       const row = Math.floor(index / 2);
-      const offset = index % 2 === 0 ? 0 : 1;
+      const offset = index % 2;
 
+      console.log(this.investmentsUI, row, offset);
+
+      
       this.investmentsUI[row].splice(offset, 1);
       this.investments.splice(index, 1);
     }
