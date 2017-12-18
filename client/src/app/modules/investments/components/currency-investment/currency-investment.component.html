@@ -9,15 +9,15 @@
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="card__content">
-    Investment: <strong>{{usdValueWhenBought | currency }}</strong> 
+    Investment: <strong>{{investmentAmount | currency : 'USD' : false : '1.2-2' }}</strong> 
     <br>
 
-    on {{investment.buyingDate | date}} at {{investment.buyingPrice | currency}}
+    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : false : '1.2-2' }}
 
-    <div [class.color__accent]="currentUsdValue >= usdValueWhenBought" 
-        [class.color__red]="currentUsdValue < usdValueWhenBought">
+    <div [class.color__accent]="investmentReturn >= investmentValueWhenBought" 
+        [class.color__red]="investmentReturn < investmentValueWhenBought">
       <br>
-      ROI: <strong>{{ currentUsdValue | currency }}</strong> ({{currentUsdValue / usdValueWhenBought * 100 | number : '1.1-2'}}%)
+      ROI: <strong>{{ investmentReturn | currency : 'USD' : false : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)
     </div>
 
     <section class="actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">

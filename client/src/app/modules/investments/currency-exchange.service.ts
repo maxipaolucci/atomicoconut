@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 import {Observable} from "rxjs/Rx";
+import { AppService } from '../../app.service';
 
 @Injectable()
 export class CurrencyExchangeService {
@@ -15,7 +16,7 @@ export class CurrencyExchangeService {
   private currencyExchangeServiceUrl : string = 'https://api.fixer.io/latest';
   currencyRates : any = null;
 
-  constructor(private http : Http) { }
+  constructor(private http : Http, private appService : AppService) { }
 
   getCurrencyRates(base = 'USD') : Observable<any> {
     if (this.currencyRates) {
@@ -91,6 +92,15 @@ export class CurrencyExchangeService {
     }
   }
 
-  
+  getUsdValueOf(amount : number, unit : string) {
+    if (unit !== 'USD') {
+      if (this.currencyRates) {
+        return amount / this.currencyRates[unit];
+      } else {
+        this.appService.showResults('Currency rates data was not loaded yet. Figures are shown as USD', 'error');
+      }
+    } 
 
+    return amount;
+  }
 }

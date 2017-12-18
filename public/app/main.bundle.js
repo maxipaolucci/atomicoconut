@@ -1151,7 +1151,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/' + investment.type + '/' + investment.unit + '.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{currentPrice | currency : 'USD' : false : '1.2-2'}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{usdValueWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}} at {{investment.buyingPrice | currency}}\r\n\r\n    <div [class.color__accent]=\"currentUsdValue >= usdValueWhenBought\" \r\n        [class.color__red]=\"currentUsdValue < usdValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ currentUsdValue | currency }}</strong> ({{currentUsdValue / usdValueWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <section class=\"actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/crypto/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
+module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/' + investment.type + '/' + investment.unit + '.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{currentPrice | currency : 'USD' : false : '1.2-2'}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : false : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : false : '1.2-2' }}\r\n\r\n    <div [class.color__accent]=\"investmentReturn >= investmentValueWhenBought\" \r\n        [class.color__red]=\"investmentReturn < investmentValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : false : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <section class=\"actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/crypto/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
 
 /***/ }),
 
@@ -1187,6 +1187,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__ = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1196,6 +1197,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1215,25 +1217,41 @@ var CurrencyInvestmentComponent = (function () {
         this.router = router;
         this.totalReturns = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
         this.deletedId = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.currentUsdValue = 0;
-        this.usdValueWhenBought = 0;
+        this.investmentAmount = 0;
+        this.buyingPrice = 0;
+        this.investmentReturn = 0;
+        this.investmentValueWhenBought = 0;
         this.currentPrice = 0;
         this.actionRunning = false;
         this.user = null;
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__["a" /* Subscription */]();
     }
     CurrencyInvestmentComponent.prototype.ngOnInit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
-        this.usersService.user$.subscribe(function (user) { return _this.user = user; }); //start listening the source of user
-        this.usdValueWhenBought = this.investment.buyingPrice * this.investment.amount;
+        var currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
+        var currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, function (user, currencyRates) {
+            _this.user = user;
+            return { user: user, currencyRates: currencyRates };
+        }); //(currency rates and user) source
         if (this.investment.type === 'crypto') {
             //crypto investment
-            this.currencyExchangeService.getCryptoRates(this.investment.unit).subscribe(function (data) {
-                _this.currentPrice = data.price;
-                _this.currentUsdValue = data.price * _this.investment.amount;
+            var cryptoRates$ = this.currencyExchangeService.getCryptoRates(this.investment.unit); //get crypto rates observable source
+            this.subscription = cryptoRates$.combineLatest(currencyRatesAndUser$, function (cryptoRates, currencyRatesAndUser) {
+                return {
+                    currencyRates: currencyRatesAndUser.currencyRates,
+                    user: currencyRatesAndUser.user,
+                    cryptoRates: cryptoRates
+                };
+            }).subscribe(function (data) {
+                _this.currentPrice = data.cryptoRates.price;
+                _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
+                _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
+                _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
+                _this.investmentReturn = _this.currentPrice * _this.investment.amount;
                 _this.totalReturns.emit({
-                    usdValueWhenBought: _this.usdValueWhenBought,
-                    currentUsdValue: _this.currentUsdValue
+                    investmentAmount: _this.investmentAmount,
+                    investmentReturn: _this.investmentReturn
                 });
             }, function (error) {
                 _this.appService.consoleLog('error', methodTrace + " There was an error trying to get crypto currency rates data > " + error);
@@ -1242,18 +1260,26 @@ var CurrencyInvestmentComponent = (function () {
         }
         else {
             //currency exchange
-            this.currencyExchangeService.getCurrencyRates().subscribe(function (data) {
-                _this.currentPrice = data[_this.investment.unit] || 0;
-                _this.currentUsdValue = data[_this.investment.unit] * _this.investment.amount || 0;
+            this.subscription = currencyRatesAndUser$.subscribe(function (data) {
+                _this.currentPrice = data.currencyRates[_this.investment.unit] || 0;
+                _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
+                _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
+                _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
+                _this.investmentReturn = _this.currentPrice * _this.investment.amount;
                 _this.totalReturns.emit({
-                    usdValueWhenBought: _this.usdValueWhenBought,
-                    currentUsdValue: _this.currentUsdValue
+                    investmentAmount: _this.investmentAmount,
+                    investmentReturn: _this.investmentReturn
                 });
             }, function (error) {
-                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get crypto currency rates data > " + error);
-                _this.appService.showResults("There was an error trying to get crypto currency rates data, please try again in a few minutes.", 'error');
+                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > " + error);
+                _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
             });
         }
+    };
+    CurrencyInvestmentComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
     };
     CurrencyInvestmentComponent.prototype.openDeleteDialog = function () {
         var _this = this;
@@ -1540,8 +1566,8 @@ var InvestmentsDashboardComponent = (function () {
         });
     };
     InvestmentsDashboardComponent.prototype.setTotals = function (totalReturns) {
-        this.totalReturn += totalReturns.currentUsdValue;
-        this.totalInvestment += totalReturns.usdValueWhenBought;
+        this.totalReturn += totalReturns.investmentReturn;
+        this.totalInvestment += totalReturns.investmentValue;
     };
     /**
      * Removes the investment from the investments array and from the investmentUI array used in view
@@ -2004,6 +2030,7 @@ var _a, _b, _c, _d, _e, _f;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2016,9 +2043,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var CurrencyExchangeService = (function () {
-    function CurrencyExchangeService(http) {
+    function CurrencyExchangeService(http, appService) {
         this.http = http;
+        this.appService = appService;
         // private cryptoExchangeServerUrl : string = 'https://api.cryptonator.com/api/ticker/';
         // cryptoRates : any = {};
         this.cryptoExchangeServerUrl = 'http://coincap.io/page/';
@@ -2095,14 +2124,25 @@ var CurrencyExchangeService = (function () {
             throw body;
         }
     };
+    CurrencyExchangeService.prototype.getUsdValueOf = function (amount, unit) {
+        if (unit !== 'USD') {
+            if (this.currencyRates) {
+                return amount / this.currencyRates[unit];
+            }
+            else {
+                this.appService.showResults('Currency rates data was not loaded yet. Figures are shown as USD', 'error');
+            }
+        }
+        return amount;
+    };
     return CurrencyExchangeService;
 }());
 CurrencyExchangeService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object])
 ], CurrencyExchangeService);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=currency-exchange.service.js.map
 
 /***/ }),
