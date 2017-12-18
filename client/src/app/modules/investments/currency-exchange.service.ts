@@ -10,7 +10,7 @@ export class CurrencyExchangeService {
   // private cryptoExchangeServerUrl : string = 'https://api.cryptonator.com/api/ticker/';
   // cryptoRates : any = {};
 
-  private cryptoExchangeServerUrl : string = 'http://coincap.io/page/';
+  private cryptoExchangeServerUrl : string = 'https://coincap.io/page/';
   cryptoRates : any = {};
 
   private currencyExchangeServiceUrl : string = 'https://api.fixer.io/latest';
