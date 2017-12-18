@@ -36,10 +36,10 @@
       </mat-menu>
     </span>
     
-    <mat-toolbar-row class="secondary-row" *ngIf="user && user.currency !== 'USD' && currencyExchangeService.rates">
+    <mat-toolbar-row class="secondary-row" *ngIf="user && user.currency !== 'USD' && currencyExchangeService.currencyRates">
       <span>Preferred currency is <a class="color__almost-white" routerLink="/users/account" matTooltip="Change..."><strong>{{user.currency}}</strong></a></span>
       <span class="example-spacer"></span>
-      <span>1 USD = {{currencyExchangeService.rates[user.currency]}} {{user.currency}}</span>
+      <span>1 USD = {{currencyExchangeService.currencyRates[user.currency]}} {{user.currency}}</span>
     </mat-toolbar-row>
   </mat-toolbar>
   

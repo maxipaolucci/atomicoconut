@@ -4,7 +4,6 @@ import { User } from '../../models/user';
 import { AccountFinance } from '../../models/account-finance';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
-import { CurrencyExchangeService } from '../../../../currency-exchange.service';
 
 @Component({
   selector: 'account-finance-info',
@@ -25,7 +24,7 @@ export class AccountFinanceInfoComponent implements OnInit {
   accountFinanceServiceRunning : boolean = false;
 
   
-  constructor(private usersService : UsersService, private appService : AppService, public currencyExchangeService : CurrencyExchangeService) {}
+  constructor(private usersService : UsersService, private appService : AppService) {}
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging

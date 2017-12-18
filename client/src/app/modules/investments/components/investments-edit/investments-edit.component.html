@@ -104,9 +104,9 @@
         </div>
   
         <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
-          <currency-investment [defaultValues]="model.investmentData"
+          <currency-investment-form [defaultValues]="model.investmentData"
               (values)="onInvestmentDataChange($event)">
-          </currency-investment>
+          </currency-investment-form>
         </div>
       </section>
   

@@ -32,7 +32,7 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <mat-toolbar class=\"toolbar\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"user.avatar\" \r\n      />\r\n      <mat-icon *ngIf=\"!user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n    \r\n    <mat-toolbar-row class=\"secondary-row\" *ngIf=\"user && user.currency !== 'USD' && currencyExchangeService.rates\">\r\n      <span>Preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{user.currency}}</strong></a></span>\r\n      <span class=\"example-spacer\"></span>\r\n      <span>1 USD = {{currencyExchangeService.rates[user.currency]}} {{user.currency}}</span>\r\n    </mat-toolbar-row>\r\n  </mat-toolbar>\r\n  \r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <mat-toolbar class=\"toolbar\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"user.avatar\" \r\n      />\r\n      <mat-icon *ngIf=\"!user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n    \r\n    <mat-toolbar-row class=\"secondary-row\" *ngIf=\"user && user.currency !== 'USD' && currencyExchangeService.currencyRates\">\r\n      <span>Preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{user.currency}}</strong></a></span>\r\n      <span class=\"example-spacer\"></span>\r\n      <span>1 USD = {{currencyExchangeService.currencyRates[user.currency]}} {{user.currency}}</span>\r\n    </mat-toolbar-row>\r\n  </mat-toolbar>\r\n  \r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
 
 /***/ }),
 
@@ -66,7 +66,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__ = __webpack_require__("../../../../../src/app/currency-exchange.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_investments_currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -106,13 +106,30 @@ var AppComponent = (function () {
         ]);
         this.usersService.user$.subscribe(function (user) { return _this.user = user; }); //start listening the source of user
         this.setUser();
-        if (!this.currencyExchangeService.rates) {
-            this.currencyExchangeService.getRates().subscribe(function (data) {
-                _this.currencyExchangeService.rates = data;
+        //Get currency exchange rates
+        if (!this.currencyExchangeService.currencyRates) {
+            this.currencyExchangeService.getCurrencyRates().subscribe(function (data) {
+                _this.currencyExchangeService.currencyRates = data;
                 _this.appService.consoleLog('info', methodTrace + " Currency exchange rates successfully loaded!");
             }, function (error) {
                 _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > " + error);
                 _this.appService.showResults("There was an error trying to get currency rates data.", 'error');
+            });
+        }
+        this.getCryptoRates('BTC');
+        this.getCryptoRates('XMR');
+    };
+    AppComponent.prototype.getCryptoRates = function (crypto) {
+        var _this = this;
+        if (crypto === void 0) { crypto = 'BTC'; }
+        var methodTrace = this.constructor.name + " > getCryptoRates() > "; //for debugging
+        if (!this.currencyExchangeService.cryptoRates[crypto]) {
+            this.currencyExchangeService.getCryptoRates(crypto).subscribe(function (data) {
+                _this.currencyExchangeService.cryptoRates[crypto] = data;
+                _this.appService.consoleLog('info', methodTrace + " " + crypto + " exchange rate successfully loaded!");
+            }, function (error) {
+                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + crypto + " rates data > " + error);
+                _this.appService.showResults("There was an error trying to get " + crypto + " rates data, please try again in a few minutes.", 'warn');
             });
         }
     };
@@ -155,7 +172,7 @@ AppComponent = __decorate([
         styles: [__webpack_require__("../../../../../src/app/app.component.scss")],
         providers: [__WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__["a" /* CurrencyExchangeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__["a" /* CurrencyExchangeService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _e || Object])
 ], AppComponent);
 
 var _a, _b, _c, _d, _e;
@@ -180,7 +197,7 @@ var _a, _b, _c, _d, _e;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__currency_exchange_service__ = __webpack_require__("../../../../../src/app/currency-exchange.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modules_investments_currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__auth_guard__ = __webpack_require__("../../../../../src/app/auth.guard.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
@@ -239,7 +256,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
             __WEBPACK_IMPORTED_MODULE_18__components_welcome_welcome_component__["a" /* WelcomeComponent */]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_9__util_service__["a" /* UtilService */], __WEBPACK_IMPORTED_MODULE_11__currency_exchange_service__["a" /* CurrencyExchangeService */], __WEBPACK_IMPORTED_MODULE_10__auth_resolver_service__["a" /* AuthResolver */], __WEBPACK_IMPORTED_MODULE_12__auth_guard__["a" /* AuthGuard */]],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_9__util_service__["a" /* UtilService */], __WEBPACK_IMPORTED_MODULE_11__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */], __WEBPACK_IMPORTED_MODULE_10__auth_resolver_service__["a" /* AuthResolver */], __WEBPACK_IMPORTED_MODULE_12__auth_guard__["a" /* AuthGuard */]],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
@@ -725,72 +742,6 @@ var _a, _b, _c;
 
 /***/ }),
 
-/***/ "../../../../../src/app/currency-exchange.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyExchangeService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var CurrencyExchangeService = (function () {
-    function CurrencyExchangeService(http) {
-        this.http = http;
-        this.serviceUrl = 'https://api.fixer.io/latest';
-        this.rates = null;
-    }
-    CurrencyExchangeService.prototype.getRates = function (base) {
-        if (base === void 0) { base = 'USD'; }
-        this.rates = null;
-        return this.http.get(this.serviceUrl + "?base=" + base)
-            .map(this.extractData)
-            .catch(this.handleError);
-    };
-    CurrencyExchangeService.prototype.extractData = function (res) {
-        var body = res.json();
-        if (Object.keys(body.rates).length > 0) {
-            return body.rates;
-        }
-        else {
-            throw body;
-        }
-    };
-    CurrencyExchangeService.prototype.handleError = function (error) {
-        var errMsg;
-        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
-            var body = error.json() || '';
-            var err = body.error || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
-        }
-        else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].throw(errMsg);
-    };
-    return CurrencyExchangeService;
-}());
-CurrencyExchangeService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
-], CurrencyExchangeService);
-
-var _a;
-//# sourceMappingURL=currency-exchange.service.js.map
-
-/***/ }),
-
 /***/ "../../../../../src/app/modules/calculators/calculators-routing.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1056,14 +1007,14 @@ var _a;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.html":
+/***/ "../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar \r\n        class=\"header-image\"\r\n        [class.header-image__xmr]=\"cryptoCurrency === 'xmr'\"\r\n        [class.header-image__btc]=\"cryptoCurrency === 'btc'\">\r\n    </div>\r\n    <mat-card-title>{{cryptoCurrency === 'xmr' ? 'Monero' : 'Bitcoin' }} ({{cryptoCurrencyCount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{cryptoCurrencyCurrentPrice | currency}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{usdFromCryptoCurrencyWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{cryptoCurrencyBuyDate | date}} at {{cryptoCurrencyBuyPrice | currency}}\r\n\r\n    <div [class.color__accent]=\"usdFromCryptoCurrency >= usdFromCryptoCurrencyWhenBought\" \r\n        [class.color__red]=\"usdFromCryptoCurrency < usdFromCryptoCurrencyWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ usdFromCryptoCurrency | currency }}</strong> ({{usdFromCryptoCurrency / usdFromCryptoCurrencyWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <section class=\"actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/crypto/edit/{{id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-currency-investment\">\r\n    <form class=\"form__container form__edit-currency-investment\" #editCurrencyInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n      \r\n      <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <currency-unit fxFlex fxFlex.gt-xs=\"200px\"\r\n                [id]=\"'currencyInvestmentUnit'\" \r\n                [value]=\"model.unit\"\r\n                [type]=\"model.type\"\r\n                [hint]=\"'Choose the desired currency to invest on...'\"\r\n                [placeHolder]=\"'Desired currency'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n\r\n            <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"amount\" name=\"amount\" placeholder=\"Amount\"\r\n                  [(ngModel)]=\"model.amount\" \r\n                  value=\"model.amount\"\r\n                  numberValidator='{\"maxFractionDigits\": 8}' \r\n                  required\r\n                  #amount=\"ngModel\">\r\n              <mat-hint align=\"start\">Set the buying amount.</mat-hint>\r\n              <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.required\">Amount is required.</mat-error>\r\n              <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.numberValidator\">Value must be numeric, with no more than eight decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <!-- Buying date -->\r\n            <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n              <input placeholder=\"Buying date\"\r\n                  id=\"buyingDate\"\r\n                  name=\"buyingDate\"\r\n                  readonly\r\n                  required\r\n                  #buyingDate=\"ngModel\"\r\n                  matInput \r\n                  [(ngModel)]=\"model.buyingDate\" \r\n                  [matDatepicker]=\"pickerBuyingDate\"\r\n                  (click)=\"pickerBuyingDate.open()\">\r\n              <mat-datepicker-toggle matSuffix [for]=\"pickerBuyingDate\"></mat-datepicker-toggle>\r\n              <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBuyingDate></mat-datepicker>\r\n              <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.required\">Buying date is required.</mat-error>\r\n              <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.matDatepickerParse\">Buying date is invalid or not follows the pattern \"mm/dd/yyyy\"</mat-error>\r\n            </mat-form-field>\r\n\r\n            <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n              <!-- Buying price unit -->\r\n              <currency-unit fxFlex=\"50px\"\r\n                  [id]=\"'buyingPriceUnit'\" \r\n                  [view]=\"'narrow'\"\r\n                  [value]=\"model.buyingPriceUnit\"\r\n                  (newValue)=\"onCurrencyUnitChange($event)\">\r\n              </currency-unit>\r\n\r\n              <!-- Buying price -->\r\n              <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n                <input matInput type=\"number\" id=\"buyingPrice\" name=\"buyingPrice\" placeholder=\"Price\"\r\n                    [(ngModel)]=\"model.buyingPrice\" \r\n                    value=\"model.buyingPrice\"\r\n                    numberValidator \r\n                    required\r\n                    #buyingPrice=\"ngModel\">\r\n                <mat-hint align=\"start\">Price on buying date.</mat-hint>\r\n                <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.required\">Buying price is required.</mat-error>\r\n                <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n              </mat-form-field>\r\n            </div>\r\n            \r\n          </div>\r\n        </div>\r\n      </section>\r\n    </form>\r\n  </div>\r\n  "
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.scss":
+/***/ "../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.scss":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -1071,7 +1022,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".currency-card {\n  text-align: center; }\n  .currency-card .header-image {\n    background-size: cover; }\n    .currency-card .header-image.header-image__xmr {\n      background-image: url(\"/assets/images/xmr.png\"); }\n    .currency-card .header-image.header-image__btc {\n      background-image: url(\"/assets/images/btc.png\"); }\n  .currency-card .card__content .actions {\n    margin: 0 8px 8px 0; }\n", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -1081,19 +1032,161 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.ts":
+/***/ "../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoCurrencyComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyInvestmentFormComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var CurrencyInvestmentFormComponent = (function () {
+    function CurrencyInvestmentFormComponent(dateAdapter, appService, utilService) {
+        this.dateAdapter = dateAdapter;
+        this.appService = appService;
+        this.utilService = utilService;
+        this.defaultValues = null; //the default values of the component model  
+        this.values = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.model = {
+            type: null,
+            unit: null,
+            amount: null,
+            buyingPrice: null,
+            buyingPriceUnit: null,
+            buyingDate: null
+        };
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__["a" /* Subscription */]();
+        this.dateAdapter.setLocale('en-GB');
+    }
+    CurrencyInvestmentFormComponent.prototype.ngOnInit = function () {
+        console.log(this.model.type);
+        this.model.unit = this.model.type === 'currency' ? 'USD' : 'BTC';
+        this.model.buyingDate = new Date(Date.now());
+        this.model.buyingPriceUnit = 'USD';
+        Object.assign(this.model, this.defaultValues);
+    };
+    CurrencyInvestmentFormComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    CurrencyInvestmentFormComponent.prototype.onCurrencyUnitChange = function ($event) {
+        if ($event.source.id === 'currencyInvestmentUnit') {
+            this.model.unit = $event.value;
+        }
+        else if ($event.source.id === 'buyingPriceUnit') {
+            this.model.buyingPriceUnit = $event.value;
+        }
+        this.values.emit({
+            value: {
+                model: this.model,
+                valid: this.form.valid
+            }
+        });
+    };
+    CurrencyInvestmentFormComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        //send data before touching any value
+        this.values.emit({
+            value: {
+                model: this.model,
+                valid: this.form.valid
+            }
+        });
+        //after any event in the form we send updated data
+        var newSubscription = this.form.valueChanges.debounceTime(500).subscribe(function (values) {
+            _this.values.emit({
+                value: {
+                    model: _this.model,
+                    valid: _this.form.valid
+                }
+            });
+        });
+        this.subscription.add(newSubscription);
+    };
+    return CurrencyInvestmentFormComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_17" /* ViewChild */])('editCurrencyInvestmentForm'),
+    __metadata("design:type", Object)
+], CurrencyInvestmentFormComponent.prototype, "form", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", Object)
+], CurrencyInvestmentFormComponent.prototype, "defaultValues", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
+], CurrencyInvestmentFormComponent.prototype, "values", void 0);
+CurrencyInvestmentFormComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'currency-investment-form',
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__util_service__["a" /* UtilService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__util_service__["a" /* UtilService */]) === "function" && _d || Object])
+], CurrencyInvestmentFormComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=currency-investment-form.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/' + investment.type + '/' + investment.unit + '.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{currentPrice | currency : 'USD' : false : '1.2-2'}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{usdValueWhenBought | currency }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}} at {{investment.buyingPrice | currency}}\r\n\r\n    <div [class.color__accent]=\"currentUsdValue >= usdValueWhenBought\" \r\n        [class.color__red]=\"currentUsdValue < usdValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ currentUsdValue | currency }}</strong> ({{currentUsdValue / usdValueWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <section class=\"actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/crypto/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".currency-card {\n  text-align: center; }\n  .currency-card .header-image img {\n    width: 50px; }\n  .currency-card .card__content .actions {\n    margin: 0 8px 8px 0; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyInvestmentComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__crypto_currency_service__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__ = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1111,9 +1204,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var CryptoCurrencyComponent = (function () {
-    function CryptoCurrencyComponent(cryptoCurrencyService, appService, usersService, investmentsService, dialog, router) {
-        this.cryptoCurrencyService = cryptoCurrencyService;
+
+var CurrencyInvestmentComponent = (function () {
+    function CurrencyInvestmentComponent(currencyExchangeService, appService, usersService, investmentsService, dialog, router) {
+        this.currencyExchangeService = currencyExchangeService;
         this.appService = appService;
         this.usersService = usersService;
         this.investmentsService = investmentsService;
@@ -1121,33 +1215,50 @@ var CryptoCurrencyComponent = (function () {
         this.router = router;
         this.totalReturns = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
         this.deletedId = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.usdFromCryptoCurrency = 0;
-        this.usdFromCryptoCurrencyWhenBought = 0;
-        this.cryptoCurrencyCurrentPrice = 0;
+        this.currentUsdValue = 0;
+        this.usdValueWhenBought = 0;
+        this.currentPrice = 0;
         this.actionRunning = false;
         this.user = null;
     }
-    CryptoCurrencyComponent.prototype.ngOnInit = function () {
+    CurrencyInvestmentComponent.prototype.ngOnInit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
         this.usersService.user$.subscribe(function (user) { return _this.user = user; }); //start listening the source of user
-        this.usdFromCryptoCurrencyWhenBought = this.cryptoCurrencyBuyPrice * this.cryptoCurrencyCount;
-        this.cryptoCurrencyService.getPrices(this.cryptoCurrency).subscribe(function (pricesData) {
-            _this.cryptoCurrencyCurrentPrice = pricesData.price;
-            _this.usdFromCryptoCurrency = pricesData.price * _this.cryptoCurrencyCount;
-            _this.totalReturns.emit({
-                usdFromCryptoCurrencyWhenBought: _this.usdFromCryptoCurrencyWhenBought,
-                usdFromCryptoCurrency: _this.usdFromCryptoCurrency
+        this.usdValueWhenBought = this.investment.buyingPrice * this.investment.amount;
+        if (this.investment.type === 'crypto') {
+            //crypto investment
+            this.currencyExchangeService.getCryptoRates(this.investment.unit).subscribe(function (data) {
+                _this.currentPrice = data.price;
+                _this.currentUsdValue = data.price * _this.investment.amount;
+                _this.totalReturns.emit({
+                    usdValueWhenBought: _this.usdValueWhenBought,
+                    currentUsdValue: _this.currentUsdValue
+                });
+            }, function (error) {
+                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get crypto currency rates data > " + error);
+                _this.appService.showResults("There was an error trying to get crypto currency rates data, please try again in a few minutes.", 'error');
             });
-        }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get crypto currency rates data > " + error);
-            _this.appService.showResults("There was an error trying to get crypto currency rates data, please try again in a few minutes.", 'error');
-        });
+        }
+        else {
+            //currency exchange
+            this.currencyExchangeService.getCurrencyRates().subscribe(function (data) {
+                _this.currentPrice = data[_this.investment.unit] || 0;
+                _this.currentUsdValue = data[_this.investment.unit] * _this.investment.amount || 0;
+                _this.totalReturns.emit({
+                    usdValueWhenBought: _this.usdValueWhenBought,
+                    currentUsdValue: _this.currentUsdValue
+                });
+            }, function (error) {
+                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get crypto currency rates data > " + error);
+                _this.appService.showResults("There was an error trying to get crypto currency rates data, please try again in a few minutes.", 'error');
+            });
+        }
     };
-    CryptoCurrencyComponent.prototype.openDeleteDialog = function () {
+    CurrencyInvestmentComponent.prototype.openDeleteDialog = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > openDeleteDialog() > "; //for debugging
-        if (!this.id) {
+        if (!this.investment.id) {
             this.appService.consoleLog('error', methodTrace + " Investment ID is required to delete.");
             return false;
         }
@@ -1166,15 +1277,15 @@ var CryptoCurrencyComponent = (function () {
         });
         return false;
     };
-    CryptoCurrencyComponent.prototype.delete = function () {
+    CurrencyInvestmentComponent.prototype.delete = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > delete() > "; //for debugging
         if (this.user) {
             this.actionRunning = true;
-            this.investmentsService.delete(this.id, this.user.email).subscribe(function (data) {
+            this.investmentsService.delete(this.investment.id, this.user.email).subscribe(function (data) {
                 if (data && data.removed > 0) {
                     _this.appService.showResults("Investment successfully removed!", 'success');
-                    _this.deletedId.emit(_this.id);
+                    _this.deletedId.emit(_this.investment.id);
                 }
                 else {
                     _this.appService.showResults("Investment could not be removed, please try again.", 'error');
@@ -1196,259 +1307,30 @@ var CryptoCurrencyComponent = (function () {
             this.router.navigate(['/users/login']);
         }
     };
-    return CryptoCurrencyComponent;
-}());
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", String)
-], CryptoCurrencyComponent.prototype, "id", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", String)
-], CryptoCurrencyComponent.prototype, "cryptoCurrency", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", Number)
-], CryptoCurrencyComponent.prototype, "cryptoCurrencyCount", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", Number)
-], CryptoCurrencyComponent.prototype, "cryptoCurrencyBuyPrice", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", Object)
-], CryptoCurrencyComponent.prototype, "cryptoCurrencyBuyDate", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
-], CryptoCurrencyComponent.prototype, "totalReturns", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
-    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _b || Object)
-], CryptoCurrencyComponent.prototype, "deletedId", void 0);
-CryptoCurrencyComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'crypto-currency',
-        template: __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.scss")]
-    }),
-    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__crypto_currency_service__["a" /* CryptoCurrencyService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__crypto_currency_service__["a" /* CryptoCurrencyService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__users_users_service__["a" /* UsersService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__investments_service__["a" /* InvestmentsService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_7__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__angular_router__["b" /* Router */]) === "function" && _h || Object])
-], CryptoCurrencyComponent);
-
-var _a, _b, _c, _d, _e, _f, _g, _h;
-//# sourceMappingURL=crypto-currency.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CryptoCurrencyService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var CryptoCurrencyService = (function () {
-    function CryptoCurrencyService(http) {
-        this.http = http;
-        this.serverUrl = 'https://api.cryptonator.com/api/ticker/';
-        this.rates = {};
-    }
-    CryptoCurrencyService.prototype.getPrices = function (currency) {
-        var _this = this;
-        if (currency === void 0) { currency = 'btc'; }
-        if (this.rates[currency.toUpperCase()]) {
-            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(this.rates[currency.toUpperCase()]);
-        }
-        return this.http.get("" + this.serverUrl + currency + "-usd")
-            .map(function (res) {
-            _this.rates[currency.toUpperCase()] = _this.extractData(res);
-            return _this.rates[currency.toUpperCase()];
-        }).catch(this.handleError);
-    };
-    CryptoCurrencyService.prototype.extractData = function (res) {
-        var body = res.json();
-        if (body.success === true) {
-            return body.ticker;
-        }
-        else {
-            throw body;
-        }
-    };
-    CryptoCurrencyService.prototype.handleError = function (error) {
-        // In a real world app, we might use a remote logging infrastructure
-        var errMsg;
-        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
-            var body = error.json() || '';
-            var err = body.error || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
-        }
-        else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].throw(errMsg);
-    };
-    return CryptoCurrencyService;
-}());
-CryptoCurrencyService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
-], CryptoCurrencyService);
-
-var _a;
-//# sourceMappingURL=crypto-currency.service.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-currency-investment\">\r\n    <form class=\"form__container form__edit-currency-investment\" #editCurrencyInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n      \r\n      <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <currency-unit fxFlex fxFlex.gt-xs=\"200px\"\r\n                [id]=\"'currencyInvestmentUnit'\" \r\n                [value]=\"model.unit\"\r\n                [type]=\"model.type\"\r\n                [hint]=\"'Choose the desired currency to invest on...'\"\r\n                [placeHolder]=\"'Desired currency'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n\r\n            <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"amount\" name=\"amount\" placeholder=\"Amount\"\r\n                  [(ngModel)]=\"model.amount\" \r\n                  value=\"model.amount\"\r\n                  numberValidator='{\"maxFractionDigits\": 8}' \r\n                  required\r\n                  #amount=\"ngModel\">\r\n              <mat-hint align=\"start\">Set the buying amount.</mat-hint>\r\n              <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.required\">Amount is required.</mat-error>\r\n              <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.numberValidator\">Value must be numeric, with no more than eight decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <!-- Buying date -->\r\n            <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n              <input placeholder=\"Buying date\"\r\n                  id=\"buyingDate\"\r\n                  name=\"buyingDate\"\r\n                  readonly\r\n                  required\r\n                  #buyingDate=\"ngModel\"\r\n                  matInput \r\n                  [(ngModel)]=\"model.buyingDate\" \r\n                  [matDatepicker]=\"pickerBuyingDate\"\r\n                  (click)=\"pickerBuyingDate.open()\">\r\n              <mat-datepicker-toggle matSuffix [for]=\"pickerBuyingDate\"></mat-datepicker-toggle>\r\n              <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBuyingDate></mat-datepicker>\r\n              <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.required\">Buying date is required.</mat-error>\r\n              <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.matDatepickerParse\">Buying date is invalid or not follows the pattern \"mm/dd/yyyy\"</mat-error>\r\n            </mat-form-field>\r\n\r\n            <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n              <!-- Buying price unit -->\r\n              <currency-unit fxFlex=\"50px\"\r\n                  [id]=\"'buyingPriceUnit'\" \r\n                  [view]=\"'narrow'\"\r\n                  [value]=\"model.buyingPriceUnit\"\r\n                  (newValue)=\"onCurrencyUnitChange($event)\">\r\n              </currency-unit>\r\n\r\n              <!-- Buying price -->\r\n              <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n                <input matInput type=\"number\" id=\"buyingPrice\" name=\"buyingPrice\" placeholder=\"Price\"\r\n                    [(ngModel)]=\"model.buyingPrice\" \r\n                    value=\"model.buyingPrice\"\r\n                    numberValidator \r\n                    required\r\n                    #buyingPrice=\"ngModel\">\r\n                <mat-hint align=\"start\">Price on buying date.</mat-hint>\r\n                <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.required\">Buying price is required.</mat-error>\r\n                <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n              </mat-form-field>\r\n            </div>\r\n            \r\n          </div>\r\n        </div>\r\n      </section>\r\n    </form>\r\n  </div>\r\n  "
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyInvestmentComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-var CurrencyInvestmentComponent = (function () {
-    function CurrencyInvestmentComponent(dateAdapter, appService, utilService) {
-        this.dateAdapter = dateAdapter;
-        this.appService = appService;
-        this.utilService = utilService;
-        this.defaultValues = null; //the default values of the component model  
-        this.values = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.model = {
-            type: null,
-            unit: null,
-            amount: null,
-            buyingPrice: null,
-            buyingPriceUnit: null,
-            buyingDate: null
-        };
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__["a" /* Subscription */]();
-        this.dateAdapter.setLocale('en-GB');
-    }
-    CurrencyInvestmentComponent.prototype.ngOnInit = function () {
-        console.log(this.model.type);
-        this.model.unit = this.model.type === 'currency' ? 'USD' : 'BTC';
-        this.model.buyingDate = new Date(Date.now());
-        this.model.buyingPriceUnit = 'USD';
-        Object.assign(this.model, this.defaultValues);
-    };
-    CurrencyInvestmentComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
-        this.subscription.unsubscribe();
-    };
-    CurrencyInvestmentComponent.prototype.onCurrencyUnitChange = function ($event) {
-        if ($event.source.id === 'currencyInvestmentUnit') {
-            this.model.unit = $event.value;
-        }
-        else if ($event.source.id === 'buyingPriceUnit') {
-            this.model.buyingPriceUnit = $event.value;
-        }
-        this.values.emit({
-            value: {
-                model: this.model,
-                valid: this.form.valid
-            }
-        });
-    };
-    CurrencyInvestmentComponent.prototype.ngAfterViewInit = function () {
-        var _this = this;
-        //send data before touching any value
-        this.values.emit({
-            value: {
-                model: this.model,
-                valid: this.form.valid
-            }
-        });
-        //after any event in the form we send updated data
-        var newSubscription = this.form.valueChanges.debounceTime(500).subscribe(function (values) {
-            _this.values.emit({
-                value: {
-                    model: _this.model,
-                    valid: _this.form.valid
-                }
-            });
-        });
-        this.subscription.add(newSubscription);
-    };
     return CurrencyInvestmentComponent;
 }());
 __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_17" /* ViewChild */])('editCurrencyInvestmentForm'),
-    __metadata("design:type", Object)
-], CurrencyInvestmentComponent.prototype, "form", void 0);
-__decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", Object)
-], CurrencyInvestmentComponent.prototype, "defaultValues", void 0);
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__["a" /* CurrencyInvestment */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__["a" /* CurrencyInvestment */]) === "function" && _a || Object)
+], CurrencyInvestmentComponent.prototype, "investment", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
-], CurrencyInvestmentComponent.prototype, "values", void 0);
+    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _b || Object)
+], CurrencyInvestmentComponent.prototype, "totalReturns", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
+    __metadata("design:type", typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _c || Object)
+], CurrencyInvestmentComponent.prototype, "deletedId", void 0);
 CurrencyInvestmentComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
         selector: 'currency-investment',
         template: __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__util_service__["a" /* UtilService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__util_service__["a" /* UtilService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__["a" /* CurrencyExchangeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__["a" /* CurrencyExchangeService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__users_users_service__["a" /* UsersService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__investments_service__["a" /* InvestmentsService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_6__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__angular_router__["b" /* Router */]) === "function" && _j || Object])
 ], CurrencyInvestmentComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 //# sourceMappingURL=currency-investment.component.js.map
 
 /***/ }),
@@ -1456,7 +1338,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>Create investment</h2>\r\n\r\n<mat-dialog-content>\r\n  <mat-button-toggle-group fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"selector__investment-type\" (change)=\"onChange($event)\" #investmentTypesGroup>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"currency\" matTooltip=\"Currency exchange\" routerLink=\"investments/currency/create\">\r\n      <img src=\"/assets/images/exchange.png\" alt=\"currency\" />\r\n    </mat-button-toggle>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"cryptocurrency\" matTooltip=\"Crypto currency\" routerLink=\"investments/crypto/create\">\r\n      <img src=\"/assets/images/cryptocurrency.png\" alt=\"Crypto currency\" />\r\n    </mat-button-toggle>\r\n    <!-- <mat-button-toggle class=\"option__investment-type\" value=\"property\" matTooltip=\"Property\" routerLink=\"investments/property/create\">\r\n      <img src=\"/assets/images/house.png\" alt=\"Property\" />\r\n    </mat-button-toggle> -->\r\n  </mat-button-toggle-group>\r\n</mat-dialog-content>\r\n"
+module.exports = "<h2 mat-dialog-title>Create investment</h2>\r\n\r\n<mat-dialog-content>\r\n  <mat-button-toggle-group fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"selector__investment-type\" (change)=\"onChange($event)\" #investmentTypesGroup>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"currency\" matTooltip=\"Currency exchange\" routerLink=\"investments/currency/create\"\r\n        [matTooltipPosition]=\"utilService.isXs() ? 'right' : 'below'\">\r\n      <img src=\"/assets/images/exchange.png\" alt=\"currency\" />\r\n    </mat-button-toggle>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"cryptocurrency\" matTooltip=\"Crypto currency\" routerLink=\"investments/crypto/create\"\r\n        [matTooltipPosition]=\"utilService.isXs() ? 'right' : 'below'\">\r\n      <img src=\"/assets/images/cryptocurrency.png\" alt=\"Crypto currency\" />\r\n    </mat-button-toggle>\r\n    <!-- <mat-button-toggle class=\"option__investment-type\" value=\"property\" matTooltip=\"Property\" routerLink=\"investments/property/create\"\r\n        [matTooltipPosition]=\"utilService.isXs() ? 'right' : 'below'\">\r\n      <img src=\"/assets/images/house.png\" alt=\"Property\" />\r\n    </mat-button-toggle> -->\r\n  </mat-button-toggle-group>\r\n</mat-dialog-content>\r\n"
 
 /***/ }),
 
@@ -1485,6 +1367,7 @@ module.exports = module.exports.toString();
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentSelectorDialogComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1499,10 +1382,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 
 
+
 var InvestmentSelectorDialogComponent = (function () {
-    function InvestmentSelectorDialogComponent(dialogRef, data) {
+    function InvestmentSelectorDialogComponent(dialogRef, data, utilService) {
         this.dialogRef = dialogRef;
         this.data = data;
+        this.utilService = utilService;
     }
     InvestmentSelectorDialogComponent.prototype.ngOnInit = function () { };
     InvestmentSelectorDialogComponent.prototype.onNoClick = function () {
@@ -1520,10 +1405,10 @@ InvestmentSelectorDialogComponent = __decorate([
         styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.scss")]
     }),
     __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */]) === "function" && _a || Object, Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */]) === "function" && _a || Object, Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__util_service__["a" /* UtilService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__util_service__["a" /* UtilService */]) === "function" && _b || Object])
 ], InvestmentSelectorDialogComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=investment-selector-dialog.component.js.map
 
 /***/ }),
@@ -1531,7 +1416,7 @@ var _a;
 /***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <div *ngFor=\"let row of investmentsUI\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <crypto-currency *ngFor=\"let investment of row\" fxFlex fxFlex.gt-xs=\"50\"\r\n        [id]=\"investment.id\" \r\n        [cryptoCurrency]=\"investment.unit | lowercase\"\r\n        [cryptoCurrencyCount]=\"investment.amount\"\r\n        [cryptoCurrencyBuyPrice]=\"investment.buyingPrice\"\r\n        [cryptoCurrencyBuyDate]=\"investment.buyingDate\"\r\n        (totalReturns)=\"setTotals($event)\"\r\n        (deletedId)=\"removeInvestment($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n    \r\n    <!-- <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"218.85627651\"\r\n        [cryptoCurrencyBuyPrice]=\"50\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex\r\n        [cryptoCurrency]=\"'btc'\"\r\n        [cryptoCurrencyCount]=\"1.28129356\"\r\n        [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n        [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.94093753\"\r\n        [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.72806551\"\r\n        [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div> -->\r\n\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n        <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n            [class.color__red]=\"totalReturn < totalInvestment\">\r\n          Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && !investments.length\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>\r\n          You do not have investments yet.\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab class=\"mat-elevation-z12\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <div *ngFor=\"let row of investmentsUI\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <currency-investment *ngFor=\"let investment of row\" fxFlex fxFlex.gt-xs=\"50\"\r\n        [investment]=\"investment\"\r\n        (totalReturns)=\"setTotals($event)\"\r\n        (deletedId)=\"removeInvestment($event)\">\r\n      </currency-investment>\r\n    </div>\r\n    \r\n    <!-- <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"218.85627651\"\r\n        [cryptoCurrencyBuyPrice]=\"50\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex\r\n        [cryptoCurrency]=\"'btc'\"\r\n        [cryptoCurrencyCount]=\"1.28129356\"\r\n        [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n        [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.94093753\"\r\n        [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.72806551\"\r\n        [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div> -->\r\n\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n        <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n            [class.color__red]=\"totalReturn < totalInvestment\">\r\n          Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && !investments.length\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>\r\n          You do not have investments yet.\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab class=\"mat-elevation-z12\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -1655,8 +1540,8 @@ var InvestmentsDashboardComponent = (function () {
         });
     };
     InvestmentsDashboardComponent.prototype.setTotals = function (totalReturns) {
-        this.totalReturn += totalReturns.usdFromCryptoCurrency;
-        this.totalInvestment += totalReturns.usdFromCryptoCurrencyWhenBought;
+        this.totalReturn += totalReturns.currentUsdValue;
+        this.totalInvestment += totalReturns.usdValueWhenBought;
     };
     /**
      * Removes the investment from the investments array and from the investmentUI array used in view
@@ -1671,10 +1556,27 @@ var InvestmentsDashboardComponent = (function () {
                 }
                 index += 1;
             }
-            var row = Math.floor(index / 2);
-            var offset = index % 2;
-            this.investmentsUI[row].splice(offset, 1);
             this.investments.splice(index, 1);
+            var row = 0; //Math.floor(index / 2);
+            var offset = 0; //index % 2;
+            var found = false;
+            for (var i = 0; i < this.investmentsUI.length; i++) {
+                for (var j = 0; j < this.investmentsUI[i].length; j++) {
+                    if (this.investmentsUI[i][j].id === deletedId) {
+                        row = i;
+                        offset = j;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) {
+                    break;
+                }
+            }
+            this.investmentsUI[row].splice(offset, 1);
+            if (!this.investmentsUI[row].length) {
+                this.investmentsUI.splice(row, 1);
+            }
         }
     };
     InvestmentsDashboardComponent.prototype.openNewInvestmentDialog = function () {
@@ -1700,7 +1602,7 @@ var _a, _b, _c, _d, _e, _f;
 /***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-investment\">\r\n  <form class=\"form__container form__edit-investment\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div *ngIf=\"!getInvestmentServiceRunning\">\r\n      <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title\">\r\n            Owner\r\n            <p class=\"mat-caption\">Specify the owner of this investment</p>\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n            <mat-radio-group fxFlex.gt-xs=\"230px\" *ngIf=\"teams.length\" class=\"form__field radiogroup__owner\"\r\n                [(ngModel)]=\"model.owner\" \r\n                name=\"owner\" \r\n                id=\"owner\" \r\n                #owner=\"ngModel\"\r\n                (change)=\"onRadioChange($event)\">\r\n              <mat-radio-button class=\"owner__option\" value=\"me\">Just me</mat-radio-button>\r\n              <mat-radio-button class=\"owner__option\" value=\"team\">My team</mat-radio-button>\r\n            </mat-radio-group>\r\n    \r\n            <mat-form-field *ngIf=\"teams.length && model.owner === 'team'\" fxFlex fxFlex.gt-xs=\"350px\" class=\"form__field\">\r\n              <mat-select [(ngModel)]=\"model.team\"\r\n                  name=\"team\" \r\n                  id=\"team\" \r\n                  #team=\"ngModel\" \r\n                  placeholder=\"Select a team\"\r\n                  (change)=\"onSelectChange($event)\"\r\n                  required>\r\n                <mat-option *ngFor=\"let team of teams\" [value]=\"team\">\r\n                  {{team.name}}\r\n                </mat-option>\r\n              </mat-select>\r\n              <mat-error *ngIf=\"team.invalid && (team.dirty || team.touched) && team.errors.required\">Please choose a team</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n        \r\n        <div *ngIf=\"model.team\" fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title\">\r\n            Split between team members\r\n            <p class=\"mat-caption\">Specify how to split the returns setting a percentage of the total investment amount to each member</p>\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">         \r\n            <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"20px\" class=\"team-members\">\r\n              <div *ngFor=\"let member of model.team.members; index as memberIndex\" fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"member\">\r\n                <div class=\"member-details\" fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n                  <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n                  <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === model.team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n                    <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === model.team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n                    <p class=\"member__email\">{{member.email}}</p>\r\n                  </div>\r\n                </div>\r\n      \r\n                <div class=\"member-percentage\">\r\n                  <mat-form-field class=\"form__field\">\r\n                    <input matInput type=\"number\" id=\"memberPercentage_{{member.email}}\" name=\"memberPercentage_{{member.email}}\" placeholder=\"Percentage of investment\"\r\n                        [(ngModel)]=\"model.membersPercentage[member.email]\" \r\n                        value=\"model.membersPercentage[member.email]\"\r\n                        numberValidator='{\"min\": 0, \"max\": 100}'\r\n                        required\r\n                        #memberPercentage=\"ngModel\">\r\n                    <mat-hint align=\"start\">(%) Investment portion for {{member.email}}.</mat-hint>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.required\">Percentage of investment is required.</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n            </div>\r\n            \r\n          </div>\r\n        </div>\r\n  \r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title title__investment-amount\">\r\n            Investment amount\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n                <currency-unit fxFlex=\"50px\"\r\n                    [id]=\"'investmentAmountUnit'\" \r\n                    [value]=\"model.investmentAmountUnit\"\r\n                    [view]=\"'narrow'\"\r\n                    (newValue)=\"onCurrencyUnitChange($event)\">\r\n                </currency-unit>\r\n                \r\n                <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n                  <input matInput type=\"number\" id=\"investmentAmount\" name=\"investmentAmount\" placeholder=\"Investment amount\"\r\n                      [(ngModel)]=\"model.investmentAmount\" \r\n                      value=\"model.investmentAmount\"\r\n                      numberValidator \r\n                      required\r\n                      #investmentAmount=\"ngModel\">\r\n                  <mat-hint align=\"start\">Set the amount of money to invest.</mat-hint>\r\n                  <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required\">Investment amount is required.</mat-error>\r\n                  <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                </mat-form-field>\r\n              </div>\r\n          </div>\r\n        </div>\r\n  \r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <currency-investment [defaultValues]=\"model.investmentData\"\r\n              (values)=\"onInvestmentDataChange($event)\">\r\n          </currency-investment>\r\n        </div>\r\n      </section>\r\n  \r\n      \r\n      \r\n      <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-investment\">\r\n        <button *ngIf=\"!editInvestmentServiceRunning\" \r\n            class=\"form__action mat-raised-button\" \r\n            mat-raised-button \r\n            type=\"submit\" \r\n            color=\"accent\" \r\n            [disabled]=\"!editInvestmentForm.form.valid || !investmentDataValid\">Save</button>\r\n        \r\n        <mat-progress-bar *ngIf=\"editInvestmentServiceRunning\"\r\n            class=\"progress-bar progress-bar--edit-investment\"\r\n            color=\"primary\"\r\n            mode=\"indeterminate\">\r\n        </mat-progress-bar>\r\n      </section>\r\n    </div>\r\n    \r\n    <!-- <pre>{{model | json}}</pre> -->\r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-investment\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>\r\n"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-investment\">\r\n  <form class=\"form__container form__edit-investment\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div *ngIf=\"!getInvestmentServiceRunning\">\r\n      <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title\">\r\n            Owner\r\n            <p class=\"mat-caption\">Specify the owner of this investment</p>\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n            <mat-radio-group fxFlex.gt-xs=\"230px\" *ngIf=\"teams.length\" class=\"form__field radiogroup__owner\"\r\n                [(ngModel)]=\"model.owner\" \r\n                name=\"owner\" \r\n                id=\"owner\" \r\n                #owner=\"ngModel\"\r\n                (change)=\"onRadioChange($event)\">\r\n              <mat-radio-button class=\"owner__option\" value=\"me\">Just me</mat-radio-button>\r\n              <mat-radio-button class=\"owner__option\" value=\"team\">My team</mat-radio-button>\r\n            </mat-radio-group>\r\n    \r\n            <mat-form-field *ngIf=\"teams.length && model.owner === 'team'\" fxFlex fxFlex.gt-xs=\"350px\" class=\"form__field\">\r\n              <mat-select [(ngModel)]=\"model.team\"\r\n                  name=\"team\" \r\n                  id=\"team\" \r\n                  #team=\"ngModel\" \r\n                  placeholder=\"Select a team\"\r\n                  (change)=\"onSelectChange($event)\"\r\n                  required>\r\n                <mat-option *ngFor=\"let team of teams\" [value]=\"team\">\r\n                  {{team.name}}\r\n                </mat-option>\r\n              </mat-select>\r\n              <mat-error *ngIf=\"team.invalid && (team.dirty || team.touched) && team.errors.required\">Please choose a team</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n        \r\n        <div *ngIf=\"model.team\" fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title\">\r\n            Split between team members\r\n            <p class=\"mat-caption\">Specify how to split the returns setting a percentage of the total investment amount to each member</p>\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">         \r\n            <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"20px\" class=\"team-members\">\r\n              <div *ngFor=\"let member of model.team.members; index as memberIndex\" fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"member\">\r\n                <div class=\"member-details\" fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n                  <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n                  <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === model.team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n                    <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === model.team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n                    <p class=\"member__email\">{{member.email}}</p>\r\n                  </div>\r\n                </div>\r\n      \r\n                <div class=\"member-percentage\">\r\n                  <mat-form-field class=\"form__field\">\r\n                    <input matInput type=\"number\" id=\"memberPercentage_{{member.email}}\" name=\"memberPercentage_{{member.email}}\" placeholder=\"Percentage of investment\"\r\n                        [(ngModel)]=\"model.membersPercentage[member.email]\" \r\n                        value=\"model.membersPercentage[member.email]\"\r\n                        numberValidator='{\"min\": 0, \"max\": 100}'\r\n                        required\r\n                        #memberPercentage=\"ngModel\">\r\n                    <mat-hint align=\"start\">(%) Investment portion for {{member.email}}.</mat-hint>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.required\">Percentage of investment is required.</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n            </div>\r\n            \r\n          </div>\r\n        </div>\r\n  \r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title title__investment-amount\">\r\n            Investment amount\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n                <currency-unit fxFlex=\"50px\"\r\n                    [id]=\"'investmentAmountUnit'\" \r\n                    [value]=\"model.investmentAmountUnit\"\r\n                    [view]=\"'narrow'\"\r\n                    (newValue)=\"onCurrencyUnitChange($event)\">\r\n                </currency-unit>\r\n                \r\n                <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n                  <input matInput type=\"number\" id=\"investmentAmount\" name=\"investmentAmount\" placeholder=\"Investment amount\"\r\n                      [(ngModel)]=\"model.investmentAmount\" \r\n                      value=\"model.investmentAmount\"\r\n                      numberValidator \r\n                      required\r\n                      #investmentAmount=\"ngModel\">\r\n                  <mat-hint align=\"start\">Set the amount of money to invest.</mat-hint>\r\n                  <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required\">Investment amount is required.</mat-error>\r\n                  <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                </mat-form-field>\r\n              </div>\r\n          </div>\r\n        </div>\r\n  \r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <currency-investment-form [defaultValues]=\"model.investmentData\"\r\n              (values)=\"onInvestmentDataChange($event)\">\r\n          </currency-investment-form>\r\n        </div>\r\n      </section>\r\n  \r\n      \r\n      \r\n      <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-investment\">\r\n        <button *ngIf=\"!editInvestmentServiceRunning\" \r\n            class=\"form__action mat-raised-button\" \r\n            mat-raised-button \r\n            type=\"submit\" \r\n            color=\"accent\" \r\n            [disabled]=\"!editInvestmentForm.form.valid || !investmentDataValid\">Save</button>\r\n        \r\n        <mat-progress-bar *ngIf=\"editInvestmentServiceRunning\"\r\n            class=\"progress-bar progress-bar--edit-investment\"\r\n            color=\"primary\"\r\n            mode=\"indeterminate\">\r\n        </mat-progress-bar>\r\n      </section>\r\n    </div>\r\n    \r\n    <!-- <pre>{{model | json}}</pre> -->\r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-investment\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -2094,6 +1996,117 @@ var _a, _b, _c, _d, _e, _f;
 
 /***/ }),
 
+/***/ "../../../../../src/app/modules/investments/currency-exchange.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyExchangeService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var CurrencyExchangeService = (function () {
+    function CurrencyExchangeService(http) {
+        this.http = http;
+        // private cryptoExchangeServerUrl : string = 'https://api.cryptonator.com/api/ticker/';
+        // cryptoRates : any = {};
+        this.cryptoExchangeServerUrl = 'http://coincap.io/page/';
+        this.cryptoRates = {};
+        this.currencyExchangeServiceUrl = 'https://api.fixer.io/latest';
+        this.currencyRates = null;
+    }
+    CurrencyExchangeService.prototype.getCurrencyRates = function (base) {
+        if (base === void 0) { base = 'USD'; }
+        if (this.currencyRates) {
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(this.currencyRates);
+        }
+        return this.http.get(this.currencyExchangeServiceUrl + "?base=" + base)
+            .map(this.extractCurrencyExchangeData)
+            .catch(this.handleError);
+    };
+    CurrencyExchangeService.prototype.extractCurrencyExchangeData = function (res) {
+        var body = res.json();
+        if (Object.keys(body.rates).length > 0) {
+            return body.rates;
+        }
+        else {
+            throw body;
+        }
+    };
+    CurrencyExchangeService.prototype.handleError = function (error) {
+        var errMsg;
+        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
+            var body = error.json() || '';
+            var err = body.error || JSON.stringify(body);
+            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+        }
+        else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].throw(errMsg);
+    };
+    // getCryptoRates(crypto : string = 'btc') : Observable<any> {
+    //   if (this.cryptoRates[crypto.toUpperCase()]) {
+    //     return Observable.of(this.cryptoRates[crypto.toUpperCase()]);
+    //   }
+    //   return this.http.get(`${this.cryptoExchangeServerUrl}${crypto}-usd`)
+    //       .map((res: Response) => {
+    //         this.cryptoRates[crypto.toUpperCase()] = this.extractCryptoExchangeData(res);
+    //         return this.cryptoRates[crypto.toUpperCase()];
+    //       }).catch(this.handleError);
+    // }
+    // private extractCryptoExchangeData(res: Response) : any {
+    //   let body = res.json();
+    //   if (body.success === true) {
+    //     return body.ticker;
+    //   } else {
+    //     throw body;
+    //   }
+    // }
+    CurrencyExchangeService.prototype.getCryptoRates = function (crypto) {
+        var _this = this;
+        if (crypto === void 0) { crypto = 'BTC'; }
+        if (this.cryptoRates[crypto.toUpperCase()]) {
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(this.cryptoRates[crypto.toUpperCase()]);
+        }
+        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase())
+            .map(function (res) {
+            _this.cryptoRates[crypto.toUpperCase()] = _this.extractCryptoExchangeData(crypto, res);
+            return _this.cryptoRates[crypto.toUpperCase()];
+        }).catch(this.handleError);
+    };
+    CurrencyExchangeService.prototype.extractCryptoExchangeData = function (crypto, res) {
+        var body = res.json();
+        if (body.id === crypto.toUpperCase()) {
+            return body;
+        }
+        else {
+            throw body;
+        }
+    };
+    return CurrencyExchangeService;
+}());
+CurrencyExchangeService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
+], CurrencyExchangeService);
+
+var _a;
+//# sourceMappingURL=currency-exchange.service.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/modules/investments/investments-routing.module.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2173,12 +2186,12 @@ InvestmentsRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_crypto_currency_crypto_currency_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_crypto_currency_crypto_currency_service__ = __webpack_require__("../../../../../src/app/modules/investments/components/crypto-currency/crypto-currency.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_investments_edit_investments_edit_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_currency_investment_currency_investment_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_currency_investment_currency_investment_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_investments_edit_investments_edit_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_currency_investment_form_currency_investment_form_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2215,16 +2228,16 @@ InvestmentsModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__["a" /* SharedModule */]
         ],
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_8__components_crypto_currency_crypto_currency_component__["a" /* CryptoCurrencyComponent */],
+            __WEBPACK_IMPORTED_MODULE_8__components_currency_investment_currency_investment_component__["a" /* CurrencyInvestmentComponent */],
             __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */],
-            __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__components_currency_investment_currency_investment_component__["a" /* CurrencyInvestmentComponent */]
+            __WEBPACK_IMPORTED_MODULE_9__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
+            __WEBPACK_IMPORTED_MODULE_11__components_currency_investment_form_currency_investment_form_component__["a" /* CurrencyInvestmentFormComponent */]
         ],
         entryComponents: [
-            __WEBPACK_IMPORTED_MODULE_10__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */] //added as material doc suggest to allow AOT on this on the fly created class
+            __WEBPACK_IMPORTED_MODULE_9__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */] //added as material doc suggest to allow AOT on this on the fly created class
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_9__components_crypto_currency_crypto_currency_service__["a" /* CryptoCurrencyService */], __WEBPACK_IMPORTED_MODULE_13__investments_service__["a" /* InvestmentsService */]]
+        providers: [__WEBPACK_IMPORTED_MODULE_13__currency_exchange_service__["a" /* CurrencyExchangeService */], __WEBPACK_IMPORTED_MODULE_12__investments_service__["a" /* InvestmentsService */]]
     })
 ], InvestmentsModule);
 
@@ -3964,7 +3977,6 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_account_finance__ = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__currency_exchange_service__ = __webpack_require__("../../../../../src/app/currency-exchange.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3979,12 +3991,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var AccountFinanceInfoComponent = (function () {
-    function AccountFinanceInfoComponent(usersService, appService, currencyExchangeService) {
+    function AccountFinanceInfoComponent(usersService, appService) {
         this.usersService = usersService;
         this.appService = appService;
-        this.currencyExchangeService = currencyExchangeService;
         this.model = {
             email: null,
             annualIncome: null,
@@ -4057,10 +4067,10 @@ AccountFinanceInfoComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__currency_exchange_service__["a" /* CurrencyExchangeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__currency_exchange_service__["a" /* CurrencyExchangeService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object])
 ], AccountFinanceInfoComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c;
 //# sourceMappingURL=account-finance-info.component.js.map
 
 /***/ }),

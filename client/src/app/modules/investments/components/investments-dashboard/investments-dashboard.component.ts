@@ -92,8 +92,8 @@ export class InvestmentsDashboardComponent implements OnInit {
   }
 
   setTotals(totalReturns : any) : void {
-    this.totalReturn += totalReturns.usdFromCryptoCurrency;
-    this.totalInvestment += totalReturns.usdFromCryptoCurrencyWhenBought;
+    this.totalReturn += totalReturns.currentUsdValue;
+    this.totalInvestment += totalReturns.usdValueWhenBought;
   }
 
   /**
@@ -109,11 +109,30 @@ export class InvestmentsDashboardComponent implements OnInit {
 
         index += 1;
       }
-      
-      const row = Math.floor(index / 2);
-      const offset = index % 2;
-      this.investmentsUI[row].splice(offset, 1);
       this.investments.splice(index, 1);
+
+      let row = 0;//Math.floor(index / 2);
+      let offset = 0;//index % 2;
+      let found = false;
+      for (let i = 0; i < this.investmentsUI.length; i++) {
+        for (let j = 0; j < this.investmentsUI[i].length; j++) {
+          if (this.investmentsUI[i][j].id === deletedId) {
+            row = i;
+            offset = j;
+            found = true;
+            break;
+          }
+        }
+
+        if (found) {
+          break;
+        }
+      }
+
+      this.investmentsUI[row].splice(offset, 1);
+      if (!this.investmentsUI[row].length) {
+        this.investmentsUI.splice(row, 1);
+      }
     }
   }
 

@@ -1,78 +1,40 @@
-<div fxLayout="column" fxLayoutGap="10px" class="container__edit-currency-investment">
-    <form class="form__container form__edit-currency-investment" #editCurrencyInvestmentForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
-      
-      <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
-        <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
-          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="form__fields__row">
-            <currency-unit fxFlex fxFlex.gt-xs="200px"
-                [id]="'currencyInvestmentUnit'" 
-                [value]="model.unit"
-                [type]="model.type"
-                [hint]="'Choose the desired currency to invest on...'"
-                [placeHolder]="'Desired currency'"
-                (newValue)="onCurrencyUnitChange($event)">
-            </currency-unit>
+<mat-card class="currency-card">
+  <mat-card-header>
+    <div mat-card-avatar class="header-image">
+        <img [src]="'/assets/images/' + investment.type + '/' + investment.unit + '.png'" [alt]="investment.type" />
+    </div>
+    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>
+    <mat-card-subtitle>
+      today at <strong>{{currentPrice | currency : 'USD' : false : '1.2-2'}}</strong>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="card__content">
+    Investment: <strong>{{usdValueWhenBought | currency }}</strong> 
+    <br>
 
-            <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
-              <input matInput type="number" id="amount" name="amount" placeholder="Amount"
-                  [(ngModel)]="model.amount" 
-                  value="model.amount"
-                  numberValidator='{"maxFractionDigits": 8}' 
-                  required
-                  #amount="ngModel">
-              <mat-hint align="start">Set the buying amount.</mat-hint>
-              <mat-error *ngIf="amount.invalid && (amount.dirty || amount.touched) && amount.errors.required">Amount is required.</mat-error>
-              <mat-error *ngIf="amount.invalid && (amount.dirty || amount.touched) && amount.errors.numberValidator">Value must be numeric, with no more than eight decimal digits</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
+    on {{investment.buyingDate | date}} at {{investment.buyingPrice | currency}}
 
-        <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
-          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="form__fields__row">
-            <!-- Buying date -->
-            <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
-              <input placeholder="Buying date"
-                  id="buyingDate"
-                  name="buyingDate"
-                  readonly
-                  required
-                  #buyingDate="ngModel"
-                  matInput 
-                  [(ngModel)]="model.buyingDate" 
-                  [matDatepicker]="pickerBuyingDate"
-                  (click)="pickerBuyingDate.open()">
-              <mat-datepicker-toggle matSuffix [for]="pickerBuyingDate"></mat-datepicker-toggle>
-              <mat-datepicker [touchUi]="utilService.isGtSm() ? false : true" #pickerBuyingDate></mat-datepicker>
-              <mat-error *ngIf="buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.required">Buying date is required.</mat-error>
-              <mat-error *ngIf="buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.matDatepickerParse">Buying date is invalid or not follows the pattern "mm/dd/yyyy"</mat-error>
-            </mat-form-field>
+    <div [class.color__accent]="currentUsdValue >= usdValueWhenBought" 
+        [class.color__red]="currentUsdValue < usdValueWhenBought">
+      <br>
+      ROI: <strong>{{ currentUsdValue | currency }}</strong> ({{currentUsdValue / usdValueWhenBought * 100 | number : '1.1-2'}}%)
+    </div>
 
-            <div fxLayout="row" fxLayoutGap="10px">
-              <!-- Buying price unit -->
-              <currency-unit fxFlex="50px"
-                  [id]="'buyingPriceUnit'" 
-                  [view]="'narrow'"
-                  [value]="model.buyingPriceUnit"
-                  (newValue)="onCurrencyUnitChange($event)">
-              </currency-unit>
+    <section class="actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
+      <button *ngIf="!actionRunning" mat-mini-fab routerLink="/investments/crypto/edit/{{investment.id}}" color="primary" (click)="actionRunning = true">
+        <mat-icon aria-label="Edit Investment">edit</mat-icon>
+      </button>
 
-              <!-- Buying price -->
-              <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
-                <input matInput type="number" id="buyingPrice" name="buyingPrice" placeholder="Price"
-                    [(ngModel)]="model.buyingPrice" 
-                    value="model.buyingPrice"
-                    numberValidator 
-                    required
-                    #buyingPrice="ngModel">
-                <mat-hint align="start">Price on buying date.</mat-hint>
-                <mat-error *ngIf="buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.required">Buying price is required.</mat-error>
-                <mat-error *ngIf="buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-              </mat-form-field>
-            </div>
-            
-          </div>
-        </div>
-      </section>
-    </form>
-  </div>
-  
+      <button *ngIf="!actionRunning" mat-mini-fab color="warn" (click)="openDeleteDialog()">
+        <mat-icon aria-label="Delete investment">delete</mat-icon>
+      </button>
+
+      <mat-progress-spinner *ngIf="actionRunning"
+        class="progress-spinner progress-spinner--action"
+        color="warn"
+        [diameter]="40" [strokeWidth]="7"
+        mode="indeterminate">
+      </mat-progress-spinner>
+    </section>
+  </mat-card-content>
+</mat-card>

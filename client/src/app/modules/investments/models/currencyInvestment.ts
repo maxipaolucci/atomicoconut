@@ -3,7 +3,7 @@ import { Team } from "../../teams/models/team";
 import { User } from "../../users/models/user";
 
 export class CurrencyInvestment extends Investment {
-  unit : string;
+  unit : string; //crypto unit
   amount : number;
   buyingPrice : number;
   buyingDate : Date;

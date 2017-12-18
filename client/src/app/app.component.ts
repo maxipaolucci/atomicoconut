@@ -6,7 +6,7 @@ import { configuration } from "../../configuration";
 import { User } from './modules/users/models/user';
 import { Router } from '@angular/router';
 import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
-import { CurrencyExchangeService } from './currency-exchange.service';
+import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -35,15 +35,36 @@ export class AppComponent implements OnInit {
       
     this.setUser();
 
-    if (!this.currencyExchangeService.rates) {
-      this.currencyExchangeService.getRates().subscribe(
+    //Get currency exchange rates
+    if (!this.currencyExchangeService.currencyRates) {
+      this.currencyExchangeService.getCurrencyRates().subscribe(
         (data : any) => {
-          this.currencyExchangeService.rates = data;
+          this.currencyExchangeService.currencyRates = data;
           this.appService.consoleLog('info', `${methodTrace} Currency exchange rates successfully loaded!`);
         },
         (error : any) => {
           this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > ${error}`);
           this.appService.showResults(`There was an error trying to get currency rates data.`, 'error');
+        }
+      );
+    }
+
+    this.getCryptoRates('BTC');
+    this.getCryptoRates('XMR');
+  }
+
+  getCryptoRates(crypto : string = 'BTC') {
+    let methodTrace = `${this.constructor.name} > getCryptoRates() > `; //for debugging
+
+    if (!this.currencyExchangeService.cryptoRates[crypto]) {
+      this.currencyExchangeService.getCryptoRates(crypto).subscribe(
+        (data : any) => {
+          this.currencyExchangeService.cryptoRates[crypto] = data;
+          this.appService.consoleLog('info', `${methodTrace} ${crypto} exchange rate successfully loaded!`);
+        },
+        (error : any) => {
+          this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${crypto} rates data > ${error}`);
+          this.appService.showResults(`There was an error trying to get ${crypto} rates data, please try again in a few minutes.`, 'warn');
         }
       );
     }

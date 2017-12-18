@@ -2,15 +2,11 @@
   <section *ngIf="!getInvestmentsServiceRunning && investments.length" fxLayout="column" fxLayoutGap="10px">
     
     <div *ngFor="let row of investmentsUI" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
-      <crypto-currency *ngFor="let investment of row" fxFlex fxFlex.gt-xs="50"
-        [id]="investment.id" 
-        [cryptoCurrency]="investment.unit | lowercase"
-        [cryptoCurrencyCount]="investment.amount"
-        [cryptoCurrencyBuyPrice]="investment.buyingPrice"
-        [cryptoCurrencyBuyDate]="investment.buyingDate"
+      <currency-investment *ngFor="let investment of row" fxFlex fxFlex.gt-xs="50"
+        [investment]="investment"
         (totalReturns)="setTotals($event)"
         (deletedId)="removeInvestment($event)">
-      </crypto-currency>
+      </currency-investment>
     </div>
     
     <!-- <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
