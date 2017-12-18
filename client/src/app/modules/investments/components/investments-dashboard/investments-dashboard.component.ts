@@ -93,7 +93,7 @@ export class InvestmentsDashboardComponent implements OnInit {
 
   setTotals(totalReturns : any) : void {
     this.totalReturn += totalReturns.investmentReturn;
-    this.totalInvestment += totalReturns.investmentValue;
+    this.totalInvestment += totalReturns.investmentAmount;
   }
 
   /**

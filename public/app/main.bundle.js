@@ -1567,7 +1567,7 @@ var InvestmentsDashboardComponent = (function () {
     };
     InvestmentsDashboardComponent.prototype.setTotals = function (totalReturns) {
         this.totalReturn += totalReturns.investmentReturn;
-        this.totalInvestment += totalReturns.investmentValue;
+        this.totalInvestment += totalReturns.investmentAmount;
     };
     /**
      * Removes the investment from the investments array and from the investmentUI array used in view
