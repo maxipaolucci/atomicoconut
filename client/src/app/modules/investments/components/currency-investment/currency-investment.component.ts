@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { Subscription } from 'rxjs/Subscription';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Team } from '../../../teams/models/team';
 
 @Component({
   selector: 'currency-investment',
@@ -19,8 +21,16 @@ import { Subscription } from 'rxjs/Subscription';
 export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
 
   @Input() investment : CurrencyInvestment;
+  @Input()
+  set teams(teams : Team[]) {
+    this.teams$.next(teams);
+  }
+  get teams() : Team[] {
+    return this.teams$.getValue();
+  }
   @Output() totalReturns: EventEmitter<any> = new EventEmitter();
   @Output() deletedId : EventEmitter<string> = new EventEmitter();
+  private teams$ = new BehaviorSubject<Team[]>([]);
   investmentAmount : number = 0;
   buyingPrice : number = 0;
   investmentReturn : number = 0;
@@ -28,6 +38,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   currentPrice : number = 0;
   actionRunning : boolean = false;
   user : User = null;
+  team : Team = null; //if the investment has a tema this will be populated with the full info of the team
   subscription : Subscription = new Subscription();
 
 
@@ -37,6 +48,19 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   ngOnInit() : void {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     
+    //get the team of the investmetn if exists
+    let newSubscription = this.teams$.subscribe((teams : Team[]) => {
+      this.team = this.investment.team ? teams.filter(team => team.slug === this.investment.team.slug)[0] : null; //look for the team of the investment
+      
+      if (this.team) {
+        for (let member of this.team.members) {
+          let percentage = (this.investment.investmentDistribution.filter(portion => portion.email === member.email)[0]).percentage;
+          member['portion_percentage'] = percentage;
+        }
+      }
+    });
+    this.subscription.add(newSubscription);
+
     const currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
     const currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, 
       (user, currencyRates) => { 
@@ -46,11 +70,12 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       }
     ); //(currency rates and user) source
     
+    
     if (this.investment.type === 'crypto') {
       //crypto investment
       const cryptoRates$ = this.currencyExchangeService.getCryptoRates(this.investment.unit); //get crypto rates observable source
       
-      this.subscription = cryptoRates$.combineLatest(currencyRatesAndUser$, (cryptoRates, currencyRatesAndUser) => { 
+      newSubscription = cryptoRates$.combineLatest(currencyRatesAndUser$, (cryptoRates, currencyRatesAndUser) => { 
         return  {
           currencyRates : currencyRatesAndUser.currencyRates,
           user : currencyRatesAndUser.user, 
@@ -75,7 +100,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       );
     } else {
       //currency exchange
-      this.subscription = currencyRatesAndUser$.subscribe(
+      newSubscription = currencyRatesAndUser$.subscribe(
         (data : any) => {
           this.currentPrice = data.currencyRates[this.investment.unit] || 0;
           this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
@@ -93,6 +118,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
         }
       );
     }
+    this.subscription.add(newSubscription);
   }
 
   ngOnDestroy() {

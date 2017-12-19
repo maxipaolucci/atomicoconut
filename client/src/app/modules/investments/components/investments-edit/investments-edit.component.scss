@@ -10,7 +10,7 @@ form {
   }
 }
 
-.progress-bar--get-investment {
+.progress-bar--get-investment, .progress-bar--get-teams {
   width: 100%;
 }
 
@@ -75,7 +75,7 @@ form {
     }
   }
 
-  .progress-bar--get-investment {
+  .progress-bar--get-investment, .progress-bar--get-teams {
     width: 300px;
   }
 }

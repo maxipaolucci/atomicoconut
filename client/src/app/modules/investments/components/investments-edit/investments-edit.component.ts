@@ -227,8 +227,13 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     const newSubscription = this.teamsService.getTeams(this.user.email).subscribe(
       (teams : Team[]) => {
         this.teams = teams;
-        this.getSelectedTeam();
         this.getTeamsServiceRunning = false;
+        
+        if (teams.length) {
+          this.getSelectedTeam();
+        } else {
+          this.appService.showResults(`You are not member of any team yet!. Create a team if you want to split your investment with other people.`, 'info');
+        }
       },
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
@@ -249,7 +254,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    * Get the selected team . This is going to works when teams and investment is here (so we are in edit mode) and the investment has a team selected
    */
   getSelectedTeam() {
-    if (this.teams && this.investment && this.investment.team) {
+    if (this.teams && this.teams.length && this.investment && this.investment.team) {
       for (let team of this.teams) {
         if (this.investment.team.slug === team.slug) {
           this.model.team = team;

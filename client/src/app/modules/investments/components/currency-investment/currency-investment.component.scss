@@ -10,6 +10,37 @@
 
   .card__content {
 
+    .team-panel {
+      cursor: default;
+      margin-top: 10px;
+  
+      mat-panel-title {
+        font-size: 18px;
+      }
+  
+      .team-panel__content {
+        text-align: left;
+        
+        .members .member {
+          
+          .member__avatar {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            padding: 0 10px 0 0;
+          }
+  
+          .member__info {
+  
+            .member__email {
+              font-size: 11px;
+            }
+          }
+        }
+      }
+      
+    }
+
     .actions {
       margin: 10px 0 0; 
     }

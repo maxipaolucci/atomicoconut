@@ -2,14 +2,21 @@
   <form class="form__container form__edit-investment" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editInvestmentForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
     <div *ngIf="!getInvestmentServiceRunning">
       <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
-        <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        
+        <mat-progress-bar *ngIf="getTeamsServiceRunning"
+          class="progress-bar progress-bar--get-teams"
+          color="primary"
+          mode="indeterminate">
+        </mat-progress-bar>
+
+        <div *ngIf="teams.length && !getTeamsServiceRunning" fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
           <h3 class="title">
             Owner
             <p class="mat-caption">Specify the owner of this investment</p>
           </h3>
   
           <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
-            <mat-radio-group fxFlex.gt-xs="230px" *ngIf="teams.length" class="form__field radiogroup__owner"
+            <mat-radio-group fxFlex.gt-xs="230px" class="form__field radiogroup__owner"
                 [(ngModel)]="model.owner" 
                 name="owner" 
                 id="owner" 
@@ -76,7 +83,7 @@
   
         <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
           <h3 class="title title__investment-amount">
-            Investment amount
+            Investment details
           </h3>
   
           <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="form__fields__row">

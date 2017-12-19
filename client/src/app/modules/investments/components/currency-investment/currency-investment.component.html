@@ -20,6 +20,41 @@
       ROI: <strong>{{ investmentReturn | currency : 'USD' : false : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)
     </div>
 
+    <!-- Team -->
+    <mat-expansion-panel *ngIf="team" class="team-panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{team.name}}
+        </mat-panel-title>
+        <mat-panel-description>
+          
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      
+      <div fxLayout="column" fxLayoutGap="10px" class="team-panel__content">
+
+        <section class="members" fxLayout="column" fxLayoutGap="10px">
+          <div *ngFor="let member of team.members" fxLayout="row" fxLayoutGap="10px" class="member">
+            <img class="member__avatar" [src]="member.avatar"/>
+            <div fxFlex class="member__info" fxLayout="column">
+              <p class="member__name">{{member.name}}</p>
+              <!-- <p class="member__email">{{member.email}}</p> -->
+              <div class="member__money" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between end">
+                <p>
+                  50%
+                </p>
+                <p>
+                  USD12,314.34
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+    </mat-expansion-panel>
+    <!-- EOF Team -->
+
     <section class="actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
       <button *ngIf="!actionRunning" mat-mini-fab routerLink="/investments/crypto/edit/{{investment.id}}" color="primary" (click)="actionRunning = true">
         <mat-icon aria-label="Edit Investment">edit</mat-icon>
