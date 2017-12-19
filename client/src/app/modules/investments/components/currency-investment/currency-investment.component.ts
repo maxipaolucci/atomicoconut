@@ -132,7 +132,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     if (this.user) {
       this.actionRunning = true;
       
-      this.investmentsService.delete(this.investment.id, this.user.email).subscribe(
+      const newSubscription = this.investmentsService.delete(this.investment.id, this.user.email).subscribe(
         (data : any) => {
           if (data && data.removed > 0) {
             this.appService.showResults(`Investment successfully removed!`, 'success');
@@ -153,6 +153,8 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
           this.actionRunning = false;
         }
       );
+
+      this.subscription.add(newSubscription)
     } else {
       this.appService.showResults(`You are not logged into AtomiCoconut, you must login first.`, 'error');
       this.router.navigate(['/users/login']);

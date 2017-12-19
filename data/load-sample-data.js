@@ -163,6 +163,7 @@ if (process.argv.includes('--delete')) {
   if (process.argv.length > 4 && ['dev', 'test', 'prod'].includes(process.argv[4])) {
     source = process.argv[4];
   }
+  
   loadData(source);
 } else {
   dumpData();

@@ -1163,7 +1163,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".currency-card {\n  text-align: center; }\n  .currency-card .header-image img {\n    width: 50px; }\n  .currency-card .card__content .actions {\n    margin: 0 8px 8px 0; }\n", ""]);
+exports.push([module.i, ".currency-card {\n  text-align: center; }\n  .currency-card .header-image img {\n    width: 40px; }\n  .currency-card .card__content .actions {\n    margin: 10px 0 0; }\n", ""]);
 
 // exports
 
@@ -1308,7 +1308,7 @@ var CurrencyInvestmentComponent = (function () {
         var methodTrace = this.constructor.name + " > delete() > "; //for debugging
         if (this.user) {
             this.actionRunning = true;
-            this.investmentsService.delete(this.investment.id, this.user.email).subscribe(function (data) {
+            var newSubscription = this.investmentsService.delete(this.investment.id, this.user.email).subscribe(function (data) {
                 if (data && data.removed > 0) {
                     _this.appService.showResults("Investment successfully removed!", 'success');
                     _this.deletedId.emit(_this.investment.id);
@@ -1327,6 +1327,7 @@ var CurrencyInvestmentComponent = (function () {
                 }
                 _this.actionRunning = false;
             });
+            this.subscription.add(newSubscription);
         }
         else {
             this.appService.showResults("You are not logged into AtomiCoconut, you must login first.", 'error');
@@ -1477,6 +1478,8 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1494,15 +1497,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var InvestmentsDashboardComponent = (function () {
-    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog, appService, investmentsService) {
+    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog, appService, teamsService, investmentsService) {
         this.route = route;
         this.mainNavigatorService = mainNavigatorService;
         this.usersService = usersService;
         this.dialog = dialog;
         this.appService = appService;
+        this.teamsService = teamsService;
         this.investmentsService = investmentsService;
         this.investments = [];
+        this.teams = [];
         this.investmentsUI = []; //this is a structure to use in the view an make the rendering easier organizing the info in rows
         this.xmrBuyDate = new Date(2017, 5, 23); //month minus 1, 5 = june
         this.xmrBuyDate2 = new Date(2017, 8, 23);
@@ -1511,7 +1518,9 @@ var InvestmentsDashboardComponent = (function () {
         this.totalInvestment = 0;
         this.totalReturn = 0;
         this.user = null;
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__["a" /* Subscription */]();
         this.getInvestmentsServiceRunning = false;
+        this.getTeamsServiceRunning = false;
     }
     InvestmentsDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1521,22 +1530,56 @@ var InvestmentsDashboardComponent = (function () {
             { displayName: 'Investments', url: null, selected: true }
         ]);
         //get authUser from resolver
-        this.route.data.subscribe(function (data) {
+        var user$ = this.route.data.map(function (data) {
             _this.user = data.authUser;
+            return data.authUser;
         });
         if (!this.investments.length) {
-            this.getInvestments();
+            this.getInvestments(user$);
         }
+        this.getTeams(user$);
+    };
+    InvestmentsDashboardComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    /**
+     * Get my teams from server
+     */
+    InvestmentsDashboardComponent.prototype.getTeams = function (user$) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        this.teams = [];
+        this.getTeamsServiceRunning = true;
+        var newSubscription = user$.switchMap(function (user) {
+            return _this.teamsService.getTeams(user.email);
+        }).subscribe(function (teams) {
+            _this.teams = teams;
+            _this.getTeamsServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getTeamsServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
     };
     /**
      * Get my investments from server
      */
-    InvestmentsDashboardComponent.prototype.getInvestments = function () {
+    InvestmentsDashboardComponent.prototype.getInvestments = function (user$) {
         var _this = this;
         var methodTrace = this.constructor.name + " > getInvestments() > "; //for debugging
         this.investments = [];
         this.getInvestmentsServiceRunning = true;
-        this.investmentsService.getInvestments(this.user.email).subscribe(function (investments) {
+        var newSubscription = user$.switchMap(function (user) {
+            return _this.investmentsService.getInvestments(user.email);
+        }).subscribe(function (investments) {
             _this.investments = investments;
             //organize investments in rows of n-items to show in the view
             var investmentsRow = [];
@@ -1564,6 +1607,7 @@ var InvestmentsDashboardComponent = (function () {
             }
             _this.getInvestmentsServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     InvestmentsDashboardComponent.prototype.setTotals = function (totalReturns) {
         this.totalReturn += totalReturns.investmentReturn;
@@ -1617,10 +1661,10 @@ InvestmentsDashboardComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__["a" /* TeamsService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */]) === "function" && _g || Object])
 ], InvestmentsDashboardComponent);
 
-var _a, _b, _c, _d, _e, _f;
+var _a, _b, _c, _d, _e, _f, _g;
 //# sourceMappingURL=investments-dashboard.component.js.map
 
 /***/ }),

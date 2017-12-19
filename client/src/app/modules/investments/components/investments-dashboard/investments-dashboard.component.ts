@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
@@ -9,14 +9,19 @@ import { InvestmentSelectorDialogComponent } from '../investment-selector-dialog
 import { Investment } from '../../models/investment';
 import { AppService } from '../../../../app.service';
 import { InvestmentsService } from '../../investments.service';
+import { Team } from '../../../teams/models/team';
+import { TeamsService } from '../../../teams/teams.service';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'investments-dashboard',
   templateUrl: './investments-dashboard.component.html',
   styleUrls: ['./investments-dashboard.component.scss']
 })
-export class InvestmentsDashboardComponent implements OnInit {
+export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   investments : Investment[] = [];
+  teams : Team[] = [];
   investmentsUI : any[] = []; //this is a structure to use in the view an make the rendering easier organizing the info in rows
   xmrBuyDate : Date = new Date(2017, 5, 23); //month minus 1, 5 = june
   xmrBuyDate2 : Date = new Date(2017, 8, 23);
@@ -25,10 +30,12 @@ export class InvestmentsDashboardComponent implements OnInit {
   totalInvestment = 0;
   totalReturn = 0;
   user : User = null;
+  subscription : Subscription = new Subscription();
   getInvestmentsServiceRunning : boolean = false;
+  getTeamsServiceRunning : boolean = false;
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private usersService : UsersService, public dialog: MatDialog, 
-      private appService : AppService, private investmentsService : InvestmentsService) { }
+      private appService : AppService, private teamsService : TeamsService, private investmentsService : InvestmentsService) { }
 
   ngOnInit() {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
@@ -39,28 +46,74 @@ export class InvestmentsDashboardComponent implements OnInit {
     ]);
 
     //get authUser from resolver
-    this.route.data.subscribe((data: { authUser: User }) => {
+    const user$ : Observable<User> = this.route.data.map((data : { authUser: User }) =>  {
       this.user = data.authUser;
+      
+      return data.authUser;
     });
 
     if (!this.investments.length) {
-      this.getInvestments();
+      this.getInvestments(user$);
     }
+
+    this.getTeams(user$);
+  }
+
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+
+    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
+  }
+
+  /**
+   * Get my teams from server
+   */
+  getTeams(user$ : Observable<User>) {
+    const methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+
+    this.teams = [];
+    this.getTeamsServiceRunning = true;
+
+    const newSubscription = user$.switchMap((user) => {
+      return this.teamsService.getTeams(user.email);
+    }).subscribe(
+      (teams : Team[]) => {
+        this.teams = teams;
+        
+        this.getTeamsServiceRunning = false;
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+        }
+
+        this.getTeamsServiceRunning = false;
+      }
+    );
+
+    this.subscription.add(newSubscription);
   }
 
   /**
    * Get my investments from server
    */
-  getInvestments() {
+  getInvestments(user$ : Observable<User>) {
     const methodTrace = `${this.constructor.name} > getInvestments() > `; //for debugging
 
     this.investments = [];
     this.getInvestmentsServiceRunning = true;
 
-    this.investmentsService.getInvestments(this.user.email).subscribe(
+    
+    const newSubscription = user$.switchMap((user) => {
+      return this.investmentsService.getInvestments(user.email);
+    }).subscribe(
       (investments : Investment[]) => {
         this.investments = investments;
-
+        
         //organize investments in rows of n-items to show in the view
         let investmentsRow : any[] = [];
         for (let item of investments) {
@@ -89,6 +142,8 @@ export class InvestmentsDashboardComponent implements OnInit {
         this.getInvestmentsServiceRunning = false;
       }
     );
+
+    this.subscription.add(newSubscription);
   }
 
   setTotals(totalReturns : any) : void {
