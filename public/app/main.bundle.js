@@ -1151,7 +1151,7 @@ var _a, _b, _c, _d;
 /***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/' + investment.type + '/' + investment.unit + '.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{currentPrice | currency : 'USD' : false : '1.2-2'}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : false : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : false : '1.2-2' }}\r\n\r\n    <div [class.color__accent]=\"investmentReturn >= investmentValueWhenBought\" \r\n        [class.color__red]=\"investmentReturn < investmentValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : false : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let member of team.members\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>\r\n                  50%\r\n                </p>\r\n                <p>\r\n                  USD12,314.34\r\n                </p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/crypto/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
+module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/' + investment.type + '/' + investment.unit + '.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{currentPrice | currency : 'USD' : false : '1.2-2'}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : false : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : false : '1.2-2' }}\r\n\r\n    <div [class.color__accent]=\"investmentReturn >= investmentValueWhenBought\" \r\n        [class.color__red]=\"investmentReturn < investmentValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : false : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let portion of investmentDistribution\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"portion.member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{portion.member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>{{ portion.percentage }}%</p>\r\n                <p>{{ portion.money | currency : 'USD' : false : '1.2-2' }}</p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/crypto/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
 
 /***/ }),
 
@@ -1228,6 +1228,7 @@ var CurrencyInvestmentComponent = (function () {
         this.actionRunning = false;
         this.user = null;
         this.team = null; //if the investment has a tema this will be populated with the full info of the team
+        this.investmentDistribution = [];
         this.subscription = new __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__["a" /* Subscription */]();
     }
     Object.defineProperty(CurrencyInvestmentComponent.prototype, "teams", {
@@ -1244,20 +1245,7 @@ var CurrencyInvestmentComponent = (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
         //get the team of the investmetn if exists
-        var newSubscription = this.teams$.subscribe(function (teams) {
-            _this.team = _this.investment.team ? teams.filter(function (team) { return team.slug === _this.investment.team.slug; })[0] : null; //look for the team of the investment
-            if (_this.team) {
-                var _loop_1 = function (member) {
-                    var percentage = (_this.investment.investmentDistribution.filter(function (portion) { return portion.email === member.email; })[0]).percentage;
-                    member['portion_percentage'] = percentage;
-                };
-                for (var _i = 0, _a = _this.team.members; _i < _a.length; _i++) {
-                    var member = _a[_i];
-                    _loop_1(member);
-                }
-            }
-        });
-        this.subscription.add(newSubscription);
+        var newSubscription = null;
         var currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
         var currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, function (user, currencyRates) {
             _this.user = user;
@@ -1272,7 +1260,7 @@ var CurrencyInvestmentComponent = (function () {
                     user: currencyRatesAndUser.user,
                     cryptoRates: cryptoRates
                 };
-            }).subscribe(function (data) {
+            }).switchMap(function (data) {
                 _this.currentPrice = data.cryptoRates.price;
                 _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
                 _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
@@ -1282,14 +1270,17 @@ var CurrencyInvestmentComponent = (function () {
                     investmentAmount: _this.investmentAmount,
                     investmentReturn: _this.investmentReturn
                 });
+                return _this.teams$;
+            }).subscribe(function (teams) {
+                _this.setInvestmentTeamData(teams);
             }, function (error) {
-                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get crypto currency rates data > " + error);
-                _this.appService.showResults("There was an error trying to get crypto currency rates data, please try again in a few minutes.", 'error');
+                _this.appService.consoleLog('error', methodTrace + " There was an error trying to generate investment data > ", error);
+                _this.appService.showResults("There was an error trying to generate investment data, please try again in a few minutes.", 'error');
             });
         }
         else {
             //currency exchange
-            newSubscription = currencyRatesAndUser$.subscribe(function (data) {
+            newSubscription = currencyRatesAndUser$.switchMap(function (data) {
                 _this.currentPrice = data.currencyRates[_this.investment.unit] || 0;
                 _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
                 _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
@@ -1299,9 +1290,12 @@ var CurrencyInvestmentComponent = (function () {
                     investmentAmount: _this.investmentAmount,
                     investmentReturn: _this.investmentReturn
                 });
+                return _this.teams$;
+            }).subscribe(function (teams) {
+                _this.setInvestmentTeamData(teams);
             }, function (error) {
-                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > " + error);
-                _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
+                _this.appService.consoleLog('error', methodTrace + " There was an error trying to generate investment data > ", error);
+                _this.appService.showResults("There was an error trying to generate investment data, please try again in a few minutes.", 'error');
             });
         }
         this.subscription.add(newSubscription);
@@ -1310,6 +1304,30 @@ var CurrencyInvestmentComponent = (function () {
         var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
         //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
+    };
+    /**
+     * Populates team data as well as the distribution on the investment between team members when the investment is asigned to a team
+     *
+     * @param {Team[]} teams . The teams of the current user
+     */
+    CurrencyInvestmentComponent.prototype.setInvestmentTeamData = function (teams) {
+        var _this = this;
+        this.team = this.investment.team ? teams.filter(function (team) { return team.slug === _this.investment.team.slug; })[0] : null; //look for the team of the investment
+        if (this.team) {
+            var _loop_1 = function (member) {
+                var percentage = (this_1.investment.investmentDistribution.filter(function (portion) { return portion.email === member.email; })[0]).percentage;
+                this_1.investmentDistribution.push({
+                    member: member,
+                    percentage: percentage,
+                    money: this_1.investmentReturn * percentage / 100
+                });
+            };
+            var this_1 = this;
+            for (var _i = 0, _a = this.team.members; _i < _a.length; _i++) {
+                var member = _a[_i];
+                _loop_1(member);
+            }
+        }
     };
     CurrencyInvestmentComponent.prototype.openDeleteDialog = function () {
         var _this = this;

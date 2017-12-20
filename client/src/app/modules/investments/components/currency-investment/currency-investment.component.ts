@@ -39,6 +39,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   actionRunning : boolean = false;
   user : User = null;
   team : Team = null; //if the investment has a tema this will be populated with the full info of the team
+  investmentDistribution : any[] = [];
   subscription : Subscription = new Subscription();
 
 
@@ -49,18 +50,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     
     //get the team of the investmetn if exists
-    let newSubscription = this.teams$.subscribe((teams : Team[]) => {
-      this.team = this.investment.team ? teams.filter(team => team.slug === this.investment.team.slug)[0] : null; //look for the team of the investment
-      
-      if (this.team) {
-        for (let member of this.team.members) {
-          let percentage = (this.investment.investmentDistribution.filter(portion => portion.email === member.email)[0]).percentage;
-          member['portion_percentage'] = percentage;
-        }
-      }
-    });
-    this.subscription.add(newSubscription);
-
+    let newSubscription = null;
     const currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
     const currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, 
       (user, currencyRates) => { 
@@ -81,7 +71,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
           user : currencyRatesAndUser.user, 
           cryptoRates 
         }; 
-      }).subscribe(
+      }).switchMap(
         (data) => {
           this.currentPrice = data.cryptoRates.price;
           this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
@@ -92,16 +82,20 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
             investmentAmount : this.investmentAmount,
             investmentReturn : this.investmentReturn
           });
-        },
-        (error : any) => {
-          this.appService.consoleLog('error', `${methodTrace} There was an error trying to get crypto currency rates data > ${error}`);
-          this.appService.showResults(`There was an error trying to get crypto currency rates data, please try again in a few minutes.`, 'error');
+
+          return this.teams$;
         }
-      );
+      ).subscribe((teams : Team[]) => {
+        this.setInvestmentTeamData(teams);
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error trying to generate investment data > `, error);
+        this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, 'error');
+      });
     } else {
       //currency exchange
-      newSubscription = currencyRatesAndUser$.subscribe(
-        (data : any) => {
+      newSubscription = currencyRatesAndUser$.switchMap(
+        (data) => {
           this.currentPrice = data.currencyRates[this.investment.unit] || 0;
           this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
           this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
@@ -111,12 +105,16 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
             investmentAmount : this.investmentAmount,
             investmentReturn : this.investmentReturn
           });
-        },
-        (error : any) => {
-          this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > ${error}`);
-          this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
+
+          return this.teams$;
         }
-      );
+      ).subscribe((teams : Team[]) => {
+        this.setInvestmentTeamData(teams);
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error trying to generate investment data > `, error);
+        this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, 'error');
+      });
     }
     this.subscription.add(newSubscription);
   }
@@ -126,6 +124,26 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
 
     //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
+  }
+
+  /**
+   * Populates team data as well as the distribution on the investment between team members when the investment is asigned to a team
+   * 
+   * @param {Team[]} teams . The teams of the current user
+   */
+  setInvestmentTeamData(teams : Team[]) {
+    this.team = this.investment.team ? teams.filter(team => team.slug === this.investment.team.slug)[0] : null; //look for the team of the investment
+    
+    if (this.team) {
+      for (let member of this.team.members) {
+        let percentage = (this.investment.investmentDistribution.filter(portion => portion.email === member.email)[0]).percentage;
+        this.investmentDistribution.push({
+          member,
+          percentage,
+          money : this.investmentReturn * percentage / 100
+        });
+      }
+    }
   }
 
   openDeleteDialog() {

@@ -34,18 +34,14 @@
       <div fxLayout="column" fxLayoutGap="10px" class="team-panel__content">
 
         <section class="members" fxLayout="column" fxLayoutGap="10px">
-          <div *ngFor="let member of team.members" fxLayout="row" fxLayoutGap="10px" class="member">
-            <img class="member__avatar" [src]="member.avatar"/>
+          <div *ngFor="let portion of investmentDistribution" fxLayout="row" fxLayoutGap="10px" class="member">
+            <img class="member__avatar" [src]="portion.member.avatar"/>
             <div fxFlex class="member__info" fxLayout="column">
-              <p class="member__name">{{member.name}}</p>
+              <p class="member__name">{{portion.member.name}}</p>
               <!-- <p class="member__email">{{member.email}}</p> -->
               <div class="member__money" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between end">
-                <p>
-                  50%
-                </p>
-                <p>
-                  USD12,314.34
-                </p>
+                <p>{{ portion.percentage }}%</p>
+                <p>{{ portion.money | currency : 'USD' : false : '1.2-2' }}</p>
               </div>
             </div>
           </div>
