@@ -96,7 +96,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       //currency exchange
       newSubscription = currencyRatesAndUser$.switchMap(
         (data) => {
-          this.currentPrice = data.currencyRates[this.investment.unit] || 0;
+          this.currentPrice = data.currencyRates[this.investment.unit] || 1;
           this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
           this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
           this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;

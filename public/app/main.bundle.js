@@ -1281,7 +1281,7 @@ var CurrencyInvestmentComponent = (function () {
         else {
             //currency exchange
             newSubscription = currencyRatesAndUser$.switchMap(function (data) {
-                _this.currentPrice = data.currencyRates[_this.investment.unit] || 0;
+                _this.currentPrice = data.currencyRates[_this.investment.unit] || 1;
                 _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
                 _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
                 _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
