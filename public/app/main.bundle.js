@@ -649,6 +649,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_users_models_account_personal__ = __webpack_require__("../../../../../src/app/modules/users/models/account-personal.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_users_models_account_finance__ = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__modules_investments_investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -666,11 +667,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var WelcomeComponent = (function () {
-    function WelcomeComponent(mainNavigatorService, usersService, appService) {
+    function WelcomeComponent(mainNavigatorService, usersService, appService, investmentsService) {
         this.mainNavigatorService = mainNavigatorService;
         this.usersService = usersService;
         this.appService = appService;
+        this.investmentsService = investmentsService;
         this.user = null;
     }
     WelcomeComponent.prototype.ngOnInit = function () {
@@ -700,7 +703,7 @@ var WelcomeComponent = (function () {
                 return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of(user);
             }
         });
-        user$.subscribe(function (user) {
+        user$.switchMap(function (user) {
             if (user && user.email) {
                 var personalInfo = null;
                 if (user.personalInfo) {
@@ -717,9 +720,15 @@ var WelcomeComponent = (function () {
                     //we just got updated information from server, let's update the current user source
                     _this.usersService.setUser(user);
                 }
+                return _this.investmentsService.getInvestments(user.email);
             }
             else {
                 _this.user = null;
+                return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of(null);
+            }
+        }).subscribe(function (investments) {
+            if (investments && investments.length) {
+                console.log(investments);
             }
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
@@ -734,10 +743,10 @@ WelcomeComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/welcome/welcome.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/welcome/welcome.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_8__modules_investments_investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__modules_investments_investments_service__["a" /* InvestmentsService */]) === "function" && _d || Object])
 ], WelcomeComponent);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=welcome.component.js.map
 
 /***/ }),
@@ -1163,7 +1172,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".currency-card {\n  text-align: center; }\n  .currency-card .header-image img {\n    width: 40px; }\n  .currency-card .card__content .team-panel {\n    cursor: default;\n    margin-top: 10px; }\n    .currency-card .card__content .team-panel mat-panel-title {\n      font-size: 18px; }\n    .currency-card .card__content .team-panel .team-panel__content {\n      text-align: left; }\n      .currency-card .card__content .team-panel .team-panel__content .members .member .member__avatar {\n        border-radius: 50%;\n        width: 40px;\n        height: 40px;\n        padding: 0 10px 0 0; }\n      .currency-card .card__content .team-panel .team-panel__content .members .member .member__info .member__email {\n        font-size: 11px; }\n  .currency-card .card__content .actions {\n    margin: 10px 0 0; }\n", ""]);
+exports.push([module.i, ".currency-card {\n  text-align: left; }\n  .currency-card .header-image img {\n    width: 40px; }\n  .currency-card .card__content {\n    text-align: center; }\n    .currency-card .card__content .team-panel {\n      cursor: default;\n      margin-top: 10px; }\n      .currency-card .card__content .team-panel mat-panel-title {\n        font-size: 18px; }\n      .currency-card .card__content .team-panel .team-panel__content {\n        text-align: left; }\n        .currency-card .card__content .team-panel .team-panel__content .members .member .member__avatar {\n          border-radius: 50%;\n          width: 40px;\n          height: 40px;\n          padding: 0 10px 0 0; }\n        .currency-card .card__content .team-panel .team-panel__content .members .member .member__info .member__email {\n          font-size: 11px; }\n    .currency-card .card__content .actions {\n      margin: 10px 0 0; }\n", ""]);
 
 // exports
 
