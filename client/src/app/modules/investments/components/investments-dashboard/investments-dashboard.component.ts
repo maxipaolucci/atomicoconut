@@ -13,6 +13,9 @@ import { Team } from '../../../teams/models/team';
 import { TeamsService } from '../../../teams/teams.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
+import { CurrencyExchangeService } from '../../currency-exchange.service';
+import { CurrencyInvestment } from '../../models/currencyInvestment';
+import { INVESTMENTS_TYPES } from '../../../../constants/constants';
 
 @Component({
   selector: 'investments-dashboard',
@@ -35,7 +38,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   getTeamsServiceRunning : boolean = false;
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private usersService : UsersService, public dialog: MatDialog, 
-      private appService : AppService, private teamsService : TeamsService, private investmentsService : InvestmentsService) { }
+      private appService : AppService, private teamsService : TeamsService, private investmentsService : InvestmentsService, private currencyExchangeService : CurrencyExchangeService) { }
 
   ngOnInit() {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
@@ -155,19 +158,45 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
    * Removes the investment from the investments array and from the investmentUI array used in view
    */
   removeInvestment(deletedId : string) : void {
+    const methodTrace = `${this.constructor.name} > removeInvestment() > `; //for debugging
+
     if (deletedId) {
       let index = 0;
       for (let investment of this.investments) {
+        //update totals and break loop
         if (investment.id === deletedId) {
+          let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
+          if (currencyInvestment.type === INVESTMENTS_TYPES.CURRENCY) {
+            this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
+              this.totalReturn -= currencyInvestment.amount * (currencyRates[currencyInvestment.unit] || 1);
+              this.totalInvestment -= this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
+            },
+            (error : any) => {
+              this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
+              this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
+            });
+          } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
+            this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
+              this.totalReturn -= currencyInvestment.amount * rates.price;
+              this.totalInvestment -= this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
+            },
+            (error : any) => {
+              this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
+              this.appService.showResults(`There was an error trying to get ${currencyInvestment.unit} rates data, please try again in a few minutes.`, 'error');
+            });
+          }
+          
           break;
         }
 
         index += 1;
       }
+      //remove investment from array
       this.investments.splice(index, 1);
 
-      let row = 0;//Math.floor(index / 2);
-      let offset = 0;//index % 2;
+      //update ui array
+      let row = 0;
+      let offset = 0;
       let found = false;
       for (let i = 0; i < this.investmentsUI.length; i++) {
         for (let j = 0; j < this.investmentsUI[i].length; j++) {

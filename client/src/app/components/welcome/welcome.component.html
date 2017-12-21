@@ -5,12 +5,13 @@
     <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
         fxLayoutAlign="space-around center">
       <p class="accent">
-        Your expected Net Worth at your age ({{user.personalInfo.age}}) is <strong>{{ user.personalInfo.age * (user.financialInfo.annualIncome || 0) / 10 }}</strong>
+        Your expected Net Worth at your age ({{user.personalInfo.age}}) is 
+        <strong>{{ user.personalInfo.age * (user.financialInfo.annualIncome || 0) / 10 | currency : 'USD' : false : '1.2-2' }}</strong>
       </p>
       <p *ngIf="user.financialInfo.savings !== null"
           [class.color__accent]="user.financialInfo.savings >= user.financialInfo.annualIncome" 
           [class.color__red]="user.financialInfo.savings < user.financialInfo.annualIncome">
-        Your current net worth is <strong>{{ user.financialInfo.savings }}</strong>
+        Your current net worth is <strong>{{ user.financialInfo.savings + investmentsReturn | currency : 'USD' : false : '1.2-2' }}</strong>
       </p>
       <p *ngIf="user.financialInfo.savings === null">
         <a class="color__almost-white" routerLink="/users/account">

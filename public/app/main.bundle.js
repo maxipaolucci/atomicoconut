@@ -614,7 +614,7 @@ var _a, _b, _c;
 /***/ "../../../../../src/app/components/welcome/welcome.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"user\" class=\"container__net-worth\">\r\n  <!-- Net Worth Card -->\r\n  <mat-card *ngIf=\"user.financialInfo && user.personalInfo\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p class=\"accent\">\r\n        Your expected Net Worth at your age ({{user.personalInfo.age}}) is <strong>{{ user.personalInfo.age * (user.financialInfo.annualIncome || 0) / 10 }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings !== null\"\r\n          [class.color__accent]=\"user.financialInfo.savings >= user.financialInfo.annualIncome\" \r\n          [class.color__red]=\"user.financialInfo.savings < user.financialInfo.annualIncome\">\r\n        Your current net worth is <strong>{{ user.financialInfo.savings }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings === null\">\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete Financial Info to see your current state\r\n          \r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n    <!-- EOF Net Worth Card -->\r\n\r\n  <!-- Net Worth Card when Personal and Financial info is incomplete -->\r\n  <mat-card *ngIf=\"!user.financialInfo || !user.personalInfo\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete your Personal and Financial Info to see expected and current Net Worth\r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  <!-- EOF Net Worth Card when Personal and Financial info is incomplete -->\r\n</div>"
+module.exports = "<div *ngIf=\"user\" class=\"container__net-worth\">\r\n  <!-- Net Worth Card -->\r\n  <mat-card *ngIf=\"user.financialInfo && user.personalInfo\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p class=\"accent\">\r\n        Your expected Net Worth at your age ({{user.personalInfo.age}}) is \r\n        <strong>{{ user.personalInfo.age * (user.financialInfo.annualIncome || 0) / 10 | currency : 'USD' : false : '1.2-2' }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings !== null\"\r\n          [class.color__accent]=\"user.financialInfo.savings >= user.financialInfo.annualIncome\" \r\n          [class.color__red]=\"user.financialInfo.savings < user.financialInfo.annualIncome\">\r\n        Your current net worth is <strong>{{ user.financialInfo.savings + investmentsReturn | currency : 'USD' : false : '1.2-2' }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings === null\">\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete Financial Info to see your current state\r\n          \r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n    <!-- EOF Net Worth Card -->\r\n\r\n  <!-- Net Worth Card when Personal and Financial info is incomplete -->\r\n  <mat-card *ngIf=\"!user.financialInfo || !user.personalInfo\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete your Personal and Financial Info to see expected and current Net Worth\r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  <!-- EOF Net Worth Card when Personal and Financial info is incomplete -->\r\n</div>"
 
 /***/ }),
 
@@ -650,6 +650,9 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_users_models_account_personal__ = __webpack_require__("../../../../../src/app/modules/users/models/account-personal.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_users_models_account_finance__ = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__modules_investments_investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__modules_investments_currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modules_investments_models_currencyInvestment__ = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__constants_constants__ = __webpack_require__("../../../../../src/app/constants/constants.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -668,21 +671,59 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 var WelcomeComponent = (function () {
-    function WelcomeComponent(mainNavigatorService, usersService, appService, investmentsService) {
+    function WelcomeComponent(mainNavigatorService, usersService, appService, investmentsService, currencyExchangeService) {
         this.mainNavigatorService = mainNavigatorService;
         this.usersService = usersService;
         this.appService = appService;
         this.investmentsService = investmentsService;
+        this.currencyExchangeService = currencyExchangeService;
         this.user = null;
+        this.investmentsReturn = 0;
     }
     WelcomeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: null, selected: true },
             { displayName: 'Investments', url: '/investments', selected: false },
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
-        this.setUser();
+        var user$ = this.setUser();
+        user$.subscribe(function (investments) {
+            var _loop_1 = function (investment) {
+                if (investment instanceof __WEBPACK_IMPORTED_MODULE_10__modules_investments_models_currencyInvestment__["a" /* CurrencyInvestment */]) {
+                    var currencyInvestment_1 = investment;
+                    if (investment.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CURRENCY) {
+                        _this.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
+                            _this.investmentsReturn += currencyInvestment_1.amount * (currencyRates[currencyInvestment_1.unit] || 1);
+                        }, function (error) {
+                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
+                            _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
+                        });
+                    }
+                    else if (investment.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CRYPTO) {
+                        _this.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).take(1).subscribe(function (rates) {
+                            _this.investmentsReturn += currencyInvestment_1.amount * rates.price;
+                        }, function (error) {
+                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_1.unit + " rates data > ", error);
+                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_1.unit + " rates data, please try again in a few minutes.", 'error');
+                        });
+                    }
+                }
+            };
+            //iterate investments and sum returns
+            for (var _i = 0, investments_1 = investments; _i < investments_1.length; _i++) {
+                var investment = investments_1[_i];
+                _loop_1(investment);
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.user = null;
+        });
     };
     /**
      * Sets the user property with the current user or null of nobody logged in yet
@@ -703,7 +744,7 @@ var WelcomeComponent = (function () {
                 return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of(user);
             }
         });
-        user$.switchMap(function (user) {
+        return user$.switchMap(function (user) {
             if (user && user.email) {
                 var personalInfo = null;
                 if (user.personalInfo) {
@@ -724,15 +765,8 @@ var WelcomeComponent = (function () {
             }
             else {
                 _this.user = null;
-                return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of(null);
+                return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of([]);
             }
-        }).subscribe(function (investments) {
-            if (investments && investments.length) {
-                console.log(investments);
-            }
-        }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
-            _this.user = null;
         });
     };
     return WelcomeComponent;
@@ -743,11 +777,25 @@ WelcomeComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/welcome/welcome.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/welcome/welcome.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_8__modules_investments_investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__modules_investments_investments_service__["a" /* InvestmentsService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_8__modules_investments_investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__modules_investments_investments_service__["a" /* InvestmentsService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_9__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */]) === "function" && _e || Object])
 ], WelcomeComponent);
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=welcome.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/constants/constants.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return INVESTMENTS_TYPES; });
+var INVESTMENTS_TYPES = {
+    CURRENCY: 'currency',
+    CRYPTO: 'crypto',
+    PROPERTY: 'property'
+};
+//# sourceMappingURL=constants.js.map
 
 /***/ }),
 
@@ -1542,6 +1590,8 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__constants_constants__ = __webpack_require__("../../../../../src/app/constants/constants.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1561,8 +1611,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var InvestmentsDashboardComponent = (function () {
-    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog, appService, teamsService, investmentsService) {
+    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog, appService, teamsService, investmentsService, currencyExchangeService) {
         this.route = route;
         this.mainNavigatorService = mainNavigatorService;
         this.usersService = usersService;
@@ -1570,6 +1622,7 @@ var InvestmentsDashboardComponent = (function () {
         this.appService = appService;
         this.teamsService = teamsService;
         this.investmentsService = investmentsService;
+        this.currencyExchangeService = currencyExchangeService;
         this.investments = [];
         this.teams = [];
         this.investmentsUI = []; //this is a structure to use in the view an make the rendering easier organizing the info in rows
@@ -1679,18 +1732,48 @@ var InvestmentsDashboardComponent = (function () {
      * Removes the investment from the investments array and from the investmentUI array used in view
      */
     InvestmentsDashboardComponent.prototype.removeInvestment = function (deletedId) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > removeInvestment() > "; //for debugging
         if (deletedId) {
             var index = 0;
-            for (var _i = 0, _a = this.investments; _i < _a.length; _i++) {
-                var investment = _a[_i];
+            var _loop_1 = function (investment) {
+                //update totals and break loop
                 if (investment.id === deletedId) {
-                    break;
+                    var currencyInvestment_1 = investment;
+                    if (currencyInvestment_1.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CURRENCY) {
+                        this_1.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
+                            _this.totalReturn -= currencyInvestment_1.amount * (currencyRates[currencyInvestment_1.unit] || 1);
+                            _this.totalInvestment -= _this.currencyExchangeService.getUsdValueOf(currencyInvestment_1.investmentAmount, currencyInvestment_1.investmentAmountUnit);
+                        }, function (error) {
+                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
+                            _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
+                        });
+                    }
+                    else if (investment.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CRYPTO) {
+                        this_1.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).take(1).subscribe(function (rates) {
+                            _this.totalReturn -= currencyInvestment_1.amount * rates.price;
+                            _this.totalInvestment -= _this.currencyExchangeService.getUsdValueOf(currencyInvestment_1.investmentAmount, currencyInvestment_1.investmentAmountUnit);
+                        }, function (error) {
+                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_1.unit + " rates data > ", error);
+                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_1.unit + " rates data, please try again in a few minutes.", 'error');
+                        });
+                    }
+                    return "break";
                 }
                 index += 1;
+            };
+            var this_1 = this;
+            for (var _i = 0, _a = this.investments; _i < _a.length; _i++) {
+                var investment = _a[_i];
+                var state_1 = _loop_1(investment);
+                if (state_1 === "break")
+                    break;
             }
+            //remove investment from array
             this.investments.splice(index, 1);
-            var row = 0; //Math.floor(index / 2);
-            var offset = 0; //index % 2;
+            //update ui array
+            var row = 0;
+            var offset = 0;
             var found = false;
             for (var i = 0; i < this.investmentsUI.length; i++) {
                 for (var j = 0; j < this.investmentsUI[i].length; j++) {
@@ -1723,10 +1806,10 @@ InvestmentsDashboardComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html"),
         styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__["a" /* TeamsService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */]) === "function" && _g || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__["a" /* TeamsService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_10__currency_exchange_service__["a" /* CurrencyExchangeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__currency_exchange_service__["a" /* CurrencyExchangeService */]) === "function" && _h || Object])
 ], InvestmentsDashboardComponent);
 
-var _a, _b, _c, _d, _e, _f, _g;
+var _a, _b, _c, _d, _e, _f, _g, _h;
 //# sourceMappingURL=investments-dashboard.component.js.map
 
 /***/ }),

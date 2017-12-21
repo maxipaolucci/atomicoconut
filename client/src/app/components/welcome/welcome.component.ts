@@ -6,6 +6,11 @@ import { AppService } from '../../app.service';
 import { User } from '../../modules/users/models/user';
 import { AccountPersonal } from '../../modules/users/models/account-personal';
 import { AccountFinance } from '../../modules/users/models/account-finance';
+import { InvestmentsService } from '../../modules/investments/investments.service';
+import { CurrencyExchangeService } from '../../modules/investments/currency-exchange.service';
+import { Investment } from '../../modules/investments/models/investment';
+import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
+import { INVESTMENTS_TYPES } from '../../constants/constants';
 
 @Component({
   selector: 'welcome',
@@ -15,16 +20,49 @@ import { AccountFinance } from '../../modules/users/models/account-finance';
 export class WelcomeComponent implements OnInit {
 
   user : User = null;
+  investmentsReturn : number = 0;
 
-  constructor(private mainNavigatorService : MainNavigatorService, private usersService : UsersService, private appService : AppService) { }
+  constructor(private mainNavigatorService : MainNavigatorService, private usersService : UsersService, private appService : AppService, 
+      private investmentsService : InvestmentsService, private currencyExchangeService : CurrencyExchangeService) { }
 
   ngOnInit() {
+    let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: null, selected: true },
       { displayName: 'Investments', url: '/investments', selected: false },
       { displayName: 'Calculators', url: '/calculators', selected: false   }]);
     
-    this.setUser();
+    const user$ = this.setUser();
+    user$.subscribe((investments : Investment[]) => {
+      //iterate investments and sum returns
+      for (let investment of investments) {
+        if (investment instanceof CurrencyInvestment) {
+          let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
+          if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
+            this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
+              this.investmentsReturn += currencyInvestment.amount * (currencyRates[currencyInvestment.unit] || 1);
+            },
+            (error : any) => {
+              this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
+              this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
+            });
+          } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
+            this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
+              this.investmentsReturn += currencyInvestment.amount * rates.price;
+            },
+            (error : any) => {
+              this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
+              this.appService.showResults(`There was an error trying to get ${currencyInvestment.unit} rates data, please try again in a few minutes.`, 'error');
+            });
+          }
+        }
+      }
+    },
+    (error : any) => {
+      this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
+      this.user = null;
+    });
   }
 
   /**
@@ -45,7 +83,7 @@ export class WelcomeComponent implements OnInit {
       }
     });
 
-    user$.subscribe(user => {
+    return user$.switchMap(user => {
       if (user && user.email) {
         let personalInfo = null;
         if (user.personalInfo) {
@@ -64,15 +102,14 @@ export class WelcomeComponent implements OnInit {
           //we just got updated information from server, let's update the current user source
           this.usersService.setUser(user);
         }
+
+        return this.investmentsService.getInvestments(user.email);
       } else {
         this.user = null;
+        return Observable.of([]);
       }
-      
-    },
-    (error : any) => {
-      this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
-      this.user = null;
     });
+    
   }
 
 }
