@@ -20,7 +20,9 @@ import { INVESTMENTS_TYPES } from '../../constants/constants';
 export class WelcomeComponent implements OnInit {
 
   user : User = null;
-  investmentsReturn : number = 0;
+  wealthAmount : number = 0;
+  expectedWealth : number = 0;
+  progressBarWealthValue : number = 0;
 
   constructor(private mainNavigatorService : MainNavigatorService, private usersService : UsersService, private appService : AppService, 
       private investmentsService : InvestmentsService, private currencyExchangeService : CurrencyExchangeService) { }
@@ -41,7 +43,8 @@ export class WelcomeComponent implements OnInit {
           let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
           if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
             this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
-              this.investmentsReturn += currencyInvestment.amount * (currencyRates[currencyInvestment.unit] || 1);
+              this.wealthAmount += currencyInvestment.amount * (currencyRates[currencyInvestment.unit] || 1);
+              this.calculateProgressBarWealthValue();
             },
             (error : any) => {
               this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
@@ -49,7 +52,8 @@ export class WelcomeComponent implements OnInit {
             });
           } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
             this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
-              this.investmentsReturn += currencyInvestment.amount * rates.price;
+              this.wealthAmount += currencyInvestment.amount * rates.price;
+              this.calculateProgressBarWealthValue();
             },
             (error : any) => {
               this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
@@ -94,6 +98,18 @@ export class WelcomeComponent implements OnInit {
         if (user.financialInfo) {
           financialInfo = new AccountFinance(user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, 
               user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
+          
+          if (gotAuthenticatedUserFromServer !== null) {
+            this.wealthAmount += this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
+          }
+          
+          if (user.personalInfo && user.personalInfo.age) {
+            this.expectedWealth = this.currencyExchangeService.getUsdValueOf(user.financialInfo.annualIncome || 0, user.financialInfo.annualIncomeUnit) * user.personalInfo.age / 10;
+          } else {
+            this.expectedWealth = 0;
+          }
+          
+          this.calculateProgressBarWealthValue();
         }
         user = new User(user.name, user.email, user.avatar, financialInfo, personalInfo, user.currency);          
         this.user = user;
@@ -110,6 +126,16 @@ export class WelcomeComponent implements OnInit {
       }
     });
     
+  }
+
+  calculateProgressBarWealthValue() {
+    if (!this.expectedWealth) {
+      this.progressBarWealthValue = 0;
+      return;
+    }
+
+    let value = this.wealthAmount * 100 / this.expectedWealth;
+    this.progressBarWealthValue = value > 100 ? 100 : value;
   }
 
 }

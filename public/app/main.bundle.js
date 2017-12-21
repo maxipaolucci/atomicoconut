@@ -614,7 +614,7 @@ var _a, _b, _c;
 /***/ "../../../../../src/app/components/welcome/welcome.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"user\" class=\"container__net-worth\">\r\n  <!-- Net Worth Card -->\r\n  <mat-card *ngIf=\"user.financialInfo && user.personalInfo\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p class=\"accent\">\r\n        Your expected Net Worth at your age ({{user.personalInfo.age}}) is \r\n        <strong>{{ user.personalInfo.age * (user.financialInfo.annualIncome || 0) / 10 | currency : 'USD' : false : '1.2-2' }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings !== null\"\r\n          [class.color__accent]=\"user.financialInfo.savings >= user.financialInfo.annualIncome\" \r\n          [class.color__red]=\"user.financialInfo.savings < user.financialInfo.annualIncome\">\r\n        Your current net worth is <strong>{{ user.financialInfo.savings + investmentsReturn | currency : 'USD' : false : '1.2-2' }}</strong>\r\n      </p>\r\n      <p *ngIf=\"user.financialInfo.savings === null\">\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete Financial Info to see your current state\r\n          \r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n    <!-- EOF Net Worth Card -->\r\n\r\n  <!-- Net Worth Card when Personal and Financial info is incomplete -->\r\n  <mat-card *ngIf=\"!user.financialInfo || !user.personalInfo\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete your Personal and Financial Info to see expected and current Net Worth\r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  <!-- EOF Net Worth Card when Personal and Financial info is incomplete -->\r\n</div>"
+module.exports = "<div *ngIf=\"user\" class=\"container__net-worth\">\r\n  <!-- Net Worth Card -->\r\n  <mat-card *ngIf=\"expectedWealth && user.personalInfo.age\"\r\n      fxLayout=\"column\" class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n      <div class=\"wealth__container\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"none center\" fxLayoutAlign.gt-xs=\"space-between none\">\r\n        <span class=\"accent\">\r\n          Expected net worth at your age ({{user.personalInfo.age}}) is \r\n          <strong>{{ expectedWealth | currency : 'USD' : false : '1.2-2' }}</strong>\r\n        </span>\r\n        <span [class.color__accent]=\"wealthAmount >= expectedWealth\" \r\n            [class.color__red]=\"wealthAmount < expectedWealth\">\r\n          Current net worth is <strong>{{ wealthAmount | currency : 'USD' : false : '1.2-2' }}</strong>\r\n        </span>\r\n        \r\n        <!-- <p *ngIf=\"user.financialInfo.savings === null\">\r\n          <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n            <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n            Go to your account and complete Financial Info to see your current state\r\n          </a>\r\n        </p> -->\r\n      </div>\r\n      <div>\r\n        <mat-progress-bar \r\n          class=\"progress-spinner progress-spinner--wealth\"\r\n          [color]=\"wealthAmount < expectedWealth ? 'warn' : 'accent'\"\r\n          [value]=\"progressBarWealthValue\"\r\n          mode=\"determinate\">\r\n        </mat-progress-bar>\r\n      </div>\r\n    </mat-card-content>\r\n  </mat-card>\r\n    <!-- EOF Net Worth Card -->\r\n\r\n  <!-- Net Worth Card when Personal and Financial info is incomplete -->\r\n  <mat-card *ngIf=\"!user.financialInfo || !user.personalInfo\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete your Personal and Financial Info to see expected and current Net Worth\r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  <!-- EOF Net Worth Card when Personal and Financial info is incomplete -->\r\n</div>"
 
 /***/ }),
 
@@ -682,7 +682,9 @@ var WelcomeComponent = (function () {
         this.investmentsService = investmentsService;
         this.currencyExchangeService = currencyExchangeService;
         this.user = null;
-        this.investmentsReturn = 0;
+        this.wealthAmount = 0;
+        this.expectedWealth = 0;
+        this.progressBarWealthValue = 0;
     }
     WelcomeComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -699,7 +701,8 @@ var WelcomeComponent = (function () {
                     var currencyInvestment_1 = investment;
                     if (investment.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CURRENCY) {
                         _this.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
-                            _this.investmentsReturn += currencyInvestment_1.amount * (currencyRates[currencyInvestment_1.unit] || 1);
+                            _this.wealthAmount += currencyInvestment_1.amount * (currencyRates[currencyInvestment_1.unit] || 1);
+                            _this.calculateProgressBarWealthValue();
                         }, function (error) {
                             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
                             _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
@@ -707,7 +710,8 @@ var WelcomeComponent = (function () {
                     }
                     else if (investment.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CRYPTO) {
                         _this.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).take(1).subscribe(function (rates) {
-                            _this.investmentsReturn += currencyInvestment_1.amount * rates.price;
+                            _this.wealthAmount += currencyInvestment_1.amount * rates.price;
+                            _this.calculateProgressBarWealthValue();
                         }, function (error) {
                             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_1.unit + " rates data > ", error);
                             _this.appService.showResults("There was an error trying to get " + currencyInvestment_1.unit + " rates data, please try again in a few minutes.", 'error');
@@ -753,6 +757,16 @@ var WelcomeComponent = (function () {
                 var financialInfo = null;
                 if (user.financialInfo) {
                     financialInfo = new __WEBPACK_IMPORTED_MODULE_7__modules_users_models_account_finance__["a" /* AccountFinance */](user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
+                    if (gotAuthenticatedUserFromServer !== null) {
+                        _this.wealthAmount += _this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
+                    }
+                    if (user.personalInfo && user.personalInfo.age) {
+                        _this.expectedWealth = _this.currencyExchangeService.getUsdValueOf(user.financialInfo.annualIncome || 0, user.financialInfo.annualIncomeUnit) * user.personalInfo.age / 10;
+                    }
+                    else {
+                        _this.expectedWealth = 0;
+                    }
+                    _this.calculateProgressBarWealthValue();
                 }
                 user = new __WEBPACK_IMPORTED_MODULE_5__modules_users_models_user__["a" /* User */](user.name, user.email, user.avatar, financialInfo, personalInfo, user.currency);
                 _this.user = user;
@@ -768,6 +782,14 @@ var WelcomeComponent = (function () {
                 return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of([]);
             }
         });
+    };
+    WelcomeComponent.prototype.calculateProgressBarWealthValue = function () {
+        if (!this.expectedWealth) {
+            this.progressBarWealthValue = 0;
+            return;
+        }
+        var value = this.wealthAmount * 100 / this.expectedWealth;
+        this.progressBarWealthValue = value > 100 ? 100 : value;
     };
     return WelcomeComponent;
 }());
