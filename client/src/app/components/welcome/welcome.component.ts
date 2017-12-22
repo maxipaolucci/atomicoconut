@@ -40,10 +40,13 @@ export class WelcomeComponent implements OnInit {
       //iterate investments and sum returns
       for (let investment of investments) {
         if (investment instanceof CurrencyInvestment) {
+          let myPercentage = (investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
+          
           let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
           if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
             this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
-              this.wealthAmount += currencyInvestment.amount * (currencyRates[currencyInvestment.unit] || 1);
+              let myReturnAmount = (currencyInvestment.amount * (currencyRates[currencyInvestment.unit] || 1)) * myPercentage / 100;
+              this.wealthAmount += myReturnAmount;
               this.calculateProgressBarWealthValue();
             },
             (error : any) => {
@@ -52,7 +55,8 @@ export class WelcomeComponent implements OnInit {
             });
           } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
             this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
-              this.wealthAmount += currencyInvestment.amount * rates.price;
+              let myReturnAmount = (currencyInvestment.amount * rates.price) * myPercentage / 100;
+              this.wealthAmount += myReturnAmount;
               this.calculateProgressBarWealthValue();
             },
             (error : any) => {

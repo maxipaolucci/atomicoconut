@@ -698,10 +698,12 @@ var WelcomeComponent = (function () {
         user$.subscribe(function (investments) {
             var _loop_1 = function (investment) {
                 if (investment instanceof __WEBPACK_IMPORTED_MODULE_10__modules_investments_models_currencyInvestment__["a" /* CurrencyInvestment */]) {
+                    var myPercentage_1 = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
                     var currencyInvestment_1 = investment;
                     if (investment.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CURRENCY) {
                         _this.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
-                            _this.wealthAmount += currencyInvestment_1.amount * (currencyRates[currencyInvestment_1.unit] || 1);
+                            var myReturnAmount = (currencyInvestment_1.amount * (currencyRates[currencyInvestment_1.unit] || 1)) * myPercentage_1 / 100;
+                            _this.wealthAmount += myReturnAmount;
                             _this.calculateProgressBarWealthValue();
                         }, function (error) {
                             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
@@ -710,7 +712,8 @@ var WelcomeComponent = (function () {
                     }
                     else if (investment.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CRYPTO) {
                         _this.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).take(1).subscribe(function (rates) {
-                            _this.wealthAmount += currencyInvestment_1.amount * rates.price;
+                            var myReturnAmount = (currencyInvestment_1.amount * rates.price) * myPercentage_1 / 100;
+                            _this.wealthAmount += myReturnAmount;
                             _this.calculateProgressBarWealthValue();
                         }, function (error) {
                             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_1.unit + " rates data > ", error);
