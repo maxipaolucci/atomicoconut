@@ -489,11 +489,21 @@ exports.getTeamBySlugObject = getTeamBySlugObject;
  * Get a team by slug and send it back to client
  */
 exports.getMyTeamBySlug = async (req, res) => {
-    const methodTrace = `${errorTrace} getTeamBySlug() >`;
+    const methodTrace = `${errorTrace} getMyTeamBySlug() >`;
 
     const result = await getTeamBySlugObject(req.query.slug, false, req.user.email);
     
-    if (result && result.admin && result.admin.email !== req.user.email) {
+    if (!result) {
+        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 461,
+            msg : getMessage('error', 461, null, false, 'Team'),
+            data : null
+        });
+
+        return;
+    } else if (result && result.admin && result.admin.email !== req.user.email) {
         //the client is not the admin of the team requested
         console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Team', req.user.email)}`);
         res.status(401).json({ 
