@@ -1421,7 +1421,10 @@ var CurrencyInvestmentComponent = (function () {
         this.actionRunning = true;
         var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_2__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
             width: '250px',
-            data: { message: "Are you sure you want to delete forever this investment?" }
+            data: {
+                title: 'Delete investment',
+                message: "Are you sure you want to delete this investment forever?"
+            }
         });
         yesNoDialogRef.afterClosed().subscribe(function (result) {
             if (result === 'yes') {
@@ -3010,7 +3013,7 @@ var _a;
 /***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>Delete team</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\r\n    {{data.message}}\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" mat-dialog-close=\"no\">\r\n    <mat-icon aria-label=\"No\">clear</mat-icon>\r\n  </button>\r\n  <button mat-mini-fab color=\"accent\" mat-dialog-close=\"yes\">\r\n    <mat-icon aria-label=\"Yes\">done</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
+module.exports = "<h2 mat-dialog-title>{{data.title}}</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\r\n    {{data.message}}\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" mat-dialog-close=\"no\">\r\n    <mat-icon aria-label=\"No\">clear</mat-icon>\r\n  </button>\r\n  <button mat-mini-fab color=\"accent\" mat-dialog-close=\"yes\">\r\n    <mat-icon aria-label=\"Yes\">done</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
 
 /***/ }),
 
@@ -3567,7 +3570,10 @@ var TeamsDashboardComponent = (function () {
         this.teamActionRunning[index] = true;
         var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_6__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
             width: '250px',
-            data: { message: "Are you sure you want to delete forever the team \"" + team.name + "\"?" }
+            data: {
+                title: 'Delete team',
+                message: "Are you sure you want to delete the team \"" + team.name + "\" forever?"
+            }
         });
         yesNoDialogRef.afterClosed().subscribe(function (result) {
             if (result === 'yes') {

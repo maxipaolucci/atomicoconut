@@ -157,7 +157,10 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     this.actionRunning = true;
     let yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
       width: '250px',
-      data: { message : `Are you sure you want to delete forever this investment?`}
+      data: { 
+        title : 'Delete investment',
+        message : `Are you sure you want to delete this investment forever?`
+      }
     });
 
     yesNoDialogRef.afterClosed().subscribe(result => {

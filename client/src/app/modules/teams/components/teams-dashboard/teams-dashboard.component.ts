@@ -85,7 +85,10 @@ export class TeamsDashboardComponent implements OnInit {
     this.teamActionRunning[index] = true;
     let yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
       width: '250px',
-      data: { message : `Are you sure you want to delete forever the team "${team.name}"?`}
+      data: {
+        title : 'Delete team', 
+        message : `Are you sure you want to delete the team "${team.name}" forever?`
+      }
     });
 
     yesNoDialogRef.afterClosed().subscribe(result => {
