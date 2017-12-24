@@ -175,7 +175,7 @@ exports.update = async (req, res, next) => {
     let user = req.user;
 
     //get the team by slug and check that the admin is the same user asking for update
-    let team = await getTeamBySlugObject(req.body.slug, true, user.email);
+    let team = await getTeamBySlugObject(req.body.slug, user.email, { withId : true });
     if (team && team.admin && team.admin.email !== user.email) {
         //the client is not the admin of the team requested
         console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Team', user.email)}`);
@@ -284,7 +284,7 @@ exports.update = async (req, res, next) => {
     }
     
     console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Team')}`);
-    team = await getTeamBySlugObject(team.slug, false, user.email);
+    team = await getTeamBySlugObject(team.slug, user.email, { withId : false });
 
     res.json({
         status : 'success', 
@@ -391,13 +391,13 @@ exports.getAllTeams = async (req, res) => {
 
 /**
  * Get a team by slug
- * @param {string} slug 
- * @param {boolean} withId . If true adds the id to the result
+ * @param {string} slug
  * @param {string} userEmail . Just for debug in console purposes.
+ * @param {object} options . Object with specific options to populate on the result
  * 
  * @return {object} . The team looked for or null
  */
-const getTeamBySlugObject = async (slug, withId = false, userEmail = null) => {
+const getTeamBySlugObject = async (slug, userEmail = null, options = null) => {
     const methodTrace = `${errorTrace} getTeamBySlugObject() >`;
 
     //check for a team with the provided slug
@@ -449,7 +449,7 @@ const getTeamBySlugObject = async (slug, withId = false, userEmail = null) => {
         if (!Object.keys(result).length) {
             //we just populate this once because all the teams in this recordset are the same, the only field that changes is the member
             //this is like these because of the use of unwind in the mongoDB query above
-            if (withId) {
+            if (options && options.withId) {
                 result._id = team._id;
             }
             result.name = team.name;
@@ -491,7 +491,7 @@ exports.getTeamBySlugObject = getTeamBySlugObject;
 exports.getMyTeamBySlug = async (req, res) => {
     const methodTrace = `${errorTrace} getMyTeamBySlug() >`;
 
-    const result = await getTeamBySlugObject(req.query.slug, false, req.user.email);
+    const result = await getTeamBySlugObject(req.query.slug, req.user.email, { withId : false });
     
     if (!result) {
         console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
@@ -528,7 +528,7 @@ exports.delete = async (req, res) => {
     const methodTrace = `${errorTrace} delete() >`;
 
     const user = req.user;
-    const team = await getTeamBySlugObject(req.params.slug, true, req.body.email);
+    const team = await getTeamBySlugObject(req.params.slug, req.body.email, { withId : true, withInvestments : true });
 
     if (team && team.admin && team.admin.email !== req.body.email) {
         //the client is not the admin of the team requested
