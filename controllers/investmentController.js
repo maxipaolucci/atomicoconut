@@ -38,8 +38,9 @@ exports.create = async (req, res, next) => {
 
     //get the team if provided
     let team = null;
+    
     if (req.body.team) {
-        team = await teamController.getTeamBySlugObject(req.body.team.slug, true, user.email);
+        team = await teamController.getTeamBySlugObject(req.body.team.slug, user.email, { withId : true });
     }
 
     //save a new investment record in DB
@@ -150,7 +151,7 @@ exports.update = async (req, res, next) => {
     //get the team if provided
     let team = null;
     if (req.body.team) {
-        team = await teamController.getTeamBySlugObject(req.body.team.slug, true, user.email);
+        team = await teamController.getTeamBySlugObject(req.body.team.slug, user.email, { withId : true });
     }
 
     //fields to update
@@ -322,7 +323,7 @@ const beautifyInvestmentsFormat = async (investments, options = null) => {
         //team data
         if (investment.team && investment.team.slug && investment.team.slug.length) {
             if (options && options.teamMembers) {
-                investment.team = await teamController.getTeamBySlugObject(investment.team.slug[0], false, null);
+                investment.team = await teamController.getTeamBySlugObject(investment.team.slug[0], null, { withId : false });
             } else {
                 investment.team.name = investment.team.name[0];
                 investment.team.slug = investment.team.slug[0];

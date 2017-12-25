@@ -22,7 +22,8 @@ const errorCodes = {
   467 : 'Something went wrong.',
   468 : 'Route not found.',
   469 : 'Failed to remove {{param}} from {{param}}.',
-  470 : 'Sorry. You are not allowed to update this {{param}}.'
+  470 : 'Sorry, you are not allowed to update this {{param}}.',
+  471 : 'Sorry, this {{param}} has {{param}} associated to it. We cannot delete it until all the related data is removed or associated to another entity.'
 };
 
 const messageCodes = {

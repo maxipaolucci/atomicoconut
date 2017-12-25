@@ -3605,6 +3605,9 @@ var TeamsDashboardComponent = (function () {
             if (error.codeno === 400) {
                 _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
             }
+            else if (error.codeno === 471) {
+                _this.appService.showResults(error.msg, 'error', 7000);
+            }
             else {
                 _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }

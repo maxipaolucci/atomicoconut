@@ -123,6 +123,8 @@ export class TeamsDashboardComponent implements OnInit {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else if (error.codeno === 471) {
+          this.appService.showResults(error.msg, 'error', 7000);
         } else {
           this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
         }

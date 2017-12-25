@@ -402,10 +402,17 @@ const getTeamBySlugObject = async (slug, userEmail = null, options = null) => {
 
     //check for a team with the provided slug
     console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'Team', 'slug', slug)}`);
-    
-    //get the team with members
-    let teams = await Team.aggregate([
-        { $match : { slug } },
+
+    //filter by slug
+    let aggregationStages = [{ $match : { slug } }];
+
+    if (options && options.withInvestments) {
+        //look for investments
+        aggregationStages.push({ $lookup : { from : 'investments', localField : '_id', foreignField : 'team', as : 'investmentsInfo' } });
+    }
+
+    //get admin and team members info
+    aggregationStages = aggregationStages.concat([
         { $lookup : { from : 'users', localField : 'admin', foreignField : '_id', as : 'adminInfo' } },
         { 
             $addFields : {
@@ -443,6 +450,9 @@ const getTeamBySlugObject = async (slug, userEmail = null, options = null) => {
         }
     ]);
 
+    //get the team with members
+    let teams = await Team.aggregate(aggregationStages);
+
     //Parse the recordset from DB and organize the info better.
     let result = {};
     for (team of teams) {
@@ -460,6 +470,13 @@ const getTeamBySlugObject = async (slug, userEmail = null, options = null) => {
                 email : team.admin.email[0],
                 gravatar : 'https://gravatar.com/avatar/' + md5(team.admin.email[0]) + '?s=200'
             };
+
+            if (options && options.withInvestments) {
+                result.investments = [];
+                for (let investment of team.investmentsInfo) {
+                    result.investments.push(investment._id);
+                }
+            }
         }
 
         if (result.members) {
@@ -542,7 +559,18 @@ exports.delete = async (req, res) => {
 
         return;
     } else if (team) {
-        //TODO check if the team has any investment
+        //check if the team has any investment
+        if (team.investments && team.investments.length) {
+            console.log(`${methodTrace} ${getMessage('error', 471, user.email, true, 'Team', 'Investments')}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 471,
+                msg : getMessage('error', 471, null, false, 'Team', 'Investments'),
+                data : null
+            });
+    
+            return;
+        }
 
         //remove all the members in the team
         for (let member of team.members) {
