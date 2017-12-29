@@ -23,7 +23,9 @@ const errorCodes = {
   468 : 'Route not found.',
   469 : 'Failed to remove {{param}} from {{param}}.',
   470 : 'Sorry, you are not allowed to update this {{param}}.',
-  471 : 'Sorry, this {{param}} has {{param}} associated to it. We cannot delete it until all the related data is removed or associated to another entity.'
+  471 : 'Sorry, this {{param}} has {{param}} associated to it. We cannot delete it until all the related data is removed or associated to another entity.',
+  472 : 'Error trying to add a new member to each investment distribution array of the team investments.',
+  473 : 'Error trying to remove member from each investment distribution array from team investments.'
 };
 
 const messageCodes = {
@@ -69,7 +71,11 @@ const messageCodes = {
   1039 : '{{param}} record successfully removed.',
   1040 : '{{param}} is not a user of AtomiCoconut. Sending email to join the app...',
   1041 : 'Sending email via {{param}}...',
-  1042 : '{{param}} and all related data successfully updated.'
+  1042 : '{{param}} and all related data successfully updated.',
+  1043 : 'Updating team investments, adding new member to each investment distributtion array...',
+  1044 : 'Successfully added new member to each investment distribution array',
+  1045 : 'Updating team investments, removing the member from each investment distributtion array...',
+  1046 : 'Successfully removed member from each investment distribution array'
 };
 
 /**

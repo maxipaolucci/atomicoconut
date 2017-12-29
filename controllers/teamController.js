@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const md5 = require('md5');
 const User = mongoose.model('User');
 const Team = mongoose.model('Team');
+const Investment = mongoose.model('Investment');
 const TeamUser = mongoose.model('TeamUser');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
@@ -81,6 +82,7 @@ exports.create = async (req, res, next) => {
 const addMemberToTeam = async (member, team, userEmail) => {
     const methodTrace = `${errorTrace} addMemberToTeam() >`;
 
+
     //Check for a teamUser that matches the team and member provided
     let teamUser = await TeamUser.findOne({user : member._id, team : team._id});
     if (teamUser) {
@@ -109,12 +111,32 @@ const addMemberToTeam = async (member, team, userEmail) => {
 
     //add the new TeamUser id to the team in its array of teamUsers
     console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, 'Team', '_id', team._id)}`);
-    team = await Team.findOneAndUpdate(
+    await Team.findOneAndUpdate(
         { _id : team._id },
         { $addToSet : { teamUsers : teamUser } },
         { new : true }
     );
     console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, 'Team')}`);
+
+    //update each investment of the team with the new member in the distribution array.
+    if (team.investments && team.investments.length) {
+        console.log(`${methodTrace} ${getMessage('message', 1043, userEmail, true)}`);
+        try {
+            await Investment.updateMany(
+                { _id : { $in : team.investments } },
+                { $addToSet : { investmentDistribution : {
+                  email : member.email,
+                  percentage : 0  
+                } } }
+            );
+
+            console.log(`${methodTrace} ${getMessage('message', 1044, userEmail, true)}`);
+        } catch (error) {
+            console.log(`${methodTrace} ${getMessage('error', 472, userEmail, true)}`);
+            
+            return false;
+        }
+    }
 
     return true;
 };
@@ -149,12 +171,31 @@ const deleteMemberFromTeam = async (member, team, userEmail) => {
 
     //remove the teamUser id from the array of teamUsers in Team
     console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, 'Team', '_id', team._id)}`);
-    team = await Team.findByIdAndUpdate(
+    await Team.findByIdAndUpdate(
         { _id : teamUser.team },
         { $pull : { teamUsers : teamUser._id } },
         { new : true }
     );
     console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, 'Team')}`);
+
+    //update each investment of the team removing the member from the distribution array.
+    if (team.investments && team.investments.length) {
+        console.log(`${methodTrace} ${getMessage('message', 1045, userEmail, true)}`);
+        try {
+            await Investment.updateMany(
+                { _id : { $in : team.investments } },
+                { $pull : { investmentDistribution : {
+                  email : member.email  
+                } } }
+            );
+
+            console.log(`${methodTrace} ${getMessage('message', 1046, userEmail, true)}`);
+        } catch (error) {
+            console.log(`${methodTrace} ${getMessage('error', 473, userEmail, true)}`);
+
+            return false;
+        }
+    }
 
     //Remove the TeamUser record
     console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'TeamUser', '_id', teamUser._id)}`);
@@ -175,7 +216,8 @@ exports.update = async (req, res, next) => {
     let user = req.user;
 
     //get the team by slug and check that the admin is the same user asking for update
-    let team = await getTeamBySlugObject(req.body.slug, user.email, { withId : true });
+    let team = await getTeamBySlugObject(req.body.slug, user.email, { withId : true, withInvestments : true });
+    
     if (team && team.admin && team.admin.email !== user.email) {
         //the client is not the admin of the team requested
         console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Team', user.email)}`);
