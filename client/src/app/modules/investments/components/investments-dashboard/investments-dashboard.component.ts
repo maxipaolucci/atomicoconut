@@ -32,6 +32,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   btcBuyDate : Date = new Date(2017, 6, 19);
   totalInvestment = 0;
   totalReturn = 0;
+  myTotalInvestment = 0;
+  myTotalReturn = 0;
   user : User = null;
   subscription : Subscription = new Subscription();
   getInvestmentsServiceRunning : boolean = false;
@@ -152,6 +154,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   setTotals(totalReturns : any) : void {
     this.totalReturn += totalReturns.investmentReturn;
     this.totalInvestment += totalReturns.investmentAmount;
+    this.myTotalInvestment += totalReturns.myInvestmentAmount;
+    this.myTotalReturn += totalReturns.myInvestmentReturn;
   }
 
   /**
@@ -168,8 +172,13 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
           let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
           if (currencyInvestment.type === INVESTMENTS_TYPES.CURRENCY) {
             this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
-              this.totalReturn -= currencyInvestment.amount * (currencyRates[currencyInvestment.unit] || 1);
-              this.totalInvestment -= this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
+              let investmentReturn = currencyInvestment.amount * (currencyRates[currencyInvestment.unit] || 1);
+              let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
+              this.totalReturn -= investmentReturn;
+              this.totalInvestment -= investmentAmount;
+              //TODO get my distribution from the distribution array an multiply by investment return and amount
+              //this.myTotalReturn -= investmentReturn * currencyInvestment.investmentDistribution
+              //this.myTotalInvestment -= ...;  
             },
             (error : any) => {
               this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);

@@ -101,10 +101,6 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
           this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
           this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
           this.investmentReturn = this.currentPrice * this.investment.amount;
-          this.totalReturns.emit({
-            investmentAmount : this.investmentAmount,
-            investmentReturn : this.investmentReturn
-          });
 
           return this.teams$;
         }
@@ -134,6 +130,14 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   setInvestmentTeamData(teams : Team[]) {
     this.team = this.investment.team ? teams.filter(team => team.slug === this.investment.team.slug)[0] : null; //look for the team of the investment
     
+    //set totals to emit to parent component
+    let totals = {
+      investmentAmount : this.investmentAmount,
+      investmentReturn : this.investmentReturn,
+      myInvestmentAmount : 0,
+      myInvestmentReturn : 0
+    };
+
     if (this.team) {
       for (let member of this.team.members) {
         let percentage = (this.investment.investmentDistribution.filter(portion => portion.email === member.email)[0]).percentage;
@@ -142,8 +146,15 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
           percentage,
           money : this.investmentReturn * percentage / 100
         });
+
+        if (this.user.email === member.email) {
+          totals.myInvestmentAmount = this.investmentAmount * percentage / 100;
+          totals.myInvestmentReturn = this.investmentReturn * percentage / 100;  
+        }
       }
     }
+
+    this.totalReturns.emit(totals);
   }
 
   openDeleteDialog() {
