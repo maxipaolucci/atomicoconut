@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from "rxjs/Rx";
 import { MainNavigatorService } from '../../modules/shared/components/main-navigator/main-navigator.service';
 import { UsersService } from '../../modules/users/users.service';
@@ -11,18 +11,20 @@ import { CurrencyExchangeService } from '../../modules/investments/currency-exch
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
 import { INVESTMENTS_TYPES } from '../../constants/constants';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss']
 })
-export class WelcomeComponent implements OnInit {
+export class WelcomeComponent implements OnInit, OnDestroy {
 
   user : User = null;
   wealthAmount : number = 0;
   expectedWealth : number = 0;
   progressBarWealthValue : number = 0;
+  subscription : Subscription = new Subscription();
 
   constructor(private mainNavigatorService : MainNavigatorService, private usersService : UsersService, private appService : AppService, 
       private investmentsService : InvestmentsService, private currencyExchangeService : CurrencyExchangeService) { }
@@ -36,7 +38,7 @@ export class WelcomeComponent implements OnInit {
       { displayName: 'Calculators', url: '/calculators', selected: false   }]);
     
     const user$ = this.setUser();
-    user$.subscribe((investments : Investment[]) => {
+    const newSubscription = user$.subscribe((investments : Investment[]) => {
       //iterate investments and sum returns
       for (let investment of investments) {
         if (investment instanceof CurrencyInvestment) {
@@ -71,6 +73,15 @@ export class WelcomeComponent implements OnInit {
       this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
       this.user = null;
     });
+
+    this.subscription.add(newSubscription);
+  }
+
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    
+    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
   }
 
   /**

@@ -126,7 +126,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   setInvestmentTeamData(teams : Team[]) {
     this.team = this.investment.team ? teams.filter(team => team.slug === this.investment.team.slug)[0] : null; //look for the team of the investment
     
-    //set totals to emit to parent component
+    //set totals to emit to parent component. If no team assigned then the total of the investment is the same as my portion
     let totals = {
       investmentId : this.investment.id,
       investmentAmount : this.investmentAmount,
@@ -136,6 +136,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     };
 
     if (this.team) {
+      //if team is present then get my portion of the investment
       for (let member of this.team.members) {
         let percentage = (this.investment.investmentDistribution.filter(portion => portion.email === member.email)[0]).percentage;
         this.investmentDistribution.push({
@@ -144,7 +145,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
           money : this.investmentReturn * percentage / 100
         });
 
-        if (this.user.email === member.email) {
+        if (this.user && this.user.email === member.email) {
           totals.myInvestmentAmount = this.investmentAmount * percentage / 100;
           totals.myInvestmentReturn = this.investmentReturn * percentage / 100;  
         }

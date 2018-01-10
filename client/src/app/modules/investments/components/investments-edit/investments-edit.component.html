@@ -98,7 +98,7 @@
                 <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
                   <input matInput type="number" id="investmentAmount" name="investmentAmount" placeholder="Investment amount"
                       [(ngModel)]="model.investmentAmount" 
-                      value="model.investmentAmount"
+                      [value]="model.investmentAmount"
                       numberValidator 
                       required
                       #investmentAmount="ngModel">

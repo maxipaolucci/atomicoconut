@@ -186,7 +186,6 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
               break;
             }
           }
-          console.log(myPortion);
 
           let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
           if (currencyInvestment.type === INVESTMENTS_TYPES.CURRENCY) {
@@ -195,6 +194,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
               let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
               this.totalReturn -= investmentReturn;
               this.totalInvestment -= investmentAmount;
+              this.myTotalReturn -= investmentReturn * myPortion / 100;
+              this.myTotalInvestment -= investmentAmount * myPortion / 100;  
             },
             (error : any) => {
               this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
@@ -206,8 +207,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
               let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
               this.totalReturn -= investmentReturn
               this.totalInvestment -= investmentAmount;
-              this.myTotalReturn -= investmentReturn * myPortion;
-              this.myTotalInvestment -= investmentAmount * myPortion;  
+              this.myTotalReturn -= investmentReturn * myPortion / 100;
+              this.myTotalInvestment -= investmentAmount * myPortion / 100;  
             },
             (error : any) => {
               this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
