@@ -26,10 +26,6 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   investments : Investment[] = [];
   teams : Team[] = [];
   investmentsUI : any[] = []; //this is a structure to use in the view an make the rendering easier organizing the info in rows
-  xmrBuyDate : Date = new Date(2017, 5, 23); //month minus 1, 5 = june
-  xmrBuyDate2 : Date = new Date(2017, 8, 23);
-  xmrBuyDate3 : Date = new Date(2017, 8, 25);
-  btcBuyDate : Date = new Date(2017, 6, 19);
   totalInvestment = 0;
   totalReturn = 0;
   myTotalInvestment = 0;
@@ -153,13 +149,15 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   }
 
   setTotals(totalReturns : any) : void {
-    console.log(this.totals);
+    //update the total that matches the id
     this.totals[totalReturns.investmentId] = totalReturns;
-
+    //reset totals
     this.totalReturn = 0;
     this.totalInvestment = 0;
     this.myTotalInvestment = 0;
     this.myTotalReturn = 0;
+
+    //re calculate totals
     for (let investmentId of Object.keys(this.totals)) {
       this.totalReturn += this.totals[investmentId].investmentReturn;
       this.totalInvestment += this.totals[investmentId].investmentAmount;

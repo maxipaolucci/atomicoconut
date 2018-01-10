@@ -32,7 +32,6 @@ export class CurrencyInvestmentFormComponent implements OnInit, OnDestroy, After
   }
 
   ngOnInit() {
-    console.log(this.model.type);
     this.model.unit = this.model.type === 'currency' ? 'USD' : 'BTC';
     this.model.buyingDate = new Date(Date.now());
     this.model.buyingPriceUnit = 'USD';
