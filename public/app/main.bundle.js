@@ -1348,10 +1348,6 @@ var CurrencyInvestmentComponent = (function () {
                 _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
                 _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
                 _this.investmentReturn = _this.currentPrice * _this.investment.amount;
-                _this.totalReturns.emit({
-                    investmentAmount: _this.investmentAmount,
-                    investmentReturn: _this.investmentReturn
-                });
                 return _this.teams$;
             }).subscribe(function (teams) {
                 _this.setInvestmentTeamData(teams);
@@ -1368,10 +1364,6 @@ var CurrencyInvestmentComponent = (function () {
                 _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
                 _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
                 _this.investmentReturn = _this.currentPrice * _this.investment.amount;
-                _this.totalReturns.emit({
-                    investmentAmount: _this.investmentAmount,
-                    investmentReturn: _this.investmentReturn
-                });
                 return _this.teams$;
             }).subscribe(function (teams) {
                 _this.setInvestmentTeamData(teams);
@@ -1395,6 +1387,14 @@ var CurrencyInvestmentComponent = (function () {
     CurrencyInvestmentComponent.prototype.setInvestmentTeamData = function (teams) {
         var _this = this;
         this.team = this.investment.team ? teams.filter(function (team) { return team.slug === _this.investment.team.slug; })[0] : null; //look for the team of the investment
+        //set totals to emit to parent component
+        var totals = {
+            investmentId: this.investment.id,
+            investmentAmount: this.investmentAmount,
+            investmentReturn: this.investmentReturn,
+            myInvestmentAmount: this.investmentAmount,
+            myInvestmentReturn: this.investmentReturn
+        };
         if (this.team) {
             var _loop_1 = function (member) {
                 var percentage = (this_1.investment.investmentDistribution.filter(function (portion) { return portion.email === member.email; })[0]).percentage;
@@ -1403,6 +1403,10 @@ var CurrencyInvestmentComponent = (function () {
                     percentage: percentage,
                     money: this_1.investmentReturn * percentage / 100
                 });
+                if (this_1.user.email === member.email) {
+                    totals.myInvestmentAmount = this_1.investmentAmount * percentage / 100;
+                    totals.myInvestmentReturn = this_1.investmentReturn * percentage / 100;
+                }
             };
             var this_1 = this;
             for (var _i = 0, _a = this.team.members; _i < _a.length; _i++) {
@@ -1410,6 +1414,7 @@ var CurrencyInvestmentComponent = (function () {
                 _loop_1(member);
             }
         }
+        this.totalReturns.emit(totals);
     };
     CurrencyInvestmentComponent.prototype.openDeleteDialog = function () {
         var _this = this;
@@ -1581,7 +1586,7 @@ var _a, _b;
 /***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <div *ngFor=\"let row of investmentsUI\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <currency-investment *ngFor=\"let investment of row\" fxFlex fxFlex.gt-xs=\"50\"\r\n        [investment]=\"investment\"\r\n        [teams]=\"teams\"\r\n        (totalReturns)=\"setTotals($event)\"\r\n        (deletedId)=\"removeInvestment($event)\">\r\n      </currency-investment>\r\n    </div>\r\n    \r\n    <!-- <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"218.85627651\"\r\n        [cryptoCurrencyBuyPrice]=\"50\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex\r\n        [cryptoCurrency]=\"'btc'\"\r\n        [cryptoCurrencyCount]=\"1.28129356\"\r\n        [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n        [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.94093753\"\r\n        [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.72806551\"\r\n        [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div> -->\r\n\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n        <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n            [class.color__red]=\"totalReturn < totalInvestment\">\r\n          Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && !investments.length\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>\r\n          You do not have investments yet.\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab class=\"mat-elevation-z12\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <div *ngFor=\"let row of investmentsUI\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <currency-investment *ngFor=\"let investment of row\" fxFlex fxFlex.gt-xs=\"50\"\r\n        [investment]=\"investment\"\r\n        [teams]=\"teams\"\r\n        (totalReturns)=\"setTotals($event)\"\r\n        (deletedId)=\"removeInvestment($event)\">\r\n      </currency-investment>\r\n    </div>\r\n    \r\n    <!-- <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"218.85627651\"\r\n        [cryptoCurrencyBuyPrice]=\"50\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex\r\n        [cryptoCurrency]=\"'btc'\"\r\n        [cryptoCurrencyCount]=\"1.28129356\"\r\n        [cryptoCurrencyBuyPrice]=\"2359.99\"\r\n        [cryptoCurrencyBuyDate]=\"btcBuyDate\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div>\r\n\r\n    <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\">\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.94093753\"\r\n        [cryptoCurrencyBuyPrice]=\"87.5282\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate2\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n\r\n      <crypto-currency fxFlex \r\n        [cryptoCurrency]=\"'xmr'\"\r\n        [cryptoCurrencyCount]=\"5.72806551\"\r\n        [cryptoCurrencyBuyPrice]=\"90.9556\"\r\n        [cryptoCurrencyBuyDate]=\"xmrBuyDate3\"\r\n        (totalReturns)=\"setTotals($event)\">\r\n      </crypto-currency>\r\n    </div> -->\r\n\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"column\" fxLayoutGap=\"20px\">\r\n        <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>Total investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n          <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n              [class.color__red]=\"totalReturn < totalInvestment\">\r\n            Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n        <div fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>MY total investments: <strong>{{myTotalInvestment | currency }}</strong></p>\r\n          <p [class.color__accent]=\"myTotalReturn >= myTotalInvestment\" \r\n              [class.color__red]=\"myTotalReturn < myTotalInvestment\">\r\n            MY total ROI: <strong>{{ myTotalReturn | currency }}</strong> ({{myTotalReturn / myTotalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && !investments.length\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>\r\n          You do not have investments yet.\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab class=\"mat-elevation-z12\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -1660,6 +1665,9 @@ var InvestmentsDashboardComponent = (function () {
         this.btcBuyDate = new Date(2017, 6, 19);
         this.totalInvestment = 0;
         this.totalReturn = 0;
+        this.myTotalInvestment = 0;
+        this.myTotalReturn = 0;
+        this.totals = {};
         this.user = null;
         this.subscription = new __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__["a" /* Subscription */]();
         this.getInvestmentsServiceRunning = false;
@@ -1753,8 +1761,19 @@ var InvestmentsDashboardComponent = (function () {
         this.subscription.add(newSubscription);
     };
     InvestmentsDashboardComponent.prototype.setTotals = function (totalReturns) {
-        this.totalReturn += totalReturns.investmentReturn;
-        this.totalInvestment += totalReturns.investmentAmount;
+        console.log(this.totals);
+        this.totals[totalReturns.investmentId] = totalReturns;
+        this.totalReturn = 0;
+        this.totalInvestment = 0;
+        this.myTotalInvestment = 0;
+        this.myTotalReturn = 0;
+        for (var _i = 0, _a = Object.keys(this.totals); _i < _a.length; _i++) {
+            var investmentId = _a[_i];
+            this.totalReturn += this.totals[investmentId].investmentReturn;
+            this.totalInvestment += this.totals[investmentId].investmentAmount;
+            this.myTotalInvestment += this.totals[investmentId].myInvestmentAmount;
+            this.myTotalReturn += this.totals[investmentId].myInvestmentReturn;
+        }
     };
     /**
      * Removes the investment from the investments array and from the investmentUI array used in view
@@ -1767,11 +1786,23 @@ var InvestmentsDashboardComponent = (function () {
             var _loop_1 = function (investment) {
                 //update totals and break loop
                 if (investment.id === deletedId) {
+                    //get my portion in the investment
+                    var myPortion_1 = 0;
+                    for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
+                        var portion = _a[_i];
+                        if (this_1.user.email === portion.email) {
+                            myPortion_1 = portion.percentage;
+                            break;
+                        }
+                    }
+                    console.log(myPortion_1);
                     var currencyInvestment_1 = investment;
                     if (currencyInvestment_1.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CURRENCY) {
                         this_1.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
-                            _this.totalReturn -= currencyInvestment_1.amount * (currencyRates[currencyInvestment_1.unit] || 1);
-                            _this.totalInvestment -= _this.currencyExchangeService.getUsdValueOf(currencyInvestment_1.investmentAmount, currencyInvestment_1.investmentAmountUnit);
+                            var investmentReturn = currencyInvestment_1.amount * (currencyRates[currencyInvestment_1.unit] || 1);
+                            var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_1.investmentAmount, currencyInvestment_1.investmentAmountUnit);
+                            _this.totalReturn -= investmentReturn;
+                            _this.totalInvestment -= investmentAmount;
                         }, function (error) {
                             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
                             _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
@@ -1779,8 +1810,12 @@ var InvestmentsDashboardComponent = (function () {
                     }
                     else if (investment.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CRYPTO) {
                         this_1.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).take(1).subscribe(function (rates) {
-                            _this.totalReturn -= currencyInvestment_1.amount * rates.price;
-                            _this.totalInvestment -= _this.currencyExchangeService.getUsdValueOf(currencyInvestment_1.investmentAmount, currencyInvestment_1.investmentAmountUnit);
+                            var investmentReturn = currencyInvestment_1.amount * rates.price;
+                            var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_1.investmentAmount, currencyInvestment_1.investmentAmountUnit);
+                            _this.totalReturn -= investmentReturn;
+                            _this.totalInvestment -= investmentAmount;
+                            _this.myTotalReturn -= investmentReturn * myPortion_1;
+                            _this.myTotalInvestment -= investmentAmount * myPortion_1;
                         }, function (error) {
                             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_1.unit + " rates data > ", error);
                             _this.appService.showResults("There was an error trying to get " + currencyInvestment_1.unit + " rates data, please try again in a few minutes.", 'error');

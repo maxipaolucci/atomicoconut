@@ -78,10 +78,6 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
           this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
           this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
           this.investmentReturn = this.currentPrice * this.investment.amount;
-          this.totalReturns.emit({
-            investmentAmount : this.investmentAmount,
-            investmentReturn : this.investmentReturn
-          });
 
           return this.teams$;
         }
@@ -132,10 +128,11 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     
     //set totals to emit to parent component
     let totals = {
+      investmentId : this.investment.id,
       investmentAmount : this.investmentAmount,
       investmentReturn : this.investmentReturn,
-      myInvestmentAmount : 0,
-      myInvestmentReturn : 0
+      myInvestmentAmount : this.investmentAmount,
+      myInvestmentReturn : this.investmentReturn
     };
 
     if (this.team) {

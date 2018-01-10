@@ -34,6 +34,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   totalReturn = 0;
   myTotalInvestment = 0;
   myTotalReturn = 0;
+  totals : any = {};
   user : User = null;
   subscription : Subscription = new Subscription();
   getInvestmentsServiceRunning : boolean = false;
@@ -152,10 +153,20 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   }
 
   setTotals(totalReturns : any) : void {
-    this.totalReturn += totalReturns.investmentReturn;
-    this.totalInvestment += totalReturns.investmentAmount;
-    this.myTotalInvestment += totalReturns.myInvestmentAmount;
-    this.myTotalReturn += totalReturns.myInvestmentReturn;
+    console.log(this.totals);
+    this.totals[totalReturns.investmentId] = totalReturns;
+
+    this.totalReturn = 0;
+    this.totalInvestment = 0;
+    this.myTotalInvestment = 0;
+    this.myTotalReturn = 0;
+    for (let investmentId of Object.keys(this.totals)) {
+      this.totalReturn += this.totals[investmentId].investmentReturn;
+      this.totalInvestment += this.totals[investmentId].investmentAmount;
+      this.myTotalInvestment += this.totals[investmentId].myInvestmentAmount;
+      this.myTotalReturn += this.totals[investmentId].myInvestmentReturn;
+    }
+    
   }
 
   /**
@@ -169,6 +180,16 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
       for (let investment of this.investments) {
         //update totals and break loop
         if (investment.id === deletedId) {
+          //get my portion in the investment
+          let myPortion = 0;
+          for (let portion of investment.investmentDistribution) {
+            if (this.user.email === portion.email) {
+              myPortion = portion.percentage;
+              break;
+            }
+          }
+          console.log(myPortion);
+
           let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
           if (currencyInvestment.type === INVESTMENTS_TYPES.CURRENCY) {
             this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
@@ -176,9 +197,6 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
               let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
               this.totalReturn -= investmentReturn;
               this.totalInvestment -= investmentAmount;
-              //TODO get my distribution from the distribution array an multiply by investment return and amount
-              //this.myTotalReturn -= investmentReturn * currencyInvestment.investmentDistribution
-              //this.myTotalInvestment -= ...;  
             },
             (error : any) => {
               this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
@@ -186,8 +204,12 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
             });
           } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
             this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
-              this.totalReturn -= currencyInvestment.amount * rates.price;
-              this.totalInvestment -= this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
+              let investmentReturn = currencyInvestment.amount * rates.price;
+              let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
+              this.totalReturn -= investmentReturn
+              this.totalInvestment -= investmentAmount;
+              this.myTotalReturn -= investmentReturn * myPortion;
+              this.myTotalInvestment -= investmentAmount * myPortion;  
             },
             (error : any) => {
               this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
