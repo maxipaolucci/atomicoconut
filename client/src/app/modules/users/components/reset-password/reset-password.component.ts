@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap  } from '@angular/router';
 
 import { UsersService } from '../../users.service';
-import {User} from '../../user';
+import {User} from '../../models/user';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
+import { AppService } from '../../../../app.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -16,7 +17,7 @@ export class ResetPasswordComponent implements OnInit {
   private token : string = '';
   public resetPasswordServiceRunning : boolean = false;
 
-  constructor(private usersService : UsersService, private router : Router, private route : ActivatedRoute,
+  constructor(private appService : AppService, private usersService : UsersService, private router : Router, private route : ActivatedRoute,
       private mainNavigatorService : MainNavigatorService ) { }
 
   ngOnInit() {
@@ -32,7 +33,7 @@ export class ResetPasswordComponent implements OnInit {
           if (token) {
             this.token = token;
           } else {
-            console.error(`${methodTrace} Token must be set to reset a password.`);
+            this.appService.consoleLog('error', `${methodTrace} Token must be set to reset a password.`);
             this.router.navigate(['/']);
           }
         });
@@ -44,28 +45,34 @@ export class ResetPasswordComponent implements OnInit {
 
     //chech that the password and the confirmed password are the same
     if (this.model.password !== this.model['password-confirm']) {
-      console.error(`${methodTrace} Confirm password must match password.`);
+      this.appService.consoleLog('error', `${methodTrace} Confirm password must match password.`);
 
       this.resetPasswordServiceRunning = false;
       return false;
     }
 
     //call the reset password service.
-    this.usersService.user = null; //reset authenticated user. Reset automatically authenticates the registered user.
+    this.usersService.setUser(null); //reset authenticated user. Reset automatically authenticates the registered user.
     this.usersService.reset(this.token, this.model).subscribe(
       (data : any) => {
         if (data) {
-          const user = new User(data.name, data.email, data.avatar, data.accessToInvestments);
-          this.usersService.user = user;
+          const user = new User(data.name, data.email, data.avatar, null, null, data.currency);
+          this.usersService.setUser(user);
+          this.appService.showResults('Your password was successfully updated!', 'success');
           this.router.navigate(['/']); //go home
         } else {
-          console.error(`${methodTrace} Unexpected data format.`)
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`)
         }
 
         this.resetPasswordServiceRunning = false;
       },
       (error : any) => {
-        console.error(`${methodTrace} There was an error with the reset password service > ${error}`);
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+        }
         this.resetPasswordServiceRunning = false;
       }
     );

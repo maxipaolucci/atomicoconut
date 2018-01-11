@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
   templateUrl: './equity.component.html',
   styleUrls: ['./equity.component.scss']
 })
-export class EquityComponent implements OnInit {
+export class EquityComponent implements OnInit, AfterViewInit {
   @ViewChild('equityForm') form;
 
   public loanAmount : number = 0;

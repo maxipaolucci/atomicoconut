@@ -1,0 +1,71 @@
+<mat-card class="currency-card">
+  <mat-card-header>
+    <div mat-card-avatar class="header-image">
+        <img [src]="'/assets/images/' + investment.type + '/' + investment.unit + '.png'" [alt]="investment.type" />
+    </div>
+    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>
+    <mat-card-subtitle>
+      today at <strong>{{currentPrice | currency : 'USD' : false : '1.2-2'}}</strong>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="card__content">
+    Investment: <strong>{{investmentAmount | currency : 'USD' : false : '1.2-2' }}</strong> 
+    <br>
+
+    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : false : '1.2-2' }}
+
+    <div [class.color__accent]="investmentReturn >= investmentValueWhenBought" 
+        [class.color__red]="investmentReturn < investmentValueWhenBought">
+      <br>
+      ROI: <strong>{{ investmentReturn | currency : 'USD' : false : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)
+    </div>
+
+    <!-- Team -->
+    <mat-expansion-panel *ngIf="team" class="team-panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{team.name}}
+        </mat-panel-title>
+        <mat-panel-description>
+          
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      
+      <div fxLayout="column" fxLayoutGap="10px" class="team-panel__content">
+
+        <section class="members" fxLayout="column" fxLayoutGap="10px">
+          <div *ngFor="let portion of investmentDistribution" fxLayout="row" fxLayoutGap="10px" class="member">
+            <img class="member__avatar" [src]="portion.member.avatar"/>
+            <div fxFlex class="member__info" fxLayout="column">
+              <p class="member__name">{{portion.member.name}}</p>
+              <!-- <p class="member__email">{{member.email}}</p> -->
+              <div class="member__money" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between end">
+                <p>{{ portion.percentage }}%</p>
+                <p>{{ portion.money | currency : 'USD' : false : '1.2-2' }}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+    </mat-expansion-panel>
+    <!-- EOF Team -->
+
+    <section class="actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
+      <button *ngIf="!actionRunning" mat-mini-fab routerLink="/investments/crypto/edit/{{investment.id}}" color="primary" (click)="actionRunning = true">
+        <mat-icon aria-label="Edit Investment">edit</mat-icon>
+      </button>
+
+      <button *ngIf="!actionRunning" mat-mini-fab color="warn" (click)="openDeleteDialog()">
+        <mat-icon aria-label="Delete investment">delete</mat-icon>
+      </button>
+
+      <mat-progress-spinner *ngIf="actionRunning"
+        class="progress-spinner progress-spinner--action"
+        color="warn"
+        [diameter]="40" [strokeWidth]="7"
+        mode="indeterminate">
+      </mat-progress-spinner>
+    </section>
+  </mat-card-content>
+</mat-card>

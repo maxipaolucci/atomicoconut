@@ -1,0 +1,40 @@
+<form class="form__container form__account-personal" #personalInfoForm="ngForm" (ngSubmit)="onSubmit()" novalidate fxLayout="column" fxLayoutGap="10px" >
+  
+    <section fxLayout="column" fxLayoutAlign.gt-xs="center center" class="form__fields">
+      <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
+        
+        <!-- Birthday -->
+        <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
+          <input 
+              placeholder="Day of birth"
+              id="birthday"
+              name="birthday"
+              readonly
+              required
+              #birthday="ngModel"
+              matInput 
+              [(ngModel)]="model.birthday" 
+              [matDatepicker]="pickerBirthday"
+              (click)="pickerBirthday.open()">
+          <mat-datepicker-toggle matSuffix [for]="pickerBirthday"></mat-datepicker-toggle>
+          <mat-datepicker [touchUi]="utilService.isGtSm() ? false : true" #pickerBirthday startView="year" [startAt]="startAt"></mat-datepicker>
+          <mat-error *ngIf="birthday.invalid && (birthday.dirty || birthday.touched) && birthday.errors.matDatepickerParse">Day of birth is invalid or not follow the pattern "mm/dd/yyyy"</mat-error>
+        </mat-form-field>
+      </div>
+    </section>
+    
+    <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--account-personal">
+      <button *ngIf="!accountPersonalServiceRunning" 
+          class="form__action mat-raised-button" 
+          mat-raised-button 
+          type="submit" 
+          color="accent" 
+          [disabled]="!personalInfoForm.form.valid">Save</button>
+      
+      <mat-progress-bar *ngIf="accountPersonalServiceRunning"
+          class="progress-bar progress-bar--account-personal"
+          color="primary"
+          mode="indeterminate">
+      </mat-progress-bar>
+    </section>
+  </form>

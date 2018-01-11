@@ -2,13 +2,30 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 import {Observable} from "rxjs/Rx";
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { environment } from '../environments/environment';
+import { SnackbarSimpleComponent } from './modules/shared/components/snackbar-simple/snackbar-simple.component';
 
 @Injectable()
 export class AppService {
 
-  constructor(private http : Http, public snackBar: MdSnackBar) {}
+  constructor(private http : Http, public snackBar: MatSnackBar) {}
+
+  /**
+   * Receives and object of paramameters and returns it in a querystring format
+   * @param {*} parameters . Object of parameters
+   * @return {string} result as querystring
+   */
+  public getParamsAsQuerystring(parameters : any = null) {
+    let strParams = '';
+    if (parameters && Object.keys(parameters).length) {
+      for (let key of Object.keys(parameters)) {
+        strParams += `&${key}=${parameters[key]}`;
+      }
+    }
+
+    return strParams.substring(1);
+  }
 
   /**
    * Extract data from a server response
@@ -45,18 +62,40 @@ export class AppService {
    * @param message . The text to show
    * @param duration . The duration in milliseconds . Optional
    * @param actionName . An action name to close the message on click. Optional
+   * 
+   * @return {MatSnackBar} . The snackbar ref
    */
-  showResults(message : string, duration : number = 5000, actionName : string = '') {
-    let snackBarRef = this.snackBar.open(message, actionName ? actionName : null, {
+  showResults(message : string, type : string = 'info', duration : number = 5000) : any {
+    let snackBarRef = this.snackBar.openFromComponent(SnackbarSimpleComponent, {
+      data : {
+        type,
+        message
+      },
       duration,
-      extraClasses: ['snack-bar--simple']
+      extraClasses : ['snackbar--simple', `snackbar--${type}`]
     });
 
-    snackBarRef.onAction().subscribe(() => {
-      if (snackBarRef.instance.action === 'Close') {
-        snackBarRef.dismiss();
-      }
-    });
+    return snackBarRef;
+  }
+
+  /**
+   * Shows multiple messages in snackbar component one after another
+   * @param {any[]} messages . The array of messages to show
+   * @param {number} index . The index where to start iterating the messages array
+   * 
+   * @return {MatSnackBar} . The snackbar Ref
+   */
+  showManyResults(messages : any[], index : number = 0) {
+    let snackBarRef = null;
+    if (index < messages.length) {
+      snackBarRef = this.showResults(messages[index].message, messages[index].type, messages[index].duration);
+
+      snackBarRef.afterDismissed().subscribe(() => {
+        this.showManyResults(messages, index += 1);
+      });
+    } else {
+      return snackBarRef;
+    }
   }
 
   /**

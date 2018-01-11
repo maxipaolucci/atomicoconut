@@ -57,6 +57,7 @@ app.use((req, res, next) => {
   res.locals.flashes = req.flash();
   res.locals.user = req.user || null;
   res.locals.currentPath = req.path;
+  res.locals.environment = process.env.NODE_ENV;
   next();
 });
 
@@ -67,11 +68,11 @@ app.use((req, res, next) => {
 });
 
 //allow cross origin requests
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 // After allllll that above middleware, we finally handle our own routes!
 app.use('/', routes);

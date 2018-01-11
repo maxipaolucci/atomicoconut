@@ -21,8 +21,27 @@ const userSchema = new Schema({
     required: 'Please supply a name',
     trim: true
   },
+  currency: {
+    type: String,
+    default : 'USD',
+    trim: true
+  },
   resetPasswordToken : String,
-  resetPasswordExpires : Date
+  resetPasswordExpires : Date,
+  personalInfo : {
+    type : mongoose.Schema.ObjectId,
+    ref : 'PersonalInfo',
+    default: null  
+  },
+  financialInfo : {
+    type : mongoose.Schema.ObjectId,
+    ref : 'FinancialInfo',
+    default: null  
+  },
+  teamUsers : [{
+    type : mongoose.Schema.ObjectId,
+    ref : 'TeamUser'
+  }]
 });
 
 
@@ -41,5 +60,22 @@ userSchema.plugin(passportLocalMongoose, { usernameField: 'email' }); //this plu
 userSchema.plugin(mongodbErrorHandler); //this make mongoDB errors show a more comprensible message. 
                                         //We use it here cause when i.e. unique validation fails the 
                                         //error is pretty hard to understand. This plugin helps on that.
+
+
+userSchema.statics.findOneAndPopulate = function(findByFields, fieldsToPopulate = {}) {
+  let fieldsToPopulateStr = '';
+
+  if (fieldsToPopulate && Object.keys(fieldsToPopulate).length) {
+    for (let key of Object.keys(fieldsToPopulate)) {
+      if (fieldsToPopulate[key] === 'true') {
+        fieldsToPopulateStr += ` ${key}`;
+      }
+    }
+    
+    return this.findOne(findByFields).populate(fieldsToPopulateStr.substring(1));
+  } 
+  
+  return this.findOne(findByFields);
+};
 
 module.exports = mongoose.model('User', userSchema); //Mongo stores a table called "users" in the DB (it lowecase the model name and add an s automatically at the end)

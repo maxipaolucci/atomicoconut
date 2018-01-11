@@ -1,7 +1,22 @@
+@import '../../../../../variables';
+
+
+.progress-bar--get-investments {
+  width: 100%;
+}
+
 .totals-card {
   text-align: center;
 
   md-card-content p {
     margin-bottom: 0;
+  }
+}
+
+
+@media screen and (min-width: $screenGtXs) {
+
+  .progress-bar--get-investments {
+    width: 300px;
   }
 }

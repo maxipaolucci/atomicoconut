@@ -9,20 +9,11 @@ head
   link(rel="icon" type="image/x-icon" href="/app/favicon.ico")
   link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
   link(href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet")
-  link(href="/app/styles.bundle.css" rel="stylesheet")
+  if locals.environment == 'production'
+    link(href="/app/styles.bundle.css" rel="stylesheet")
 
-  body.mat-app-background
-    block messages
-      if locals.flashes
-        .inner
-          .flash-messages
-            - const categories = Object.keys(locals.flashes)
-            each category in categories
-              each message in flashes[category]
-                .flash(class=`flash--${category}`)
-                  p.flash__text!= message
-                  button.flash__remove(onClick="this.parentElement.remove()") &times;
-                  
+  body.mat-app-background.mat-typography
+    
     block content
   
     block scripts
@@ -32,6 +23,7 @@ head
       //- these are all the client app resources
       script(type="text/javascript" src="/app/inline.bundle.js")
       script(type="text/javascript" src="/app/polyfills.bundle.js")
-      //- script(type="text/javascript" src="/app/styles.bundle.js")
+      if locals.environment == 'development'
+        script(type="text/javascript" src="/app/styles.bundle.js")
       script(type="text/javascript" src="/app/vendor.bundle.js")
       script(type="text/javascript" src="/app/main.bundle.js")

@@ -1,41 +1,57 @@
 .form__container {
   
+  .form__fields__row__container {
+
+    .title {
+      margin-top : 20px;
+    }
+
+    &:first-child {
+
+      .title {
+        margin-top : 0;
+      }
+    }
+  }
+
   .form__fields {
 
-      .form__field {
+    .form__field {
+      width: 100%;
+
+      .mat-input-flex {
+        //this is the input element
+
+        .mat-input-placeholder-wrapper .mat-input-placeholder {
+          color: #ffffff;
+        }
+      }
+      
+      .mat-input-underline {
+        //this is the line below the input
+        bottom: auto;
+      }
+      .mat-input-subscript-wrapper {
+        //this is the errors zone
+        position: relative;
+      }
+
+      &.mat-focused {
 
         .mat-input-flex {
           //this is the input element
 
           .mat-input-placeholder-wrapper .mat-input-placeholder {
-            transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px)
-          }
-        }
-        
-        .mat-input-underline {
-          //this is the line below the input
-          bottom: auto;
-        }
-        .mat-input-subscript-wrapper {
-          //this is the errors zone
-          position: relative;
-        }
-
-        &.mat-focused {
-
-          .mat-input-flex {
-            //this is the input element
-  
-            .mat-input-placeholder-wrapper .mat-input-placeholder {
-              color: $purpleFonts;
-            }
+            color: $purpleFonts;
+            transform: translateY(-1.28125em) scale(1) perspective(100px) translateZ(.001px);
           }
         }
       }
+    }
   }
 }
 
-@media screen and (min-width: $screen-gt-xs) {
+@media screen and (min-width: $screenGtXs) {
   
   .form__container {
     

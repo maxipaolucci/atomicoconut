@@ -1,0 +1,78 @@
+<div fxLayout="column" fxLayoutGap="10px" class="container__edit-currency-investment">
+    <form class="form__container form__edit-currency-investment" #editCurrencyInvestmentForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
+      
+      <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
+        <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="form__fields__row">
+            <currency-unit fxFlex fxFlex.gt-xs="200px"
+                [id]="'currencyInvestmentUnit'" 
+                [value]="model.unit"
+                [type]="model.type"
+                [hint]="'Choose the desired currency to invest on...'"
+                [placeHolder]="'Desired currency'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+
+            <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
+              <input matInput type="number" id="amount" name="amount" placeholder="Amount"
+                  [(ngModel)]="model.amount" 
+                  [value]="model.amount"
+                  numberValidator='{"maxFractionDigits": 8}' 
+                  required
+                  #amount="ngModel">
+              <mat-hint align="start">Set the buying amount.</mat-hint>
+              <mat-error *ngIf="amount.invalid && (amount.dirty || amount.touched) && amount.errors.required">Amount is required.</mat-error>
+              <mat-error *ngIf="amount.invalid && (amount.dirty || amount.touched) && amount.errors.numberValidator">Value must be numeric, with no more than 8 decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="form__fields__row">
+            <!-- Buying date -->
+            <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+              <input placeholder="Buying date"
+                  id="buyingDate"
+                  name="buyingDate"
+                  readonly
+                  required
+                  #buyingDate="ngModel"
+                  matInput 
+                  [(ngModel)]="model.buyingDate" 
+                  [matDatepicker]="pickerBuyingDate"
+                  (click)="pickerBuyingDate.open()">
+              <mat-datepicker-toggle matSuffix [for]="pickerBuyingDate"></mat-datepicker-toggle>
+              <mat-datepicker [touchUi]="utilService.isGtSm() ? false : true" #pickerBuyingDate></mat-datepicker>
+              <mat-error *ngIf="buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.required">Buying date is required.</mat-error>
+              <mat-error *ngIf="buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.matDatepickerParse">Buying date is invalid or not follows the pattern "mm/dd/yyyy"</mat-error>
+            </mat-form-field>
+
+            <div fxLayout="row" fxLayoutGap="10px">
+              <!-- Buying price unit -->
+              <currency-unit fxFlex="50px"
+                  [id]="'buyingPriceUnit'" 
+                  [view]="'narrow'"
+                  [value]="model.buyingPriceUnit"
+                  (newValue)="onCurrencyUnitChange($event)">
+              </currency-unit>
+
+              <!-- Buying price -->
+              <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
+                <input matInput type="number" id="buyingPrice" name="buyingPrice" placeholder="Price"
+                    [(ngModel)]="model.buyingPrice" 
+                    [value]="model.buyingPrice"
+                    numberValidator 
+                    required
+                    #buyingPrice="ngModel">
+                <mat-hint align="start">Price on buying date.</mat-hint>
+                <mat-error *ngIf="buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.required">Buying price is required.</mat-error>
+                <mat-error *ngIf="buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+              </mat-form-field>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+    </form>
+  </div>
+  

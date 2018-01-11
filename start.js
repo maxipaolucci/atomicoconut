@@ -11,11 +11,7 @@ if (major < 7 || (major === 7 && minor <= 5)) {
 require('dotenv').config({ path: 'variables.env' });
 
 // Connect to our Database and handle an bad connections
-if (process.env.NODE_ENV === 'development') {
-  mongoose.connect(process.env.DATABASE);
-} else if (process.env.NODE_ENV === 'production') {
-  mongoose.connect(process.env.DATABASE_PROD);
-}
+mongoose.connect(process.env.DATABASE);
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection.on('error', (err) => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
@@ -24,7 +20,12 @@ mongoose.connection.on('error', (err) => {
 // READY?! Let's go!
 // import all of our models
 require('./models/User');
-
+require('./models/PersonalInfo');
+require('./models/FinancialInfo');
+require('./models/Team');
+require('./models/Team_User');
+require('./models/Investment');
+require('./models/CurrencyInvestment');
 
 // Start our app!
 const app = require('./app');

@@ -1,0 +1,81 @@
+<form class="form__container form__account-finance" (ngSubmit)="onSubmit()" #financeForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
+
+  <section fxLayout="column" fxLayoutAlign.gt-xs="center center" class="form__fields">
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
+      <!-- Active income -->
+      <div fxLayout="row" fxLayoutGap="10px">
+        <currency-unit fxFlex="50px"
+            [id]="'annualIncomeUnit'" 
+            [value]="model.annualIncomeUnit"
+            [view]="'narrow'"
+            (newValue)="onCurrencyUnitChange($event)">
+        </currency-unit>
+        
+        <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
+          <input matInput type="number" id="annualIncome" name="annualIncome" placeholder="Annual Income"
+              [(ngModel)]="model.annualIncome" 
+              value="model.annualIncome"
+              numberValidator 
+              #annualIncome="ngModel">
+          <mat-hint align="start">Annual income amount pre-tax.</mat-hint>
+          <mat-error *ngIf="annualIncome.invalid && (annualIncome.dirty || annualIncome.touched) && annualIncome.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+        </mat-form-field>
+        <!-- <pre>{{annualIncome.errors | json}}</pre> -->
+      </div>
+
+      <!-- Tax rate -->
+      <mat-form-field fxFlex fxFlex.gt-xs="150px" class="form__field">
+        <input matInput type="number" id="incomeTaxRate" name="incomeTaxRate" placeholder="Income tax rate (%)" 
+            [(ngModel)]="model.incomeTaxRate" 
+            value="model.incomeTaxRate"
+            numberValidator='{"min": 0, "max": 100}' 
+            #incomeTaxRate="ngModel">
+
+        <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+        <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
+        <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
+      </mat-form-field>
+      <!-- <pre>{{incomeTaxRate.errors | json}}</pre> -->
+    </div>
+
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
+      <!-- Savings -->
+      <div fxLayout="row" fxLayoutGap="10px">
+        <currency-unit fxFlex="50px"
+            [id]="'savingsUnit'" 
+            [value]="model.savingsUnit"
+            [view]="'narrow'"
+            (newValue)="onCurrencyUnitChange($event)">
+        </currency-unit>
+        
+        <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
+          <input matInput type="number" id="savings" name="savings" placeholder="Current savings" 
+              [(ngModel)]="model.savings" 
+              value="model.savings"
+              numberValidator
+              #savings="ngModel">
+
+          <mat-error *ngIf="savings.invalid && (savings.dirty || savings.touched) && savings.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex fxFlex.gt-xs="150px" class="form__spacer"></div>
+    </div>
+  </section>
+
+  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--account-finance">
+    <button *ngIf="!accountFinanceServiceRunning" 
+        class="form__action mat-raised-button" 
+        mat-raised-button 
+        type="submit" 
+        color="accent" 
+        [disabled]="!financeForm.form.valid">Save</button>
+    
+    <mat-progress-bar *ngIf="accountFinanceServiceRunning"
+        class="progress-bar progress-bar--account-finance"
+        color="primary"
+        mode="indeterminate">
+    </mat-progress-bar>
+  </section>
+
+</form>

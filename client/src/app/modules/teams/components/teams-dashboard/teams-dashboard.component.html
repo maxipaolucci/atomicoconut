@@ -1,0 +1,70 @@
+<div fxLayout="column" fxLayoutGap="10px" class="container__teams">
+  <section fxLayoutWrap 
+      fxLayout="row" fxLayout.xs="column" 
+      fxLayoutGap.xs="10px" 
+      fxLayoutAlign="space-around center" fxLayoutAlign.xs="none none" >
+    
+    <div *ngIf="!teams.length && !getTeamsServiceRunning" fxFlexAlign="center">You are not member of any team yet.</div>
+    <!-- Team Cards -->
+    <mat-expansion-panel *ngFor="let team of teams; index as teamIndex"
+        fxFlex.sm="45" fxFlex.gt-sm="30" 
+        class="team-card">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{team.name}}
+        </mat-panel-title>
+        <mat-panel-description>
+          
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      
+      <div fxLayout="column" fxLayoutGap="10px" class="team-card__content">
+        <section *ngIf="team.description" class="description">
+          <p>{{team.description}}</p>
+        </section>
+
+        <section class="members" fxLayout="column" fxLayoutGap="10px">
+          <div *ngFor="let member of team.members" fxLayout="row" fxLayoutGap="10px" class="member">
+            <img class="member__avatar" [src]="member.avatar"/>
+            <div class="member__info" fxLayout="column" [matTooltip]="member.email === team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
+              <p class="member__name">{{member.name}} <mat-icon *ngIf="member.email === team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
+              <p class="member__email">{{member.email}}</p>
+            </div>
+          </div>
+        </section>
+
+        <section *ngIf="team.admin.email === user.email" class="actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
+          <button *ngIf="!teamActionRunning[teamIndex]" mat-mini-fab routerLink="/teams/edit/{{team.slug}}" color="primary" (click)="teamActionRunning[teamIndex] = true">
+            <mat-icon aria-label="Edit team">edit</mat-icon>
+          </button>
+
+          <button *ngIf="!teamActionRunning[teamIndex]" mat-mini-fab color="warn" (click)="openDeleteTeamDialog(teamIndex, team)">
+            <mat-icon aria-label="Delete team">delete</mat-icon>
+          </button>
+
+          <mat-progress-spinner *ngIf="teamActionRunning[teamIndex]"
+            class="progress-spinner progress-spinner--delete-team"
+            color="warn"
+            [diameter]="40" [strokeWidth]="7"
+            mode="indeterminate">
+          </mat-progress-spinner>
+        </section>
+      </div>
+      
+    </mat-expansion-panel>
+    <!-- EOF Team Cards -->
+  </section>
+
+  <mat-progress-bar *ngIf="getTeamsServiceRunning"
+      fxFlexAlign="center"
+      class="progress-bar progress-bar--get-teams"
+      color="primary"
+      mode="indeterminate">
+  </mat-progress-bar>
+
+  <section fxLayout="column" fxLayoutAlign="start end">
+    <button mat-fab routerLink="create" color="accent">
+      <mat-icon class="mat-24" aria-label="Create team">group_add</mat-icon>
+    </button>
+  </section>
+</div>

@@ -1,9 +1,16 @@
 //Breakpoints
-$screen-gt-xs: 600px;
+$screenGtXs: 600px;
 
 
 //Colors
-$purple : #7b1fa2;
+$primary: #7b1fa2;
+$secondary: rgb(156, 39, 176);
+$accent: #69f0ae;
+$warn : #f44336;
+$purple : $primary;
 $purpleFonts : #C352F3;
 $green: #28FE7C;
-$red: #FE2048;
+$red: #ff5271;
+$lightOrange : rgba(255, 187, 0, 0.87);
+$almostWhite : rgba(255,255,255,.87);
+$almostBlack : rgba(0,0,0,.87);

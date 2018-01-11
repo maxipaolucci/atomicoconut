@@ -1,61 +1,67 @@
-<div *ngIf="showInvestments" fxLayout="column" fxLayoutGap="10px">
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
-    <crypto-currency fxFlex 
-      [cryptoCurrency]="'xmr'"
-      [cryptoCurrencyCount]="218.85627651"
-      [cryptoCurrencyBuyPrice]="50"
-      [cryptoCurrencyBuyDate]="xmrBuyDate"
-      (totalReturns)="setTotals($event)">
-    </crypto-currency>
+<div fxLayout="column" fxLayoutGap="10px" class="container__investments">
+  <section *ngIf="!getInvestmentsServiceRunning && investments.length" fxLayout="column" fxLayoutGap="10px">
+    
+    <div *ngFor="let row of investmentsUI" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
+      <currency-investment *ngFor="let investment of row" fxFlex fxFlex.gt-xs="50"
+        [investment]="investment"
+        [teams]="teams"
+        (totalReturns)="setTotals($event)"
+        (deletedId)="removeInvestment($event)">
+      </currency-investment>
+    </div>
 
-    <crypto-currency fxFlex
-      [cryptoCurrency]="'btc'"
-      [cryptoCurrencyCount]="1.28129356"
-      [cryptoCurrencyBuyPrice]="2359.99"
-      [cryptoCurrencyBuyDate]="btcBuyDate"
-      (totalReturns)="setTotals($event)">
-    </crypto-currency>
-  </div>
+    <mat-card fxFlex class="totals-card">
+      <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
+        <!-- Totals -->
+        <div *ngIf="!myTotals.checked" fxFlex fxFlex.xs="none" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="space-around center">
+          <p>Total investments: <strong>{{totalInvestment | currency }}</strong></p>
+          <p [class.color__accent]="totalReturn >= totalInvestment" 
+              [class.color__red]="totalReturn < totalInvestment">
+            Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
+          </p>
+        </div>
 
-  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
-    <crypto-currency fxFlex 
-      [cryptoCurrency]="'xmr'"
-      [cryptoCurrencyCount]="5.94093753"
-      [cryptoCurrencyBuyPrice]="87.5282"
-      [cryptoCurrencyBuyDate]="xmrBuyDate2"
-      (totalReturns)="setTotals($event)">
-    </crypto-currency>
+        <!-- My totals -->
+        <div *ngIf="myTotals.checked" fxFlex fxFlex.xs="none" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="space-around center">
+          <p>My total investments: <strong>{{myTotalInvestment | currency }}</strong></p>
+          <p [class.color__accent]="myTotalReturn >= myTotalInvestment" 
+              [class.color__red]="myTotalReturn < myTotalInvestment">
+            My total ROI: <strong>{{ myTotalReturn | currency }}</strong> ({{myTotalReturn / myTotalInvestment * 100 | number : '1.1-2'}}%)
+          </p>
+        </div>
 
-    <crypto-currency fxFlex 
-      [cryptoCurrency]="'xmr'"
-      [cryptoCurrencyCount]="5.72806551"
-      [cryptoCurrencyBuyPrice]="90.9556"
-      [cryptoCurrencyBuyDate]="xmrBuyDate3"
-      (totalReturns)="setTotals($event)">
-    </crypto-currency>
-  </div>
+        <!-- Totals switcher -->
+        <mat-slide-toggle fxFlexAlign.xs="center" color="accent" class="form__field form__field__toogle" [checked]="false" #myTotals>
+          My totals
+        </mat-slide-toggle>
 
-  <md-card fxFlex class="totals-card">
-    <md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
-        fxLayoutAlign="space-around center">
-      <p>Total Investments: <strong>{{totalInvestment | currency }}</strong></p>
-      <p [class.color__green]="totalReturn >= totalInvestment" 
-          [class.color__red]="totalReturn < totalInvestment">
-        Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
-      </p>
-    </md-card-content>
-  </md-card>
-  
-</div>
+      </mat-card-content>
+    </mat-card>
 
-<div *ngIf="!showInvestments" fxLayout="column" fxLayoutGap="10px">
-  <md-card fxFlex class="totals-card">
-    <md-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
-        fxLayoutAlign="space-around center">
-      <p>
-        You do not have any investment to show
-      </p>
-    </md-card-content>
-  </md-card>
-  
+  </section>
+
+  <section *ngIf="!getInvestmentsServiceRunning && !investments.length" fxLayout="column" fxLayoutGap="10px">
+    <mat-card fxFlex class="totals-card">
+      <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+          fxLayoutAlign="space-around center">
+        <p>
+          You do not have investments yet.
+        </p>
+      </mat-card-content>
+    </mat-card>
+    
+  </section>
+
+  <mat-progress-bar *ngIf="getInvestmentsServiceRunning"
+    fxFlexAlign="center"
+    class="progress-bar progress-bar--get-investments"
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-bar>
+
+  <section fxLayout="column" fxLayoutAlign="start end">
+    <button mat-fab class="mat-elevation-z12" color="accent" matTooltip="Create new investment" matTooltipPosition="left" (click)="openNewInvestmentDialog()">
+      <mat-icon aria-label="Create new investemt">add</mat-icon>
+    </button>
+  </section>
 </div>

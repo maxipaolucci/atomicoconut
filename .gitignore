@@ -57,6 +57,9 @@ node_modules
 # variables
 variables.env
 
+# data
+data/**/*
+
 # Public folder
 public/app/index.html
 public/uploads/*

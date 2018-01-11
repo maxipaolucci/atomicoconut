@@ -6,7 +6,11 @@
 
 
 body {
-    color: rgba(255,255,255,.87);
+    color: $almostWhite;
+
+    &.mat-typography p {
+        margin: 0;
+    }
 }
 
 .ac__link {
@@ -21,7 +25,7 @@ body {
     color: $red;
 }
 
-.color__purple {
+.color__purple, .color__primary {
     color : $purple;
 }
 
@@ -30,5 +34,17 @@ body {
 }
 
 .color__almost-white {
-    color: rgba(255,255,255,.87);
+    color: $almostWhite;
+}
+
+.color__accent {
+    color: $accent;
+}
+
+.color__secondary {
+    color: $secondary
+}
+
+p {
+    margin: 0;
 }

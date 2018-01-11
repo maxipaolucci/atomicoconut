@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
-import {User} from '../../user';
+import {User} from '../../models/user';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.route.paramMap.map((params: ParamMap) => params.get('state'))
         .subscribe(state => {
           if (state === 'reset-password-token-expired') {
-            this.appService.showResults('Reset password url has expired or is invalid. Please go to Forgot my password again to create a new one.', 5000);
+            this.appService.showResults('Reset password token has expired or is invalid. Click on "Forgot my password" again to create a new one.', 'error', 10000);
           }
         });
   }
@@ -43,26 +43,29 @@ export class LoginComponent implements OnInit {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
 
     this.loginServiceRunning = true;
-    this.usersService.user = null; //reset authenticated user. Register automatically authenticates the registered user.
+    this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
     //call the register service
     this.usersService.login(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
-          const user = new User(data.name, data.email, data.avatar, data.accessToInvestments);
-          this.usersService.user = user;
+          const user = new User(data.name, data.email, data.avatar, null, null, data.currency);
+          this.usersService.setUser(user);
           const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
           this.usersService.routerRedirectUrl = null;
           this.router.navigate([redirectUrl]); //go home
         } else {
-          console.error(`${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
           this.loginServiceRunning = false;
         }
       },
       (error : any) => {
-        console.error(`${methodTrace} There was an error with the login service: `, error);
-
-        if (error.codeno === 451) {
-          this.appService.showResults(error.msg, 60000, 'Close');
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else if (error.codeno === 451) {
+          this.appService.showResults(error.msg, 'error');
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
         }
 
         this.loginServiceRunning = false;
@@ -81,19 +84,19 @@ export class LoginComponent implements OnInit {
     this.usersService.forgot(this.forgotModel).subscribe(
       (data : any) => {
         this.forgotServiceRunning = false;
-        this.appService.showResults(`You have been emailed a password reset link.`);
+        this.appService.showResults(`You have been emailed a password reset link.`, 'info');
       },
       (error : any) => {
-        console.error(`${methodTrace} There was an error with the forgot password service: `, error);
-        this.forgotServiceRunning = false;
-        
-        if (error.codeno === 455) {
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else if (error.codeno === 455) {
           //invalid email
-          this.appService.showResults(error.msg, 3000);
-        } else if (error.codeno === 400) {
-          //the mail system failed for external reasons
-          this.appService.showResults(`There was an issue sending the reset password email, please try again in a few minutes.`);
+          this.appService.showResults(error.msg, 'error');
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
         }
+        this.forgotServiceRunning = false;
       }
     );
   }

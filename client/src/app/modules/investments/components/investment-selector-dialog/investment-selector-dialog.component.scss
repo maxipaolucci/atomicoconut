@@ -1,0 +1,27 @@
+@import '../../../../../variables';
+
+:host {
+  text-align: center;
+  
+  .selector__investment-type {
+    .option__investment-type {
+      padding: 10px;
+
+      img {
+        width: 50px;
+      }
+    }
+  }
+
+  @media screen and (min-width: $screenGtXs) {
+    
+    .selector__investment-type {
+      
+      .option__investment-type {
+        img {
+          width: 90px;
+        }
+      }
+    }
+  }
+}

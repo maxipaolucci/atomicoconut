@@ -1,0 +1,78 @@
+<div fxLayout="column" fxLayoutGap="10px" class="container__edit-team">
+  <form *ngIf="!getTeamServiceRunning" 
+      class="form__container form__edit-team" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editTeamForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
+    
+    <section fxLayout="column" class="form__fields">
+      <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" fxLayoutAlign.gt-xs="none end" class="form__fields__row">
+        <!-- Team name -->
+        <mat-form-field fxFlex class="form__field">
+          <input matInput type="tezt" id="name" name="name" placeholder="Team name" 
+              [(ngModel)]="model.name" 
+              value="model.name"
+              required
+              minlength="4"
+              #name="ngModel">
+          <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">Name is required</mat-error>
+          <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.minlength">Value must be longer than 3 characters</mat-error>
+        </mat-form-field>
+
+        <!-- Description -->
+        <mat-form-field fxFlex class="form__field">
+          <textarea matInput id="description" name="description" placeholder="Description"
+              [(ngModel)]="model.description" 
+              value="model.description"
+              #description="ngModel"></textarea>
+        </mat-form-field>
+      </div>
+    </section>
+
+    <section *ngIf="editMode" class="members" fxLayout="row" fxLayoutGap="10px" fxLayoutWrap>
+      <mat-card *ngFor="let member of team.members; index as memberIndex" class="member" [class.not-saved-yet]="!member.name && !member.avatar">
+        <mat-card-content fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="none center">
+          
+          <img *ngIf="member.avatar" class="member__avatar" [src]="member.avatar"/>
+          <mat-icon *ngIf="!member.avatar" class="member__avatar member__avatar--default">account_circle</mat-icon>
+          
+          <div class="member__info" fxLayout="column" [matTooltip]="member.email === team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
+            <p *ngIf="member.name" class="member__name">
+              {{member.name}}
+              <mat-icon *ngIf="member.email === team.admin.email" class="icon__admin" aria-label="Admin" >lock</mat-icon>
+            </p>
+            <p class="member__email">{{member.email}}</p>
+          </div>
+
+          <mat-icon *ngIf="member.email !== team.admin.email" matTooltip="Remove" class="icon__remove-member" (click)="removeMember(memberIndex)">clear</mat-icon>
+        </mat-card-content>
+      </mat-card>
+    </section>
+
+    <section *ngIf="editMode" class="add-members" fxLayout="column" fxLayoutAlign="start end">
+      <button mat-fab color="accent" type="button" (click)="openAddPersonDialog()">
+        <mat-icon aria-label="Add new member">person_add</mat-icon>
+      </button>
+    </section>
+
+    <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--edit-team">
+      <button *ngIf="!editTeamServiceRunning" 
+          class="form__action mat-raised-button" 
+          mat-raised-button 
+          type="submit" 
+          color="accent" 
+          [disabled]="!editTeamForm.form.valid">Save</button>
+      
+      <mat-progress-bar *ngIf="editTeamServiceRunning"
+          class="progress-bar progress-bar--edit-team"
+          color="primary"
+          mode="indeterminate">
+      </mat-progress-bar>
+    </section>
+    
+  </form>
+
+  <mat-progress-bar *ngIf="getTeamServiceRunning"
+      fxFlexAlign="center"
+      class="progress-bar progress-bar--get-team"
+      color="primary"
+      mode="indeterminate">
+  </mat-progress-bar>
+</div>

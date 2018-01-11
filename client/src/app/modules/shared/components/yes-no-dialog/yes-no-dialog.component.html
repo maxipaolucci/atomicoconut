@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+
+<mat-dialog-content>
+  <div fxLayout="column" class="container__yes-no-dialog">
+    {{data.message}}
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-around center">
+  <button mat-mini-fab color="warn" mat-dialog-close="no">
+    <mat-icon aria-label="No">clear</mat-icon>
+  </button>
+  <button mat-mini-fab color="accent" mat-dialog-close="yes">
+    <mat-icon aria-label="Yes">done</mat-icon>
+  </button>
+</mat-dialog-actions>

@@ -1,15 +1,63 @@
-snack-bar-container.snack-bar--simple {
-  background-color: $purple;
-}
 
-md-chip {
-  cursor: pointer;
 
-  &.mat-chip-selected {
-    cursor: default;
+snack-bar-container {
+  &.snack-bar--simple {
+    background-color: $purple;
+    color: $almostWhite;
+  }
+
+  &.snackbar--simple {
+    padding : 10px;
+    color: $almostWhite;
+  }
+
+  &.snackbar--success {
+    background-color: $accent;
+    color: $almostBlack;
+  }
+
+  &.snackbar--error {
+    background-color: $warn;
+  }
+
+  &.snackbar--warn {
+    background-color: $lightOrange;
+    color: $almostBlack;
+  }
+
+  &.snackbar--info {
+    background-color: $purple;
   }
 }
 
-md-card .mat-card-title.md-card-title--ac {
+mat-chip {
+  cursor: pointer !important;
+
+  &.mat-chip-selected {
+    cursor: default !important;
+  }
+}
+
+mat-card .mat-card-title.mat-card-title--ac {
   font-size: 18px;
+}
+
+mat-tab-group mat-tab-body {
+  margin-top: 10px;
+}
+
+mat-toolbar.mat-toolbar {
+  padding: 0;
+
+  mat-toolbar-row {
+    padding : 0 16px;
+
+    &.secondary-row {
+      background-color: $secondary;
+      font-size: 12px;
+      height: 30px;
+    }
+  }
+
+  
 }

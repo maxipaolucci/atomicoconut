@@ -8,8 +8,8 @@
       "root": "src",
       "outDir": "../public/app",
       "assets": [
-        { "glob": "**/*", "input": "./assets/", "output": "../assets/" },
-        { "glob": "favicon.ico", "input": "./", "output": "../" }
+        { "glob": "**/*", "input": "./assets/", "output": "./assets/" },
+        { "glob": "favicon.ico", "input": "./", "output": "./" }
       ],
       "index": "index.html",
       "main": "main.ts",

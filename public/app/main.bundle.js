@@ -1,1 +1,5617 @@
-webpackJsonp([1],{0:function(l,n,u){l.exports=u("cDNt")},cDNt:function(l,n,u){"use strict";function e(l){return Ol._43(0,[],null,null)}function r(l){return Ol._43(0,[(l()(),Ol._21(0,null,null,1,"app-welcome",[],null,null,null,e,Zl)),Ol._19(114688,null,0,El,[Gl],null,null)],function(l,n){l(n,1,0)},null)}function t(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(16384,[[3,4]],0,Jl._2,[],null,null),(l()(),Hl._41(null,["Name is required"]))],null,null)}function a(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(16384,[[3,4]],0,Jl._2,[],null,null),(l()(),Hl._41(null,["Name must contains more than 4 characters"]))],null,null)}function o(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(16384,[[9,4]],0,Jl._2,[],null,null),(l()(),Hl._41(null,["Email is required"]))],null,null)}function i(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(16384,[[9,4]],0,Jl._2,[],null,null),(l()(),Hl._41(null,["Email must be a valid email address"]))],null,null)}function _(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(16384,[[15,4]],0,Jl._2,[],null,null),(l()(),Hl._41(null,["Password is required"]))],null,null)}function s(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(16384,[[15,4]],0,Jl._2,[],null,null),(l()(),Hl._41(null,["Password must be longer than 3 characters"]))],null,null)}function c(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(16384,[[15,4]],0,Jl._2,[],null,null),(l()(),Hl._41(null,["Password must be shorter than 8 characters"]))],null,null)}function d(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(16384,[[21,4]],0,Jl._2,[],null,null),(l()(),Hl._41(null,["Confirm password is required"]))],null,null)}function m(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(16384,[[21,4]],0,Jl._2,[],null,null),(l()(),Hl._41(null,["Confirm password must be longer than 3 characters"]))],null,null)}function p(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(16384,[[21,4]],0,Jl._2,[],null,null),(l()(),Hl._41(null,["Confirm password must be shorter than 8 characters"]))],null,null)}function g(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(16384,[[21,4]],0,Jl._2,[],null,null),(l()(),Hl._41(null,["Confirm password must match password"]))],null,null)}function f(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,5,"button",[["class","form__action mat-raised-button mat-raised-button"],["color","accent"],["md-raised-button",""],["type","submit"]],[[8,"disabled",0]],null,null,Yl.t,Yl.e)),Hl._19(933888,null,0,Kl.a,[$l.a,Hl.B,Hl.C,Hl.q,Hl.P,Hl.Q],{classBase:[0,"classBase"]},null),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(180224,null,0,Jl.w,[Hl.Q,Hl.q,ln.L,Jl.g],{disabled:[0,"disabled"],color:[1,"color"]},null),Hl._19(16384,null,0,Jl._44,[],null,null),(l()(),Hl._41(0,["Create account"]))],function(l,n){l(n,1,0,"form__action mat-raised-button");l(n,3,0,!Hl._35(n.parent,2).form.valid,"accent")},function(l,n){l(n,0,0,Hl._35(n,3).disabled||null)})}function h(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,4,"md-progress-bar",[["aria-valuemax","100"],["aria-valuemin","0"],["class","progress-bar progress-bar--register mat-progress-bar"],["color","primary"],["mode","indeterminate"],["role","progressbar"]],[[2,"mat-primary",null],[2,"mat-accent",null],[2,"mat-warn",null],[1,"aria-valuenow",0],[1,"mode",0]],null,null,Yl.C,Yl.n)),Hl._19(933888,null,0,Kl.a,[$l.a,Hl.B,Hl.C,Hl.q,Hl.P,Hl.Q],{classBase:[0,"classBase"]},null),Hl._19(16384,null,0,Jl._35,[[2,Jl.j],Hl.q],null,null),Hl._19(49152,null,0,Jl._36,[],{color:[0,"color"],mode:[1,"mode"]},null),(l()(),Hl._41(null,["\n  "]))],function(l,n){l(n,1,0,"progress-bar progress-bar--register");l(n,3,0,"primary","indeterminate")},function(l,n){l(n,0,0,"primary"==Hl._35(n,3).color,"accent"==Hl._35(n,3).color,"warn"==Hl._35(n,3).color,Hl._35(n,3).value,Hl._35(n,3).mode)})}function y(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,172,"form",[["class","form__container"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,r=l.component;if("submit"===n){e=!1!==Hl._35(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==Hl._35(l,2).onReset()&&e}if("ngSubmit"===n){e=!1!==r.onSubmit()&&e}return e},null,null)),Hl._19(16384,null,0,nn.t,[],null,null),Hl._19(16384,[["registerForm",4]],0,nn.n,[[8,null],[8,null]],null,{ngSubmit:"ngSubmit"}),Hl._38(2048,null,nn.b,null,[nn.n]),Hl._19(16384,null,0,nn.m,[nn.b],null,null),Hl._19(737280,null,0,un.a,[$l.a,Hl.q,Hl.Q],{layout:[0,"layout"]},null),Hl._19(1720320,null,0,en.a,[$l.a,Hl.q,Hl.Q,[2,un.a]],{gap:[0,"gap"]},null),Hl._19(933888,null,0,Kl.a,[$l.a,Hl.B,Hl.C,Hl.q,Hl.P,Hl.Q],{classBase:[0,"classBase"]},null),(l()(),Hl._41(null,["\n  \n  "])),(l()(),Hl._21(0,null,null,149,"div",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),Hl._19(737280,null,0,un.a,[$l.a,Hl.q,Hl.Q],{layout:[0,"layout"]},null),Hl._19(933888,null,0,Kl.a,[$l.a,Hl.B,Hl.C,Hl.q,Hl.P,Hl.Q],{classBase:[0,"classBase"]},null),(l()(),Hl._41(null,["\n    "])),(l()(),Hl._21(0,null,null,64,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),Hl._19(737280,null,0,un.a,[$l.a,Hl.q,Hl.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),Hl._19(1720320,null,0,en.a,[$l.a,Hl.q,Hl.Q,[2,un.a]],{gapGtSm:[0,"gapGtSm"]},null),Hl._19(933888,null,0,Kl.a,[$l.a,Hl.B,Hl.C,Hl.q,Hl.P,Hl.Q],{classBase:[0,"classBase"]},null),(l()(),Hl._41(null,["\n      "])),(l()(),Hl._41(null,["\n      "])),(l()(),Hl._21(0,null,null,27,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Hl._35(l,22)._focusInput()&&e}return e},Yl.z,Yl.k)),Hl._19(737280,null,0,rn.a,[$l.a,Hl.q,Hl.Q,[3,un.a],[3,tn.a]],{flex:[0,"flex"]},null),Hl._19(933888,null,0,Kl.a,[$l.a,Hl.B,Hl.C,Hl.q,Hl.P,Hl.Q],{classBase:[0,"classBase"]},null),Hl._19(7389184,null,6,Jl._16,[Hl.q,Hl.j,[2,Jl.o]],null,null),Hl._39(335544320,1,{_mdInputChild:0}),Hl._39(335544320,2,{_placeholderChild:0}),Hl._39(603979776,3,{_errorChildren:1}),Hl._39(603979776,4,{_hintChildren:1}),Hl._39(603979776,5,{_prefixChildren:1}),Hl._39(603979776,6,{_suffixChildren:1}),(l()(),Hl._41(1,["\n        "])),(l()(),Hl._21(0,null,1,9,"input",[["class","mat-input-element"],["id","name"],["mdInput",""],["minlength","4"],["name","name"],["placeholder","Name"],["required",""],["type","text"]],[[1,"required",0],[1,"minlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Hl._35(l,31)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Hl._35(l,31).onTouched()&&e}if("compositionstart"===n){e=!1!==Hl._35(l,31)._compositionStart()&&e}if("compositionend"===n){e=!1!==Hl._35(l,31)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==Hl._35(l,39)._onBlur()&&e}if("focus"===n){e=!1!==Hl._35(l,39)._onFocus()&&e}if("input"===n){e=!1!==Hl._35(l,39)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.name=u)&&e}return e},null,null)),Hl._19(16384,null,0,nn.c,[Hl.Q,Hl.q,[2,nn.a]],null,null),Hl._19(16384,null,0,nn.p,[],{required:[0,"required"]},null),Hl._19(540672,null,0,nn.h,[],{minlength:[0,"minlength"]},null),Hl._38(1024,null,nn.i,function(l,n){return[l,n]},[nn.p,nn.h]),Hl._38(1024,null,nn.j,function(l){return[l]},[nn.c]),Hl._19(671744,[["name",4]],0,nn.o,[[2,nn.b],[2,nn.i],[8,null],[2,nn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Hl._38(2048,null,nn.k,null,[nn.o]),Hl._19(16384,null,0,nn.l,[nn.k],null,null),Hl._19(16384,[[1,4]],0,Jl._17,[Hl.q,Hl.Q,ln.L,[2,nn.k],[2,nn.n],[2,nn.e],[2,Jl.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),Hl._41(1,["\n\n        "])),(l()(),Hl._15(16777216,null,4,1,null,t)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(1,["\n        "])),(l()(),Hl._15(16777216,null,4,1,null,a)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(1,["\n      "])),(l()(),Hl._41(null,["\n      \n      "])),(l()(),Hl._41(null,["\n      "])),(l()(),Hl._21(0,null,null,27,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Hl._35(l,52)._focusInput()&&e}return e},Yl.z,Yl.k)),Hl._19(737280,null,0,rn.a,[$l.a,Hl.q,Hl.Q,[3,un.a],[3,tn.a]],{flex:[0,"flex"]},null),Hl._19(933888,null,0,Kl.a,[$l.a,Hl.B,Hl.C,Hl.q,Hl.P,Hl.Q],{classBase:[0,"classBase"]},null),Hl._19(7389184,null,6,Jl._16,[Hl.q,Hl.j,[2,Jl.o]],null,null),Hl._39(335544320,7,{_mdInputChild:0}),Hl._39(335544320,8,{_placeholderChild:0}),Hl._39(603979776,9,{_errorChildren:1}),Hl._39(603979776,10,{_hintChildren:1}),Hl._39(603979776,11,{_prefixChildren:1}),Hl._39(603979776,12,{_suffixChildren:1}),(l()(),Hl._41(1,["\n        "])),(l()(),Hl._21(0,null,1,9,"input",[["class","mat-input-element"],["email",""],["id","email"],["mdInput",""],["name","email"],["placeholder","Email address"],["required",""],["type","email"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Hl._35(l,61)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Hl._35(l,61).onTouched()&&e}if("compositionstart"===n){e=!1!==Hl._35(l,61)._compositionStart()&&e}if("compositionend"===n){e=!1!==Hl._35(l,61)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==Hl._35(l,69)._onBlur()&&e}if("focus"===n){e=!1!==Hl._35(l,69)._onFocus()&&e}if("input"===n){e=!1!==Hl._35(l,69)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.email=u)&&e}return e},null,null)),Hl._19(16384,null,0,nn.c,[Hl.Q,Hl.q,[2,nn.a]],null,null),Hl._19(16384,null,0,nn.p,[],{required:[0,"required"]},null),Hl._19(16384,null,0,nn.d,[],{email:[0,"email"]},null),Hl._38(1024,null,nn.i,function(l,n){return[l,n]},[nn.p,nn.d]),Hl._38(1024,null,nn.j,function(l){return[l]},[nn.c]),Hl._19(671744,[["email",4]],0,nn.o,[[2,nn.b],[2,nn.i],[8,null],[2,nn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Hl._38(2048,null,nn.k,null,[nn.o]),Hl._19(16384,null,0,nn.l,[nn.k],null,null),Hl._19(16384,[[7,4]],0,Jl._17,[Hl.q,Hl.Q,ln.L,[2,nn.k],[2,nn.n],[2,nn.e],[2,Jl.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),Hl._41(1,["\n\n        "])),(l()(),Hl._15(16777216,null,4,1,null,o)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(1,["\n        "])),(l()(),Hl._15(16777216,null,4,1,null,i)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(1,["\n      "])),(l()(),Hl._41(null,["\n    "])),(l()(),Hl._41(null,["\n\n    "])),(l()(),Hl._21(0,null,null,78,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),Hl._19(737280,null,0,un.a,[$l.a,Hl.q,Hl.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),Hl._19(1720320,null,0,en.a,[$l.a,Hl.q,Hl.Q,[2,un.a]],{gapGtSm:[0,"gapGtSm"]},null),Hl._19(933888,null,0,Kl.a,[$l.a,Hl.B,Hl.C,Hl.q,Hl.P,Hl.Q],{classBase:[0,"classBase"]},null),(l()(),Hl._41(null,["\n      "])),(l()(),Hl._41(null,["\n      "])),(l()(),Hl._21(0,null,null,32,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Hl._35(l,88)._focusInput()&&e}return e},Yl.z,Yl.k)),Hl._19(737280,null,0,rn.a,[$l.a,Hl.q,Hl.Q,[3,un.a],[3,tn.a]],{flex:[0,"flex"]},null),Hl._19(933888,null,0,Kl.a,[$l.a,Hl.B,Hl.C,Hl.q,Hl.P,Hl.Q],{classBase:[0,"classBase"]},null),Hl._19(7389184,null,6,Jl._16,[Hl.q,Hl.j,[2,Jl.o]],null,null),Hl._39(335544320,13,{_mdInputChild:0}),Hl._39(335544320,14,{_placeholderChild:0}),Hl._39(603979776,15,{_errorChildren:1}),Hl._39(603979776,16,{_hintChildren:1}),Hl._39(603979776,17,{_prefixChildren:1}),Hl._39(603979776,18,{_suffixChildren:1}),(l()(),Hl._41(1,["\n        "])),(l()(),Hl._21(0,null,1,11,"input",[["class","mat-input-element"],["equalvalidator","passwordConfirm"],["id","password"],["maxlength","8"],["mdInput",""],["minlength","3"],["name","password"],["placeholder","Password"],["required",""],["reverse","true"],["type","password"]],[[1,"required",0],[1,"minlength",0],[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Hl._35(l,97)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Hl._35(l,97).onTouched()&&e}if("compositionstart"===n){e=!1!==Hl._35(l,97)._compositionStart()&&e}if("compositionend"===n){e=!1!==Hl._35(l,97)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==Hl._35(l,107)._onBlur()&&e}if("focus"===n){e=!1!==Hl._35(l,107)._onFocus()&&e}if("input"===n){e=!1!==Hl._35(l,107)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.password=u)&&e}return e},null,null)),Hl._19(16384,null,0,nn.c,[Hl.Q,Hl.q,[2,nn.a]],null,null),Hl._19(16384,null,0,nn.p,[],{required:[0,"required"]},null),Hl._19(540672,null,0,nn.h,[],{minlength:[0,"minlength"]},null),Hl._19(540672,null,0,nn.g,[],{maxlength:[0,"maxlength"]},null),Hl._19(16384,null,0,Wl,[[8,"passwordConfirm"],[8,"true"]],null,null),Hl._38(1024,null,nn.i,function(l,n,u,e){return[l,n,u,e]},[nn.p,nn.h,nn.g,Wl]),Hl._38(1024,null,nn.j,function(l){return[l]},[nn.c]),Hl._19(671744,[["password",4]],0,nn.o,[[2,nn.b],[2,nn.i],[8,null],[2,nn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Hl._38(2048,null,nn.k,null,[nn.o]),Hl._19(16384,null,0,nn.l,[nn.k],null,null),Hl._19(16384,[[13,4]],0,Jl._17,[Hl.q,Hl.Q,ln.L,[2,nn.k],[2,nn.n],[2,nn.e],[2,Jl.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),Hl._41(1,["\n\n        "])),(l()(),Hl._15(16777216,null,4,1,null,_)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(1,["\n        "])),(l()(),Hl._15(16777216,null,4,1,null,s)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(1,["\n        "])),(l()(),Hl._15(16777216,null,4,1,null,c)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(1,["\n      "])),(l()(),Hl._41(null,["\n\n      "])),(l()(),Hl._41(null,["\n      "])),(l()(),Hl._21(0,null,null,35,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Hl._35(l,123)._focusInput()&&e}return e},Yl.z,Yl.k)),Hl._19(737280,null,0,rn.a,[$l.a,Hl.q,Hl.Q,[3,un.a],[3,tn.a]],{flex:[0,"flex"]},null),Hl._19(933888,null,0,Kl.a,[$l.a,Hl.B,Hl.C,Hl.q,Hl.P,Hl.Q],{classBase:[0,"classBase"]},null),Hl._19(7389184,null,6,Jl._16,[Hl.q,Hl.j,[2,Jl.o]],null,null),Hl._39(335544320,19,{_mdInputChild:0}),Hl._39(335544320,20,{_placeholderChild:0}),Hl._39(603979776,21,{_errorChildren:1}),Hl._39(603979776,22,{_hintChildren:1}),Hl._39(603979776,23,{_prefixChildren:1}),Hl._39(603979776,24,{_suffixChildren:1}),(l()(),Hl._41(1,["\n        "])),(l()(),Hl._21(0,null,1,11,"input",[["class","mat-input-element"],["equalvalidator","password"],["id","passwordConfirm"],["maxlength","8"],["mdInput",""],["minlength","3"],["name","passwordConfirm"],["placeholder","Confirm password"],["required",""],["type","password"]],[[1,"required",0],[1,"minlength",0],[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Hl._35(l,132)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Hl._35(l,132).onTouched()&&e}if("compositionstart"===n){e=!1!==Hl._35(l,132)._compositionStart()&&e}if("compositionend"===n){e=!1!==Hl._35(l,132)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==Hl._35(l,142)._onBlur()&&e}if("focus"===n){e=!1!==Hl._35(l,142)._onFocus()&&e}if("input"===n){e=!1!==Hl._35(l,142)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model["password-confirm"]=u)&&e}return e},null,null)),Hl._19(16384,null,0,nn.c,[Hl.Q,Hl.q,[2,nn.a]],null,null),Hl._19(16384,null,0,nn.p,[],{required:[0,"required"]},null),Hl._19(540672,null,0,nn.h,[],{minlength:[0,"minlength"]},null),Hl._19(540672,null,0,nn.g,[],{maxlength:[0,"maxlength"]},null),Hl._19(16384,null,0,Wl,[[8,"password"],[8,null]],null,null),Hl._38(1024,null,nn.i,function(l,n,u,e){return[l,n,u,e]},[nn.p,nn.h,nn.g,Wl]),Hl._38(1024,null,nn.j,function(l){return[l]},[nn.c]),Hl._19(671744,[["passwordConfirm",4]],0,nn.o,[[2,nn.b],[2,nn.i],[8,null],[2,nn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Hl._38(2048,null,nn.k,null,[nn.o]),Hl._19(16384,null,0,nn.l,[nn.k],null,null),Hl._19(16384,[[19,4]],0,Jl._17,[Hl.q,Hl.Q,ln.L,[2,nn.k],[2,nn.n],[2,nn.e],[2,Jl.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),Hl._41(1,["\n\n        "])),(l()(),Hl._15(16777216,null,4,1,null,d)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(1,["\n        "])),(l()(),Hl._15(16777216,null,4,1,null,m)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(1,["\n        "])),(l()(),Hl._15(16777216,null,4,1,null,p)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(1,["\n        "])),(l()(),Hl._15(16777216,null,4,1,null,g)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(1,["\n      "])),(l()(),Hl._41(null,["\n      "])),(l()(),Hl._41(null,["\n    "])),(l()(),Hl._41(null,["\n    \n  "])),(l()(),Hl._41(null,["\n  \n  "])),(l()(),Hl._21(0,null,null,11,"div",[["class","form__actions"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign.gt-xs","center none"],["fxLayoutGap","10px"]],null,null,null,null,null)),Hl._19(737280,null,0,un.a,[$l.a,Hl.q,Hl.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),Hl._19(1720320,null,0,en.a,[$l.a,Hl.q,Hl.Q,[2,un.a]],{gap:[0,"gap"]},null),Hl._19(737280,null,0,on.a,[$l.a,Hl.q,Hl.Q,[2,un.a]],{alignGtXs:[0,"alignGtXs"]},null),Hl._19(933888,null,0,Kl.a,[$l.a,Hl.B,Hl.C,Hl.q,Hl.P,Hl.Q],{classBase:[0,"classBase"]},null),(l()(),Hl._41(null,["\n    "])),(l()(),Hl._15(16777216,null,null,1,null,f)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(null,["\n\n    "])),(l()(),Hl._15(16777216,null,null,1,null,h)),Hl._19(16384,null,0,an.m,[Hl._3,Hl.Z],{ngIf:[0,"ngIf"]},null),(l()(),Hl._41(null,["\n  "])),(l()(),Hl._41(null,["\n\n"]))],function(l,n){var u=n.component;l(n,5,0,"column");l(n,6,0,"10px");l(n,7,0,"form__container");l(n,10,0,"column");l(n,11,0,"form__fields");l(n,14,0,"column","row");l(n,15,0,"10px");l(n,16,0,"form__fields__row");l(n,20,0,"");l(n,21,0,"form__field");l(n,32,0,"");l(n,33,0,"4");l(n,36,0,"name",u.model.name);l(n,39,0,"name","Name","","text"),l(n,42,0,Hl._35(n,36).invalid&&(Hl._35(n,36).dirty||Hl._35(n,36).touched)&&Hl._35(n,36).errors.required),l(n,45,0,Hl._35(n,36).invalid&&(Hl._35(n,36).dirty||Hl._35(n,36).touched)&&Hl._35(n,36).errors.minlength);l(n,50,0,"");l(n,51,0,"form__field");l(n,62,0,"");l(n,63,0,"");l(n,66,0,"email",u.model.email);l(n,69,0,"email","Email address","","email"),l(n,72,0,Hl._35(n,66).invalid&&(Hl._35(n,66).dirty||Hl._35(n,66).touched)&&Hl._35(n,66).errors.required),l(n,75,0,Hl._35(n,66).invalid&&(Hl._35(n,66).dirty||Hl._35(n,66).touched)&&Hl._35(n,66).errors.email);l(n,80,0,"column","row");l(n,81,0,"10px");l(n,82,0,"form__fields__row");l(n,86,0,"");l(n,87,0,"form__field");l(n,98,0,"");l(n,99,0,"3");l(n,100,0,"8");l(n,104,0,"password",u.model.password);l(n,107,0,"password","Password","","password"),l(n,110,0,Hl._35(n,104).invalid&&(Hl._35(n,104).dirty||Hl._35(n,104).touched)&&Hl._35(n,104).errors.required),l(n,113,0,Hl._35(n,104).invalid&&(Hl._35(n,104).dirty||Hl._35(n,104).touched)&&Hl._35(n,104).errors.minlength),l(n,116,0,Hl._35(n,104).invalid&&(Hl._35(n,104).dirty||Hl._35(n,104).touched)&&Hl._35(n,104).errors.maxlength);l(n,121,0,"");l(n,122,0,"form__field");l(n,133,0,"");l(n,134,0,"3");l(n,135,0,"8");l(n,139,0,"passwordConfirm",u.model["password-confirm"]);l(n,142,0,"passwordConfirm","Confirm password","","password"),l(n,145,0,Hl._35(n,139).invalid&&(Hl._35(n,139).dirty||Hl._35(n,139).touched)&&Hl._35(n,139).errors.required),l(n,148,0,Hl._35(n,139).invalid&&(Hl._35(n,139).dirty||Hl._35(n,139).touched)&&Hl._35(n,139).errors.minlength),l(n,151,0,Hl._35(n,139).invalid&&(Hl._35(n,139).dirty||Hl._35(n,139).touched)&&Hl._35(n,139).errors.maxlength),l(n,154,0,Hl._35(n,139).invalid&&(Hl._35(n,139).dirty||Hl._35(n,139).touched)&&Hl._35(n,139).errors.equalvalidator);l(n,161,0,"column","row");l(n,162,0,"10px");l(n,163,0,"center none");l(n,164,0,"form__actions"),l(n,167,0,!u.registerServiceRunning),l(n,170,0,u.registerServiceRunning)},function(l,n){l(n,0,0,Hl._35(n,4).ngClassUntouched,Hl._35(n,4).ngClassTouched,Hl._35(n,4).ngClassPristine,Hl._35(n,4).ngClassDirty,Hl._35(n,4).ngClassValid,Hl._35(n,4).ngClassInvalid,Hl._35(n,4).ngClassPending);l(n,19,0,null,Hl._35(n,22)._mdInputChild._isErrorState(),Hl._35(n,22)._mdInputChild.focused,Hl._35(n,22)._shouldForward("untouched"),Hl._35(n,22)._shouldForward("touched"),Hl._35(n,22)._shouldForward("pristine"),Hl._35(n,22)._shouldForward("dirty"),Hl._35(n,22)._shouldForward("valid"),Hl._35(n,22)._shouldForward("invalid"),Hl._35(n,22)._shouldForward("pending")),l(n,30,1,[Hl._35(n,32).required?"":null,Hl._35(n,33).minlength?Hl._35(n,33).minlength:null,Hl._35(n,38).ngClassUntouched,Hl._35(n,38).ngClassTouched,Hl._35(n,38).ngClassPristine,Hl._35(n,38).ngClassDirty,Hl._35(n,38).ngClassValid,Hl._35(n,38).ngClassInvalid,Hl._35(n,38).ngClassPending,Hl._35(n,39).id,Hl._35(n,39).placeholder,Hl._35(n,39).disabled,Hl._35(n,39).required,Hl._35(n,39).ariaDescribedby||null,Hl._35(n,39)._isErrorState()]);l(n,49,0,null,Hl._35(n,52)._mdInputChild._isErrorState(),Hl._35(n,52)._mdInputChild.focused,Hl._35(n,52)._shouldForward("untouched"),Hl._35(n,52)._shouldForward("touched"),Hl._35(n,52)._shouldForward("pristine"),Hl._35(n,52)._shouldForward("dirty"),Hl._35(n,52)._shouldForward("valid"),Hl._35(n,52)._shouldForward("invalid"),Hl._35(n,52)._shouldForward("pending")),l(n,60,1,[Hl._35(n,62).required?"":null,Hl._35(n,68).ngClassUntouched,Hl._35(n,68).ngClassTouched,Hl._35(n,68).ngClassPristine,Hl._35(n,68).ngClassDirty,Hl._35(n,68).ngClassValid,Hl._35(n,68).ngClassInvalid,Hl._35(n,68).ngClassPending,Hl._35(n,69).id,Hl._35(n,69).placeholder,Hl._35(n,69).disabled,Hl._35(n,69).required,Hl._35(n,69).ariaDescribedby||null,Hl._35(n,69)._isErrorState()]);l(n,85,0,null,Hl._35(n,88)._mdInputChild._isErrorState(),Hl._35(n,88)._mdInputChild.focused,Hl._35(n,88)._shouldForward("untouched"),Hl._35(n,88)._shouldForward("touched"),Hl._35(n,88)._shouldForward("pristine"),Hl._35(n,88)._shouldForward("dirty"),Hl._35(n,88)._shouldForward("valid"),Hl._35(n,88)._shouldForward("invalid"),Hl._35(n,88)._shouldForward("pending")),l(n,96,1,[Hl._35(n,98).required?"":null,Hl._35(n,99).minlength?Hl._35(n,99).minlength:null,Hl._35(n,100).maxlength?Hl._35(n,100).maxlength:null,Hl._35(n,106).ngClassUntouched,Hl._35(n,106).ngClassTouched,Hl._35(n,106).ngClassPristine,Hl._35(n,106).ngClassDirty,Hl._35(n,106).ngClassValid,Hl._35(n,106).ngClassInvalid,Hl._35(n,106).ngClassPending,Hl._35(n,107).id,Hl._35(n,107).placeholder,Hl._35(n,107).disabled,Hl._35(n,107).required,Hl._35(n,107).ariaDescribedby||null,Hl._35(n,107)._isErrorState()]);l(n,120,0,null,Hl._35(n,123)._mdInputChild._isErrorState(),Hl._35(n,123)._mdInputChild.focused,Hl._35(n,123)._shouldForward("untouched"),Hl._35(n,123)._shouldForward("touched"),Hl._35(n,123)._shouldForward("pristine"),Hl._35(n,123)._shouldForward("dirty"),Hl._35(n,123)._shouldForward("valid"),Hl._35(n,123)._shouldForward("invalid"),Hl._35(n,123)._shouldForward("pending")),l(n,131,1,[Hl._35(n,133).required?"":null,Hl._35(n,134).minlength?Hl._35(n,134).minlength:null,Hl._35(n,135).maxlength?Hl._35(n,135).maxlength:null,Hl._35(n,141).ngClassUntouched,Hl._35(n,141).ngClassTouched,Hl._35(n,141).ngClassPristine,Hl._35(n,141).ngClassDirty,Hl._35(n,141).ngClassValid,Hl._35(n,141).ngClassInvalid,Hl._35(n,141).ngClassPending,Hl._35(n,142).id,Hl._35(n,142).placeholder,Hl._35(n,142).disabled,Hl._35(n,142).required,Hl._35(n,142).ariaDescribedby||null,Hl._35(n,142)._isErrorState()])})}function v(l){return Hl._43(0,[(l()(),Hl._21(0,null,null,1,"users-register",[],null,null,null,y,cn)),Hl._19(114688,null,0,Al,[Fl,Pl,_n.k,Gl],null,null)],function(l,n){l(n,1,0)},null)}function C(l){return fn._43(0,[(l()(),fn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(16384,[[3,4]],0,hn._2,[],null,null),(l()(),fn._41(null,["Email is required"]))],null,null)}function b(l){return fn._43(0,[(l()(),fn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(16384,[[3,4]],0,hn._2,[],null,null),(l()(),fn._41(null,["Email must be a valid email address"]))],null,null)}function q(l){return fn._43(0,[(l()(),fn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(16384,[[9,4]],0,hn._2,[],null,null),(l()(),fn._41(null,["Password is required"]))],null,null)}function x(l){return fn._43(0,[(l()(),fn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(16384,[[9,4]],0,hn._2,[],null,null),(l()(),fn._41(null,["Password must be longer than 3 characters"]))],null,null)}function w(l){return fn._43(0,[(l()(),fn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(16384,[[9,4]],0,hn._2,[],null,null),(l()(),fn._41(null,["Password must be shorter than 8 characters"]))],null,null)}function B(l){return fn._43(0,[(l()(),fn._21(0,null,null,5,"button",[["class","form__action mat-raised-button mat-raised-button"],["color","accent"],["md-raised-button",""],["type","submit"]],[[8,"disabled",0]],null,null,yn.t,yn.e)),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(180224,null,0,hn.w,[fn.Q,fn.q,bn.L,hn.g],{disabled:[0,"disabled"],color:[1,"color"]},null),fn._19(16384,null,0,hn._44,[],null,null),(l()(),fn._41(0,["Login"]))],function(l,n){l(n,1,0,"form__action mat-raised-button");l(n,3,0,!fn._35(n.parent,2).form.valid,"accent")},function(l,n){l(n,0,0,fn._35(n,3).disabled||null)})}function I(l){return fn._43(0,[(l()(),fn._21(0,null,null,4,"md-progress-bar",[["aria-valuemax","100"],["aria-valuemin","0"],["class","progress-bar progress-bar--login mat-progress-bar"],["color","primary"],["mode","indeterminate"],["role","progressbar"]],[[2,"mat-primary",null],[2,"mat-accent",null],[2,"mat-warn",null],[1,"aria-valuenow",0],[1,"mode",0]],null,null,yn.C,yn.n)),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(49152,null,0,hn._36,[],{color:[0,"color"],mode:[1,"mode"]},null),(l()(),fn._41(null,["\n    "]))],function(l,n){l(n,1,0,"progress-bar progress-bar--login");l(n,3,0,"primary","indeterminate")},function(l,n){l(n,0,0,"primary"==fn._35(n,3).color,"accent"==fn._35(n,3).color,"warn"==fn._35(n,3).color,fn._35(n,3).value,fn._35(n,3).mode)})}function k(l){return fn._43(0,[(l()(),fn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(16384,[[15,4]],0,hn._2,[],null,null),(l()(),fn._41(null,["Email is required"]))],null,null)}function S(l){return fn._43(0,[(l()(),fn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(16384,[[15,4]],0,hn._2,[],null,null),(l()(),fn._41(null,["Email must be a valid email address"]))],null,null)}function P(l){return fn._43(0,[(l()(),fn._21(0,null,null,5,"button",[["class","form__action mat-raised-button mat-raised-button"],["color","accent"],["md-raised-button",""],["type","submit"]],[[8,"disabled",0]],null,null,yn.t,yn.e)),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(180224,null,0,hn.w,[fn.Q,fn.q,bn.L,hn.g],{disabled:[0,"disabled"],color:[1,"color"]},null),fn._19(16384,null,0,hn._44,[],null,null),(l()(),fn._41(0,["Send"]))],function(l,n){l(n,1,0,"form__action mat-raised-button");l(n,3,0,!fn._35(n.parent,2).form.valid,"accent")},function(l,n){l(n,0,0,fn._35(n,3).disabled||null)})}function Q(l){return fn._43(0,[(l()(),fn._21(0,null,null,4,"md-progress-bar",[["aria-valuemax","100"],["aria-valuemin","0"],["class","progress-bar progress-bar--forgot mat-progress-bar"],["color","primary"],["mode","indeterminate"],["role","progressbar"]],[[2,"mat-primary",null],[2,"mat-accent",null],[2,"mat-warn",null],[1,"aria-valuenow",0],[1,"mode",0]],null,null,yn.C,yn.n)),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(49152,null,0,hn._36,[],{color:[0,"color"],mode:[1,"mode"]},null),(l()(),fn._41(null,["\n    "]))],function(l,n){l(n,1,0,"progress-bar progress-bar--forgot");l(n,3,0,"primary","indeterminate")},function(l,n){l(n,0,0,"primary"==fn._35(n,3).color,"accent"==fn._35(n,3).color,"warn"==fn._35(n,3).color,fn._35(n,3).value,fn._35(n,3).mode)})}function F(l){return fn._43(0,[(l()(),fn._21(0,null,null,67,"form",[["class","form__container form__forgot"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,r=l.component;if("submit"===n){e=!1!==fn._35(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==fn._35(l,2).onReset()&&e}if("ngSubmit"===n){e=!1!==r.onForgotSubmit()&&e}return e},null,null)),fn._19(16384,null,0,qn.t,[],null,null),fn._19(16384,[["forgotForm",4]],0,qn.n,[[8,null],[8,null]],null,{ngSubmit:"ngSubmit"}),fn._38(2048,null,qn.b,null,[qn.n]),fn._19(16384,null,0,qn.m,[qn.b],null,null),fn._19(737280,null,0,xn.a,[Cn.a,fn.q,fn.Q],{layout:[0,"layout"]},null),fn._19(1720320,null,0,wn.a,[Cn.a,fn.q,fn.Q,[2,xn.a]],{gap:[0,"gap"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),(l()(),fn._41(null,["\n  \n  "])),(l()(),fn._21(0,null,null,44,"section",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),fn._19(737280,null,0,xn.a,[Cn.a,fn.q,fn.Q],{layout:[0,"layout"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),(l()(),fn._41(null,["\n    "])),(l()(),fn._21(0,null,null,39,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),fn._19(737280,null,0,xn.a,[Cn.a,fn.q,fn.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),fn._19(1720320,null,0,wn.a,[Cn.a,fn.q,fn.Q,[2,xn.a]],{gapGtSm:[0,"gapGtSm"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),(l()(),fn._41(null,["\n      "])),(l()(),fn._41(null,["\n      "])),(l()(),fn._21(0,null,null,32,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==fn._35(l,22)._focusInput()&&e}return e},yn.z,yn.k)),fn._19(737280,null,0,Bn.a,[Cn.a,fn.q,fn.Q,[3,xn.a],[3,In.a]],{flex:[0,"flex"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),fn._19(7389184,null,6,hn._16,[fn.q,fn.j,[2,hn.o]],null,null),fn._39(335544320,13,{_mdInputChild:0}),fn._39(335544320,14,{_placeholderChild:0}),fn._39(603979776,15,{_errorChildren:1}),fn._39(603979776,16,{_hintChildren:1}),fn._39(603979776,17,{_prefixChildren:1}),fn._39(603979776,18,{_suffixChildren:1}),(l()(),fn._41(1,["\n        \n        "])),(l()(),fn._21(0,null,1,9,"input",[["class","mat-input-element"],["email",""],["id","emailForgot"],["mdInput",""],["name","emailForgot"],["placeholder","Email address"],["required",""],["type","email"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==fn._35(l,31)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==fn._35(l,31).onTouched()&&e}if("compositionstart"===n){e=!1!==fn._35(l,31)._compositionStart()&&e}if("compositionend"===n){e=!1!==fn._35(l,31)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==fn._35(l,39)._onBlur()&&e}if("focus"===n){e=!1!==fn._35(l,39)._onFocus()&&e}if("input"===n){e=!1!==fn._35(l,39)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.forgotModel.email=u)&&e}return e},null,null)),fn._19(16384,null,0,qn.c,[fn.Q,fn.q,[2,qn.a]],null,null),fn._19(16384,null,0,qn.p,[],{required:[0,"required"]},null),fn._19(16384,null,0,qn.d,[],{email:[0,"email"]},null),fn._38(1024,null,qn.i,function(l,n){return[l,n]},[qn.p,qn.d]),fn._38(1024,null,qn.j,function(l){return[l]},[qn.c]),fn._19(671744,[["emailForgot",4]],0,qn.o,[[2,qn.b],[2,qn.i],[8,null],[2,qn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),fn._38(2048,null,qn.k,null,[qn.o]),fn._19(16384,null,0,qn.l,[qn.k],null,null),fn._19(16384,[[13,4]],0,hn._17,[fn.q,fn.Q,bn.L,[2,qn.k],[2,qn.n],[2,qn.e],[2,hn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),fn._41(1,["\n        "])),(l()(),fn._21(0,null,5,3,"md-hint",[["align","start"],["class","mat-hint"]],[[2,"mat-right",null],[1,"id",0]],null,null,null,null)),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(16384,[[16,4]],0,hn._10,[],{align:[0,"align"]},null),(l()(),fn._41(null,["Type your email and we will send you an email to reset your password."])),(l()(),fn._41(1,["\n        "])),(l()(),fn._15(16777216,null,4,1,null,k)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null),(l()(),fn._41(1,["\n        "])),(l()(),fn._15(16777216,null,4,1,null,S)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null),(l()(),fn._41(1,["\n      "])),(l()(),fn._41(null,["\n    "])),(l()(),fn._41(null,["\n  "])),(l()(),fn._41(null,["\n\n  "])),(l()(),fn._21(0,null,null,11,"section",[["class","form__actions"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign.gt-xs","center none"],["fxLayoutGap","10px"]],null,null,null,null,null)),fn._19(737280,null,0,xn.a,[Cn.a,fn.q,fn.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),fn._19(1720320,null,0,wn.a,[Cn.a,fn.q,fn.Q,[2,xn.a]],{gap:[0,"gap"]},null),fn._19(737280,null,0,Sn.a,[Cn.a,fn.q,fn.Q,[2,xn.a]],{alignGtXs:[0,"alignGtXs"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),(l()(),fn._41(null,["\n    "])),(l()(),fn._15(16777216,null,null,1,null,P)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null),(l()(),fn._41(null,["\n\n    "])),(l()(),fn._15(16777216,null,null,1,null,Q)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null),(l()(),fn._41(null,["\n  "])),(l()(),fn._41(null,["\n\n"]))],function(l,n){var u=n.component;l(n,5,0,"column");l(n,6,0,"10px");l(n,7,0,"form__container form__forgot");l(n,10,0,"column");l(n,11,0,"form__fields");l(n,14,0,"column","row");l(n,15,0,"10px");l(n,16,0,"form__fields__row");l(n,20,0,"");l(n,21,0,"form__field");l(n,32,0,"");l(n,33,0,"");l(n,36,0,"emailForgot",u.forgotModel.email);l(n,39,0,"emailForgot","Email address","","email");l(n,43,0,"start"),l(n,47,0,fn._35(n,36).invalid&&(fn._35(n,36).dirty||fn._35(n,36).touched)&&fn._35(n,36).errors.required),l(n,50,0,fn._35(n,36).invalid&&(fn._35(n,36).dirty||fn._35(n,36).touched)&&fn._35(n,36).errors.email);l(n,56,0,"column","row");l(n,57,0,"10px");l(n,58,0,"center none");l(n,59,0,"form__actions"),l(n,62,0,!u.forgotServiceRunning),l(n,65,0,u.forgotServiceRunning)},function(l,n){l(n,0,0,fn._35(n,4).ngClassUntouched,fn._35(n,4).ngClassTouched,fn._35(n,4).ngClassPristine,fn._35(n,4).ngClassDirty,fn._35(n,4).ngClassValid,fn._35(n,4).ngClassInvalid,fn._35(n,4).ngClassPending);l(n,19,0,null,fn._35(n,22)._mdInputChild._isErrorState(),fn._35(n,22)._mdInputChild.focused,fn._35(n,22)._shouldForward("untouched"),fn._35(n,22)._shouldForward("touched"),fn._35(n,22)._shouldForward("pristine"),fn._35(n,22)._shouldForward("dirty"),fn._35(n,22)._shouldForward("valid"),fn._35(n,22)._shouldForward("invalid"),fn._35(n,22)._shouldForward("pending")),l(n,30,1,[fn._35(n,32).required?"":null,fn._35(n,38).ngClassUntouched,fn._35(n,38).ngClassTouched,fn._35(n,38).ngClassPristine,fn._35(n,38).ngClassDirty,fn._35(n,38).ngClassValid,fn._35(n,38).ngClassInvalid,fn._35(n,38).ngClassPending,fn._35(n,39).id,fn._35(n,39).placeholder,fn._35(n,39).disabled,fn._35(n,39).required,fn._35(n,39).ariaDescribedby||null,fn._35(n,39)._isErrorState()]),l(n,41,0,"end"==fn._35(n,43).align,fn._35(n,43).id)})}function L(l){return fn._43(0,[(l()(),fn._21(0,null,null,122,"form",[["class","form__container form__login"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,r=l.component;if("submit"===n){e=!1!==fn._35(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==fn._35(l,2).onReset()&&e}if("ngSubmit"===n){e=!1!==r.onSubmit()&&e}return e},null,null)),fn._19(16384,null,0,qn.t,[],null,null),fn._19(16384,[["loginForm",4]],0,qn.n,[[8,null],[8,null]],null,{ngSubmit:"ngSubmit"}),fn._38(2048,null,qn.b,null,[qn.n]),fn._19(16384,null,0,qn.m,[qn.b],null,null),fn._19(737280,null,0,xn.a,[Cn.a,fn.q,fn.Q],{layout:[0,"layout"]},null),fn._19(1720320,null,0,wn.a,[Cn.a,fn.q,fn.Q,[2,xn.a]],{gap:[0,"gap"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),(l()(),fn._41(null,["\n  \n  "])),(l()(),fn._21(0,null,null,73,"section",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),fn._19(737280,null,0,xn.a,[Cn.a,fn.q,fn.Q],{layout:[0,"layout"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),(l()(),fn._41(null,["\n    "])),(l()(),fn._21(0,null,null,68,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),fn._19(737280,null,0,xn.a,[Cn.a,fn.q,fn.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),fn._19(1720320,null,0,wn.a,[Cn.a,fn.q,fn.Q,[2,xn.a]],{gapGtSm:[0,"gapGtSm"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),(l()(),fn._41(null,["\n      "])),(l()(),fn._41(null,["\n      "])),(l()(),fn._21(0,null,null,27,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==fn._35(l,22)._focusInput()&&e}return e},yn.z,yn.k)),fn._19(737280,null,0,Bn.a,[Cn.a,fn.q,fn.Q,[3,xn.a],[3,In.a]],{flex:[0,"flex"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),fn._19(7389184,null,6,hn._16,[fn.q,fn.j,[2,hn.o]],null,null),fn._39(335544320,1,{_mdInputChild:0}),fn._39(335544320,2,{_placeholderChild:0}),fn._39(603979776,3,{_errorChildren:1}),fn._39(603979776,4,{_hintChildren:1}),fn._39(603979776,5,{_prefixChildren:1}),fn._39(603979776,6,{_suffixChildren:1}),(l()(),fn._41(1,["\n        "])),(l()(),fn._21(0,null,1,9,"input",[["class","mat-input-element"],["email",""],["id","email"],["mdInput",""],["name","email"],["placeholder","Email address"],["required",""],["type","email"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==fn._35(l,31)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==fn._35(l,31).onTouched()&&e}if("compositionstart"===n){e=!1!==fn._35(l,31)._compositionStart()&&e}if("compositionend"===n){e=!1!==fn._35(l,31)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==fn._35(l,39)._onBlur()&&e}if("focus"===n){e=!1!==fn._35(l,39)._onFocus()&&e}if("input"===n){e=!1!==fn._35(l,39)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.email=u)&&e}return e},null,null)),fn._19(16384,null,0,qn.c,[fn.Q,fn.q,[2,qn.a]],null,null),fn._19(16384,null,0,qn.p,[],{required:[0,"required"]},null),fn._19(16384,null,0,qn.d,[],{email:[0,"email"]},null),fn._38(1024,null,qn.i,function(l,n){return[l,n]},[qn.p,qn.d]),fn._38(1024,null,qn.j,function(l){return[l]},[qn.c]),fn._19(671744,[["email",4]],0,qn.o,[[2,qn.b],[2,qn.i],[8,null],[2,qn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),fn._38(2048,null,qn.k,null,[qn.o]),fn._19(16384,null,0,qn.l,[qn.k],null,null),fn._19(16384,[[1,4]],0,hn._17,[fn.q,fn.Q,bn.L,[2,qn.k],[2,qn.n],[2,qn.e],[2,hn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),fn._41(1,["\n  \n        "])),(l()(),fn._15(16777216,null,4,1,null,C)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null),(l()(),fn._41(1,["\n        "])),(l()(),fn._15(16777216,null,4,1,null,b)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null),(l()(),fn._41(1,["\n      "])),(l()(),fn._41(null,["\n      \n      "])),(l()(),fn._41(null,["\n      "])),(l()(),fn._21(0,null,null,31,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==fn._35(l,52)._focusInput()&&e}return e},yn.z,yn.k)),fn._19(737280,null,0,Bn.a,[Cn.a,fn.q,fn.Q,[3,xn.a],[3,In.a]],{flex:[0,"flex"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),fn._19(7389184,null,6,hn._16,[fn.q,fn.j,[2,hn.o]],null,null),fn._39(335544320,7,{_mdInputChild:0}),fn._39(335544320,8,{_placeholderChild:0}),fn._39(603979776,9,{_errorChildren:1}),fn._39(603979776,10,{_hintChildren:1}),fn._39(603979776,11,{_prefixChildren:1}),fn._39(603979776,12,{_suffixChildren:1}),(l()(),fn._41(1,["\n        "])),(l()(),fn._21(0,null,1,10,"input",[["class","mat-input-element"],["id","password"],["maxlength","8"],["mdInput",""],["minlength","3"],["name","password"],["placeholder","Password"],["required",""],["type","password"]],[[1,"required",0],[1,"minlength",0],[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==fn._35(l,61)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==fn._35(l,61).onTouched()&&e}if("compositionstart"===n){e=!1!==fn._35(l,61)._compositionStart()&&e}if("compositionend"===n){e=!1!==fn._35(l,61)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==fn._35(l,70)._onBlur()&&e}if("focus"===n){e=!1!==fn._35(l,70)._onFocus()&&e}if("input"===n){e=!1!==fn._35(l,70)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.password=u)&&e}return e},null,null)),fn._19(16384,null,0,qn.c,[fn.Q,fn.q,[2,qn.a]],null,null),fn._19(16384,null,0,qn.p,[],{required:[0,"required"]},null),fn._19(540672,null,0,qn.h,[],{minlength:[0,"minlength"]},null),fn._19(540672,null,0,qn.g,[],{maxlength:[0,"maxlength"]},null),fn._38(1024,null,qn.i,function(l,n,u){return[l,n,u]},[qn.p,qn.h,qn.g]),fn._38(1024,null,qn.j,function(l){return[l]},[qn.c]),fn._19(671744,[["password",4]],0,qn.o,[[2,qn.b],[2,qn.i],[8,null],[2,qn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),fn._38(2048,null,qn.k,null,[qn.o]),fn._19(16384,null,0,qn.l,[qn.k],null,null),fn._19(16384,[[7,4]],0,hn._17,[fn.q,fn.Q,bn.L,[2,qn.k],[2,qn.n],[2,qn.e],[2,hn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),fn._41(1,["\n  \n        "])),(l()(),fn._15(16777216,null,4,1,null,q)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null),(l()(),fn._41(1,["\n        "])),(l()(),fn._15(16777216,null,4,1,null,x)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null),(l()(),fn._41(1,["\n        "])),(l()(),fn._15(16777216,null,4,1,null,w)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null),(l()(),fn._41(1,["\n      "])),(l()(),fn._41(null,["\n    "])),(l()(),fn._41(null,["\n  "])),(l()(),fn._41(null,["\n\n  "])),(l()(),fn._21(0,null,null,22,"section",[["class","form__actions form__actions--login"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign.gt-xs","center center"],["fxLayoutGap","10px"]],null,null,null,null,null)),fn._19(737280,null,0,xn.a,[Cn.a,fn.q,fn.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),fn._19(1720320,null,0,wn.a,[Cn.a,fn.q,fn.Q,[2,xn.a]],{gap:[0,"gap"]},null),fn._19(737280,null,0,Sn.a,[Cn.a,fn.q,fn.Q,[2,xn.a]],{alignGtXs:[0,"alignGtXs"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),(l()(),fn._41(null,["\n    "])),(l()(),fn._15(16777216,null,null,1,null,B)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null),(l()(),fn._41(null,["\n    \n    "])),(l()(),fn._15(16777216,null,null,1,null,I)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null),(l()(),fn._41(null,["\n    \n    "])),(l()(),fn._21(0,null,null,9,"md-checkbox",[["class","form__action mat-checkbox"],["fxLayoutAlign.xs","center center"],["id","forgot"],["name","forgot"]],[[2,"mat-checkbox-indeterminate",null],[2,"mat-checkbox-checked",null],[2,"mat-checkbox-disabled",null],[2,"mat-checkbox-label-before",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngModelChange"]],function(l,n,u){var e=!0,r=l.component;if("ngModelChange"===n){e=!1!==(r.forgotModel.forgot=u)&&e}return e},yn.w,yn.h)),fn._19(4374528,null,0,hn.N,[fn.Q,fn.q,fn.j,hn.g],{id:[0,"id"],name:[1,"name"]},null),fn._38(1024,null,qn.j,function(l){return[l]},[hn.N]),fn._19(671744,null,0,qn.o,[[2,qn.b],[8,null],[8,null],[2,qn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),fn._38(2048,null,qn.k,null,[qn.o]),fn._19(16384,null,0,qn.l,[qn.k],null,null),fn._19(737280,null,0,Sn.a,[Cn.a,fn.q,fn.Q,[8,null]],{alignXs:[0,"alignXs"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),(l()(),fn._41(0,["Forgot my password"])),(l()(),fn._41(null,["\n  "])),(l()(),fn._41(null,["\n\n  "])),(l()(),fn._21(0,null,null,13,"section",[["class","form__actions form__actions--create-account"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign","center center"],["fxLayoutGap","10px"]],null,null,null,null,null)),fn._19(737280,null,0,xn.a,[Cn.a,fn.q,fn.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),fn._19(1720320,null,0,wn.a,[Cn.a,fn.q,fn.Q,[2,xn.a]],{gap:[0,"gap"]},null),fn._19(737280,null,0,Sn.a,[Cn.a,fn.q,fn.Q,[2,xn.a]],{align:[0,"align"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),(l()(),fn._41(null,["\n    "])),(l()(),fn._21(0,null,null,6,"a",[["class","color__almost-white ac__link mat-button"],["color","accent"],["md-button",""],["routerLink","/users/register"]],[[1,"target",0],[8,"href",4],[1,"disabled",0],[1,"aria-disabled",0],[8,"tabIndex",0]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==fn._35(l,115).onClick(u.button,u.ctrlKey,u.metaKey,u.shiftKey)&&e}if("click"===n){e=!1!==fn._35(l,118)._haltDisabledEvents(u)&&e}return e},yn.s,yn.d)),fn._19(671744,null,0,Pn.m,[Pn.k,Pn.a,kn.j],{routerLink:[0,"routerLink"]},null),fn._19(933888,null,0,vn.a,[Cn.a,fn.B,fn.C,fn.q,fn.P,fn.Q],{classBase:[0,"classBase"]},null),fn._19(16384,null,0,hn._35,[[2,hn.j],fn.q],null,null),fn._19(180224,null,0,hn.t,[bn.L,hn.g,fn.q,fn.Q],{color:[0,"color"]},null),fn._19(16384,null,0,hn.x,[],null,null),(l()(),fn._41(0,["Create an account"])),(l()(),fn._41(null,["\n  "])),(l()(),fn._41(null,["\n\n"])),(l()(),fn._41(null,["\n\n"])),(l()(),fn._15(16777216,null,null,1,null,F)),fn._19(16384,null,0,kn.m,[fn._3,fn.Z],{ngIf:[0,"ngIf"]},null)],function(l,n){var u=n.component;l(n,5,0,"column");l(n,6,0,"10px");l(n,7,0,"form__container form__login");l(n,10,0,"column");l(n,11,0,"form__fields");l(n,14,0,"column","row");l(n,15,0,"10px");l(n,16,0,"form__fields__row");l(n,20,0,"");l(n,21,0,"form__field");l(n,32,0,"");l(n,33,0,"");l(n,36,0,"email",u.model.email);l(n,39,0,"email","Email address","","email"),l(n,42,0,fn._35(n,36).invalid&&(fn._35(n,36).dirty||fn._35(n,36).touched)&&fn._35(n,36).errors.required),l(n,45,0,fn._35(n,36).invalid&&(fn._35(n,36).dirty||fn._35(n,36).touched)&&fn._35(n,36).errors.email);l(n,50,0,"");l(n,51,0,"form__field");l(n,62,0,"");l(n,63,0,"3");l(n,64,0,"8");l(n,67,0,"password",u.model.password);l(n,70,0,"password","Password","","password"),l(n,73,0,fn._35(n,67).invalid&&(fn._35(n,67).dirty||fn._35(n,67).touched)&&fn._35(n,67).errors.required),l(n,76,0,fn._35(n,67).invalid&&(fn._35(n,67).dirty||fn._35(n,67).touched)&&fn._35(n,67).errors.minlength),l(n,79,0,fn._35(n,67).invalid&&(fn._35(n,67).dirty||fn._35(n,67).touched)&&fn._35(n,67).errors.maxlength);l(n,85,0,"column","row");l(n,86,0,"10px");l(n,87,0,"center center");l(n,88,0,"form__actions form__actions--login"),l(n,91,0,!u.loginServiceRunning),l(n,94,0,u.loginServiceRunning);l(n,97,0,"forgot","forgot");l(n,99,0,"forgot",u.forgotModel.forgot);l(n,102,0,"center center");l(n,103,0,"form__action");l(n,109,0,"column","row");l(n,110,0,"10px");l(n,111,0,"center center");l(n,112,0,"form__actions form__actions--create-account");l(n,115,0,"/users/register");l(n,116,0,"color__almost-white ac__link");l(n,118,0,"accent"),l(n,125,0,u.forgotModel.forgot)},function(l,n){l(n,0,0,fn._35(n,4).ngClassUntouched,fn._35(n,4).ngClassTouched,fn._35(n,4).ngClassPristine,fn._35(n,4).ngClassDirty,fn._35(n,4).ngClassValid,fn._35(n,4).ngClassInvalid,fn._35(n,4).ngClassPending);l(n,19,0,null,fn._35(n,22)._mdInputChild._isErrorState(),fn._35(n,22)._mdInputChild.focused,fn._35(n,22)._shouldForward("untouched"),fn._35(n,22)._shouldForward("touched"),fn._35(n,22)._shouldForward("pristine"),fn._35(n,22)._shouldForward("dirty"),fn._35(n,22)._shouldForward("valid"),fn._35(n,22)._shouldForward("invalid"),fn._35(n,22)._shouldForward("pending")),l(n,30,1,[fn._35(n,32).required?"":null,fn._35(n,38).ngClassUntouched,fn._35(n,38).ngClassTouched,fn._35(n,38).ngClassPristine,fn._35(n,38).ngClassDirty,fn._35(n,38).ngClassValid,fn._35(n,38).ngClassInvalid,fn._35(n,38).ngClassPending,fn._35(n,39).id,fn._35(n,39).placeholder,fn._35(n,39).disabled,fn._35(n,39).required,fn._35(n,39).ariaDescribedby||null,fn._35(n,39)._isErrorState()]);l(n,49,0,null,fn._35(n,52)._mdInputChild._isErrorState(),fn._35(n,52)._mdInputChild.focused,fn._35(n,52)._shouldForward("untouched"),fn._35(n,52)._shouldForward("touched"),fn._35(n,52)._shouldForward("pristine"),fn._35(n,52)._shouldForward("dirty"),fn._35(n,52)._shouldForward("valid"),fn._35(n,52)._shouldForward("invalid"),fn._35(n,52)._shouldForward("pending")),l(n,60,1,[fn._35(n,62).required?"":null,fn._35(n,63).minlength?fn._35(n,63).minlength:null,fn._35(n,64).maxlength?fn._35(n,64).maxlength:null,fn._35(n,69).ngClassUntouched,fn._35(n,69).ngClassTouched,fn._35(n,69).ngClassPristine,fn._35(n,69).ngClassDirty,fn._35(n,69).ngClassValid,fn._35(n,69).ngClassInvalid,fn._35(n,69).ngClassPending,fn._35(n,70).id,fn._35(n,70).placeholder,fn._35(n,70).disabled,fn._35(n,70).required,fn._35(n,70).ariaDescribedby||null,fn._35(n,70)._isErrorState()]),l(n,96,1,[fn._35(n,97).indeterminate,fn._35(n,97).checked,fn._35(n,97).disabled,"before"==fn._35(n,97).labelPosition,fn._35(n,101).ngClassUntouched,fn._35(n,101).ngClassTouched,fn._35(n,101).ngClassPristine,fn._35(n,101).ngClassDirty,fn._35(n,101).ngClassValid,fn._35(n,101).ngClassInvalid,fn._35(n,101).ngClassPending]),l(n,114,0,fn._35(n,115).target,fn._35(n,115).href,fn._35(n,118).disabled||null,fn._35(n,118).disabled.toString(),fn._35(n,118).tabIndex)})}function j(l){return fn._43(0,[(l()(),fn._21(0,null,null,1,"app-login",[],null,null,null,L,Fn)),fn._19(114688,null,0,gn,[Fl,Pl,Gl,Pn.k,Pn.a],null,null)],function(l,n){l(n,1,0)},null)}function M(l){return Rn._43(0,[(l()(),Rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Rn._19(16384,null,0,Dn._35,[[2,Dn.j],Rn.q],null,null),Rn._19(16384,[[3,4]],0,Dn._2,[],null,null),(l()(),Rn._41(null,["Name is required"]))],null,null)}function G(l){return Rn._43(0,[(l()(),Rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Rn._19(16384,null,0,Dn._35,[[2,Dn.j],Rn.q],null,null),Rn._19(16384,[[3,4]],0,Dn._2,[],null,null),(l()(),Rn._41(null,["Name must contains more than 4 characters"]))],null,null)}function R(l){return Rn._43(0,[(l()(),Rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Rn._19(16384,null,0,Dn._35,[[2,Dn.j],Rn.q],null,null),Rn._19(16384,[[9,4]],0,Dn._2,[],null,null),(l()(),Rn._41(null,["Email is required"]))],null,null)}function D(l){return Rn._43(0,[(l()(),Rn._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),Rn._19(16384,null,0,Dn._35,[[2,Dn.j],Rn.q],null,null),Rn._19(16384,[[9,4]],0,Dn._2,[],null,null),(l()(),Rn._41(null,["Email must be a valid email address"]))],null,null)}function T(l){return Rn._43(0,[(l()(),Rn._21(0,null,null,5,"button",[["class","form__action mat-raised-button mat-raised-button"],["color","accent"],["md-raised-button",""],["type","submit"]],[[8,"disabled",0]],null,null,Tn.t,Tn.e)),Rn._19(933888,null,0,En.a,[On.a,Rn.B,Rn.C,Rn.q,Rn.P,Rn.Q],{classBase:[0,"classBase"]},null),Rn._19(16384,null,0,Dn._35,[[2,Dn.j],Rn.q],null,null),Rn._19(180224,null,0,Dn.w,[Rn.Q,Rn.q,Nn.L,Dn.g],{disabled:[0,"disabled"],color:[1,"color"]},null),Rn._19(16384,null,0,Dn._44,[],null,null),(l()(),Rn._41(0,["Save"]))],function(l,n){l(n,1,0,"form__action mat-raised-button");l(n,3,0,!Rn._35(n.parent,2).form.valid,"accent")},function(l,n){l(n,0,0,Rn._35(n,3).disabled||null)})}function E(l){return Rn._43(0,[(l()(),Rn._21(0,null,null,4,"md-progress-bar",[["aria-valuemax","100"],["aria-valuemin","0"],["class","progress-bar progress-bar--update-account mat-progress-bar"],["color","primary"],["mode","indeterminate"],["role","progressbar"]],[[2,"mat-primary",null],[2,"mat-accent",null],[2,"mat-warn",null],[1,"aria-valuenow",0],[1,"mode",0]],null,null,Tn.C,Tn.n)),Rn._19(933888,null,0,En.a,[On.a,Rn.B,Rn.C,Rn.q,Rn.P,Rn.Q],{classBase:[0,"classBase"]},null),Rn._19(16384,null,0,Dn._35,[[2,Dn.j],Rn.q],null,null),Rn._19(49152,null,0,Dn._36,[],{color:[0,"color"],mode:[1,"mode"]},null),(l()(),Rn._41(null,["\n    "]))],function(l,n){l(n,1,0,"progress-bar progress-bar--update-account");l(n,3,0,"primary","indeterminate")},function(l,n){l(n,0,0,"primary"==Rn._35(n,3).color,"accent"==Rn._35(n,3).color,"warn"==Rn._35(n,3).color,Rn._35(n,3).value,Rn._35(n,3).mode)})}function O(l){return Rn._43(0,[(l()(),Rn._21(0,null,null,92,"form",[["class","form__container"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,r=l.component;if("submit"===n){e=!1!==Rn._35(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==Rn._35(l,2).onReset()&&e}if("ngSubmit"===n){e=!1!==r.onSubmit()&&e}return e},null,null)),Rn._19(16384,null,0,Zn.t,[],null,null),Rn._19(16384,[["accountForm",4]],0,Zn.n,[[8,null],[8,null]],null,{ngSubmit:"ngSubmit"}),Rn._38(2048,null,Zn.b,null,[Zn.n]),Rn._19(16384,null,0,Zn.m,[Zn.b],null,null),Rn._19(737280,null,0,Un.a,[On.a,Rn.q,Rn.Q],{layout:[0,"layout"]},null),Rn._19(1720320,null,0,Xn.a,[On.a,Rn.q,Rn.Q,[2,Un.a]],{gap:[0,"gap"]},null),Rn._19(933888,null,0,En.a,[On.a,Rn.B,Rn.C,Rn.q,Rn.P,Rn.Q],{classBase:[0,"classBase"]},null),(l()(),Rn._41(null,["\n  \n  "])),(l()(),Rn._21(0,null,null,69,"div",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),Rn._19(737280,null,0,Un.a,[On.a,Rn.q,Rn.Q],{layout:[0,"layout"]},null),Rn._19(933888,null,0,En.a,[On.a,Rn.B,Rn.C,Rn.q,Rn.P,Rn.Q],{classBase:[0,"classBase"]},null),(l()(),Rn._41(null,["\n    "])),(l()(),Rn._21(0,null,null,64,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),Rn._19(737280,null,0,Un.a,[On.a,Rn.q,Rn.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),Rn._19(1720320,null,0,Xn.a,[On.a,Rn.q,Rn.Q,[2,Un.a]],{gapGtSm:[0,"gapGtSm"]},null),Rn._19(933888,null,0,En.a,[On.a,Rn.B,Rn.C,Rn.q,Rn.P,Rn.Q],{classBase:[0,"classBase"]},null),(l()(),Rn._41(null,["\n      "])),(l()(),Rn._41(null,["\n      "])),(l()(),Rn._21(0,null,null,27,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Rn._35(l,22)._focusInput()&&e}return e},Tn.z,Tn.k)),Rn._19(737280,null,0,Vn.a,[On.a,Rn.q,Rn.Q,[3,Un.a],[3,An.a]],{flex:[0,"flex"]},null),Rn._19(933888,null,0,En.a,[On.a,Rn.B,Rn.C,Rn.q,Rn.P,Rn.Q],{classBase:[0,"classBase"]},null),Rn._19(7389184,null,6,Dn._16,[Rn.q,Rn.j,[2,Dn.o]],null,null),Rn._39(335544320,1,{_mdInputChild:0}),Rn._39(335544320,2,{_placeholderChild:0}),Rn._39(603979776,3,{_errorChildren:1}),Rn._39(603979776,4,{_hintChildren:1}),Rn._39(603979776,5,{_prefixChildren:1}),Rn._39(603979776,6,{_suffixChildren:1}),(l()(),Rn._41(1,["\n        "])),(l()(),Rn._21(0,null,1,9,"input",[["class","mat-input-element"],["id","name"],["mdInput",""],["minlength","4"],["name","name"],["placeholder","Name"],["required",""],["type","text"],["value","model.name"]],[[1,"required",0],[1,"minlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Rn._35(l,31)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Rn._35(l,31).onTouched()&&e}if("compositionstart"===n){e=!1!==Rn._35(l,31)._compositionStart()&&e}if("compositionend"===n){e=!1!==Rn._35(l,31)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==Rn._35(l,39)._onBlur()&&e}if("focus"===n){e=!1!==Rn._35(l,39)._onFocus()&&e}if("input"===n){e=!1!==Rn._35(l,39)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.name=u)&&e}return e},null,null)),Rn._19(16384,null,0,Zn.c,[Rn.Q,Rn.q,[2,Zn.a]],null,null),Rn._19(16384,null,0,Zn.p,[],{required:[0,"required"]},null),Rn._19(540672,null,0,Zn.h,[],{minlength:[0,"minlength"]},null),Rn._38(1024,null,Zn.i,function(l,n){return[l,n]},[Zn.p,Zn.h]),Rn._38(1024,null,Zn.j,function(l){return[l]},[Zn.c]),Rn._19(671744,[["name",4]],0,Zn.o,[[2,Zn.b],[2,Zn.i],[8,null],[2,Zn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Rn._38(2048,null,Zn.k,null,[Zn.o]),Rn._19(16384,null,0,Zn.l,[Zn.k],null,null),Rn._19(16384,[[1,4]],0,Dn._17,[Rn.q,Rn.Q,Nn.L,[2,Zn.k],[2,Zn.n],[2,Zn.e],[2,Dn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),Rn._41(1,["\n\n        "])),(l()(),Rn._15(16777216,null,4,1,null,M)),Rn._19(16384,null,0,zn.m,[Rn._3,Rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Rn._41(1,["\n        "])),(l()(),Rn._15(16777216,null,4,1,null,G)),Rn._19(16384,null,0,zn.m,[Rn._3,Rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Rn._41(1,["\n      "])),(l()(),Rn._41(null,["\n      \n      "])),(l()(),Rn._41(null,["\n      "])),(l()(),Rn._21(0,null,null,27,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Rn._35(l,52)._focusInput()&&e}return e},Tn.z,Tn.k)),Rn._19(737280,null,0,Vn.a,[On.a,Rn.q,Rn.Q,[3,Un.a],[3,An.a]],{flex:[0,"flex"]},null),Rn._19(933888,null,0,En.a,[On.a,Rn.B,Rn.C,Rn.q,Rn.P,Rn.Q],{classBase:[0,"classBase"]},null),Rn._19(7389184,null,6,Dn._16,[Rn.q,Rn.j,[2,Dn.o]],null,null),Rn._39(335544320,7,{_mdInputChild:0}),Rn._39(335544320,8,{_placeholderChild:0}),Rn._39(603979776,9,{_errorChildren:1}),Rn._39(603979776,10,{_hintChildren:1}),Rn._39(603979776,11,{_prefixChildren:1}),Rn._39(603979776,12,{_suffixChildren:1}),(l()(),Rn._41(1,["\n        "])),(l()(),Rn._21(0,null,1,9,"input",[["class","mat-input-element"],["email",""],["id","email"],["mdInput",""],["name","email"],["placeholder","Email address"],["required",""],["type","email"],["value","model.email"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==Rn._35(l,61)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==Rn._35(l,61).onTouched()&&e}if("compositionstart"===n){e=!1!==Rn._35(l,61)._compositionStart()&&e}if("compositionend"===n){e=!1!==Rn._35(l,61)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==Rn._35(l,69)._onBlur()&&e}if("focus"===n){e=!1!==Rn._35(l,69)._onFocus()&&e}if("input"===n){e=!1!==Rn._35(l,69)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.email=u)&&e}return e},null,null)),Rn._19(16384,null,0,Zn.c,[Rn.Q,Rn.q,[2,Zn.a]],null,null),Rn._19(16384,null,0,Zn.p,[],{required:[0,"required"]},null),Rn._19(16384,null,0,Zn.d,[],{email:[0,"email"]},null),Rn._38(1024,null,Zn.i,function(l,n){return[l,n]},[Zn.p,Zn.d]),Rn._38(1024,null,Zn.j,function(l){return[l]},[Zn.c]),Rn._19(671744,[["email",4]],0,Zn.o,[[2,Zn.b],[2,Zn.i],[8,null],[2,Zn.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),Rn._38(2048,null,Zn.k,null,[Zn.o]),Rn._19(16384,null,0,Zn.l,[Zn.k],null,null),Rn._19(16384,[[7,4]],0,Dn._17,[Rn.q,Rn.Q,Nn.L,[2,Zn.k],[2,Zn.n],[2,Zn.e],[2,Dn.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),Rn._41(1,["\n\n        "])),(l()(),Rn._15(16777216,null,4,1,null,R)),Rn._19(16384,null,0,zn.m,[Rn._3,Rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Rn._41(1,["\n        "])),(l()(),Rn._15(16777216,null,4,1,null,D)),Rn._19(16384,null,0,zn.m,[Rn._3,Rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Rn._41(1,["\n      "])),(l()(),Rn._41(null,["\n    "])),(l()(),Rn._41(null,["\n  "])),(l()(),Rn._41(null,["\n\n  "])),(l()(),Rn._21(0,null,null,11,"div",[["class","form__actions"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign.gt-xs","center none"],["fxLayoutGap","10px"]],null,null,null,null,null)),Rn._19(737280,null,0,Un.a,[On.a,Rn.q,Rn.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),Rn._19(1720320,null,0,Xn.a,[On.a,Rn.q,Rn.Q,[2,Un.a]],{gap:[0,"gap"]},null),Rn._19(737280,null,0,Wn.a,[On.a,Rn.q,Rn.Q,[2,Un.a]],{alignGtXs:[0,"alignGtXs"]},null),Rn._19(933888,null,0,En.a,[On.a,Rn.B,Rn.C,Rn.q,Rn.P,Rn.Q],{classBase:[0,"classBase"]},null),(l()(),Rn._41(null,["\n    "])),(l()(),Rn._15(16777216,null,null,1,null,T)),Rn._19(16384,null,0,zn.m,[Rn._3,Rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Rn._41(null,["\n\n    "])),(l()(),Rn._15(16777216,null,null,1,null,E)),Rn._19(16384,null,0,zn.m,[Rn._3,Rn.Z],{ngIf:[0,"ngIf"]},null),(l()(),Rn._41(null,["\n  "])),(l()(),Rn._41(null,["\n\n"]))],function(l,n){var u=n.component;l(n,5,0,"column");l(n,6,0,"10px");l(n,7,0,"form__container");l(n,10,0,"column");l(n,11,0,"form__fields");l(n,14,0,"column","row");l(n,15,0,"10px");l(n,16,0,"form__fields__row");l(n,20,0,"");l(n,21,0,"form__field");l(n,32,0,"");l(n,33,0,"4");l(n,36,0,"name",u.model.name);l(n,39,0,"name","Name","","text"),l(n,42,0,Rn._35(n,36).invalid&&(Rn._35(n,36).dirty||Rn._35(n,36).touched)&&Rn._35(n,36).errors.required),l(n,45,0,Rn._35(n,36).invalid&&(Rn._35(n,36).dirty||Rn._35(n,36).touched)&&Rn._35(n,36).errors.minlength);l(n,50,0,"");l(n,51,0,"form__field");l(n,62,0,"");l(n,63,0,"");l(n,66,0,"email",u.model.email);l(n,69,0,"email","Email address","","email"),l(n,72,0,Rn._35(n,66).invalid&&(Rn._35(n,66).dirty||Rn._35(n,66).touched)&&Rn._35(n,66).errors.required),l(n,75,0,Rn._35(n,66).invalid&&(Rn._35(n,66).dirty||Rn._35(n,66).touched)&&Rn._35(n,66).errors.email);l(n,81,0,"column","row");l(n,82,0,"10px");l(n,83,0,"center none");l(n,84,0,"form__actions"),l(n,87,0,!u.updateAccountServiceRunning),l(n,90,0,u.updateAccountServiceRunning)},function(l,n){l(n,0,0,Rn._35(n,4).ngClassUntouched,Rn._35(n,4).ngClassTouched,Rn._35(n,4).ngClassPristine,Rn._35(n,4).ngClassDirty,Rn._35(n,4).ngClassValid,Rn._35(n,4).ngClassInvalid,Rn._35(n,4).ngClassPending);l(n,19,0,null,Rn._35(n,22)._mdInputChild._isErrorState(),Rn._35(n,22)._mdInputChild.focused,Rn._35(n,22)._shouldForward("untouched"),Rn._35(n,22)._shouldForward("touched"),Rn._35(n,22)._shouldForward("pristine"),Rn._35(n,22)._shouldForward("dirty"),Rn._35(n,22)._shouldForward("valid"),Rn._35(n,22)._shouldForward("invalid"),Rn._35(n,22)._shouldForward("pending")),l(n,30,1,[Rn._35(n,32).required?"":null,Rn._35(n,33).minlength?Rn._35(n,33).minlength:null,Rn._35(n,38).ngClassUntouched,Rn._35(n,38).ngClassTouched,Rn._35(n,38).ngClassPristine,Rn._35(n,38).ngClassDirty,Rn._35(n,38).ngClassValid,Rn._35(n,38).ngClassInvalid,Rn._35(n,38).ngClassPending,Rn._35(n,39).id,Rn._35(n,39).placeholder,Rn._35(n,39).disabled,Rn._35(n,39).required,Rn._35(n,39).ariaDescribedby||null,Rn._35(n,39)._isErrorState()]);l(n,49,0,null,Rn._35(n,52)._mdInputChild._isErrorState(),Rn._35(n,52)._mdInputChild.focused,Rn._35(n,52)._shouldForward("untouched"),Rn._35(n,52)._shouldForward("touched"),Rn._35(n,52)._shouldForward("pristine"),Rn._35(n,52)._shouldForward("dirty"),Rn._35(n,52)._shouldForward("valid"),Rn._35(n,52)._shouldForward("invalid"),Rn._35(n,52)._shouldForward("pending")),l(n,60,1,[Rn._35(n,62).required?"":null,Rn._35(n,68).ngClassUntouched,Rn._35(n,68).ngClassTouched,Rn._35(n,68).ngClassPristine,Rn._35(n,68).ngClassDirty,Rn._35(n,68).ngClassValid,Rn._35(n,68).ngClassInvalid,Rn._35(n,68).ngClassPending,Rn._35(n,69).id,Rn._35(n,69).placeholder,Rn._35(n,69).disabled,Rn._35(n,69).required,Rn._35(n,69).ariaDescribedby||null,Rn._35(n,69)._isErrorState()])})}function N(l){return Rn._43(0,[(l()(),Rn._21(0,null,null,1,"app-account",[],null,null,null,O,Yn)),Rn._19(114688,null,0,Gn,[Fl,Pl,Gl,Hn.a],null,null)],function(l,n){l(n,1,0)},null)}function Z(l){return uu._43(0,[(l()(),uu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),uu._19(16384,null,0,eu._35,[[2,eu.j],uu.q],null,null),uu._19(16384,[[3,4]],0,eu._2,[],null,null),(l()(),uu._41(null,["Password is required"]))],null,null)}function U(l){return uu._43(0,[(l()(),uu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),uu._19(16384,null,0,eu._35,[[2,eu.j],uu.q],null,null),uu._19(16384,[[3,4]],0,eu._2,[],null,null),(l()(),uu._41(null,["Password must be longer than 3 characters"]))],null,null)}function X(l){return uu._43(0,[(l()(),uu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),uu._19(16384,null,0,eu._35,[[2,eu.j],uu.q],null,null),uu._19(16384,[[3,4]],0,eu._2,[],null,null),(l()(),uu._41(null,["Password must be shorter than 8 characters"]))],null,null)}function V(l){return uu._43(0,[(l()(),uu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),uu._19(16384,null,0,eu._35,[[2,eu.j],uu.q],null,null),uu._19(16384,[[9,4]],0,eu._2,[],null,null),(l()(),uu._41(null,["Confirm password is required"]))],null,null)}function A(l){return uu._43(0,[(l()(),uu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),uu._19(16384,null,0,eu._35,[[2,eu.j],uu.q],null,null),uu._19(16384,[[9,4]],0,eu._2,[],null,null),(l()(),uu._41(null,["Confirm password must be longer than 3 characters"]))],null,null)}function z(l){return uu._43(0,[(l()(),uu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),uu._19(16384,null,0,eu._35,[[2,eu.j],uu.q],null,null),uu._19(16384,[[9,4]],0,eu._2,[],null,null),(l()(),uu._41(null,["Confirm password must be shorter than 8 characters"]))],null,null)}function W(l){return uu._43(0,[(l()(),uu._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),uu._19(16384,null,0,eu._35,[[2,eu.j],uu.q],null,null),uu._19(16384,[[9,4]],0,eu._2,[],null,null),(l()(),uu._41(null,["Confirm password must match password"]))],null,null)}function H(l){return uu._43(0,[(l()(),uu._21(0,null,null,5,"button",[["class","form__action mat-raised-button mat-raised-button"],["color","accent"],["md-raised-button",""],["type","submit"]],[[8,"disabled",0]],null,null,ru.t,ru.e)),uu._19(933888,null,0,tu.a,[au.a,uu.B,uu.C,uu.q,uu.P,uu.Q],{classBase:[0,"classBase"]},null),uu._19(16384,null,0,eu._35,[[2,eu.j],uu.q],null,null),uu._19(180224,null,0,eu.w,[uu.Q,uu.q,ou.L,eu.g],{disabled:[0,"disabled"],color:[1,"color"]},null),uu._19(16384,null,0,eu._44,[],null,null),(l()(),uu._41(0,["Reset password"]))],function(l,n){l(n,1,0,"form__action mat-raised-button");l(n,3,0,!uu._35(n.parent,2).form.valid,"accent")},function(l,n){l(n,0,0,uu._35(n,3).disabled||null)})}function J(l){return uu._43(0,[(l()(),uu._21(0,null,null,4,"md-progress-bar",[["aria-valuemax","100"],["aria-valuemin","0"],["class","progress-bar progress-bar--reset-password mat-progress-bar"],["color","primary"],["mode","indeterminate"],["role","progressbar"]],[[2,"mat-primary",null],[2,"mat-accent",null],[2,"mat-warn",null],[1,"aria-valuenow",0],[1,"mode",0]],null,null,ru.C,ru.n)),uu._19(933888,null,0,tu.a,[au.a,uu.B,uu.C,uu.q,uu.P,uu.Q],{classBase:[0,"classBase"]},null),uu._19(16384,null,0,eu._35,[[2,eu.j],uu.q],null,null),uu._19(49152,null,0,eu._36,[],{color:[0,"color"],mode:[1,"mode"]},null),(l()(),uu._41(null,["\n    "]))],function(l,n){l(n,1,0,"progress-bar progress-bar--reset-password");l(n,3,0,"primary","indeterminate")},function(l,n){l(n,0,0,"primary"==uu._35(n,3).color,"accent"==uu._35(n,3).color,"warn"==uu._35(n,3).color,uu._35(n,3).value,uu._35(n,3).mode)})}function Y(l){return uu._43(0,[(l()(),uu._21(0,null,null,105,"form",[["class","form__container"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,r=l.component;if("submit"===n){e=!1!==uu._35(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==uu._35(l,2).onReset()&&e}if("ngSubmit"===n){e=!1!==r.onSubmit()&&e}return e},null,null)),uu._19(16384,null,0,iu.t,[],null,null),uu._19(16384,[["resetForm",4]],0,iu.n,[[8,null],[8,null]],null,{ngSubmit:"ngSubmit"}),uu._38(2048,null,iu.b,null,[iu.n]),uu._19(16384,null,0,iu.m,[iu.b],null,null),uu._19(737280,null,0,_u.a,[au.a,uu.q,uu.Q],{layout:[0,"layout"]},null),uu._19(1720320,null,0,su.a,[au.a,uu.q,uu.Q,[2,_u.a]],{gap:[0,"gap"]},null),uu._19(933888,null,0,tu.a,[au.a,uu.B,uu.C,uu.q,uu.P,uu.Q],{classBase:[0,"classBase"]},null),(l()(),uu._41(null,["\n  \n  "])),(l()(),uu._21(0,null,null,82,"div",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),uu._19(737280,null,0,_u.a,[au.a,uu.q,uu.Q],{layout:[0,"layout"]},null),uu._19(933888,null,0,tu.a,[au.a,uu.B,uu.C,uu.q,uu.P,uu.Q],{classBase:[0,"classBase"]},null),(l()(),uu._41(null,["\n    "])),(l()(),uu._21(0,null,null,77,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-sm","row"],["fxLayoutGap.gt-sm","10px"]],null,null,null,null,null)),uu._19(737280,null,0,_u.a,[au.a,uu.q,uu.Q],{layout:[0,"layout"],layoutGtSm:[1,"layoutGtSm"]},null),uu._19(1720320,null,0,su.a,[au.a,uu.q,uu.Q,[2,_u.a]],{gapGtSm:[0,"gapGtSm"]},null),uu._19(933888,null,0,tu.a,[au.a,uu.B,uu.C,uu.q,uu.P,uu.Q],{classBase:[0,"classBase"]},null),(l()(),uu._41(null,["\n      "])),(l()(),uu._41(null,["\n      "])),(l()(),uu._21(0,null,null,32,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==uu._35(l,22)._focusInput()&&e}return e},ru.z,ru.k)),uu._19(737280,null,0,cu.a,[au.a,uu.q,uu.Q,[3,_u.a],[3,du.a]],{flex:[0,"flex"]},null),uu._19(933888,null,0,tu.a,[au.a,uu.B,uu.C,uu.q,uu.P,uu.Q],{classBase:[0,"classBase"]},null),uu._19(7389184,null,6,eu._16,[uu.q,uu.j,[2,eu.o]],null,null),uu._39(335544320,1,{_mdInputChild:0}),uu._39(335544320,2,{_placeholderChild:0}),uu._39(603979776,3,{_errorChildren:1}),uu._39(603979776,4,{_hintChildren:1}),uu._39(603979776,5,{_prefixChildren:1}),uu._39(603979776,6,{_suffixChildren:1}),(l()(),uu._41(1,["\n        "])),(l()(),uu._21(0,null,1,11,"input",[["class","mat-input-element"],["equalvalidator","passwordConfirm"],["id","password"],["maxlength","8"],["mdInput",""],["minlength","3"],["name","password"],["placeholder","Password"],["required",""],["reverse","true"],["type","password"]],[[1,"required",0],[1,"minlength",0],[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==uu._35(l,31)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==uu._35(l,31).onTouched()&&e}if("compositionstart"===n){e=!1!==uu._35(l,31)._compositionStart()&&e}if("compositionend"===n){e=!1!==uu._35(l,31)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==uu._35(l,41)._onBlur()&&e}if("focus"===n){e=!1!==uu._35(l,41)._onFocus()&&e}if("input"===n){e=!1!==uu._35(l,41)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.password=u)&&e}return e},null,null)),uu._19(16384,null,0,iu.c,[uu.Q,uu.q,[2,iu.a]],null,null),uu._19(16384,null,0,iu.p,[],{required:[0,"required"]},null),uu._19(540672,null,0,iu.h,[],{minlength:[0,"minlength"]},null),uu._19(540672,null,0,iu.g,[],{maxlength:[0,"maxlength"]},null),uu._19(16384,null,0,Wl,[[8,"passwordConfirm"],[8,"true"]],null,null),uu._38(1024,null,iu.i,function(l,n,u,e){return[l,n,u,e]},[iu.p,iu.h,iu.g,Wl]),uu._38(1024,null,iu.j,function(l){return[l]},[iu.c]),uu._19(671744,[["password",4]],0,iu.o,[[2,iu.b],[2,iu.i],[8,null],[2,iu.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),uu._38(2048,null,iu.k,null,[iu.o]),uu._19(16384,null,0,iu.l,[iu.k],null,null),uu._19(16384,[[1,4]],0,eu._17,[uu.q,uu.Q,ou.L,[2,iu.k],[2,iu.n],[2,iu.e],[2,eu.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),uu._41(1,["\n\n        "])),(l()(),uu._15(16777216,null,4,1,null,Z)),uu._19(16384,null,0,mu.m,[uu._3,uu.Z],{ngIf:[0,"ngIf"]},null),(l()(),uu._41(1,["\n        "])),(l()(),uu._15(16777216,null,4,1,null,U)),uu._19(16384,null,0,mu.m,[uu._3,uu.Z],{ngIf:[0,"ngIf"]},null),(l()(),uu._41(1,["\n        "])),(l()(),uu._15(16777216,null,4,1,null,X)),uu._19(16384,null,0,mu.m,[uu._3,uu.Z],{ngIf:[0,"ngIf"]},null),(l()(),uu._41(1,["\n      "])),(l()(),uu._41(null,["\n\n      "])),(l()(),uu._41(null,["\n      "])),(l()(),uu._21(0,null,null,35,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==uu._35(l,57)._focusInput()&&e}return e},ru.z,ru.k)),uu._19(737280,null,0,cu.a,[au.a,uu.q,uu.Q,[3,_u.a],[3,du.a]],{flex:[0,"flex"]},null),uu._19(933888,null,0,tu.a,[au.a,uu.B,uu.C,uu.q,uu.P,uu.Q],{classBase:[0,"classBase"]},null),uu._19(7389184,null,6,eu._16,[uu.q,uu.j,[2,eu.o]],null,null),uu._39(335544320,7,{_mdInputChild:0}),uu._39(335544320,8,{_placeholderChild:0}),uu._39(603979776,9,{_errorChildren:1}),uu._39(603979776,10,{_hintChildren:1}),uu._39(603979776,11,{_prefixChildren:1}),uu._39(603979776,12,{_suffixChildren:1}),(l()(),uu._41(1,["\n        "])),(l()(),uu._21(0,null,1,11,"input",[["class","mat-input-element"],["equalvalidator","password"],["id","passwordConfirm"],["maxlength","8"],["mdInput",""],["minlength","3"],["name","passwordConfirm"],["placeholder","Confirm password"],["required",""],["type","password"]],[[1,"required",0],[1,"minlength",0],[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==uu._35(l,66)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==uu._35(l,66).onTouched()&&e}if("compositionstart"===n){e=!1!==uu._35(l,66)._compositionStart()&&e}if("compositionend"===n){e=!1!==uu._35(l,66)._compositionEnd(u.target.value)&&e}if("blur"===n){e=!1!==uu._35(l,76)._onBlur()&&e}if("focus"===n){e=!1!==uu._35(l,76)._onFocus()&&e}if("input"===n){e=!1!==uu._35(l,76)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model["password-confirm"]=u)&&e}return e},null,null)),uu._19(16384,null,0,iu.c,[uu.Q,uu.q,[2,iu.a]],null,null),uu._19(16384,null,0,iu.p,[],{required:[0,"required"]},null),uu._19(540672,null,0,iu.h,[],{minlength:[0,"minlength"]},null),uu._19(540672,null,0,iu.g,[],{maxlength:[0,"maxlength"]},null),uu._19(16384,null,0,Wl,[[8,"password"],[8,null]],null,null),uu._38(1024,null,iu.i,function(l,n,u,e){return[l,n,u,e]},[iu.p,iu.h,iu.g,Wl]),uu._38(1024,null,iu.j,function(l){return[l]},[iu.c]),uu._19(671744,[["passwordConfirm",4]],0,iu.o,[[2,iu.b],[2,iu.i],[8,null],[2,iu.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),uu._38(2048,null,iu.k,null,[iu.o]),uu._19(16384,null,0,iu.l,[iu.k],null,null),uu._19(16384,[[7,4]],0,eu._17,[uu.q,uu.Q,ou.L,[2,iu.k],[2,iu.n],[2,iu.e],[2,eu.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),uu._41(1,["\n\n        "])),(l()(),uu._15(16777216,null,4,1,null,V)),uu._19(16384,null,0,mu.m,[uu._3,uu.Z],{ngIf:[0,"ngIf"]},null),(l()(),uu._41(1,["\n        "])),(l()(),uu._15(16777216,null,4,1,null,A)),uu._19(16384,null,0,mu.m,[uu._3,uu.Z],{ngIf:[0,"ngIf"]},null),(l()(),uu._41(1,["\n        "])),(l()(),uu._15(16777216,null,4,1,null,z)),uu._19(16384,null,0,mu.m,[uu._3,uu.Z],{ngIf:[0,"ngIf"]},null),(l()(),uu._41(1,["\n        "])),(l()(),uu._15(16777216,null,4,1,null,W)),uu._19(16384,null,0,mu.m,[uu._3,uu.Z],{ngIf:[0,"ngIf"]},null),(l()(),uu._41(1,["\n      "])),(l()(),uu._41(null,["\n    "])),(l()(),uu._41(null,["\n    \n    \n    \n  "])),(l()(),uu._41(null,["\n  \n  "])),(l()(),uu._21(0,null,null,11,"div",[["class","form__actions"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutAlign.gt-xs","center none"],["fxLayoutGap","10px"]],null,null,null,null,null)),uu._19(737280,null,0,_u.a,[au.a,uu.q,uu.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),uu._19(1720320,null,0,su.a,[au.a,uu.q,uu.Q,[2,_u.a]],{gap:[0,"gap"]},null),uu._19(737280,null,0,pu.a,[au.a,uu.q,uu.Q,[2,_u.a]],{alignGtXs:[0,"alignGtXs"]},null),uu._19(933888,null,0,tu.a,[au.a,uu.B,uu.C,uu.q,uu.P,uu.Q],{classBase:[0,"classBase"]},null),(l()(),uu._41(null,["\n    "])),(l()(),uu._15(16777216,null,null,1,null,H)),uu._19(16384,null,0,mu.m,[uu._3,uu.Z],{ngIf:[0,"ngIf"]},null),(l()(),uu._41(null,["\n\n    "])),(l()(),uu._15(16777216,null,null,1,null,J)),uu._19(16384,null,0,mu.m,[uu._3,uu.Z],{ngIf:[0,"ngIf"]},null),(l()(),uu._41(null,["\n  "])),(l()(),uu._41(null,["\n\n"]))],function(l,n){var u=n.component;l(n,5,0,"column");l(n,6,0,"10px");l(n,7,0,"form__container");l(n,10,0,"column");l(n,11,0,"form__fields");l(n,14,0,"column","row");l(n,15,0,"10px");l(n,16,0,"form__fields__row");l(n,20,0,"");l(n,21,0,"form__field");l(n,32,0,"");l(n,33,0,"3");l(n,34,0,"8");l(n,38,0,"password",u.model.password);l(n,41,0,"password","Password","","password"),l(n,44,0,uu._35(n,38).invalid&&(uu._35(n,38).dirty||uu._35(n,38).touched)&&uu._35(n,38).errors.required),l(n,47,0,uu._35(n,38).invalid&&(uu._35(n,38).dirty||uu._35(n,38).touched)&&uu._35(n,38).errors.minlength),l(n,50,0,uu._35(n,38).invalid&&(uu._35(n,38).dirty||uu._35(n,38).touched)&&uu._35(n,38).errors.maxlength);l(n,55,0,"");l(n,56,0,"form__field");l(n,67,0,"");l(n,68,0,"3");l(n,69,0,"8");l(n,73,0,"passwordConfirm",u.model["password-confirm"]);l(n,76,0,"passwordConfirm","Confirm password","","password"),l(n,79,0,uu._35(n,73).invalid&&(uu._35(n,73).dirty||uu._35(n,73).touched)&&uu._35(n,73).errors.required),l(n,82,0,uu._35(n,73).invalid&&(uu._35(n,73).dirty||uu._35(n,73).touched)&&uu._35(n,73).errors.minlength),l(n,85,0,uu._35(n,73).invalid&&(uu._35(n,73).dirty||uu._35(n,73).touched)&&uu._35(n,73).errors.maxlength),l(n,88,0,uu._35(n,73).invalid&&(uu._35(n,73).dirty||uu._35(n,73).touched)&&uu._35(n,73).errors.equalvalidator);l(n,94,0,"column","row");l(n,95,0,"10px");l(n,96,0,"center none");l(n,97,0,"form__actions"),l(n,100,0,!u.resetPasswordServiceRunning),l(n,103,0,u.resetPasswordServiceRunning)},function(l,n){l(n,0,0,uu._35(n,4).ngClassUntouched,uu._35(n,4).ngClassTouched,uu._35(n,4).ngClassPristine,uu._35(n,4).ngClassDirty,uu._35(n,4).ngClassValid,uu._35(n,4).ngClassInvalid,uu._35(n,4).ngClassPending);l(n,19,0,null,uu._35(n,22)._mdInputChild._isErrorState(),uu._35(n,22)._mdInputChild.focused,uu._35(n,22)._shouldForward("untouched"),uu._35(n,22)._shouldForward("touched"),uu._35(n,22)._shouldForward("pristine"),uu._35(n,22)._shouldForward("dirty"),uu._35(n,22)._shouldForward("valid"),uu._35(n,22)._shouldForward("invalid"),uu._35(n,22)._shouldForward("pending")),l(n,30,1,[uu._35(n,32).required?"":null,uu._35(n,33).minlength?uu._35(n,33).minlength:null,uu._35(n,34).maxlength?uu._35(n,34).maxlength:null,uu._35(n,40).ngClassUntouched,uu._35(n,40).ngClassTouched,uu._35(n,40).ngClassPristine,uu._35(n,40).ngClassDirty,uu._35(n,40).ngClassValid,uu._35(n,40).ngClassInvalid,uu._35(n,40).ngClassPending,uu._35(n,41).id,uu._35(n,41).placeholder,uu._35(n,41).disabled,uu._35(n,41).required,uu._35(n,41).ariaDescribedby||null,uu._35(n,41)._isErrorState()]);l(n,54,0,null,uu._35(n,57)._mdInputChild._isErrorState(),uu._35(n,57)._mdInputChild.focused,uu._35(n,57)._shouldForward("untouched"),uu._35(n,57)._shouldForward("touched"),uu._35(n,57)._shouldForward("pristine"),uu._35(n,57)._shouldForward("dirty"),uu._35(n,57)._shouldForward("valid"),uu._35(n,57)._shouldForward("invalid"),uu._35(n,57)._shouldForward("pending")),l(n,65,1,[uu._35(n,67).required?"":null,uu._35(n,68).minlength?uu._35(n,68).minlength:null,uu._35(n,69).maxlength?uu._35(n,69).maxlength:null,uu._35(n,75).ngClassUntouched,uu._35(n,75).ngClassTouched,uu._35(n,75).ngClassPristine,uu._35(n,75).ngClassDirty,uu._35(n,75).ngClassValid,uu._35(n,75).ngClassInvalid,uu._35(n,75).ngClassPending,uu._35(n,76).id,uu._35(n,76).placeholder,uu._35(n,76).disabled,uu._35(n,76).required,uu._35(n,76).ariaDescribedby||null,uu._35(n,76)._isErrorState()])})}function K(l){return uu._43(0,[(l()(),uu._21(0,null,null,1,"app-reset-password",[],null,null,null,Y,hu)),uu._19(114688,null,0,nu,[Fl,gu.k,gu.a,Gl],null,null)],function(l,n){l(n,1,0)},null)}function $(l){return ku._43(0,[ku._36(0,Su.c,[ku.D]),ku._36(0,Su.e,[ku.D]),ku._36(0,Su.f,[ku.D]),(l()(),ku._21(0,null,null,51,"md-card",[["class","currency-card mat-card"]],null,null,null,Pu.v,Pu.f)),ku._19(933888,null,0,Qu.a,[Fu.a,ku.B,ku.C,ku.q,ku.P,ku.Q],{classBase:[0,"classBase"]},null),ku._19(16384,null,0,Lu._35,[[2,Lu.j],ku.q],null,null),ku._19(49152,null,0,Lu.F,[],null,null),(l()(),ku._41(0,["\n  "])),(l()(),ku._21(0,null,0,22,"md-card-header",[["class","mat-card-header"]],null,null,null,Pu.u,Pu.g)),ku._19(16384,null,0,Lu._35,[[2,Lu.j],ku.q],null,null),ku._19(49152,null,0,Lu.I,[],null,null),(l()(),ku._41(2,["\n    "])),(l()(),ku._21(0,null,0,3,"div",[["class","header-image mat-card-avatar"],["md-card-avatar",""]],[[2,"header-image__xmr",null],[2,"header-image__btc",null]],null,null,null,null)),ku._19(933888,null,0,Qu.a,[Fu.a,ku.B,ku.C,ku.q,ku.P,ku.Q],{classBase:[0,"classBase"]},null),ku._19(16384,null,0,Lu.G,[],null,null),(l()(),ku._41(null,["\n    "])),(l()(),ku._41(2,["\n    "])),(l()(),ku._21(0,null,1,3,"md-card-title",[["class","mat-card-title "]],null,null,null,null,null)),ku._19(16384,null,0,Lu._35,[[2,Lu.j],ku.q],null,null),ku._19(16384,null,0,Lu.L,[],null,null),(l()(),ku._41(null,[""," (",")"])),(l()(),ku._41(2,["\n    "])),(l()(),ku._21(0,null,1,7,"md-card-subtitle",[["class","mat-card-subtitle "]],null,null,null,null,null)),ku._19(16384,null,0,Lu._35,[[2,Lu.j],ku.q],null,null),ku._19(16384,null,0,Lu.K,[],null,null),(l()(),ku._41(null,["\n      today at "])),(l()(),ku._21(0,null,null,2,"strong",[],null,null,null,null,null)),(l()(),ku._41(null,["",""])),ku._37(1),(l()(),ku._41(null,["\n    "])),(l()(),ku._41(2,["\n  "])),(l()(),ku._41(0,["\n  "])),(l()(),ku._21(0,null,0,21,"md-card-content",[["class","mat-card-content"]],null,null,null,null,null)),ku._19(16384,null,0,Lu._35,[[2,Lu.j],ku.q],null,null),ku._19(16384,null,0,Lu.H,[],null,null),(l()(),ku._41(null,["\n    Investment: "])),(l()(),ku._21(0,null,null,2,"strong",[],null,null,null,null,null)),(l()(),ku._41(null,["",""])),ku._37(1),(l()(),ku._41(null,[" \n    "])),(l()(),ku._21(0,null,null,0,"br",[],null,null,null,null,null)),(l()(),ku._41(null,["\n\n    on "," at ","\n\n    "])),ku._37(1),ku._37(1),(l()(),ku._21(0,null,null,8,"div",[],[[2,"color__green",null],[2,"color__red",null]],null,null,null,null)),(l()(),ku._41(null,["\n      "])),(l()(),ku._21(0,null,null,0,"br",[],null,null,null,null,null)),(l()(),ku._41(null,["\n      ROI: "])),(l()(),ku._21(0,null,null,2,"strong",[],null,null,null,null,null)),(l()(),ku._41(null,["",""])),ku._37(1),(l()(),ku._41(null,[" (","%)\n    "])),ku._37(2),(l()(),ku._41(null,["\n  "])),(l()(),ku._41(0,["\n"]))],function(l,n){l(n,4,0,"currency-card");l(n,13,0,"header-image")},function(l,n){var u=n.component;l(n,12,0,"xmr"===u.cryptoCurrency,"btc"===u.cryptoCurrency),l(n,20,0,"xmr"===u.cryptoCurrency?"Monero":"Bitcoin",u.cryptoCurrencyCount),l(n,27,0,ku._42(n,27,0,l(n,28,0,ku._35(n,0),u.cryptoCurrencyCurrentPrice))),l(n,37,0,ku._42(n,37,0,l(n,38,0,ku._35(n,0),u.usdFromCryptoCurrencyWhenBought))),l(n,41,0,ku._42(n,41,0,l(n,42,0,ku._35(n,1),u.cryptoCurrencyBuyDate)),ku._42(n,41,1,l(n,43,0,ku._35(n,0),u.cryptoCurrencyBuyPrice))),l(n,44,0,u.usdFromCryptoCurrency>=u.usdFromCryptoCurrencyWhenBought,u.usdFromCryptoCurrency<u.usdFromCryptoCurrencyWhenBought),l(n,49,0,ku._42(n,49,0,l(n,50,0,ku._35(n,0),u.usdFromCryptoCurrency))),l(n,51,0,ku._42(n,51,0,l(n,52,0,ku._35(n,2),u.usdFromCryptoCurrency/u.usdFromCryptoCurrencyWhenBought*100,"1.1-2")))})}function ll(l){return ku._43(0,[(l()(),ku._21(0,null,null,2,"crypto-currency",[],null,null,null,$,Gu)),ku._38(512,null,xu,xu,[ju.e]),ku._19(114688,null,0,Iu,[xu],null,null)],function(l,n){l(n,2,0)},null)}function nl(l){return Tu._43(0,[(l()(),Tu._21(0,null,null,66,"div",[["fxLayout","column"],["fxLayoutGap","10px"]],null,null,null,null,null)),Tu._19(737280,null,0,Eu.a,[Ou.a,Tu.q,Tu.Q],{layout:[0,"layout"]},null),Tu._19(1720320,null,0,Nu.a,[Ou.a,Tu.q,Tu.Q,[2,Eu.a]],{gap:[0,"gap"]},null),(l()(),Tu._41(null,["\n  "])),(l()(),Tu._21(0,null,null,15,"div",[["fxLayout","row"],["fxLayout.xs","column"],["fxLayoutGap","10px"]],null,null,null,null,null)),Tu._19(737280,null,0,Eu.a,[Ou.a,Tu.q,Tu.Q],{layout:[0,"layout"],layoutXs:[1,"layoutXs"]},null),Tu._19(1720320,null,0,Nu.a,[Ou.a,Tu.q,Tu.Q,[2,Eu.a]],{gap:[0,"gap"]},null),(l()(),Tu._41(null,["\n    "])),(l()(),Tu._21(0,null,null,4,"crypto-currency",[["fxFlex",""]],null,[[null,"totalReturns"]],function(l,n,u){var e=!0,r=l.component;if("totalReturns"===n){e=!1!==r.setTotals(u)&&e}return e},$,Gu)),Tu._19(737280,null,0,Zu.a,[Ou.a,Tu.q,Tu.Q,[3,Eu.a],[3,Uu.a]],{flex:[0,"flex"]},null),Tu._38(512,null,xu,xu,[Xu.e]),Tu._19(114688,null,0,Iu,[xu],{cryptoCurrency:[0,"cryptoCurrency"],cryptoCurrencyCount:[1,"cryptoCurrencyCount"],cryptoCurrencyBuyPrice:[2,"cryptoCurrencyBuyPrice"],cryptoCurrencyBuyDate:[3,"cryptoCurrencyBuyDate"]},{totalReturns:"totalReturns"}),(l()(),Tu._41(null,["\n    "])),(l()(),Tu._41(null,["\n\n    "])),(l()(),Tu._21(0,null,null,4,"crypto-currency",[["fxFlex",""]],null,[[null,"totalReturns"]],function(l,n,u){var e=!0,r=l.component;if("totalReturns"===n){e=!1!==r.setTotals(u)&&e}return e},$,Gu)),Tu._19(737280,null,0,Zu.a,[Ou.a,Tu.q,Tu.Q,[3,Eu.a],[3,Uu.a]],{flex:[0,"flex"]},null),Tu._38(512,null,xu,xu,[Xu.e]),Tu._19(114688,null,0,Iu,[xu],{cryptoCurrency:[0,"cryptoCurrency"],cryptoCurrencyCount:[1,"cryptoCurrencyCount"],cryptoCurrencyBuyPrice:[2,"cryptoCurrencyBuyPrice"],cryptoCurrencyBuyDate:[3,"cryptoCurrencyBuyDate"]},{totalReturns:"totalReturns"}),(l()(),Tu._41(null,["\n    "])),(l()(),Tu._41(null,["\n  "])),(l()(),Tu._41(null,["\n\n  "])),(l()(),Tu._21(0,null,null,15,"div",[["fxLayout","row"],["fxLayout.xs","column"],["fxLayoutGap","10px"]],null,null,null,null,null)),Tu._19(737280,null,0,Eu.a,[Ou.a,Tu.q,Tu.Q],{layout:[0,"layout"],layoutXs:[1,"layoutXs"]},null),Tu._19(1720320,null,0,Nu.a,[Ou.a,Tu.q,Tu.Q,[2,Eu.a]],{gap:[0,"gap"]},null),(l()(),Tu._41(null,["\n    "])),(l()(),Tu._21(0,null,null,4,"crypto-currency",[["fxFlex",""]],null,[[null,"totalReturns"]],function(l,n,u){var e=!0,r=l.component;if("totalReturns"===n){e=!1!==r.setTotals(u)&&e}return e},$,Gu)),Tu._19(737280,null,0,Zu.a,[Ou.a,Tu.q,Tu.Q,[3,Eu.a],[3,Uu.a]],{flex:[0,"flex"]},null),Tu._38(512,null,xu,xu,[Xu.e]),Tu._19(114688,null,0,Iu,[xu],{cryptoCurrency:[0,"cryptoCurrency"],cryptoCurrencyCount:[1,"cryptoCurrencyCount"],cryptoCurrencyBuyPrice:[2,"cryptoCurrencyBuyPrice"],cryptoCurrencyBuyDate:[3,"cryptoCurrencyBuyDate"]},{totalReturns:"totalReturns"}),(l()(),Tu._41(null,["\n    "])),(l()(),Tu._41(null,["\n\n    "])),(l()(),Tu._21(0,null,null,4,"crypto-currency",[["fxFlex",""]],null,[[null,"totalReturns"]],function(l,n,u){var e=!0,r=l.component;if("totalReturns"===n){e=!1!==r.setTotals(u)&&e}return e},$,Gu)),Tu._19(737280,null,0,Zu.a,[Ou.a,Tu.q,Tu.Q,[3,Eu.a],[3,Uu.a]],{flex:[0,"flex"]},null),Tu._38(512,null,xu,xu,[Xu.e]),Tu._19(114688,null,0,Iu,[xu],{cryptoCurrency:[0,"cryptoCurrency"],cryptoCurrencyCount:[1,"cryptoCurrencyCount"],cryptoCurrencyBuyPrice:[2,"cryptoCurrencyBuyPrice"],cryptoCurrencyBuyDate:[3,"cryptoCurrencyBuyDate"]},{totalReturns:"totalReturns"}),(l()(),Tu._41(null,["\n    "])),(l()(),Tu._41(null,["\n  "])),(l()(),Tu._41(null,["\n\n  "])),(l()(),Tu._21(0,null,null,27,"md-card",[["class","totals-card mat-card"],["fxFlex",""]],null,null,null,Vu.v,Vu.f)),Tu._19(737280,null,0,Zu.a,[Ou.a,Tu.q,Tu.Q,[3,Eu.a],[3,Uu.a]],{flex:[0,"flex"]},null),Tu._19(933888,null,0,Au.a,[Ou.a,Tu.B,Tu.C,Tu.q,Tu.P,Tu.Q],{classBase:[0,"classBase"]},null),Tu._19(16384,null,0,zu._35,[[2,zu.j],Tu.q],null,null),Tu._19(49152,null,0,zu.F,[],null,null),(l()(),Tu._41(0,["\n    "])),(l()(),Tu._21(0,null,0,20,"md-card-content",[["class","mat-card-content"],["fxLayout","row"],["fxLayout.xs","column"],["fxLayoutAlign","space-around center"],["fxLayoutGap","10px"]],null,null,null,null,null)),Tu._19(737280,null,0,Eu.a,[Ou.a,Tu.q,Tu.Q],{layout:[0,"layout"],layoutXs:[1,"layoutXs"]},null),Tu._19(1720320,null,0,Nu.a,[Ou.a,Tu.q,Tu.Q,[2,Eu.a]],{gap:[0,"gap"]},null),Tu._19(737280,null,0,Wu.a,[Ou.a,Tu.q,Tu.Q,[2,Eu.a]],{align:[0,"align"]},null),Tu._19(16384,null,0,zu._35,[[2,zu.j],Tu.q],null,null),Tu._19(16384,null,0,zu.H,[],null,null),(l()(),Tu._41(null,["\n      "])),(l()(),Tu._21(0,null,null,4,"p",[],null,null,null,null,null)),(l()(),Tu._41(null,["Total Investments: "])),(l()(),Tu._21(0,null,null,2,"strong",[],null,null,null,null,null)),(l()(),Tu._41(null,["",""])),Tu._37(1),(l()(),Tu._41(null,["\n      "])),(l()(),Tu._21(0,null,null,6,"p",[],[[2,"color__green",null],[2,"color__red",null]],null,null,null,null)),(l()(),Tu._41(null,["\n        Total ROI: "])),(l()(),Tu._21(0,null,null,2,"strong",[],null,null,null,null,null)),(l()(),Tu._41(null,["",""])),Tu._37(1),(l()(),Tu._41(null,[" (","%)\n      "])),Tu._37(2),(l()(),Tu._41(null,["\n    "])),(l()(),Tu._41(0,["\n  "])),(l()(),Tu._41(null,["\n  \n"]))],function(l,n){var u=n.component;l(n,1,0,"column");l(n,2,0,"10px");l(n,5,0,"row","column");l(n,6,0,"10px");l(n,9,0,"");l(n,11,0,"xmr",218.85627651,50,u.xmrBuyDate);l(n,15,0,"");l(n,17,0,"btc",1.28129356,2359.99,u.btcBuyDate);l(n,22,0,"row","column");l(n,23,0,"10px");l(n,26,0,"");l(n,28,0,"xmr",5.94093753,87.5282,u.xmrBuyDate2);l(n,32,0,"");l(n,34,0,"xmr",5.72806551,90.9556,u.xmrBuyDate3);l(n,39,0,"");l(n,40,0,"totals-card");l(n,45,0,"row","column");l(n,46,0,"10px");l(n,47,0,"space-around center")},function(l,n){var u=n.component;l(n,54,0,Tu._42(n,54,0,l(n,55,0,Tu._35(n.parent,0),u.totalInvestment))),l(n,57,0,u.totalReturn>=u.totalInvestment,u.totalReturn<u.totalInvestment),l(n,60,0,Tu._42(n,60,0,l(n,61,0,Tu._35(n.parent,0),u.totalReturn))),l(n,62,0,Tu._42(n,62,0,l(n,63,0,Tu._35(n.parent,1),u.totalReturn/u.totalInvestment*100,"1.1-2")))})}function ul(l){return Tu._43(0,[(l()(),Tu._21(0,null,null,21,"div",[["fxLayout","column"],["fxLayoutGap","10px"]],null,null,null,null,null)),Tu._19(737280,null,0,Eu.a,[Ou.a,Tu.q,Tu.Q],{layout:[0,"layout"]},null),Tu._19(1720320,null,0,Nu.a,[Ou.a,Tu.q,Tu.Q,[2,Eu.a]],{gap:[0,"gap"]},null),(l()(),Tu._41(null,["\n  "])),(l()(),Tu._21(0,null,null,16,"md-card",[["class","totals-card mat-card"],["fxFlex",""]],null,null,null,Vu.v,Vu.f)),Tu._19(737280,null,0,Zu.a,[Ou.a,Tu.q,Tu.Q,[3,Eu.a],[3,Uu.a]],{flex:[0,"flex"]},null),Tu._19(933888,null,0,Au.a,[Ou.a,Tu.B,Tu.C,Tu.q,Tu.P,Tu.Q],{classBase:[0,"classBase"]},null),Tu._19(16384,null,0,zu._35,[[2,zu.j],Tu.q],null,null),Tu._19(49152,null,0,zu.F,[],null,null),(l()(),Tu._41(0,["\n    "])),(l()(),Tu._21(0,null,0,9,"md-card-content",[["class","mat-card-content"],["fxLayout","row"],["fxLayout.xs","column"],["fxLayoutAlign","space-around center"],["fxLayoutGap","10px"]],null,null,null,null,null)),Tu._19(737280,null,0,Eu.a,[Ou.a,Tu.q,Tu.Q],{layout:[0,"layout"],layoutXs:[1,"layoutXs"]},null),Tu._19(1720320,null,0,Nu.a,[Ou.a,Tu.q,Tu.Q,[2,Eu.a]],{gap:[0,"gap"]},null),Tu._19(737280,null,0,Wu.a,[Ou.a,Tu.q,Tu.Q,[2,Eu.a]],{align:[0,"align"]},null),Tu._19(16384,null,0,zu._35,[[2,zu.j],Tu.q],null,null),Tu._19(16384,null,0,zu.H,[],null,null),(l()(),Tu._41(null,["\n      "])),(l()(),Tu._21(0,null,null,1,"p",[],null,null,null,null,null)),(l()(),Tu._41(null,["\n        You do not have any investment to show\n      "])),(l()(),Tu._41(null,["\n    "])),(l()(),Tu._41(0,["\n  "])),(l()(),Tu._41(null,["\n  \n"]))],function(l,n){l(n,1,0,"column");l(n,2,0,"10px");l(n,5,0,"");l(n,6,0,"totals-card");l(n,11,0,"row","column");l(n,12,0,"10px");l(n,13,0,"space-around center")},null)}function el(l){return Tu._43(0,[Tu._36(0,Hu.c,[Tu.D]),Tu._36(0,Hu.f,[Tu.D]),(l()(),Tu._15(16777216,null,null,1,null,nl)),Tu._19(16384,null,0,Hu.m,[Tu._3,Tu.Z],{ngIf:[0,"ngIf"]},null),(l()(),Tu._41(null,["\n\n"])),(l()(),Tu._15(16777216,null,null,1,null,ul)),Tu._19(16384,null,0,Hu.m,[Tu._3,Tu.Z],{ngIf:[0,"ngIf"]},null)],function(l,n){var u=n.component;l(n,3,0,u.showInvestments),l(n,6,0,!u.showInvestments)},null)}function rl(l){return Tu._43(0,[(l()(),Tu._21(0,null,null,1,"investments-dashboard",[],null,null,null,el,Ku)),Tu._19(114688,null,0,Du,[Ju.a,Gl],null,null)],function(l,n){l(n,1,0)},null)}function tl(l){return ue._43(0,[],null,null)}function al(l){return ue._43(0,[(l()(),ue._21(0,null,null,1,"app-calculators-dashboard",[],null,null,null,tl,re)),ue._19(114688,null,0,ne,[Gl],null,null)],function(l,n){l(n,1,0)},null)}function ol(l){return ie._43(0,[(l()(),ie._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),ie._19(16384,null,0,_e._35,[[2,_e.j],ie.q],null,null),ie._19(16384,[[4,4]],0,_e._2,[],null,null),(l()(),ie._41(null,["Purchase price is required"]))],null,null)}function il(l){return ie._43(0,[(l()(),ie._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),ie._19(16384,null,0,_e._35,[[2,_e.j],ie.q],null,null),ie._19(16384,[[10,4]],0,_e._2,[],null,null),(l()(),ie._41(null,["Market value is required"]))],null,null)}function _l(l){return ie._43(0,[(l()(),ie._21(0,null,null,3,"md-error",[["class","mat-input-error"]],null,null,null,null,null)),ie._19(16384,null,0,_e._35,[[2,_e.j],ie.q],null,null),ie._19(16384,[[16,4]],0,_e._2,[],null,null),(l()(),ie._41(null,["Loan coverage is required"]))],null,null)}function sl(l){return ie._43(0,[(l()(),ie._21(0,null,null,75,"section",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),ie._19(737280,null,0,se.a,[ce.a,ie.q,ie.Q],{layout:[0,"layout"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),(l()(),ie._41(null,["\n    "])),(l()(),ie._21(0,null,null,70,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutGap.gt-xs","10px"]],null,null,null,null,null)),ie._19(737280,null,0,se.a,[ce.a,ie.q,ie.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),ie._19(1720320,null,0,me.a,[ce.a,ie.q,ie.Q,[2,se.a]],{gapGtXs:[0,"gapGtXs"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),(l()(),ie._41(null,["\n      "])),(l()(),ie._41(null,["\n      "])),(l()(),ie._21(0,null,null,19,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==ie._35(l,13)._focusInput()&&e}return e},pe.z,pe.k)),ie._19(737280,null,0,ge.a,[ce.a,ie.q,ie.Q,[3,se.a],[3,fe.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),ie._19(7389184,null,6,_e._16,[ie.q,ie.j,[2,_e.o]],null,null),ie._39(335544320,26,{_mdInputChild:0}),ie._39(335544320,27,{_placeholderChild:0}),ie._39(603979776,28,{_errorChildren:1}),ie._39(603979776,29,{_hintChildren:1}),ie._39(603979776,30,{_prefixChildren:1}),ie._39(603979776,31,{_suffixChildren:1}),(l()(),ie._41(1,["\n        "])),(l()(),ie._21(0,null,1,7,"input",[["class","mat-input-element"],["id","renovationCost"],["mdInput",""],["name","renovationCost"],["placeholder","Renovation cost"],["type","number"],["value","model.renovationCost"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==ie._35(l,22)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,22).onTouched()&&e}if("compositionstart"===n){e=!1!==ie._35(l,22)._compositionStart()&&e}if("compositionend"===n){e=!1!==ie._35(l,22)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==ie._35(l,23).onChange(u.target.value)&&e}if("input"===n){e=!1!==ie._35(l,23).onChange(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,23).onTouched()&&e}if("blur"===n){e=!1!==ie._35(l,28)._onBlur()&&e}if("focus"===n){e=!1!==ie._35(l,28)._onFocus()&&e}if("input"===n){e=!1!==ie._35(l,28)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.renovationCost=u)&&e}return e},null,null)),ie._19(16384,null,0,he.c,[ie.Q,ie.q,[2,he.a]],null,null),ie._19(16384,null,0,he.s,[ie.Q,ie.q],null,null),ie._38(1024,null,he.j,function(l,n){return[l,n]},[he.c,he.s]),ie._19(671744,[["renovationCost",4]],0,he.o,[[2,he.b],[8,null],[8,null],[2,he.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),ie._38(2048,null,he.k,null,[he.o]),ie._19(16384,null,0,he.l,[he.k],null,null),ie._19(16384,[[26,4]],0,_e._17,[ie.q,ie.Q,ye.L,[2,he.k],[2,he.n],[2,he.e],[2,_e.m]],{id:[0,"id"],placeholder:[1,"placeholder"],type:[2,"type"]},null),(l()(),ie._41(1,["\n      "])),(l()(),ie._41(null,["\n      \n      "])),(l()(),ie._41(null,["\n      "])),(l()(),ie._21(0,null,null,19,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==ie._35(l,35)._focusInput()&&e}return e},pe.z,pe.k)),ie._19(737280,null,0,ge.a,[ce.a,ie.q,ie.Q,[3,se.a],[3,fe.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),ie._19(7389184,null,6,_e._16,[ie.q,ie.j,[2,_e.o]],null,null),ie._39(335544320,32,{_mdInputChild:0}),ie._39(335544320,33,{_placeholderChild:0}),ie._39(603979776,34,{_errorChildren:1}),ie._39(603979776,35,{_hintChildren:1}),ie._39(603979776,36,{_prefixChildren:1}),ie._39(603979776,37,{_suffixChildren:1}),(l()(),ie._41(1,["\n        "])),(l()(),ie._21(0,null,1,7,"input",[["class","mat-input-element"],["id","newMarketValue"],["mdInput",""],["name","newMarketValue"],["placeholder","After renovations market value"],["type","number"],["value","model.newMarketValue"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==ie._35(l,44)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,44).onTouched()&&e}if("compositionstart"===n){e=!1!==ie._35(l,44)._compositionStart()&&e}if("compositionend"===n){e=!1!==ie._35(l,44)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==ie._35(l,45).onChange(u.target.value)&&e}if("input"===n){e=!1!==ie._35(l,45).onChange(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,45).onTouched()&&e}if("blur"===n){e=!1!==ie._35(l,50)._onBlur()&&e}if("focus"===n){e=!1!==ie._35(l,50)._onFocus()&&e}if("input"===n){e=!1!==ie._35(l,50)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.newMarketValue=u)&&e}return e},null,null)),ie._19(16384,null,0,he.c,[ie.Q,ie.q,[2,he.a]],null,null),ie._19(16384,null,0,he.s,[ie.Q,ie.q],null,null),ie._38(1024,null,he.j,function(l,n){return[l,n]},[he.c,he.s]),ie._19(671744,[["newMarketValue",4]],0,he.o,[[2,he.b],[8,null],[8,null],[2,he.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),ie._38(2048,null,he.k,null,[he.o]),ie._19(16384,null,0,he.l,[he.k],null,null),ie._19(16384,[[32,4]],0,_e._17,[ie.q,ie.Q,ye.L,[2,he.k],[2,he.n],[2,he.e],[2,_e.m]],{id:[0,"id"],placeholder:[1,"placeholder"],type:[2,"type"]},null),(l()(),ie._41(1,["\n      "])),(l()(),ie._41(null,["\n      \n      "])),(l()(),ie._41(null,["\n      "])),(l()(),ie._21(0,null,null,19,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==ie._35(l,57)._focusInput()&&e}return e},pe.z,pe.k)),ie._19(737280,null,0,ge.a,[ce.a,ie.q,ie.Q,[3,se.a],[3,fe.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),ie._19(7389184,null,6,_e._16,[ie.q,ie.j,[2,_e.o]],null,null),ie._39(335544320,38,{_mdInputChild:0}),ie._39(335544320,39,{_placeholderChild:0}),ie._39(603979776,40,{_errorChildren:1}),ie._39(603979776,41,{_hintChildren:1}),ie._39(603979776,42,{_prefixChildren:1}),ie._39(603979776,43,{_suffixChildren:1}),(l()(),ie._41(1,["\n        "])),(l()(),ie._21(0,null,1,7,"input",[["class","mat-input-element"],["id","firstYearRepayment"],["mdInput",""],["name","firstYearRepayment"],["placeholder","First year loan repayments"],["type","number"],["value","model.firstYearRepayment"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==ie._35(l,66)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,66).onTouched()&&e}if("compositionstart"===n){e=!1!==ie._35(l,66)._compositionStart()&&e}if("compositionend"===n){e=!1!==ie._35(l,66)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==ie._35(l,67).onChange(u.target.value)&&e}if("input"===n){e=!1!==ie._35(l,67).onChange(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,67).onTouched()&&e}if("blur"===n){e=!1!==ie._35(l,72)._onBlur()&&e}if("focus"===n){e=!1!==ie._35(l,72)._onFocus()&&e}if("input"===n){e=!1!==ie._35(l,72)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.firstYearRepayment=u)&&e}return e},null,null)),ie._19(16384,null,0,he.c,[ie.Q,ie.q,[2,he.a]],null,null),ie._19(16384,null,0,he.s,[ie.Q,ie.q],null,null),ie._38(1024,null,he.j,function(l,n){return[l,n]},[he.c,he.s]),ie._19(671744,[["firstYearRepayment",4]],0,he.o,[[2,he.b],[8,null],[8,null],[2,he.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),ie._38(2048,null,he.k,null,[he.o]),ie._19(16384,null,0,he.l,[he.k],null,null),ie._19(16384,[[38,4]],0,_e._17,[ie.q,ie.Q,ye.L,[2,he.k],[2,he.n],[2,he.e],[2,_e.m]],{id:[0,"id"],placeholder:[1,"placeholder"],type:[2,"type"]},null),(l()(),ie._41(1,["\n      "])),(l()(),ie._41(null,["\n    "])),(l()(),ie._41(null,["\n  "]))],function(l,n){var u=n.component;l(n,1,0,"column");l(n,2,0,"form__fields");l(n,5,0,"column","row");l(n,6,0,"10px");l(n,7,0,"form__fields__row");l(n,11,0,"","200px");l(n,12,0,"form__field");l(n,25,0,"renovationCost",u.model.renovationCost);l(n,28,0,"renovationCost","Renovation cost","number");l(n,33,0,"","200px");l(n,34,0,"form__field");l(n,47,0,"newMarketValue",u.model.newMarketValue);l(n,50,0,"newMarketValue","After renovations market value","number");l(n,55,0,"","200px");l(n,56,0,"form__field");l(n,69,0,"firstYearRepayment",u.model.firstYearRepayment);l(n,72,0,"firstYearRepayment","First year loan repayments","number")},function(l,n){l(n,10,0,null,ie._35(n,13)._mdInputChild._isErrorState(),ie._35(n,13)._mdInputChild.focused,ie._35(n,13)._shouldForward("untouched"),ie._35(n,13)._shouldForward("touched"),ie._35(n,13)._shouldForward("pristine"),ie._35(n,13)._shouldForward("dirty"),ie._35(n,13)._shouldForward("valid"),ie._35(n,13)._shouldForward("invalid"),ie._35(n,13)._shouldForward("pending")),l(n,21,1,[ie._35(n,27).ngClassUntouched,ie._35(n,27).ngClassTouched,ie._35(n,27).ngClassPristine,ie._35(n,27).ngClassDirty,ie._35(n,27).ngClassValid,ie._35(n,27).ngClassInvalid,ie._35(n,27).ngClassPending,ie._35(n,28).id,ie._35(n,28).placeholder,ie._35(n,28).disabled,ie._35(n,28).required,ie._35(n,28).ariaDescribedby||null,ie._35(n,28)._isErrorState()]);l(n,32,0,null,ie._35(n,35)._mdInputChild._isErrorState(),ie._35(n,35)._mdInputChild.focused,ie._35(n,35)._shouldForward("untouched"),ie._35(n,35)._shouldForward("touched"),ie._35(n,35)._shouldForward("pristine"),ie._35(n,35)._shouldForward("dirty"),ie._35(n,35)._shouldForward("valid"),ie._35(n,35)._shouldForward("invalid"),ie._35(n,35)._shouldForward("pending")),l(n,43,1,[ie._35(n,49).ngClassUntouched,ie._35(n,49).ngClassTouched,ie._35(n,49).ngClassPristine,ie._35(n,49).ngClassDirty,ie._35(n,49).ngClassValid,ie._35(n,49).ngClassInvalid,ie._35(n,49).ngClassPending,ie._35(n,50).id,ie._35(n,50).placeholder,ie._35(n,50).disabled,ie._35(n,50).required,ie._35(n,50).ariaDescribedby||null,ie._35(n,50)._isErrorState()]);l(n,54,0,null,ie._35(n,57)._mdInputChild._isErrorState(),ie._35(n,57)._mdInputChild.focused,ie._35(n,57)._shouldForward("untouched"),ie._35(n,57)._shouldForward("touched"),ie._35(n,57)._shouldForward("pristine"),ie._35(n,57)._shouldForward("dirty"),ie._35(n,57)._shouldForward("valid"),ie._35(n,57)._shouldForward("invalid"),ie._35(n,57)._shouldForward("pending")),l(n,65,1,[ie._35(n,71).ngClassUntouched,ie._35(n,71).ngClassTouched,ie._35(n,71).ngClassPristine,ie._35(n,71).ngClassDirty,ie._35(n,71).ngClassValid,ie._35(n,71).ngClassInvalid,ie._35(n,71).ngClassPending,ie._35(n,72).id,ie._35(n,72).placeholder,ie._35(n,72).disabled,ie._35(n,72).required,ie._35(n,72).ariaDescribedby||null,ie._35(n,72)._isErrorState()])})}function cl(l){return ie._43(0,[(l()(),ie._21(0,null,null,21,"md-card",[["class","mat-card"],["fxFlex",""]],null,null,null,pe.v,pe.f)),ie._19(737280,null,0,ge.a,[ce.a,ie.q,ie.Q,[3,se.a],[3,fe.a]],{flex:[0,"flex"]},null),ie._19(16384,null,0,_e._35,[[2,_e.j],ie.q],null,null),ie._19(49152,null,0,_e.F,[],null,null),(l()(),ie._41(0,["\n      "])),(l()(),ie._21(0,null,0,4,"md-card-title",[["class","md-card-title--ac mat-card-title "]],null,null,null,null,null)),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),ie._19(16384,null,0,_e._35,[[2,_e.j],ie.q],null,null),ie._19(16384,null,0,_e.L,[],null,null),(l()(),ie._41(null,["After renovations figures"])),(l()(),ie._41(0,["\n      "])),(l()(),ie._21(0,null,0,9,"md-card-content",[["class","mat-card-content"]],null,null,null,null,null)),ie._19(16384,null,0,_e._35,[[2,_e.j],ie.q],null,null),ie._19(16384,null,0,_e.H,[],null,null),(l()(),ie._41(null,["\n        "])),(l()(),ie._21(0,null,null,4,"div",[],null,null,null,null,null)),(l()(),ie._21(0,null,null,1,"label",[],null,null,null,null,null)),(l()(),ie._41(null,["Usable equity: "])),(l()(),ie._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),ie._41(null,["",""])),(l()(),ie._41(null,["\n      "])),(l()(),ie._41(0,["\n    "]))],function(l,n){l(n,1,0,"");l(n,6,0,"md-card-title--ac")},function(l,n){l(n,19,0,n.component.usableEquityAfterReno)})}function dl(l){return ie._43(0,[ie._39(402653184,1,{form:0}),(l()(),ie._21(0,null,null,147,"form",[["class","form__container form__equity-calc"],["fxLayout","column"],["fxLayoutGap","10px"],["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0;if("submit"===n){e=!1!==ie._35(l,3).onSubmit(u)&&e}if("reset"===n){e=!1!==ie._35(l,3).onReset()&&e}return e},null,null)),ie._19(16384,null,0,he.t,[],null,null),ie._19(16384,[[1,4],["equityForm",4]],0,he.n,[[8,null],[8,null]],null,null),ie._38(2048,null,he.b,null,[he.n]),ie._19(16384,null,0,he.m,[he.b],null,null),ie._19(737280,null,0,se.a,[ce.a,ie.q,ie.Q],{layout:[0,"layout"]},null),ie._19(1720320,null,0,me.a,[ce.a,ie.q,ie.Q,[2,se.a]],{gap:[0,"gap"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),(l()(),ie._41(null,["\n  \n  "])),(l()(),ie._21(0,null,null,63,"section",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),ie._19(737280,null,0,se.a,[ce.a,ie.q,ie.Q],{layout:[0,"layout"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),(l()(),ie._41(null,["\n    "])),(l()(),ie._21(0,null,null,58,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutGap.gt-xs","10px"]],null,null,null,null,null)),ie._19(737280,null,0,se.a,[ce.a,ie.q,ie.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),ie._19(1720320,null,0,me.a,[ce.a,ie.q,ie.Q,[2,se.a]],{gapGtXs:[0,"gapGtXs"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),(l()(),ie._41(null,["\n      "])),(l()(),ie._41(null,["\n      "])),(l()(),ie._21(0,null,null,24,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==ie._35(l,23)._focusInput()&&e}return e},pe.z,pe.k)),ie._19(737280,null,0,ge.a,[ce.a,ie.q,ie.Q,[3,se.a],[3,fe.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),ie._19(7389184,null,6,_e._16,[ie.q,ie.j,[2,_e.o]],null,null),ie._39(335544320,2,{_mdInputChild:0}),ie._39(335544320,3,{_placeholderChild:0}),ie._39(603979776,4,{_errorChildren:1}),ie._39(603979776,5,{_hintChildren:1}),ie._39(603979776,6,{_prefixChildren:1}),ie._39(603979776,7,{_suffixChildren:1}),(l()(),ie._41(1,["\n        "])),(l()(),ie._21(0,null,1,9,"input",[["class","mat-input-element"],["id","purchasePrice"],["mdInput",""],["name","purchasePrice"],["placeholder","Purchase price"],["required",""],["type","number"],["value","model.purchasePrice"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==ie._35(l,32)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,32).onTouched()&&e}if("compositionstart"===n){e=!1!==ie._35(l,32)._compositionStart()&&e}if("compositionend"===n){e=!1!==ie._35(l,32)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==ie._35(l,33).onChange(u.target.value)&&e}if("input"===n){e=!1!==ie._35(l,33).onChange(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,33).onTouched()&&e}if("blur"===n){e=!1!==ie._35(l,40)._onBlur()&&e}if("focus"===n){e=!1!==ie._35(l,40)._onFocus()&&e}if("input"===n){e=!1!==ie._35(l,40)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.purchasePrice=u)&&e}return e},null,null)),ie._19(16384,null,0,he.c,[ie.Q,ie.q,[2,he.a]],null,null),ie._19(16384,null,0,he.s,[ie.Q,ie.q],null,null),ie._19(16384,null,0,he.p,[],{required:[0,"required"]},null),ie._38(1024,null,he.i,function(l){return[l]},[he.p]),ie._38(1024,null,he.j,function(l,n){return[l,n]},[he.c,he.s]),ie._19(671744,[["purchasePrice",4]],0,he.o,[[2,he.b],[2,he.i],[8,null],[2,he.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),ie._38(2048,null,he.k,null,[he.o]),ie._19(16384,null,0,he.l,[he.k],null,null),ie._19(16384,[[2,4]],0,_e._17,[ie.q,ie.Q,ye.L,[2,he.k],[2,he.n],[2,he.e],[2,_e.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),ie._41(1,["\n  \n        "])),(l()(),ie._15(16777216,null,4,1,null,ol)),ie._19(16384,null,0,ve.m,[ie._3,ie.Z],{ngIf:[0,"ngIf"]},null),(l()(),ie._41(1,["\n      "])),(l()(),ie._41(null,["\n      \n      "])),(l()(),ie._41(null,["\n      "])),(l()(),ie._21(0,null,null,24,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==ie._35(l,50)._focusInput()&&e}return e},pe.z,pe.k)),ie._19(737280,null,0,ge.a,[ce.a,ie.q,ie.Q,[3,se.a],[3,fe.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),ie._19(7389184,null,6,_e._16,[ie.q,ie.j,[2,_e.o]],null,null),ie._39(335544320,8,{_mdInputChild:0}),ie._39(335544320,9,{_placeholderChild:0}),ie._39(603979776,10,{_errorChildren:1}),ie._39(603979776,11,{_hintChildren:1}),ie._39(603979776,12,{_prefixChildren:1}),ie._39(603979776,13,{_suffixChildren:1}),(l()(),ie._41(1,["\n        "])),(l()(),ie._21(0,null,1,9,"input",[["class","mat-input-element"],["id","marketValue"],["mdInput",""],["name","marketValue"],["placeholder","Market value"],["required",""],["type","number"],["value","model.marketValue"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==ie._35(l,59)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,59).onTouched()&&e}if("compositionstart"===n){e=!1!==ie._35(l,59)._compositionStart()&&e}if("compositionend"===n){e=!1!==ie._35(l,59)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==ie._35(l,60).onChange(u.target.value)&&e}if("input"===n){e=!1!==ie._35(l,60).onChange(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,60).onTouched()&&e}if("blur"===n){e=!1!==ie._35(l,67)._onBlur()&&e}if("focus"===n){e=!1!==ie._35(l,67)._onFocus()&&e}if("input"===n){e=!1!==ie._35(l,67)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.marketValue=u)&&e}return e},null,null)),ie._19(16384,null,0,he.c,[ie.Q,ie.q,[2,he.a]],null,null),ie._19(16384,null,0,he.s,[ie.Q,ie.q],null,null),ie._19(16384,null,0,he.p,[],{required:[0,"required"]},null),ie._38(1024,null,he.i,function(l){return[l]},[he.p]),ie._38(1024,null,he.j,function(l,n){return[l,n]},[he.c,he.s]),ie._19(671744,[["marketValue",4]],0,he.o,[[2,he.b],[2,he.i],[8,null],[2,he.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),ie._38(2048,null,he.k,null,[he.o]),ie._19(16384,null,0,he.l,[he.k],null,null),ie._19(16384,[[8,4]],0,_e._17,[ie.q,ie.Q,ye.L,[2,he.k],[2,he.n],[2,he.e],[2,_e.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),ie._41(1,["\n  \n        "])),(l()(),ie._15(16777216,null,4,1,null,il)),ie._19(16384,null,0,ve.m,[ie._3,ie.Z],{ngIf:[0,"ngIf"]},null),(l()(),ie._41(1,["\n      "])),(l()(),ie._41(null,["\n    "])),(l()(),ie._41(null,["\n  "])),(l()(),ie._41(null,["\n\n  "])),(l()(),ie._21(0,null,null,69,"section",[["class","form__fields"],["fxLayout","column"]],null,null,null,null,null)),ie._19(737280,null,0,se.a,[ce.a,ie.q,ie.Q],{layout:[0,"layout"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),(l()(),ie._41(null,["\n    "])),(l()(),ie._21(0,null,null,64,"div",[["class","form__fields__row"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutGap.gt-xs","10px"]],null,null,null,null,null)),ie._19(737280,null,0,se.a,[ce.a,ie.q,ie.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),ie._19(1720320,null,0,me.a,[ce.a,ie.q,ie.Q,[2,se.a]],{gapGtXs:[0,"gapGtXs"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),(l()(),ie._41(null,["\n      "])),(l()(),ie._41(null,["\n      "])),(l()(),ie._21(0,null,null,24,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==ie._35(l,88)._focusInput()&&e}return e},pe.z,pe.k)),ie._19(737280,null,0,ge.a,[ce.a,ie.q,ie.Q,[3,se.a],[3,fe.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),ie._19(7389184,null,6,_e._16,[ie.q,ie.j,[2,_e.o]],null,null),ie._39(335544320,14,{_mdInputChild:0}),ie._39(335544320,15,{_placeholderChild:0}),ie._39(603979776,16,{_errorChildren:1}),ie._39(603979776,17,{_hintChildren:1}),ie._39(603979776,18,{_prefixChildren:1}),ie._39(603979776,19,{_suffixChildren:1}),(l()(),ie._41(1,["\n        "])),(l()(),ie._21(0,null,1,9,"input",[["class","mat-input-element"],["id","loanCoverage"],["loanCoverage",""],["mdInput",""],["name","loanCoverage"],["placeholder","Loan coverage %"],["required",""],["type","number"],["value","model.loanCoverage"]],[[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==ie._35(l,97)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,97).onTouched()&&e}if("compositionstart"===n){e=!1!==ie._35(l,97)._compositionStart()&&e}if("compositionend"===n){e=!1!==ie._35(l,97)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==ie._35(l,98).onChange(u.target.value)&&e}if("input"===n){e=!1!==ie._35(l,98).onChange(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,98).onTouched()&&e}if("blur"===n){e=!1!==ie._35(l,105)._onBlur()&&e}if("focus"===n){e=!1!==ie._35(l,105)._onFocus()&&e}if("input"===n){e=!1!==ie._35(l,105)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.loanCoverage=u)&&e}return e},null,null)),ie._19(16384,null,0,he.c,[ie.Q,ie.q,[2,he.a]],null,null),ie._19(16384,null,0,he.s,[ie.Q,ie.q],null,null),ie._19(16384,null,0,he.p,[],{required:[0,"required"]},null),ie._38(1024,null,he.i,function(l){return[l]},[he.p]),ie._38(1024,null,he.j,function(l,n){return[l,n]},[he.c,he.s]),ie._19(671744,[["loanCoverage",4]],0,he.o,[[2,he.b],[2,he.i],[8,null],[2,he.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),ie._38(2048,null,he.k,null,[he.o]),ie._19(16384,null,0,he.l,[he.k],null,null),ie._19(16384,[[14,4]],0,_e._17,[ie.q,ie.Q,ye.L,[2,he.k],[2,he.n],[2,he.e],[2,_e.m]],{id:[0,"id"],placeholder:[1,"placeholder"],required:[2,"required"],type:[3,"type"]},null),(l()(),ie._41(1,["\n  \n        "])),(l()(),ie._15(16777216,null,4,1,null,_l)),ie._19(16384,null,0,ve.m,[ie._3,ie.Z],{ngIf:[0,"ngIf"]},null),(l()(),ie._41(1,["\n      "])),(l()(),ie._41(null,["\n\n      "])),(l()(),ie._41(null,["\n      "])),(l()(),ie._21(0,null,null,19,"md-input-container",[["class","form__field mat-input-container"],["fxFlex",""],["fxFlex.gt-xs","200px"]],[[1,"align",0],[2,"mat-input-invalid",null],[2,"mat-focused",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==ie._35(l,115)._focusInput()&&e}return e},pe.z,pe.k)),ie._19(737280,null,0,ge.a,[ce.a,ie.q,ie.Q,[3,se.a],[3,fe.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),ie._19(7389184,null,6,_e._16,[ie.q,ie.j,[2,_e.o]],null,null),ie._39(335544320,20,{_mdInputChild:0}),ie._39(335544320,21,{_placeholderChild:0}),ie._39(603979776,22,{_errorChildren:1}),ie._39(603979776,23,{_hintChildren:1}),ie._39(603979776,24,{_prefixChildren:1}),ie._39(603979776,25,{_suffixChildren:1}),(l()(),ie._41(1,["\n        "])),(l()(),ie._21(0,null,1,7,"input",[["class","mat-input-element"],["id","savings"],["mdInput",""],["name","savings"],["placeholder","Current savings"],["type","number"],["value","model.savings"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[8,"id",0],[8,"placeholder",0],[8,"disabled",0],[8,"required",0],[1,"aria-describedby",0],[1,"aria-invalid",0]],[[null,"ngModelChange"],[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"],[null,"change"],[null,"focus"]],function(l,n,u){var e=!0,r=l.component;if("input"===n){e=!1!==ie._35(l,124)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,124).onTouched()&&e}if("compositionstart"===n){e=!1!==ie._35(l,124)._compositionStart()&&e}if("compositionend"===n){e=!1!==ie._35(l,124)._compositionEnd(u.target.value)&&e}if("change"===n){e=!1!==ie._35(l,125).onChange(u.target.value)&&e}if("input"===n){e=!1!==ie._35(l,125).onChange(u.target.value)&&e}if("blur"===n){e=!1!==ie._35(l,125).onTouched()&&e}if("blur"===n){e=!1!==ie._35(l,130)._onBlur()&&e}if("focus"===n){e=!1!==ie._35(l,130)._onFocus()&&e}if("input"===n){e=!1!==ie._35(l,130)._onInput()&&e}if("ngModelChange"===n){e=!1!==(r.model.savings=u)&&e}return e},null,null)),ie._19(16384,null,0,he.c,[ie.Q,ie.q,[2,he.a]],null,null),ie._19(16384,null,0,he.s,[ie.Q,ie.q],null,null),ie._38(1024,null,he.j,function(l,n){return[l,n]},[he.c,he.s]),ie._19(671744,[["savings",4]],0,he.o,[[2,he.b],[8,null],[8,null],[2,he.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),ie._38(2048,null,he.k,null,[he.o]),ie._19(16384,null,0,he.l,[he.k],null,null),ie._19(16384,[[20,4]],0,_e._17,[ie.q,ie.Q,ye.L,[2,he.k],[2,he.n],[2,he.e],[2,_e.m]],{id:[0,"id"],placeholder:[1,"placeholder"],type:[2,"type"]},null),(l()(),ie._41(1,["\n      "])),(l()(),ie._41(null,["\n\n      "])),(l()(),ie._41(null,["\n      "])),(l()(),ie._21(0,null,null,7,"md-slide-toggle",[["class","form__field form__field__toogle form__field__toogle--add-reno mat-slide-toggle"],["color","accent"],["id","addRenovations"],["name","addRenovations"]],[[2,"mat-checked",null],[2,"mat-disabled",null],[2,"mat-slide-toggle-label-before",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngModelChange"]],function(l,n,u){var e=!0,r=l.component;if("ngModelChange"===n){e=!1!==(r.model.addRenovations=u)&&e}return e},pe.D,pe.o)),ie._19(1228800,null,0,_e._54,[ie.q,ie.Q,ye.L,_e.g,ie.j],{color:[0,"color"],name:[1,"name"],id:[2,"id"]},null),ie._38(1024,null,he.j,function(l){return[l]},[_e._54]),ie._19(671744,null,0,he.o,[[2,he.b],[8,null],[8,null],[2,he.j]],{name:[0,"name"],model:[1,"model"]},{update:"ngModelChange"}),ie._38(2048,null,he.k,null,[he.o]),ie._19(16384,null,0,he.l,[he.k],null,null),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),(l()(),ie._41(0,["\n        \n        Add renovations data\n      "])),(l()(),ie._41(null,["\n      "])),(l()(),ie._41(null,["\n    "])),(l()(),ie._41(null,["\n  "])),(l()(),ie._41(null,["\n\n  "])),(l()(),ie._15(16777216,null,null,1,null,sl)),ie._19(16384,null,0,ve.m,[ie._3,ie.Z],{ngIf:[0,"ngIf"]},null),(l()(),ie._41(null,["\n\n"])),(l()(),ie._41(null,["\n\n"])),(l()(),ie._21(0,null,null,52,"section",[["class",""]],null,null,null,null,null)),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),(l()(),ie._41(null,["\n  "])),(l()(),ie._21(0,null,null,48,"div",[["fxFlex",""],["fxFlex.gt-xs","620px"],["fxLayout","column"],["fxLayout.gt-xs","row"],["fxLayoutGap","10px"]],null,null,null,null,null)),ie._19(737280,null,0,se.a,[ce.a,ie.q,ie.Q],{layout:[0,"layout"],layoutGtXs:[1,"layoutGtXs"]},null),ie._19(1720320,null,0,me.a,[ce.a,ie.q,ie.Q,[2,se.a]],{gap:[0,"gap"]},null),ie._19(737280,null,0,ge.a,[ce.a,ie.q,ie.Q,[3,se.a],[3,fe.a]],{flex:[0,"flex"],flexGtXs:[1,"flexGtXs"]},null),(l()(),ie._41(null,["\n    "])),(l()(),ie._21(0,null,null,39,"md-card",[["class","mat-card"],["fxFlex",""]],null,null,null,pe.v,pe.f)),ie._19(737280,null,0,ge.a,[ce.a,ie.q,ie.Q,[3,se.a],[3,fe.a]],{flex:[0,"flex"]},null),ie._19(16384,null,0,_e._35,[[2,_e.j],ie.q],null,null),ie._19(49152,null,0,_e.F,[],null,null),(l()(),ie._41(0,["\n      "])),(l()(),ie._21(0,null,0,4,"md-card-title",[["class","md-card-title--ac mat-card-title "]],null,null,null,null,null)),ie._19(933888,null,0,de.a,[ce.a,ie.B,ie.C,ie.q,ie.P,ie.Q],{classBase:[0,"classBase"]},null),ie._19(16384,null,0,_e._35,[[2,_e.j],ie.q],null,null),ie._19(16384,null,0,_e.L,[],null,null),(l()(),ie._41(null,["Initial figures"])),(l()(),ie._41(0,["\n      "])),(l()(),ie._21(0,null,0,27,"md-card-content",[["class","mat-card-content"]],null,null,null,null,null)),ie._19(16384,null,0,_e._35,[[2,_e.j],ie.q],null,null),ie._19(16384,null,0,_e.H,[],null,null),(l()(),ie._41(null,["\n        "])),(l()(),ie._21(0,null,null,4,"div",[],null,null,null,null,null)),(l()(),ie._21(0,null,null,1,"label",[],null,null,null,null,null)),(l()(),ie._41(null,["Loan amount: "])),(l()(),ie._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),ie._41(null,["",""])),(l()(),ie._41(null,["\n        "])),(l()(),ie._21(0,null,null,4,"div",[],null,null,null,null,null)),(l()(),ie._21(0,null,null,1,"label",[],null,null,null,null,null)),(l()(),ie._41(null,["Deposit amount: "])),(l()(),ie._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),ie._41(null,["",""])),(l()(),ie._41(null,["\n        "])),(l()(),ie._21(0,null,null,4,"div",[],null,null,null,null,null)),(l()(),ie._21(0,null,null,1,"label",[],null,null,null,null,null)),(l()(),ie._41(null,["Discount: "])),(l()(),ie._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),ie._41(null,["",""])),(l()(),ie._41(null,["\n        "])),(l()(),ie._21(0,null,null,4,"div",[],null,null,null,null,null)),(l()(),ie._21(0,null,null,1,"label",[],null,null,null,null,null)),(l()(),ie._41(null,["Equity: "])),(l()(),ie._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),ie._41(null,["",""])),(l()(),ie._41(null,["\n      "])),(l()(),ie._41(0,["\n    "])),(l()(),ie._41(null,["\n\n    "])),(l()(),ie._15(16777216,null,null,1,null,cl)),ie._19(16384,null,0,ve.m,[ie._3,ie.Z],{ngIf:[0,"ngIf"]},null),(l()(),ie._41(null,["\n  "])),(l()(),ie._41(null,["\n"]))],function(l,n){var u=n.component;l(n,6,0,"column");l(n,7,0,"10px");l(n,8,0,"form__container form__equity-calc");l(n,11,0,"column");l(n,12,0,"form__fields");l(n,15,0,"column","row");l(n,16,0,"10px");l(n,17,0,"form__fields__row");l(n,21,0,"","200px");l(n,22,0,"form__field");l(n,34,0,"");l(n,37,0,"purchasePrice",u.model.purchasePrice);l(n,40,0,"purchasePrice","Purchase price","","number"),l(n,43,0,ie._35(n,37).invalid&&(ie._35(n,37).dirty||ie._35(n,37).touched)&&ie._35(n,37).errors.required);l(n,48,0,"","200px");l(n,49,0,"form__field");l(n,61,0,"");l(n,64,0,"marketValue",u.model.marketValue);l(n,67,0,"marketValue","Market value","","number"),l(n,70,0,ie._35(n,64).invalid&&(ie._35(n,64).dirty||ie._35(n,64).touched)&&ie._35(n,64).errors.required);l(n,76,0,"column");l(n,77,0,"form__fields");l(n,80,0,"column","row");l(n,81,0,"10px");l(n,82,0,"form__fields__row");l(n,86,0,"","200px");l(n,87,0,"form__field");l(n,99,0,"");l(n,102,0,"loanCoverage",u.model.loanCoverage);l(n,105,0,"loanCoverage","Loan coverage %","","number"),l(n,108,0,ie._35(n,102).invalid&&(ie._35(n,102).dirty||ie._35(n,102).touched)&&ie._35(n,102).errors.required);l(n,113,0,"","200px");l(n,114,0,"form__field");l(n,127,0,"savings",u.model.savings);l(n,130,0,"savings","Current savings","number");l(n,135,0,"accent","addRenovations","addRenovations");l(n,137,0,"addRenovations",u.model.addRenovations);l(n,140,0,"form__field form__field__toogle form__field__toogle--add-reno"),l(n,147,0,u.model.addRenovations);l(n,151,0,"");l(n,154,0,"column","row");l(n,155,0,"10px");l(n,156,0,"","620px");l(n,159,0,"");l(n,164,0,"md-card-title--ac"),l(n,200,0,u.model.addRenovations)},function(l,n){var u=n.component;l(n,1,0,ie._35(n,5).ngClassUntouched,ie._35(n,5).ngClassTouched,ie._35(n,5).ngClassPristine,ie._35(n,5).ngClassDirty,ie._35(n,5).ngClassValid,ie._35(n,5).ngClassInvalid,ie._35(n,5).ngClassPending);l(n,20,0,null,ie._35(n,23)._mdInputChild._isErrorState(),ie._35(n,23)._mdInputChild.focused,ie._35(n,23)._shouldForward("untouched"),ie._35(n,23)._shouldForward("touched"),ie._35(n,23)._shouldForward("pristine"),ie._35(n,23)._shouldForward("dirty"),ie._35(n,23)._shouldForward("valid"),ie._35(n,23)._shouldForward("invalid"),ie._35(n,23)._shouldForward("pending")),l(n,31,1,[ie._35(n,34).required?"":null,ie._35(n,39).ngClassUntouched,ie._35(n,39).ngClassTouched,ie._35(n,39).ngClassPristine,ie._35(n,39).ngClassDirty,ie._35(n,39).ngClassValid,ie._35(n,39).ngClassInvalid,ie._35(n,39).ngClassPending,ie._35(n,40).id,ie._35(n,40).placeholder,ie._35(n,40).disabled,ie._35(n,40).required,ie._35(n,40).ariaDescribedby||null,ie._35(n,40)._isErrorState()]);l(n,47,0,null,ie._35(n,50)._mdInputChild._isErrorState(),ie._35(n,50)._mdInputChild.focused,ie._35(n,50)._shouldForward("untouched"),ie._35(n,50)._shouldForward("touched"),ie._35(n,50)._shouldForward("pristine"),ie._35(n,50)._shouldForward("dirty"),ie._35(n,50)._shouldForward("valid"),ie._35(n,50)._shouldForward("invalid"),ie._35(n,50)._shouldForward("pending")),l(n,58,1,[ie._35(n,61).required?"":null,ie._35(n,66).ngClassUntouched,ie._35(n,66).ngClassTouched,ie._35(n,66).ngClassPristine,ie._35(n,66).ngClassDirty,ie._35(n,66).ngClassValid,ie._35(n,66).ngClassInvalid,ie._35(n,66).ngClassPending,ie._35(n,67).id,ie._35(n,67).placeholder,ie._35(n,67).disabled,ie._35(n,67).required,ie._35(n,67).ariaDescribedby||null,ie._35(n,67)._isErrorState()]);l(n,85,0,null,ie._35(n,88)._mdInputChild._isErrorState(),ie._35(n,88)._mdInputChild.focused,ie._35(n,88)._shouldForward("untouched"),ie._35(n,88)._shouldForward("touched"),ie._35(n,88)._shouldForward("pristine"),ie._35(n,88)._shouldForward("dirty"),ie._35(n,88)._shouldForward("valid"),ie._35(n,88)._shouldForward("invalid"),ie._35(n,88)._shouldForward("pending")),l(n,96,1,[ie._35(n,99).required?"":null,ie._35(n,104).ngClassUntouched,ie._35(n,104).ngClassTouched,ie._35(n,104).ngClassPristine,ie._35(n,104).ngClassDirty,ie._35(n,104).ngClassValid,ie._35(n,104).ngClassInvalid,ie._35(n,104).ngClassPending,ie._35(n,105).id,ie._35(n,105).placeholder,ie._35(n,105).disabled,ie._35(n,105).required,ie._35(n,105).ariaDescribedby||null,ie._35(n,105)._isErrorState()]);l(n,112,0,null,ie._35(n,115)._mdInputChild._isErrorState(),ie._35(n,115)._mdInputChild.focused,ie._35(n,115)._shouldForward("untouched"),ie._35(n,115)._shouldForward("touched"),ie._35(n,115)._shouldForward("pristine"),ie._35(n,115)._shouldForward("dirty"),ie._35(n,115)._shouldForward("valid"),ie._35(n,115)._shouldForward("invalid"),ie._35(n,115)._shouldForward("pending")),l(n,123,1,[ie._35(n,129).ngClassUntouched,ie._35(n,129).ngClassTouched,ie._35(n,129).ngClassPristine,ie._35(n,129).ngClassDirty,ie._35(n,129).ngClassValid,ie._35(n,129).ngClassInvalid,ie._35(n,129).ngClassPending,ie._35(n,130).id,ie._35(n,130).placeholder,ie._35(n,130).disabled,ie._35(n,130).required,ie._35(n,130).ariaDescribedby||null,ie._35(n,130)._isErrorState()]),l(n,134,0,ie._35(n,135).checked,ie._35(n,135).disabled,"before"==ie._35(n,135).labelPosition,ie._35(n,139).ngClassUntouched,ie._35(n,139).ngClassTouched,ie._35(n,139).ngClassPristine,ie._35(n,139).ngClassDirty,ie._35(n,139).ngClassValid,ie._35(n,139).ngClassInvalid,ie._35(n,139).ngClassPending),l(n,177,0,u.loanAmount),l(n,183,0,u.depositAmount),l(n,189,0,u.discount),l(n,195,0,u.equity)})}function ml(l){return ie._43(0,[(l()(),ie._21(0,null,null,1,"app-equity",[],null,null,null,dl,be)),ie._19(4308992,null,0,oe,[Gl],null,null)],function(l,n){l(n,1,0)},null)}function pl(l){return Ie._43(0,[(l()(),Ie._21(0,null,null,4,"md-chip",[["class","mat-chip"],["role","option"],["tabindex","-1"]],[[2,"mat-chip-selected",null],[1,"disabled",0],[1,"aria-disabled",0]],[[null,"click"],[null,"focus"],[null,"blur"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Ie._35(l,1).onClick()&&e}if("click"===n){e=!1!==Ie._35(l,3)._handleClick(u)&&e}if("focus"===n){e=!1!=(Ie._35(l,3)._hasFocus=!0)&&e}if("blur"===n){e=!1!=(Ie._35(l,3)._hasFocus=!1)&&e}return e},null,null)),Ie._19(16384,null,0,ke.l,[ke.k,ke.a,[8,null],Ie.Q,Ie.q],{routerLink:[0,"routerLink"]},null),Ie._19(16384,null,0,Se._35,[[2,Se.j],Ie.q],null,null),Ie._19(147456,[[1,4]],0,Se.P,[Ie.Q,Ie.q],{selected:[0,"selected"]},null),(l()(),Ie._41(null,["",""]))],function(l,n){l(n,1,0,n.context.$implicit.url),l(n,3,0,n.context.$implicit.selected)},function(l,n){l(n,0,0,Ie._35(n,3).selected,Ie._35(n,3).disabled||null,Ie._35(n,3).disabled.toString()),l(n,4,0,n.context.$implicit.displayName)})}function gl(l){return Ie._43(0,[(l()(),Ie._21(0,null,null,9,"nav",[["class","navigation--main"]],null,null,null,null,null)),(l()(),Ie._41(null,["\n  "])),(l()(),Ie._21(0,null,null,6,"md-chip-list",[["class","mat-chip-list"],["role","listbox"]],[[1,"tabindex",0]],[[null,"focus"],[null,"keydown"]],function(l,n,u){var e=!0;if("focus"===n){e=!1!==Ie._35(l,3).focus()&&e}if("keydown"===n){e=!1!==Ie._35(l,3)._keydown(u)&&e}return e},Pe.x,Pe.i)),Ie._19(1228800,null,1,Se.Q,[],null,null),Ie._39(603979776,1,{chips:1}),(l()(),Ie._41(0,["\n    "])),(l()(),Ie._15(16777216,null,0,1,null,pl)),Ie._19(802816,null,0,Qe.l,[Ie._3,Ie.Z,Ie.B],{ngForOf:[0,"ngForOf"]},null),(l()(),Ie._41(0,["\n  "])),(l()(),Ie._41(null,["      \n"]))],function(l,n){l(n,7,0,n.component.links)},function(l,n){l(n,2,0,Ie._35(n,3)._tabIndex)})}function fl(l){return Ie._43(0,[(l()(),Ie._21(0,null,null,1,"main-navigator",[],null,null,null,gl,Le)),Ie._19(114688,null,0,Be,[Gl],null,null)],function(l,n){l(n,1,0)},null)}function hl(l){return je._43(0,[(l()(),je._21(0,null,null,9,"span",[["fxLayoutAlign"," center"]],null,null,null,null,null)),je._19(737280,null,0,Me.a,[Ge.a,je.q,je.Q,[8,null]],{align:[0,"align"]},null),(l()(),je._41(null,["\n      "])),(l()(),je._21(0,null,null,5,"md-icon",[["class","toolbar__icon mat-icon"],["role","img"],["routerLink","/users/login"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==je._35(l,4).onClick()&&e}return e},Re.y,Re.j)),je._19(16384,null,0,De.l,[De.k,De.a,[8,null],je.Q,je.q],{routerLink:[0,"routerLink"]},null),je._19(933888,null,0,Te.a,[Ge.a,je.B,je.C,je.q,je.P,je.Q],{classBase:[0,"classBase"]},null),je._19(16384,null,0,Ee._35,[[2,Ee.j],je.q],null,null),je._19(638976,null,0,Ee._11,[je.Q,je.q,Ee._14,[8,null]],null,null),(l()(),je._41(0,["account_circle"])),(l()(),je._41(null,["\n    "]))],function(l,n){l(n,1,0," center");l(n,4,0,"/users/login");l(n,5,0,"toolbar__icon"),l(n,7,0)},null)}function yl(l){return je._43(0,[(l()(),je._21(16777216,null,null,2,"img",[["aria-haspopup","true"],["class","toolbar__icon user__avatar"]],[[8,"src",4]],[[null,"mousedown"],[null,"click"]],function(l,n,u){var e=!0;if("mousedown"===n){e=!1!==je._35(l,2)._handleMousedown(u)&&e}if("click"===n){e=!1!==je._35(l,2).toggleMenu()&&e}return e},null,null)),je._19(933888,null,0,Te.a,[Ge.a,je.B,je.C,je.q,je.P,je.Q],{classBase:[0,"classBase"]},null),je._19(4341760,null,0,Ee._26,[Ee._84,je.q,je._3,[2,Oe.q]],{menu:[0,"menu"]},null),(l()(),je._15(0,null,null,0))],function(l,n){l(n,1,0,"toolbar__icon user__avatar"),l(n,2,0,je._35(n.parent,12))},function(l,n){l(n,0,0,n.component.usersService.user.avatar)})}function vl(l){return je._43(0,[(l()(),je._21(16777216,null,null,5,"md-icon",[["aria-haspopup","true"],["class","toolbar__icon user__icon--logged-in mat-icon"],["role","img"]],null,[[null,"mousedown"],[null,"click"]],function(l,n,u){var e=!0;if("mousedown"===n){e=!1!==je._35(l,4)._handleMousedown(u)&&e}if("click"===n){e=!1!==je._35(l,4).toggleMenu()&&e}return e},Re.y,Re.j)),je._19(933888,null,0,Te.a,[Ge.a,je.B,je.C,je.q,je.P,je.Q],{classBase:[0,"classBase"]},null),je._19(16384,null,0,Ee._35,[[2,Ee.j],je.q],null,null),je._19(638976,null,0,Ee._11,[je.Q,je.q,Ee._14,[8,null]],null,null),je._19(4341760,null,0,Ee._26,[Ee._84,je.q,je._3,[2,Oe.q]],{menu:[0,"menu"]},null),(l()(),je._41(0,["\n        account_circle\n      "])),(l()(),je._15(0,null,null,0))],function(l,n){l(n,1,0,"toolbar__icon user__icon--logged-in"),l(n,3,0),l(n,4,0,je._35(n.parent,12))},null)}function Cl(l){return je._43(0,[(l()(),je._21(0,null,null,40,"span",[["fxLayoutAlign"," center"]],null,null,null,null,null)),je._19(737280,null,0,Me.a,[Ge.a,je.q,je.Q,[8,null]],{align:[0,"align"]},null),(l()(),je._41(null,["\n      "])),(l()(),je._15(16777216,null,null,1,null,yl)),je._19(16384,null,0,Ne.m,[je._3,je.Z],{ngIf:[0,"ngIf"]},null),(l()(),je._41(null,["\n      "])),(l()(),je._15(16777216,null,null,1,null,vl)),je._19(16384,null,0,Ne.m,[je._3,je.Z],{ngIf:[0,"ngIf"]},null),(l()(),je._41(null,["\n      \n      "])),(l()(),je._21(0,null,null,30,"md-menu",[["class","user__menu--logged-in"]],null,null,null,Re.B,Re.l)),je._19(933888,null,0,Te.a,[Ge.a,je.B,je.C,je.q,je.P,je.Q],{classBase:[0,"classBase"]},null),je._19(16384,null,0,Ee._35,[[2,Ee.j],je.q],null,null),je._19(1228800,[["userMenu",4]],1,Ee._23,[je.q],{overlapTrigger:[0,"overlapTrigger"],classList:[1,"classList"]},null),je._39(603979776,1,{items:1}),(l()(),je._41(0,["\n        "])),(l()(),je._21(0,null,0,11,"button",[["class","mat-menu-item"],["md-menu-item",""],["role","menuitem"],["routerLink","/users/account"]],[[1,"tabindex",0],[1,"aria-disabled",0],[1,"disabled",0]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==je._35(l,16).onClick()&&e}if("click"===n){e=!1!==je._35(l,17)._checkDisabled(u)&&e}return e},Re.A,Re.m)),je._19(16384,null,0,De.l,[De.k,De.a,[8,null],je.Q,je.q],{routerLink:[0,"routerLink"]},null),je._19(49152,[[1,4]],0,Ee._24,[je.q],null,null),(l()(),je._41(0,["\n          "])),(l()(),je._21(0,null,0,3,"md-icon",[["class","mat-icon"],["role","img"]],null,null,null,Re.y,Re.j)),je._19(16384,null,0,Ee._35,[[2,Ee.j],je.q],null,null),je._19(638976,null,0,Ee._11,[je.Q,je.q,Ee._14,[8,null]],null,null),(l()(),je._41(0,["settings"])),(l()(),je._41(0,["\n          "])),(l()(),je._21(0,null,0,1,"span",[],null,null,null,null,null)),(l()(),je._41(null,["My account"])),(l()(),je._41(0,["\n        "])),(l()(),je._41(0,["\n        "])),(l()(),je._21(0,null,0,10,"button",[["class","mat-menu-item"],["md-menu-item",""],["role","menuitem"]],[[1,"tabindex",0],[1,"aria-disabled",0],[1,"disabled",0]],[[null,"click"]],function(l,n,u){var e=!0,r=l.component;if("click"===n){e=!1!==je._35(l,29)._checkDisabled(u)&&e}if("click"===n){e=!1!==r.logout()&&e}return e},Re.A,Re.m)),je._19(49152,[[1,4]],0,Ee._24,[je.q],null,null),(l()(),je._41(0,["\n          "])),(l()(),je._21(0,null,0,3,"md-icon",[["class","mat-icon"],["role","img"]],null,null,null,Re.y,Re.j)),je._19(16384,null,0,Ee._35,[[2,Ee.j],je.q],null,null),je._19(638976,null,0,Ee._11,[je.Q,je.q,Ee._14,[8,null]],null,null),(l()(),je._41(0,["exit_to_app"])),(l()(),je._41(0,["\n          "])),(l()(),je._21(0,null,0,1,"span",[],null,null,null,null,null)),(l()(),je._41(null,["Logout"])),(l()(),je._41(0,["\n        "])),(l()(),je._41(0,["\n      "])),(l()(),je._41(null,["\n    "]))],function(l,n){var u=n.component;l(n,1,0," center"),l(n,4,0,u.usersService.user.avatar),l(n,7,0,!u.usersService.user.avatar);l(n,10,0,"user__menu--logged-in");l(n,12,0,!1,"user__menu--logged-in");l(n,16,0,"/users/account"),l(n,21,0),l(n,33,0)},function(l,n){l(n,15,0,je._35(n,17)._getTabIndex(),je._35(n,17).disabled.toString(),je._35(n,17).disabled||null),l(n,28,0,je._35(n,29)._getTabIndex(),je._35(n,29).disabled.toString(),je._35(n,29).disabled||null)})}function bl(l){return je._43(0,[(l()(),je._41(null,["\n"])),(l()(),je._21(0,null,null,30,"div",[["class","inner mat-typography"]],null,null,null,null,null)),je._19(933888,null,0,Te.a,[Ge.a,je.B,je.C,je.q,je.P,je.Q],{classBase:[0,"classBase"]},null),(l()(),je._41(null,["\n\n  "])),(l()(),je._21(0,null,null,19,"md-toolbar",[["class","toolbar mat-toolbar"],["color","primary"],["role","toolbar"]],null,null,null,Re.E,Re.p)),je._19(933888,null,0,Te.a,[Ge.a,je.B,je.C,je.q,je.P,je.Q],{classBase:[0,"classBase"]},null),je._19(16384,null,0,Ee._35,[[2,Ee.j],je.q],null,null),je._19(49152,null,0,Ee._75,[je.Q,je.q],{color:[0,"color"]},null),(l()(),je._41(0,["\n    "])),(l()(),je._21(0,null,0,4,"a",[["class","toolbar__brand-name color__almost-white"],["routerLink","/"]],[[1,"target",0],[8,"href",4]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==je._35(l,10).onClick(u.button,u.ctrlKey,u.metaKey,u.shiftKey)&&e}return e},null,null)),je._19(671744,null,0,De.m,[De.k,De.a,Ne.j],{routerLink:[0,"routerLink"]},null),je._19(933888,null,0,Te.a,[Ge.a,je.B,je.C,je.q,je.P,je.Q],{classBase:[0,"classBase"]},null),(l()(),je._21(0,null,null,1,"span",[],null,null,null,null,null)),(l()(),je._41(null,["AtomiCoconut"])),(l()(),je._41(0,["\n    "])),(l()(),je._21(0,null,0,1,"span",[["class","example-spacer"]],null,null,null,null,null)),je._19(933888,null,0,Te.a,[Ge.a,je.B,je.C,je.q,je.P,je.Q],{classBase:[0,"classBase"]},null),(l()(),je._41(0,["\n    \n    "])),(l()(),je._15(16777216,null,0,1,null,hl)),je._19(16384,null,0,Ne.m,[je._3,je.Z],{ngIf:[0,"ngIf"]},null),(l()(),je._41(0,["\n    "])),(l()(),je._15(16777216,null,0,1,null,Cl)),je._19(16384,null,0,Ne.m,[je._3,je.Z],{ngIf:[0,"ngIf"]},null),(l()(),je._41(0,["\n    \n  "])),(l()(),je._41(null,["\n  \n  "])),(l()(),je._41(null,["\n  "])),(l()(),je._21(0,null,null,1,"main-navigator",[],null,null,null,gl,Le)),je._19(114688,null,0,Be,[Gl],null,null),(l()(),je._41(null,["\n\n  "])),(l()(),je._21(16777216,null,null,1,"router-outlet",[],null,null,null,null,null)),je._19(212992,null,0,De.o,[De.b,je._3,je.m,[8,null],je.j],null,null),(l()(),je._41(null,["\n"]))],function(l,n){var u=n.component;l(n,2,0,"inner mat-typography");l(n,5,0,"toolbar");l(n,7,0,"primary");l(n,10,0,"/");l(n,11,0,"toolbar__brand-name color__almost-white");l(n,16,0,"example-spacer"),l(n,19,0,!u.usersService.user),l(n,22,0,u.usersService.user),l(n,27,0),l(n,30,0)},function(l,n){l(n,9,0,je._35(n,10).target,je._35(n,10).href)})}function ql(l){return je._43(0,[(l()(),je._21(0,null,null,2,"app-root",[],null,null,null,bl,Ue)),je._38(512,null,Gl,Gl,[]),je._19(114688,null,0,Dl,[De.k,Pl,Fl,Gl],null,null)],function(l,n){l(n,2,0)},null)}Object.defineProperty(n,"__esModule",{value:!0});var xl={production:!0,apiHost:"",showLogs:!0},wl=u("rgUS"),Bl=(u.n(wl),function(){function l(){}return l}()),Il=u("CPp0"),kl=u("Dqrr"),Sl=(u.n(kl),u("Z04r")),Pl=function(){function l(l,n){this.http=l,this.snackBar=n}return l.prototype.extractData=function(l){var n=l.json();if(200===n.codeno&&"success"===n.status)return n.data;throw n},l.prototype.handleError=function(l){var n={};return n=l instanceof Il.h?l.json()||{}:l||{},kl.Observable.throw(n)},l.prototype.showResults=function(l,n,u){void 0===n&&(n=5e3),void 0===u&&(u="");var e=this.snackBar.open(l,u||null,{duration:n,extraClasses:["snack-bar--simple"]});e.onAction().subscribe(function(){"Close"===e.instance.action&&e.dismiss()})},l.prototype.consoleLog=function(l,n){for(var u=[],e=2;e<arguments.length;e++)u[e-2]=arguments[e];xl.showLogs&&console[l](n,u)},l.ctorParameters=function(){return[{type:Il.e},{type:Sl._58}]},l}(),Ql=u("CPp0"),Fl=function(){function l(l,n){this.http=l,this.appService=n,this.serverHost=xl.apiHost+"/api/users",this.headers=new Ql.d({"Content-Type":"application/json"}),this.routerRedirectUrl=null,this._user=null}return l.prototype.register=function(l){return void 0===l&&(l={}),this.http.post(this.serverHost+"/register",l,{headers:this.headers}).map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.updateAccount=function(l){return void 0===l&&(l={}),this.http.post(this.serverHost+"/account",l,{headers:this.headers}).map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.getAuthenticatedUser=function(){return this.http.get(this.serverHost+"/getUser").map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.login=function(l){return void 0===l&&(l={}),console.log("login service called"),this.http.post(this.serverHost+"/login",l,{headers:this.headers}).map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.forgot=function(l){return void 0===l&&(l={}),this.http.post(this.serverHost+"/account/forgot",l,{headers:this.headers}).map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.reset=function(l,n){return void 0===n&&(n={}),this.http.post(this.serverHost+"/account/reset/"+l,n,{headers:this.headers}).map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.logout=function(){return this.http.get(this.serverHost+"/logout").map(this.appService.extractData).catch(this.appService.handleError)},l.prototype.isLoggedIn=function(){return!(!this.user||!this.user.email)},Object.defineProperty(l.prototype,"user",{get:function(){return this._user},set:function(l){this._user=l},enumerable:!0,configurable:!0}),l.ctorParameters=function(){return[{type:Ql.e},{type:Pl}]},l}(),Ll={defaultGravatarUrl:"https://gravatar.com/avatar/7038663cc684aa330956752c7e6fe7d4?s=200"},jl=function(){function l(l,n,u,e){void 0===l&&(l=""),void 0===n&&(n=""),void 0===u&&(u=""),void 0===e&&(e=!1),this._name=l,this._email=n,this._avatar=u,this._accessToinvestments=e}return Object.defineProperty(l.prototype,"name",{get:function(){return this._name},set:function(l){this._name=l},enumerable:!0,configurable:!0}),Object.defineProperty(l.prototype,"email",{get:function(){return this._email},set:function(l){this._email=l},enumerable:!0,configurable:!0}),Object.defineProperty(l.prototype,"avatar",{get:function(){return this._avatar},set:function(l){this._avatar=l},enumerable:!0,configurable:!0}),Object.defineProperty(l.prototype,"accessToInvestments",{get:function(){return this._accessToinvestments},set:function(l){this._accessToinvestments=l},enumerable:!0,configurable:!0}),l}(),Ml=u("gvep"),Gl=(u.n(Ml),function(){function l(){this.linksSource=new Ml.BehaviorSubject(null),this.links$=this.linksSource.asObservable()}return l.prototype.setLinks=function(l){this.linksSource.next(l)},l.ctorParameters=function(){return[]},l}()),Rl=u("BkNc"),Dl=function(){function l(l,n,u,e){this.router=l,this.appService=n,this.usersService=u,this.mainNavigatorService=e,this.title="app",this.defaultGravatarUrl=Ll.defaultGravatarUrl}return l.prototype.ngOnInit=function(){var l=this,n=this.constructor.name+" > ngOnInit() > ";this.mainNavigatorService.setLinks([{displayName:"Welcome",url:null,selected:!0},{displayName:"Investments",url:"/investments",selected:!1},{displayName:"Calculators",url:"/calculators",selected:!1}]),this.usersService.getAuthenticatedUser().subscribe(function(u){if(u&&u.email){var e=new jl(u.name,u.email,u.avatar,u.accessToInvestments);l.usersService.user=e}else l.appService.consoleLog("info",n+" User not logged in.",u),l.usersService.user=null},function(u){l.appService.consoleLog("error",n+" There was an error with the getAuthenticatedUser service.",u),l.usersService.user=null})},l.prototype.logout=function(){var l=this,n=this.constructor.name+" > logout() > ";this.usersService.logout().subscribe(function(n){l.usersService.user=null,l.router.navigate(["/"])},function(u){l.appService.consoleLog("error",n+" There was an error with the logout service.",u)})},l.ctorParameters=function(){return[{type:Rl.k},{type:Pl},{type:Fl},{type:Gl}]},l}(),Tl=[""],El=function(){function l(l){this.mainNavigatorService=l}return l.prototype.ngOnInit=function(){this.mainNavigatorService.setLinks([{displayName:"Welcome",url:null,selected:!0},{displayName:"Investments",url:"/investments",selected:!1},{displayName:"Calculators",url:"/calculators",selected:!1}])},l.ctorParameters=function(){return[{type:Gl}]},l}(),Ol=u("/oeL"),Nl=[Tl],Zl=Ol._18({encapsulation:0,styles:Nl,data:{}}),Ul=Ol._16("app-welcome",El,r,{},{},[]),Xl=["form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:100%}@media screen and (min-width:600px){form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:127px}}"],Vl=u("BkNc"),Al=function(){function l(l,n,u,e){this.usersService=l,this.appService=n,this.router=u,this.mainNavigatorService=e,this.model={name:"",email:"",password:"","password-confirm":""},this.registerServiceRunning=!1}return l.prototype.ngOnInit=function(){this.constructor.name;this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Login",url:"/users/login",selected:!1},{displayName:"Create account",url:null,selected:!0}])},l.prototype.onSubmit=function(){var l=this,n=this.constructor.name+" > onSubmit() > ";if(this.registerServiceRunning=!0,this.model.password!==this.model["password-confirm"])return console.error(n+" Confirm password must match password."),this.registerServiceRunning=!1,!1;this.usersService.user=null,this.usersService.register(this.model).subscribe(function(u){if(u&&u.email){var e=new jl(u.name,u.email,u.avatar,u.accessToInvestments);l.usersService.user=e,l.router.navigate(["/"]),l.appService.showResults(e.name+" welcome to AtomiCoconut!")}else console.error(n+" Unexpected data format.",u);l.registerServiceRunning=!1},function(u){console.error(n+" There was an error with the register service.",u),400===u.codeno&&u.data&&"UserExistsError"===u.data.name&&l.appService.showResults("The submitted email was already use by another person, pick a different one please."),l.registerServiceRunning=!1})},l.ctorParameters=function(){return[{type:Fl},{type:Pl},{type:Vl.k},{type:Gl}]},l}(),zl=u("/oeL"),Wl=function(){function l(l,n){this.equalFormControlName=l,this.reverse=n}return Object.defineProperty(l.prototype,"isReverse",{get:function(){return!!this.reverse&&"true"===this.reverse},enumerable:!0,configurable:!0}),l.prototype.validate=function(l){var n=l.root.get(this.equalFormControlName);if(n&&n.value!==l.value){if(!this.isReverse)return{equalvalidator:!0};n.setErrors({equalvalidator:!0})}else n&&this.reverse&&(delete n.errors.equalvalidator,Object.keys(n.errors).length||n.setErrors(null));return null},l.ctorParameters=function(){return[{type:null,decorators:[{type:zl.h,args:["equalvalidator"]}]},{type:null,decorators:[{type:zl.h,args:["reverse"]}]}]},l}(),Hl=u("/oeL"),Jl=u("Z04r"),Yl=u("v6Q/"),Kl=u("TgoG"),$l=u("tcGV"),ln=u("p4Sk"),nn=u("bm2B"),un=u("Wraf"),en=u("rUvy"),rn=u("hDHr"),tn=u("SOm2"),an=u("qbdv"),on=u("IJGD"),_n=u("BkNc"),sn=[Xl],cn=Hl._18({encapsulation:0,styles:sn,data:{}}),dn=Hl._16("users-register",Al,v,{},{},[]),mn=["form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:100%}.form__login[_ngcontent-%COMP%]   .form__actions--create-account[_ngcontent-%COMP%]{margin:20px 0}.form__forgot[_ngcontent-%COMP%]{margin-top:50px}@media screen and (min-width:600px){form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:88px}}"],pn=u("BkNc"),gn=function(){function l(l,n,u,e,r){this.usersService=l,this.appService=n,this.mainNavigatorService=u,this.router=e,this.route=r,this.model={email:"",password:""},this.forgotModel={email:"",forgot:!1},this.loginServiceRunning=!1,this.forgotServiceRunning=!1}return l.prototype.ngOnInit=function(){var l=this;this.constructor.name;this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Login",url:null,selected:!0}]),this.route.paramMap.map(function(l){return l.get("state")}).subscribe(function(n){"reset-password-token-expired"===n&&l.appService.showResults("Reset password url has expired or is invalid. Please go to Forgot my password again to create a new one.",5e3)})},l.prototype.onSubmit=function(){var l=this,n=this.constructor.name+" > onSubmit() > ";this.loginServiceRunning=!0,this.usersService.user=null,this.usersService.login(this.model).subscribe(function(u){if(u&&u.email){var e=new jl(u.name,u.email,u.avatar,u.accessToInvestments);l.usersService.user=e;var r=l.usersService.routerRedirectUrl?l.usersService.routerRedirectUrl:"/";l.usersService.routerRedirectUrl=null,l.router.navigate([r])}else console.error(n+" Unexpected data format."),l.loginServiceRunning=!1},function(u){console.error(n+" There was an error with the login service: ",u),451===u.codeno&&l.appService.showResults(u.msg,6e4,"Close"),l.loginServiceRunning=!1})},l.prototype.onForgotSubmit=function(){var l=this,n=this.constructor.name+" > onForgotSubmit() > ";this.forgotServiceRunning=!0,this.usersService.forgot(this.forgotModel).subscribe(function(n){l.forgotServiceRunning=!1,l.appService.showResults("You have been emailed a password reset link.")},function(u){console.error(n+" There was an error with the forgot password service: ",u),l.forgotServiceRunning=!1,455===u.codeno?l.appService.showResults(u.msg,3e3):400===u.codeno&&l.appService.showResults("There was an issue sending the reset password email, please try again in a few minutes.")})},l.ctorParameters=function(){return[{type:Fl},{type:Pl},{type:Gl},{type:pn.k},{type:pn.a}]},l}(),fn=u("/oeL"),hn=u("Z04r"),yn=u("v6Q/"),vn=u("TgoG"),Cn=u("tcGV"),bn=u("p4Sk"),qn=u("bm2B"),xn=u("Wraf"),wn=u("rUvy"),Bn=u("hDHr"),In=u("SOm2"),kn=u("qbdv"),Sn=u("IJGD"),Pn=u("BkNc"),Qn=[mn],Fn=fn._18({encapsulation:0,styles:Qn,data:{}}),Ln=fn._16("app-login",gn,j,{},{},[]),jn=["form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:100%}@media screen and (min-width:600px){form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:88px}}"],Mn=u("BkNc"),Gn=function(){function l(l,n,u,e){this.usersService=l,this.appService=n,this.mainNavigatorService=u,this.route=e,this.model={name:"",email:""},this.updateAccountServiceRunning=!1}return l.prototype.ngOnInit=function(){var l=this;this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"My account",url:null,selected:!0}]),this.route.data.subscribe(function(n){l.model={name:n.authUser.name,email:n.authUser.email}})},l.prototype.onSubmit=function(){var l=this,n=this.constructor.name+" > onSubmit() > ";this.updateAccountServiceRunning=!0,this.usersService.updateAccount(this.model).subscribe(function(u){if(u&&u.email){var e=new jl(u.name,u.email,u.avatar,u.accessToInvestments);l.usersService.user=e,l.appService.showResults("Your profile was successfully updated!.")}else console.error(n+" Unexpected data format.");l.updateAccountServiceRunning=!1},function(u){console.error(n+" There was an error with the update account service > "+u),400===u.codeno&&l.appService.showResults("There was an error with the update account service, please try again in a few minutes."),l.updateAccountServiceRunning=!1})},l.ctorParameters=function(){return[{type:Fl},{type:Pl},{type:Gl},{type:Mn.a}]},l}(),Rn=u("/oeL"),Dn=u("Z04r"),Tn=u("v6Q/"),En=u("TgoG"),On=u("tcGV"),Nn=u("p4Sk"),Zn=u("bm2B"),Un=u("Wraf"),Xn=u("rUvy"),Vn=u("hDHr"),An=u("SOm2"),zn=u("qbdv"),Wn=u("IJGD"),Hn=u("BkNc"),Jn=[jn],Yn=Rn._18({encapsulation:0,styles:Jn,data:{}}),Kn=Rn._16("app-account",Gn,N,{},{},[]),$n=["form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:100%}@media screen and (min-width:600px){form[_ngcontent-%COMP%]   .form__actions[_ngcontent-%COMP%]   .progress-bar[_ngcontent-%COMP%]{width:127px}}"],lu=u("BkNc"),nu=function(){function l(l,n,u,e){this.usersService=l,this.router=n,this.route=u,this.mainNavigatorService=e,this.model={password:"","password-confirm":""},this.token="",this.resetPasswordServiceRunning=!1}return l.prototype.ngOnInit=function(){var l=this,n=this.constructor.name+" > ngOnInit() > ";this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Login",url:"/users/login",selected:!1},{displayName:"Reset password",url:null,selected:!0}]),this.route.paramMap.map(function(l){return l.get("token")}).subscribe(function(u){u?l.token=u:(console.error(n+" Token must be set to reset a password."),l.router.navigate(["/"]))})},l.prototype.onSubmit=function(){var l=this,n=this.constructor.name+" > onSubmit() > ";if(this.resetPasswordServiceRunning=!0,this.model.password!==this.model["password-confirm"])return console.error(n+" Confirm password must match password."),this.resetPasswordServiceRunning=!1,!1;this.usersService.user=null,this.usersService.reset(this.token,this.model).subscribe(function(u){if(u){var e=new jl(u.name,u.email,u.avatar,u.accessToInvestments);l.usersService.user=e,l.router.navigate(["/"])}else console.error(n+" Unexpected data format.");l.resetPasswordServiceRunning=!1},function(u){console.error(n+" There was an error with the reset password service > "+u),l.resetPasswordServiceRunning=!1})},l.ctorParameters=function(){return[{type:Fl},{type:lu.k},{type:lu.a},{type:Gl}]},l}(),uu=u("/oeL"),eu=u("Z04r"),ru=u("v6Q/"),tu=u("TgoG"),au=u("tcGV"),ou=u("p4Sk"),iu=u("bm2B"),_u=u("Wraf"),su=u("rUvy"),cu=u("hDHr"),du=u("SOm2"),mu=u("qbdv"),pu=u("IJGD"),gu=u("BkNc"),fu=[$n],hu=uu._18({encapsulation:0,styles:fu,data:{}}),yu=uu._16("app-reset-password",nu,K,{},{},[]),vu=[".totals-card[_ngcontent-%COMP%]{text-align:center}.totals-card[_ngcontent-%COMP%]   md-card-content[_ngcontent-%COMP%]   p[_ngcontent-%COMP%]{margin-bottom:0}"],Cu=[".currency-card[_ngcontent-%COMP%]{text-align:center}.currency-card[_ngcontent-%COMP%]   .header-image[_ngcontent-%COMP%]{background-size:cover}.currency-card[_ngcontent-%COMP%]   .header-image.header-image__xmr[_ngcontent-%COMP%]{background-image:url(/assets/images/xmr.png)}.currency-card[_ngcontent-%COMP%]   .header-image.header-image__btc[_ngcontent-%COMP%]{background-image:url(/assets/images/btc.png)}"],bu=u("CPp0"),qu=u("Dqrr"),xu=(u.n(qu),function(){function l(l){this.http=l,this.serverUrl="https://api.cryptonator.com/api/ticker/"}return l.prototype.getPrices=function(l){return void 0===l&&(l="btc"),this.http.get(""+this.serverUrl+l+"-usd").map(this.extractData).catch(this.handleError)},l.prototype.extractData=function(l){var n=l.json();if(!0===n.success)return n.ticker;throw n},l.prototype.handleError=function(l){var n;if(l instanceof bu.h){var u=l.json()||"",e=u.error||JSON.stringify(u);n=l.status+" - "+(l.statusText||"")+" "+e}else n=l.message?l.message:l.toString();return qu.Observable.throw(n)},l.ctorParameters=function(){return[{type:bu.e}]},l}()),wu=u("/oeL"),Bu=u("gvep"),Iu=(u.n(Bu),function(){function l(l){this.crytoCurrencyService=l,this.usdFromCryptoCurrency=0,this.usdFromCryptoCurrencyWhenBought=0,this.cryptoCurrencyCurrentPrice=0,this.totalReturns=new wu.s,this.cryptoCurrency$=new Bu.BehaviorSubject(null)}return l.prototype.ngOnInit=function(){var l=this,n=this.constructor.name+" > ngOnInit() > ";this.usdFromCryptoCurrencyWhenBought=this.cryptoCurrencyBuyPrice*this.cryptoCurrencyCount,this.crytoCurrencyService.getPrices(this.cryptoCurrency).subscribe(function(n){l.cryptoCurrency$.next(n),l.cryptoCurrencyCurrentPrice=n.price,l.usdFromCryptoCurrency=n.price*l.cryptoCurrencyCount,l.totalReturns.emit({usdFromCryptoCurrencyWhenBought:l.usdFromCryptoCurrencyWhenBought,usdFromCryptoCurrency:l.usdFromCryptoCurrency})},function(l){return console.error(n+" There was an error trying to load Monero prices > "+l)})},l.ctorParameters=function(){return[{type:xu}]},l}()),ku=u("/oeL"),Su=u("qbdv"),Pu=u("v6Q/"),Qu=u("TgoG"),Fu=u("tcGV"),Lu=u("Z04r"),ju=u("CPp0"),Mu=[Cu],Gu=ku._18({encapsulation:0,styles:Mu,data:{}}),Ru=(ku._16("crypto-currency",Iu,ll,{cryptoCurrency:"cryptoCurrency",cryptoCurrencyCount:"cryptoCurrencyCount",cryptoCurrencyBuyPrice:"cryptoCurrencyBuyPrice",cryptoCurrencyBuyDate:"cryptoCurrencyBuyDate"},{totalReturns:"totalReturns"},[]),u("BkNc")),Du=function(){function l(l,n){this.route=l,this.mainNavigatorService=n,this.xmrBuyDate=new Date(2017,5,23),this.xmrBuyDate2=new Date(2017,8,23),this.xmrBuyDate3=new Date(2017,8,25),this.btcBuyDate=new Date(2017,6,19),this.totalInvestment=0,this.totalReturn=0,this.showInvestments=!1}return l.prototype.ngOnInit=function(){var l=this;this.constructor.name;this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Investments",url:null,selected:!0}]),this.route.data.subscribe(function(n){l.showInvestments=n.authUser.accessToInvestments})},l.prototype.setTotals=function(l){this.totalReturn+=l.usdFromCryptoCurrency,this.totalInvestment+=l.usdFromCryptoCurrencyWhenBought},l.ctorParameters=function(){return[{type:Ru.a},{type:Gl}]},l}(),Tu=u("/oeL"),Eu=u("Wraf"),Ou=u("tcGV"),Nu=u("rUvy"),Zu=u("hDHr"),Uu=u("SOm2"),Xu=u("CPp0"),Vu=u("v6Q/"),Au=u("TgoG"),zu=u("Z04r"),Wu=u("IJGD"),Hu=u("qbdv"),Ju=u("BkNc"),Yu=[vu],Ku=Tu._18({encapsulation:0,styles:Yu,data:{}}),$u=Tu._16("investments-dashboard",Du,rl,{},{},[]),le=[""],ne=function(){function l(l){this.mainNavigatorService=l}return l.prototype.ngOnInit=function(){this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Calculators",url:null,selected:!0},{displayName:"Equity",url:"/calculators/equity",selected:!1}])},l.ctorParameters=function(){return[{type:Gl}]},l}(),ue=u("/oeL"),ee=[le],re=ue._18({encapsulation:0,styles:ee,data:{}}),te=ue._16("app-calculators-dashboard",ne,al,{},{},[]),ae=[".form__equity-calc[_ngcontent-%COMP%]   .form__field__toogle--add-reno[_ngcontent-%COMP%]{margin-bottom:20px}"],oe=function(){function l(l){this.mainNavigatorService=l,this.loanAmount=0,this.discount=0,this.equity=0,this.depositAmount=0,this.usableEquityAfterReno=0,this.model={purchasePrice:0,marketValue:0,loanCoverage:.8,savings:0,renovationCost:0,newMarketValue:0,firstYearRepayment:0,addRenovations:!1}}return l.prototype.ngOnInit=function(){this.mainNavigatorService.setLinks([{displayName:"Welcome",url:"/welcome",selected:!1},{displayName:"Calculators",url:"/calculators",selected:!1},{displayName:"Equity",url:null,selected:!0}])},l.prototype.ngAfterViewInit=function(){var l=this;this.form.valueChanges.debounceTime(500).subscribe(function(n){l.loanAmount=n.purchasePrice*n.loanCoverage,l.discount=n.marketValue-n.purchasePrice,l.depositAmount=n.purchasePrice-l.loanAmount,l.equity=n.savings+l.discount+l.depositAmount,n.addRenovations&&(l.usableEquityAfterReno=.8*n.newMarketValue-l.loanAmount+n.firstYearRepayment)})},l.ctorParameters=function(){return[{type:Gl}]},l}(),ie=u("/oeL"),_e=u("Z04r"),se=u("Wraf"),ce=u("tcGV"),de=u("TgoG"),me=u("rUvy"),pe=u("v6Q/"),ge=u("hDHr"),fe=u("SOm2"),he=u("bm2B"),ye=u("p4Sk"),ve=u("qbdv"),Ce=[ae],be=ie._18({encapsulation:0,styles:Ce,data:{}}),qe=ie._16("app-equity",oe,ml,{},{},[]),xe=[".toolbar[_ngcontent-%COMP%]{margin-bottom:10px}.toolbar[_ngcontent-%COMP%]   .toolbar__brand-name[_ngcontent-%COMP%]{text-decoration:none}.toolbar[_ngcontent-%COMP%]   .toolbar__icon[_ngcontent-%COMP%]{padding:0 10px;cursor:pointer}.toolbar[_ngcontent-%COMP%]   .example-spacer[_ngcontent-%COMP%]{-ms-flex:1 1 auto;flex:1 1 auto}.toolbar[_ngcontent-%COMP%]   .user__avatar[_ngcontent-%COMP%]{border-radius:50%;width:30px;padding:0 10px}.toolbar[_ngcontent-%COMP%]   .user__icon--logged-in[_ngcontent-%COMP%]{color:#28fe7c}  nav.navigation--main{margin-bottom:20px}"],we=[""],Be=function(){function l(l){this.mainNavigatorService=l}return l.prototype.ngOnInit=function(){var l=this;this.mainNavigatorService.links$.subscribe(function(n){return l.links=n})},l.ctorParameters=function(){return[{type:Gl}]},l}(),Ie=u("/oeL"),ke=u("BkNc"),Se=u("Z04r"),Pe=u("v6Q/"),Qe=u("qbdv"),Fe=[we],Le=Ie._18({encapsulation:0,styles:Fe,data:{}}),je=(Ie._16("main-navigator",Be,fl,{},{},[]),u("/oeL")),Me=u("IJGD"),Ge=u("tcGV"),Re=u("v6Q/"),De=u("BkNc"),Te=u("TgoG"),Ee=u("Z04r"),Oe=u("p4Sk"),Ne=u("qbdv"),Ze=[xe],Ue=je._18({encapsulation:0,styles:Ze,data:{}}),Xe=je._16("app-root",Dl,ql,{},{},[]),Ve=u("BkNc"),Ae=function(){function l(l,n,u){this.appService=l,this.usersService=n,this.router=u}return l.prototype.resolve=function(l,n){var u=this,e=this.constructor.name+" > resolve() > ";return this.usersService.getAuthenticatedUser().map(function(l){if(l&&l.email){var n=new jl(l.name,l.email,l.avatar,l.accessToInvestments);return u.usersService.user=n,n}return u.appService.consoleLog("info",e+" User not logged in.",l),u.usersService.user=null,u.router.navigate(["/users/login"]),null},function(l){return u.appService.consoleLog("error",e+" There was an error with the getAuthenticatedUser service.",l),u.usersService.user=null,u.router.navigate(["/users/login"]),null})},l.ctorParameters=function(){return[{type:Pl},{type:Fl},{type:Ve.k}]},l}(),ze=u("BkNc"),We=function(){function l(l,n,u){this.appService=l,this.usersService=n,this.router=u}return l.prototype.canActivate=function(l,n){var u=this,e=this.constructor.name+" > canActivate() > ";return this.usersService.routerRedirectUrl=n.url,console.log(n,l),this.usersService.getAuthenticatedUser().map(function(l){return l&&l.email?(u.usersService.routerRedirectUrl=null,!0):(u.appService.consoleLog("info",e+" User not logged in.",l),u.router.navigate(["/users/login"]),!1)},function(l){return u.appService.consoleLog("error",e+" There was an error with the getAuthenticatedUser service.",l),u.router.navigate(["/users/login"]),!1})},l.ctorParameters=function(){return[{type:Pl},{type:Fl},{type:ze.k}]},l}(),He=function(){function l(){}return l}(),Je=function(){function l(){}return l}(),Ye=function(){function l(){}return l}(),Ke=function(){function l(){}return l}(),$e=function(){function l(){}return l}(),lr=function(){function l(){}return l}(),nr=function(){function l(){}return l}(),ur=function(){function l(){}return l}(),er=function(){function l(){}return l}(),rr=u("/oeL"),tr=u("v6Q/"),ar=u("qbdv"),or=u("fc+i"),ir=u("Z04r"),_r=u("f9zQ"),sr=u("fL27"),cr=u("EyWH"),dr=u("BkNc"),mr=u("CPp0"),pr=u("1uWg"),gr=u("yBGh"),fr=u("/RbK"),hr=u("hK8s"),yr=u("tcGV"),vr=u("/mqM"),Cr=u("M6V1"),br=u("dvoJ"),qr=u("p4Sk"),xr=u("bm2B"),wr=u("rex9"),Br=u("ZycJ"),Ir=rr._17(Bl,[Dl],function(l){return rr._32([rr._33(512,rr.m,rr._13,[[8,[Ul,tr.b,tr.a,tr.r,tr.c,tr.q,dn,Ln,Kn,yu,$u,te,qe,Xe]],[3,rr.m],rr.H]),rr._33(5120,rr.D,rr._31,[[3,rr.D]]),rr._33(4608,ar.o,ar.n,[rr.D]),rr._33(5120,rr.c,rr._22,[]),rr._33(5120,rr.B,rr._28,[]),rr._33(5120,rr.C,rr._29,[]),rr._33(4608,or.c,or.t,[ar.d]),rr._33(6144,rr.T,null,[or.c]),rr._33(4608,or.f,ir.h,[]),rr._33(5120,or.d,function(l,n,u,e){return[new or.l(l),new or.p(n),new or.o(u,e)]},[ar.d,ar.d,ar.d,or.f]),rr._33(4608,or.e,or.e,[or.d,rr.J]),rr._33(135680,or.n,or.n,[ar.d]),rr._33(4608,or.m,or.m,[or.e,or.n]),rr._33(5120,_r.a,sr.d,[]),rr._33(5120,_r.c,sr.e,[]),rr._33(4608,_r.b,sr.c,[_r.a,_r.c]),rr._33(5120,rr.R,sr.f,[or.m,_r.b,rr.J]),rr._33(6144,or.q,null,[or.n]),rr._33(4608,rr._0,rr._0,[rr.J]),rr._33(4608,or.h,or.h,[ar.d]),rr._33(4608,or.j,or.j,[ar.d]),rr._33(4608,cr.b,sr.b,[rr.R]),rr._33(5120,dr.a,dr.x,[dr.k]),rr._33(4608,dr.d,dr.d,[]),rr._33(6144,dr.f,null,[dr.d]),rr._33(135680,dr.p,dr.p,[dr.k,rr.G,rr.k,rr.z,dr.f]),rr._33(4608,dr.e,dr.e,[]),rr._33(5120,dr.h,dr.A,[dr.y]),rr._33(5120,rr.b,function(l){return[l]},[dr.h]),rr._33(4608,mr.c,mr.c,[]),rr._33(4608,mr.i,mr.b,[]),rr._33(5120,mr.k,mr.l,[]),rr._33(4608,mr.j,mr.j,[mr.c,mr.i,mr.k]),rr._33(4608,mr.g,mr.a,[]),rr._33(5120,mr.e,mr.m,[mr.j,mr.g]),rr._33(5120,pr.a,gr.c,[]),rr._33(4608,fr.a,fr.a,[pr.a]),rr._33(4608,hr.a,hr.a,[rr.J]),rr._33(5120,yr.a,vr.b,[[3,yr.a],fr.a,hr.a]),rr._33(5120,Cr.b,br.b,[[3,Cr.b],hr.a,fr.a]),rr._33(6144,qr.o,null,[or.b]),rr._33(4608,qr.q,qr.q,[[2,qr.o]]),rr._33(4608,qr.L,qr.L,[]),rr._33(5120,ir._89,ir._99,[[3,ir._89],rr.J,qr.L]),rr._33(5120,ir._96,ir._98,[[3,ir._96],ir._89]),rr._33(4608,ir._90,ir._90,[ir._89,ir._96]),rr._33(5120,ir._85,ir._97,[[3,ir._85]]),rr._33(4608,ir._102,ir._102,[ir._96]),rr._33(4608,ir._84,ir._84,[ir._90,ir._85,rr.m,ir._102,rr.g,rr.z,rr.J]),rr._33(5120,ir.g,ir.f,[[3,ir.g],rr.J,qr.L]),rr._33(4608,xr.u,xr.u,[]),rr._33(5120,ir._95,ir._100,[[3,ir._95]]),rr._33(4608,qr.G,qr.G,[]),rr._33(4608,qr.z,qr.z,[qr.L]),rr._33(4608,qr.w,qr.w,[qr.z,qr.L,rr.J]),rr._33(5120,qr.F,qr.D,[[3,qr.F],[2,qr.B],qr.L]),rr._33(4608,ir.Z,ir.Z,[ir._84,rr.z,[2,ar.i],[3,ir.Z]]),rr._33(4608,ir.W,ir.W,[]),rr._33(5120,ir._14,ir.i,[[3,ir._14],[2,mr.e],or.c]),rr._33(4608,ir._103,ir._103,[]),rr._33(4608,ir._58,ir._58,[ir._84,qr.F,[3,ir._58]]),rr._33(4608,ir._63,ir._63,[]),rr._33(4608,Pl,Pl,[mr.e,ir._58]),rr._33(4608,Fl,Fl,[mr.e,Pl]),rr._33(4608,Ae,Ae,[Pl,Fl,dr.k]),rr._33(4608,We,We,[Pl,Fl,dr.k]),rr._33(512,ar.b,ar.b,[]),rr._33(1024,rr.r,or.r,[]),rr._33(1024,rr.I,function(){return[dr.t()]},[]),rr._33(512,dr.y,dr.y,[rr.z]),rr._33(1024,rr.d,function(l,n,u){return[or.s(l,n),dr.z(u)]},[[2,or.i],[2,rr.I],dr.y]),rr._33(512,rr.e,rr.e,[[2,rr.d]]),rr._33(131584,rr._20,rr._20,[rr.J,rr._14,rr.z,rr.r,rr.m,rr.e]),rr._33(2048,rr.g,null,[rr._20]),rr._33(512,rr.f,rr.f,[rr.g]),rr._33(512,or.a,or.a,[[3,or.a]]),rr._33(512,sr.a,sr.a,[]),rr._33(1024,dr.s,dr.v,[[3,dr.k]]),rr._33(512,dr.r,dr.c,[]),rr._33(512,dr.b,dr.b,[]),rr._33(256,dr.g,{},[]),rr._33(1024,ar.j,dr.u,[ar.u,[2,ar.a],dr.g]),rr._33(512,ar.i,ar.i,[ar.j]),rr._33(512,rr.k,rr.k,[]),rr._33(512,rr.G,rr.X,[rr.k,[2,rr.Y]]),rr._33(1024,dr.i,function(){return[[{path:"",redirectTo:"welcome",pathMatch:"full"},{path:"welcome",component:El}],[{path:"users",children:[{path:"register",component:Al},{path:"login/:state",component:gn},{path:"login",component:gn},{path:"account",component:Gn,resolve:{authUser:Ae}},{path:"account/reset/expired",redirectTo:"login/reset-password-token-expired",pathMatch:"full"},{path:"account/reset/:token",component:nu}]}],[{path:"investments",canActivate:[We],children:[{path:"",component:Du,resolve:{authUser:Ae}}]}],[{path:"calculators",children:[{path:"",component:ne},{path:"equity",component:oe}]}]]},[]),rr._33(1024,dr.k,dr.w,[rr.g,dr.r,dr.b,ar.i,rr.z,rr.G,rr.k,dr.i,dr.g,[2,dr.q],[2,dr.j]]),rr._33(512,dr.n,dr.n,[[2,dr.s],[2,dr.k]]),rr._33(512,He,He,[]),rr._33(512,mr.f,mr.f,[]),rr._33(512,wr.a,wr.a,[]),rr._33(512,Br.a,Br.a,[]),rr._33(512,ir.c,ir.c,[]),rr._33(512,qr.c,qr.c,[]),rr._33(256,ir.k,!0,[]),rr._33(512,ir.S,ir.S,[[2,or.b],[2,ir.k]]),rr._33(512,qr.M,qr.M,[]),rr._33(512,ir._88,ir._88,[]),rr._33(512,ir._46,ir._46,[]),rr._33(512,ir._50,ir._50,[]),rr._33(512,ir._32,ir._32,[]),rr._33(512,qr.O,qr.O,[]),rr._33(512,ir._86,ir._86,[]),rr._33(512,ir.v,ir.v,[]),rr._33(512,ir._93,ir._93,[]),rr._33(512,ir.y,ir.y,[]),rr._33(512,xr.r,xr.r,[]),rr._33(512,xr.f,xr.f,[]),rr._33(512,ir.C,ir.C,[]),rr._33(512,ir.J,ir.J,[]),rr._33(512,ir.R,ir.R,[]),rr._33(512,qr.I,qr.I,[]),rr._33(512,ir.O,ir.O,[]),rr._33(512,qr.a,qr.a,[]),rr._33(512,ir._1,ir._1,[]),rr._33(512,ir.X,ir.X,[]),rr._33(512,qr.m,qr.m,[]),rr._33(512,ir._73,ir._73,[]),rr._33(512,ir._3,ir._3,[]),rr._33(512,ir._19,ir._19,[]),rr._33(512,ir._7,ir._7,[]),rr._33(512,ir._13,ir._13,[]),rr._33(512,ir._18,ir._18,[]),rr._33(512,ir._22,ir._22,[]),rr._33(512,ir._25,ir._25,[]),rr._33(512,ir._49,ir._49,[]),rr._33(512,ir._79,ir._79,[]),rr._33(512,ir._34,ir._34,[]),rr._33(512,ir._37,ir._37,[]),rr._33(512,ir._39,ir._39,[]),rr._33(512,ir._43,ir._43,[]),rr._33(512,ir._53,ir._53,[]),rr._33(512,ir._57,ir._57,[]),rr._33(512,ir._55,ir._55,[]),rr._33(512,ir._60,ir._60,[]),rr._33(512,ir._64,ir._64,[]),rr._33(512,ir._74,ir._74,[]),rr._33(512,ir._76,ir._76,[]),rr._33(512,ir.r,ir.r,[]),rr._33(512,Je,Je,[]),rr._33(512,Ye,Ye,[]),rr._33(512,Ke,Ke,[]),rr._33(512,$e,$e,[]),rr._33(512,lr,lr,[]),rr._33(512,nr,nr,[]),rr._33(512,ur,ur,[]),rr._33(512,er,er,[]),rr._33(512,Bl,Bl,[])])}),kr=u("/oeL"),Sr=u("fc+i");xl.production&&(Object(kr._7)(),console.log("ENV: Production")),Object(Sr.k)().bootstrapModuleFactory(Ir)},gFIY:function(l,n){function u(l){return new Promise(function(n,u){u(new Error("Cannot find module '"+l+"'."))})}u.keys=function(){return[]},u.resolve=u,l.exports=u,u.id="gFIY"}},[0]);
+webpackJsonp(["main"],{
+
+/***/ "../../../../../configuration.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return configuration; });
+var configuration = {
+    defaultGravatarUrl: 'https://gravatar.com/avatar/7038663cc684aa330956752c7e6fe7d4?s=200'
+};
+//# sourceMappingURL=configuration.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/$$_gendir lazy recursive":
+/***/ (function(module, exports) {
+
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\r\n<div class=\"inner mat-typography\">\r\n\r\n  <mat-toolbar class=\"toolbar\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    <span class=\"example-spacer\"></span>\r\n    \r\n    <span *ngIf=\"!user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"user.avatar\" \r\n      />\r\n      <mat-icon *ngIf=\"!user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n    \r\n    <mat-toolbar-row class=\"secondary-row\" *ngIf=\"user && user.currency !== 'USD' && currencyExchangeService.currencyRates\">\r\n      <span>Preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{user.currency}}</strong></a></span>\r\n      <span class=\"example-spacer\"></span>\r\n      <span>1 USD = {{currencyExchangeService.currencyRates[user.currency]}} {{user.currency}}</span>\r\n    </mat-toolbar-row>\r\n  </mat-toolbar>\r\n  \r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".toolbar {\n  margin-bottom: 10px; }\n  .toolbar .toolbar__brand-name {\n    text-decoration: none; }\n  .toolbar .toolbar__icon {\n    padding: 0 10px;\n    cursor: pointer; }\n  .toolbar .example-spacer {\n    -ms-flex: 1 1 auto;\n        flex: 1 1 auto; }\n  .toolbar .user__avatar {\n    border-radius: 50%;\n    width: 30px;\n    padding: 0 10px; }\n  .toolbar .user__icon--logged-in {\n    color: #28FE7C; }\n\n::ng-deep nav.navigation--main {\n  margin-bottom: 20px; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__configuration__ = __webpack_require__("../../../../../configuration.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_investments_currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+var AppComponent = (function () {
+    function AppComponent(router, appService, usersService, currencyExchangeService, mainNavigatorService) {
+        this.router = router;
+        this.appService = appService;
+        this.usersService = usersService;
+        this.currencyExchangeService = currencyExchangeService;
+        this.mainNavigatorService = mainNavigatorService;
+        this.title = 'AtomiCoconut';
+        this.user = null;
+        this.defaultGravatarUrl = __WEBPACK_IMPORTED_MODULE_3__configuration__["a" /* configuration */].defaultGravatarUrl;
+    }
+    AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        //set the navigation links valid for this components
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: null, selected: true },
+            { displayName: 'Investments', url: '/investments', selected: false },
+            { displayName: 'Calculators', url: '/calculators', selected: false }
+        ]);
+        this.usersService.user$.subscribe(function (user) { return _this.user = user; }); //start listening the source of user
+        this.setUser();
+        //Get currency exchange rates
+        if (!this.currencyExchangeService.currencyRates) {
+            this.currencyExchangeService.getCurrencyRates().subscribe(function (data) {
+                _this.currencyExchangeService.currencyRates = data;
+                _this.appService.consoleLog('info', methodTrace + " Currency exchange rates successfully loaded!");
+            }, function (error) {
+                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > " + error);
+                _this.appService.showResults("There was an error trying to get currency rates data.", 'error');
+            });
+        }
+        this.getCryptoRates('BTC');
+        this.getCryptoRates('XMR');
+    };
+    AppComponent.prototype.getCryptoRates = function (crypto) {
+        var _this = this;
+        if (crypto === void 0) { crypto = 'BTC'; }
+        var methodTrace = this.constructor.name + " > getCryptoRates() > "; //for debugging
+        if (!this.currencyExchangeService.cryptoRates[crypto]) {
+            this.currencyExchangeService.getCryptoRates(crypto).subscribe(function (data) {
+                _this.currencyExchangeService.cryptoRates[crypto] = data;
+                _this.appService.consoleLog('info', methodTrace + " " + crypto + " exchange rate successfully loaded!");
+            }, function (error) {
+                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + crypto + " rates data > " + error);
+                _this.appService.showResults("There was an error trying to get " + crypto + " rates data, please try again in a few minutes.", 'warn');
+            });
+        }
+    };
+    AppComponent.prototype.setUser = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > setUser() > "; //for debugging
+        this.usersService.getAuthenticatedUser().subscribe(function (data) {
+            if (data && data.email) {
+                _this.user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, null, null, data.currency);
+                _this.usersService.setUser(_this.user);
+            }
+            else {
+                _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
+                _this.usersService.setUser(null);
+                _this.user = null;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.usersService.setUser(null);
+            _this.user = null;
+        });
+    };
+    AppComponent.prototype.logout = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > logout() > "; //for debugging  
+        this.usersService.logout().subscribe(function (data) {
+            _this.usersService.setUser(null);
+            _this.user = null;
+            _this.router.navigate(['/']);
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the logout service.", error);
+        });
+    };
+    return AppComponent;
+}());
+AppComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-root',
+        template: __webpack_require__("../../../../../src/app/app.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/app.component.scss")],
+        providers: [__WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__angular_router__["b" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _e || Object])
+], AppComponent);
+
+var _a, _b, _c, _d, _e;
+//# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/@angular/platform-browser/animations.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_hammerjs__ = __webpack_require__("../../../../hammerjs/hammer.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_hammerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_hammerjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_routing_module__ = __webpack_require__("../../../../../src/app/app.routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modules_investments_currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__auth_guard__ = __webpack_require__("../../../../../src/app/auth.guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modules_users_users_module__ = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__modules_teams_teams_module__ = __webpack_require__("../../../../../src/app/modules/teams/teams.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__modules_investments_investments_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__modules_calculators_calculators_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var AppModule = (function () {
+    function AppModule() {
+    }
+    return AppModule;
+}());
+AppModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
+            __WEBPACK_IMPORTED_MODULE_6__app_routing_module__["a" /* AppRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_http__["c" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
+            __WEBPACK_IMPORTED_MODULE_13__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_14__modules_users_users_module__["a" /* UsersModule */],
+            __WEBPACK_IMPORTED_MODULE_15__modules_teams_teams_module__["a" /* TeamsModule */],
+            __WEBPACK_IMPORTED_MODULE_16__modules_investments_investments_module__["a" /* InvestmentsModule */],
+            __WEBPACK_IMPORTED_MODULE_17__modules_calculators_calculators_module__["a" /* CalculatorsModule */],
+            __WEBPACK_IMPORTED_MODULE_19__modules_shared_shared_module__["a" /* SharedModule */]
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
+            __WEBPACK_IMPORTED_MODULE_18__components_welcome_welcome_component__["a" /* WelcomeComponent */]
+        ],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_9__util_service__["a" /* UtilService */], __WEBPACK_IMPORTED_MODULE_11__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */], __WEBPACK_IMPORTED_MODULE_10__auth_resolver_service__["a" /* AuthResolver */], __WEBPACK_IMPORTED_MODULE_12__auth_guard__["a" /* AuthGuard */]],
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
+    })
+], AppModule);
+
+//# sourceMappingURL=app.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_welcome_welcome_component__ = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+/**
+ * Created by mpaoluc on 13/01/2017.
+ */
+
+
+
+var appRoutes = [
+    {
+        path: '',
+        redirectTo: 'welcome',
+        pathMatch: 'full'
+    },
+    {
+        path: 'welcome',
+        component: __WEBPACK_IMPORTED_MODULE_2__components_welcome_welcome_component__["a" /* WelcomeComponent */]
+    }
+    // {
+    //   path : 'page-not-found',
+    //   component : PageNotFoundComponent
+    // },
+    // {
+    //   path : '**',
+    //   component : PageNotFoundComponent
+    // }
+];
+var AppRoutingModule = (function () {
+    function AppRoutingModule() {
+    }
+    return AppRoutingModule;
+}());
+AppRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forRoot(appRoutes)
+        ],
+        exports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]
+        ]
+    })
+], AppRoutingModule);
+
+//# sourceMappingURL=app.routing.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/app.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_components_snackbar_simple_snackbar_simple_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var AppService = (function () {
+    function AppService(http, snackBar) {
+        this.http = http;
+        this.snackBar = snackBar;
+    }
+    /**
+     * Receives and object of paramameters and returns it in a querystring format
+     * @param {*} parameters . Object of parameters
+     * @return {string} result as querystring
+     */
+    AppService.prototype.getParamsAsQuerystring = function (parameters) {
+        if (parameters === void 0) { parameters = null; }
+        var strParams = '';
+        if (parameters && Object.keys(parameters).length) {
+            for (var _i = 0, _a = Object.keys(parameters); _i < _a.length; _i++) {
+                var key = _a[_i];
+                strParams += "&" + key + "=" + parameters[key];
+            }
+        }
+        return strParams.substring(1);
+    };
+    /**
+     * Extract data from a server response
+     * @param res
+     */
+    AppService.prototype.extractData = function (res) {
+        var body = res.json();
+        if (body.codeno === 200 && body.status === 'success') {
+            return body.data;
+        }
+        else {
+            throw body;
+        }
+    };
+    /**
+     * Handle server service errors and parse the result in an object
+     * @param error
+     */
+    AppService.prototype.handleError = function (error) {
+        // In a real world app, we might use a remote logging infrastructure
+        var errObj = {};
+        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
+            errObj = error.json() || {};
+        }
+        else {
+            errObj = error || {};
+        }
+        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].throw(errObj);
+    };
+    /**
+     * Shows messages in snackbar component
+     * @param message . The text to show
+     * @param duration . The duration in milliseconds . Optional
+     * @param actionName . An action name to close the message on click. Optional
+     *
+     * @return {MatSnackBar} . The snackbar ref
+     */
+    AppService.prototype.showResults = function (message, type, duration) {
+        if (type === void 0) { type = 'info'; }
+        if (duration === void 0) { duration = 5000; }
+        var snackBarRef = this.snackBar.openFromComponent(__WEBPACK_IMPORTED_MODULE_5__modules_shared_components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */], {
+            data: {
+                type: type,
+                message: message
+            },
+            duration: duration,
+            extraClasses: ['snackbar--simple', "snackbar--" + type]
+        });
+        return snackBarRef;
+    };
+    /**
+     * Shows multiple messages in snackbar component one after another
+     * @param {any[]} messages . The array of messages to show
+     * @param {number} index . The index where to start iterating the messages array
+     *
+     * @return {MatSnackBar} . The snackbar Ref
+     */
+    AppService.prototype.showManyResults = function (messages, index) {
+        var _this = this;
+        if (index === void 0) { index = 0; }
+        var snackBarRef = null;
+        if (index < messages.length) {
+            snackBarRef = this.showResults(messages[index].message, messages[index].type, messages[index].duration);
+            snackBarRef.afterDismissed().subscribe(function () {
+                _this.showManyResults(messages, index += 1);
+            });
+        }
+        else {
+            return snackBarRef;
+        }
+    };
+    /**
+     * Show logs in the console if enabled in the current environment
+     * @param type . Error type
+     * @param message . The message to show
+     * @param params . Any extra parameters to list in the log.
+     */
+    AppService.prototype.consoleLog = function (type, message) {
+        var params = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            params[_i - 2] = arguments[_i];
+        }
+        if (__WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].showLogs) {
+            console[type](message, params);
+        }
+    };
+    return AppService;
+}());
+AppService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_material__["w" /* MatSnackBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_material__["w" /* MatSnackBar */]) === "function" && _b || Object])
+], AppService);
+
+var _a, _b;
+//# sourceMappingURL=app.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/auth-resolver.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthResolver; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_users_models_account_personal__ = __webpack_require__("../../../../../src/app/modules/users/models/account-personal.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_users_models_account_finance__ = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var AuthResolver = (function () {
+    function AuthResolver(appService, usersService, router) {
+        this.appService = appService;
+        this.usersService = usersService;
+        this.router = router;
+    }
+    AuthResolver.prototype.resolve = function (route, state) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > resolve() > "; //for debugging  
+        this.usersService.routerRedirectUrl = state.url;
+        var urlsForCompleteUserData = ['/investments', '/users/account'];
+        var params = null;
+        if (urlsForCompleteUserData.includes(state.url)) {
+            params = { personalInfo: true, financialInfo: true };
+        }
+        return this.usersService.getAuthenticatedUser(params).map(function (data) {
+            if (data && data.email) {
+                var personalInfo = null;
+                if (data.personalInfo) {
+                    personalInfo = new __WEBPACK_IMPORTED_MODULE_3__modules_users_models_account_personal__["a" /* AccountPersonal */](data.personalInfo.birthday);
+                }
+                var financialInfo = null;
+                if (data.financialInfo) {
+                    financialInfo = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_account_finance__["a" /* AccountFinance */](data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
+                }
+                var user = new __WEBPACK_IMPORTED_MODULE_2__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
+                _this.usersService.setUser(user);
+                _this.usersService.routerRedirectUrl = null;
+                return user;
+            }
+            else {
+                _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
+                _this.usersService.setUser(null);
+                _this.router.navigate(['/users/login']);
+                return null;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.usersService.setUser(null);
+            _this.router.navigate(['/users/login']);
+            return null;
+        });
+    };
+    return AuthResolver;
+}());
+AuthResolver = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _c || Object])
+], AuthResolver);
+
+var _a, _b, _c;
+//# sourceMappingURL=auth-resolver.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/auth.guard.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthGuard; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var AuthGuard = (function () {
+    function AuthGuard(appService, usersService, router) {
+        this.appService = appService;
+        this.usersService = usersService;
+        this.router = router;
+    }
+    AuthGuard.prototype.canActivate = function (next, state) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > canActivate() > "; //for debugging
+        this.usersService.routerRedirectUrl = state.url;
+        return this.usersService.getAuthenticatedUser().map(function (data) {
+            if (data && data.email) {
+                _this.usersService.routerRedirectUrl = null; //we don't need this
+                return true;
+            }
+            else {
+                _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
+                _this.router.navigate(['/users/login']);
+                return false;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.router.navigate(['/users/login']);
+            return false;
+        });
+    };
+    return AuthGuard;
+}());
+AuthGuard = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _c || Object])
+], AuthGuard);
+
+var _a, _b, _c;
+//# sourceMappingURL=auth.guard.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/welcome/welcome.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div *ngIf=\"user\" class=\"container__net-worth\">\r\n  <!-- Net Worth Card -->\r\n  <mat-card *ngIf=\"expectedWealth && user.personalInfo.age\"\r\n      fxLayout=\"column\" class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n      <div class=\"wealth__container\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"none center\" fxLayoutAlign.gt-xs=\"space-between none\">\r\n        <span class=\"accent\">\r\n          Expected net worth at your age ({{user.personalInfo.age}}) is \r\n          <strong>{{ expectedWealth | currency : 'USD' : false : '1.2-2' }}</strong>\r\n        </span>\r\n        <span [class.color__accent]=\"wealthAmount >= expectedWealth\" \r\n            [class.color__red]=\"wealthAmount < expectedWealth\">\r\n          Current net worth is <strong>{{ wealthAmount | currency : 'USD' : false : '1.2-2' }}</strong>\r\n        </span>\r\n        \r\n        <!-- <p *ngIf=\"user.financialInfo.savings === null\">\r\n          <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n            <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n            Go to your account and complete Financial Info to see your current state\r\n          </a>\r\n        </p> -->\r\n      </div>\r\n      <div>\r\n        <mat-progress-bar \r\n          class=\"progress-spinner progress-spinner--wealth\"\r\n          [color]=\"wealthAmount < expectedWealth ? 'warn' : 'accent'\"\r\n          [value]=\"progressBarWealthValue\"\r\n          mode=\"determinate\">\r\n        </mat-progress-bar>\r\n      </div>\r\n    </mat-card-content>\r\n  </mat-card>\r\n    <!-- EOF Net Worth Card -->\r\n\r\n  <!-- Net Worth Card when Personal and Financial info is incomplete -->\r\n  <mat-card *ngIf=\"!user.financialInfo || !user.personalInfo\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete your Personal and Financial Info to see expected and current Net Worth\r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  <!-- EOF Net Worth Card when Personal and Financial info is incomplete -->\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/welcome/welcome.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".container__net-worth {\n  margin-bottom: 10px; }\n  .container__net-worth .icon--arrow_forward {\n    float: left; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/welcome/welcome.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WelcomeComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_users_models_account_personal__ = __webpack_require__("../../../../../src/app/modules/users/models/account-personal.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_users_models_account_finance__ = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__modules_investments_investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__modules_investments_currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__modules_investments_models_currencyInvestment__ = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__constants_constants__ = __webpack_require__("../../../../../src/app/constants/constants.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+var WelcomeComponent = (function () {
+    function WelcomeComponent(mainNavigatorService, usersService, appService, investmentsService, currencyExchangeService) {
+        this.mainNavigatorService = mainNavigatorService;
+        this.usersService = usersService;
+        this.appService = appService;
+        this.investmentsService = investmentsService;
+        this.currencyExchangeService = currencyExchangeService;
+        this.user = null;
+        this.wealthAmount = 0;
+        this.expectedWealth = 0;
+        this.progressBarWealthValue = 0;
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_12_rxjs_Subscription__["a" /* Subscription */]();
+    }
+    WelcomeComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: null, selected: true },
+            { displayName: 'Investments', url: '/investments', selected: false },
+            { displayName: 'Calculators', url: '/calculators', selected: false }
+        ]);
+        var user$ = this.setUser();
+        var newSubscription = user$.subscribe(function (investments) {
+            var _loop_1 = function (investment) {
+                if (investment instanceof __WEBPACK_IMPORTED_MODULE_10__modules_investments_models_currencyInvestment__["a" /* CurrencyInvestment */]) {
+                    var myPercentage_1 = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
+                    var currencyInvestment_1 = investment;
+                    if (investment.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CURRENCY) {
+                        _this.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
+                            var myReturnAmount = (currencyInvestment_1.amount * (currencyRates[currencyInvestment_1.unit] || 1)) * myPercentage_1 / 100;
+                            _this.wealthAmount += myReturnAmount;
+                            _this.calculateProgressBarWealthValue();
+                        }, function (error) {
+                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
+                            _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
+                        });
+                    }
+                    else if (investment.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CRYPTO) {
+                        _this.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).take(1).subscribe(function (rates) {
+                            var myReturnAmount = (currencyInvestment_1.amount * rates.price) * myPercentage_1 / 100;
+                            _this.wealthAmount += myReturnAmount;
+                            _this.calculateProgressBarWealthValue();
+                        }, function (error) {
+                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_1.unit + " rates data > ", error);
+                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_1.unit + " rates data, please try again in a few minutes.", 'error');
+                        });
+                    }
+                }
+            };
+            //iterate investments and sum returns
+            for (var _i = 0, investments_1 = investments; _i < investments_1.length; _i++) {
+                var investment = investments_1[_i];
+                _loop_1(investment);
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.user = null;
+        });
+        this.subscription.add(newSubscription);
+    };
+    WelcomeComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    /**
+     * Sets the user property with the current user or null of nobody logged in yet
+     */
+    WelcomeComponent.prototype.setUser = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > setUser() > "; //for debugging
+        var gotAuthenticatedUserFromServer = false;
+        var user$ = this.usersService.user$.switchMap(function (user) {
+            if (!user) {
+                return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of(null);
+            }
+            else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
+                gotAuthenticatedUserFromServer = true;
+                return _this.usersService.getAuthenticatedUser({ personalInfo: true, financialInfo: true });
+            }
+            else {
+                return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of(user);
+            }
+        });
+        return user$.switchMap(function (user) {
+            if (user && user.email) {
+                var personalInfo = null;
+                if (user.personalInfo) {
+                    personalInfo = new __WEBPACK_IMPORTED_MODULE_6__modules_users_models_account_personal__["a" /* AccountPersonal */](user.personalInfo.birthday);
+                }
+                var financialInfo = null;
+                if (user.financialInfo) {
+                    financialInfo = new __WEBPACK_IMPORTED_MODULE_7__modules_users_models_account_finance__["a" /* AccountFinance */](user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
+                    if (gotAuthenticatedUserFromServer !== null) {
+                        _this.wealthAmount += _this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
+                    }
+                    if (user.personalInfo && user.personalInfo.age) {
+                        _this.expectedWealth = _this.currencyExchangeService.getUsdValueOf(user.financialInfo.annualIncome || 0, user.financialInfo.annualIncomeUnit) * user.personalInfo.age / 10;
+                    }
+                    else {
+                        _this.expectedWealth = 0;
+                    }
+                    _this.calculateProgressBarWealthValue();
+                }
+                user = new __WEBPACK_IMPORTED_MODULE_5__modules_users_models_user__["a" /* User */](user.name, user.email, user.avatar, financialInfo, personalInfo, user.currency);
+                _this.user = user;
+                if (gotAuthenticatedUserFromServer) {
+                    gotAuthenticatedUserFromServer = null; //shut down the flag
+                    //we just got updated information from server, let's update the current user source
+                    _this.usersService.setUser(user);
+                }
+                return _this.investmentsService.getInvestments(user.email);
+            }
+            else {
+                _this.user = null;
+                return __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__["a" /* Observable */].of([]);
+            }
+        });
+    };
+    WelcomeComponent.prototype.calculateProgressBarWealthValue = function () {
+        if (!this.expectedWealth) {
+            this.progressBarWealthValue = 0;
+            return;
+        }
+        var value = this.wealthAmount * 100 / this.expectedWealth;
+        this.progressBarWealthValue = value > 100 ? 100 : value;
+    };
+    return WelcomeComponent;
+}());
+WelcomeComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'welcome',
+        template: __webpack_require__("../../../../../src/app/components/welcome/welcome.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/welcome/welcome.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__modules_users_users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_8__modules_investments_investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__modules_investments_investments_service__["a" /* InvestmentsService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_9__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */]) === "function" && _e || Object])
+], WelcomeComponent);
+
+var _a, _b, _c, _d, _e;
+//# sourceMappingURL=welcome.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/constants/constants.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return INVESTMENTS_TYPES; });
+var INVESTMENTS_TYPES = {
+    CURRENCY: 'currency',
+    CRYPTO: 'crypto',
+    PROPERTY: 'property'
+};
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/calculators-routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_equity_equity_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_calculators_dashboard_calculators_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var routes = [{
+        path: 'calculators',
+        children: [
+            { path: '', component: __WEBPACK_IMPORTED_MODULE_3__components_calculators_dashboard_calculators_dashboard_component__["a" /* CalculatorsDashboardComponent */] },
+            { path: 'equity', component: __WEBPACK_IMPORTED_MODULE_2__components_equity_equity_component__["a" /* EquityComponent */] }
+        ]
+    }];
+var CalculatorsRoutingModule = (function () {
+    function CalculatorsRoutingModule() {
+    }
+    return CalculatorsRoutingModule;
+}());
+CalculatorsRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+    })
+], CalculatorsRoutingModule);
+
+//# sourceMappingURL=calculators-routing.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/calculators.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__calculators_routing_module__ = __webpack_require__("../../../../../src/app/modules/calculators/calculators-routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_equity_equity_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_calculators_dashboard_calculators_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+var CalculatorsModule = (function () {
+    function CalculatorsModule() {
+    }
+    return CalculatorsModule;
+}());
+CalculatorsModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_6__calculators_routing_module__["a" /* CalculatorsRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__["FlexLayoutModule"],
+            __WEBPACK_IMPORTED_MODULE_4__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_5__modules_shared_shared_module__["a" /* SharedModule */]
+        ],
+        declarations: [__WEBPACK_IMPORTED_MODULE_7__components_equity_equity_component__["a" /* EquityComponent */], __WEBPACK_IMPORTED_MODULE_8__components_calculators_dashboard_calculators_dashboard_component__["a" /* CalculatorsDashboardComponent */]]
+    })
+], CalculatorsModule);
+
+//# sourceMappingURL=calculators.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsDashboardComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var CalculatorsDashboardComponent = (function () {
+    function CalculatorsDashboardComponent(mainNavigatorService) {
+        this.mainNavigatorService = mainNavigatorService;
+    }
+    CalculatorsDashboardComponent.prototype.ngOnInit = function () {
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Calculators', url: null, selected: true },
+            { displayName: 'Equity', url: '/calculators/equity', selected: false }
+        ]);
+    };
+    return CalculatorsDashboardComponent;
+}());
+CalculatorsDashboardComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-calculators-dashboard',
+        template: __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object])
+], CalculatorsDashboardComponent);
+
+var _a;
+//# sourceMappingURL=calculators-dashboard.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container form__equity-calc\" #equityForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Purchase price -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\" \r\n            [(ngModel)]=\"model.purchasePrice\" \r\n            required\r\n            value=\"model.purchasePrice\"\r\n            #purchasePrice=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required\">Purchase price is required</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Market value -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\" \r\n            [(ngModel)]=\"model.marketValue\" \r\n            required\r\n            value=\"model.marketValue\"\r\n            #marketValue=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required\">Market value is required</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Loan coverage -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"loanCoverage\" name=\"loanCoverage\" placeholder=\"Loan coverage %\" \r\n            [(ngModel)]=\"model.loanCoverage\" \r\n            required loanCoverage\r\n            value=\"model.loanCoverage\"\r\n            #loanCoverage=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required\">Loan coverage is required</mat-error>\r\n      </mat-form-field>\r\n\r\n      <!-- Savings -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"savings\" name=\"savings\" placeholder=\"Current savings\" \r\n            [(ngModel)]=\"model.savings\" \r\n            value=\"model.savings\"\r\n            #savings=\"ngModel\">\r\n      </mat-form-field>\r\n\r\n      <!-- Add renovations checkbox -->\r\n      <mat-slide-toggle color=\"accent\" class=\"form__field form__field__toogle form__field__toogle--add-reno\"\r\n          [(ngModel)]=\"model.addRenovations\" name=\"addRenovations\" id=\"addRenovations\">\r\n        \r\n        Add renovations data\r\n      </mat-slide-toggle>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\" *ngIf=\"model.addRenovations\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Renovation cost -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\" \r\n            [(ngModel)]=\"model.renovationCost\" \r\n            value=\"model.renovationCost\"\r\n            #renovationCost=\"ngModel\">\r\n      </mat-form-field>\r\n      \r\n      <!-- New market value -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"newMarketValue\" name=\"newMarketValue\" placeholder=\"After renovations market value\" \r\n            [(ngModel)]=\"model.newMarketValue\" \r\n            value=\"model.newMarketValue\"\r\n            #newMarketValue=\"ngModel\">\r\n      </mat-form-field>\r\n      \r\n      <!-- First year repayment -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"firstYearRepayment\" name=\"firstYearRepayment\" placeholder=\"First year loan repayments\" \r\n            [(ngModel)]=\"model.firstYearRepayment\" \r\n            value=\"model.firstYearRepayment\"\r\n            #firstYearRepayment=\"ngModel\">\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n</form>\r\n\r\n<section  class=\"\">\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxFlex fxFlex.gt-xs=\"620px\">\r\n    <mat-card fxFlex>\r\n      <mat-card-title class=\"mat-card-title--ac\">Initial figures</mat-card-title>\r\n      <mat-card-content>\r\n        <div><label>Loan amount: </label><span>{{loanAmount}}</span></div>\r\n        <div><label>Deposit amount: </label><span>{{depositAmount}}</span></div>\r\n        <div><label>Discount: </label><span>{{discount}}</span></div>\r\n        <div><label>Equity: </label><span>{{equity}}</span></div>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n    <mat-card fxFlex *ngIf=\"model.addRenovations\">\r\n      <mat-card-title class=\"mat-card-title--ac\">After renovations figures</mat-card-title>\r\n      <mat-card-content>\r\n        <div><label>Usable equity: </label><span>{{usableEquityAfterReno}}</span></div>\r\n      </mat-card-content>\r\n    </mat-card>\r\n  </div>\r\n</section>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".form__equity-calc .form__field__toogle--add-reno {\n  margin-bottom: 20px; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EquityComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var EquityComponent = (function () {
+    function EquityComponent(mainNavigatorService) {
+        this.mainNavigatorService = mainNavigatorService;
+        this.loanAmount = 0;
+        this.discount = 0;
+        this.equity = 0;
+        this.depositAmount = 0;
+        this.usableEquityAfterReno = 0;
+        this.model = {
+            purchasePrice: 0,
+            marketValue: 0,
+            loanCoverage: 0.8,
+            savings: 0,
+            renovationCost: 0,
+            newMarketValue: 0,
+            firstYearRepayment: 0,
+            addRenovations: false
+        };
+    }
+    EquityComponent.prototype.ngOnInit = function () {
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Calculators', url: '/calculators', selected: false },
+            { displayName: 'Equity', url: null, selected: true }
+        ]);
+    };
+    EquityComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        this.form.valueChanges.debounceTime(500).subscribe(function (values) {
+            _this.loanAmount = values.purchasePrice * values.loanCoverage;
+            _this.discount = values.marketValue - values.purchasePrice;
+            _this.depositAmount = values.purchasePrice - _this.loanAmount;
+            _this.equity = values.savings + _this.discount + _this.depositAmount;
+            if (values.addRenovations) {
+                _this.usableEquityAfterReno = values.newMarketValue * 0.8 - _this.loanAmount + values.firstYearRepayment;
+            }
+        });
+    };
+    return EquityComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_17" /* ViewChild */])('equityForm'),
+    __metadata("design:type", Object)
+], EquityComponent.prototype, "form", void 0);
+EquityComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-equity',
+        template: __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object])
+], EquityComponent);
+
+var _a;
+//# sourceMappingURL=equity.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-currency-investment\">\r\n    <form class=\"form__container form__edit-currency-investment\" #editCurrencyInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n      \r\n      <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <currency-unit fxFlex fxFlex.gt-xs=\"200px\"\r\n                [id]=\"'currencyInvestmentUnit'\" \r\n                [value]=\"model.unit\"\r\n                [type]=\"model.type\"\r\n                [hint]=\"'Choose the desired currency to invest on...'\"\r\n                [placeHolder]=\"'Desired currency'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n\r\n            <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"amount\" name=\"amount\" placeholder=\"Amount\"\r\n                  [(ngModel)]=\"model.amount\" \r\n                  [value]=\"model.amount\"\r\n                  numberValidator='{\"maxFractionDigits\": 8}' \r\n                  required\r\n                  #amount=\"ngModel\">\r\n              <mat-hint align=\"start\">Set the buying amount.</mat-hint>\r\n              <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.required\">Amount is required.</mat-error>\r\n              <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.numberValidator\">Value must be numeric, with no more than 8 decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <!-- Buying date -->\r\n            <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n              <input placeholder=\"Buying date\"\r\n                  id=\"buyingDate\"\r\n                  name=\"buyingDate\"\r\n                  readonly\r\n                  required\r\n                  #buyingDate=\"ngModel\"\r\n                  matInput \r\n                  [(ngModel)]=\"model.buyingDate\" \r\n                  [matDatepicker]=\"pickerBuyingDate\"\r\n                  (click)=\"pickerBuyingDate.open()\">\r\n              <mat-datepicker-toggle matSuffix [for]=\"pickerBuyingDate\"></mat-datepicker-toggle>\r\n              <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBuyingDate></mat-datepicker>\r\n              <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.required\">Buying date is required.</mat-error>\r\n              <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.matDatepickerParse\">Buying date is invalid or not follows the pattern \"mm/dd/yyyy\"</mat-error>\r\n            </mat-form-field>\r\n\r\n            <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n              <!-- Buying price unit -->\r\n              <currency-unit fxFlex=\"50px\"\r\n                  [id]=\"'buyingPriceUnit'\" \r\n                  [view]=\"'narrow'\"\r\n                  [value]=\"model.buyingPriceUnit\"\r\n                  (newValue)=\"onCurrencyUnitChange($event)\">\r\n              </currency-unit>\r\n\r\n              <!-- Buying price -->\r\n              <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n                <input matInput type=\"number\" id=\"buyingPrice\" name=\"buyingPrice\" placeholder=\"Price\"\r\n                    [(ngModel)]=\"model.buyingPrice\" \r\n                    [value]=\"model.buyingPrice\"\r\n                    numberValidator \r\n                    required\r\n                    #buyingPrice=\"ngModel\">\r\n                <mat-hint align=\"start\">Price on buying date.</mat-hint>\r\n                <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.required\">Buying price is required.</mat-error>\r\n                <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n              </mat-form-field>\r\n            </div>\r\n            \r\n          </div>\r\n        </div>\r\n      </section>\r\n    </form>\r\n  </div>\r\n  "
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyInvestmentFormComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var CurrencyInvestmentFormComponent = (function () {
+    function CurrencyInvestmentFormComponent(dateAdapter, appService, utilService) {
+        this.dateAdapter = dateAdapter;
+        this.appService = appService;
+        this.utilService = utilService;
+        this.defaultValues = null; //the default values of the component model  
+        this.values = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.model = {
+            type: null,
+            unit: null,
+            amount: null,
+            buyingPrice: null,
+            buyingPriceUnit: null,
+            buyingDate: null
+        };
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__["a" /* Subscription */]();
+        this.dateAdapter.setLocale('en-GB');
+    }
+    CurrencyInvestmentFormComponent.prototype.ngOnInit = function () {
+        this.model.unit = this.model.type === 'currency' ? 'USD' : 'BTC';
+        this.model.buyingDate = new Date(Date.now());
+        this.model.buyingPriceUnit = 'USD';
+        Object.assign(this.model, this.defaultValues);
+    };
+    CurrencyInvestmentFormComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    CurrencyInvestmentFormComponent.prototype.onCurrencyUnitChange = function ($event) {
+        if ($event.source.id === 'currencyInvestmentUnit') {
+            this.model.unit = $event.value;
+        }
+        else if ($event.source.id === 'buyingPriceUnit') {
+            this.model.buyingPriceUnit = $event.value;
+        }
+        this.values.emit({
+            value: {
+                model: this.model,
+                valid: this.form.valid
+            }
+        });
+    };
+    CurrencyInvestmentFormComponent.prototype.ngAfterViewInit = function () {
+        var _this = this;
+        //send data before touching any value
+        this.values.emit({
+            value: {
+                model: this.model,
+                valid: this.form.valid
+            }
+        });
+        //after any event in the form we send updated data
+        var newSubscription = this.form.valueChanges.debounceTime(500).subscribe(function (values) {
+            _this.values.emit({
+                value: {
+                    model: _this.model,
+                    valid: _this.form.valid
+                }
+            });
+        });
+        this.subscription.add(newSubscription);
+    };
+    return CurrencyInvestmentFormComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_17" /* ViewChild */])('editCurrencyInvestmentForm'),
+    __metadata("design:type", Object)
+], CurrencyInvestmentFormComponent.prototype, "form", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", Object)
+], CurrencyInvestmentFormComponent.prototype, "defaultValues", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
+], CurrencyInvestmentFormComponent.prototype, "values", void 0);
+CurrencyInvestmentFormComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'currency-investment-form',
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__util_service__["a" /* UtilService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__util_service__["a" /* UtilService */]) === "function" && _d || Object])
+], CurrencyInvestmentFormComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=currency-investment-form.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/' + investment.type + '/' + investment.unit + '.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{currentPrice | currency : 'USD' : false : '1.2-2'}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : false : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : false : '1.2-2' }}\r\n\r\n    <div [class.color__accent]=\"investmentReturn >= investmentValueWhenBought\" \r\n        [class.color__red]=\"investmentReturn < investmentValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : false : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let portion of investmentDistribution\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"portion.member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{portion.member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>{{ portion.percentage }}%</p>\r\n                <p>{{ portion.money | currency : 'USD' : false : '1.2-2' }}</p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/crypto/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".currency-card {\n  text-align: left; }\n  .currency-card .header-image img {\n    width: 40px; }\n  .currency-card .card__content {\n    text-align: center; }\n    .currency-card .card__content .team-panel {\n      cursor: default;\n      margin-top: 10px; }\n      .currency-card .card__content .team-panel mat-panel-title {\n        font-size: 18px; }\n      .currency-card .card__content .team-panel .team-panel__content {\n        text-align: left; }\n        .currency-card .card__content .team-panel .team-panel__content .members .member .member__avatar {\n          border-radius: 50%;\n          width: 40px;\n          height: 40px;\n          padding: 0 10px 0 0; }\n        .currency-card .card__content .team-panel .team-panel__content .members .member .member__info .member__email {\n          font-size: 11px; }\n    .currency-card .card__content .actions {\n      margin: 10px 0 0; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyInvestmentComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__ = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+
+var CurrencyInvestmentComponent = (function () {
+    function CurrencyInvestmentComponent(currencyExchangeService, appService, usersService, investmentsService, dialog, router) {
+        this.currencyExchangeService = currencyExchangeService;
+        this.appService = appService;
+        this.usersService = usersService;
+        this.investmentsService = investmentsService;
+        this.dialog = dialog;
+        this.router = router;
+        this.totalReturns = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.deletedId = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.teams$ = new __WEBPACK_IMPORTED_MODULE_10_rxjs_BehaviorSubject__["a" /* BehaviorSubject */]([]);
+        this.investmentAmount = 0;
+        this.buyingPrice = 0;
+        this.investmentReturn = 0;
+        this.investmentValueWhenBought = 0;
+        this.currentPrice = 0;
+        this.actionRunning = false;
+        this.user = null;
+        this.team = null; //if the investment has a tema this will be populated with the full info of the team
+        this.investmentDistribution = [];
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__["a" /* Subscription */]();
+    }
+    Object.defineProperty(CurrencyInvestmentComponent.prototype, "teams", {
+        get: function () {
+            return this.teams$.getValue();
+        },
+        set: function (teams) {
+            this.teams$.next(teams);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    CurrencyInvestmentComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        //get the team of the investmetn if exists
+        var newSubscription = null;
+        var currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
+        var currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, function (user, currencyRates) {
+            _this.user = user;
+            return { user: user, currencyRates: currencyRates };
+        }); //(currency rates and user) source
+        if (this.investment.type === 'crypto') {
+            //crypto investment
+            var cryptoRates$ = this.currencyExchangeService.getCryptoRates(this.investment.unit); //get crypto rates observable source
+            newSubscription = cryptoRates$.combineLatest(currencyRatesAndUser$, function (cryptoRates, currencyRatesAndUser) {
+                return {
+                    currencyRates: currencyRatesAndUser.currencyRates,
+                    user: currencyRatesAndUser.user,
+                    cryptoRates: cryptoRates
+                };
+            }).switchMap(function (data) {
+                _this.currentPrice = data.cryptoRates.price;
+                _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
+                _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
+                _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
+                _this.investmentReturn = _this.currentPrice * _this.investment.amount;
+                return _this.teams$;
+            }).subscribe(function (teams) {
+                _this.setInvestmentTeamData(teams);
+            }, function (error) {
+                _this.appService.consoleLog('error', methodTrace + " There was an error trying to generate investment data > ", error);
+                _this.appService.showResults("There was an error trying to generate investment data, please try again in a few minutes.", 'error');
+            });
+        }
+        else {
+            //currency exchange
+            newSubscription = currencyRatesAndUser$.switchMap(function (data) {
+                _this.currentPrice = data.currencyRates[_this.investment.unit] || 1;
+                _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
+                _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
+                _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
+                _this.investmentReturn = _this.currentPrice * _this.investment.amount;
+                return _this.teams$;
+            }).subscribe(function (teams) {
+                _this.setInvestmentTeamData(teams);
+            }, function (error) {
+                _this.appService.consoleLog('error', methodTrace + " There was an error trying to generate investment data > ", error);
+                _this.appService.showResults("There was an error trying to generate investment data, please try again in a few minutes.", 'error');
+            });
+        }
+        this.subscription.add(newSubscription);
+    };
+    CurrencyInvestmentComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    /**
+     * Populates team data as well as the distribution on the investment between team members when the investment is asigned to a team
+     *
+     * @param {Team[]} teams . The teams of the current user
+     */
+    CurrencyInvestmentComponent.prototype.setInvestmentTeamData = function (teams) {
+        var _this = this;
+        this.team = this.investment.team ? teams.filter(function (team) { return team.slug === _this.investment.team.slug; })[0] : null; //look for the team of the investment
+        //set totals to emit to parent component. If no team assigned then the total of the investment is the same as my portion
+        var totals = {
+            investmentId: this.investment.id,
+            investmentAmount: this.investmentAmount,
+            investmentReturn: this.investmentReturn,
+            myInvestmentAmount: this.investmentAmount,
+            myInvestmentReturn: this.investmentReturn
+        };
+        if (this.team) {
+            var _loop_1 = function (member) {
+                var percentage = (this_1.investment.investmentDistribution.filter(function (portion) { return portion.email === member.email; })[0]).percentage;
+                this_1.investmentDistribution.push({
+                    member: member,
+                    percentage: percentage,
+                    money: this_1.investmentReturn * percentage / 100
+                });
+                if (this_1.user && this_1.user.email === member.email) {
+                    totals.myInvestmentAmount = this_1.investmentAmount * percentage / 100;
+                    totals.myInvestmentReturn = this_1.investmentReturn * percentage / 100;
+                }
+            };
+            var this_1 = this;
+            //if team is present then get my portion of the investment
+            for (var _i = 0, _a = this.team.members; _i < _a.length; _i++) {
+                var member = _a[_i];
+                _loop_1(member);
+            }
+        }
+        this.totalReturns.emit(totals);
+    };
+    CurrencyInvestmentComponent.prototype.openDeleteDialog = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > openDeleteDialog() > "; //for debugging
+        if (!this.investment.id) {
+            this.appService.consoleLog('error', methodTrace + " Investment ID is required to delete.");
+            return false;
+        }
+        this.actionRunning = true;
+        var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_2__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
+            width: '250px',
+            data: {
+                title: 'Delete investment',
+                message: "Are you sure you want to delete this investment forever?"
+            }
+        });
+        yesNoDialogRef.afterClosed().subscribe(function (result) {
+            if (result === 'yes') {
+                _this.delete();
+            }
+            else {
+                _this.actionRunning = false;
+            }
+        });
+        return false;
+    };
+    CurrencyInvestmentComponent.prototype.delete = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        if (this.user) {
+            this.actionRunning = true;
+            var newSubscription = this.investmentsService.delete(this.investment.id, this.user.email).subscribe(function (data) {
+                if (data && data.removed > 0) {
+                    _this.appService.showResults("Investment successfully removed!", 'success');
+                    _this.deletedId.emit(_this.investment.id);
+                }
+                else {
+                    _this.appService.showResults("Investment could not be removed, please try again.", 'error');
+                    _this.actionRunning = false;
+                }
+            }, function (error) {
+                _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+                if (error.codeno === 400) {
+                    _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+                }
+                else {
+                    _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+                }
+                _this.actionRunning = false;
+            });
+            this.subscription.add(newSubscription);
+        }
+        else {
+            this.appService.showResults("You are not logged into AtomiCoconut, you must login first.", 'error');
+            this.router.navigate(['/users/login']);
+        }
+    };
+    return CurrencyInvestmentComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__["a" /* CurrencyInvestment */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__["a" /* CurrencyInvestment */]) === "function" && _a || Object)
+], CurrencyInvestmentComponent.prototype, "investment", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", Array),
+    __metadata("design:paramtypes", [Array])
+], CurrencyInvestmentComponent.prototype, "teams", null);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
+    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _b || Object)
+], CurrencyInvestmentComponent.prototype, "totalReturns", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
+    __metadata("design:type", typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _c || Object)
+], CurrencyInvestmentComponent.prototype, "deletedId", void 0);
+CurrencyInvestmentComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'currency-investment',
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__["a" /* CurrencyExchangeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__["a" /* CurrencyExchangeService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__users_users_service__["a" /* UsersService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__investments_service__["a" /* InvestmentsService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_6__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__angular_router__["b" /* Router */]) === "function" && _j || Object])
+], CurrencyInvestmentComponent);
+
+var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+//# sourceMappingURL=currency-investment.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<h2 mat-dialog-title>Create investment</h2>\r\n\r\n<mat-dialog-content>\r\n  <mat-button-toggle-group fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"selector__investment-type\" (change)=\"onChange($event)\" #investmentTypesGroup>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"currency\" matTooltip=\"Currency exchange\" routerLink=\"investments/currency/create\"\r\n        [matTooltipPosition]=\"utilService.isXs() ? 'right' : 'below'\">\r\n      <img src=\"/assets/images/exchange.png\" alt=\"currency\" />\r\n    </mat-button-toggle>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"cryptocurrency\" matTooltip=\"Crypto currency\" routerLink=\"investments/crypto/create\"\r\n        [matTooltipPosition]=\"utilService.isXs() ? 'right' : 'below'\">\r\n      <img src=\"/assets/images/cryptocurrency.png\" alt=\"Crypto currency\" />\r\n    </mat-button-toggle>\r\n    <!-- <mat-button-toggle class=\"option__investment-type\" value=\"property\" matTooltip=\"Property\" routerLink=\"investments/property/create\"\r\n        [matTooltipPosition]=\"utilService.isXs() ? 'right' : 'below'\">\r\n      <img src=\"/assets/images/house.png\" alt=\"Property\" />\r\n    </mat-button-toggle> -->\r\n  </mat-button-toggle-group>\r\n</mat-dialog-content>\r\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ":host {\n  text-align: center; }\n  :host .selector__investment-type .option__investment-type {\n    padding: 10px; }\n    :host .selector__investment-type .option__investment-type img {\n      width: 50px; }\n  @media screen and (min-width: 600px) {\n    :host .selector__investment-type .option__investment-type img {\n      width: 90px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentSelectorDialogComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+
+var InvestmentSelectorDialogComponent = (function () {
+    function InvestmentSelectorDialogComponent(dialogRef, data, utilService) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this.utilService = utilService;
+    }
+    InvestmentSelectorDialogComponent.prototype.ngOnInit = function () { };
+    InvestmentSelectorDialogComponent.prototype.onNoClick = function () {
+        this.dialogRef.close();
+    };
+    InvestmentSelectorDialogComponent.prototype.onChange = function (event) {
+        this.dialogRef.close();
+    };
+    return InvestmentSelectorDialogComponent;
+}());
+InvestmentSelectorDialogComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'investment-selector-dialog',
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.scss")]
+    }),
+    __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */]) === "function" && _a || Object, Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__util_service__["a" /* UtilService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__util_service__["a" /* UtilService */]) === "function" && _b || Object])
+], InvestmentSelectorDialogComponent);
+
+var _a, _b;
+//# sourceMappingURL=investment-selector-dialog.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <div *ngFor=\"let row of investmentsUI\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <currency-investment *ngFor=\"let investment of row\" fxFlex fxFlex.gt-xs=\"50\"\r\n        [investment]=\"investment\"\r\n        [teams]=\"teams\"\r\n        (totalReturns)=\"setTotals($event)\"\r\n        (deletedId)=\"removeInvestment($event)\">\r\n      </currency-investment>\r\n    </div>\r\n\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"20px\">\r\n        <!-- Totals -->\r\n        <div *ngIf=\"!myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>Total investments: <strong>{{totalInvestment | currency }}</strong></p>\r\n          <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n              [class.color__red]=\"totalReturn < totalInvestment\">\r\n            Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- My totals -->\r\n        <div *ngIf=\"myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>My total investments: <strong>{{myTotalInvestment | currency }}</strong></p>\r\n          <p [class.color__accent]=\"myTotalReturn >= myTotalInvestment\" \r\n              [class.color__red]=\"myTotalReturn < myTotalInvestment\">\r\n            My total ROI: <strong>{{ myTotalReturn | currency }}</strong> ({{myTotalReturn / myTotalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- Totals switcher -->\r\n        <mat-slide-toggle fxFlexAlign.xs=\"center\" color=\"accent\" class=\"form__field form__field__toogle\" [checked]=\"false\" #myTotals>\r\n          My totals\r\n        </mat-slide-toggle>\r\n\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && !investments.length\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"totals-card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>\r\n          You do not have investments yet.\r\n        </p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab class=\"mat-elevation-z12\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".progress-bar--get-investments {\n  width: 100%; }\n\n.totals-card {\n  text-align: center; }\n  .totals-card md-card-content p {\n    margin-bottom: 0; }\n\n@media screen and (min-width: 600px) {\n  .progress-bar--get-investments {\n    width: 300px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsDashboardComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__users_users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__constants_constants__ = __webpack_require__("../../../../../src/app/constants/constants.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+var InvestmentsDashboardComponent = (function () {
+    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog, appService, teamsService, investmentsService, currencyExchangeService) {
+        this.route = route;
+        this.mainNavigatorService = mainNavigatorService;
+        this.usersService = usersService;
+        this.dialog = dialog;
+        this.appService = appService;
+        this.teamsService = teamsService;
+        this.investmentsService = investmentsService;
+        this.currencyExchangeService = currencyExchangeService;
+        this.investments = [];
+        this.teams = [];
+        this.investmentsUI = []; //this is a structure to use in the view an make the rendering easier organizing the info in rows
+        this.totalInvestment = 0;
+        this.totalReturn = 0;
+        this.myTotalInvestment = 0;
+        this.myTotalReturn = 0;
+        this.totals = {};
+        this.user = null;
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__["a" /* Subscription */]();
+        this.getInvestmentsServiceRunning = false;
+        this.getTeamsServiceRunning = false;
+    }
+    InvestmentsDashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Investments', url: null, selected: true }
+        ]);
+        //get authUser from resolver
+        var user$ = this.route.data.map(function (data) {
+            _this.user = data.authUser;
+            return data.authUser;
+        });
+        if (!this.investments.length) {
+            this.getInvestments(user$);
+        }
+        this.getTeams(user$);
+    };
+    InvestmentsDashboardComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    /**
+     * Get my teams from server
+     */
+    InvestmentsDashboardComponent.prototype.getTeams = function (user$) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        this.teams = [];
+        this.getTeamsServiceRunning = true;
+        var newSubscription = user$.switchMap(function (user) {
+            return _this.teamsService.getTeams(user.email);
+        }).subscribe(function (teams) {
+            _this.teams = teams;
+            _this.getTeamsServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getTeamsServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    /**
+     * Get my investments from server
+     */
+    InvestmentsDashboardComponent.prototype.getInvestments = function (user$) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getInvestments() > "; //for debugging
+        this.investments = [];
+        this.getInvestmentsServiceRunning = true;
+        var newSubscription = user$.switchMap(function (user) {
+            return _this.investmentsService.getInvestments(user.email);
+        }).subscribe(function (investments) {
+            _this.investments = investments;
+            //organize investments in rows of n-items to show in the view
+            var investmentsRow = [];
+            for (var _i = 0, investments_1 = investments; _i < investments_1.length; _i++) {
+                var item = investments_1[_i];
+                if (investmentsRow.length < 2) {
+                    investmentsRow.push(item);
+                }
+                else {
+                    _this.investmentsUI.push(investmentsRow);
+                    investmentsRow = [item];
+                }
+            }
+            if (investmentsRow.length) {
+                _this.investmentsUI.push(investmentsRow);
+            }
+            _this.getInvestmentsServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getInvestmentsServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    InvestmentsDashboardComponent.prototype.setTotals = function (totalReturns) {
+        //update the total that matches the id
+        this.totals[totalReturns.investmentId] = totalReturns;
+        //reset totals
+        this.totalReturn = 0;
+        this.totalInvestment = 0;
+        this.myTotalInvestment = 0;
+        this.myTotalReturn = 0;
+        //re calculate totals
+        for (var _i = 0, _a = Object.keys(this.totals); _i < _a.length; _i++) {
+            var investmentId = _a[_i];
+            this.totalReturn += this.totals[investmentId].investmentReturn;
+            this.totalInvestment += this.totals[investmentId].investmentAmount;
+            this.myTotalInvestment += this.totals[investmentId].myInvestmentAmount;
+            this.myTotalReturn += this.totals[investmentId].myInvestmentReturn;
+        }
+    };
+    /**
+     * Removes the investment from the investments array and from the investmentUI array used in view
+     */
+    InvestmentsDashboardComponent.prototype.removeInvestment = function (deletedId) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > removeInvestment() > "; //for debugging
+        if (deletedId) {
+            var index = 0;
+            var _loop_1 = function (investment) {
+                //update totals and break loop
+                if (investment.id === deletedId) {
+                    //get my portion in the investment
+                    var myPortion_1 = 0;
+                    for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
+                        var portion = _a[_i];
+                        if (this_1.user.email === portion.email) {
+                            myPortion_1 = portion.percentage;
+                            break;
+                        }
+                    }
+                    var currencyInvestment_1 = investment;
+                    if (currencyInvestment_1.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CURRENCY) {
+                        this_1.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
+                            var investmentReturn = currencyInvestment_1.amount * (currencyRates[currencyInvestment_1.unit] || 1);
+                            var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_1.investmentAmount, currencyInvestment_1.investmentAmountUnit);
+                            _this.totalReturn -= investmentReturn;
+                            _this.totalInvestment -= investmentAmount;
+                            _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
+                            _this.myTotalInvestment -= investmentAmount * myPortion_1 / 100;
+                        }, function (error) {
+                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
+                            _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
+                        });
+                    }
+                    else if (investment.type === __WEBPACK_IMPORTED_MODULE_11__constants_constants__["a" /* INVESTMENTS_TYPES */].CRYPTO) {
+                        this_1.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).take(1).subscribe(function (rates) {
+                            var investmentReturn = currencyInvestment_1.amount * rates.price;
+                            var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_1.investmentAmount, currencyInvestment_1.investmentAmountUnit);
+                            _this.totalReturn -= investmentReturn;
+                            _this.totalInvestment -= investmentAmount;
+                            _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
+                            _this.myTotalInvestment -= investmentAmount * myPortion_1 / 100;
+                        }, function (error) {
+                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_1.unit + " rates data > ", error);
+                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_1.unit + " rates data, please try again in a few minutes.", 'error');
+                        });
+                    }
+                    return "break";
+                }
+                index += 1;
+            };
+            var this_1 = this;
+            for (var _i = 0, _a = this.investments; _i < _a.length; _i++) {
+                var investment = _a[_i];
+                var state_1 = _loop_1(investment);
+                if (state_1 === "break")
+                    break;
+            }
+            //remove investment from array
+            this.investments.splice(index, 1);
+            //update ui array
+            var row = 0;
+            var offset = 0;
+            var found = false;
+            for (var i = 0; i < this.investmentsUI.length; i++) {
+                for (var j = 0; j < this.investmentsUI[i].length; j++) {
+                    if (this.investmentsUI[i][j].id === deletedId) {
+                        row = i;
+                        offset = j;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) {
+                    break;
+                }
+            }
+            this.investmentsUI[row].splice(offset, 1);
+            if (!this.investmentsUI[row].length) {
+                this.investmentsUI.splice(row, 1);
+            }
+        }
+    };
+    InvestmentsDashboardComponent.prototype.openNewInvestmentDialog = function () {
+        var addPersonDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_5__investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */], {});
+        return false;
+    };
+    return InvestmentsDashboardComponent;
+}());
+InvestmentsDashboardComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'investments-dashboard',
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDialog */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__["a" /* TeamsService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_10__currency_exchange_service__["a" /* CurrencyExchangeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__currency_exchange_service__["a" /* CurrencyExchangeService */]) === "function" && _h || Object])
+], InvestmentsDashboardComponent);
+
+var _a, _b, _c, _d, _e, _f, _g, _h;
+//# sourceMappingURL=investments-dashboard.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-investment\">\r\n  <form class=\"form__container form__edit-investment\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div *ngIf=\"!getInvestmentServiceRunning\">\r\n      <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n        \r\n        <mat-progress-bar *ngIf=\"getTeamsServiceRunning\"\r\n          class=\"progress-bar progress-bar--get-teams\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n        </mat-progress-bar>\r\n\r\n        <div *ngIf=\"teams.length && !getTeamsServiceRunning\" fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title\">\r\n            Owner\r\n            <p class=\"mat-caption\">Specify the owner of this investment</p>\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n            <mat-radio-group fxFlex.gt-xs=\"230px\" class=\"form__field radiogroup__owner\"\r\n                [(ngModel)]=\"model.owner\" \r\n                name=\"owner\" \r\n                id=\"owner\" \r\n                #owner=\"ngModel\"\r\n                (change)=\"onRadioChange($event)\">\r\n              <mat-radio-button class=\"owner__option\" value=\"me\">Just me</mat-radio-button>\r\n              <mat-radio-button class=\"owner__option\" value=\"team\">My team</mat-radio-button>\r\n            </mat-radio-group>\r\n    \r\n            <mat-form-field *ngIf=\"teams.length && model.owner === 'team'\" fxFlex fxFlex.gt-xs=\"350px\" class=\"form__field\">\r\n              <mat-select [(ngModel)]=\"model.team\"\r\n                  name=\"team\" \r\n                  id=\"team\" \r\n                  #team=\"ngModel\" \r\n                  placeholder=\"Select a team\"\r\n                  (change)=\"onSelectChange($event)\"\r\n                  required>\r\n                <mat-option *ngFor=\"let team of teams\" [value]=\"team\">\r\n                  {{team.name}}\r\n                </mat-option>\r\n              </mat-select>\r\n              <mat-error *ngIf=\"team.invalid && (team.dirty || team.touched) && team.errors.required\">Please choose a team</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n        \r\n        <div *ngIf=\"model.team\" fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title\">\r\n            Split between team members\r\n            <p class=\"mat-caption\">Specify how to split the returns setting a percentage of the total investment amount to each member</p>\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">         \r\n            <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"20px\" class=\"team-members\">\r\n              <div *ngFor=\"let member of model.team.members; index as memberIndex\" fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"member\">\r\n                <div class=\"member-details\" fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n                  <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n                  <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === model.team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n                    <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === model.team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n                    <p class=\"member__email\">{{member.email}}</p>\r\n                  </div>\r\n                </div>\r\n      \r\n                <div class=\"member-percentage\">\r\n                  <mat-form-field class=\"form__field\">\r\n                    <input matInput type=\"number\" id=\"memberPercentage_{{member.email}}\" name=\"memberPercentage_{{member.email}}\" placeholder=\"Percentage of investment\"\r\n                        [(ngModel)]=\"model.membersPercentage[member.email]\" \r\n                        [value]=\"model.membersPercentage[member.email]\"\r\n                        numberValidator='{\"min\": 0, \"max\": 100}'\r\n                        required\r\n                        #memberPercentage=\"ngModel\">\r\n                    <mat-hint align=\"start\">(%) Investment portion for {{member.email}}.</mat-hint>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.required\">Percentage of investment is required.</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n            </div>\r\n            \r\n          </div>\r\n        </div>\r\n  \r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title title__investment-amount\">\r\n            Investment details\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n                <currency-unit fxFlex=\"50px\"\r\n                    [id]=\"'investmentAmountUnit'\" \r\n                    [value]=\"model.investmentAmountUnit\"\r\n                    [view]=\"'narrow'\"\r\n                    (newValue)=\"onCurrencyUnitChange($event)\">\r\n                </currency-unit>\r\n                \r\n                <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n                  <input matInput type=\"number\" id=\"investmentAmount\" name=\"investmentAmount\" placeholder=\"Investment amount\"\r\n                      [(ngModel)]=\"model.investmentAmount\" \r\n                      [value]=\"model.investmentAmount\"\r\n                      numberValidator \r\n                      required\r\n                      #investmentAmount=\"ngModel\">\r\n                  <mat-hint align=\"start\">Set the amount of money to invest.</mat-hint>\r\n                  <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required\">Investment amount is required.</mat-error>\r\n                  <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                </mat-form-field>\r\n              </div>\r\n          </div>\r\n        </div>\r\n  \r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <currency-investment-form [defaultValues]=\"model.investmentData\"\r\n              (values)=\"onInvestmentDataChange($event)\">\r\n          </currency-investment-form>\r\n        </div>\r\n      </section>\r\n  \r\n      \r\n      \r\n      <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-investment\">\r\n        <button *ngIf=\"!editInvestmentServiceRunning\" \r\n            class=\"form__action mat-raised-button\" \r\n            mat-raised-button \r\n            type=\"submit\" \r\n            color=\"accent\" \r\n            [disabled]=\"!editInvestmentForm.form.valid || !investmentDataValid\">Save</button>\r\n        \r\n        <mat-progress-bar *ngIf=\"editInvestmentServiceRunning\"\r\n            class=\"progress-bar progress-bar--edit-investment\"\r\n            color=\"primary\"\r\n            mode=\"indeterminate\">\r\n        </mat-progress-bar>\r\n      </section>\r\n    </div>\r\n    \r\n    <!-- <pre>{{model | json}}</pre> -->\r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-investment\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>\r\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.progress-bar--get-investment, .progress-bar--get-teams {\n  width: 100%; }\n\n.container__edit-investment .form__fields .form__fields__row__container .radiogroup__owner .owner__option {\n  margin-right: 10px; }\n  .container__edit-investment .form__fields .form__fields__row__container .radiogroup__owner .owner__option:last-child {\n    margin-right: 0; }\n\n.container__edit-investment .form__fields .form__fields__row__container .title__investment-amount {\n  margin-bottom: 5px !important; }\n\n.container__edit-investment .team-members .member .member__avatar {\n  border-radius: 50%;\n  width: 40px;\n  height: 40px;\n  padding: 0 10px 0 0; }\n\n.container__edit-investment .team-members .member .member__info .admin-icon {\n  font-size: 14px;\n  height: auto;\n  width: auto; }\n\n.container__edit-investment .team-members .member .member__info .member__email {\n  font-size: 11px; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-investment, .progress-bar--get-teams {\n    width: 300px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsEditComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__ = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+var InvestmentsEditComponent = (function () {
+    function InvestmentsEditComponent(route, mainNavigatorService, investmentsService, teamsService, appService, router) {
+        this.route = route;
+        this.mainNavigatorService = mainNavigatorService;
+        this.investmentsService = investmentsService;
+        this.teamsService = teamsService;
+        this.appService = appService;
+        this.router = router;
+        this.editMode = false;
+        this.user = null;
+        this.teams = [];
+        this.investment = null;
+        this.model = {
+            id: null,
+            email: null,
+            owner: 'me',
+            team: null,
+            teamSlug: null,
+            membersPercentage: {},
+            investmentAmount: null,
+            investmentAmountUnit: null,
+            type: null,
+            investmentData: {},
+            investmentDistribution: [] //how the investment would be distributed into its owners
+        };
+        this.id = null; //investment id
+        this.type = null; //investment type
+        //services flags
+        this.editInvestmentServiceRunning = false;
+        this.getInvestmentServiceRunning = false;
+        this.getTeamsServiceRunning = false;
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_6_rxjs_Subscription__["a" /* Subscription */]();
+        this.formChangesSubscription = null;
+        this.investmentDataValid = false; //this value is set when investment data form is updated
+    }
+    InvestmentsEditComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Investments', url: '/investments', selected: false }
+        ]);
+        //generates a user source object from authUser from resolver
+        var user$ = this.route.data.map(function (data) { return data.authUser; });
+        //generates an investment id source from id parameter in url
+        var id$ = this.route.paramMap.map(function (params) { return params.get('id'); });
+        //combine user$ and id$ sources into one object and start listen to it for changes
+        this.subscription = user$.combineLatest(id$, function (user, id) {
+            return { user: user, investmentId: id };
+        }).subscribe(function (data) {
+            _this.user = data.user;
+            _this.model.email = data.user.email;
+            _this.model.investmentAmountUnit = _this.user.currency;
+            _this.model.id = data.investmentId || null;
+            _this.editInvestmentServiceRunning = false;
+            _this.getInvestmentServiceRunning = false;
+            //get user teams
+            _this.getTeams();
+            if (!data.investmentId) {
+                //we are creating a new investment
+                _this.id = null;
+                _this.editMode = false;
+                _this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected: true });
+            }
+            else {
+                _this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected: true });
+                //we are editing an existing investment
+                _this.id = data.investmentId; //the new slug
+                _this.editMode = true;
+                _this.getInvestment(data.investmentId); //get data
+            }
+        });
+        //get TYPE parameter
+        this.route.paramMap.map(function (params) { return params.get('type'); }).subscribe(function (type) {
+            if (!['currency', 'crypto', 'property'].includes(type)) {
+                _this.appService.showResults('You must provide a valid investment type to continue.', 'error');
+                _this.router.navigate(['welcome']);
+            }
+            else {
+                _this.type = type;
+                _this.model.type = type;
+                _this.model.investmentData.type = type;
+            }
+        });
+    };
+    InvestmentsEditComponent.prototype.ngAfterViewInit = function () {
+        if (this.form && !this.formChangesSubscription) {
+            this.subscribeFormValueChanges();
+        }
+    };
+    /**
+     * This methods subscribes to changes on the main form in the view. We do it in a separate method because when the page loads for edition the form it is not defined in the
+     * view until an investment is retrived from the server. We save an instance of the subscription to avoid subscriwe twice or more times.
+     */
+    InvestmentsEditComponent.prototype.subscribeFormValueChanges = function () {
+        var _this = this;
+        this.formChangesSubscription = this.form.valueChanges.debounceTime(500).subscribe(function (values) {
+            if (values.owner === 'team' && values.team && _this.model.team) {
+                //calculates the percentage acum from all the members
+                var percentageAcum = _this.model.team.members.reduce(function (total, member) {
+                    return total + (_this.model.membersPercentage[member.email] || 0);
+                }, 0);
+                if (percentageAcum > 100) {
+                    var lastMember = _this.model.team.members.slice(-1)[0];
+                    var diff = percentageAcum - 100;
+                    var decimalPipe = new __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DecimalPipe */]('en');
+                    var newValue = Number(decimalPipe.transform(_this.model.membersPercentage[lastMember.email] - diff, '1.0-2'));
+                    if (newValue < 0) {
+                        _this.setDefaultInvestmentPercentages();
+                        _this.appService.showResults("The sum of percentages must not exceed 100%, we reset the values to make it valid.", 'warn');
+                    }
+                    else {
+                        _this.model.membersPercentage[lastMember.email] = newValue <= 100 ? newValue : 0;
+                        _this.appService.showResults("The sum of percentages must not exceed 100%, we reset the last values to make it valid.", 'warn');
+                    }
+                }
+            }
+        });
+        this.subscription.add(this.formChangesSubscription);
+    };
+    InvestmentsEditComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    InvestmentsEditComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.editInvestmentServiceRunning = true;
+        this.model.investmentDistribution = this.populateInvestmentDistributionArray();
+        this.model.createdOn = new Date(Date.now());
+        this.model.updatedOn = new Date(Date.now());
+        //call the investment create service
+        var newSubscription = this.investmentsService.create(this.model).subscribe(function (data) {
+            if (data && data.id && data.type) {
+                _this.appService.showResults("Investment successfully created!", 'success');
+                _this.router.navigate(['/investments/', data.type, 'edit', data.id]);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+                _this.editInvestmentServiceRunning = false;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit investment service.", error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error with the investment services, please try again in a few minutes.", 'error');
+            }
+            _this.editInvestmentServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    InvestmentsEditComponent.prototype.onUpdate = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onUpdate() > "; //for debugging
+        this.editInvestmentServiceRunning = true;
+        this.model.investmentDistribution = this.populateInvestmentDistributionArray();
+        this.model.updatedOn = new Date(Date.now());
+        //call the investment create service
+        var newSubscription = this.investmentsService.update(this.model).subscribe(function (data) {
+            if (data && data.id && data.type) {
+                _this.appService.showResults("Investment successfully updated!", 'success');
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            _this.editInvestmentServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit investment service.", error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error with the investment services, please try again in a few minutes.", 'error');
+            }
+            _this.editInvestmentServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    /**
+     * Get my teams from server
+     */
+    InvestmentsEditComponent.prototype.getTeams = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        this.teams = [];
+        this.getTeamsServiceRunning = true;
+        var newSubscription = this.teamsService.getTeams(this.user.email).subscribe(function (teams) {
+            _this.teams = teams;
+            _this.getTeamsServiceRunning = false;
+            if (teams.length) {
+                _this.getSelectedTeam();
+            }
+            else {
+                _this.appService.showResults("You are not member of any team yet!. Create a team if you want to split your investment with other people.", 'info');
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getTeamsServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    /**
+     * Get the selected team . This is going to works when teams and investment is here (so we are in edit mode) and the investment has a team selected
+     */
+    InvestmentsEditComponent.prototype.getSelectedTeam = function () {
+        if (this.teams && this.teams.length && this.investment && this.investment.team) {
+            for (var _i = 0, _a = this.teams; _i < _a.length; _i++) {
+                var team = _a[_i];
+                if (this.investment.team.slug === team.slug) {
+                    this.model.team = team;
+                }
+            }
+        }
+    };
+    /**
+     * Populates an array that specifies the distribution of the investment between its owners and returns it.
+     *
+     * @return {array} The distribution of the investment
+     */
+    InvestmentsEditComponent.prototype.populateInvestmentDistributionArray = function () {
+        var result = [];
+        if (!this.model.team) {
+            result.push({ email: this.user.email, percentage: 100 });
+        }
+        else {
+            for (var _i = 0, _a = Object.keys(this.model.membersPercentage); _i < _a.length; _i++) {
+                var email = _a[_i];
+                result.push({ email: email, percentage: this.model.membersPercentage[email] });
+            }
+        }
+        return result;
+    };
+    /**
+     * Get a team from server based on the id provided
+     * @param {string} id
+     */
+    InvestmentsEditComponent.prototype.getInvestment = function (id) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getInvestment() > "; //for debugging
+        if (!id) {
+            this.appService.showResults("Invalid investment ID", 'error');
+            this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
+            return false;
+        }
+        this.getInvestmentServiceRunning = true;
+        var newSubscription = this.investmentsService.getInvestmentById(this.user.email, id).subscribe(function (investment) {
+            _this.investment = investment;
+            //populate the model
+            _this.model.owner = investment.team ? 'team' : 'me';
+            _this.model.team = investment.team;
+            _this.getSelectedTeam(); //this is necesary to make the selectbox in ui set a team
+            _this.model.teamSlug = investment.team ? investment.team.slug : null;
+            _this.model.investmentDistribution = investment.investmentDistribution;
+            for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
+                var portion = _a[_i];
+                _this.model.membersPercentage[portion.email] = portion.percentage;
+            }
+            _this.model.investmentAmount = investment.investmentAmount;
+            _this.model.investmentAmountUnit = investment.investmentAmountUnit;
+            _this.model.type = investment.type;
+            if (investment instanceof __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__["a" /* CurrencyInvestment */]) {
+                _this.model.investmentData = {
+                    type: investment.type,
+                    unit: investment.unit,
+                    amount: investment.amount,
+                    buyingPrice: investment.buyingPrice,
+                    buyingPriceUnit: investment.buyingPriceUnit,
+                    buyingDate: investment.buyingDate
+                };
+            }
+            _this.getInvestmentServiceRunning = false;
+            if (_this.form && !_this.formChangesSubscription) {
+                _this.subscribeFormValueChanges();
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 461 || error.codeno === 462) {
+                _this.appService.showResults(error.msg, 'error');
+                _this.router.navigate(['/welcome']);
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getInvestmentServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    InvestmentsEditComponent.prototype.onSelectChange = function (matSelectChange) {
+        this.model.teamSlug = matSelectChange.value.slug;
+        this.setDefaultInvestmentPercentages();
+    };
+    InvestmentsEditComponent.prototype.onRadioChange = function (matRadioChange) {
+        if (matRadioChange.value === 'me') {
+            //reset team values from model
+            this.model.team = this.model.teamSlug = null;
+        }
+        this.model.membersPercentage = {};
+    };
+    InvestmentsEditComponent.prototype.onCurrencyUnitChange = function ($event) {
+        if ($event.source.id === 'investmentAmountUnit') {
+            this.model.investmentAmountUnit = $event.value;
+        }
+    };
+    InvestmentsEditComponent.prototype.onInvestmentDataChange = function ($event) {
+        this.model.investmentData = $event.value.model;
+        this.investmentDataValid = $event.value.valid;
+    };
+    /**
+     * Splits equally the percentage of an investment to all the team members
+     */
+    InvestmentsEditComponent.prototype.setDefaultInvestmentPercentages = function () {
+        var decimalPipe = new __WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DecimalPipe */]('en');
+        this.model.membersPercentage = {};
+        //set the default percentage of the investment to each member
+        var defaultPercentage = Number(decimalPipe.transform(100 / this.model.team.members.length, '1.0-2'));
+        for (var _i = 0, _a = this.model.team.members; _i < _a.length; _i++) {
+            var member = _a[_i];
+            this.model.membersPercentage[member.email] = defaultPercentage;
+        }
+    };
+    return InvestmentsEditComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_17" /* ViewChild */])('editInvestmentForm'),
+    __metadata("design:type", Object)
+], InvestmentsEditComponent.prototype, "form", void 0);
+InvestmentsEditComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'investments-edit',
+        template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__["a" /* TeamsService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _f || Object])
+], InvestmentsEditComponent);
+
+var _a, _b, _c, _d, _e, _f;
+//# sourceMappingURL=investments-edit.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/currency-exchange.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyExchangeService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var CurrencyExchangeService = (function () {
+    function CurrencyExchangeService(http, appService) {
+        this.http = http;
+        this.appService = appService;
+        // private cryptoExchangeServerUrl : string = 'https://api.cryptonator.com/api/ticker/';
+        // cryptoRates : any = {};
+        this.cryptoExchangeServerUrl = 'https://coincap.io/page/';
+        this.cryptoRates = {};
+        this.currencyExchangeServiceUrl = 'https://api.fixer.io/latest';
+        this.currencyRates = null;
+    }
+    CurrencyExchangeService.prototype.getCurrencyRates = function (base) {
+        if (base === void 0) { base = 'USD'; }
+        if (this.currencyRates) {
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(this.currencyRates);
+        }
+        return this.http.get(this.currencyExchangeServiceUrl + "?base=" + base)
+            .map(this.extractCurrencyExchangeData)
+            .catch(this.handleError);
+    };
+    CurrencyExchangeService.prototype.extractCurrencyExchangeData = function (res) {
+        var body = res.json();
+        if (Object.keys(body.rates).length > 0) {
+            return body.rates;
+        }
+        else {
+            throw body;
+        }
+    };
+    CurrencyExchangeService.prototype.handleError = function (error) {
+        var errMsg;
+        if (error instanceof __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Response */]) {
+            var body = error.json() || '';
+            var err = body.error || JSON.stringify(body);
+            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
+        }
+        else {
+            errMsg = error.message ? error.message : error.toString();
+        }
+        return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].throw(errMsg);
+    };
+    // getCryptoRates(crypto : string = 'btc') : Observable<any> {
+    //   if (this.cryptoRates[crypto.toUpperCase()]) {
+    //     return Observable.of(this.cryptoRates[crypto.toUpperCase()]);
+    //   }
+    //   return this.http.get(`${this.cryptoExchangeServerUrl}${crypto}-usd`)
+    //       .map((res: Response) => {
+    //         this.cryptoRates[crypto.toUpperCase()] = this.extractCryptoExchangeData(res);
+    //         return this.cryptoRates[crypto.toUpperCase()];
+    //       }).catch(this.handleError);
+    // }
+    // private extractCryptoExchangeData(res: Response) : any {
+    //   let body = res.json();
+    //   if (body.success === true) {
+    //     return body.ticker;
+    //   } else {
+    //     throw body;
+    //   }
+    // }
+    CurrencyExchangeService.prototype.getCryptoRates = function (crypto) {
+        var _this = this;
+        if (crypto === void 0) { crypto = 'BTC'; }
+        if (this.cryptoRates[crypto.toUpperCase()]) {
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(this.cryptoRates[crypto.toUpperCase()]);
+        }
+        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase())
+            .map(function (res) {
+            _this.cryptoRates[crypto.toUpperCase()] = _this.extractCryptoExchangeData(crypto, res);
+            return _this.cryptoRates[crypto.toUpperCase()];
+        }).catch(this.handleError);
+    };
+    CurrencyExchangeService.prototype.extractCryptoExchangeData = function (crypto, res) {
+        var body = res.json();
+        if (body.id === crypto.toUpperCase()) {
+            return body;
+        }
+        else {
+            throw body;
+        }
+    };
+    CurrencyExchangeService.prototype.getUsdValueOf = function (amount, unit) {
+        if (unit !== 'USD') {
+            if (this.currencyRates) {
+                return amount / this.currencyRates[unit];
+            }
+            else {
+                this.appService.showResults('Currency rates data was not loaded yet. Figures are shown as USD', 'error');
+            }
+        }
+        return amount;
+    };
+    return CurrencyExchangeService;
+}());
+CurrencyExchangeService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object])
+], CurrencyExchangeService);
+
+var _a, _b;
+//# sourceMappingURL=currency-exchange.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/investments-routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+var routes = [
+    {
+        path: 'investments',
+        children: [
+            {
+                path: ':type/create',
+                component: __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            },
+            {
+                path: ':type/edit/:id',
+                component: __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            },
+            {
+                path: '',
+                pathMatch: 'full',
+                component: __WEBPACK_IMPORTED_MODULE_2__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            }
+        ]
+    }
+];
+var InvestmentsRoutingModule = (function () {
+    function InvestmentsRoutingModule() {
+    }
+    return InvestmentsRoutingModule;
+}());
+InvestmentsRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+    })
+], InvestmentsRoutingModule);
+
+//# sourceMappingURL=investments-routing.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/investments.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investments_routing_module__ = __webpack_require__("../../../../../src/app/modules/investments/investments-routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_currency_investment_currency_investment_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_investments_edit_investments_edit_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_currency_investment_form_currency_investment_form_component__ = __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__investments_service__ = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__currency_exchange_service__ = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var InvestmentsModule = (function () {
+    function InvestmentsModule() {
+    }
+    return InvestmentsModule;
+}());
+InvestmentsModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__investments_routing_module__["a" /* InvestmentsRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
+            __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__["a" /* SharedModule */]
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_8__components_currency_investment_currency_investment_component__["a" /* CurrencyInvestmentComponent */],
+            __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
+            __WEBPACK_IMPORTED_MODULE_11__components_currency_investment_form_currency_investment_form_component__["a" /* CurrencyInvestmentFormComponent */]
+        ],
+        entryComponents: [
+            __WEBPACK_IMPORTED_MODULE_9__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */] //added as material doc suggest to allow AOT on this on the fly created class
+        ],
+        providers: [__WEBPACK_IMPORTED_MODULE_13__currency_exchange_service__["a" /* CurrencyExchangeService */], __WEBPACK_IMPORTED_MODULE_12__investments_service__["a" /* InvestmentsService */]]
+    })
+], InvestmentsModule);
+
+//# sourceMappingURL=investments.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/investments.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_currencyInvestment__ = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__teams_models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+var InvestmentsService = (function () {
+    function InvestmentsService(http, appService) {
+        this.http = http;
+        this.appService = appService;
+        this.serverHost = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiHost + '/api/investments';
+        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
+    }
+    /**
+     * Server call to Create a new investment in the system
+     * @param postData
+     */
+    InvestmentsService.prototype.create = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to Update an investment in the system
+     * @param postData
+     */
+    InvestmentsService.prototype.update = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to Get an investment from the server based on its ID
+     * @param {string} id . The investment id
+     */
+    InvestmentsService.prototype.getInvestmentById = function (email, id) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getInvestmentById() > "; //for debugging
+        if (!id) {
+            this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
+            return null;
+        }
+        var investmentData$ = this.http.get(this.serverHost + "/getbyId?" + this.appService.getParamsAsQuerystring({ id: id, email: email }))
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+        return investmentData$.switchMap(function (investmentData) {
+            var investment = null;
+            if (investmentData && investmentData._id) {
+                var createdBy = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](investmentData.createdBy.name, investmentData.createdBy.email, investmentData.createdBy.gravatar);
+                var team = null;
+                if (investmentData.team) {
+                    //fill team members
+                    var admin = null;
+                    var members = [];
+                    for (var _i = 0, _a = investmentData.team.members; _i < _a.length; _i++) {
+                        var member = _a[_i];
+                        var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
+                        members.push(newMember);
+                        if (member.isAdmin) {
+                            admin = newMember;
+                        }
+                    }
+                    team = new __WEBPACK_IMPORTED_MODULE_7__teams_models_team__["a" /* Team */](investmentData.team.name, investmentData.team.description, investmentData.team.slug, admin, members);
+                }
+                if (investmentData.investmentType === 'currency' || investmentData.investmentType === 'crypto') {
+                    investment = new __WEBPACK_IMPORTED_MODULE_6__models_currencyInvestment__["a" /* CurrencyInvestment */](investmentData._id, investmentData.amount, investmentData.amountUnit, createdBy, team, investmentData.investmentDistribution, investmentData.currencyInvestmentData.amountUnit, investmentData.currencyInvestmentData.amount, investmentData.currencyInvestmentData.buyingPrice, investmentData.currencyInvestmentData.buyingPriceUnit, investmentData.currencyInvestmentData.buyingDate, investmentData.investmentType);
+                }
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(investment);
+        });
+    };
+    /**
+     * Server call to Get all the Investments for the current user from the server
+     * @param {string} email . The team slug
+     */
+    InvestmentsService.prototype.getInvestments = function (email) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        var investmentsData$ = this.http.get(this.serverHost + "/getAll?" + this.appService.getParamsAsQuerystring({ email: email }))
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+        return investmentsData$.switchMap(function (investmentsData) {
+            var investments = [];
+            if (investmentsData && investmentsData instanceof Array) {
+                for (var _i = 0, investmentsData_1 = investmentsData; _i < investmentsData_1.length; _i++) {
+                    var item = investmentsData_1[_i];
+                    var createdBy = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
+                    var team = item.team ? new __WEBPACK_IMPORTED_MODULE_7__teams_models_team__["a" /* Team */](item.team.name, item.team.description, item.team.slug) : null;
+                    if (item.investmentType === 'currency' || item.investmentType === 'crypto') {
+                        investments.push(new __WEBPACK_IMPORTED_MODULE_6__models_currencyInvestment__["a" /* CurrencyInvestment */](item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.currencyInvestmentData.amountUnit, item.currencyInvestmentData.amount, item.currencyInvestmentData.buyingPrice, item.currencyInvestmentData.buyingPriceUnit, item.currencyInvestmentData.buyingDate, item.investmentType));
+                    }
+                }
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(investments);
+        });
+    };
+    /**
+     * Server call to delete an investment from the server
+     * @param {string} id . The investment id
+     * @param {string} email . The current user email.
+     */
+    InvestmentsService.prototype.delete = function (id, email) {
+        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, body: { email: email } })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    return InvestmentsService;
+}());
+InvestmentsService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _b || Object])
+], InvestmentsService);
+
+var _a, _b;
+//# sourceMappingURL=investments.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/models/currencyInvestment.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyInvestment; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__investment__ = __webpack_require__("../../../../../src/app/modules/investments/models/investment.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var CurrencyInvestment = (function (_super) {
+    __extends(CurrencyInvestment, _super);
+    function CurrencyInvestment(id, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, unit, amount, buyingPrice, buyingPriceUnit, buyingDate, type) {
+        if (team === void 0) { team = null; }
+        if (investmentDistribution === void 0) { investmentDistribution = []; }
+        if (type === void 0) { type = 'currency'; }
+        var _this = _super.call(this, id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) || this;
+        _this.unit = unit;
+        _this.amount = amount;
+        _this.buyingDate = buyingDate;
+        _this.buyingPrice = buyingPrice;
+        _this.buyingPriceUnit = buyingPriceUnit;
+        return _this;
+    }
+    return CurrencyInvestment;
+}(__WEBPACK_IMPORTED_MODULE_0__investment__["a" /* Investment */]));
+
+//# sourceMappingURL=currencyInvestment.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/investments/models/investment.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Investment; });
+var Investment = (function () {
+    function Investment(id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) {
+        if (team === void 0) { team = null; }
+        if (investmentDistribution === void 0) { investmentDistribution = []; }
+        this.investmentAmount = investmentAmount;
+        this.investmentAmountUnit = investmentAmountUnit;
+        this.team = team;
+        this.investmentDistribution = investmentDistribution;
+        this.createdBy = createdBy;
+        this.id = id;
+        this.type = type;
+    }
+    return Investment;
+}());
+
+//# sourceMappingURL=investment.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<mat-form-field class=\"form__field\">\r\n  <mat-select *ngIf=\"type === 'currency'\" id=\"{{id}}\" placeholder=\"{{placeHolder}}\" value=\"{{value}}\" (change)=\"onChange($event)\">\r\n    <mat-option value=\"AUD\">{{view === 'narrow' ? 'AUD' : 'Australian Dollar'}}</mat-option>\r\n    <mat-option value=\"EUR\">{{view === 'narrow' ? 'EUR' : 'Euro'}}</mat-option>\r\n    <mat-option value=\"NZD\">{{view === 'narrow' ? 'NZD' : 'New Zealand Dollar'}}</mat-option>\r\n    <mat-option value=\"USD\">{{view === 'narrow' ? 'USD' : 'US Dollar'}}</mat-option>\r\n  </mat-select>\r\n\r\n  <mat-select *ngIf=\"type === 'crypto'\" id=\"{{id}}\" placeholder=\"{{placeHolder}}\" value=\"{{value}}\" (change)=\"onChange($event)\">\r\n    <mat-option value=\"BTC\">{{view === 'narrow' ? 'BTC' : 'Bitcoin'}}</mat-option>\r\n    <mat-option value=\"XMR\">{{view === 'narrow' ? 'XMR' : 'Monero'}}</mat-option>\r\n  </mat-select>\r\n  \r\n  <mat-hint align=\"start\">{{hint}}</mat-hint>\r\n</mat-form-field>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyUnitComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var CurrencyUnitComponent = (function () {
+    function CurrencyUnitComponent() {
+        this.view = 'normal';
+        this.type = 'currency';
+        this.newValue = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.model = {};
+    }
+    CurrencyUnitComponent.prototype.ngOnInit = function () { };
+    CurrencyUnitComponent.prototype.onChange = function (matSelectChange) {
+        this.newValue.emit(matSelectChange);
+    };
+    return CurrencyUnitComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CurrencyUnitComponent.prototype, "id", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CurrencyUnitComponent.prototype, "hint", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CurrencyUnitComponent.prototype, "view", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CurrencyUnitComponent.prototype, "type", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CurrencyUnitComponent.prototype, "placeHolder", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", String)
+], CurrencyUnitComponent.prototype, "value", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
+], CurrencyUnitComponent.prototype, "newValue", void 0);
+CurrencyUnitComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'currency-unit',
+        template: __webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.scss")]
+    }),
+    __metadata("design:paramtypes", [])
+], CurrencyUnitComponent);
+
+var _a;
+//# sourceMappingURL=currency-unit.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<nav class=\"navigation--main\">\r\n  <mat-chip-list>\r\n    <mat-chip *ngFor=\"let link of links\" [routerLink]=\"link.url\" [selected]=\"link.selected\">{{link.displayName}}</mat-chip>\r\n  </mat-chip-list>      \r\n</nav>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainNavigatorComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var MainNavigatorComponent = (function () {
+    function MainNavigatorComponent(mainNavigatorService, appService) {
+        this.mainNavigatorService = mainNavigatorService;
+        this.appService = appService;
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__["a" /* Subscription */]();
+    }
+    MainNavigatorComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.subscription = this.mainNavigatorService.links$.subscribe(function (links) { return _this.links = links; });
+    };
+    MainNavigatorComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    return MainNavigatorComponent;
+}());
+MainNavigatorComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'main-navigator',
+        template: __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object])
+], MainNavigatorComponent);
+
+var _a, _b;
+//# sourceMappingURL=main-navigator.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainNavigatorService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var MainNavigatorService = (function () {
+    function MainNavigatorService() {
+        this.linksSource = new __WEBPACK_IMPORTED_MODULE_1_rxjs_BehaviorSubject__["a" /* BehaviorSubject */](null);
+        this.links$ = this.linksSource.asObservable();
+    }
+    //links source feeder
+    MainNavigatorService.prototype.setLinks = function (newLinks) {
+        this.linksSource.next(newLinks);
+    };
+    //add a link to the source feeder
+    MainNavigatorService.prototype.appendLink = function (link) {
+        var currentLinks = this.linksSource.getValue();
+        currentLinks.push(link);
+        this.setLinks(currentLinks);
+    };
+    return MainNavigatorService;
+}());
+MainNavigatorService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], MainNavigatorService);
+
+//# sourceMappingURL=main-navigator.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutWrap fxLayoutAlign=\"space-around center\" class=\"snackbar--simple\">\r\n  <p fxFlex class=\"message\">{{data.message}}</p>\r\n  <mat-icon class=\"icon\" aria-label=\"Close\" (click)=\"actionClicked()\">clear</mat-icon>\r\n</div>\r\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".snackbar--simple {\n  font-size: 12px;\n  cursor: default; }\n  .snackbar--simple .icon {\n    cursor: pointer; }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SnackbarSimpleComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var SnackbarSimpleComponent = (function () {
+    function SnackbarSimpleComponent(snackBarRef, data) {
+        this.snackBarRef = snackBarRef;
+        this.data = data;
+    }
+    SnackbarSimpleComponent.prototype.ngOnInit = function () { };
+    SnackbarSimpleComponent.prototype.actionClicked = function () {
+        this.snackBarRef.dismiss();
+    };
+    return SnackbarSimpleComponent;
+}());
+SnackbarSimpleComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-snackbar-simple',
+        template: __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.scss")]
+    }),
+    __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MAT_SNACK_BAR_DATA */])),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["y" /* MatSnackBarRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["y" /* MatSnackBarRef */]) === "function" && _a || Object, Object])
+], SnackbarSimpleComponent);
+
+var _a;
+//# sourceMappingURL=snackbar-simple.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<h2 mat-dialog-title>{{data.title}}</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\r\n    {{data.message}}\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" mat-dialog-close=\"no\">\r\n    <mat-icon aria-label=\"No\">clear</mat-icon>\r\n  </button>\r\n  <button mat-mini-fab color=\"accent\" mat-dialog-close=\"yes\">\r\n    <mat-icon aria-label=\"Yes\">done</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YesNoDialogComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var YesNoDialogComponent = (function () {
+    function YesNoDialogComponent(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+    }
+    YesNoDialogComponent.prototype.ngOnInit = function () { };
+    YesNoDialogComponent.prototype.onNoClick = function () {
+        this.dialogRef.close();
+    };
+    return YesNoDialogComponent;
+}());
+YesNoDialogComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-yes-no-dialog',
+        template: __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.scss")]
+    }),
+    __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */]) === "function" && _a || Object, Object])
+], YesNoDialogComponent);
+
+var _a;
+//# sourceMappingURL=yes-no-dialog.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/custom-material-design.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomMaterialDesignModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var CustomMaterialDesignModule = (function () {
+    function CustomMaterialDesignModule() {
+    }
+    return CustomMaterialDesignModule;
+}());
+CustomMaterialDesignModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatCheckboxModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatChipsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDatepickerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["A" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatProgressSpinnerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatCardModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatExpansionModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["B" /* MatTooltipModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatDialogModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatSelectModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatButtonToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatRadioModule */]
+        ],
+        exports: [
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatCheckboxModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatSnackBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatChipsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDatepickerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatSlideToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatMenuModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["A" /* MatToolbarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatIconModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatInputModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatButtonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatProgressBarModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatProgressSpinnerModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatCardModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatNativeDateModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatTabsModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["m" /* MatExpansionModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["B" /* MatTooltipModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatDialogModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatSelectModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatButtonToggleModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatRadioModule */]
+        ]
+    })
+], CustomMaterialDesignModule);
+
+//# sourceMappingURL=custom-material-design.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/directives/equal-validator.directive.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EqualValidatorDirective; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var EqualValidatorDirective = EqualValidatorDirective_1 = (function () {
+    function EqualValidatorDirective(equalFormControlName, reverse) {
+        this.equalFormControlName = equalFormControlName;
+        this.reverse = reverse;
+    }
+    Object.defineProperty(EqualValidatorDirective.prototype, "isReverse", {
+        get: function () {
+            if (!this.reverse) {
+                return false;
+            }
+            return this.reverse === 'true' ? true : false;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    EqualValidatorDirective.prototype.validate = function (control) {
+        var equalsFormControl = control.root.get(this.equalFormControlName);
+        if (equalsFormControl && equalsFormControl.value !== control.value) {
+            if (this.isReverse) {
+                equalsFormControl.setErrors({ 'equalvalidator': true });
+            }
+            else {
+                return { 'equalvalidator': true };
+            }
+        }
+        else if (equalsFormControl) {
+            //value is the same on both
+            if (this.reverse) {
+                delete equalsFormControl.errors['equalvalidator'];
+                if (!Object.keys(equalsFormControl.errors).length) {
+                    equalsFormControl.setErrors(null);
+                }
+            }
+        }
+        return null;
+    };
+    return EqualValidatorDirective;
+}());
+EqualValidatorDirective = EqualValidatorDirective_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Directive */])({
+        selector: '[equalvalidator]',
+        providers: [{ provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALIDATORS */], useExisting: EqualValidatorDirective_1, multi: true }]
+    }),
+    __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('equalvalidator')),
+    __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('reverse')),
+    __metadata("design:paramtypes", [String, String])
+], EqualValidatorDirective);
+
+var EqualValidatorDirective_1;
+//# sourceMappingURL=equal-validator.directive.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/directives/number-validator.directive.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberValidatorDirective; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var NumberValidatorDirective = NumberValidatorDirective_1 = (function () {
+    function NumberValidatorDirective(validationType) {
+        this.validationType = validationType;
+    }
+    NumberValidatorDirective.prototype.validate = function (control) {
+        var validationObj = {};
+        if (this.validationType) {
+            validationObj = JSON.parse(this.validationType);
+        }
+        //original pattern: ^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$
+        var pattern = '^[+-]?[0-9]{1,';
+        pattern += !isNaN(validationObj.maxIntegerDigits) && validationObj.maxIntegerDigits > 1 ? validationObj.maxIntegerDigits : 9;
+        pattern += '}(?:\.[0-9]{1,';
+        pattern += !isNaN(validationObj.maxFractionDigits) && validationObj.maxFractionDigits > 1 ? validationObj.maxFractionDigits : 2;
+        pattern += '})?$';
+        var numberRegExp = new RegExp(pattern);
+        var val = control.value;
+        if (!numberRegExp.test(val + '')) {
+            return { "numberValidator": true };
+        }
+        var result = {};
+        if (!isNaN(validationObj.min) && val < validationObj.min) {
+            result.numberValidatorMin = true;
+        }
+        if (!isNaN(validationObj.max) && val > validationObj.max) {
+            result.numberValidatorMax = true;
+        }
+        return Object.keys(result).length ? result : null;
+    };
+    return NumberValidatorDirective;
+}());
+NumberValidatorDirective = NumberValidatorDirective_1 = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Directive */])({
+        selector: '[numberValidator]',
+        providers: [{ provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALIDATORS */], useExisting: NumberValidatorDirective_1, multi: true }]
+    }),
+    __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('numberValidator')),
+    __metadata("design:paramtypes", [String])
+], NumberValidatorDirective);
+
+var NumberValidatorDirective_1;
+//# sourceMappingURL=number-validator.directive.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/shared/shared.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SharedModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__directives_equal_validator_directive__ = __webpack_require__("../../../../../src/app/modules/shared/directives/equal-validator.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__directives_number_validator_directive__ = __webpack_require__("../../../../../src/app/modules/shared/directives/number-validator.directive.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+var SharedModule = (function () {
+    function SharedModule() {
+    }
+    return SharedModule;
+}());
+SharedModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* RouterModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
+            __WEBPACK_IMPORTED_MODULE_7__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */]
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */],
+            __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */],
+            __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__directives_equal_validator_directive__["a" /* EqualValidatorDirective */],
+            __WEBPACK_IMPORTED_MODULE_11__directives_number_validator_directive__["a" /* NumberValidatorDirective */]
+        ],
+        exports: [
+            __WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */],
+            __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */],
+            __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__directives_equal_validator_directive__["a" /* EqualValidatorDirective */],
+            __WEBPACK_IMPORTED_MODULE_11__directives_number_validator_directive__["a" /* NumberValidatorDirective */]
+        ],
+        entryComponents: [
+            __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */]
+        ]
+    })
+], SharedModule);
+
+//# sourceMappingURL=shared.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\r\n\r\n<h2 mat-dialog-title>Add team member</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__add-person-to-team\">\r\n    <form class=\"form__container form__add-person-to-team\" #addPersonToTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n      \r\n      <section fxLayout=\"column\" class=\"form__fields\">\r\n        <div fxLayout=\"column\" class=\"form__fields__row\">\r\n          <!-- Member email -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <input matInput type=\"tezt\" id=\"email\" name=\"email\" placeholder=\"Member email\" \r\n                [(ngModel)]=\"model.email\"\r\n                required \r\n                email\r\n                #email=\"ngModel\">\r\n            <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n            <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n      </section>\r\n    </form>\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" mat-dialog-close>\r\n    <mat-icon aria-label=\"Cancel\">clear</mat-icon>\r\n  </button>\r\n  <button mat-mini-fab color=\"accent\" [mat-dialog-close]=\"email.value || null\" [disabled]=\"!addPersonToTeamForm.form.valid\">\r\n    <mat-icon aria-label=\"Add\">done</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddPersonToTeamDialogComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+var AddPersonToTeamDialogComponent = (function () {
+    function AddPersonToTeamDialogComponent(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this.model = { email: null };
+    }
+    AddPersonToTeamDialogComponent.prototype.ngOnInit = function () { };
+    AddPersonToTeamDialogComponent.prototype.onNoClick = function () {
+        this.dialogRef.close();
+    };
+    return AddPersonToTeamDialogComponent;
+}());
+AddPersonToTeamDialogComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-add-person-to-team-dialog',
+        template: __webpack_require__("../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.scss")]
+    }),
+    __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatDialogRef */]) === "function" && _a || Object, Object])
+], AddPersonToTeamDialogComponent);
+
+var _a;
+//# sourceMappingURL=add-person-to-team-dialog.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__teams\">\r\n  <section fxLayoutWrap \r\n      fxLayout=\"row\" fxLayout.xs=\"column\" \r\n      fxLayoutGap.xs=\"10px\" \r\n      fxLayoutAlign=\"space-around center\" fxLayoutAlign.xs=\"none none\" >\r\n    \r\n    <div *ngIf=\"!teams.length && !getTeamsServiceRunning\" fxFlexAlign=\"center\">You are not member of any team yet.</div>\r\n    <!-- Team Cards -->\r\n    <mat-expansion-panel *ngFor=\"let team of teams; index as teamIndex\"\r\n        fxFlex.sm=\"45\" fxFlex.gt-sm=\"30\" \r\n        class=\"team-card\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-card__content\">\r\n        <section *ngIf=\"team.description\" class=\"description\">\r\n          <p>{{team.description}}</p>\r\n        </section>\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let member of team.members\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n            <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n              <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n              <p class=\"member__email\">{{member.email}}</p>\r\n            </div>\r\n          </div>\r\n        </section>\r\n\r\n        <section *ngIf=\"team.admin.email === user.email\" class=\"actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n          <button *ngIf=\"!teamActionRunning[teamIndex]\" mat-mini-fab routerLink=\"/teams/edit/{{team.slug}}\" color=\"primary\" (click)=\"teamActionRunning[teamIndex] = true\">\r\n            <mat-icon aria-label=\"Edit team\">edit</mat-icon>\r\n          </button>\r\n\r\n          <button *ngIf=\"!teamActionRunning[teamIndex]\" mat-mini-fab color=\"warn\" (click)=\"openDeleteTeamDialog(teamIndex, team)\">\r\n            <mat-icon aria-label=\"Delete team\">delete</mat-icon>\r\n          </button>\r\n\r\n          <mat-progress-spinner *ngIf=\"teamActionRunning[teamIndex]\"\r\n            class=\"progress-spinner progress-spinner--delete-team\"\r\n            color=\"warn\"\r\n            [diameter]=\"40\" [strokeWidth]=\"7\"\r\n            mode=\"indeterminate\">\r\n          </mat-progress-spinner>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team Cards -->\r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getTeamsServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-teams\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n    <button mat-fab routerLink=\"create\" color=\"accent\">\r\n      <mat-icon class=\"mat-24\" aria-label=\"Create team\">group_add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".container__teams .team-card {\n  cursor: default; }\n  .container__teams .team-card mat-panel-title {\n    font-size: 18px; }\n  .container__teams .team-card .team-card__content .description {\n    margin-bottom: 20px;\n    font-size: 13px; }\n  .container__teams .team-card .team-card__content .members .member .member__avatar {\n    border-radius: 50%;\n    width: 40px;\n    height: 40px;\n    padding: 0 10px 0 0; }\n  .container__teams .team-card .team-card__content .members .member .member__info .admin-icon {\n    font-size: 14px;\n    height: auto;\n    width: auto; }\n  .container__teams .team-card .team-card__content .members .member .member__info .member__email {\n    font-size: 11px; }\n  .container__teams .team-card .team-card__content .actions {\n    margin: 0 8px 8px 0; }\n\n.container__teams .progress-bar--get-teams {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  .container__teams .team-card {\n    margin-bottom: 10px; }\n  .container__teams .progress-bar--get-teams {\n    width: 300px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsDashboardComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var TeamsDashboardComponent = (function () {
+    function TeamsDashboardComponent(route, mainNavigatorService, teamsService, appService, router, dialog) {
+        this.route = route;
+        this.mainNavigatorService = mainNavigatorService;
+        this.teamsService = teamsService;
+        this.appService = appService;
+        this.router = router;
+        this.dialog = dialog;
+        this.user = null;
+        this.getTeamsServiceRunning = false;
+        this.teamActionRunning = [];
+        this.teams = [];
+    }
+    TeamsDashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Teams', url: null, selected: true }
+        ]);
+        //get authUser from resolver
+        this.route.data.subscribe(function (data) {
+            _this.user = data.authUser;
+        });
+        if (!this.teams.length) {
+            this.getTeams();
+        }
+    };
+    /**
+     * Get my teams from server
+     */
+    TeamsDashboardComponent.prototype.getTeams = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        this.teams = [];
+        this.getTeamsServiceRunning = true;
+        this.teamsService.getTeams(this.user.email).subscribe(function (teams) {
+            var index = 0;
+            _this.teams = teams;
+            for (var _i = 0, teams_1 = teams; _i < teams_1.length; _i++) {
+                var item = teams_1[_i];
+                _this.teamActionRunning[index] = false;
+                index += 1;
+            }
+            _this.getTeamsServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getTeamsServiceRunning = false;
+        });
+    };
+    TeamsDashboardComponent.prototype.openDeleteTeamDialog = function (index, team) {
+        var _this = this;
+        if (team === void 0) { team = null; }
+        var methodTrace = this.constructor.name + " > openDeleteTeamDialog() > "; //for debugging
+        if (!team) {
+            this.appService.consoleLog('error', methodTrace + " Team is required to delete.");
+            return false;
+        }
+        this.teamActionRunning[index] = true;
+        var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_6__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
+            width: '250px',
+            data: {
+                title: 'Delete team',
+                message: "Are you sure you want to delete the team \"" + team.name + "\" forever?"
+            }
+        });
+        yesNoDialogRef.afterClosed().subscribe(function (result) {
+            if (result === 'yes') {
+                _this.delete(index, team);
+            }
+            else {
+                _this.teamActionRunning[index] = false;
+            }
+        });
+        return false;
+    };
+    TeamsDashboardComponent.prototype.delete = function (index, team) {
+        var _this = this;
+        if (team === void 0) { team = null; }
+        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        this.teamActionRunning[index] = true;
+        this.teamsService.delete(team.slug, this.user.email).subscribe(function (data) {
+            if (data && data.removed > 0) {
+                _this.teams.splice(index, 1);
+                _this.teamActionRunning.splice(index, 1);
+                _this.appService.showResults("Team \"" + team.name + "\" successfully removed!", 'success');
+            }
+            else {
+                _this.appService.showResults("Team \"" + team.name + "\" could not be removed, please try again.", 'error');
+            }
+            _this.teamActionRunning[index] = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 471) {
+                _this.appService.showResults(error.msg, 'error', 7000);
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.teamActionRunning[index] = false;
+        });
+    };
+    return TeamsDashboardComponent;
+}());
+TeamsDashboardComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-teams-dashboard',
+        template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */]) === "function" && _f || Object])
+], TeamsDashboardComponent);
+
+var _a, _b, _c, _d, _e, _f;
+//# sourceMappingURL=teams-dashboard.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-team\">\r\n  <form *ngIf=\"!getTeamServiceRunning\" \r\n      class=\"form__container form__edit-team\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <section fxLayout=\"column\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" fxLayoutAlign.gt-xs=\"none end\" class=\"form__fields__row\">\r\n        <!-- Team name -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <input matInput type=\"tezt\" id=\"name\" name=\"name\" placeholder=\"Team name\" \r\n              [(ngModel)]=\"model.name\" \r\n              value=\"model.name\"\r\n              required\r\n              minlength=\"4\"\r\n              #name=\"ngModel\">\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Value must be longer than 3 characters</mat-error>\r\n        </mat-form-field>\r\n\r\n        <!-- Description -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\r\n              [(ngModel)]=\"model.description\" \r\n              value=\"model.description\"\r\n              #description=\"ngModel\"></textarea>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n\r\n    <section *ngIf=\"editMode\" class=\"members\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutWrap>\r\n      <mat-card *ngFor=\"let member of team.members; index as memberIndex\" class=\"member\" [class.not-saved-yet]=\"!member.name && !member.avatar\">\r\n        <mat-card-content fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"none center\">\r\n          \r\n          <img *ngIf=\"member.avatar\" class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n          <mat-icon *ngIf=\"!member.avatar\" class=\"member__avatar member__avatar--default\">account_circle</mat-icon>\r\n          \r\n          <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n            <p *ngIf=\"member.name\" class=\"member__name\">\r\n              {{member.name}}\r\n              <mat-icon *ngIf=\"member.email === team.admin.email\" class=\"icon__admin\" aria-label=\"Admin\" >lock</mat-icon>\r\n            </p>\r\n            <p class=\"member__email\">{{member.email}}</p>\r\n          </div>\r\n\r\n          <mat-icon *ngIf=\"member.email !== team.admin.email\" matTooltip=\"Remove\" class=\"icon__remove-member\" (click)=\"removeMember(memberIndex)\">clear</mat-icon>\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </section>\r\n\r\n    <section *ngIf=\"editMode\" class=\"add-members\" fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n      <button mat-fab color=\"accent\" type=\"button\" (click)=\"openAddPersonDialog()\">\r\n        <mat-icon aria-label=\"Add new member\">person_add</mat-icon>\r\n      </button>\r\n    </section>\r\n\r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-team\">\r\n      <button *ngIf=\"!editTeamServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!editTeamForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"editTeamServiceRunning\"\r\n          class=\"progress-bar progress-bar--edit-team\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n    \r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getTeamServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-team\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.progress-bar--get-team {\n  width: 100%; }\n\n.form__edit-team .form__actions--edit-team {\n  margin: 20px 0; }\n\n.members .member {\n  margin-bottom: 10px;\n  padding: 14px;\n  border-radius: 50px;\n  cursor: default; }\n  .members .member .member__avatar {\n    border-radius: 50%;\n    width: 40px;\n    height: 40px; }\n  .members .member .member__info .icon__admin {\n    font-size: 14px;\n    height: auto;\n    width: auto; }\n  .members .member .member__info .member__email {\n    font-size: 11px; }\n  .members .member .icon__remove-member {\n    font-size: 16px;\n    height: auto;\n    width: auto;\n    cursor: pointer; }\n  .members .member.not-saved-yet .member__avatar--default {\n    font-size: 40px;\n    color: #f44336; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-team {\n    width: 300px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsEditComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_add_person_to_team_dialog_add_person_to_team_dialog_component__ = __webpack_require__("../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__ = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+var TeamsEditComponent = (function () {
+    function TeamsEditComponent(route, mainNavigatorService, teamsService, appService, router, dialog) {
+        this.route = route;
+        this.mainNavigatorService = mainNavigatorService;
+        this.teamsService = teamsService;
+        this.appService = appService;
+        this.router = router;
+        this.dialog = dialog;
+        this.editMode = false;
+        this.user = null;
+        this.team = null;
+        this.editTeamServiceRunning = false;
+        this.getTeamServiceRunning = false;
+        this.model = {
+            name: null,
+            description: null,
+            email: null,
+            members: []
+        };
+        this.slug = null;
+        this.subscription = new __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__["a" /* Subscription */]();
+    }
+    TeamsEditComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Teams', url: '/teams', selected: false }
+        ]);
+        //generates a user source object from authUser from resolver
+        var user$ = this.route.data.map(function (data) { return data.authUser; });
+        //generates an investment id source from id parameter in url
+        var slug$ = this.route.paramMap.map(function (params) { return params.get('slug'); });
+        //combine user$ and id$ sources into one object and start listen to it for changes
+        this.subscription = user$.combineLatest(slug$, function (user, slug) {
+            return { user: user, teamSlug: slug };
+        }).subscribe(function (data) {
+            _this.user = data.user;
+            _this.model.email = data.user.email;
+            _this.editTeamServiceRunning = false;
+            _this.getTeamServiceRunning = false;
+            if (!data.teamSlug) {
+                //we are creating a new team
+                _this.slug = null;
+                _this.editMode = false;
+                _this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected: true });
+            }
+            else {
+                if (_this.slug) {
+                    //if this is true means the user updated the name and we refresh the page to update the slug in the url
+                    //in this case we don't want to append the edit team link to the navigation component because it is already there.
+                }
+                else {
+                    _this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected: true });
+                }
+                //we are editing an existing investment
+                _this.slug = data.teamSlug; //the new slug
+                _this.editMode = true;
+                _this.getTeam(data.teamSlug); //get data
+            }
+        });
+    };
+    TeamsEditComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    TeamsEditComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.editTeamServiceRunning = true;
+        //call the team create service
+        var newSubscription = this.teamsService.create(this.model).subscribe(function (data) {
+            if (data && data.slug) {
+                _this.appService.showResults("Team " + data.name + " successfully created!", 'success');
+                _this.router.navigate(['/teams/edit', data.slug]);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+                _this.editTeamServiceRunning = false;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit team service.", error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error with the team services, please try again in a few minutes.", 'error');
+            }
+            _this.editTeamServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    TeamsEditComponent.prototype.onUpdate = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onUpdate() > "; //for debugging
+        this.editTeamServiceRunning = true;
+        //add slug and members to service payload
+        this.model.slug = this.slug;
+        this.model.members = []; //reset the members array
+        for (var _i = 0, _a = this.team.members; _i < _a.length; _i++) {
+            var member = _a[_i];
+            this.model.members.push(member.email);
+        }
+        //TODO check the new members are not duplicated, especially the admin
+        //call the team update service
+        var newSubscription = this.teamsService.update(this.model).subscribe(function (data) {
+            if (data && data.team && data.team.slug) {
+                var messages = [
+                    {
+                        message: "Team \"" + data.team.name + "\" successfully updated!",
+                        type: 'success'
+                    }
+                ];
+                if (data.usersNotRegistered.length) {
+                    //handle not registered users
+                    var message = {
+                        message: "The following emails added to the team are not registered users in AtomiCoconut: ",
+                        duration: 8000
+                    };
+                    for (var _i = 0, _a = data.usersNotRegistered; _i < _a.length; _i++) {
+                        var email = _a[_i];
+                        message.message += "\"" + email + "\", ";
+                    }
+                    message.message = message.message.slice(0, -2); //remove last comma char
+                    message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
+                    messages.push(message);
+                }
+                _this.appService.showManyResults(messages);
+                //TODO redirect to the new team slug name if changed
+                if (_this.slug !== data.team.slug) {
+                    //this means that the team name was update and therefore the slug too
+                    _this.router.navigate(['/teams/edit', data.team.slug]); //go home 
+                }
+                else {
+                    _this.populateTeam(data.team);
+                    _this.editTeamServiceRunning = false;
+                }
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+                _this.editTeamServiceRunning = false;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.editTeamServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    /**
+     * Get a team from server based on the slug provided
+     * @param {string} slug
+     */
+    TeamsEditComponent.prototype.getTeam = function (slug) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getTeam() > "; //for debugging
+        if (!slug) {
+            this.appService.showResults("Invalid team ID", 'error');
+            this.appService.consoleLog('error', methodTrace + " Slug parameter must be provided, but was: ", slug);
+            return false;
+        }
+        this.getTeamServiceRunning = true;
+        var newSubscription = this.teamsService.getMyTeamBySlug(this.user.email, slug).subscribe(function (data) {
+            if (data && data.slug) {
+                _this.populateTeam(data);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            _this.getTeamServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 461 || error.codeno === 462) {
+                _this.appService.showResults(error.msg, 'error');
+                _this.router.navigate(['/welcome']);
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getTeamServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    /**
+     * Populates the team and model with a team object coming from a service
+     * @param {*} team . Team object retrieved from a service
+     */
+    TeamsEditComponent.prototype.populateTeam = function (team) {
+        //populate admin
+        var admin = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](team.admin.name, team.admin.email, team.admin.gravatar);
+        //populate members
+        var members = [];
+        for (var _i = 0, _a = team.members; _i < _a.length; _i++) {
+            var member = _a[_i];
+            var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
+            members.push(newMember);
+        }
+        //create team
+        this.team = new __WEBPACK_IMPORTED_MODULE_8__models_team__["a" /* Team */](team.name, team.description || null, team.slug, admin, members);
+        //populate the model
+        this.model.name = this.team.name;
+        this.model.description = this.team.description;
+    };
+    TeamsEditComponent.prototype.openAddPersonDialog = function () {
+        var _this = this;
+        var addPersonDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_3__components_add_person_to_team_dialog_add_person_to_team_dialog_component__["a" /* AddPersonToTeamDialogComponent */], {
+            width: '250px',
+            data: {}
+        });
+        var newSubscription = addPersonDialogRef.afterClosed().subscribe(function (result) {
+            if (result) {
+                var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */]('', result);
+                _this.team.members.push(newMember);
+            }
+        });
+        this.subscription.add(newSubscription);
+        return false;
+    };
+    TeamsEditComponent.prototype.removeMember = function (index) {
+        this.team.members.splice(index, 1);
+    };
+    return TeamsEditComponent;
+}());
+TeamsEditComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-teams-edit',
+        template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__teams_service__["a" /* TeamsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__teams_service__["a" /* TeamsService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatDialog */]) === "function" && _f || Object])
+], TeamsEditComponent);
+
+var _a, _b, _c, _d, _e, _f;
+//# sourceMappingURL=teams-edit.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/models/team.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Team; });
+var Team = (function () {
+    function Team(name, description, slug, admin, members) {
+        if (name === void 0) { name = null; }
+        if (description === void 0) { description = null; }
+        if (slug === void 0) { slug = null; }
+        if (admin === void 0) { admin = null; }
+        if (members === void 0) { members = null; }
+        this.name = name;
+        this.slug = slug;
+        this.description = description;
+        this.admin = admin;
+        this.members = members;
+    }
+    return Team;
+}());
+
+//# sourceMappingURL=team.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/teams-routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_teams_dashboard_teams_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_teams_edit_teams_edit_component__ = __webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+var routes = [
+    {
+        path: 'teams',
+        children: [
+            {
+                path: 'create',
+                component: __WEBPACK_IMPORTED_MODULE_3__components_teams_edit_teams_edit_component__["a" /* TeamsEditComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            },
+            {
+                path: 'edit/:slug',
+                component: __WEBPACK_IMPORTED_MODULE_3__components_teams_edit_teams_edit_component__["a" /* TeamsEditComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            },
+            {
+                path: '',
+                pathMatch: 'full',
+                component: __WEBPACK_IMPORTED_MODULE_2__components_teams_dashboard_teams_dashboard_component__["a" /* TeamsDashboardComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            }
+        ]
+    }
+];
+var TeamsRoutingModule = (function () {
+    function TeamsRoutingModule() {
+    }
+    return TeamsRoutingModule;
+}());
+TeamsRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+    })
+], TeamsRoutingModule);
+
+//# sourceMappingURL=teams-routing.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/teams.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__teams_routing_module__ = __webpack_require__("../../../../../src/app/modules/teams/teams-routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_teams_dashboard_teams_dashboard_component__ = __webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_teams_edit_teams_edit_component__ = __webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__teams_service__ = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_add_person_to_team_dialog_add_person_to_team_dialog_component__ = __webpack_require__("../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+var TeamsModule = (function () {
+    function TeamsModule() {
+    }
+    return TeamsModule;
+}());
+TeamsModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_4__teams_routing_module__["a" /* TeamsRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_6__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__["FlexLayoutModule"]
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_5__components_teams_dashboard_teams_dashboard_component__["a" /* TeamsDashboardComponent */],
+            __WEBPACK_IMPORTED_MODULE_7__components_teams_edit_teams_edit_component__["a" /* TeamsEditComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_add_person_to_team_dialog_add_person_to_team_dialog_component__["a" /* AddPersonToTeamDialogComponent */]
+        ],
+        entryComponents: [
+            __WEBPACK_IMPORTED_MODULE_9__components_add_person_to_team_dialog_add_person_to_team_dialog_component__["a" /* AddPersonToTeamDialogComponent */] //added as material doc suggest to allow AOT on this on the fly created class
+        ],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__teams_service__["a" /* TeamsService */]]
+    })
+], TeamsModule);
+
+//# sourceMappingURL=teams.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/teams/teams.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_team__ = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var TeamsService = (function () {
+    function TeamsService(http, appService) {
+        this.http = http;
+        this.appService = appService;
+        this.serverHost = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiHost + '/api/teams';
+        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
+    }
+    /**
+     * Server call to Create a new team in the system
+     * @param postData
+     */
+    TeamsService.prototype.create = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to Update a team in the system
+     * @param postData
+     */
+    TeamsService.prototype.update = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to Get a team from the server based on its slug
+     * @param {string} slug . The team slug
+     */
+    TeamsService.prototype.getMyTeamBySlug = function (email, slug) {
+        var methodTrace = this.constructor.name + " > getMyTeamBySlug() > "; //for debugging
+        if (!slug) {
+            this.appService.consoleLog('error', methodTrace + " Slug parameter must be provided, but was: ", slug);
+            return null;
+        }
+        return this.http.get(this.serverHost + "/getMyTeamBySlug?" + this.appService.getParamsAsQuerystring({ slug: slug, email: email }))
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to Get all the teams for the current user from the server
+     * @param {string} slug . The team slug
+     */
+    TeamsService.prototype.getTeams = function (email) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        var teamsData$ = this.http.get(this.serverHost + "/getAll?" + this.appService.getParamsAsQuerystring({ email: email }))
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+        return teamsData$.switchMap(function (teamsData) {
+            var teams = [];
+            if (teamsData && teamsData instanceof Array) {
+                for (var _i = 0, teamsData_1 = teamsData; _i < teamsData_1.length; _i++) {
+                    var item = teamsData_1[_i];
+                    var admin = null;
+                    var members = [];
+                    for (var _a = 0, _b = item.members; _a < _b.length; _a++) {
+                        var member = _b[_a];
+                        var newMember = new __WEBPACK_IMPORTED_MODULE_6__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
+                        members.push(newMember);
+                        if (member.isAdmin) {
+                            admin = newMember;
+                        }
+                    }
+                    teams.push(new __WEBPACK_IMPORTED_MODULE_5__models_team__["a" /* Team */](item.name, item.description || null, item.slug, admin, members));
+                }
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(teams);
+        });
+    };
+    /**
+     * Server call to Get all the teams for the current user from the server
+     * @param {string} slug . The team slug
+     * @param {string} email . The current user email.
+     */
+    TeamsService.prototype.delete = function (slug, email) {
+        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        return this.http.delete(this.serverHost + "/delete/" + slug, { headers: this.headers, body: { email: email } })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    return TeamsService;
+}());
+TeamsService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _b || Object])
+], TeamsService);
+
+var _a, _b;
+//# sourceMappingURL=teams.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container form__account-finance\" (ngSubmit)=\"onSubmit()\" #financeForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Active income -->\r\n      <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n        <currency-unit fxFlex=\"50px\"\r\n            [id]=\"'annualIncomeUnit'\" \r\n            [value]=\"model.annualIncomeUnit\"\r\n            [view]=\"'narrow'\"\r\n            (newValue)=\"onCurrencyUnitChange($event)\">\r\n        </currency-unit>\r\n        \r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n          <input matInput type=\"number\" id=\"annualIncome\" name=\"annualIncome\" placeholder=\"Annual Income\"\r\n              [(ngModel)]=\"model.annualIncome\" \r\n              value=\"model.annualIncome\"\r\n              numberValidator \r\n              #annualIncome=\"ngModel\">\r\n          <mat-hint align=\"start\">Annual income amount pre-tax.</mat-hint>\r\n          <mat-error *ngIf=\"annualIncome.invalid && (annualIncome.dirty || annualIncome.touched) && annualIncome.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        </mat-form-field>\r\n        <!-- <pre>{{annualIncome.errors | json}}</pre> -->\r\n      </div>\r\n\r\n      <!-- Tax rate -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"150px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"incomeTaxRate\" name=\"incomeTaxRate\" placeholder=\"Income tax rate (%)\" \r\n            [(ngModel)]=\"model.incomeTaxRate\" \r\n            value=\"model.incomeTaxRate\"\r\n            numberValidator='{\"min\": 0, \"max\": 100}' \r\n            #incomeTaxRate=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n      </mat-form-field>\r\n      <!-- <pre>{{incomeTaxRate.errors | json}}</pre> -->\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Savings -->\r\n      <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n        <currency-unit fxFlex=\"50px\"\r\n            [id]=\"'savingsUnit'\" \r\n            [value]=\"model.savingsUnit\"\r\n            [view]=\"'narrow'\"\r\n            (newValue)=\"onCurrencyUnitChange($event)\">\r\n        </currency-unit>\r\n        \r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n          <input matInput type=\"number\" id=\"savings\" name=\"savings\" placeholder=\"Current savings\" \r\n              [(ngModel)]=\"model.savings\" \r\n              value=\"model.savings\"\r\n              numberValidator\r\n              #savings=\"ngModel\">\r\n\r\n          <mat-error *ngIf=\"savings.invalid && (savings.dirty || savings.touched) && savings.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n\r\n      <div fxFlex fxFlex.gt-xs=\"150px\" class=\"form__spacer\"></div>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-finance\">\r\n    <button *ngIf=\"!accountFinanceServiceRunning\" \r\n        class=\"form__action mat-raised-button\" \r\n        mat-raised-button \r\n        type=\"submit\" \r\n        color=\"accent\" \r\n        [disabled]=\"!financeForm.form.valid\">Save</button>\r\n    \r\n    <mat-progress-bar *ngIf=\"accountFinanceServiceRunning\"\r\n        class=\"progress-bar progress-bar--account-finance\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </section>\r\n\r\n</form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountFinanceInfoComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_account_finance__ = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var AccountFinanceInfoComponent = (function () {
+    function AccountFinanceInfoComponent(usersService, appService) {
+        this.usersService = usersService;
+        this.appService = appService;
+        this.model = {
+            email: null,
+            annualIncome: null,
+            annualIncomeUnit: null,
+            incomeTaxRate: null,
+            savings: null,
+            savingsUnit: null
+        };
+        this.accountFinanceServiceRunning = false;
+    }
+    AccountFinanceInfoComponent.prototype.ngOnInit = function () {
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.model.email = this.user.email;
+        this.model.annualIncomeUnit = this.user.currency;
+        this.model.savingsUnit = this.user.currency;
+        if (this.user.financialInfo) {
+            Object.assign(this.model, {
+                annualIncome: this.user.financialInfo.annualIncome,
+                annualIncomeUnit: this.user.financialInfo.annualIncomeUnit,
+                incomeTaxRate: this.user.financialInfo.incomeTaxRate,
+                savings: this.user.financialInfo.savings,
+                savingsUnit: this.user.financialInfo.savingsUnit
+            });
+        }
+    };
+    AccountFinanceInfoComponent.prototype.onCurrencyUnitChange = function ($event) {
+        if ($event.source.id === 'annualIncomeUnit') {
+            this.model.annualIncomeUnit = $event.value;
+        }
+        else if ($event.source.id === 'savingsUnit') {
+            this.model.savingsUnit = $event.value;
+        }
+    };
+    AccountFinanceInfoComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.accountFinanceServiceRunning = true;
+        //call the account service
+        this.usersService.updateFinancialInfo(this.model).subscribe(function (data) {
+            if (data === null) {
+                var user = _this.usersService.getUser();
+                user.financialInfo = new __WEBPACK_IMPORTED_MODULE_2__models_account_finance__["a" /* AccountFinance */](_this.model.annualIncome, _this.model.annualIncomeUnit, _this.model.savings, _this.model.savingsUnit, _this.model.incomeTaxRate);
+                _this.usersService.setUser(user);
+                _this.appService.showResults("Your personal information was successfully updated!.", 'success');
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            _this.accountFinanceServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.accountFinanceServiceRunning = false;
+        });
+    };
+    return AccountFinanceInfoComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */]) === "function" && _a || Object)
+], AccountFinanceInfoComponent.prototype, "user", void 0);
+AccountFinanceInfoComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'account-finance-info',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _c || Object])
+], AccountFinanceInfoComponent);
+
+var _a, _b, _c;
+//# sourceMappingURL=account-finance-info.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container form__account-personal\" #personalInfoForm=\"ngForm\" (ngSubmit)=\"onSubmit()\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n    <section fxLayout=\"column\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n        \r\n        <!-- Birthday -->\r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n          <input \r\n              placeholder=\"Day of birth\"\r\n              id=\"birthday\"\r\n              name=\"birthday\"\r\n              readonly\r\n              required\r\n              #birthday=\"ngModel\"\r\n              matInput \r\n              [(ngModel)]=\"model.birthday\" \r\n              [matDatepicker]=\"pickerBirthday\"\r\n              (click)=\"pickerBirthday.open()\">\r\n          <mat-datepicker-toggle matSuffix [for]=\"pickerBirthday\"></mat-datepicker-toggle>\r\n          <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBirthday startView=\"year\" [startAt]=\"startAt\"></mat-datepicker>\r\n          <mat-error *ngIf=\"birthday.invalid && (birthday.dirty || birthday.touched) && birthday.errors.matDatepickerParse\">Day of birth is invalid or not follow the pattern \"mm/dd/yyyy\"</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n    \r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-personal\">\r\n      <button *ngIf=\"!accountPersonalServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!personalInfoForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"accountPersonalServiceRunning\"\r\n          class=\"progress-bar progress-bar--account-personal\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n  </form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountPersonalInfoComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_account_personal__ = __webpack_require__("../../../../../src/app/modules/users/models/account-personal.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var AccountPersonalInfoComponent = (function () {
+    function AccountPersonalInfoComponent(dateAdapter, usersService, appService, utilService) {
+        this.dateAdapter = dateAdapter;
+        this.usersService = usersService;
+        this.appService = appService;
+        this.utilService = utilService;
+        this.model = { birthday: null, email: null };
+        this.startAt = new Date(1990, 0, 1);
+        this.accountPersonalServiceRunning = false;
+        this.dateAdapter.setLocale('en-GB');
+    }
+    AccountPersonalInfoComponent.prototype.ngOnInit = function () {
+        this.model.email = this.user.email;
+        if (this.user.personalInfo) {
+            this.model.birthday = this.user.personalInfo.birthday;
+            if (this.user.personalInfo.birthday) {
+                this.startAt = this.user.personalInfo.birthday;
+            }
+        }
+    };
+    AccountPersonalInfoComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.accountPersonalServiceRunning = true;
+        //call the account service
+        this.usersService.updatePersonalInfo(this.model).subscribe(function (data) {
+            if (data === null) {
+                var user = _this.usersService.getUser();
+                user.personalInfo = new __WEBPACK_IMPORTED_MODULE_3__models_account_personal__["a" /* AccountPersonal */](_this.model.birthday);
+                _this.usersService.setUser(user);
+                _this.appService.showResults("Your personal information was successfully updated!.", 'success');
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            _this.accountPersonalServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.accountPersonalServiceRunning = false;
+        });
+    };
+    return AccountPersonalInfoComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__models_user__["a" /* User */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__models_user__["a" /* User */]) === "function" && _a || Object)
+], AccountPersonalInfoComponent.prototype, "user", void 0);
+AccountPersonalInfoComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'account-personal-info',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__users_service__["a" /* UsersService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__util_service__["a" /* UtilService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__util_service__["a" /* UtilService */]) === "function" && _e || Object])
+], AccountPersonalInfoComponent);
+
+var _a, _b, _c, _d, _e;
+//# sourceMappingURL=account-personal-info.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #accountForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            value=\"model.name\"\r\n            #name=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            value=\"model.email\"\r\n            #email=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Preferred currency -->\r\n      <currency-unit fxFlex fxFlex.gt-xs=\"200px\"\r\n          [id]=\"'preferredCurrency'\"\r\n          [hint]=\"'Your preferred currency format to use across the platform'\" \r\n          [placeHolder]=\"'Preferred currency'\" \r\n          [value]=\"model.currency\"\r\n          (newValue)=\"onCurrencyUnitChange($event)\">\r\n      </currency-unit>\r\n    </div>\r\n\r\n    <div fxFlex class=\"form__spacer\"></div>\r\n  </div>\r\n\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!updateAccountServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!accountForm.form.valid\">Save</button>\r\n\r\n    <mat-progress-bar *ngIf=\"updateAccountServiceRunning\"\r\n        class=\"progress-bar progress-bar--update-account\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountUserInfoComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var AccountUserInfoComponent = (function () {
+    function AccountUserInfoComponent(usersService, appService) {
+        this.usersService = usersService;
+        this.appService = appService;
+        this.user = null;
+        this.model = { name: '', email: '', currency: '' };
+        this.updateAccountServiceRunning = false;
+    }
+    AccountUserInfoComponent.prototype.ngOnInit = function () {
+        this.model = { name: this.user.name, email: this.user.email, currency: this.user.currency };
+    };
+    AccountUserInfoComponent.prototype.onCurrencyUnitChange = function ($event) {
+        if ($event.source.id === 'preferredCurrency') {
+            this.model.currency = $event.value;
+        }
+    };
+    /**
+     * When user submits the register form.
+     */
+    AccountUserInfoComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.updateAccountServiceRunning = true;
+        //call the account service
+        this.usersService.updateAccount(this.model).subscribe(function (data) {
+            if (data && data.email) {
+                var user = _this.usersService.getUser();
+                user.name = data.name;
+                user.email = data.email;
+                user.currency = data.currency;
+                _this.usersService.setUser(user);
+                _this.appService.showResults("Your profile was successfully updated!.", 'success');
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            _this.updateAccountServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.updateAccountServiceRunning = false;
+        });
+    };
+    return AccountUserInfoComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */]) === "function" && _a || Object)
+], AccountUserInfoComponent.prototype, "user", void 0);
+AccountUserInfoComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'account-user-info',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _c || Object])
+], AccountUserInfoComponent);
+
+var _a, _b, _c;
+//# sourceMappingURL=account-user-info.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account/account.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<!-- SM and higher view -->\r\n<mat-tab-group *ngIf=\"utilService.isGtXs()\">\r\n  <mat-tab label=\"Account info\">\r\n    <account-user-info [user]=\"user\"></account-user-info>\r\n  </mat-tab>\r\n  <mat-tab label=\"Personal info\">\r\n    <account-personal-info [user]=\"user\"></account-personal-info>\r\n  </mat-tab>\r\n  <mat-tab label=\"Financial info\">\r\n    <account-finance-info [user]=\"user\"></account-finance-info>\r\n  </mat-tab>\r\n</mat-tab-group>\r\n\r\n<!-- XS view -->\r\n<mat-accordion *ngIf=\"utilService.isXs()\">  \r\n    <mat-expansion-panel>\r\n      <mat-expansion-panel-header>\r\n        Account info\r\n      </mat-expansion-panel-header>\r\n\r\n      <account-user-info [user]=\"user\"></account-user-info>\r\n    </mat-expansion-panel>\r\n  \r\n    <mat-expansion-panel>\r\n      <mat-expansion-panel-header>\r\n        Personal info\r\n      </mat-expansion-panel-header>\r\n\r\n      <account-personal-info [user]=\"user\"></account-personal-info>\r\n    </mat-expansion-panel>\r\n\r\n    <mat-expansion-panel>\r\n      <mat-expansion-panel-header>\r\n        Financial info\r\n      </mat-expansion-panel-header>\r\n\r\n      <account-finance-info [user]=\"user\"></account-finance-info>\r\n    </mat-expansion-panel>\r\n\r\n  </mat-accordion>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account/account.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/account/account.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_service__ = __webpack_require__("../../../../../src/app/util.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var AccountComponent = (function () {
+    function AccountComponent(mainNavigatorService, route, utilService) {
+        this.mainNavigatorService = mainNavigatorService;
+        this.route = route;
+        this.utilService = utilService;
+        this.user = null;
+    }
+    AccountComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'My account', url: null, selected: true }
+        ]);
+        //get authUser from resolver
+        this.route.data.subscribe(function (data) {
+            _this.user = data.authUser;
+        });
+    };
+    return AccountComponent;
+}());
+AccountComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-account',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/account/account.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__util_service__["a" /* UtilService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__util_service__["a" /* UtilService */]) === "function" && _c || Object])
+], AccountComponent);
+
+var _a, _b, _c;
+//# sourceMappingURL=account.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/login/login.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container form__login\" (ngSubmit)=\"onSubmit()\" #loginForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            #email=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Password -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\"\r\n            #password=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--login\">\r\n    <button *ngIf=\"!loginServiceRunning\" class=\"form__action mat-raised-button\" mat-raised-button type=\"submit\" \r\n        color=\"accent\" [disabled]=\"!loginForm.form.valid\">Login</button>\r\n    \r\n    <mat-progress-bar *ngIf=\"loginServiceRunning\"\r\n        class=\"progress-bar progress-bar--login\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n    \r\n    <mat-checkbox fxLayoutAlign.xs=\"center center\" class=\"form__action\" [(ngModel)]=\"forgotModel.forgot\" name=\"forgot\" id=\"forgot\">Forgot my password</mat-checkbox>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"center center\" class=\"form__actions form__actions--create-account\">\r\n    <a mat-button color=\"accent\" class=\"color__almost-white ac__link\" routerLink=\"/users/register\">Create an account</a>\r\n  </section>\r\n\r\n</form>\r\n\r\n<form class=\"form__container form__forgot\" (ngSubmit)=\"onForgotSubmit()\" #forgotForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" *ngIf=\"forgotModel.forgot\">\r\n  \r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        \r\n        <input matInput type=\"email\" id=\"emailForgot\" name=\"emailForgot\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"forgotModel.email\" \r\n            required email\r\n            #emailForgot=\"ngModel\">\r\n        <mat-hint align=\"start\">Type your email and we will send you an email to reset your password.</mat-hint>\r\n        <mat-error *ngIf=\"emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!forgotServiceRunning\" class=\"form__action mat-raised-button\" \r\n        color=\"accent\" mat-raised-button type=\"submit\" [disabled]=\"!forgotForm.form.valid\">Send</button>\r\n\r\n    <mat-progress-bar *ngIf=\"forgotServiceRunning\"\r\n        class=\"progress-bar progress-bar--forgot\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </section>\r\n\r\n</form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/login/login.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.form__login .form__actions--create-account {\n  margin: 20px 0; }\n\n.form__forgot {\n  margin-top: 50px; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/login/login.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var LoginComponent = (function () {
+    function LoginComponent(usersService, appService, mainNavigatorService, router, route) {
+        this.usersService = usersService;
+        this.appService = appService;
+        this.mainNavigatorService = mainNavigatorService;
+        this.router = router;
+        this.route = route;
+        this.model = { email: '', password: '' };
+        this.forgotModel = { email: '', forgot: false };
+        this.loginServiceRunning = false;
+        this.forgotServiceRunning = false;
+    }
+    LoginComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Login', url: null, selected: true }
+        ]);
+        this.route.paramMap.map(function (params) { return params.get('state'); })
+            .subscribe(function (state) {
+            if (state === 'reset-password-token-expired') {
+                _this.appService.showResults('Reset password token has expired or is invalid. Click on "Forgot my password" again to create a new one.', 'error', 10000);
+            }
+        });
+    };
+    /**
+     * When user submits the login form
+     */
+    LoginComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.loginServiceRunning = true;
+        this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
+        //call the register service
+        this.usersService.login(this.model).subscribe(function (data) {
+            if (data && data.email) {
+                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, null, null, data.currency);
+                _this.usersService.setUser(user);
+                var redirectUrl = _this.usersService.routerRedirectUrl ? _this.usersService.routerRedirectUrl : '/';
+                _this.usersService.routerRedirectUrl = null;
+                _this.router.navigate([redirectUrl]); //go home
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+                _this.loginServiceRunning = false;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 451) {
+                _this.appService.showResults(error.msg, 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.loginServiceRunning = false;
+        });
+    };
+    /**
+     * When user submits the forgot password form
+     */
+    LoginComponent.prototype.onForgotSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onForgotSubmit() > "; //for debugging
+        this.forgotServiceRunning = true;
+        //call the register service
+        this.usersService.forgot(this.forgotModel).subscribe(function (data) {
+            _this.forgotServiceRunning = false;
+            _this.appService.showResults("You have been emailed a password reset link.", 'info');
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 455) {
+                //invalid email
+                _this.appService.showResults(error.msg, 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.forgotServiceRunning = false;
+        });
+    };
+    return LoginComponent;
+}());
+LoginComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-login',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/login/login.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _e || Object])
+], LoginComponent);
+
+var _a, _b, _c, _d, _e;
+//# sourceMappingURL=login.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/register/register.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #registerForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            #name=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            #email=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"passwordConfirm\" reverse=\"true\"\r\n            #password=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</mat-error>\r\n      </mat-form-field>\r\n\r\n      <!-- Password confirm -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model['password-confirm']\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"password\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator\">Confirm password must match password</mat-error>\r\n      </mat-form-field>\r\n      <!-- <pre>{{passwordConfirm.errors | json}}</pre> -->\r\n    </div>\r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!registerServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!registerForm.form.valid\">Create account</button>\r\n\r\n    <mat-progress-bar *ngIf=\"registerServiceRunning\"\r\n        class=\"progress-bar progress-bar--register\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/register/register.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 127px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/register/register.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var RegisterComponent = (function () {
+    function RegisterComponent(usersService, appService, router, mainNavigatorService) {
+        this.usersService = usersService;
+        this.appService = appService;
+        this.router = router;
+        this.mainNavigatorService = mainNavigatorService;
+        this.model = { name: '', email: '', password: '', 'password-confirm': '' };
+        this.registerServiceRunning = false;
+    }
+    RegisterComponent.prototype.ngOnInit = function () {
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Login', url: '/users/login', selected: false },
+            { displayName: 'Create account', url: null, selected: true }
+        ]);
+    };
+    /**
+     * When user submits the register form.
+     */
+    RegisterComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.registerServiceRunning = true;
+        //chech that the password and the confirmed password are the same
+        if (this.model.password !== this.model['password-confirm']) {
+            this.appService.consoleLog('error', methodTrace + " Confirm password must match password.");
+            this.registerServiceRunning = false;
+            return false;
+        }
+        this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
+        //call the register service
+        this.usersService.register(this.model).subscribe(function (data) {
+            if (data && data.email) {
+                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, null, null, data.currency);
+                _this.usersService.setUser(user);
+                _this.router.navigate(['/']); //go home
+                _this.appService.showResults(user.name + " welcome to AtomiCoconut!", 'success');
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.", data);
+            }
+            _this.registerServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                if (error.data && error.data.name === 'UserExistsError') {
+                    //the mail system failed for external reasons
+                    _this.appService.showResults("The selected email address already in use by another person, pick a different one please.", 'error');
+                }
+                else {
+                    _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+                }
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.registerServiceRunning = false;
+        });
+    };
+    return RegisterComponent;
+}());
+RegisterComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'users-register',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/register/register.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _d || Object])
+], RegisterComponent);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=register.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/reset-password/reset-password.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #resetForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"passwordConfirm\" reverse=\"true\"\r\n            #password=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</mat-error>\r\n      </mat-form-field>\r\n\r\n      <!-- Password confirm -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model['password-confirm']\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"password\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator\">Confirm password must match password</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n    \r\n    \r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!resetPasswordServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!resetForm.form.valid\">Reset password</button>\r\n\r\n    <mat-progress-bar *ngIf=\"resetPasswordServiceRunning\"\r\n        class=\"progress-bar progress-bar--reset-password\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/reset-password/reset-password.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 127px; } }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/components/reset-password/reset-password.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ResetPasswordComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_user__ = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var ResetPasswordComponent = (function () {
+    function ResetPasswordComponent(appService, usersService, router, route, mainNavigatorService) {
+        this.appService = appService;
+        this.usersService = usersService;
+        this.router = router;
+        this.route = route;
+        this.mainNavigatorService = mainNavigatorService;
+        this.model = { password: '', 'password-confirm': '' };
+        this.token = '';
+        this.resetPasswordServiceRunning = false;
+    }
+    ResetPasswordComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Login', url: '/users/login', selected: false },
+            { displayName: 'Reset password', url: null, selected: true }
+        ]);
+        this.route.paramMap.map(function (params) { return params.get('token'); })
+            .subscribe(function (token) {
+            if (token) {
+                _this.token = token;
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Token must be set to reset a password.");
+                _this.router.navigate(['/']);
+            }
+        });
+    };
+    ResetPasswordComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.resetPasswordServiceRunning = true;
+        //chech that the password and the confirmed password are the same
+        if (this.model.password !== this.model['password-confirm']) {
+            this.appService.consoleLog('error', methodTrace + " Confirm password must match password.");
+            this.resetPasswordServiceRunning = false;
+            return false;
+        }
+        //call the reset password service.
+        this.usersService.setUser(null); //reset authenticated user. Reset automatically authenticates the registered user.
+        this.usersService.reset(this.token, this.model).subscribe(function (data) {
+            if (data) {
+                var user = new __WEBPACK_IMPORTED_MODULE_3__models_user__["a" /* User */](data.name, data.email, data.avatar, null, null, data.currency);
+                _this.usersService.setUser(user);
+                _this.appService.showResults('Your password was successfully updated!', 'success');
+                _this.router.navigate(['/']); //go home
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            _this.resetPasswordServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.resetPasswordServiceRunning = false;
+        });
+    };
+    return ResetPasswordComponent;
+}());
+ResetPasswordComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-reset-password',
+        template: __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.scss")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]) === "function" && _e || Object])
+], ResetPasswordComponent);
+
+var _a, _b, _c, _d, _e;
+//# sourceMappingURL=reset-password.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/models/account-finance.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountFinance; });
+var AccountFinance = (function () {
+    function AccountFinance(annualIncome, annualIncomeUnit, savings, savingsUnit, incomeTaxRate) {
+        if (annualIncome === void 0) { annualIncome = null; }
+        if (annualIncomeUnit === void 0) { annualIncomeUnit = 'USD'; }
+        if (savings === void 0) { savings = null; }
+        if (savingsUnit === void 0) { savingsUnit = 'USD'; }
+        if (incomeTaxRate === void 0) { incomeTaxRate = null; }
+        this.annualIncome = annualIncome;
+        this.annualIncomeUnit = annualIncomeUnit;
+        this.savings = savings;
+        this.savingsUnit = savingsUnit;
+        this.incomeTaxRate = incomeTaxRate;
+    }
+    return AccountFinance;
+}());
+
+//# sourceMappingURL=account-finance.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/models/account-personal.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountPersonal; });
+var AccountPersonal = (function () {
+    function AccountPersonal(birthday) {
+        if (birthday === void 0) { birthday = null; }
+        this.birthday = null;
+        this.birthday = birthday;
+    }
+    Object.defineProperty(AccountPersonal.prototype, "age", {
+        get: function () {
+            if (this.birthday) {
+                var ageDifMs = Date.now() - new Date(this.birthday).getTime();
+                var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                return Math.abs(ageDate.getUTCFullYear() - 1970);
+            }
+            return 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return AccountPersonal;
+}());
+
+//# sourceMappingURL=account-personal.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/models/user.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
+var User = (function () {
+    function User(name, email, avatar, financialInfo, personalInfo, currency) {
+        if (name === void 0) { name = ''; }
+        if (email === void 0) { email = ''; }
+        if (avatar === void 0) { avatar = ''; }
+        if (financialInfo === void 0) { financialInfo = null; }
+        if (personalInfo === void 0) { personalInfo = null; }
+        if (currency === void 0) { currency = 'USD'; }
+        this.name = name;
+        this.email = email;
+        this.avatar = avatar;
+        this.currency = currency;
+        if (financialInfo) {
+            this.financialInfo = financialInfo;
+        }
+        else {
+            this.financialInfo = null;
+        }
+        if (personalInfo) {
+            this.personalInfo = personalInfo;
+        }
+        else {
+            this.personalInfo = null;
+        }
+    }
+    return User;
+}());
+
+//# sourceMappingURL=user.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/users-routing.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersRoutingModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_register_register_component__ = __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__ = __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_reset_password_reset_password_component__ = __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_account_account_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__auth_resolver_service__ = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+var routes = [
+    {
+        path: 'users',
+        children: [
+            { path: 'register', component: __WEBPACK_IMPORTED_MODULE_2__components_register_register_component__["a" /* RegisterComponent */] },
+            { path: 'login/:state', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
+            { path: 'login', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
+            {
+                path: 'account',
+                component: __WEBPACK_IMPORTED_MODULE_5__components_account_account_component__["a" /* AccountComponent */],
+                resolve: {
+                    authUser: __WEBPACK_IMPORTED_MODULE_6__auth_resolver_service__["a" /* AuthResolver */]
+                }
+            },
+            {
+                path: 'account/reset/expired',
+                redirectTo: 'login/reset-password-token-expired',
+                pathMatch: 'full'
+            },
+            { path: 'account/reset/:token', component: __WEBPACK_IMPORTED_MODULE_4__components_reset_password_reset_password_component__["a" /* ResetPasswordComponent */] }
+        ]
+    }
+];
+var UsersRoutingModule = (function () {
+    function UsersRoutingModule() {
+    }
+    return UsersRoutingModule;
+}());
+UsersRoutingModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
+        exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+    })
+], UsersRoutingModule);
+
+//# sourceMappingURL=users-routing.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/users.module.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("../../../common/@angular/common.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_routing_module__ = __webpack_require__("../../../../../src/app/modules/users/users-routing.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("../../../flex-layout/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__ = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__ = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_register_register_component__ = __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__users_service__ = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_login_login_component__ = __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_reset_password_reset_password_component__ = __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_account_account_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_account_finance_info_account_finance_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_account_personal_info_account_personal_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_account_user_info_account_user_info_component__ = __webpack_require__("../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var UsersModule = (function () {
+    function UsersModule() {
+    }
+    return UsersModule;
+}());
+UsersModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
+            __WEBPACK_IMPORTED_MODULE_2__users_routing_module__["a" /* UsersRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["FlexLayoutModule"],
+            __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
+            __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__["a" /* SharedModule */]
+        ],
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_7__components_register_register_component__["a" /* RegisterComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_login_login_component__["a" /* LoginComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__components_reset_password_reset_password_component__["a" /* ResetPasswordComponent */],
+            __WEBPACK_IMPORTED_MODULE_11__components_account_account_component__["a" /* AccountComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__components_account_finance_info_account_finance_info_component__["a" /* AccountFinanceInfoComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__components_account_personal_info_account_personal_info_component__["a" /* AccountPersonalInfoComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__components_account_user_info_account_user_info_component__["a" /* AccountUserInfoComponent */]
+        ],
+        providers: [__WEBPACK_IMPORTED_MODULE_8__users_service__["a" /* UsersService */]]
+    })
+], UsersModule);
+
+//# sourceMappingURL=users.module.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/users/users.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__ = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("../../../../../src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var UsersService = (function () {
+    function UsersService(http, appService) {
+        this.http = http;
+        this.appService = appService;
+        this.serverHost = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiHost + '/api/users';
+        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
+        this.routerRedirectUrl = null; //a route to redirect the user to when login is successfull
+        this.userSource = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["a" /* BehaviorSubject */](null);
+        this.user$ = this.userSource.asObservable();
+    }
+    /**
+     * user source feeder
+     */
+    UsersService.prototype.setUser = function (user) {
+        if (user === void 0) { user = null; }
+        this.userSource.next(user);
+    };
+    /**
+     * get the current user from the source
+     */
+    UsersService.prototype.getUser = function () {
+        return this.userSource.getValue();
+    };
+    /**
+     * Server call to Register a new user in the system
+     * @param postData
+     */
+    UsersService.prototype.register = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/register", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to update account user details
+     * @param postData
+     */
+    UsersService.prototype.updateAccount = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/account", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to update account personal details
+     * @param postData
+     */
+    UsersService.prototype.updatePersonalInfo = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/accountPersonalInfo", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to update account financial details
+     * @param postData
+     */
+    UsersService.prototype.updateFinancialInfo = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/accountFinancialInfo", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to retrieve the currently authenticated user, or null if nobody .
+     * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financeInfo (boolean)
+     */
+    UsersService.prototype.getAuthenticatedUser = function (parameters) {
+        if (parameters === void 0) { parameters = null; }
+        return this.http.get(this.serverHost + "/getUser?" + this.appService.getParamsAsQuerystring(parameters))
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to login the provided user email and pass.
+     */
+    UsersService.prototype.login = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/login", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to forgot with the provided user email.
+     */
+    UsersService.prototype.forgot = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/account/forgot", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to reset password api with the provided new password.
+     */
+    UsersService.prototype.reset = function (token, postData) {
+        if (postData === void 0) { postData = {}; }
+        return this.http.post(this.serverHost + "/account/reset/" + token, postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    /**
+     * Server call to login the provided user email and pass.
+     */
+    UsersService.prototype.logout = function () {
+        return this.http.get(this.serverHost + "/logout")
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError);
+    };
+    return UsersService;
+}());
+UsersService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]) === "function" && _b || Object])
+], UsersService);
+
+var _a, _b;
+//# sourceMappingURL=users.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/util.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UtilService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var UtilService = (function () {
+    function UtilService() {
+        this.settings = {
+            flexLayoutBkpts: {
+                xs: { min: 0, max: 599 },
+                sm: { min: 600, max: 959 },
+                md: { min: 960, max: 1279 },
+                lg: { min: 1280, max: 1919 },
+                xl: { min: 1920, max: 5000 }
+            }
+        };
+    }
+    UtilService.prototype.isXs = function () {
+        return window.innerWidth <= this.settings.flexLayoutBkpts.xs.max;
+    };
+    UtilService.prototype.isSm = function () {
+        return window.innerWidth >= this.settings.flexLayoutBkpts.sm.min && window.innerWidth <= this.settings.flexLayoutBkpts.sm.max;
+    };
+    UtilService.prototype.isMd = function () {
+        return window.innerWidth >= this.settings.flexLayoutBkpts.md.min && window.innerWidth <= this.settings.flexLayoutBkpts.md.max;
+    };
+    UtilService.prototype.isLg = function () {
+        return window.innerWidth >= this.settings.flexLayoutBkpts.lg.min && window.innerWidth <= this.settings.flexLayoutBkpts.lg.max;
+    };
+    UtilService.prototype.isXl = function () {
+        return window.innerWidth >= this.settings.flexLayoutBkpts.xl.min && window.innerWidth <= this.settings.flexLayoutBkpts.xl.max;
+    };
+    UtilService.prototype.isGtXs = function () {
+        return window.innerWidth >= this.settings.flexLayoutBkpts.sm.min;
+    };
+    UtilService.prototype.isGtSm = function () {
+        return window.innerWidth >= this.settings.flexLayoutBkpts.md.min;
+    };
+    /**
+     * Show logs in the console if enabled in the current environment
+     * @param type . Error type
+     * @param message . The message to show
+     * @param params . Any extra parameters to list in the log.
+     */
+    UtilService.prototype.consoleLog = function (type, message) {
+        var params = [];
+        for (var _i = 2; _i < arguments.length; _i++) {
+            params[_i - 2] = arguments[_i];
+        }
+        if (__WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].showLogs) {
+            console[type](message, params);
+        }
+    };
+    return UtilService;
+}());
+UtilService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], UtilService);
+
+//# sourceMappingURL=util.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/environments/environment.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
+// The file contents for the current environment will overwrite these during build.
+// The build system defaults to the dev environment which uses `environment.ts`, but if you do
+// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// The list of which env maps to which file can be found in `.angular-cli.json`.
+// The file contents for the current environment will overwrite these during build.
+var environment = {
+    production: true,
+    apiHost: '',
+    showLogs: true
+};
+//# sourceMappingURL=environment.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/main.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__("../../../platform-browser-dynamic/@angular/platform-browser-dynamic.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__("../../../../../src/app/app.module.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+
+
+
+
+if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_24" /* enableProdMode */])();
+    console.log('ENV: Production');
+}
+Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */]);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ 0:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__("../../../../../src/main.ts");
+
+
+/***/ })
+
+},[0]);
+//# sourceMappingURL=main.bundle.js.map

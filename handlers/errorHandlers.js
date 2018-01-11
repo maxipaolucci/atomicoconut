@@ -6,11 +6,26 @@ const errorCodes = {
   451 : 'No user found with the provided credentials',
   452 : 'There was an error trying to login with the recently authenticated user.',
   453 : 'User not authenticated to proceed.',
-  454 : 'this {{param}} is a {{param}} test.',
+  454 : 'This {{param}} is a {{param}} test.',
   455 : 'None user found with email: {{param}}.',
   456 : 'Passwords do not match!',
   457 : 'User not found with that token, it may be invalid or already expired.',
-  458 : 'The register form contains some errors: {{param}}'
+  458 : 'The register form contains some errors: {{param}}.',
+  459 : 'Failed to create and save a new record of {{param}}.',
+  460 : 'User email loggedin in current server session does not match "{{param}}" provided by the service consumer.',
+  461 : 'No {{param}} found with those parameters.',
+  462 : 'The {{param}} information requested it is not available for {{param}}.',
+  463 : 'You cannot remove the administrator of a Team.',
+  464 : 'Error trying to remove a record from {{param}} with {{param}} = {{param}}',
+  465 : 'Failed to update record from {{param}} with {{param}} = {{param}}',
+  466 : '{{param}} already member of Team: {{param}}.',
+  467 : 'Something went wrong.',
+  468 : 'Route not found.',
+  469 : 'Failed to remove {{param}} from {{param}}.',
+  470 : 'Sorry, you are not allowed to update this {{param}}.',
+  471 : 'Sorry, this {{param}} has {{param}} associated to it. We cannot delete it until all the related data is removed or associated to another entity.',
+  472 : 'Error trying to add a new member to each investment distribution array of the team investments.',
+  473 : 'Error trying to remove member from each investment distribution array from team investments.'
 };
 
 const messageCodes = {
@@ -37,7 +52,30 @@ const messageCodes = {
   1020 : 'User {{param}} profile successfully updated.',
   1021 : 'User {{param}} has not got access to investments',
   1022 : 'User {{param}} has access to investments',
-  1023 : 'Checking access to investments for {{param}}...'
+  1023 : 'Checking access to investments for {{param}}...',
+  1024 : 'Searching {{param}} with {{param}} = {{param}} to update...',
+  1025 : '{{param}} record not found in DB. Creating one instead...',
+  1026 : 'New {{param}} record successfully created and saved.',
+  1027 : 'User {{param}} found.',
+  1028 : 'Record in {{param}} found and successfully updated.',
+  1029 : 'Checking that the logged in user email in session matches "{{param}}" provided by the service consumer...',
+  1030 : 'Email provided by service consumer successfully matches the user in the current server session.',
+  1031 : 'Saving a new record into {{param}}...',
+  1032 : '{{param}} successfully updated.',
+  1033 : '{{param}} and all related data successfully created and saved.',
+  1034 : 'Get {{param}} by {{param}} = {{param}}...',
+  1035 : '{{param}} found.',
+  1036 : '{{param}} {{param}} found.',
+  1037 : 'Searching one {{param}} with {{param}}...',
+  1038 : 'Removing from {{param}} where {{param}} = {{param}}...',
+  1039 : '{{param}} record successfully removed.',
+  1040 : '{{param}} is not a user of AtomiCoconut. Sending email to join the app...',
+  1041 : 'Sending email via {{param}}...',
+  1042 : '{{param}} and all related data successfully updated.',
+  1043 : 'Updating team investments, adding new member to each investment distributtion array...',
+  1044 : 'Successfully added new member to each investment distribution array',
+  1045 : 'Updating team investments, removing the member from each investment distributtion array...',
+  1046 : 'Successfully removed member from each investment distribution array'
 };
 
 /**
@@ -45,7 +83,7 @@ const messageCodes = {
  * @param {*} codeno . The number of message to get back
  * @param {*} params . The params to configure the message
  */
-const getMessage = (type = 'error', codeno = -1, ...params) => {
+const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = false,...params) => {
   if (codeno === -1) {
     return '';
   }
@@ -62,7 +100,16 @@ const getMessage = (type = 'error', codeno = -1, ...params) => {
     }
   }
   
-  return message;
+  let prefix = '';
+  if (userEmail) {
+    prefix += `[${userEmail}`;
+  }
+
+  if (showDate) {
+    prefix += prefix.length ? ` on ${new Date(Date.now())}]` : `[on ${new Date(Date.now())}]`;
+  }
+
+  return `${prefix} ${message}`;
 };
 
 exports.getMessage = getMessage;
@@ -78,7 +125,7 @@ exports.getMessage = getMessage;
 exports.catchErrors = (fn) => {
   const methodTrace = `${errorTrace} catchErrors() >`;
 
-  console.log(`${methodTrace} Something went wrong.`);
+  console.log(`${methodTrace} ${getMessage('error', 467, null, true)}`);
   return function(req, res, next) {
     return fn(req, res, next).catch(next);
   };
@@ -92,7 +139,7 @@ exports.catchErrors = (fn) => {
 exports.notFound = (req, res, next) => {
   const methodTrace = `${errorTrace} notFound() >`;
   
-  console.log(`${methodTrace} Route not found.`);
+  console.log(`${methodTrace} ${getMessage('error', 468, req.user ? req.user.email : null, true)}`);
   const err = new Error('Not Found');
   err.status = 'error';
   err.codeno = 404;
@@ -124,11 +171,11 @@ exports.notFound = (req, res, next) => {
 exports.developmentErrors = (err, req, res, next) => {
   const methodTrace = `${errorTrace} developmentErrors() >`;
 
-  console.log(`${methodTrace} Something went wrong: ${err.message}`);
+  console.log(`${methodTrace} ${getMessage('error', 467, req.user ? req.user.email : null, true)} ${err.message}`);
   err.stack = err.stack || '';
   //console.log(err);
   const errorDetails = {
-    msg: `${getMessage('error', 400)} ${err.message || err.msg}`,
+    msg: `${getMessage('error', 400, null, false)} ${err.message || err.msg}`,
     status: 'error',
     codeno: 400,
     data: err
@@ -157,7 +204,7 @@ exports.developmentErrors = (err, req, res, next) => {
 exports.productionErrors = (err, req, res, next) => {
   const methodTrace = `${errorTrace} productionErrors() >`;
   
-  console.log(`${methodTrace} Something went wrong.`);
+  console.log(`${methodTrace} ${getMessage('error', 467, req.user ? req.user.email : null, true)} ${err.message}`);
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,

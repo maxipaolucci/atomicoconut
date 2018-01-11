@@ -1,0 +1,81 @@
+@import '../../../../../variables';
+
+form {
+
+  .form__actions {
+
+    .progress-bar {
+      width: 100%;
+    }
+  }
+}
+
+.progress-bar--get-team {
+  width: 100%;
+}
+
+.form__edit-team {
+
+  .form__actions--edit-team {
+    margin: 20px 0;
+  }
+}
+
+.members .member {
+  margin-bottom: 10px;
+  padding: 14px;
+  border-radius: 50px;
+  cursor: default;
+
+  .member__avatar {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+
+  .member__info {
+    
+    .icon__admin {
+      font-size: 14px;
+      height: auto;
+      width: auto;
+    }
+
+    .member__email {
+      font-size: 11px;
+    }
+  }
+
+    
+  .icon__remove-member {
+    font-size: 16px;
+    height: auto;
+    width: auto;
+    cursor: pointer;
+  }
+
+  &.not-saved-yet {
+    
+    .member__avatar--default {
+      font-size: 40px;
+      color : $warn;
+    }
+  }
+}
+
+@media screen and (min-width: $screenGtXs) {
+  
+  form {
+    
+    .form__actions {
+  
+      .progress-bar {
+        width: 88px;
+      }
+    }
+  }
+
+  .progress-bar--get-team {
+    width: 300px;
+  }
+}
