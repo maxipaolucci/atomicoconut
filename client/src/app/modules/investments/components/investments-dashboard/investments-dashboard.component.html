@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__investments">
-  <section *ngIf="!getInvestmentsServiceRunning && investments.length" fxLayout="column" fxLayoutGap="10px">
+  <section *ngIf="!getInvestmentsServiceRunning && investments.length > 0" fxLayout="column" fxLayoutGap="10px">
     
     <div *ngFor="let row of investmentsUI" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
       <currency-investment *ngFor="let investment of row" fxFlex fxFlex.gt-xs="50"
@@ -40,7 +40,7 @@
 
   </section>
 
-  <section *ngIf="!getInvestmentsServiceRunning && !investments.length" fxLayout="column" fxLayoutGap="10px">
+  <section *ngIf="!getInvestmentsServiceRunning && investments.length == 0" fxLayout="column" fxLayoutGap="10px">
     <mat-card fxFlex class="totals-card">
       <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
           fxLayoutAlign="space-around center">
