@@ -5576,7 +5576,7 @@ UtilService = __decorate([
 // The file contents for the current environment will overwrite these during build.
 var environment = {
     production: false,
-    apiHost: 'http://localhost:7777',
+    apiHost: '',
     showLogs: true
 };
 //# sourceMappingURL=environment.js.map
