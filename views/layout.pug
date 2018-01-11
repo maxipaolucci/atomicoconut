@@ -23,7 +23,9 @@ head
       //- these are all the client app resources
       script(type="text/javascript" src="/app/inline.bundle.js")
       script(type="text/javascript" src="/app/polyfills.bundle.js")
-      if locals.environment == 'development || production'
+      if locals.environment == 'development'
+        script(type="text/javascript" src="/app/styles.bundle.js")
+      else
         script(type="text/javascript" src="/app/styles.bundle.js")
       script(type="text/javascript" src="/app/vendor.bundle.js")
       script(type="text/javascript" src="/app/main.bundle.js")
