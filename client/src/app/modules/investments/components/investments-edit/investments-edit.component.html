@@ -64,7 +64,7 @@
                   <mat-form-field class="form__field">
                     <input matInput type="number" id="memberPercentage_{{member.email}}" name="memberPercentage_{{member.email}}" placeholder="Percentage of investment"
                         [(ngModel)]="model.membersPercentage[member.email]" 
-                        value="model.membersPercentage[member.email]"
+                        [value]="model.membersPercentage[member.email]"
                         numberValidator='{"min": 0, "max": 100}'
                         required
                         #memberPercentage="ngModel">
