@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import {Observable} from "rxjs/Rx";
 import { AppService } from '../../app.service';
+import { tap } from 'rxjs/operators/tap';
+import { catchError } from 'rxjs/operators/catchError';
 
 @Injectable()
 export class CurrencyExchangeService {
-
-  // private cryptoExchangeServerUrl : string = 'https://api.cryptonator.com/api/ticker/';
-  // cryptoRates : any = {};
 
   private cryptoExchangeServerUrl : string = 'https://coincap.io/page/';
   cryptoRates : any = {};
@@ -16,19 +15,20 @@ export class CurrencyExchangeService {
   private currencyExchangeServiceUrl : string = 'https://api.fixer.io/latest';
   currencyRates : any = null;
 
-  constructor(private http : Http, private appService : AppService) { }
+  constructor(private http : HttpClient, private appService : AppService) { }
 
   getCurrencyRates(base = 'USD') : Observable<any> {
     if (this.currencyRates) {
       return Observable.of(this.currencyRates);
     }
 
-    return this.http.get(`${this.currencyExchangeServiceUrl}?base=${base}`)
-        .map(this.extractCurrencyExchangeData)
-        .catch(this.handleError);
+    return this.http.get(`${this.currencyExchangeServiceUrl}?base=${base}`).pipe(
+      tap(currencyExchangeData => this.extractCurrencyExchangeData(currencyExchangeData)),
+      catchError(this.handleError)
+    );
   }
 
-  private extractCurrencyExchangeData(res: Response) : any {
+  private extractCurrencyExchangeData(res: any) : any {
     let body = res.json();
     if (Object.keys(body.rates).length > 0) {
       return body.rates;
@@ -49,27 +49,6 @@ export class CurrencyExchangeService {
     
     return Observable.throw(errMsg);
   }
-
-  // getCryptoRates(crypto : string = 'btc') : Observable<any> {
-  //   if (this.cryptoRates[crypto.toUpperCase()]) {
-  //     return Observable.of(this.cryptoRates[crypto.toUpperCase()]);
-  //   }
-    
-  //   return this.http.get(`${this.cryptoExchangeServerUrl}${crypto}-usd`)
-  //       .map((res: Response) => {
-  //         this.cryptoRates[crypto.toUpperCase()] = this.extractCryptoExchangeData(res);
-  //         return this.cryptoRates[crypto.toUpperCase()];
-  //       }).catch(this.handleError);
-  // }
-
-  // private extractCryptoExchangeData(res: Response) : any {
-  //   let body = res.json();
-  //   if (body.success === true) {
-  //     return body.ticker;
-  //   } else {
-  //     throw body;
-  //   }
-  // }
 
   getCryptoRates(crypto : string = 'BTC') : Observable<any> {
     if (this.cryptoRates[crypto.toUpperCase()]) {

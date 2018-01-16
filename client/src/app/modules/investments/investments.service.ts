@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from "rxjs/Rx";
 import { environment } from "../../../environments/environment";
@@ -14,9 +14,9 @@ import { Team } from '../teams/models/team';
 export class InvestmentsService {
 
   private serverHost : string = environment.apiHost + '/api/investments';
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-  constructor(private http : Http, private appService : AppService) {}
+  constructor(private http : HttpClient, private appService : AppService) {}
 
   /**
    * Server call to Create a new investment in the system 

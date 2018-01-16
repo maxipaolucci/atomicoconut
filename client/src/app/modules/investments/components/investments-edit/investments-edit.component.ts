@@ -129,8 +129,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         if (percentageAcum > 100) {
           const [lastMember] = this.model.team.members.slice(-1);
           const diff = percentageAcum - 100;
-          const decimalPipe = new DecimalPipe('en');
-          const newValue = Number(decimalPipe.transform(this.model.membersPercentage[lastMember.email] - diff, '1.0-2'));
+          const newValue = Number(DecimalPipe.prototype.transform(this.model.membersPercentage[lastMember.email] - diff, '1.0-2', 'en'));
           if (newValue < 0) {
             this.setDefaultInvestmentPercentages();
             this.appService.showResults(`The sum of percentages must not exceed 100%, we reset the values to make it valid.`, 'warn');
@@ -376,10 +375,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    * Splits equally the percentage of an investment to all the team members
    */
   setDefaultInvestmentPercentages() {
-    const decimalPipe = new DecimalPipe('en');
     this.model.membersPercentage = {};
     //set the default percentage of the investment to each member
-    const defaultPercentage = Number(decimalPipe.transform(100 / this.model.team.members.length, '1.0-2'));
+    const defaultPercentage = Number(DecimalPipe.prototype.transform(100 / this.model.team.members.length, '1.0-2', 'en'));
     for (let member of this.model.team.members) {
       this.model.membersPercentage[member.email] = defaultPercentage;
     }
