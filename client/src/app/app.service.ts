@@ -1,60 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-
-import {Observable} from "rxjs/Rx";
 import { MatSnackBar } from '@angular/material';
 import { environment } from '../environments/environment';
 import { SnackbarSimpleComponent } from './modules/shared/components/snackbar-simple/snackbar-simple.component';
+import { Response } from './models/response';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AppService {
 
-  constructor(private http : Http, public snackBar: MatSnackBar) {}
-
-  /**
-   * Receives and object of paramameters and returns it in a querystring format
-   * @param {*} parameters . Object of parameters
-   * @return {string} result as querystring
-   */
-  public getParamsAsQuerystring(parameters : any = null) {
-    let strParams = '';
-    if (parameters && Object.keys(parameters).length) {
-      for (let key of Object.keys(parameters)) {
-        strParams += `&${key}=${parameters[key]}`;
-      }
-    }
-
-    return strParams.substring(1);
-  }
+  constructor(public snackBar: MatSnackBar) {}
 
   /**
    * Extract data from a server response
    * @param res
    */
   public extractData(res: Response) : any {
-    let body = res.json();
-
-    if (body.codeno === 200 && body.status === 'success') {
-      return body.data;
+    if (res.codeno === 200 && res.status === 'success') {
+      return res.data;
     } else {
-      throw body;
+      throw res;
     }
   }
 
   /**
    * Handle server service errors and parse the result in an object
-   * @param error 
+   * @param operation (string). The operation performed
+   * @param result (T). Optional, a result to handle the fail. 
    */
-  public handleError (error: Response | any) {
-    // In a real world app, we might use a remote logging infrastructure
-    let errObj: any = {};
-    if (error instanceof Response) {
-      errObj = error.json() || {};
-    } else {
-      errObj = error || {};
-    }
-    
-    return Observable.throw(errObj);
+  public handleError<T>(operation = 'operation', result?: T) {
+    return (error : any) : Observable<T> => {
+      this.consoleLog('error', `Operation "${operation}" failed with message:  ${error.message}`, error);
+      
+      return Observable.throw(error.message);
+    };
   }
 
   /**

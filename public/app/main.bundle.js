@@ -103,7 +103,6 @@ var AppComponent = /** @class */ (function () {
         //Get currency exchange rates
         if (!this.currencyExchangeService.currencyRates) {
             this.currencyExchangeService.getCurrencyRates().subscribe(function (data) {
-                _this.currencyExchangeService.currencyRates = data;
                 _this.appService.consoleLog('info', methodTrace + " Currency exchange rates successfully loaded!");
             }, function (error) {
                 _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > " + error);
@@ -119,7 +118,7 @@ var AppComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getCryptoRates() > "; //for debugging
         if (!this.currencyExchangeService.cryptoRates[crypto]) {
             this.currencyExchangeService.getCryptoRates(crypto).subscribe(function (data) {
-                _this.currencyExchangeService.cryptoRates[crypto] = data;
+                //this.currencyExchangeService.cryptoRates[crypto] = data;
                 _this.appService.consoleLog('info', methodTrace + " " + crypto + " exchange rate successfully loaded!");
             }, function (error) {
                 _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + crypto + " rates data > " + error);
@@ -312,59 +311,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var http_1 = __webpack_require__("../../../http/esm5/http.js");
-var Rx_1 = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
 var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
 var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
 var snackbar_simple_component_1 = __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
+var Observable_1 = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
 var AppService = /** @class */ (function () {
-    function AppService(http, snackBar) {
-        this.http = http;
+    function AppService(snackBar) {
         this.snackBar = snackBar;
     }
-    /**
-     * Receives and object of paramameters and returns it in a querystring format
-     * @param {*} parameters . Object of parameters
-     * @return {string} result as querystring
-     */
-    AppService.prototype.getParamsAsQuerystring = function (parameters) {
-        if (parameters === void 0) { parameters = null; }
-        var strParams = '';
-        if (parameters && Object.keys(parameters).length) {
-            for (var _i = 0, _a = Object.keys(parameters); _i < _a.length; _i++) {
-                var key = _a[_i];
-                strParams += "&" + key + "=" + parameters[key];
-            }
-        }
-        return strParams.substring(1);
-    };
     /**
      * Extract data from a server response
      * @param res
      */
     AppService.prototype.extractData = function (res) {
-        var body = res.json();
-        if (body.codeno === 200 && body.status === 'success') {
-            return body.data;
+        if (res.codeno === 200 && res.status === 'success') {
+            return res.data;
         }
         else {
-            throw body;
+            throw res;
         }
     };
     /**
      * Handle server service errors and parse the result in an object
-     * @param error
+     * @param operation (string). The operation performed
+     * @param result (T). Optional, a result to handle the fail.
      */
-    AppService.prototype.handleError = function (error) {
-        // In a real world app, we might use a remote logging infrastructure
-        var errObj = {};
-        if (error instanceof http_1.Response) {
-            errObj = error.json() || {};
-        }
-        else {
-            errObj = error || {};
-        }
-        return Rx_1.Observable.throw(errObj);
+    AppService.prototype.handleError = function (operation, result) {
+        var _this = this;
+        if (operation === void 0) { operation = 'operation'; }
+        return function (error) {
+            _this.consoleLog('error', "Operation \"" + operation + "\" failed with message:  " + error.message, error);
+            return Observable_1.Observable.throw(error.message);
+        };
     };
     /**
      * Shows messages in snackbar component
@@ -425,7 +403,7 @@ var AppService = /** @class */ (function () {
     };
     AppService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.Http, material_1.MatSnackBar])
+        __metadata("design:paramtypes", [material_1.MatSnackBar])
     ], AppService);
     return AppService;
 }());
@@ -607,7 +585,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var Rx_1 = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
 var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
 var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
@@ -619,6 +596,7 @@ var currency_exchange_service_1 = __webpack_require__("../../../../../src/app/mo
 var currencyInvestment_1 = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
 var constants_1 = __webpack_require__("../../../../../src/app/constants/constants.ts");
 var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+var of_1 = __webpack_require__("../../../../rxjs/_esm5/observable/of.js");
 var WelcomeComponent = /** @class */ (function () {
     function WelcomeComponent(mainNavigatorService, usersService, appService, investmentsService, currencyExchangeService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -693,14 +671,14 @@ var WelcomeComponent = /** @class */ (function () {
         var gotAuthenticatedUserFromServer = false;
         var user$ = this.usersService.user$.switchMap(function (user) {
             if (!user) {
-                return Rx_1.Observable.of(null);
+                return of_1.of(null);
             }
             else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
                 gotAuthenticatedUserFromServer = true;
                 return _this.usersService.getAuthenticatedUser({ personalInfo: true, financialInfo: true });
             }
             else {
-                return Rx_1.Observable.of(user);
+                return of_1.of(user);
             }
         });
         return user$.switchMap(function (user) {
@@ -734,7 +712,7 @@ var WelcomeComponent = /** @class */ (function () {
             }
             else {
                 _this.user = null;
-                return Rx_1.Observable.of([]);
+                return of_1.of([]);
             }
         });
     };
@@ -2193,12 +2171,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
 var http_1 = __webpack_require__("../../../common/esm5/http.js");
-var Rx_1 = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
 var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var tap_1 = __webpack_require__("../../../../rxjs/_esm5/operators/tap.js");
-var catchError_1 = __webpack_require__("../../../../rxjs/_esm5/operators/catchError.js");
+var core_1 = __webpack_require__("../../../core/esm5/core.js");
+var Observable_1 = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
 var CurrencyExchangeService = /** @class */ (function () {
     function CurrencyExchangeService(http, appService) {
         this.http = http;
@@ -2209,53 +2185,45 @@ var CurrencyExchangeService = /** @class */ (function () {
         this.currencyRates = null;
     }
     CurrencyExchangeService.prototype.getCurrencyRates = function (base) {
-        var _this = this;
         if (base === void 0) { base = 'USD'; }
+        var methodTrace = this.constructor.name + " > getCurrencyRates() > "; //for debugging
         if (this.currencyRates) {
-            return Rx_1.Observable.of(this.currencyRates);
+            return Observable_1.Observable.of(this.currencyRates);
         }
-        return this.http.get(this.currencyExchangeServiceUrl + "?base=" + base).pipe(tap_1.tap(function (currencyExchangeData) { return _this.extractCurrencyExchangeData(currencyExchangeData); }), catchError_1.catchError(this.handleError));
+        return this.http.get(this.currencyExchangeServiceUrl + "?base=" + base)
+            .map(this.extractCurrencyExchangeData)
+            .catch(this.appService.handleError(methodTrace))
+            .retry(3);
     };
     CurrencyExchangeService.prototype.extractCurrencyExchangeData = function (res) {
-        var body = res.json();
-        if (Object.keys(body.rates).length > 0) {
-            return body.rates;
+        if (Object.keys(res.rates).length > 0) {
+            this.currencyRates = res.rates;
+            return res.rates;
         }
         else {
-            throw body;
+            throw res;
         }
-    };
-    CurrencyExchangeService.prototype.handleError = function (error) {
-        var errMsg;
-        if (error instanceof Response) {
-            var body = error.json() || '';
-            var err = body.error || JSON.stringify(body);
-            errMsg = error.status + " - " + (error.statusText || '') + " " + err;
-        }
-        else {
-            errMsg = error.message ? error.message : error.toString();
-        }
-        return Rx_1.Observable.throw(errMsg);
     };
     CurrencyExchangeService.prototype.getCryptoRates = function (crypto) {
         var _this = this;
         if (crypto === void 0) { crypto = 'BTC'; }
+        var methodTrace = this.constructor.name + " > getCryptoRates() > "; //for debugging
         if (this.cryptoRates[crypto.toUpperCase()]) {
-            return Rx_1.Observable.of(this.cryptoRates[crypto.toUpperCase()]);
+            return Observable_1.Observable.of(this.cryptoRates[crypto.toUpperCase()]);
         }
         return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase())
             .map(function (res) {
             _this.cryptoRates[crypto.toUpperCase()] = _this.extractCryptoExchangeData(crypto, res);
             return _this.cryptoRates[crypto.toUpperCase()];
-        }).catch(this.handleError);
+        })
+            .catch(this.appService.handleError(methodTrace));
     };
     CurrencyExchangeService.prototype.extractCryptoExchangeData = function (crypto, res) {
-        var body = res.json();
-        if (body.id === crypto.toUpperCase()) {
-            return body;
+        if (res['id'] === crypto.toUpperCase()) {
+            return res;
         }
         else {
-            throw body;
+            throw res;
         }
     };
     CurrencyExchangeService.prototype.getUsdValueOf = function (amount, unit) {
@@ -2418,18 +2386,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("../../../core/esm5/core.js");
 var http_1 = __webpack_require__("../../../common/esm5/http.js");
+var http_2 = __webpack_require__("../../../common/esm5/http.js");
 var Rx_1 = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
 var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
 var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
 var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
 var currencyInvestment_1 = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
 var team_1 = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
+var of_1 = __webpack_require__("../../../../rxjs/_esm5/observable/of.js");
 var InvestmentsService = /** @class */ (function () {
     function InvestmentsService(http, appService) {
         this.http = http;
         this.appService = appService;
         this.serverHost = environment_1.environment.apiHost + '/api/investments';
-        this.headers = new http_1.HttpHeaders({ 'Content-Type': 'application/json' });
+        this.headers = new http_1.HttpHeaders().set('Content-Type', 'application/json');
     }
     /**
      * Server call to Create a new investment in the system
@@ -2437,9 +2407,10 @@ var InvestmentsService = /** @class */ (function () {
      */
     InvestmentsService.prototype.create = function (postData) {
         if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > create() > "; //for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to Update an investment in the system
@@ -2447,9 +2418,10 @@ var InvestmentsService = /** @class */ (function () {
      */
     InvestmentsService.prototype.update = function (postData) {
         if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > update() > "; //for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to Get an investment from the server based on its ID
@@ -2458,13 +2430,16 @@ var InvestmentsService = /** @class */ (function () {
     InvestmentsService.prototype.getInvestmentById = function (email, id) {
         var _this = this;
         var methodTrace = this.constructor.name + " > getInvestmentById() > "; //for debugging
-        if (!id) {
-            this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
-            return null;
+        if (!id || !email) {
+            this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
+            return of_1.of(null);
         }
-        var investmentData$ = this.http.get(this.serverHost + "/getbyId?" + this.appService.getParamsAsQuerystring({ id: id, email: email }))
+        var params = new http_2.HttpParams()
+            .set('id', id)
+            .set('email', email);
+        var investmentData$ = this.http.get(this.serverHost + "/getbyId", { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
         return investmentData$.switchMap(function (investmentData) {
             var investment = null;
             if (investmentData && investmentData._id) {
@@ -2500,10 +2475,15 @@ var InvestmentsService = /** @class */ (function () {
      */
     InvestmentsService.prototype.getInvestments = function (email) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
-        var investmentsData$ = this.http.get(this.serverHost + "/getAll?" + this.appService.getParamsAsQuerystring({ email: email }))
+        var methodTrace = this.constructor.name + " > getInvestments() > "; //for debugging
+        if (!email) {
+            this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
+            return Rx_1.Observable.from([]);
+        }
+        var params = new http_2.HttpParams().set('email', email);
+        var investmentsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
         return investmentsData$.switchMap(function (investmentsData) {
             var investments = [];
             if (investmentsData && investmentsData instanceof Array) {
@@ -2529,9 +2509,14 @@ var InvestmentsService = /** @class */ (function () {
      */
     InvestmentsService.prototype.delete = function (id, email) {
         var methodTrace = this.constructor.name + " > delete() > "; //for debugging
-        return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, body: { email: email } })
+        if (!id || !email) {
+            this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
+            return Rx_1.Observable.throw(null);
+        }
+        var params = new http_2.HttpParams().set('email', email);
+        return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     InvestmentsService = __decorate([
         core_1.Injectable(),
@@ -3935,18 +3920,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var http_1 = __webpack_require__("../../../http/esm5/http.js");
-var Rx_1 = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+var http_1 = __webpack_require__("../../../common/esm5/http.js");
 var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
 var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
 var team_1 = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
 var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+var Observable_1 = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+var of_1 = __webpack_require__("../../../../rxjs/_esm5/observable/of.js");
+var from_1 = __webpack_require__("../../../../rxjs/_esm5/observable/from.js");
 var TeamsService = /** @class */ (function () {
     function TeamsService(http, appService) {
         this.http = http;
         this.appService = appService;
         this.serverHost = environment_1.environment.apiHost + '/api/teams';
-        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        this.headers = new http_1.HttpHeaders().set('Content-Type', 'application/json');
     }
     /**
      * Server call to Create a new team in the system
@@ -3954,9 +3941,10 @@ var TeamsService = /** @class */ (function () {
      */
     TeamsService.prototype.create = function (postData) {
         if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > register() > "; //for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to Update a team in the system
@@ -3964,9 +3952,10 @@ var TeamsService = /** @class */ (function () {
      */
     TeamsService.prototype.update = function (postData) {
         if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > register() > "; //for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to Get a team from the server based on its slug
@@ -3974,13 +3963,16 @@ var TeamsService = /** @class */ (function () {
      */
     TeamsService.prototype.getMyTeamBySlug = function (email, slug) {
         var methodTrace = this.constructor.name + " > getMyTeamBySlug() > "; //for debugging
-        if (!slug) {
-            this.appService.consoleLog('error', methodTrace + " Slug parameter must be provided, but was: ", slug);
-            return null;
+        if (!email || !slug) {
+            this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
+            return of_1.of(null);
         }
-        return this.http.get(this.serverHost + "/getMyTeamBySlug?" + this.appService.getParamsAsQuerystring({ slug: slug, email: email }))
+        var params = new http_1.HttpParams()
+            .set('email', email)
+            .set('slug', slug);
+        return this.http.get(this.serverHost + "/getMyTeamBySlug", { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to Get all the teams for the current user from the server
@@ -3989,9 +3981,14 @@ var TeamsService = /** @class */ (function () {
     TeamsService.prototype.getTeams = function (email) {
         var _this = this;
         var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
-        var teamsData$ = this.http.get(this.serverHost + "/getAll?" + this.appService.getParamsAsQuerystring({ email: email }))
+        if (!email) {
+            this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
+            return from_1.from([]);
+        }
+        var params = new http_1.HttpParams().set('email', email);
+        var teamsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
         return teamsData$.switchMap(function (teamsData) {
             var teams = [];
             if (teamsData && teamsData instanceof Array) {
@@ -4013,7 +4010,7 @@ var TeamsService = /** @class */ (function () {
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return Rx_1.Observable.of(teams);
+            return of_1.of(teams);
         });
     };
     /**
@@ -4023,13 +4020,18 @@ var TeamsService = /** @class */ (function () {
      */
     TeamsService.prototype.delete = function (slug, email) {
         var methodTrace = this.constructor.name + " > delete() > "; //for debugging
-        return this.http.delete(this.serverHost + "/delete/" + slug, { headers: this.headers, body: { email: email } })
+        if (!slug || !email) {
+            this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
+            return Observable_1.Observable.throw(null);
+        }
+        var params = new http_1.HttpParams().set('email', email);
+        return this.http.delete(this.serverHost + "/delete/" + slug, { headers: this.headers, params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     TeamsService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.Http, app_service_1.AppService])
+        __metadata("design:paramtypes", [http_1.HttpClient, app_service_1.AppService])
     ], TeamsService);
     return TeamsService;
 }());
@@ -5093,7 +5095,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var http_1 = __webpack_require__("../../../http/esm5/http.js");
+var http_1 = __webpack_require__("../../../common/esm5/http.js");
 var BehaviorSubject_1 = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
 var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
 var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
@@ -5102,7 +5104,7 @@ var UsersService = /** @class */ (function () {
         this.http = http;
         this.appService = appService;
         this.serverHost = environment_1.environment.apiHost + '/api/users';
-        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        this.headers = new http_1.HttpHeaders().set('Content-Type', 'application/json');
         this.routerRedirectUrl = null; //a route to redirect the user to when login is successfull
         this.userSource = new BehaviorSubject_1.BehaviorSubject(null);
         this.user$ = this.userSource.asObservable();
@@ -5126,9 +5128,10 @@ var UsersService = /** @class */ (function () {
      */
     UsersService.prototype.register = function (postData) {
         if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > register() > "; //for debugging
         return this.http.post(this.serverHost + "/register", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to update account user details
@@ -5136,9 +5139,10 @@ var UsersService = /** @class */ (function () {
      */
     UsersService.prototype.updateAccount = function (postData) {
         if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > updateAccount() > "; //for debugging
         return this.http.post(this.serverHost + "/account", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to update account personal details
@@ -5146,9 +5150,10 @@ var UsersService = /** @class */ (function () {
      */
     UsersService.prototype.updatePersonalInfo = function (postData) {
         if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > updatePersonalInfo() > "; //for debugging
         return this.http.post(this.serverHost + "/accountPersonalInfo", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to update account financial details
@@ -5156,9 +5161,10 @@ var UsersService = /** @class */ (function () {
      */
     UsersService.prototype.updateFinancialInfo = function (postData) {
         if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > updateFinancialInfo() > "; //for debugging
         return this.http.post(this.serverHost + "/accountFinancialInfo", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to retrieve the currently authenticated user, or null if nobody .
@@ -5166,48 +5172,60 @@ var UsersService = /** @class */ (function () {
      */
     UsersService.prototype.getAuthenticatedUser = function (parameters) {
         if (parameters === void 0) { parameters = null; }
-        return this.http.get(this.serverHost + "/getUser?" + this.appService.getParamsAsQuerystring(parameters))
+        var methodTrace = this.constructor.name + " > getAuthenticatedUser() > "; //for debugging
+        var params = new http_1.HttpParams();
+        if (parameters && Object.keys(parameters).length) {
+            for (var _i = 0, _a = Object.keys(parameters); _i < _a.length; _i++) {
+                var key = _a[_i];
+                params = params.set(key, parameters[key] + '');
+            }
+        }
+        return this.http.get(this.serverHost + "/getUser", { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to login the provided user email and pass.
      */
     UsersService.prototype.login = function (postData) {
         if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > login() > "; //for debugging
         return this.http.post(this.serverHost + "/login", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to forgot with the provided user email.
      */
     UsersService.prototype.forgot = function (postData) {
         if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > forgot() > "; //for debugging
         return this.http.post(this.serverHost + "/account/forgot", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to reset password api with the provided new password.
      */
     UsersService.prototype.reset = function (token, postData) {
         if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > reset() > "; //for debugging
         return this.http.post(this.serverHost + "/account/reset/" + token, postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     /**
      * Server call to login the provided user email and pass.
      */
     UsersService.prototype.logout = function () {
+        var methodTrace = this.constructor.name + " > logout() > "; //for debugging
         return this.http.get(this.serverHost + "/logout")
             .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .catch(this.appService.handleError(methodTrace));
     };
     UsersService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.Http, app_service_1.AppService])
+        __metadata("design:paramtypes", [http_1.HttpClient, app_service_1.AppService])
     ], UsersService);
     return UsersService;
 }());

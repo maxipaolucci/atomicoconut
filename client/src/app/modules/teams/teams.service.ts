@@ -1,30 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
-import { HttpParams } from '@angular/common/http';
-
-import {Observable} from "rxjs/Rx";
-import {environment} from "../../../environments/environment";
-import {AppService} from "../../app.service";
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from "../../../environments/environment";
+import { AppService } from "../../app.service";
 import { Team } from './models/team';
 import { User } from '../users/models/user';
+import { Observable } from 'rxjs/Observable';
+import { Response } from '../../models/response';
+import { of } from 'rxjs/observable/of';
+import { from } from 'rxjs/observable/from';
 
 
 @Injectable()
 export class TeamsService {
 
   private serverHost : string = environment.apiHost + '/api/teams';
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http : Http, private appService : AppService) {}
+  constructor(private http : HttpClient, private appService : AppService) {}
 
   /**
    * Server call to Create a new team in the system 
    * @param postData 
    */
   create(postData : any = {}) : Observable<any> {
-    return this.http.post(`${this.serverHost}/create`, postData, { headers : this.headers })
+    let methodTrace = `${this.constructor.name} > register() > `; //for debugging
+
+    return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .catch(this.appService.handleError(methodTrace));
   } 
   
   /**
@@ -32,9 +35,11 @@ export class TeamsService {
    * @param postData 
    */
   update(postData : any = {}) : Observable<any> {
-    return this.http.post(`${this.serverHost}/update`, postData, { headers : this.headers })
+    let methodTrace = `${this.constructor.name} > register() > `; //for debugging
+
+    return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .catch(this.appService.handleError(methodTrace));
   } 
 
   /**
@@ -44,14 +49,18 @@ export class TeamsService {
   getMyTeamBySlug(email : string, slug : string) : Observable<any> {
     let methodTrace = `${this.constructor.name} > getMyTeamBySlug() > `; //for debugging
 
-    if (!slug) {
-      this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
-      return null;
+    if (!email || !slug) {
+      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      return of(null);
     }
 
-    return this.http.get(`${this.serverHost}/getMyTeamBySlug?${this.appService.getParamsAsQuerystring({slug, email})}`)
+    let params = new HttpParams()
+        .set('email', email)
+        .set('slug', slug);
+
+    return this.http.get<Response>(`${this.serverHost}/getMyTeamBySlug`, { params })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .catch(this.appService.handleError(methodTrace));
   }
 
   /**
@@ -61,9 +70,16 @@ export class TeamsService {
   getTeams(email : string) : Observable<any> {
     let methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
 
-    const teamsData$ = this.http.get(`${this.serverHost}/getAll?${this.appService.getParamsAsQuerystring({email})}`)
+    if (!email) {
+      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      return from([]);
+    }
+
+    let params = new HttpParams().set('email', email);
+
+    const teamsData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .catch(this.appService.handleError(methodTrace));
     
     return teamsData$.switchMap((teamsData) => {
       let teams : Team[] = [];
@@ -85,7 +101,7 @@ export class TeamsService {
         this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
       }
 
-      return Observable.of(teams);
+      return of(teams);
     });
   }
 
@@ -97,8 +113,15 @@ export class TeamsService {
   delete(slug : string, email : string) : Observable<any> {
     let methodTrace = `${this.constructor.name} > delete() > `; //for debugging
 
-    return this.http.delete(`${this.serverHost}/delete/${slug}`, {headers : this.headers, body : { email } } )
+    if (!slug || !email) {
+      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      return Observable.throw(null);
+    }
+
+    let params = new HttpParams().set('email', email);
+
+    return this.http.delete<Response>(`${this.serverHost}/delete/${slug}`, {headers : this.headers, params } )
         .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .catch(this.appService.handleError(methodTrace));
   }
 }

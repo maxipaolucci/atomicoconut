@@ -8,13 +8,15 @@ import { User } from '../users/models/user';
 import { Investment } from './models/investment';
 import { CurrencyInvestment } from './models/currencyInvestment';
 import { Team } from '../teams/models/team';
+import { Response } from '../../models/response';
+import { of } from 'rxjs/observable/of';
 
 
 @Injectable()
 export class InvestmentsService {
 
   private serverHost : string = environment.apiHost + '/api/investments';
-  private headers = new HttpHeaders({'Content-Type': 'application/json'});
+  private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http : HttpClient, private appService : AppService) {}
 
@@ -23,9 +25,11 @@ export class InvestmentsService {
    * @param postData 
    */
   create(postData : any = {}) : Observable<any> {
-    return this.http.post(`${this.serverHost}/create`, postData, { headers : this.headers })
+    let methodTrace = `${this.constructor.name} > create() > `; //for debugging
+
+    return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .catch(this.appService.handleError(methodTrace));
   } 
   
   /**
@@ -33,9 +37,11 @@ export class InvestmentsService {
    * @param postData 
    */
   update(postData : any = {}) : Observable<any> {
-    return this.http.post(`${this.serverHost}/update`, postData, { headers : this.headers })
+    let methodTrace = `${this.constructor.name} > update() > `; //for debugging
+
+    return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .catch(this.appService.handleError(methodTrace));
   } 
 
   /**
@@ -45,14 +51,18 @@ export class InvestmentsService {
   getInvestmentById(email : string, id : string) : Observable<any> {
     let methodTrace = `${this.constructor.name} > getInvestmentById() > `; //for debugging
 
-    if (!id) {
-      this.appService.consoleLog('error', `${methodTrace} ID parameter must be provided, but was: `, id);
-      return null;
+    if (!id || !email) {
+      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      return of(null);
     }
 
-    const investmentData$ = this.http.get(`${this.serverHost}/getbyId?${this.appService.getParamsAsQuerystring({id, email})}`)
+    let params = new HttpParams()
+        .set('id', id)
+        .set('email', email);
+
+    const investmentData$ = this.http.get<Response>(`${this.serverHost}/getbyId`, { params })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .catch(this.appService.handleError(methodTrace));
 
     return investmentData$.switchMap((investmentData) => {
       let investment : Investment = null;
@@ -93,11 +103,18 @@ export class InvestmentsService {
    * @param {string} email . The team slug
    */
   getInvestments(email : string) : Observable<Investment[]> {
-    let methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+    let methodTrace = `${this.constructor.name} > getInvestments() > `; //for debugging
 
-    const investmentsData$ = this.http.get(`${this.serverHost}/getAll?${this.appService.getParamsAsQuerystring({email})}`)
+    if (!email) {
+      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      return Observable.from([]);
+    }
+
+    let params = new HttpParams().set('email', email);
+
+    const investmentsData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .catch(this.appService.handleError(methodTrace));
     
     return investmentsData$.switchMap((investmentsData) => {
       let investments : Investment[] = [];
@@ -128,8 +145,15 @@ export class InvestmentsService {
   delete(id : string, email : string) : Observable<any> {
     let methodTrace = `${this.constructor.name} > delete() > `; //for debugging
 
-    return this.http.delete(`${this.serverHost}/delete/${id}`, {headers : this.headers, body : { email } } )
+    if (!id || !email) {
+      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      return Observable.throw(null);
+    }
+
+    let params = new HttpParams().set('email', email);
+
+    return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } )
         .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .catch(this.appService.handleError(methodTrace));
   }
 }

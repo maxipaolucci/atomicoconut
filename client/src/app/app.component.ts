@@ -39,7 +39,6 @@ export class AppComponent implements OnInit {
     if (!this.currencyExchangeService.currencyRates) {
       this.currencyExchangeService.getCurrencyRates().subscribe(
         (data : any) => {
-          this.currencyExchangeService.currencyRates = data;
           this.appService.consoleLog('info', `${methodTrace} Currency exchange rates successfully loaded!`);
         },
         (error : any) => {
@@ -59,7 +58,7 @@ export class AppComponent implements OnInit {
     if (!this.currencyExchangeService.cryptoRates[crypto]) {
       this.currencyExchangeService.getCryptoRates(crypto).subscribe(
         (data : any) => {
-          this.currencyExchangeService.cryptoRates[crypto] = data;
+          //this.currencyExchangeService.cryptoRates[crypto] = data;
           this.appService.consoleLog('info', `${methodTrace} ${crypto} exchange rate successfully loaded!`);
         },
         (error : any) => {

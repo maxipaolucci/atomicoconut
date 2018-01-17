@@ -587,9 +587,9 @@ exports.delete = async (req, res) => {
     const methodTrace = `${errorTrace} delete() >`;
 
     const user = req.user;
-    const team = await getTeamBySlugObject(req.params.slug, req.body.email, { withId : true, withInvestments : true });
+    const team = await getTeamBySlugObject(req.params.slug, req.query.email, { withId : true, withInvestments : true });
 
-    if (team && team.admin && team.admin.email !== req.body.email) {
+    if (team && team.admin && team.admin.email !== req.query.email) {
         //the client is not the admin of the team requested
         console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Team', user.email)}`);
         res.status(401).json({ 

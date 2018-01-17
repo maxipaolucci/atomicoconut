@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable } from "rxjs/Rx";
 import { MainNavigatorService } from '../../modules/shared/components/main-navigator/main-navigator.service';
 import { UsersService } from '../../modules/users/users.service';
 import { AppService } from '../../app.service';
@@ -12,6 +11,7 @@ import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
 import { INVESTMENTS_TYPES } from '../../constants/constants';
 import { Subscription } from 'rxjs/Subscription';
+import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'welcome',
@@ -93,12 +93,12 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     let gotAuthenticatedUserFromServer = false;
     const user$ = this.usersService.user$.switchMap((user : User) => {
       if (!user) {
-        return Observable.of(null);
+        return of(null);
       } else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
         gotAuthenticatedUserFromServer = true;
         return this.usersService.getAuthenticatedUser({ personalInfo : true, financialInfo : true });
       } else {
-        return Observable.of(user);
+        return of(user);
       }
     });
 
@@ -137,7 +137,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         return this.investmentsService.getInvestments(user.email);
       } else {
         this.user = null;
-        return Observable.of([]);
+        return of([]);
       }
     });
     
