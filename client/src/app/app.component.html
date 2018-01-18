@@ -2,39 +2,41 @@
 <div class="inner mat-typography">
 
   <mat-toolbar class="toolbar" color="primary">
-    <a class="toolbar__brand-name color__almost-white" routerLink="/"><span>AtomiCoconut</span></a>
-    <span class="example-spacer"></span>
-    
-    <span *ngIf="!user" fxLayoutAlign=" center">
-      <mat-icon routerLink="/users/login" class="toolbar__icon">account_circle</mat-icon>
-    </span>
-    <span *ngIf="user" fxLayoutAlign=" center">
-      <img *ngIf="user.avatar" 
-          [matMenuTriggerFor]="userMenu" 
-          class="toolbar__icon user__avatar" 
-          [src]="user.avatar" 
-      />
-      <mat-icon *ngIf="!user.avatar"
-          class="toolbar__icon user__icon--logged-in" 
-          [matMenuTriggerFor]="userMenu">
-        account_circle
-      </mat-icon>
+    <mat-toolbar-row>
+      <a class="toolbar__brand-name color__almost-white" routerLink="/"><span>AtomiCoconut</span></a>
+      <span class="example-spacer"></span>
       
-      <mat-menu class="user__menu--logged-in" #userMenu="matMenu" [overlapTrigger]="false">
-        <button mat-menu-item routerLink="/users/account">
-          <mat-icon>settings</mat-icon>
-          <span>My account</span>
-        </button>
-        <button mat-menu-item routerLink="/teams">
-          <mat-icon>group</mat-icon>
-          <span>Teams</span>
-        </button>
-        <button mat-menu-item (click)="logout()">
-          <mat-icon>exit_to_app</mat-icon>
-          <span>Logout</span>
-        </button>
-      </mat-menu>
-    </span>
+      <span *ngIf="!user" fxLayoutAlign=" center">
+        <mat-icon routerLink="/users/login" class="toolbar__icon">account_circle</mat-icon>
+      </span>
+      <span *ngIf="user" fxLayoutAlign=" center">
+        <img *ngIf="user.avatar" 
+            [matMenuTriggerFor]="userMenu" 
+            class="toolbar__icon user__avatar" 
+            [src]="user.avatar" 
+        />
+        <mat-icon *ngIf="!user.avatar"
+            class="toolbar__icon user__icon--logged-in" 
+            [matMenuTriggerFor]="userMenu">
+          account_circle
+        </mat-icon>
+        
+        <mat-menu class="user__menu--logged-in" #userMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item routerLink="/users/account">
+            <mat-icon>settings</mat-icon>
+            <span>My account</span>
+          </button>
+          <button mat-menu-item routerLink="/teams">
+            <mat-icon>group</mat-icon>
+            <span>Teams</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </span>
+    </mat-toolbar-row>
     
     <mat-toolbar-row class="secondary-row" *ngIf="user && user.currency !== 'USD' && currencyExchangeService.currencyRates">
       <span>Preferred currency is <a class="color__almost-white" routerLink="/users/account" matTooltip="Change..."><strong>{{user.currency}}</strong></a></span>

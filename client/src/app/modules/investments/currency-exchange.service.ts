@@ -19,7 +19,7 @@ export class CurrencyExchangeService {
 
   getCurrencyRates(base = 'USD') : Observable<any> {
     let methodTrace = `${this.constructor.name} > getCurrencyRates() > `; //for debugging
-
+    
     if (this.currencyRates) {
       return Observable.of(this.currencyRates);
     }
@@ -32,8 +32,6 @@ export class CurrencyExchangeService {
 
   private extractCurrencyExchangeData(res: CurrencyExchangeResponse) : any {
     if (Object.keys(res.rates).length > 0) {
-      this.currencyRates = res.rates;
-
       return res.rates;
     } else {
       throw res;

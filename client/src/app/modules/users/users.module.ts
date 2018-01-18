@@ -32,6 +32,6 @@ import { AccountUserInfoComponent } from './components/account-user-info/account
     AccountPersonalInfoComponent,
     AccountUserInfoComponent
   ],
-  providers: [UsersService]
+  providers: [ UsersService ]
 })
 export class UsersModule {}

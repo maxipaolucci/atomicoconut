@@ -4,21 +4,14 @@
       fxLayout="column" class="totals-card">
     <mat-card-content fxLayout="column" fxLayoutGap="10px">
       <div class="wealth__container" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign="none center" fxLayoutAlign.gt-xs="space-between none">
-        <span class="accent">
-          Expected net worth at your age ({{user.personalInfo.age}}) is 
-          <strong>{{ expectedWealth | currency : 'USD' : false : '1.2-2' }}</strong>
-        </span>
         <span [class.color__accent]="wealthAmount >= expectedWealth" 
             [class.color__red]="wealthAmount < expectedWealth">
-          Current net worth is <strong>{{ wealthAmount | currency : 'USD' : false : '1.2-2' }}</strong>
+          Current net worth is <strong>{{ wealthAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>
         </span>
-        
-        <!-- <p *ngIf="user.financialInfo.savings === null">
-          <a class="color__almost-white" routerLink="/users/account">
-            <mat-icon class="icon--arrow_forward">arrow_forward</mat-icon>
-            Go to your account and complete Financial Info to see your current state
-          </a>
-        </p> -->
+        <span class="accent">
+          Expected net worth at your age ({{user.personalInfo.age}}) is 
+          <strong>{{ expectedWealth | currency : 'USD' : 'code' : '1.2-2' }}</strong>
+        </span>
       </div>
       <div>
         <mat-progress-bar 

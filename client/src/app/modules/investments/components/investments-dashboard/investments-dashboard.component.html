@@ -14,19 +14,19 @@
       <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
         <!-- Totals -->
         <div *ngIf="!myTotals.checked" fxFlex fxFlex.xs="none" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="space-around center">
-          <p>Total investments: <strong>{{totalInvestment | currency }}</strong></p>
+          <p>Total investments: <strong>{{totalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>
           <p [class.color__accent]="totalReturn >= totalInvestment" 
               [class.color__red]="totalReturn < totalInvestment">
-            Total ROI: <strong>{{ totalReturn | currency }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
+            Total ROI: <strong>{{ totalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)
           </p>
         </div>
 
         <!-- My totals -->
         <div *ngIf="myTotals.checked" fxFlex fxFlex.xs="none" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="space-around center">
-          <p>My total investments: <strong>{{myTotalInvestment | currency }}</strong></p>
+          <p>My total investments: <strong>{{myTotalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>
           <p [class.color__accent]="myTotalReturn >= myTotalInvestment" 
               [class.color__red]="myTotalReturn < myTotalInvestment">
-            My total ROI: <strong>{{ myTotalReturn | currency }}</strong> ({{myTotalReturn / myTotalInvestment * 100 | number : '1.1-2'}}%)
+            My total ROI: <strong>{{ myTotalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{myTotalReturn / myTotalInvestment * 100 | number : '1.1-2'}}%)
           </p>
         </div>
 

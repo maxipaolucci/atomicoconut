@@ -5,19 +5,19 @@
     </div>
     <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>
     <mat-card-subtitle>
-      today at <strong>{{currentPrice | currency : 'USD' : false : '1.2-2'}}</strong>
+      today at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="card__content">
-    Investment: <strong>{{investmentAmount | currency : 'USD' : false : '1.2-2' }}</strong> 
+    Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> 
     <br>
 
-    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : false : '1.2-2' }}
+    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}
 
     <div [class.color__accent]="investmentReturn >= investmentValueWhenBought" 
         [class.color__red]="investmentReturn < investmentValueWhenBought">
       <br>
-      ROI: <strong>{{ investmentReturn | currency : 'USD' : false : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)
+      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)
     </div>
 
     <!-- Team -->
@@ -41,7 +41,7 @@
               <!-- <p class="member__email">{{member.email}}</p> -->
               <div class="member__money" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between end">
                 <p>{{ portion.percentage }}%</p>
-                <p>{{ portion.money | currency : 'USD' : false : '1.2-2' }}</p>
+                <p>{{ portion.money | currency : 'USD' : 'code' : '1.2-2' }}</p>
               </div>
             </div>
           </div>

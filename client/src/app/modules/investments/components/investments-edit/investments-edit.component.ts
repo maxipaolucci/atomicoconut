@@ -49,7 +49,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
 
   
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private investmentsService : InvestmentsService,
-    private teamsService : TeamsService, private appService : AppService, private router : Router) { }
+      private teamsService : TeamsService, private appService : AppService, private router : Router) {
+    
+  }
 
   ngOnInit() {
     this.mainNavigatorService.setLinks([
