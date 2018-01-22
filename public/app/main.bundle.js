@@ -771,11 +771,13 @@ var core_1 = __webpack_require__("../../../core/esm5/core.js");
 var router_1 = __webpack_require__("../../../router/esm5/router.js");
 var equity_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.ts");
 var calculators_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var house_figures_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.ts");
 var routes = [{
         path: 'calculators',
         children: [
             { path: '', component: calculators_dashboard_component_1.CalculatorsDashboardComponent },
-            { path: 'equity', component: equity_component_1.EquityComponent }
+            { path: 'equity', component: equity_component_1.EquityComponent },
+            { path: 'house-figures', component: house_figures_component_1.HouseFiguresComponent }
         ]
     }];
 var CalculatorsRoutingModule = /** @class */ (function () {
@@ -815,6 +817,7 @@ var shared_module_1 = __webpack_require__("../../../../../src/app/modules/shared
 var calculators_routing_module_1 = __webpack_require__("../../../../../src/app/modules/calculators/calculators-routing.module.ts");
 var equity_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.ts");
 var calculators_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var house_figures_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.ts");
 var CalculatorsModule = /** @class */ (function () {
     function CalculatorsModule() {
     }
@@ -828,7 +831,7 @@ var CalculatorsModule = /** @class */ (function () {
                 custom_material_design_module_1.CustomMaterialDesignModule,
                 shared_module_1.SharedModule
             ],
-            declarations: [equity_component_1.EquityComponent, calculators_dashboard_component_1.CalculatorsDashboardComponent]
+            declarations: [equity_component_1.EquityComponent, calculators_dashboard_component_1.CalculatorsDashboardComponent, house_figures_component_1.HouseFiguresComponent]
         })
     ], CalculatorsModule);
     return CalculatorsModule;
@@ -888,7 +891,8 @@ var CalculatorsDashboardComponent = /** @class */ (function () {
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Calculators', url: null, selected: true },
-            { displayName: 'Equity', url: '/calculators/equity', selected: false }
+            { displayName: 'Equity', url: '/calculators/equity', selected: false },
+            { displayName: 'House figures', url: '/calculators/house-figures', selected: false }
         ]);
     };
     CalculatorsDashboardComponent = __decorate([
@@ -909,7 +913,7 @@ exports.CalculatorsDashboardComponent = CalculatorsDashboardComponent;
 /***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container form__equity-calc\" #equityForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Purchase price -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\" \r\n            [(ngModel)]=\"model.purchasePrice\" \r\n            required\r\n            value=\"model.purchasePrice\"\r\n            #purchasePrice=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required\">Purchase price is required</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Market value -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\" \r\n            [(ngModel)]=\"model.marketValue\" \r\n            required\r\n            value=\"model.marketValue\"\r\n            #marketValue=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required\">Market value is required</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Loan coverage -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"loanCoverage\" name=\"loanCoverage\" placeholder=\"Loan coverage %\" \r\n            [(ngModel)]=\"model.loanCoverage\" \r\n            required loanCoverage\r\n            value=\"model.loanCoverage\"\r\n            #loanCoverage=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required\">Loan coverage is required</mat-error>\r\n      </mat-form-field>\r\n\r\n      <!-- Savings -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"savings\" name=\"savings\" placeholder=\"Current savings\" \r\n            [(ngModel)]=\"model.savings\" \r\n            value=\"model.savings\"\r\n            #savings=\"ngModel\">\r\n      </mat-form-field>\r\n\r\n      <!-- Add renovations checkbox -->\r\n      <mat-slide-toggle color=\"accent\" class=\"form__field form__field__toogle form__field__toogle--add-reno\"\r\n          [(ngModel)]=\"model.addRenovations\" name=\"addRenovations\" id=\"addRenovations\">\r\n        \r\n        Add renovations data\r\n      </mat-slide-toggle>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\" *ngIf=\"model.addRenovations\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Renovation cost -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\" \r\n            [(ngModel)]=\"model.renovationCost\" \r\n            value=\"model.renovationCost\"\r\n            #renovationCost=\"ngModel\">\r\n      </mat-form-field>\r\n      \r\n      <!-- New market value -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"newMarketValue\" name=\"newMarketValue\" placeholder=\"After renovations market value\" \r\n            [(ngModel)]=\"model.newMarketValue\" \r\n            value=\"model.newMarketValue\"\r\n            #newMarketValue=\"ngModel\">\r\n      </mat-form-field>\r\n      \r\n      <!-- First year repayment -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"firstYearRepayment\" name=\"firstYearRepayment\" placeholder=\"First year loan repayments\" \r\n            [(ngModel)]=\"model.firstYearRepayment\" \r\n            value=\"model.firstYearRepayment\"\r\n            #firstYearRepayment=\"ngModel\">\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n</form>\r\n\r\n<section  class=\"\">\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxFlex fxFlex.gt-xs=\"620px\">\r\n    <mat-card fxFlex>\r\n      <mat-card-title class=\"mat-card-title--ac\">Initial figures</mat-card-title>\r\n      <mat-card-content>\r\n        <div><label>Loan amount: </label><span>{{loanAmount}}</span></div>\r\n        <div><label>Deposit amount: </label><span>{{depositAmount}}</span></div>\r\n        <div><label>Discount: </label><span>{{discount}}</span></div>\r\n        <div><label>Equity: </label><span>{{equity}}</span></div>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n    <mat-card fxFlex *ngIf=\"model.addRenovations\">\r\n      <mat-card-title class=\"mat-card-title--ac\">After renovations figures</mat-card-title>\r\n      <mat-card-content>\r\n        <div><label>Usable equity: </label><span>{{usableEquityAfterReno}}</span></div>\r\n      </mat-card-content>\r\n    </mat-card>\r\n  </div>\r\n</section>"
+module.exports = "<form class=\"form__container form__equity-calc\" #equityForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Purchase price -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\" \r\n            [(ngModel)]=\"model.purchasePrice\" \r\n            required\r\n            [value]=\"model.purchasePrice\"\r\n            #purchasePrice=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required\">Purchase price is required</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Market value -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\" \r\n            [(ngModel)]=\"model.marketValue\" \r\n            required\r\n            [value]=\"model.marketValue\"\r\n            #marketValue=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required\">Market value is required</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Loan coverage -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"loanCoverage\" name=\"loanCoverage\" placeholder=\"Loan coverage %\" \r\n            [(ngModel)]=\"model.loanCoverage\" \r\n            required\r\n            [value]=\"model.loanCoverage\"\r\n            #loanCoverage=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required\">Loan coverage is required</mat-error>\r\n      </mat-form-field>\r\n\r\n      <!-- Savings -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"savings\" name=\"savings\" placeholder=\"Current savings\" \r\n            [(ngModel)]=\"model.savings\" \r\n            [value]=\"model.savings\"\r\n            #savings=\"ngModel\">\r\n      </mat-form-field>\r\n\r\n      <!-- Add renovations checkbox -->\r\n      <mat-slide-toggle color=\"accent\" class=\"form__field form__field__toogle form__field__toogle--add-reno\"\r\n          [(ngModel)]=\"model.addRenovations\" name=\"addRenovations\" id=\"addRenovations\">\r\n        \r\n        Add renovations data\r\n      </mat-slide-toggle>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" class=\"form__fields\" *ngIf=\"model.addRenovations\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Renovation cost -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\" \r\n            [(ngModel)]=\"model.renovationCost\" \r\n            [value]=\"model.renovationCost\"\r\n            #renovationCost=\"ngModel\">\r\n      </mat-form-field>\r\n      \r\n      <!-- New market value -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"newMarketValue\" name=\"newMarketValue\" placeholder=\"After renovations market value\" \r\n            [(ngModel)]=\"model.newMarketValue\" \r\n            [value]=\"model.newMarketValue\"\r\n            #newMarketValue=\"ngModel\">\r\n      </mat-form-field>\r\n      \r\n      <!-- First year repayment -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"firstYearRepayment\" name=\"firstYearRepayment\" placeholder=\"First year loan repayments\" \r\n            [(ngModel)]=\"model.firstYearRepayment\" \r\n            [value]=\"model.firstYearRepayment\"\r\n            #firstYearRepayment=\"ngModel\">\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n</form>\r\n\r\n<section  class=\"\">\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxFlex fxFlex.gt-xs=\"620px\">\r\n    <mat-card fxFlex>\r\n      <mat-card-title class=\"mat-card-title--ac\">Initial figures</mat-card-title>\r\n      <mat-card-content>\r\n        <div><label>Loan amount: </label><span>{{loanAmount}}</span></div>\r\n        <div><label>Deposit amount: </label><span>{{depositAmount}}</span></div>\r\n        <div><label>Discount: </label><span>{{discount}}</span></div>\r\n        <div><label>Equity: </label><span>{{equity}}</span></div>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n    <mat-card fxFlex *ngIf=\"model.addRenovations\">\r\n      <mat-card-title class=\"mat-card-title--ac\">After renovations figures</mat-card-title>\r\n      <mat-card-content>\r\n        <div><label>Usable equity: </label><span>{{usableEquityAfterReno}}</span></div>\r\n      </mat-card-content>\r\n    </mat-card>\r\n  </div>\r\n</section>"
 
 /***/ }),
 
@@ -971,7 +975,8 @@ var EquityComponent = /** @class */ (function () {
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Calculators', url: '/calculators', selected: false },
-            { displayName: 'Equity', url: null, selected: true }
+            { displayName: 'Equity', url: null, selected: true },
+            { displayName: 'House figures', url: '/calculators/house-figures', selected: false }
         ]);
     };
     EquityComponent.prototype.ngAfterViewInit = function () {
@@ -1001,6 +1006,92 @@ var EquityComponent = /** @class */ (function () {
     return EquityComponent;
 }());
 exports.EquityComponent = EquityComponent;
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<form class=\"form__container form__house-figures-calc\" #houseFiguresForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\n  \n  <section fxLayout=\"column\" class=\"form__fields\">\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\n      <!-- Purchase price -->\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\n        <input matInput type=\"number\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\" \n            [(ngModel)]=\"model.purchasePrice\" \n            required\n            [value]=\"model.purchasePrice\"\n            #purchasePrice=\"ngModel\">\n  \n        <mat-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required\">Purchase price is required</mat-error>\n      </mat-form-field>\n      \n      <!-- Market value -->\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\n        <input matInput type=\"number\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\" \n            [(ngModel)]=\"model.marketValue\" \n            required\n            [value]=\"model.marketValue\"\n            #marketValue=\"ngModel\">\n  \n        <mat-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required\">Market value is required</mat-error>\n      </mat-form-field>\n    </div>\n  </section>\n\n  <section fxLayout=\"column\" class=\"form__fields\">\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\n      <!-- Loan coverage -->\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\n        <input matInput type=\"number\" id=\"loanCoverage\" name=\"loanCoverage\" placeholder=\"Loan coverage %\" \n            [(ngModel)]=\"model.loanCoverage\" \n            required\n            [value]=\"model.loanCoverage\"\n            #loanCoverage=\"ngModel\">\n  \n        <mat-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required\">Loan coverage is required</mat-error>\n      </mat-form-field>\n    </div>\n  </section>\n\n  <section fxLayout=\"column\" class=\"form__fields\">\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\n      <!-- Renovation cost -->\n      <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\n        <input matInput type=\"number\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\" \n            [(ngModel)]=\"model.renovationCost\" \n            [value]=\"model.renovationCost\"\n            #renovationCost=\"ngModel\">\n      </mat-form-field>\n    </div>\n  </section>\n\n</form>\n\n<section  class=\"\">\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxFlex fxFlex.gt-xs=\"620px\">\n    <mat-card fxFlex>\n      <mat-card-title class=\"mat-card-title--ac\">Initial figures</mat-card-title>\n      <mat-card-content>\n        <div><label>Loan amount: </label><span>{{1000}}</span></div>\n      </mat-card-content>\n    </mat-card>\n  </div>\n</section>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("../../../core/esm5/core.js");
+var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var HouseFiguresComponent = /** @class */ (function () {
+    function HouseFiguresComponent(mainNavigatorService) {
+        this.mainNavigatorService = mainNavigatorService;
+        this.model = {
+            purchasePrice: 0,
+            capitalGrowth: 0.04,
+            marketValue: 0,
+            loanCoverage: 0.65,
+            interestRates: 0.07,
+            weeklyRent: 0,
+            vacancy: 4,
+            renovationCost: 0,
+            mantainanceCost: 0,
+            bodyCorporate: 0,
+            houseRates: 2000,
+            utilities: 0,
+            insurance: 900,
+            otherCosts: 0,
+            managed: 0.8
+        };
+    }
+    HouseFiguresComponent.prototype.ngOnInit = function () {
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Calculators', url: '/calculators', selected: false },
+            { displayName: 'Equity', url: '/calculators/equity', selected: false },
+            { displayName: 'House figures', url: null, selected: true }
+        ]);
+    };
+    HouseFiguresComponent = __decorate([
+        core_1.Component({
+            selector: 'app-house-figures',
+            template: __webpack_require__("../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.scss")]
+        }),
+        __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService])
+    ], HouseFiguresComponent);
+    return HouseFiguresComponent;
+}());
+exports.HouseFiguresComponent = HouseFiguresComponent;
 
 
 /***/ }),

@@ -1,4 +1,4 @@
-<form class="form__container form__equity-calc" #equityForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
+<form class="form__container form__house-figures-calc" #houseFiguresForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
   
   <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
@@ -38,25 +38,10 @@
   
         <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required">Loan coverage is required</mat-error>
       </mat-form-field>
-
-      <!-- Savings -->
-      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input matInput type="number" id="savings" name="savings" placeholder="Current savings" 
-            [(ngModel)]="model.savings" 
-            [value]="model.savings"
-            #savings="ngModel">
-      </mat-form-field>
-
-      <!-- Add renovations checkbox -->
-      <mat-slide-toggle color="accent" class="form__field form__field__toogle form__field__toogle--add-reno"
-          [(ngModel)]="model.addRenovations" name="addRenovations" id="addRenovations">
-        
-        Add renovations data
-      </mat-slide-toggle>
     </div>
   </section>
 
-  <section fxLayout="column" class="form__fields" *ngIf="model.addRenovations">
+  <section fxLayout="column" class="form__fields">
     <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
       <!-- Renovation cost -->
       <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
@@ -64,22 +49,6 @@
             [(ngModel)]="model.renovationCost" 
             [value]="model.renovationCost"
             #renovationCost="ngModel">
-      </mat-form-field>
-      
-      <!-- New market value -->
-      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input matInput type="number" id="newMarketValue" name="newMarketValue" placeholder="After renovations market value" 
-            [(ngModel)]="model.newMarketValue" 
-            [value]="model.newMarketValue"
-            #newMarketValue="ngModel">
-      </mat-form-field>
-      
-      <!-- First year repayment -->
-      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input matInput type="number" id="firstYearRepayment" name="firstYearRepayment" placeholder="First year loan repayments" 
-            [(ngModel)]="model.firstYearRepayment" 
-            [value]="model.firstYearRepayment"
-            #firstYearRepayment="ngModel">
       </mat-form-field>
     </div>
   </section>
@@ -91,17 +60,7 @@
     <mat-card fxFlex>
       <mat-card-title class="mat-card-title--ac">Initial figures</mat-card-title>
       <mat-card-content>
-        <div><label>Loan amount: </label><span>{{loanAmount}}</span></div>
-        <div><label>Deposit amount: </label><span>{{depositAmount}}</span></div>
-        <div><label>Discount: </label><span>{{discount}}</span></div>
-        <div><label>Equity: </label><span>{{equity}}</span></div>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card fxFlex *ngIf="model.addRenovations">
-      <mat-card-title class="mat-card-title--ac">After renovations figures</mat-card-title>
-      <mat-card-content>
-        <div><label>Usable equity: </label><span>{{usableEquityAfterReno}}</span></div>
+        <div><label>Loan amount: </label><span>{{1000}}</span></div>
       </mat-card-content>
     </mat-card>
   </div>

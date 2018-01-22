@@ -7,6 +7,7 @@ import { SharedModule } from '../../modules/shared/shared.module';
 import { CalculatorsRoutingModule } from './calculators-routing.module';
 import { EquityComponent } from './components/equity/equity.component';
 import { CalculatorsDashboardComponent } from './components/calculators-dashboard/calculators-dashboard.component';
+import { HouseFiguresComponent } from './components/house-figures/house-figures.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { CalculatorsDashboardComponent } from './components/calculators-dashboar
     CustomMaterialDesignModule,
     SharedModule
   ],
-  declarations: [EquityComponent, CalculatorsDashboardComponent]
+  declarations: [EquityComponent, CalculatorsDashboardComponent, HouseFiguresComponent]
 })
 export class CalculatorsModule { }

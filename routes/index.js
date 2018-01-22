@@ -65,6 +65,10 @@ router.get('/app/calculators/equity', (req, res) => {
   res.render('home', {title: 'Equity calculator'});
 });
 
+router.get('/app/calculators/house-figures', (req, res) => {
+  res.render('home', {title: 'House figures calculator'});
+});
+
 /** Teams */
 router.get('/app/teams', (req, res) => {
   res.render('home', {title: 'Teams'});

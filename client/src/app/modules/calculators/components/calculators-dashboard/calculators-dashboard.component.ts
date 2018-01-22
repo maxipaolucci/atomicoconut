@@ -14,7 +14,8 @@ export class CalculatorsDashboardComponent implements OnInit {
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Calculators', url: null, selected: true },
-      { displayName: 'Equity', url: '/calculators/equity', selected: false }]);
+      { displayName: 'Equity', url: '/calculators/equity', selected: false },
+      { displayName: 'House figures', url: '/calculators/house-figures', selected: false }]);
   }
 
 }

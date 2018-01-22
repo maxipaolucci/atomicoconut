@@ -9,13 +9,13 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 export class EquityComponent implements OnInit, AfterViewInit {
   @ViewChild('equityForm') form;
 
-  public loanAmount : number = 0;
-  public discount : number = 0;
-  public equity : number = 0;
-  public depositAmount : number = 0;
-  public usableEquityAfterReno : number = 0;
+  loanAmount : number = 0;
+  discount : number = 0;
+  equity : number = 0;
+  depositAmount : number = 0;
+  usableEquityAfterReno : number = 0;
 
-  public model : any = { 
+  model : any = { 
     purchasePrice : 0,
     marketValue : 0,
     loanCoverage : 0.8,
@@ -32,7 +32,8 @@ export class EquityComponent implements OnInit, AfterViewInit {
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Calculators', url: '/calculators', selected: false },
-      { displayName: 'Equity', url: null, selected: true }]);
+      { displayName: 'Equity', url: null, selected: true },
+      { displayName: 'House figures', url: '/calculators/house-figures', selected: false }]);
   }
 
   ngAfterViewInit() {
