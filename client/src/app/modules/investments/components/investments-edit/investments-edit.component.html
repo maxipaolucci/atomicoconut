@@ -32,7 +32,7 @@
                   id="team" 
                   #team="ngModel" 
                   placeholder="Select a team"
-                  (change)="onSelectChange($event)"
+                  (selectionChange)="onSelectChange($event)"
                   required>
                 <mat-option *ngFor="let team of teams" [value]="team">
                   {{team.name}}

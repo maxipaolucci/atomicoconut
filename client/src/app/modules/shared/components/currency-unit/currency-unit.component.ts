@@ -22,7 +22,7 @@ export class CurrencyUnitComponent implements OnInit {
 
   ngOnInit() { }
 
-  onChange(matSelectChange : MatSelectChange) {
+  onSelectionChange(matSelectChange : MatSelectChange) {
     this.newValue.emit(matSelectChange);
   }
 }
