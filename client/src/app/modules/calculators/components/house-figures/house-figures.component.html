@@ -224,19 +224,69 @@
   <section fxLayout="column" fxLayoutGap="10px" class="calculator__results">
     <mat-card>
       <mat-card-title class="mat-card-title--ac">Figures</mat-card-title>
-      <mat-card-content>
-        <div><label>Gross yield: </label><span>{{grossYield | percent : '1.1-2'}}</span></div>
-        <div><label>Net yield: </label><span>{{netYield | percent : '1.1-2'}}</span></div>
-        <div><label>Gross annual rent: </label><span>{{grossAnnualRent | currency : 'USD' : 'symbol' : '1.2-2'}}</span></div>
-        <div><label>Net annual rent: </label><span>{{netAnnualRent | currency : 'USD' : 'symbol' : '1.2-2'}}</span></div>
-        <div><label>1st year expenses: </label><span>{{expenses | currency : 'USD' : 'symbol' : '1.2-2'}}</span></div>
-        <div><label>1st day loan interest: </label><span>{{loanInterest | currency : 'USD' : 'symbol' : '1.2-2'}}</span></div>
-        <div><label>Pre tax cashflow: </label><span>{{preTaxCashflow | currency : 'USD' : 'symbol' : '1.2-2'}}</span></div>
-        <div><label>Discount: </label><span>{{discount | percent : '1.1-2'}}</span></div>
-        <div><label>Total 1 year return: </label><span>{{totalFirstYearReturn | currency : 'USD' : 'symbol' : '1.2-2'}}</span></div>
-        <div><label>Deposit: </label><span>{{deposit | currency : 'USD' : 'symbol' : '1.2-2'}}</span></div>
-        <div><label>Return on deposit: </label><span>{{returnOnDeposit | percent : '1.1-2'}}</span></div>
-        <div><label>Capital growth: </label><span>{{capitalGrowths | currency : 'USD' : 'symbol' : '1.2-2'}}</span></div>
+
+      <mat-card-content fxLayout="column" fxLayoutGap="10px">
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="Gross yield" text="Ratio between Gross annual rent / purchase price (as percentage)"></info-tooltip>
+          <span>: {{grossYield | percent : '1.1-2'}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="Net yield" text="Ratio between (Net annual rent - expenses) / purchase price (as percentage)"></info-tooltip>
+          <span>: {{netYield | percent : '1.1-2'}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="Gross annual rent" text="Rent a week * 52"></info-tooltip>
+          <span>: {{grossAnnualRent | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="Net annual rent" text="Gross annual rent - vacancies"></info-tooltip>
+          <span>: {{netAnnualRent | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="1st year expenses" 
+              text="Sums all the expenses detailed. It is a first year expenses because of the renovation cost, that it is suposed the be done once during the first year."></info-tooltip>
+          <span>: {{expenses | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="1st day loan interest" 
+              text="The interest of the loan based in the specified interest rate. It says first day because is calculated base in the total amount"></info-tooltip>
+          <span>: {{loanInterest | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="Pre tax cashflow" text="Net annual rent - expenses - 1st day loan interest"></info-tooltip>
+          <span>: {{preTaxCashflow | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="Discount"></info-tooltip>
+          <span>: {{discount | percent : '1.1-2'}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="Total 1 year return" text="Capital growth + market value - purchase price - renovations + pre tax cashflow"></info-tooltip>
+          <span>: {{totalFirstYearReturn | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="Deposit" text=""></info-tooltip>
+          <span>: {{deposit | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="Return on deposit" text="Ratio between Total 1st year return / deposit (as percentage)"></info-tooltip>
+          <span>: {{returnOnDeposit | percent : '1.1-2'}}</span>
+        </div>
+        
+        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+          <info-tooltip title="Capital growth" text=""></info-tooltip>
+          <span>: {{capitalGrowths | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+        </div>
       </mat-card-content>
     </mat-card>
   </section>

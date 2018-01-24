@@ -60,9 +60,9 @@ export class HouseFiguresComponent implements OnInit, AfterViewInit {
       this.netYield = (this.netAnnualRent - this.expenses) / this.model.purchasePrice;
       this.loanInterest = this.model.purchasePrice * (this.model.loanCoverage / 100) * (this.model.interestRates / 100);
       this.preTaxCashflow = this.netAnnualRent - this.expenses - this.loanInterest;
-      this.discount = (this.model.marketValue - this.model.purchasePrice) / (this.model.marketValue || 1);
+      this.discount = (this.model.marketValue - this.model.purchasePrice - this.model.renovationCost) / (this.model.marketValue || 1);
       this.capitalGrowths = this.model.marketValue * (this.model.capitalGrowth / 100);
-      this.totalFirstYearReturn = this.capitalGrowths + this.model.marketValue - this.model.purchasePrice + this.preTaxCashflow;
+      this.totalFirstYearReturn = this.capitalGrowths + this.model.marketValue - this.model.purchasePrice - this.model.renovationCost + this.preTaxCashflow;
       this.deposit = this.model.purchasePrice * (1 - this.model.loanCoverage / 100);
       this.returnOnDeposit = this.totalFirstYearReturn / this.deposit;
     });

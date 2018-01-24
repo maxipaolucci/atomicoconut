@@ -18,6 +18,10 @@ import { HouseFiguresComponent } from './components/house-figures/house-figures.
     CustomMaterialDesignModule,
     SharedModule
   ],
-  declarations: [EquityComponent, CalculatorsDashboardComponent, HouseFiguresComponent]
+  declarations: [
+    EquityComponent, 
+    CalculatorsDashboardComponent, 
+    HouseFiguresComponent
+  ]
 })
 export class CalculatorsModule { }

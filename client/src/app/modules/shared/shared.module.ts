@@ -10,6 +10,7 @@ import { YesNoDialogComponent } from './components/yes-no-dialog/yes-no-dialog.c
 import { SnackbarSimpleComponent } from './components/snackbar-simple/snackbar-simple.component';
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
 import { NumberValidatorDirective } from './directives/number-validator.directive';
+import { InfoTooltipComponent } from './components/info-tooltip/info-tooltip.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { NumberValidatorDirective } from './directives/number-validator.directiv
     YesNoDialogComponent, 
     SnackbarSimpleComponent, 
     EqualValidatorDirective, 
-    NumberValidatorDirective 
+    NumberValidatorDirective,
+    InfoTooltipComponent
   ],
   exports: [ 
     MainNavigatorComponent, 
@@ -33,7 +35,8 @@ import { NumberValidatorDirective } from './directives/number-validator.directiv
     YesNoDialogComponent, 
     SnackbarSimpleComponent,
     EqualValidatorDirective,
-    NumberValidatorDirective
+    NumberValidatorDirective,
+    InfoTooltipComponent
   ],
   entryComponents: [
     YesNoDialogComponent, //added as material doc suggest to allow AOT on this on the fly created class
