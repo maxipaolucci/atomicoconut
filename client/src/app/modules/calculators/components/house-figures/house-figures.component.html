@@ -1,4 +1,4 @@
-<div class="calculator__container" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
+<div class="calculator__container" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
   <!-- Form  -->
   <form class="form__container form__house-figures-calc" #houseFiguresForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
@@ -10,7 +10,7 @@
   
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Purchase price -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="purchasePrice" name="purchasePrice" placeholder="Purchase price" 
                 [(ngModel)]="model.purchasePrice" 
                 required numberValidator
@@ -22,7 +22,7 @@
           </mat-form-field>
           
           <!-- Market value -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="marketValue" name="marketValue" placeholder="Market value" 
                 [(ngModel)]="model.marketValue" 
                 numberValidator
@@ -33,7 +33,7 @@
           </mat-form-field>
   
           <!-- Capital growth -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="capitalGrowth" name="capitalGrowth" placeholder="Capital growth %" 
                 [(ngModel)]="model.capitalGrowth" 
                 numberValidator='{"min": 0, "max": 100}' 
@@ -55,7 +55,7 @@
       
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Loan coverage -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="loanCoverage" name="loanCoverage" placeholder="Loan coverage %" 
                 [(ngModel)]="model.loanCoverage" 
                 numberValidator='{"min": 0, "max": 100}' 
@@ -68,7 +68,7 @@
           </mat-form-field>
   
           <!-- Interest rates -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="interestRates" name="interestRates" placeholder="Interest rates %" 
                 [(ngModel)]="model.interestRates" 
                 numberValidator='{"min": 0, "max": 100}' 
@@ -90,7 +90,7 @@
       
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Weekly rent -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="weeklyRent" name="weeklyRent" placeholder="Weekly rent" 
                 [(ngModel)]="model.weeklyRent" 
                 numberValidator
@@ -102,7 +102,7 @@
           </mat-form-field>
   
           <!-- Vacancy -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="vacancy" name="vacancy" placeholder="Vacancy" 
                 [(ngModel)]="model.vacancy" 
                 numberValidator
@@ -114,7 +114,7 @@
           </mat-form-field>
   
           <!-- Rental manager -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="managed" name="managed" placeholder="Managed %" 
                 [(ngModel)]="model.managed" 
                 numberValidator='{"min": 0, "max": 100}' 
@@ -137,7 +137,7 @@
   
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Renovation cost -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="renovationCost" name="renovationCost" placeholder="Renovation cost" 
                 [(ngModel)]="model.renovationCost" 
                 [value]="model.renovationCost"
@@ -148,7 +148,7 @@
           </mat-form-field>
   
           <!-- Mantainance cost -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="mantainanceCost" name="mantainanceCost" placeholder="Mantainance cost" 
                 [(ngModel)]="model.mantainanceCost" 
                 [value]="model.mantainanceCost"
@@ -159,7 +159,7 @@
           </mat-form-field>
   
           <!-- Body corporate -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="bodyCorporate" name="bodyCorporate" placeholder="Body corporate" 
                 [(ngModel)]="model.bodyCorporate" 
                 [value]="model.bodyCorporate"
@@ -170,7 +170,7 @@
           </mat-form-field>
   
           <!-- House rates -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="houseRates" name="houseRates" placeholder="House rates" 
                 [(ngModel)]="model.houseRates" 
                 [value]="model.houseRates"
@@ -183,7 +183,7 @@
   
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- utilities -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="utilities" name="utilities" placeholder="Utitities" 
                 [(ngModel)]="model.utilities" 
                 [value]="model.utilities"
@@ -195,7 +195,7 @@
           </mat-form-field>
   
           <!-- Insurance -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="insurance" name="insurance" placeholder="Insurances" 
                 [(ngModel)]="model.insurance" 
                 [value]="model.insurance"
@@ -206,7 +206,7 @@
           </mat-form-field>
   
           <!-- Other costs -->
-          <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
+          <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="otherCosts" name="otherCosts" placeholder="Other costs" 
                 [(ngModel)]="model.otherCosts" 
                 [value]="model.otherCosts"
