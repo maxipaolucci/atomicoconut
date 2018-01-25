@@ -1,5 +1,7 @@
-
-  <span fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center" *ngIf="(title && title.length > 0) || (text && text.length > 0)">
-      <label *ngIf="title && title.length > 0">{{title}}</label>
-      <mat-icon *ngIf="text && text.length > 0" [matTooltip]="text" [matTooltipPosition]="position">info_outline</mat-icon>  
-  </span>
+<span fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center" *ngIf="(title && title.length > 0) || (text && text.length > 0)">
+    <label *ngIf="title && title.length > 0">{{title}}</label>
+    <mat-icon *ngIf="text && text.length > 0" 
+        [matTooltip]="text" 
+        [matTooltipPosition]="position"
+        [matTooltipHideDelay]="5000">info_outline</mat-icon>  
+</span>

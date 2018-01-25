@@ -229,12 +229,18 @@
 
       <mat-card-content fxLayout="column" fxLayoutGap="10px">
         <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
-          <info-tooltip title="Gross yield" text="Ratio between Gross annual rent / purchase price (as percentage)"></info-tooltip>
+          <info-tooltip 
+              title="Gross yield" 
+              text="Ratio between Gross annual rent / purchase price (as percentage)"
+              position="right"></info-tooltip>
           <span>: {{grossYield | percent : '1.1-2'}}</span>
         </div>
 
         <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
-          <info-tooltip title="Net yield" text="Ratio between (Net annual rent - expenses) / purchase price (as percentage)"></info-tooltip>
+          <info-tooltip 
+              title="Net yield" 
+              text="Ratio between (Net annual rent - expenses) / purchase price (as percentage)"
+              position="right"></info-tooltip>
           <span>: {{netYield | percent : '1.1-2'}}</span>
         </div>
 
@@ -250,13 +256,13 @@
 
         <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
           <info-tooltip title="1st year expenses" 
-              text="Sums all the expenses detailed. It is a first year expenses because of the renovation cost, that it is suposed the be done once during the first year."></info-tooltip>
+              text="Sums all the expenses in the form. 'First year' expenses because of the renovation cost. Set a value that covers all the required renovations to be done."></info-tooltip>
           <span>: {{expenses | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
         </div>
 
         <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
           <info-tooltip title="1st day loan interest" 
-              text="The interest of the loan based in the specified interest rate. It says first day because is calculated base in the total amount"></info-tooltip>
+              text="The interest of the loan based in the specified interest rate. 'First day' because is calculated base in the total loan amount."></info-tooltip>
           <span>: {{loanInterest | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
         </div>
 
