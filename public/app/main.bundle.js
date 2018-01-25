@@ -2893,7 +2893,7 @@ exports.InfoTooltipComponent = InfoTooltipComponent;
 /***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navigation--main\">\r\n  <mat-chip-list>\r\n    <mat-chip *ngFor=\"let link of links\" [routerLink]=\"link.url\" [selected]=\"link.selected\">{{link.displayName}}</mat-chip>\r\n  </mat-chip-list>      \r\n</nav>"
+module.exports = "<nav class=\"navigation--main\">\r\n  <mat-chip-list fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutWrap>\r\n    <mat-chip class=\"nav--item\" *ngFor=\"let link of links\" [routerLink]=\"link.url\" [selected]=\"link.selected\">{{link.displayName}}</mat-chip>\r\n  </mat-chip-list>      \r\n</nav>"
 
 /***/ }),
 
@@ -2905,7 +2905,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".navigation--main mat-chip.nav--item {\n  margin: 0 8px 8px 0; }\n", ""]);
 
 // exports
 
