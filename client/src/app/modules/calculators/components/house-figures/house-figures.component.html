@@ -1,4 +1,4 @@
-<div class="calculator__container" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px">
+<div class="calculator__container" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" fxLayoutAlign.gt-sm="space-between none">
   <!-- Form  -->
   <form class="form__container form__house-figures-calc" #houseFiguresForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
@@ -157,7 +157,9 @@
   
                 <mat-error *ngIf="mantainanceCost.invalid && (mantainanceCost.dirty || mantainanceCost.touched) && mantainanceCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
-  
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Body corporate -->
           <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="bodyCorporate" name="bodyCorporate" placeholder="Body corporate" 
@@ -221,7 +223,7 @@
   </form>
   
   <!-- Results -->
-  <section fxLayout="column" fxLayoutGap="10px" class="calculator__results">
+  <section fxLayout="column" fxLayoutGap="10px" fxFlex fxFlex.gt-sm="300px" class="calculator__results">
     <mat-card>
       <mat-card-title class="mat-card-title--ac">Figures</mat-card-title>
 
