@@ -4,8 +4,7 @@
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <h3 class="title">
-          House figures
-          <p class="mat-caption">subtitle here</p>
+          Property value
         </h3>
   
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
@@ -13,11 +12,10 @@
           <mat-form-field fxFlex  class="form__field">
             <input matInput type="number" id="purchasePrice" name="purchasePrice" placeholder="Purchase price" 
                 [(ngModel)]="model.purchasePrice" 
-                required numberValidator
+                numberValidator
                 [value]="model.purchasePrice"
                 #purchasePrice="ngModel">
             
-            <mat-error *ngIf="purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required">This field is required</mat-error>
             <mat-error *ngIf="purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
           
@@ -39,7 +37,7 @@
                 numberValidator='{"min": 0, "max": 100}' 
                 [value]="model.capitalGrowth"
                 #capitalGrowth="ngModel">
-      
+            
             <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
             <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
@@ -50,7 +48,6 @@
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <h3 class="title">
           Loan figures
-          <p class="mat-caption">subtitle here</p>
         </h3>
       
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
@@ -61,7 +58,8 @@
                 numberValidator='{"min": 0, "max": 100}' 
                 [value]="model.loanCoverage"
                 #loanCoverage="ngModel">
-  
+            
+            <mat-hint align="start">Percentage of the purchase price covered by the loan.</mat-hint>
             <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
             <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
@@ -75,6 +73,7 @@
                 [value]="model.interestRates"
                 #interestRates="ngModel">
 
+            <mat-hint align="start">Average loan interest rates (as a percentage).</mat-hint>
             <mat-error *ngIf="interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             <mat-error *ngIf="interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
             <mat-error *ngIf="interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
@@ -85,7 +84,6 @@
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <h3 class="title">
           Rent figures
-          <p class="mat-caption">subtitle here</p>
         </h3>
       
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
@@ -109,7 +107,7 @@
                 [value]="model.vacancy"
                 #vacancy="ngModel">
   
-            <mat-hint align="start">Vacancies as number of weeks with no rent per year.</mat-hint>
+            <mat-hint align="start">The number of weeks per year with no rent.</mat-hint>
             <mat-error *ngIf="vacancy.invalid && (vacancy.dirty || vacancy.touched) && vacancy.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
   
@@ -121,7 +119,7 @@
                 [value]="model.managed"
                 #managed="ngModel">
   
-            <mat-hint align="start">Rental manager percentage of net annual rental income (excludes vacancies).</mat-hint>
+            <mat-hint align="start">Rental manager charges as a percentage of net annual rental income.</mat-hint>
             <mat-error *ngIf="managed.invalid && (managed.dirty || managed.touched) && managed.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             <mat-error *ngIf="managed.invalid && (managed.dirty || managed.touched) && managed.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
             <mat-error *ngIf="managed.invalid && (managed.dirty || managed.touched) && managed.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
@@ -132,7 +130,6 @@
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <h3 class="title">
           Expenses
-          <p class="mat-caption">subtitle here</p>
         </h3>
   
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
@@ -143,7 +140,8 @@
                 [value]="model.renovationCost"
                 numberValidator
                 #renovationCost="ngModel">
-  
+
+                <mat-hint align="start">The cost to do all the renovations in the property.</mat-hint>
                 <mat-error *ngIf="renovationCost.invalid && (renovationCost.dirty || renovationCost.touched) && renovationCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
   
@@ -154,7 +152,8 @@
                 [value]="model.mantainanceCost"
                 numberValidator
                 #mantainanceCost="ngModel">
-  
+
+                <mat-hint align="start">The cost of maintaining the property per year.</mat-hint>
                 <mat-error *ngIf="mantainanceCost.invalid && (mantainanceCost.dirty || mantainanceCost.touched) && mantainanceCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
         </div>
@@ -214,7 +213,8 @@
                 [value]="model.otherCosts"
                 numberValidator
                 #otherCosts="ngModel">
-  
+
+                <mat-hint align="start">Any other cost to have in mind not declared in the previous fields.</mat-hint>
                 <mat-error *ngIf="otherCosts.invalid && (otherCosts.dirty || otherCosts.touched) && otherCosts.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
         </div>
