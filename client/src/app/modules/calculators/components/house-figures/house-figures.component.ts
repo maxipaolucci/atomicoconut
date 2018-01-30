@@ -58,7 +58,7 @@ export class HouseFiguresComponent implements OnInit, AfterViewInit {
       this.expenses = this.model.renovationCost + this.model.mantainanceCost + this.model.bodyCorporate + this.model.houseRates + this.model.utilities + this.model.insurance
           + this.model.otherCosts + this.netAnnualRent * (this.model.managed / 100);
       this.netYield = (this.netAnnualRent - this.expenses) / this.model.purchasePrice;
-      this.loanInterest = this.model.purchasePrice * (this.model.loanCoverage / 100) * (this.model.interestRates / 100);
+      this.loanInterest = this.model.purchasePrice * (this.model.interestRates / 100);
       this.preTaxCashflow = this.netAnnualRent - this.expenses - this.loanInterest;
       this.discount = (this.model.marketValue - this.model.purchasePrice - this.model.renovationCost) / (this.model.marketValue || 1);
       this.capitalGrowths = this.model.marketValue * (this.model.capitalGrowth / 100);

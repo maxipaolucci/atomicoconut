@@ -141,7 +141,7 @@
                 numberValidator
                 #renovationCost="ngModel">
 
-                <mat-hint align="start">The cost to do all the renovations in the property.</mat-hint>
+                <mat-hint align="start">The cost to do all the renovations.</mat-hint>
                 <mat-error *ngIf="renovationCost.invalid && (renovationCost.dirty || renovationCost.touched) && renovationCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
   
@@ -153,7 +153,7 @@
                 numberValidator
                 #mantainanceCost="ngModel">
 
-                <mat-hint align="start">The cost of maintaining the property per year.</mat-hint>
+                <mat-hint align="start">The annual cost to maintain the property.</mat-hint>
                 <mat-error *ngIf="mantainanceCost.invalid && (mantainanceCost.dirty || mantainanceCost.touched) && mantainanceCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
         </div>
@@ -225,10 +225,10 @@
   <!-- Results -->
   <section fxLayout="column" fxLayoutGap="10px" fxFlex fxFlex.gt-sm="300px" class="calculator__results">
     <mat-card>
-      <mat-card-title class="mat-card-title--ac">Figures</mat-card-title>
+      <mat-card-title class="mat-card-title--ac">Results</mat-card-title>
 
       <mat-card-content fxLayout="column" fxLayoutGap="10px">
-        <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
+        <div fxLayout="row" fxLayoutGap="2px" fxFlex="none" fxFlex.gt-xs="50" fxLayoutAlign="space-between none">
           <info-tooltip 
               title="Gross yield" 
               text="Ratio between Gross annual rent / purchase price (as percentage)"
@@ -239,7 +239,7 @@
         <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
           <info-tooltip 
               title="Net yield" 
-              text="Ratio between (Net annual rent - expenses) / purchase price (as percentage)"
+              text="Ratio between (Net annual rent - Expenses) / Purchase price * 100"
               position="right"></info-tooltip>
           <span>: {{netYield | percent : '1.1-2'}}</span>
         </div>
@@ -250,24 +250,24 @@
         </div>
 
         <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
-          <info-tooltip title="Net annual rent" text="Gross annual rent - vacancies"></info-tooltip>
+          <info-tooltip title="Net annual rent" text="Gross annual rent - Vacancy"></info-tooltip>
           <span>: {{netAnnualRent | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
         </div>
 
         <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
-          <info-tooltip title="1st year expenses" 
-              text="Sums all the expenses in the form. 'First year' expenses because of the renovation cost."></info-tooltip>
+          <info-tooltip title="Expenses" 
+              text="Sums all the expenses in detailed before"></info-tooltip>
           <span>: {{expenses | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
         </div>
 
         <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
-          <info-tooltip title="1st day loan interest" 
-              text="The interest of the loan based in the specified interest rate. 'First day' because is calculated base in the total loan amount."></info-tooltip>
+          <info-tooltip title="Loan interest" 
+              text="The interest of the loan based in the specified interest rate."></info-tooltip>
           <span>: {{loanInterest | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
         </div>
 
         <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
-          <info-tooltip title="Pre tax cashflow" text="Net annual rent - expenses - 1st day loan interest"></info-tooltip>
+          <info-tooltip title="Pre tax cashflow" text="Net annual rent - Expenses - Loan interest"></info-tooltip>
           <span>: {{preTaxCashflow | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
         </div>
 
@@ -277,7 +277,7 @@
         </div>
 
         <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
-          <info-tooltip title="Total 1 year return" text="Capital growth + market value - purchase price - renovations + pre tax cashflow"></info-tooltip>
+          <info-tooltip title="Total 1 year return" text="Capital growth + Market value - Purchase price - Renovations + Pre tax cashflow"></info-tooltip>
           <span>: {{totalFirstYearReturn | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
         </div>
 
@@ -287,7 +287,7 @@
         </div>
 
         <div fxLayout="row" fxLayoutGap="2px" fxLayoutAlign="start center">
-          <info-tooltip title="Return on deposit" text="Ratio between Total 1st year return / deposit (as percentage)"></info-tooltip>
+          <info-tooltip title="Return on deposit" text="Ratio between Total 1st year return / Deposit * 100"></info-tooltip>
           <span>: {{returnOnDeposit | percent : '1.1-2'}}</span>
         </div>
         
