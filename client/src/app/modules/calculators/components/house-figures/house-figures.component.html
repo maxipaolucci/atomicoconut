@@ -228,16 +228,16 @@
       <mat-card-title class="mat-card-title--ac">Results</mat-card-title>
 
       <mat-card-content fxLayout="column" fxLayoutGap="10px">
-        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" fxLayoutAlign="space-between center">
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip fxFlex
+        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" fxLayoutAlign.xs="start center" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start center">
+          <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <info-tooltip
                 title="Gross yield" 
                 text="Ratio between Gross annual rent / purchase price (as percentage)"
                 position="right"></info-tooltip>
-            <span fxFlex> {{grossYield | percent : '1.1-2'}}</span>
+            <span> {{grossYield | percent : '1.1-2'}}</span>
           </div>
   
-          <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
             <info-tooltip 
                 title="Net yield" 
                 text="Ratio between (Net annual rent - Expenses) / Purchase price * 100"
