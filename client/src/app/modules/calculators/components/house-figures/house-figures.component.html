@@ -228,13 +228,13 @@
       <mat-card-title class="mat-card-title--ac">Results</mat-card-title>
 
       <mat-card-content fxLayout="column" fxLayoutGap="10px">
-        <div fxLayout.xs="row" fxLayout.gt-xs="column" fxLayout.gt-sm="row" fxLayoutAlign="space-between center">
+        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" fxLayoutAlign="space-between center">
           <div fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip
+            <info-tooltip fxFlex
                 title="Gross yield" 
                 text="Ratio between Gross annual rent / purchase price (as percentage)"
                 position="right"></info-tooltip>
-            <span> {{grossYield | percent : '1.1-2'}}</span>
+            <span fxFlex> {{grossYield | percent : '1.1-2'}}</span>
           </div>
   
           <div fxLayout="row" fxLayoutAlign="space-between center">
@@ -246,7 +246,7 @@
           </div>
         </div>
         
-        <div fxLayout="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" fxLayoutAlign="space-between center" fxLayoutAlign.gt-xs="center space-between" fxLayoutAlign.gt-sm="space-between center">
+        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" fxLayoutAlign="space-between center">
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <info-tooltip title="Gross annual rent" text="Rent a week * 52"></info-tooltip>
             <span> {{grossAnnualRent | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
