@@ -45,6 +45,10 @@ body {
     color: $secondary
 }
 
+.tag-spacer {
+    flex: 1 1 auto;
+}
+
 p {
     margin: 0;
 }

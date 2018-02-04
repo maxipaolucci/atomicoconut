@@ -45,19 +45,3 @@ mat-card .mat-card-title.mat-card-title--ac {
 mat-tab-group mat-tab-body {
   margin-top: 10px;
 }
-
-mat-toolbar.mat-toolbar {
-  padding: 0;
-
-  mat-toolbar-row {
-    padding : 0 16px;
-
-    &.secondary-row {
-      background-color: $secondary;
-      font-size: 12px;
-      height: 30px;
-    }
-  }
-
-  
-}

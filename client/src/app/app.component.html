@@ -1,50 +1,50 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="inner mat-typography">
 
-  <mat-toolbar class="toolbar" color="primary">
-    <mat-toolbar-row>
-      <a class="toolbar__brand-name color__almost-white" routerLink="/"><span>AtomiCoconut</span></a>
-      <span class="example-spacer"></span>
-      
-      <span *ngIf="!user" fxLayoutAlign=" center">
-        <mat-icon routerLink="/users/login" class="toolbar__icon">account_circle</mat-icon>
-      </span>
-      <span *ngIf="user" fxLayoutAlign=" center">
-        <img *ngIf="user.avatar" 
-            [matMenuTriggerFor]="userMenu" 
-            class="toolbar__icon user__avatar" 
-            [src]="user.avatar" 
-        />
-        <mat-icon *ngIf="!user.avatar"
-            class="toolbar__icon user__icon--logged-in" 
-            [matMenuTriggerFor]="userMenu">
-          account_circle
-        </mat-icon>
-        
-        <mat-menu class="user__menu--logged-in" #userMenu="matMenu" [overlapTrigger]="false">
-          <button mat-menu-item routerLink="/users/account">
-            <mat-icon>settings</mat-icon>
-            <span>My account</span>
-          </button>
-          <button mat-menu-item routerLink="/teams">
-            <mat-icon>group</mat-icon>
-            <span>Teams</span>
-          </button>
-          <button mat-menu-item (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
-            <span>Logout</span>
-          </button>
-        </mat-menu>
-      </span>
-    </mat-toolbar-row>
-    
-    <mat-toolbar-row class="secondary-row" *ngIf="user && user.currency !== 'USD' && currencyExchangeService.currencyRates">
-      <span>Preferred currency is <a class="color__almost-white" routerLink="/users/account" matTooltip="Change..."><strong>{{user.currency}}</strong></a></span>
-      <span class="example-spacer"></span>
-      <span>1 USD = {{currencyExchangeService.currencyRates[user.currency]}} {{user.currency}}</span>
-    </mat-toolbar-row>
-  </mat-toolbar>
+
+
+
   
+<div class="inner mat-typography">
+  
+  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="toolbar__primary mat-elevation-z1" color="primary">
+    <a class="toolbar__brand-name color__almost-white" routerLink="/"><span>AtomiCoconut</span></a>
+    
+    <span *ngIf="!user" fxLayoutAlign=" center">
+      <mat-icon routerLink="/users/login" class="toolbar__icon">account_circle</mat-icon>
+    </span>
+    <span *ngIf="user" fxLayoutAlign=" center">
+      <img *ngIf="user.avatar" 
+          [matMenuTriggerFor]="userMenu" 
+          class="toolbar__icon user__avatar" 
+          [src]="user.avatar"/>
+      <mat-icon *ngIf="!user.avatar"
+          class="toolbar__icon user__icon--logged-in" 
+          [matMenuTriggerFor]="userMenu">
+        account_circle
+      </mat-icon>
+      
+      <mat-menu class="user__menu--logged-in" #userMenu="matMenu" [overlapTrigger]="false">
+        <button mat-menu-item routerLink="/users/account">
+          <mat-icon>settings</mat-icon>
+          <span>My account</span>
+        </button>
+        <button mat-menu-item routerLink="/teams">
+          <mat-icon>group</mat-icon>
+          <span>Teams</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </span>
+  </mat-toolbar>
+
+  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="toolbar__secondary" *ngIf="user && user.currency !== 'USD' && currencyExchangeService.currencyRates">
+    <span>Preferred currency is <a class="color__almost-white" routerLink="/users/account" matTooltip="Change..."><strong>{{user.currency}}</strong></a></span>   
+    <span>1 USD = {{currencyExchangeService.currencyRates[user.currency]}} {{user.currency}}</span>
+  </mat-toolbar>
+
   <!-- Main navigator (chips) -->
   <main-navigator></main-navigator>
 

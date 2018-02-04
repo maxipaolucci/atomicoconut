@@ -1,7 +1,12 @@
 @import '../variables';
 
-.toolbar {
-  margin-bottom: 10px;
+
+
+.toolbar__primary {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
   
   .toolbar__brand-name {
     text-decoration: none;
@@ -10,10 +15,6 @@
   .toolbar__icon {
     padding: 0 10px;
     cursor: pointer;
-  }
-
-  .example-spacer {
-    flex: 1 1 auto;
   }
 
   .user__avatar {
@@ -27,6 +28,22 @@
   }
 }
 
+.toolbar__secondary {
+  margin-top: 64px;
+  margin-bottom: 10px;
+  background-color: $secondary;
+  font-size: 12px;
+  height: 30px;
+}
+
+/* Chip navigation */
 ::ng-deep nav.navigation--main {
   margin-bottom: 20px;
+}
+
+@media screen and (min-width: $screenGtXs) {
+  .toolbar__secondary {
+    margin-top: 72px;
+  }
+  
 }
