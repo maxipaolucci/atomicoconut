@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const errorTrace = 'errorHandlers >';
 
 const errorCodes = {
@@ -106,7 +108,9 @@ const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = fa
   }
 
   if (showDate) {
-    prefix += prefix.length ? ` on ${new Date(Date.now())}]` : `[on ${new Date(Date.now())}]`;
+    let date = moment(Date.now()).format('DD/MM/YYYY HH:mm:ss.SSS');
+
+    prefix += prefix.length ? ` on ${date}]` : `[on ${date}]`;
   }
 
   return `${prefix} ${message}`;
