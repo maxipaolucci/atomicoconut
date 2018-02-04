@@ -1,11 +1,6 @@
 @import '../../../../../variables';
 
-
-.progress-bar--get-investments {
-  width: 100%;
-}
-
-.totals-card {
+.totals__card, .no-investments__card {
   text-align: center;
 
   md-card-content p {
@@ -13,6 +8,9 @@
   }
 }
 
+.progress-bar--get-investments {
+  width: 100%;
+}
 
 @media screen and (min-width: $screenGtXs) {
 

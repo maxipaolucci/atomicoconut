@@ -33,7 +33,7 @@
           </div>
         </section>
 
-        <section *ngIf="team.admin.email === user.email" class="actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
+        <section *ngIf="team.admin.email === user.email" class="card__actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
           <button *ngIf="!teamActionRunning[teamIndex]" mat-mini-fab routerLink="/teams/edit/{{team.slug}}" color="primary" (click)="teamActionRunning[teamIndex] = true">
             <mat-icon aria-label="Edit team">edit</mat-icon>
           </button>
@@ -62,8 +62,8 @@
       mode="indeterminate">
   </mat-progress-bar>
 
-  <section fxLayout="column" fxLayoutAlign="start end">
-    <button mat-fab routerLink="create" color="accent">
+  <section fxLayout="column" fxLayoutAlign="start end" class="actions">
+    <button mat-fab routerLink="create" color="accent" class="fab">
       <mat-icon class="mat-24" aria-label="Create team">group_add</mat-icon>
     </button>
   </section>

@@ -51,7 +51,7 @@
     </mat-expansion-panel>
     <!-- EOF Team -->
 
-    <section class="actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
+    <section class="card__actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
       <button *ngIf="!actionRunning" mat-mini-fab routerLink="/investments/crypto/edit/{{investment.id}}" color="primary" (click)="actionRunning = true">
         <mat-icon aria-label="Edit Investment">edit</mat-icon>
       </button>

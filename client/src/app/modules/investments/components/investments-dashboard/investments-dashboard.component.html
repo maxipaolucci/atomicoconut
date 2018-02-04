@@ -10,7 +10,7 @@
       </currency-investment>
     </div>
 
-    <mat-card fxFlex class="totals-card">
+    <mat-card fxFlex class="totals__card">
       <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px">
         <!-- Totals -->
         <div *ngIf="!myTotals.checked" fxFlex fxFlex.xs="none" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="space-around center">
@@ -41,12 +41,10 @@
   </section>
 
   <section *ngIf="!getInvestmentsServiceRunning && investments.length == 0" fxLayout="column" fxLayoutGap="10px">
-    <mat-card fxFlex class="totals-card">
+    <mat-card fxFlex class="no-investments__card">
       <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
           fxLayoutAlign="space-around center">
-        <p>
-          You do not have investments yet.
-        </p>
+        <p> You do not have investments yet.</p>
       </mat-card-content>
     </mat-card>
     
@@ -59,8 +57,8 @@
     mode="indeterminate">
   </mat-progress-bar>
 
-  <section fxLayout="column" fxLayoutAlign="start end">
-    <button mat-fab class="mat-elevation-z12" color="accent" matTooltip="Create new investment" matTooltipPosition="left" (click)="openNewInvestmentDialog()">
+  <section fxLayout="column" fxLayoutAlign="start end" class="actions">
+    <button mat-fab class="fab mat-elevation-z0" color="accent" matTooltip="Create new investment" matTooltipPosition="left" (click)="openNewInvestmentDialog()">
       <mat-icon aria-label="Create new investemt">add</mat-icon>
     </button>
   </section>

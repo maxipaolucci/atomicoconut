@@ -48,3 +48,14 @@ body {
 p {
     margin: 0;
 }
+
+.actions {
+    height: 70px;  
+  
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10;
+    }
+}
