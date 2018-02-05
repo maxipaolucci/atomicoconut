@@ -1,7 +1,5 @@
 @import '../variables';
 
-
-
 .toolbar__primary {
   position: fixed;
   top: 0;
@@ -28,8 +26,11 @@
   }
 }
 
+.toolbar__primary__spacer {
+  height: 54px;
+}
+
 .toolbar__secondary {
-  margin-top: 64px;
   margin-bottom: 10px;
   background-color: $secondary;
   font-size: 12px;
@@ -42,8 +43,9 @@
 }
 
 @media screen and (min-width: $screenGtXs) {
-  .toolbar__secondary {
-    margin-top: 72px;
+  
+  .toolbar__primary__spacer {
+    height: 62px;
   }
   
 }

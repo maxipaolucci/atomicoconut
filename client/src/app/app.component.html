@@ -1,11 +1,4 @@
-<!--The content below is only a placeholder and can be replaced.-->
-
-
-
-
-  
-<div class="inner mat-typography">
-  
+<div class="inner mat-typography">  
   <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="toolbar__primary mat-elevation-z1" color="primary">
     <a class="toolbar__brand-name color__almost-white" routerLink="/"><span>AtomiCoconut</span></a>
     
@@ -39,6 +32,7 @@
       </mat-menu>
     </span>
   </mat-toolbar>
+  <div class="toolbar__primary__spacer"><!-- This is a spacer with main toolbar height to avoid any content going behind the toolbar --></div>
 
   <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="toolbar__secondary" *ngIf="user && user.currency !== 'USD' && currencyExchangeService.currencyRates">
     <span>Preferred currency is <a class="color__almost-white" routerLink="/users/account" matTooltip="Change..."><strong>{{user.currency}}</strong></a></span>   
