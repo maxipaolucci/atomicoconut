@@ -79,6 +79,27 @@
             <mat-error *ngIf="interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
           </mat-form-field>
         </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Loan term -->
+          <!-- <mat-form-field fxFlex  class="form__field"> -->
+            <div class="">
+              <label class="slider__label">Term</label>
+              <mat-slider id="loanTerm" name="loanTerm"
+                  color="accent"
+                  [max]="30"
+                  [min]="1"
+                  [step]="1"
+                  [thumb-label]="true"
+                  [tick-interval]="1"
+                  [(ngModel)]="model.loanTerm"
+                  [value]="model.loanTerm"> 
+              </mat-slider>
+              {{model.loanTerm}}
+            </div>
+          <!-- </mat-form-field> -->
+  
+        </div>
       </div>
   
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">

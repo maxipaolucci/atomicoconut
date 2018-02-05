@@ -28,6 +28,7 @@ export class HouseFiguresComponent implements OnInit, AfterViewInit {
     marketValue : 0,
     loanCoverage : 65,
     interestRates : 7,
+    loanTerm : 30,
     weeklyRent : 0,
     vacancy : 4,
     renovationCost : 0,
