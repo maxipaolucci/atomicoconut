@@ -15,6 +15,8 @@ export class HouseFiguresComponent implements OnInit, AfterViewInit {
   netYield : number = 0;
   expenses : number = 0;
   loanInterest : number = 0;
+  loanRepayments : number = 0;
+  loanRepaymentsLabels : any = { '12': 'Monthly', '26' : 'Fortnightly', '52' : 'Weekly' };
   preTaxCashflow : number = 0;
   discount : number = 0;
   capitalGrowths : number = 0;
@@ -29,6 +31,7 @@ export class HouseFiguresComponent implements OnInit, AfterViewInit {
     loanCoverage : 65,
     interestRates : 7,
     loanTerm : 30,
+    paymentFrecuency : "26",
     weeklyRent : 0,
     vacancy : 4,
     renovationCost : 0,
@@ -60,6 +63,10 @@ export class HouseFiguresComponent implements OnInit, AfterViewInit {
           + this.model.otherCosts + this.netAnnualRent * (this.model.managed / 100);
       this.netYield = (this.netAnnualRent - this.expenses) / this.model.purchasePrice;
       this.loanInterest = this.model.purchasePrice * (this.model.interestRates / 100);
+      let numberOfPayments = this.model.loanTerm * parseInt(this.model.paymentFrecuency);
+      let periodicInterestRate = (this.model.interestRates / 100) / parseInt(this.model.paymentFrecuency);
+      let loanDiscountFactor = (Math.pow(1 + periodicInterestRate, numberOfPayments) - 1) / (periodicInterestRate * Math.pow(1 + periodicInterestRate, numberOfPayments));
+      this.loanRepayments = (this.model.purchasePrice * (this.model.loanCoverage / 100)) / loanDiscountFactor; 
       this.preTaxCashflow = this.netAnnualRent - this.expenses - this.loanInterest;
       this.discount = (this.model.marketValue - this.model.purchasePrice - this.model.renovationCost) / (this.model.marketValue || 1);
       this.capitalGrowths = this.model.marketValue * (this.model.capitalGrowth / 100);

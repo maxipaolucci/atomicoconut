@@ -82,10 +82,10 @@
 
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Loan term -->
-          <!-- <mat-form-field fxFlex  class="form__field"> -->
-            <div class="">
-              <label class="slider__label">Term</label>
-              <mat-slider id="loanTerm" name="loanTerm"
+          <div fxFlex="none" fxFlex.gt-xs fxLayout="column" class="form__field">
+            <label class="slider__label">Term</label>
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+              <mat-slider fxFlex id="loanTerm" name="loanTerm"
                   color="accent"
                   [max]="30"
                   [min]="1"
@@ -95,10 +95,22 @@
                   [(ngModel)]="model.loanTerm"
                   [value]="model.loanTerm"> 
               </mat-slider>
-              {{model.loanTerm}}
+              <span>{{model.loanTerm}}</span>
             </div>
-          <!-- </mat-form-field> -->
-  
+            
+          </div>
+
+          <!-- Payment frecuency -->
+          <mat-form-field fxFlex class="form__field">
+            <mat-select id="paymentFrecuency" name="paymentFrecuency" placeholder="Frecuency" 
+                [(ngModel)]="model.paymentFrecuency" [value]="model.paymentFrecuency">
+              <mat-option value="12">Monthly</mat-option>
+              <mat-option value="26">Fornightly</mat-option>
+              <mat-option value="52">Weekly</mat-option>
+            </mat-select>
+            
+            <mat-hint align="start">Payment frecuency</mat-hint>
+          </mat-form-field>
         </div>
       </div>
   
@@ -293,17 +305,14 @@
             fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
 
           <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Expenses" 
-                text="Sums all the expenses in detailed before"></info-tooltip>
-            <span>{{expenses | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
-          </div>
-
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Loan interest" 
-                text="The interest of the loan based in the specified interest rate."></info-tooltip>
+            <info-tooltip title="Loan interest" text="The interest of the loan based in the specified interest rate."></info-tooltip>
             <span>{{loanInterest | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
           </div>
 
+          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
+            <info-tooltip title="Loan repayments" text="{{loanRepaymentsLabels[model.paymentFrecuency]}}"></info-tooltip>
+            <span>{{loanRepayments | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+          </div>
         </div>
 
         <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
@@ -350,6 +359,17 @@
           <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
             <info-tooltip title="Capital growth" text=""></info-tooltip>
             <span>{{capitalGrowths | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+          </div>
+
+        </div>
+
+        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
+            fxLayoutGap.xs="10px"fxLayoutGap.gt-xs="50px" fxLayoutGap.gt-sm="10px"
+            fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
+
+          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
+            <info-tooltip title="Expenses" text="Sums all the expenses in detailed before"></info-tooltip>
+            <span>{{expenses | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
           </div>
 
         </div>
