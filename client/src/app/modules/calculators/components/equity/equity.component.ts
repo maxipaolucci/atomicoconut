@@ -13,17 +13,17 @@ export class EquityComponent implements OnInit, AfterViewInit {
   discount : number = 0;
   equity : number = 0;
   depositAmount : number = 0;
-  usableEquityAfterReno : number = 0;
+  usableEquity : number = 0;
+  purchaseCapacity : number = 0;
 
   model : any = { 
     purchasePrice : 0,
     marketValue : 0,
-    loanCoverage : 0.8,
+    loanCoverage : 80,
     savings : 0,
     renovationCost : 0,
-    newMarketValue : 0,
-    firstYearRepayment : 0,
-    addRenovations : false
+    loanAmountPaid : 0,
+    secondLoanCoverage : 65
   }
 
   constructor(private mainNavigatorService : MainNavigatorService) { }
@@ -38,13 +38,13 @@ export class EquityComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.form.valueChanges.debounceTime(500).subscribe(values => {
-      this.loanAmount = values.purchasePrice * values.loanCoverage;
-      this.discount = values.marketValue - values.purchasePrice;
+      this.loanAmount = values.purchasePrice * (values.loanCoverage / 100);
+      this.discount = values.marketValue - values.purchasePrice - values.renovationCost;
       this.depositAmount = values.purchasePrice - this.loanAmount;
       this.equity = values.savings + this.discount + this.depositAmount;
-      if (values.addRenovations) {
-        this.usableEquityAfterReno = values.newMarketValue * 0.8 - this.loanAmount + values.firstYearRepayment;
-      }
+      this.usableEquity = values.marketValue * (this.model.loanCoverage / 100) - this.loanAmount + values.loanAmountPaid + values.savings;
+      this.purchaseCapacity = (this.usableEquity * 100) / (100 - values.secondLoanCoverage);
+
     });
   }
 

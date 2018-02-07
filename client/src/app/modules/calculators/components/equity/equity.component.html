@@ -1,108 +1,166 @@
-<form class="form__container form__equity-calc" #equityForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
+<div class="calculator__container" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px" fxLayoutAlign.gt-sm="space-between none">
+  <!--  form  -->
+  <form class="form__container form__equity-calc" #equityForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Purchase price -->
+          <mat-form-field fxFlex  class="form__field">
+            <input matInput type="number" id="purchasePrice" name="purchasePrice" placeholder="Purchase price" 
+                [(ngModel)]="model.purchasePrice" 
+                numberValidator
+                [value]="model.purchasePrice"
+                #purchasePrice="ngModel">
+            
+            <mat-error *ngIf="purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+          </mat-form-field>
+          
+          <!-- Market value -->
+          <mat-form-field fxFlex  class="form__field">
+            <input matInput type="number" id="marketValue" name="marketValue" placeholder="Market value" 
+                [(ngModel)]="model.marketValue" 
+                numberValidator
+                [value]="model.marketValue"
+                #marketValue="ngModel">
+
+            <mat-error *ngIf="marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+           <!-- Loan coverage -->
+           <mat-form-field fxFlex  class="form__field">
+              <input matInput type="number" id="loanCoverage" name="loanCoverage" placeholder="Loan coverage %" 
+                  [(ngModel)]="model.loanCoverage" 
+                  numberValidator='{"min": 0, "max": 100}' 
+                  [value]="model.loanCoverage"
+                  #loanCoverage="ngModel">
+              
+              <mat-hint align="start">Percentage of the purchase price covered by the loan.</mat-hint>
+              <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+              <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
+              <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
+            </mat-form-field>
+
+            <!-- Savings -->
+            <mat-form-field fxFlex  class="form__field">
+              <input matInput type="number" id="savings" name="savings" placeholder="Savings" 
+                  [(ngModel)]="model.savings" 
+                  numberValidator
+                  [value]="model.savings"
+                  #savings="ngModel">
   
-  <section fxLayout="column" class="form__fields">
-    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
-      <!-- Purchase price -->
-      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input matInput type="number" id="purchasePrice" name="purchasePrice" placeholder="Purchase price" 
-            [(ngModel)]="model.purchasePrice" 
-            required
-            [value]="model.purchasePrice"
-            #purchasePrice="ngModel">
+              <mat-error *ngIf="savings.invalid && (savings.dirty || savings.touched) && savings.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+           <!-- Renovation cost -->
+           <mat-form-field fxFlex  class="form__field">
+              <input matInput type="number" id="renovationCost" name="renovationCost" placeholder="Renovation cost" 
+                  [(ngModel)]="model.renovationCost" 
+                  [value]="model.renovationCost"
+                  numberValidator
+                  #renovationCost="ngModel">
   
-        <mat-error *ngIf="purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.required">Purchase price is required</mat-error>
-      </mat-form-field>
-      
-      <!-- Market value -->
-      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input matInput type="number" id="marketValue" name="marketValue" placeholder="Market value" 
-            [(ngModel)]="model.marketValue" 
-            required
-            [value]="model.marketValue"
-            #marketValue="ngModel">
+                  <mat-hint align="start">The cost to do all the renovations.</mat-hint>
+                  <mat-error *ngIf="renovationCost.invalid && (renovationCost.dirty || renovationCost.touched) && renovationCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+
+            <!-- Loan amount paid -->
+            <mat-form-field fxFlex  class="form__field">
+              <input matInput type="number" id="loanAmountPaid" name="loanAmountPaid" placeholder="Loan amount paid" 
+                  [(ngModel)]="model.loanAmountPaid" 
+                  [value]="model.loanAmountPaid"
+                  numberValidator
+                  #loanAmountPaid="ngModel">
   
-        <mat-error *ngIf="marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.required">Market value is required</mat-error>
-      </mat-form-field>
-    </div>
-  </section>
+                  <mat-hint align="start">The amount of money paid back to the lender.</mat-hint>
+                  <mat-error *ngIf="loanAmountPaid.invalid && (loanAmountPaid.dirty || loanAmountPaid.touched) && loanAmountPaid.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+        </div>
 
-  <section fxLayout="column" class="form__fields">
-    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
-      <!-- Loan coverage -->
-      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input matInput type="number" id="loanCoverage" name="loanCoverage" placeholder="Loan coverage %" 
-            [(ngModel)]="model.loanCoverage" 
-            required
-            [value]="model.loanCoverage"
-            #loanCoverage="ngModel">
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+            <!-- Loan coverage -->
+            <mat-form-field fxFlex  class="form__field">
+               <input matInput type="number" id="secondLoanCoverage" name="secondLoanCoverage" placeholder="Second Loan coverage %" 
+                   [(ngModel)]="model.secondLoanCoverage" 
+                   numberValidator='{"min": 0, "max": 100}' 
+                   [value]="model.secondLoanCoverage"
+                   #secondLoanCoverage="ngModel">
+               
+               <mat-hint align="start">Percentage of the purchase price of a new property covered by a second loan.</mat-hint>
+               <mat-error *ngIf="secondLoanCoverage.invalid && (secondLoanCoverage.dirty || secondLoanCoverage.touched) && secondLoanCoverage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+               <mat-error *ngIf="secondLoanCoverage.invalid && (secondLoanCoverage.dirty || secondLoanCoverage.touched) && secondLoanCoverage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
+               <mat-error *ngIf="secondLoanCoverage.invalid && (secondLoanCoverage.dirty || secondLoanCoverage.touched) && secondLoanCoverage.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
+             </mat-form-field>
+         </div>
+      </div>
+    </section>
+  </form>
+
+  <!-- Results -->
+  <section fxLayout="column" fxLayoutGap="10px" fxFlex fxFlex.gt-sm="300px" class="calculator__results">
+    <mat-card>
+      <mat-card-title class="mat-card-title--ac">Results</mat-card-title>
+
+      <mat-card-content fxLayout="column" fxLayoutGap="10px">
+
+        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
+            fxLayoutGap.xs="10px"fxLayoutGap.gt-xs="50px" fxLayoutGap.gt-sm="10px"
+            fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
+
+          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
+            <info-tooltip
+                title="Loan amount"></info-tooltip>
+            <span>{{loanAmount | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+          </div>
   
-        <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.required">Loan coverage is required</mat-error>
-      </mat-form-field>
+          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
+            <info-tooltip
+                title="Deposit amount"></info-tooltip>
+            <span>{{depositAmount | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+          </div>
 
-      <!-- Savings -->
-      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input matInput type="number" id="savings" name="savings" placeholder="Current savings" 
-            [(ngModel)]="model.savings" 
-            [value]="model.savings"
-            #savings="ngModel">
-      </mat-form-field>
+        </div>
 
-      <!-- Add renovations checkbox -->
-      <mat-slide-toggle color="accent" class="form__field form__field__toogle form__field__toogle--add-reno"
-          [(ngModel)]="model.addRenovations" name="addRenovations" id="addRenovations">
-        
-        Add renovations data
-      </mat-slide-toggle>
-    </div>
-  </section>
+        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
+            fxLayoutGap.xs="10px"fxLayoutGap.gt-xs="50px" fxLayoutGap.gt-sm="10px"
+            fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
 
-  <section fxLayout="column" class="form__fields" *ngIf="model.addRenovations">
-    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
-      <!-- Renovation cost -->
-      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input matInput type="number" id="renovationCost" name="renovationCost" placeholder="Renovation cost" 
-            [(ngModel)]="model.renovationCost" 
-            [value]="model.renovationCost"
-            #renovationCost="ngModel">
-      </mat-form-field>
-      
-      <!-- New market value -->
-      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input matInput type="number" id="newMarketValue" name="newMarketValue" placeholder="After renovations market value" 
-            [(ngModel)]="model.newMarketValue" 
-            [value]="model.newMarketValue"
-            #newMarketValue="ngModel">
-      </mat-form-field>
-      
-      <!-- First year repayment -->
-      <mat-form-field fxFlex fxFlex.gt-xs="200px" class="form__field">
-        <input matInput type="number" id="firstYearRepayment" name="firstYearRepayment" placeholder="First year loan repayments" 
-            [(ngModel)]="model.firstYearRepayment" 
-            [value]="model.firstYearRepayment"
-            #firstYearRepayment="ngModel">
-      </mat-form-field>
-    </div>
-  </section>
+          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
+            <info-tooltip
+                title="Discount"></info-tooltip>
+            <span>{{discount | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+          </div>
+  
+          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
+            <info-tooltip
+                title="Equity"></info-tooltip>
+            <span>{{equity | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+          </div>
 
-</form>
+        </div>
 
-<section  class="">
-  <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxFlex fxFlex.gt-xs="620px">
-    <mat-card fxFlex>
-      <mat-card-title class="mat-card-title--ac">Initial figures</mat-card-title>
-      <mat-card-content>
-        <div><label>Loan amount: </label><span>{{loanAmount}}</span></div>
-        <div><label>Deposit amount: </label><span>{{depositAmount}}</span></div>
-        <div><label>Discount: </label><span>{{discount}}</span></div>
-        <div><label>Equity: </label><span>{{equity}}</span></div>
+        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
+            fxLayoutGap.xs="10px"fxLayoutGap.gt-xs="50px" fxLayoutGap.gt-sm="10px"
+            fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
+  
+          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
+            <info-tooltip
+                title="Usable equity"></info-tooltip>
+            <span>{{usableEquity | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+          </div>
+
+          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
+            <info-tooltip
+                title="Purchase capacity"
+                text="Maximum purchase capacity based on the usable equity and the second loan coverage."></info-tooltip>
+            <span>{{purchaseCapacity | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+          </div>
+        </div>
+
       </mat-card-content>
     </mat-card>
-
-    <mat-card fxFlex *ngIf="model.addRenovations">
-      <mat-card-title class="mat-card-title--ac">After renovations figures</mat-card-title>
-      <mat-card-content>
-        <div><label>Usable equity: </label><span>{{usableEquityAfterReno}}</span></div>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</section>
+  </section>
+</div>
