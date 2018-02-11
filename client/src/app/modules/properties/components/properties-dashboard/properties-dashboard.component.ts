@@ -6,6 +6,8 @@ import { AppService } from '../../../../app.service';
 import { User } from '../../../users/models/user';
 import { Observable } from 'rxjs/Observable';
 import { Property } from '../../models/property';
+import { Subscription } from 'rxjs/Subscription';
+import { PropertiesService } from '../../properties.service';
 
 @Component({
   selector: 'properties-dashboard',
@@ -16,9 +18,11 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
 
   user : User = null;
   properties : Property[] = [];
+  subscription : Subscription = new Subscription();
+  getPropertiesServiceRunning : boolean = false;
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private usersService : UsersService,  
-    private appService : AppService ) { }
+    private appService : AppService, private propertiesService : PropertiesService ) { }
 
 
   ngOnInit() {
@@ -39,12 +43,46 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
     });
 
     if (!this.properties.length) {
-      //this.getInvestments(user$);
+      this.getProperties(user$);
     }
   }
 
-  ngOnDestroy(): void {
-    
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+
+    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
   }
 
+  /**
+   * Get my properties from the server
+   */
+  getProperties(user$ : Observable<User>) {
+    const methodTrace = `${this.constructor.name} > getProperties() > `; //for debugging
+
+    this.properties = [];
+    this.getPropertiesServiceRunning = true;
+
+    
+    const newSubscription = user$.switchMap((user) => {
+      return this.propertiesService.getProperties(user.email);
+    }).subscribe(
+      (properties : Property[]) => {
+        this.properties = properties;
+        console.log(methodTrace, this.properties);
+
+        this.getPropertiesServiceRunning = false;
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+        }
+
+        this.getPropertiesServiceRunning = false;
+      }
+    );
+  }
 }

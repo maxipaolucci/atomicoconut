@@ -10,9 +10,10 @@ const promisify = require('es6-promisify');
 const flash = require('connect-flash');
 const expressValidator = require('express-validator');
 const routes = require('./routes/index');
-const usersRoutes = require('./routes/users/routes');
-const teamsRoutes = require('./routes/teams/routes');
-const investmentsRoutes = require('./routes/investments/routes');
+const usersRoutes = require('./routes/api/usersRoutes');
+const teamsRoutes = require('./routes/api/teamsRoutes');
+const investmentsRoutes = require('./routes/api/investmentsRoutes');
+const propertiesRoutes = require('./routes/api/propertiesRoutes');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
 require('./handlers/passport'); //used by passport library
@@ -82,6 +83,7 @@ app.use('/', routes);
 app.use('/api/users', usersRoutes);
 app.use('/api/teams', teamsRoutes);
 app.use('/api/investments', investmentsRoutes);
+app.use('/api/properties', propertiesRoutes);
 
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);

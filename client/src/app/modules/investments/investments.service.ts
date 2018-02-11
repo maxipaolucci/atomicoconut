@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from "rxjs/Rx";
 import { environment } from "../../../environments/environment";
 import { AppService } from "../../app.service";
@@ -100,7 +99,7 @@ export class InvestmentsService {
 
   /**
    * Server call to Get all the Investments for the current user from the server
-   * @param {string} email . The team slug
+   * @param {string} email . The user email
    */
   getInvestments(email : string) : Observable<Investment[]> {
     let methodTrace = `${this.constructor.name} > getInvestments() > `; //for debugging

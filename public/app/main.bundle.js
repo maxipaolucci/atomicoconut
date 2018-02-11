@@ -2516,7 +2516,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("../../../core/esm5/core.js");
 var http_1 = __webpack_require__("../../../common/esm5/http.js");
-var http_2 = __webpack_require__("../../../common/esm5/http.js");
 var Rx_1 = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
 var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
 var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
@@ -2564,7 +2563,7 @@ var InvestmentsService = /** @class */ (function () {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return of_1.of(null);
         }
-        var params = new http_2.HttpParams()
+        var params = new http_1.HttpParams()
             .set('id', id)
             .set('email', email);
         var investmentData$ = this.http.get(this.serverHost + "/getbyId", { params: params })
@@ -2601,7 +2600,7 @@ var InvestmentsService = /** @class */ (function () {
     };
     /**
      * Server call to Get all the Investments for the current user from the server
-     * @param {string} email . The team slug
+     * @param {string} email . The user email
      */
     InvestmentsService.prototype.getInvestments = function (email) {
         var _this = this;
@@ -2610,7 +2609,7 @@ var InvestmentsService = /** @class */ (function () {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return Rx_1.Observable.from([]);
         }
-        var params = new http_2.HttpParams().set('email', email);
+        var params = new http_1.HttpParams().set('email', email);
         var investmentsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .map(this.appService.extractData)
             .catch(this.appService.handleError(methodTrace));
@@ -2643,7 +2642,7 @@ var InvestmentsService = /** @class */ (function () {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return Rx_1.Observable.throw(null);
         }
-        var params = new http_2.HttpParams().set('email', email);
+        var params = new http_1.HttpParams().set('email', email);
         return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, params: params })
             .map(this.appService.extractData)
             .catch(this.appService.handleError(methodTrace));
@@ -2725,7 +2724,7 @@ exports.Investment = Investment;
 /***/ "../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  houses-edit works!\n</p>\n"
+module.exports = "<p>\r\n  houses-edit works!\r\n</p>\r\n"
 
 /***/ }),
 
@@ -2786,7 +2785,7 @@ exports.HousesEditComponent = HousesEditComponent;
 /***/ "../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  houses-dashboard works!\n</p>\n"
+module.exports = "<p>\r\n  houses-dashboard works!\r\n</p>\r\n"
 
 /***/ }),
 
@@ -2828,14 +2827,19 @@ var router_1 = __webpack_require__("../../../router/esm5/router.js");
 var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
 var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+var properties_service_1 = __webpack_require__("../../../../../src/app/modules/properties/properties.service.ts");
 var PropertiesDashboardComponent = /** @class */ (function () {
-    function PropertiesDashboardComponent(route, mainNavigatorService, usersService, appService) {
+    function PropertiesDashboardComponent(route, mainNavigatorService, usersService, appService, propertiesService) {
         this.route = route;
         this.mainNavigatorService = mainNavigatorService;
         this.usersService = usersService;
         this.appService = appService;
+        this.propertiesService = propertiesService;
         this.user = null;
         this.properties = [];
+        this.subscription = new Subscription_1.Subscription();
+        this.getPropertiesServiceRunning = false;
     }
     PropertiesDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -2852,10 +2856,38 @@ var PropertiesDashboardComponent = /** @class */ (function () {
             return data.authUser;
         });
         if (!this.properties.length) {
-            //this.getInvestments(user$);
+            this.getProperties(user$);
         }
     };
     PropertiesDashboardComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    /**
+     * Get my properties from the server
+     */
+    PropertiesDashboardComponent.prototype.getProperties = function (user$) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
+        this.properties = [];
+        this.getPropertiesServiceRunning = true;
+        var newSubscription = user$.switchMap(function (user) {
+            return _this.propertiesService.getProperties(user.email);
+        }).subscribe(function (properties) {
+            _this.properties = properties;
+            console.log(methodTrace, _this.properties);
+            _this.getPropertiesServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getPropertiesServiceRunning = false;
+        });
     };
     PropertiesDashboardComponent = __decorate([
         core_1.Component({
@@ -2864,7 +2896,7 @@ var PropertiesDashboardComponent = /** @class */ (function () {
             styles: [__webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.scss")]
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, users_service_1.UsersService,
-            app_service_1.AppService])
+            app_service_1.AppService, properties_service_1.PropertiesService])
     ], PropertiesDashboardComponent);
     return PropertiesDashboardComponent;
 }());
@@ -2953,6 +2985,7 @@ var properties_routing_module_1 = __webpack_require__("../../../../../src/app/mo
 var properties_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
 var houses_edit_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.ts");
 var shared_module_1 = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+var properties_service_1 = __webpack_require__("../../../../../src/app/modules/properties/properties.service.ts");
 var PropertiesModule = /** @class */ (function () {
     function PropertiesModule() {
     }
@@ -2966,12 +2999,87 @@ var PropertiesModule = /** @class */ (function () {
                 // CustomMaterialDesignModule,
                 shared_module_1.SharedModule
             ],
-            declarations: [properties_dashboard_component_1.PropertiesDashboardComponent, houses_edit_component_1.HousesEditComponent]
+            declarations: [properties_dashboard_component_1.PropertiesDashboardComponent, houses_edit_component_1.HousesEditComponent],
+            providers: [properties_service_1.PropertiesService]
         })
     ], PropertiesModule);
     return PropertiesModule;
 }());
 exports.PropertiesModule = PropertiesModule;
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/properties.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("../../../core/esm5/core.js");
+var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
+var http_1 = __webpack_require__("../../../common/esm5/http.js");
+var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var Observable_1 = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+var PropertiesService = /** @class */ (function () {
+    function PropertiesService(http, appService) {
+        this.http = http;
+        this.appService = appService;
+        this.serverHost = environment_1.environment.apiHost + '/api/properties';
+        this.headers = new http_1.HttpHeaders().set('Content-Type', 'application/json');
+    }
+    /**
+     * Server call to Get all the properties for the current user from the server.
+     * This proeprties will be the properties the user created plus the investment properties where she/he has a piece of the cake.
+     * @param {string} email . The user email
+     */
+    PropertiesService.prototype.getProperties = function (email) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
+        if (!email) {
+            this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
+            return Observable_1.Observable.from([]);
+        }
+        var params = new http_1.HttpParams().set('email', email);
+        var responseData$ = this.http.get(this.serverHost + "/getAll", { params: params })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError(methodTrace));
+        return responseData$.switchMap(function (responseData) {
+            var properties = [];
+            if (responseData && responseData instanceof Array) {
+                for (var _i = 0, responseData_1 = responseData; _i < responseData_1.length; _i++) {
+                    var item = responseData_1[_i];
+                    properties.push(item); //TODO create clases of property
+                    // const createdBy = new User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
+                    // const team = item.team ? new Team(item.team.name, item.team.description, item.team.slug) : null;
+                    // if (item.investmentType === 'currency' || item.investmentType === 'crypto') {
+                    //   properties.push(new CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.currencyInvestmentData.amountUnit, 
+                    //       item.currencyInvestmentData.amount, item.currencyInvestmentData.buyingPrice, item.currencyInvestmentData.buyingPriceUnit, item.currencyInvestmentData.buyingDate, item.investmentType));
+                    // }
+                }
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return Observable_1.Observable.of(properties);
+        });
+    };
+    PropertiesService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.HttpClient, app_service_1.AppService])
+    ], PropertiesService);
+    return PropertiesService;
+}());
+exports.PropertiesService = PropertiesService;
 
 
 /***/ }),
