@@ -79,12 +79,11 @@ var router_1 = __webpack_require__("../../../router/esm5/router.js");
 var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var currency_exchange_service_1 = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
 var AppComponent = /** @class */ (function () {
-    function AppComponent(router, appService, usersService, currencyExchangeService, mainNavigatorService) {
+    function AppComponent(router, appService, usersService, currencyExchangeService) {
         this.router = router;
         this.appService = appService;
         this.usersService = usersService;
         this.currencyExchangeService = currencyExchangeService;
-        this.mainNavigatorService = mainNavigatorService;
         this.title = 'AtomiCoconut';
         this.user = null;
         this.defaultGravatarUrl = configuration_1.configuration.defaultGravatarUrl;
@@ -92,12 +91,6 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
-        //set the navigation links valid for this components
-        this.mainNavigatorService.setLinks([
-            { displayName: 'Welcome', url: null, selected: true },
-            { displayName: 'Investments', url: '/investments', selected: false },
-            { displayName: 'Calculators', url: '/calculators', selected: false }
-        ]);
         this.usersService.user$.subscribe(function (user) { return _this.user = user; }); //start listening the source of user
         this.setUser();
         //Get currency exchange rates
@@ -163,8 +156,7 @@ var AppComponent = /** @class */ (function () {
             styles: [__webpack_require__("../../../../../src/app/app.component.scss")],
             providers: [main_navigator_service_1.MainNavigatorService]
         }),
-        __metadata("design:paramtypes", [router_1.Router, app_service_1.AppService, users_service_1.UsersService, currency_exchange_service_1.CurrencyExchangeService,
-            main_navigator_service_1.MainNavigatorService])
+        __metadata("design:paramtypes", [router_1.Router, app_service_1.AppService, users_service_1.UsersService, currency_exchange_service_1.CurrencyExchangeService])
     ], AppComponent);
     return AppComponent;
 }());
@@ -205,6 +197,7 @@ var investments_module_1 = __webpack_require__("../../../../../src/app/modules/i
 var calculators_module_1 = __webpack_require__("../../../../../src/app/modules/calculators/calculators.module.ts");
 var welcome_component_1 = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
 var shared_module_1 = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+var properties_module_1 = __webpack_require__("../../../../../src/app/modules/properties/properties.module.ts");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -221,7 +214,8 @@ var AppModule = /** @class */ (function () {
                 teams_module_1.TeamsModule,
                 investments_module_1.InvestmentsModule,
                 calculators_module_1.CalculatorsModule,
-                shared_module_1.SharedModule
+                shared_module_1.SharedModule,
+                properties_module_1.PropertiesModule
             ],
             declarations: [
                 app_component_1.AppComponent,
@@ -258,13 +252,13 @@ var router_1 = __webpack_require__("../../../router/esm5/router.js");
 var welcome_component_1 = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
 var appRoutes = [
     {
+        path: 'welcome',
+        component: welcome_component_1.WelcomeComponent
+    },
+    {
         path: '',
         redirectTo: 'welcome',
         pathMatch: 'full'
-    },
-    {
-        path: 'welcome',
-        component: welcome_component_1.WelcomeComponent
     }
     // {
     //   path : 'page-not-found',
@@ -616,6 +610,7 @@ var WelcomeComponent = /** @class */ (function () {
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: null, selected: true },
             { displayName: 'Investments', url: '/investments', selected: false },
+            { displayName: 'Properties', url: '/properties', selected: false },
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
         var user$ = this.setUser();
@@ -1698,7 +1693,8 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
-            { displayName: 'Investments', url: null, selected: true }
+            { displayName: 'Investments', url: null, selected: true },
+            { displayName: 'Properties', url: '/properties', selected: false }
         ]);
         //get authUser from resolver
         var user$ = this.route.data.map(function (data) {
@@ -2722,6 +2718,260 @@ var Investment = /** @class */ (function () {
     return Investment;
 }());
 exports.Investment = Investment;
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  houses-edit works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("../../../core/esm5/core.js");
+var HousesEditComponent = /** @class */ (function () {
+    function HousesEditComponent() {
+    }
+    HousesEditComponent.prototype.ngOnInit = function () {
+    };
+    HousesEditComponent = __decorate([
+        core_1.Component({
+            selector: 'app-houses-edit',
+            template: __webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], HousesEditComponent);
+    return HousesEditComponent;
+}());
+exports.HousesEditComponent = HousesEditComponent;
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  houses-dashboard works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("../../../core/esm5/core.js");
+var router_1 = __webpack_require__("../../../router/esm5/router.js");
+var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var PropertiesDashboardComponent = /** @class */ (function () {
+    function PropertiesDashboardComponent(route, mainNavigatorService, usersService, appService) {
+        this.route = route;
+        this.mainNavigatorService = mainNavigatorService;
+        this.usersService = usersService;
+        this.appService = appService;
+        this.user = null;
+        this.properties = [];
+    }
+    PropertiesDashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Investments', url: '/investments', selected: false },
+            { displayName: 'Properties', url: null, selected: true },
+            { displayName: 'Calculators', url: '/calculators', selected: false }
+        ]);
+        //get authUser from resolver
+        var user$ = this.route.data.map(function (data) {
+            _this.user = data.authUser;
+            return data.authUser;
+        });
+        if (!this.properties.length) {
+            //this.getInvestments(user$);
+        }
+    };
+    PropertiesDashboardComponent.prototype.ngOnDestroy = function () {
+    };
+    PropertiesDashboardComponent = __decorate([
+        core_1.Component({
+            selector: 'properties-dashboard',
+            template: __webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.scss")]
+        }),
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, users_service_1.UsersService,
+            app_service_1.AppService])
+    ], PropertiesDashboardComponent);
+    return PropertiesDashboardComponent;
+}());
+exports.PropertiesDashboardComponent = PropertiesDashboardComponent;
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/properties-routing.module.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("../../../core/esm5/core.js");
+var router_1 = __webpack_require__("../../../router/esm5/router.js");
+var houses_edit_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.ts");
+var auth_resolver_service_1 = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+var properties_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
+var routes = [
+    {
+        path: 'properties',
+        children: [
+            {
+                path: 'house/create',
+                component: houses_edit_component_1.HousesEditComponent,
+                resolve: {
+                    authUser: auth_resolver_service_1.AuthResolver
+                }
+            },
+            {
+                path: 'house/edit/:id',
+                component: houses_edit_component_1.HousesEditComponent,
+                resolve: {
+                    authUser: auth_resolver_service_1.AuthResolver
+                }
+            },
+            {
+                path: '',
+                pathMatch: 'full',
+                component: properties_dashboard_component_1.PropertiesDashboardComponent,
+                resolve: {
+                    authUser: auth_resolver_service_1.AuthResolver
+                }
+            }
+        ]
+    }
+];
+var PropertiesRoutingModule = /** @class */ (function () {
+    function PropertiesRoutingModule() {
+    }
+    PropertiesRoutingModule = __decorate([
+        core_1.NgModule({
+            imports: [router_1.RouterModule.forChild(routes)],
+            exports: [router_1.RouterModule]
+        })
+    ], PropertiesRoutingModule);
+    return PropertiesRoutingModule;
+}());
+exports.PropertiesRoutingModule = PropertiesRoutingModule;
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/properties.module.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("../../../core/esm5/core.js");
+var common_1 = __webpack_require__("../../../common/esm5/common.js");
+var properties_routing_module_1 = __webpack_require__("../../../../../src/app/modules/properties/properties-routing.module.ts");
+var properties_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
+var houses_edit_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.ts");
+var shared_module_1 = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
+var PropertiesModule = /** @class */ (function () {
+    function PropertiesModule() {
+    }
+    PropertiesModule = __decorate([
+        core_1.NgModule({
+            imports: [
+                common_1.CommonModule,
+                properties_routing_module_1.PropertiesRoutingModule,
+                // FormsModule,
+                // FlexLayoutModule,
+                // CustomMaterialDesignModule,
+                shared_module_1.SharedModule
+            ],
+            declarations: [properties_dashboard_component_1.PropertiesDashboardComponent, houses_edit_component_1.HousesEditComponent]
+        })
+    ], PropertiesModule);
+    return PropertiesModule;
+}());
+exports.PropertiesModule = PropertiesModule;
 
 
 /***/ }),

@@ -79,5 +79,17 @@ router.get('/app/teams/edit/:slug', (req, res) => {
   res.render('home', {title: 'Edit Team'});
 });
 
+/** Properties */
+router.get('/app/properties', (req, res) => {
+  res.render('home', {title: 'Properties'});
+});
+
+router.get('/app/properties/create', (req, res) => {
+  res.render('home', {title: 'Create Property'});
+});
+
+router.get('/app/properties/edit/:id', (req, res) => {
+  res.render('home', {title: 'Edit Property'});
+});
 
 module.exports = router;

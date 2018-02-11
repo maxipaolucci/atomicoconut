@@ -35,7 +35,9 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: null, selected: true },
       { displayName: 'Investments', url: '/investments', selected: false },
-      { displayName: 'Calculators', url: '/calculators', selected: false   }]);
+      { displayName: 'Properties', url: '/properties', selected: false },
+      { displayName: 'Calculators', url: '/calculators', selected: false }
+    ]);
     
     const user$ = this.setUser();
     const newSubscription = user$.subscribe((investments : Investment[]) => {

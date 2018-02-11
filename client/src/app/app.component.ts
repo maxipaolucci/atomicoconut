@@ -19,17 +19,10 @@ export class AppComponent implements OnInit {
   user : User = null;
   defaultGravatarUrl = configuration.defaultGravatarUrl;
 
-  constructor(private router : Router, private appService: AppService, public usersService : UsersService, public currencyExchangeService : CurrencyExchangeService,
-    private mainNavigatorService : MainNavigatorService) { }
+  constructor(private router : Router, private appService: AppService, public usersService : UsersService, public currencyExchangeService : CurrencyExchangeService ) { }
 
   ngOnInit(): void {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
-
-    //set the navigation links valid for this components
-    this.mainNavigatorService.setLinks([
-      { displayName: 'Welcome', url: null, selected: true },
-      { displayName: 'Investments', url: '/investments', selected: false },
-      { displayName: 'Calculators', url: '/calculators', selected: false }]);
 
     this.usersService.user$.subscribe((user : User) => this.user = user); //start listening the source of user
       

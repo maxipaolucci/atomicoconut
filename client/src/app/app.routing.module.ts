@@ -8,13 +8,13 @@ import {AuthResolver} from './auth-resolver.service';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 const appRoutes : Routes = [
   {
+    path : 'welcome',
+    component : WelcomeComponent
+  },
+  {
     path : '',
     redirectTo : 'welcome',
     pathMatch : 'full'
-  },
-  {
-    path : 'welcome',
-    component : WelcomeComponent
   }
   // {
   //   path : 'page-not-found',

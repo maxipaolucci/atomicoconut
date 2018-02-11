@@ -19,6 +19,7 @@ import { InvestmentsModule } from './modules/investments/investments.module';
 import { CalculatorsModule } from './modules/calculators/calculators.module';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SharedModule } from './modules/shared/shared.module';
+import { PropertiesModule } from './modules/properties/properties.module';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { SharedModule } from './modules/shared/shared.module';
     TeamsModule,
     InvestmentsModule,
     CalculatorsModule,
-    SharedModule
+    SharedModule,
+    PropertiesModule
   ],
   declarations: [
     AppComponent,

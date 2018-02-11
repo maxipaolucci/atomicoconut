@@ -44,7 +44,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
 
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Investments', url: null, selected: true }
+      { displayName: 'Investments', url: null, selected: true },
+      { displayName: 'Properties', url: '/properties', selected: false }
     ]);
 
     //get authUser from resolver
