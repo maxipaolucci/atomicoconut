@@ -1,3 +1,28 @@
-<p>
-  houses-dashboard works!
-</p>
+<div fxLayout="column" fxLayoutGap="10px" class="container__properties">
+  <section *ngIf="!getPropertiesServiceRunning && properties.length > 0" fxLayout="column" fxLayoutGap="10px">
+
+  </section>
+
+  <section *ngIf="!getPropertiesServiceRunning && properties.length == 0" fxLayout="column" fxLayoutGap="10px">
+    <mat-card fxFlex class="no-properties__card">
+      <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+          fxLayoutAlign="space-around center">
+        <p> You do not have properties yet.</p>
+      </mat-card-content>
+    </mat-card>
+    
+  </section>
+
+  <mat-progress-bar *ngIf="getPropertiesServiceRunning"
+    fxFlexAlign="center"
+    class="progress-bar progress-bar--get-properties"
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-bar>
+
+  <section fxLayout="column" fxLayoutAlign="start end" class="actions">
+    <button mat-fab routerLink="house/create" class="fab mat-elevation-z10" color="accent" matTooltip="Create new property" matTooltipPosition="left">
+      <mat-icon aria-label="Create new property">add</mat-icon>
+    </button>
+  </section>
+</div>

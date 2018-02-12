@@ -6,14 +6,16 @@ import { PropertiesDashboardComponent } from './components/properties-dashboard/
 import { HousesEditComponent } from './components/houses-edit/houses-edit.component';
 import { SharedModule } from '../shared/shared.module';
 import { PropertiesService } from './properties.service';
+import { CustomMaterialDesignModule } from '../shared/custom-material-design.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
     CommonModule,
     PropertiesRoutingModule,
     // FormsModule,
-    // FlexLayoutModule,
-    // CustomMaterialDesignModule,
+    FlexLayoutModule,
+    CustomMaterialDesignModule,
     SharedModule
   ],
   declarations: [ PropertiesDashboardComponent, HousesEditComponent ],

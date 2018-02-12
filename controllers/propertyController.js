@@ -35,16 +35,17 @@ exports.validateRegister = (req, res, next) => {
 exports.getAllProperties = async (req, res) => {
     const methodTrace = `${errorTrace} getAllProperties() >`;
 
+    const user = req.user;
     //1 - Get all the properties where user is involved (created or has a part of an investment in the property)
-    console.log(`${methodTrace} ${getMessage('message', 1034, req.user.email, true, 'all Properties', 'user', req.user.email)}`);
-    const aggregationStagesArr = [{ $match : { createdBy : req.user._id } }].concat(aggregationStages());
+    console.log(`${methodTrace} ${getMessage('message', 1034, user.email, true, 'all Properties', 'user', user.email)}`);
+    const aggregationStagesArr = [{ $match : { createdBy : user._id } }].concat(aggregationStages());
     let properties = await Property.aggregate(aggregationStagesArr);
 
     //2 - Parse the recordset from DB and organize the info better.
     let result = await beautifyPropertiesFormat(properties);
 
     //3- Return investments info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, result.length, 'Property(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, user.email, true, result.length, 'Property(s)')}`);
     res.json({
         status : 'success', 
         codeno : 200,
@@ -81,46 +82,28 @@ const aggregationStages = () => {
 };
 
 /**
- * Organize the information for investment retrieved from DB in a better format to send back to the client
+ * Organize the information for property retrieved from DB in a better format to send back to the client
  * 
- * @param {array} investments . The result from the DB query for investments
+ * @param {array} properties . The result from the DB query for properties
  * @param {object} options . Specific options to populate the result with
  * 
  * @return {array} . The formatted result
  */
-const beautifyInvestmentsFormat = async (investments, options = null) => {
+const beautifyPropertiesFormat = async (properties, options = null) => {
     let result = [];
-    for (let investment of investments) {
+    for (let property of properties) {
         //created by data
-        investment.createdBy.name = investment.createdBy.name[0];
-        investment.createdBy.email = investment.createdBy.email[0];
-        investment.createdBy.gravatar = 'https://gravatar.com/avatar/' + md5(investment.createdBy.email) + '?s=200';
-
-        //created by data
-        investment.updatedBy.name = investment.updatedBy.name[0];
-        investment.updatedBy.email = investment.updatedBy.email[0];
-        investment.updatedBy.gravatar = 'https://gravatar.com/avatar/' + md5(investment.updatedBy.email) + '?s=200';
-
-        //team data
-        if (investment.team && investment.team.slug && investment.team.slug.length) {
-            if (options && options.teamMembers) {
-                investment.team = await teamController.getTeamBySlugObject(investment.team.slug[0], null, { withId : false });
-            } else {
-                investment.team.name = investment.team.name[0];
-                investment.team.slug = investment.team.slug[0];
-                investment.team.description = investment.team.description[0];
-            }
-        } else {
-            investment.team = null;
-        }
+        property.createdBy.name = property.createdBy.name[0];
+        property.createdBy.email = property.createdBy.email[0];
+        property.createdBy.gravatar = 'https://gravatar.com/avatar/' + md5(property.createdBy.email) + '?s=200';
 
         //investment data
-        investment.currencyInvestmentData = investment.currencyInvestmentData[0];
-        if (!(options && options.investmentDataId)) {
-            delete investment.currencyInvestmentData['_id'];
+        property.houseData = property.houseData[0];
+        if (!(options && options.propertyDataId)) {
+            delete property.houseData['_id'];
         }
         
-        result.push(investment);
+        result.push(property);
     }
 
     return result;

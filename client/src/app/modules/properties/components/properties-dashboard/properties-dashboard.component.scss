@@ -1,0 +1,20 @@
+@import '../../../../../variables';
+
+.totals__card, .no-properties__card {
+  text-align: center;
+
+  md-card-content p {
+    margin-bottom: 0;
+  }
+}
+
+.progress-bar--get-properties {
+  width: 100%;
+}
+
+@media screen and (min-width: $screenGtXs) {
+
+  .progress-bar--get-properties {
+    width: 300px;
+  }
+}
