@@ -14,6 +14,19 @@ const propertySchema = new mongoose.Schema({
     ref : 'User',
     required : 'A property creator (User) is required!.'
   },
+  createdOn : {
+    type : Date,
+    default: Date.now
+  },
+  updatedBy: {
+    type : mongoose.Schema.ObjectId,
+    ref : 'User',
+    default: null
+  },
+  updatedOn : {
+    type : Date,
+    default: Date.now
+  },
   address: {
     type: String,
     required: 'An address is required!.',

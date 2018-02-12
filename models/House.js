@@ -55,7 +55,7 @@ const houseSchema = new mongoose.Schema({
     type : Number,
     default : null
   },
-  beedrooms : {
+  bedrooms : {
     type : Number,
     default : null
   },

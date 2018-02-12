@@ -15,4 +15,18 @@ router.route('/getAll').get(
   catchErrors(propertyController.getAllProperties)
 );
 
+router.route('/create').post(
+  authController.isLogggedIn, 
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  propertyController.validateRegister,
+  catchErrors(propertyController.create)
+);
+
+router.route('/update').post(
+  authController.isLogggedIn, 
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  propertyController.validateRegister,
+  catchErrors(propertyController.update)
+);
+
 module.exports = router;

@@ -27,7 +27,7 @@ export class Property {
   notes : string;
 
   constructor(
-      type : 'house'='house',
+      type : 'house' = 'house',
       address : string = null,
       createdBy : User = null,
       askingPrice : number = null,
