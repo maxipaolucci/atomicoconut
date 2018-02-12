@@ -26,6 +26,8 @@ require('./models/Team');
 require('./models/Team_User');
 require('./models/Investment');
 require('./models/CurrencyInvestment');
+require('./models/Property');
+require('./models/House');
 
 // Start our app!
 const app = require('./app');

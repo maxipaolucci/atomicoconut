@@ -5,8 +5,6 @@ export class Property {
   type : 'house' /*| 'building' | 'condo'*/;
   address : string;
   createdBy : User;
-  landArea : number; //square meters
-  floorArea : number; //square meters
   askingPrice : number;
   askingPriceUnit : string;
   offerPrice : number;
@@ -19,12 +17,6 @@ export class Property {
   reasonForSelling : string;
   marketValue : number;
   marketValueUnit : string;
-  registeredValue : number;
-  registeredValueUnit : string;
-  rates : number;
-  ratesUnit : string;
-  insurance : number;
-  insuranceUnit : string;
   renovationCost : number;
   renovationCostUnit : string;
   maintainanceCost : number;
@@ -33,46 +25,35 @@ export class Property {
   otherCost : number;
   otherCostUnit : string;
   notes : string;
-  capitalGrowth : number;
 
-  constructor(type : 'house'= null,
+  constructor(
+      type : 'house'='house',
       address : string = null,
       createdBy : User = null,
-      landArea : number = 0,
-      floorArea : number = 0,
-      askingPrice : number = 0,
+      askingPrice : number = null,
       askingPriceUnit : string = null,
-      offerPrice : number = 0,
+      offerPrice : number = null,
       offerPriceUnit : string = null,
-      walkAwayPrice : number = 0,
+      walkAwayPrice : number = null,
       walkAwayPriceUnit : string = null,
-      salePrice : number = 0,
+      salePrice : number = null,
       salePriceUnit : string = null,
       dateListed : Date = null,
       reasonForSelling : string = null,
-      marketValue : number = 0,
+      marketValue : number = null,
       marketValueUnit : string = null,
-      registeredValue : number = 0,
-      registeredValueUnit : string = null,
-      rates : number = 0,
-      ratesUnit : string = null,
-      insurance : number = 0,
-      insuranceUnit : string = null,
-      renovationCost : number = 0,
+      renovationCost : number = null,
       renovationCostUnit : string = null,
-      maintainanceCost : number = 0,
+      maintainanceCost : number = null,
       maintainanceCostUnit : string = null,
       description : string = null,
-      otherCost : number = 0,
+      otherCost : number = null,
       otherCostUnit : string = null,
-      notes : string = null,
-      capitalGrowth : number = 0) {
+      notes : string = null) {
     
     this.type = type;
     this.address = address;
     this.createdBy = createdBy;
-    this.landArea = landArea;
-    this.floorArea = floorArea;
     this.askingPrice = askingPrice;
     this.askingPriceUnit = askingPriceUnit;
     this.offerPrice = offerPrice;
@@ -85,12 +66,6 @@ export class Property {
     this.reasonForSelling = reasonForSelling;
     this.marketValue = marketValue;
     this.marketValueUnit = marketValueUnit;
-    this.registeredValue = registeredValue;
-    this.registeredValueUnit = registeredValueUnit;
-    this.rates = rates;
-    this.ratesUnit = ratesUnit;
-    this.insurance = insurance;
-    this.insuranceUnit = insuranceUnit;
     this.renovationCost = renovationCost;
     this.renovationCostUnit = renovationCostUnit;
     this.maintainanceCost = maintainanceCost;
@@ -99,6 +74,5 @@ export class Property {
     this.otherCost = otherCost;
     this.otherCostUnit = otherCostUnit;
     this.notes = notes;
-    this.capitalGrowth = capitalGrowth;
   }
 }

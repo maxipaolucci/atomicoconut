@@ -35,27 +35,26 @@ exports.validateRegister = (req, res, next) => {
 exports.getAllProperties = async (req, res) => {
     const methodTrace = `${errorTrace} getAllProperties() >`;
 
-    //1 - Get all the investments where user is involved
-    console.log(`${methodTrace} ${getMessage('message', 1034, req.user.email, true, 'all Investments', 'user', req.user.email)}`);
-    const aggregationStagesArr = [{ $match : { investmentDistribution : { $elemMatch : { email : req.user.email } } } }].concat(aggregationStages(), 
-            { $sort : { "currencyInvestmentData.buyingDate" : 1 } });
-    let investments = await Investment.aggregate(aggregationStagesArr);
+    //1 - Get all the properties where user is involved (created or has a part of an investment in the property)
+    console.log(`${methodTrace} ${getMessage('message', 1034, req.user.email, true, 'all Properties', 'user', req.user.email)}`);
+    const aggregationStagesArr = [{ $match : { createdBy : req.user._id } }].concat(aggregationStages());
+    let properties = await Property.aggregate(aggregationStagesArr);
 
     //2 - Parse the recordset from DB and organize the info better.
-    let result = await beautifyInvestmentsFormat(investments);
+    let result = await beautifyPropertiesFormat(properties);
 
     //3- Return investments info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, result.length, 'Investment(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, result.length, 'Property(s)')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1036, null, false, result.length, 'Investment(s)'),
+        msg : getMessage('message', 1036, null, false, result.length, 'Property(s)'),
         data : result
     });
 };
 
 /**
- * Return the basic aggregation stages to populate investments results
+ * Return the basic aggregation stages to populate property results
  */
 const aggregationStages = () => {
     return [
@@ -68,37 +67,14 @@ const aggregationStages = () => {
                 }
             }
         },
-        { $lookup : { from : 'users', localField : 'updatedBy', foreignField : '_id', as : 'updatorData' } },
-        { 
-            $addFields : {
-                updatedBy : { //replaces the exitent createdBy field with this
-                    name : '$updatorData.name',
-                    email : '$updatorData.email'
-                }
-            }
-        },
-        { $lookup : { from : 'teams', localField : 'team', foreignField : '_id', as : 'teamData' } },
-        { 
-            $addFields : {
-                team : { //replaces the exitent createdBy field with this
-                    name : '$teamData.name',
-                    slug : '$teamData.slug',
-                    description : '$teamData.description'
-                }
-            }
-        },
-        { $lookup : { from : 'currencyinvestments', localField : '_id', foreignField : 'parent', as : 'currencyInvestmentData' } }, //for currency investments
-        //{ $lookup : { from : 'propertyinvestments', localField : '_id', foreignField : 'parent', as : 'propertyInvestmentData' } } //For property investments
+        { $lookup : { from : 'houses', localField : '_id', foreignField : 'parent', as : 'houseData' } }, //for houses
         {
             $project : {
                 __v : false,
                 creatorData : false,
-                updatorData : false,
-                teamData : false,
-                currencyInvestmentData : { 
+                houseData : { 
                     __v : false
-                },
-                "investmentDistribution._id" : false
+                }
             }
         }
     ];

@@ -3,6 +3,17 @@ import { Property } from './property';
 
 export class House extends Property {
 
+  buildingType : 'house'  | 'unit' | 'apartment';
+  titleType : string;
+  landArea : number; //square meters
+  floorArea : number; //square meters
+  registeredValue : number;
+  registeredValueUnit : string;
+  rates : number;
+  ratesUnit : string;
+  insurance : number;
+  insuranceUnit : string;
+  capitalGrowth : number;
   bedrooms : number;
   bathrooms : number;
   parkingSpaces : number;
@@ -17,63 +28,75 @@ export class House extends Property {
   bodyCorporateUnit : string;
   utilitiesCost : number;
   utilitiesCostUnit : string;
+  managed : number;
   agent : string; //this must be a contact in a contact persons module like networking
   
 
-  constructor(type : 'house' = null,
+  constructor(type : 'house' = 'house',
       address : string = null,
       createdBy : User = null,
-      landArea : number = 0,
-      floorArea : number = 0,
-      askingPrice : number = 0,
+      landArea : number = null,
+      floorArea : number = null,
+      askingPrice : number = null,
       askingPriceUnit : string = null,
-      offerPrice : number = 0,
+      offerPrice : number = null,
       offerPriceUnit : string = null,
-      walkAwayPrice : number = 0,
+      walkAwayPrice : number = null,
       walkAwayPriceUnit : string = null,
-      salePrice : number = 0,
+      salePrice : number = null,
       salePriceUnit : string = null,
       dateListed : Date = null,
       reasonForSelling : string = null,
-      marketValue : number = 0,
+      marketValue : number = null,
       marketValueUnit : string = null,
-      registeredValue : number = 0,
+      registeredValue : number = null,
       registeredValueUnit : string = null,
-      rates : number = 0,
+      rates : number = null,
       ratesUnit : string = null,
-      insurance : number = 0,
+      insurance : number = null,
       insuranceUnit : string = null,
-      renovationCost : number = 0,
+      renovationCost : number = null,
       renovationCostUnit : string = null,
-      maintainanceCost : number = 0,
+      maintainanceCost : number = null,
       maintainanceCostUnit : string = null,
       description : string = null,
-      otherCost : number = 0,
+      otherCost : number = null,
       otherCostUnit : string = null,
       notes : string = null,
-      capitalGrowth : number = 0,
-      bedrooms : number = 0,
-      bathrooms : number = 0,
-      parkingSpaces : number = 0,
+      capitalGrowth : number = null,
+      bedrooms : number = null,
+      bathrooms : number = null,
+      parkingSpaces : number = null,
       fenced : boolean = false,
       rented : boolean = false,
-      rentPrice : number = 0,
+      rentPrice : number = null,
       rentPriceUnit : string= null,
       rentPricePeriod : 'week' | 'month' = 'week',
       rentAppraisalDone : boolean = false,
-      vacancy : number = 0,
-      bodyCorporate : number = 0,
+      vacancy : number = null,
+      bodyCorporate : number = null,
       bodyCorporateUnit : string= null,
-      utilitiesCost : number = 0,
+      utilitiesCost : number = null,
       utilitiesCostUnit : string= null,
-      agent : string) {
+      agent : string,
+      managed : number = null,
+      buildingType : 'house'  | 'unit' | 'apartment' = 'house',
+      titleType : string = null) {
     
-    super(type, address, createdBy, landArea, floorArea, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit,
+    super(type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit,
         walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue,
-        marketValueUnit, registeredValue, registeredValueUnit, rates, ratesUnit, insurance, insuranceUnit,
-        renovationCost, renovationCostUnit, maintainanceCost, maintainanceCostUnit, description, otherCost,
-        otherCostUnit, notes, capitalGrowth);
-
+        marketValueUnit, renovationCost, renovationCostUnit, maintainanceCost, maintainanceCostUnit, description, otherCost,
+        otherCostUnit, notes);
+    
+    this.landArea = landArea;
+    this.floorArea = floorArea;
+    this.registeredValue = registeredValue;
+    this.registeredValueUnit = registeredValueUnit;
+    this.rates = rates;
+    this.ratesUnit = ratesUnit;
+    this.insurance = insurance;
+    this.insuranceUnit = insuranceUnit;
+    this.capitalGrowth = capitalGrowth;
     this.bedrooms = bedrooms;
     this.bathrooms = bathrooms;
     this.parkingSpaces = parkingSpaces;
@@ -89,5 +112,8 @@ export class House extends Property {
     this.utilitiesCost = utilitiesCost;
     this.utilitiesCostUnit = utilitiesCostUnit;
     this.agent = agent;
+    this.managed = managed;
+    this.buildingType = buildingType;
+    this.titleType = titleType;
   }
 }
