@@ -8,6 +8,9 @@ const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
 
 const errorTrace = 'propertyController >';
+const propertyTypes = {
+    HOUSE : 'house'
+};
 
 exports.validateRegister = (req, res, next) => {
     const methodTrace = `${errorTrace} validateRegister() >`;
@@ -70,7 +73,7 @@ exports.create = async (req, res, next) => {
         console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Investment')}`);
 
         const propertyType = null;
-        if (property.propertyType === 'house') {
+        if (property.propertyType === propertyTypes.HOUSE) {
             //save a new house record in DB
             console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'House')}`);
             propertyType = await (new House({
@@ -145,8 +148,9 @@ exports.update = async (req, res, next) => {
 
     //1 - get the record by ID
     let property = await getByIdObject(req.body.id, user.email, {
-        investmentDataId : true
+        propertyTypeData : true
     });
+
     if (!property) {
         //no record found with that id
         console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, 'Property')}`);
@@ -227,7 +231,7 @@ exports.update = async (req, res, next) => {
         console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Property')}`);
 
         const propertyType = null;
-        if (property.propertyType === 'House') {
+        if (property.propertyType === propertyTypes.HOUSE) {
             const propertyTypeUpdates = {
                 buildingType : req.body.buildingType,
                 titleType : req.body.investmentData.titleType,
@@ -297,6 +301,187 @@ exports.update = async (req, res, next) => {
         status : "error", 
         codeno : 465,
         msg : getMessage('error', 465, null, false, 'Property', '_id', originalProperty._id),
+        data : null
+    });
+};
+
+exports.delete = async (req, res) => {
+    const methodTrace = `${errorTrace} delete() >`;
+
+    const user = req.user;
+    //1 - get the record by ID
+    const property = await getByIdObject(req.params.id, user.email, {
+        propertyTypeDataId : true
+    });
+    
+    //2 - check that the property was created by the user or he is part of an investment on that property
+    if (property /* && property.investmentDistribution*/) {
+        let found = false;
+        if (property.createdBy === user._id) {
+            found = true;
+        }
+        // for (let member of property.investmentDistribution) {
+        //     if (user.email === member.email) {
+        //         found = true;
+        //         break;
+        //     }
+        // }
+
+        if (found) {
+            //3.1 - The property,in some way, belongs to the user, we proceed to delete
+            let writeResult = null;
+            let propertyTypeDataId = null;
+            let propertyTypeDataModel = null;
+            if (property.propertyType === propertyTypes.HOUSE) {
+                propertyTypeDataModel = 'House';
+                propertyTypeDataId = property.propertyTypeData._id;
+                writeResult = await deletePropertyTypeData(propertyTypeDataModel, propertyTypeDataId, user.email);
+            }
+            
+            if (writeResult && writeResult.result.n > 0) {
+                writeResult = null;
+                console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Property', '_id', property._id)}`);
+
+                writeResult = await Property.remove({ _id : property._id });
+                if (writeResult && writeResult.result.n > 0) {
+                    //Success deleting property
+                    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Property')}`);
+                    res.json({
+                        status : 'success', 
+                        codeno : 200,
+                        msg : getMessage('message', 1039, null, false, 'Property'),
+                        data : { removed : writeResult.result.n }
+                    });
+    
+                    return;
+                } else {
+                    //Failed to delete property
+                    console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Property', '_id', property._id)}`);
+                    res.status(401).json({ 
+                        status : "error", 
+                        codeno : 464,
+                        msg : getMessage('error', 464, null, false, 'Property', '_id', property._id),
+                        data : null
+                    });
+    
+                    return;
+                }
+            } else {
+                //Failed to delete property type data
+                res.status(401).json({ 
+                    status : "error", 
+                    codeno : 464,
+                    msg : getMessage('error', 464, null, false, propertyTypeDataModel, '_id', propertyTypeDataId),
+                    data : null
+                });
+
+                return;
+            }
+            
+        }
+    } else if (!property){
+        //Nothing found for that ID
+        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Property')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 461,
+            msg : getMessage('error', 461, null, false, 'Property'),
+            data : null
+        });
+
+        return;
+    }
+
+    //3.2 - the user it is not the creator of the property or a member of an investment in that property
+    console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Property', req.user.email)}`);
+    res.status(401).json({ 
+        status : "error", 
+        codeno : 462,
+        msg : getMessage('error', 462, null, false, 'Property', req.user.email),
+        data : null
+    });
+};
+
+/**
+ * Deletes a currency investment record from db
+ * @param {string} model - The model (table) where to delete the record
+ * @param {string} id . The record id
+ * @param {string} userEmail . The user email for debug purposes 
+ */
+const deletePropertyTypeData = async (model, id, userEmail) => {
+    const methodTrace = `${errorTrace} deletePropertyTypeData() >`;
+    
+    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, model, '_id', id)}`);
+    
+    const writeResult = null;
+    if (model.toLowerCase === propertyTypes.HOUSE) {
+        writeResult = await House.remove({ _id : id });
+    }
+    
+    if (writeResult && writeResult.result.n > 0) {
+        console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, model)}`);
+    } else {
+        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, model, '_id', id)}`);
+    }
+    
+    return writeResult;
+};
+
+/**
+ * Get a property by ID
+ */
+exports.getById = async (req, res) => {
+    const methodTrace = `${errorTrace} getById() >`;
+
+    //1 - get record by ID
+    const result = await getByIdObject(req.params.id, req.user.email, {
+        propertyTypeDataId : false
+    });
+    
+    //2 - check that the user is the creator of the property or he is investing in it
+    if (result /*&& result.investmentDistribution*/) {
+        let found = false;
+
+        if (result.createdBy === req.user._id) {
+            found = true;
+        }
+        // for (let member of result.investmentDistribution) {
+        //     if (req.user.email === member.email) {
+        //         found = true;
+        //         break;
+        //     }
+        // }
+
+        if (found) {
+            //3.1 - The user is member of the property, send it back to the client
+            res.json({
+                status : 'success', 
+                codeno : 200,
+                msg : getMessage('message', 1036, null, false, 1, 'Property(s)'),
+                data : result
+            });
+
+            return;
+        }
+    } else if (!result){
+        //Nothing found for that ID
+        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Property')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 461,
+            msg : getMessage('error', 461, null, false, 'Property'),
+            data : null
+        });
+
+        return;
+    }
+
+    //3.2 - the user is not allow to receive information for the record requested
+    console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Property', req.user.email)}`);
+    res.status(401).json({ 
+        status : "error", 
+        codeno : 462,
+        msg : getMessage('error', 462, null, false, 'Property', req.user.email),
         data : null
     });
 };
@@ -409,11 +594,11 @@ const beautifyPropertiesFormat = async (properties, options = null) => {
         if (property.houseData[0]) {
             property.propertyTypeData = property.houseData[0];
             delete property['houseData'];
-            if (!(options && options.propertyTypeDataId)) {
-                delete property.propertyTypeData['_id'];
-            }
         }
-        
+
+        if (property.propertyTypeData && !(options && options.propertyTypeDataId)) {
+            delete property.propertyTypeData['_id'];
+        }
         
         result.push(property);
     }

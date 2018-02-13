@@ -29,4 +29,15 @@ router.route('/update').post(
   catchErrors(propertyController.update)
 );
 
+router.route('/delete/:id').delete( 
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  catchErrors(propertyController.delete)
+);
+
+router.route('/:id').get(
+  authController.isLogggedIn,
+  catchErrors(userController.checkLoggedInUserWithEmail),
+  catchErrors(propertyController.getById)
+);
+
 module.exports = router;
