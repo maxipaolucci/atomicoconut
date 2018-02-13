@@ -2948,6 +2948,7 @@ var PropertiesEditComponent = /** @class */ (function () {
         this.editPropertyServiceRunning = false;
         this.getPropertyServiceRunning = false;
         this.subscription = new rxjs_1.Subscription();
+        this.propertyTypeDataValid = false; //this value is set when property type data form is updated
     }
     PropertiesEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -3019,23 +3020,60 @@ var PropertiesEditComponent = /** @class */ (function () {
         var newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(function (property) {
             _this.property = property;
             //populate the model
-            // this.model.owner = property.team ? 'team' : 'me';
-            // this.model.team = property.team;
-            // this.model.teamSlug = property.team ? property.team.slug : null;
-            // this.model.investmentDistribution = property.investmentDistribution;
-            // for (let portion of property.investmentDistribution) {
-            //   this.model.membersPercentage[portion.email] = portion.percentage;
-            // }
-            // this.model.investmentAmount = property.investmentAmount;
-            // this.model.investmentAmountUnit = property.investmentAmountUnit;
-            _this.model.type = property.propertyType;
+            _this.model.address = property.address;
+            _this.model.askingPrice = property.askingPrice;
+            _this.model.askingPriceUnit = property.askingPriceUnit;
+            _this.model.offerPrice = property.offerPrice;
+            _this.model.offerPriceUnit = property.offerPriceUnit;
+            _this.model.walkAwayPrice = property.walkAwayPrice;
+            _this.model.walkAwayPriceUnit = property.walkAwayPriceUnit;
+            _this.model.salePrice = property.salePrice;
+            _this.model.salePriceUnit = property.salePriceUnit;
+            _this.model.dateListed = property.dateListed;
+            _this.model.reasonForSelling = property.reasonForSelling;
+            _this.model.marketValue = property.marketValue;
+            _this.model.marketValueUnit = property.marketValueUnit;
+            _this.model.renovationCost = property.renovationCost;
+            _this.model.renovationCostUnit = property.renovationCostUnit;
+            _this.model.maintainanceCost = property.maintainanceCost;
+            _this.model.maintainanceCostUnit = property.maintainanceCostUnit;
+            _this.model.description = property.description;
+            _this.model.otherCost = property.otherCost;
+            _this.model.otherCostUnit = property.otherCostUnit;
+            _this.model.notes = property.notes;
+            _this.model.type = property.type;
             if (property instanceof house_1.House) {
-                _this.model.propertyTypeData = {};
+                _this.model.propertyTypeData = {
+                    buildingType: property.buildingType,
+                    titleType: property.titleType,
+                    landArea: property.landArea,
+                    floorArea: property.floorArea,
+                    registeredValue: property.registeredValue,
+                    registeredValueUnit: property.registeredValueUnit,
+                    rates: property.rates,
+                    ratesUnit: property.ratesUnit,
+                    insurance: property.insurance,
+                    insuranceUnit: property.insuranceUnit,
+                    capitalGrowth: property.capitalGrowth,
+                    bedrooms: property.bedrooms,
+                    bathrooms: property.bathrooms,
+                    parkingSpaces: property.parkingSpaces,
+                    fenced: property.fenced,
+                    rented: property.rented,
+                    rentPrice: property.rentPrice,
+                    rentPriceUnit: property.rentPriceUnit,
+                    rentPricePeriod: property.rentPricePeriod,
+                    rentAppraisalDone: property.rentAppraisalDone,
+                    vacancy: property.vacancy,
+                    bodyCorporate: property.bodyCorporate,
+                    bodyCorporateUnit: property.bodyCorporateUnit,
+                    utilitiesCost: property.utilitiesCost,
+                    utilitiesCostUnit: property.utilitiesCostUnit,
+                    managed: property.managed,
+                    agent: property.agent
+                };
             }
             _this.getPropertyServiceRunning = false;
-            if (_this.form && !_this.formChangesSubscription) {
-                _this.subscribeFormValueChanges();
-            }
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
@@ -3051,6 +3089,63 @@ var PropertiesEditComponent = /** @class */ (function () {
             _this.getPropertyServiceRunning = false;
         });
         this.subscription.add(newSubscription);
+    };
+    PropertiesEditComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        this.editPropertyServiceRunning = true;
+        this.model.createdOn = new Date(Date.now());
+        this.model.updatedOn = new Date(Date.now());
+        //call the investment create service
+        var newSubscription = this.propertiesService.create(this.model).subscribe(function (data) {
+            if (data && data.id && data.type) {
+                _this.appService.showResults("Property successfully created!", 'success');
+                _this.router.navigate(['/properties/', data.type, 'edit', data.id]);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+                _this.editPropertyServiceRunning = false;
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit property service.", error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error with the property services, please try again in a few minutes.", 'error');
+            }
+            _this.editPropertyServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    PropertiesEditComponent.prototype.onUpdate = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > onUpdate() > "; //for debugging
+        this.editPropertyServiceRunning = true;
+        this.model.updatedOn = new Date(Date.now());
+        //call the investment create service
+        var newSubscription = this.propertiesService.update(this.model).subscribe(function (data) {
+            if (data && data.id && data.type) {
+                _this.appService.showResults("Property successfully updated!", 'success');
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            _this.editPropertyServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the create/edit property service.", error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error with the property services, please try again in a few minutes.", 'error');
+            }
+            _this.editPropertyServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    PropertiesEditComponent.prototype.onCurrencyUnitChange = function ($event) {
+        if ($event.source.id === 'askingPriceUnit') {
+            this.model.askingPriceUnit = $event.value;
+        }
+    };
+    PropertiesEditComponent.prototype.onPropertyTypeDataChange = function ($event) {
+        this.model.propertyTypeData = $event.value.model;
+        this.propertyTypeDataValid = $event.value.valid;
     };
     PropertiesEditComponent = __decorate([
         core_1.Component({
@@ -3363,6 +3458,10 @@ var environment_1 = __webpack_require__("../../../../../src/environments/environ
 var http_1 = __webpack_require__("../../../common/esm5/http.js");
 var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
 var Observable_1 = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
+var constants_1 = __webpack_require__("../../../../../src/app/constants.ts");
+var house_1 = __webpack_require__("../../../../../src/app/modules/properties/models/house.ts");
+var of_1 = __webpack_require__("../../../../rxjs/_esm5/observable/of.js");
 var PropertiesService = /** @class */ (function () {
     function PropertiesService(http, appService) {
         this.http = http;
@@ -3370,6 +3469,57 @@ var PropertiesService = /** @class */ (function () {
         this.serverHost = environment_1.environment.apiHost + '/api/properties';
         this.headers = new http_1.HttpHeaders().set('Content-Type', 'application/json');
     }
+    /**
+     * Server call to Create a new property in the system
+     * @param postData
+     */
+    PropertiesService.prototype.create = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > create() > "; //for debugging
+        return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError(methodTrace));
+    };
+    /**
+     * Server call to Update an investment in the system
+     * @param postData
+     */
+    PropertiesService.prototype.update = function (postData) {
+        if (postData === void 0) { postData = {}; }
+        var methodTrace = this.constructor.name + " > update() > "; //for debugging
+        return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError(methodTrace));
+    };
+    /**
+     * Server call to Get a property from the server based on its ID
+     * @param {string} id . The property id
+     */
+    PropertiesService.prototype.getPropertyById = function (email, id) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getPropertyById() > "; //for debugging
+        if (!id || !email) {
+            this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
+            return of_1.of(null);
+        }
+        var params = new http_1.HttpParams().set('email', email);
+        var data$ = this.http.get(this.serverHost + "/" + id, { params: params })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError(methodTrace));
+        return data$.switchMap(function (data) {
+            var result = null;
+            if (data && data._id) {
+                var createdBy = new user_1.User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
+                if (data.propertyType === constants_1.propertyTypes.HOUSE) {
+                    result = new house_1.House(data.propertyType, data.address, createdBy, data.landArea, data.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.registeredValue, data.registeredValueUnit, data.rates, data.ratesUnit, data.insurance, data.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintainanceCost, data.maintainanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.capitalGrowth, data.bedrooms, data.bathrooms, data.parkingSpaces, data.fenced, data.rented, data.rentPrice, data.rentPriceUnit, data.rentPricePeriod, data.rentAppraisalDone, data.vacancy, data.bodyCorporate, data.bodyCorporateUnit, data.utilitiesCost, data.utilitiesCostUnit, data.agent, data.managed, data.buildingType, data.titleType);
+                }
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return Observable_1.Observable.of(result);
+        });
+    };
     /**
      * Server call to Get all the properties for the current user from the server.
      * This proeprties will be the properties the user created plus the investment properties where she/he has a piece of the cake.
@@ -3392,12 +3542,10 @@ var PropertiesService = /** @class */ (function () {
                 for (var _i = 0, responseData_1 = responseData; _i < responseData_1.length; _i++) {
                     var item = responseData_1[_i];
                     properties.push(item); //TODO create clases of property
-                    // const createdBy = new User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
-                    // const team = item.team ? new Team(item.team.name, item.team.description, item.team.slug) : null;
-                    // if (item.investmentType === 'currency' || item.investmentType === 'crypto') {
-                    //   properties.push(new CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.currencyInvestmentData.amountUnit, 
-                    //       item.currencyInvestmentData.amount, item.currencyInvestmentData.buyingPrice, item.currencyInvestmentData.buyingPriceUnit, item.currencyInvestmentData.buyingDate, item.investmentType));
-                    // }
+                    var createdBy = new user_1.User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
+                    if (item.propertyType === constants_1.propertyTypes.HOUSE) {
+                        properties.push(new house_1.House(item.propertyType, item.address, createdBy, item.landArea, item.floorArea, item.askingPrice, item.askingPriceUnit, item.offerPrice, item.offerPriceUnit, item.walkAwayPrice, item.walkAwayPriceUnit, item.salePrice, item.salePriceUnit, item.dateListed, item.reasonForSelling, item.marketValue, item.marketValueUnit, item.registeredValue, item.registeredValueUnit, item.rates, item.ratesUnit, item.insurance, item.insuranceUnit, item.renovationCost, item.renovationCostUnit, item.maintainanceCost, item.maintainanceCostUnit, item.description, item.otherCost, item.otherCostUnit, item.notes, item.capitalGrowth, item.bedrooms, item.bathrooms, item.parkingSpaces, item.fenced, item.rented, item.rentPrice, item.rentPriceUnit, item.rentPricePeriod, item.rentAppraisalDone, item.vacancy, item.bodyCorporate, item.bodyCorporateUnit, item.utilitiesCost, item.utilitiesCostUnit, item.agent, item.managed, item.buildingType, item.titleType));
+                    }
                 }
             }
             else {
@@ -3405,6 +3553,22 @@ var PropertiesService = /** @class */ (function () {
             }
             return Observable_1.Observable.of(properties);
         });
+    };
+    /**
+     * Server call to delete a property from the system
+     * @param {string} id . The record id
+     * @param {string} email . The current user email.
+     */
+    PropertiesService.prototype.delete = function (id, email) {
+        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        if (!id || !email) {
+            this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
+            return Observable_1.Observable.throw(null);
+        }
+        var params = new http_1.HttpParams().set('email', email);
+        return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, params: params })
+            .map(this.appService.extractData)
+            .catch(this.appService.handleError(methodTrace));
     };
     PropertiesService = __decorate([
         core_1.Injectable(),

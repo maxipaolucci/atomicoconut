@@ -8,6 +8,7 @@ import { PropertiesService } from '../../properties.service';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { propertyTypes } from '../../../../constants';
 import { House } from '../../models/house';
+import { MatSelectChange } from '@angular/material';
 
 @Component({
   selector: 'properties-edit',
@@ -53,6 +54,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   editPropertyServiceRunning : boolean = false;
   getPropertyServiceRunning : boolean = false;
   subscription : Subscription = new Subscription();
+  propertyTypeDataValid : boolean = false; //this value is set when property type data form is updated
   
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private propertiesService : PropertiesService, 
       private appService : AppService, private router : Router) { }
@@ -136,31 +138,62 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       (property : Property) => {
         this.property = property;
         //populate the model
-        // this.model.owner = property.team ? 'team' : 'me';
-        // this.model.team = property.team;
-        // this.model.teamSlug = property.team ? property.team.slug : null;
-        // this.model.investmentDistribution = property.investmentDistribution;
-        // for (let portion of property.investmentDistribution) {
-        //   this.model.membersPercentage[portion.email] = portion.percentage;
-        // }
-        // this.model.investmentAmount = property.investmentAmount;
-        // this.model.investmentAmountUnit = property.investmentAmountUnit;
-        this.model.type = property.propertyType;
+        this.model.address = property.address;
+        this.model.askingPrice = property.askingPrice;
+        this.model.askingPriceUnit = property.askingPriceUnit;
+        this.model.offerPrice = property.offerPrice;
+        this.model.offerPriceUnit = property.offerPriceUnit;
+        this.model.walkAwayPrice = property.walkAwayPrice;
+        this.model.walkAwayPriceUnit = property.walkAwayPriceUnit;
+        this.model.salePrice = property.salePrice;
+        this.model.salePriceUnit = property.salePriceUnit;
+        this.model.dateListed = property.dateListed;
+        this.model.reasonForSelling = property.reasonForSelling;
+        this.model.marketValue = property.marketValue;
+        this.model.marketValueUnit = property.marketValueUnit;
+        this.model.renovationCost = property.renovationCost;
+        this.model.renovationCostUnit = property.renovationCostUnit;
+        this.model.maintainanceCost = property.maintainanceCost;
+        this.model.maintainanceCostUnit = property.maintainanceCostUnit;
+        this.model.description = property.description;
+        this.model.otherCost = property.otherCost;
+        this.model.otherCostUnit = property.otherCostUnit;
+        this.model.notes = property.notes;
+        this.model.type = property.type;
+        
         if (property instanceof House) {
           this.model.propertyTypeData = {
-            // type : property.type,
-            // unit : property.unit,
-            // amount : property.amount,
-            // buyingPrice : property.buyingPrice,
-            // buyingPriceUnit : property.buyingPriceUnit,
-            // buyingDate : property.buyingDate
+            buildingType : property.buildingType,
+            titleType : property.titleType,
+            landArea : property.landArea,
+            floorArea : property.floorArea,
+            registeredValue : property.registeredValue,
+            registeredValueUnit : property.registeredValueUnit,
+            rates : property.rates,
+            ratesUnit : property.ratesUnit,
+            insurance : property.insurance,
+            insuranceUnit : property.insuranceUnit,
+            capitalGrowth : property.capitalGrowth,
+            bedrooms : property.bedrooms,
+            bathrooms : property.bathrooms,
+            parkingSpaces : property.parkingSpaces,
+            fenced : property.fenced,
+            rented : property.rented,
+            rentPrice : property.rentPrice,
+            rentPriceUnit : property.rentPriceUnit,
+            rentPricePeriod : property.rentPricePeriod,
+            rentAppraisalDone : property.rentAppraisalDone,
+            vacancy : property.vacancy,
+            bodyCorporate : property.bodyCorporate,
+            bodyCorporateUnit : property.bodyCorporateUnit,
+            utilitiesCost : property.utilitiesCost,
+            utilitiesCostUnit : property.utilitiesCostUnit,
+            managed : property.managed,
+            agent : property.agent
           };
         }
 
         this.getPropertyServiceRunning = false;
-        if (this.form && !this.formChangesSubscription) {
-          this.subscribeFormValueChanges();
-        }
       },
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
@@ -178,5 +211,77 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     );
 
     this.subscription.add(newSubscription);
+  }
+
+  onSubmit() {
+    const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
+
+    this.editPropertyServiceRunning = true;
+
+    this.model.createdOn = new Date(Date.now());
+    this.model.updatedOn = new Date(Date.now());
+    //call the investment create service
+    const newSubscription = this.propertiesService.create(this.model).subscribe(
+      (data : any) => {
+        if (data && data.id && data.type) {
+          this.appService.showResults(`Property successfully created!`, 'success');
+          this.router.navigate(['/properties/', data.type, 'edit', data.id]);
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.editPropertyServiceRunning = false;
+        }
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit property service.`, error);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, 'error');
+        }
+
+        this.editPropertyServiceRunning = false;
+      }
+    );
+
+    this.subscription.add(newSubscription);
+  }
+
+  onUpdate() {
+    const methodTrace = `${this.constructor.name} > onUpdate() > `; //for debugging
+
+    this.editPropertyServiceRunning = true;
+
+    this.model.updatedOn = new Date(Date.now());
+    //call the investment create service
+    const newSubscription = this.propertiesService.update(this.model).subscribe(
+      (data : any) => {
+        if (data && data.id && data.type) {
+          this.appService.showResults(`Property successfully updated!`, 'success');
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        }
+
+        this.editPropertyServiceRunning = false;
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit property service.`, error);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, 'error');
+        }
+
+        this.editPropertyServiceRunning = false;
+      }
+    );
+
+    this.subscription.add(newSubscription);
+  }
+
+  onCurrencyUnitChange($event : MatSelectChange) {
+    if ($event.source.id === 'askingPriceUnit') {
+      this.model.askingPriceUnit = $event.value;
+    }
+  }
+
+  onPropertyTypeDataChange($event : any) {
+    this.model.propertyTypeData = $event.value.model;
+    this.propertyTypeDataValid = $event.value.valid;
   }
 }
