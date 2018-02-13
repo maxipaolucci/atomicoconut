@@ -284,67 +284,67 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   /**
-   * Get a team from server based on the id provided
+   * Get an investment from server based on the id provided
    * @param {string} id 
    */
   getInvestment(id : string) {
     const methodTrace = `${this.constructor.name} > getInvestment() > `; //for debugging
     
-        if (!id) {
-          this.appService.showResults(`Invalid investment ID`, 'error');
-          this.appService.consoleLog('error', `${methodTrace} ID parameter must be provided, but was: `, id);
-          return false;
+    if (!id) {
+      this.appService.showResults(`Invalid investment ID`, 'error');
+      this.appService.consoleLog('error', `${methodTrace} ID parameter must be provided, but was: `, id);
+      return false;
+    }
+
+    this.getInvestmentServiceRunning = true;
+
+    const newSubscription = this.investmentsService.getInvestmentById(this.user.email, id).subscribe(
+      (investment : Investment) => {
+        this.investment = investment;
+        //populate the model
+        this.model.owner = investment.team ? 'team' : 'me';
+        this.model.team = investment.team;
+        this.getSelectedTeam(); //this is necesary to make the selectbox in ui set a team
+        this.model.teamSlug = investment.team ? investment.team.slug : null;
+        this.model.investmentDistribution = investment.investmentDistribution;
+        for (let portion of investment.investmentDistribution) {
+          this.model.membersPercentage[portion.email] = portion.percentage;
         }
-    
-        this.getInvestmentServiceRunning = true;
-    
-        const newSubscription = this.investmentsService.getInvestmentById(this.user.email, id).subscribe(
-          (investment : Investment) => {
-            this.investment = investment;
-            //populate the model
-            this.model.owner = investment.team ? 'team' : 'me';
-            this.model.team = investment.team;
-            this.getSelectedTeam(); //this is necesary to make the selectbox in ui set a team
-            this.model.teamSlug = investment.team ? investment.team.slug : null;
-            this.model.investmentDistribution = investment.investmentDistribution;
-            for (let portion of investment.investmentDistribution) {
-              this.model.membersPercentage[portion.email] = portion.percentage;
-            }
-            this.model.investmentAmount = investment.investmentAmount;
-            this.model.investmentAmountUnit = investment.investmentAmountUnit;
-            this.model.type = investment.type;
-            if (investment instanceof CurrencyInvestment) {
-              this.model.investmentData = {
-                type : investment.type,
-                unit : investment.unit,
-                amount : investment.amount,
-                buyingPrice : investment.buyingPrice,
-                buyingPriceUnit : investment.buyingPriceUnit,
-                buyingDate : investment.buyingDate
-              };
-            }
-    
-            this.getInvestmentServiceRunning = false;
-            if (this.form && !this.formChangesSubscription) {
-              this.subscribeFormValueChanges();
-            }
-          },
-          (error : any) => {
-            this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-            if (error.codeno === 400) {
-              this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-            } else if (error.codeno === 461 || error.codeno === 462) {
-              this.appService.showResults(error.msg, 'error');
-              this.router.navigate(['/welcome']);
-            } else {
-              this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-            }
-    
-            this.getInvestmentServiceRunning = false;
-          }
-        );
-    
-        this.subscription.add(newSubscription);
+        this.model.investmentAmount = investment.investmentAmount;
+        this.model.investmentAmountUnit = investment.investmentAmountUnit;
+        this.model.type = investment.type;
+        if (investment instanceof CurrencyInvestment) {
+          this.model.investmentData = {
+            type : investment.type,
+            unit : investment.unit,
+            amount : investment.amount,
+            buyingPrice : investment.buyingPrice,
+            buyingPriceUnit : investment.buyingPriceUnit,
+            buyingDate : investment.buyingDate
+          };
+        }
+
+        this.getInvestmentServiceRunning = false;
+        if (this.form && !this.formChangesSubscription) {
+          this.subscribeFormValueChanges();
+        }
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else if (error.codeno === 461 || error.codeno === 462) {
+          this.appService.showResults(error.msg, 'error');
+          this.router.navigate(['/welcome']);
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+        }
+
+        this.getInvestmentServiceRunning = false;
+      }
+    );
+
+    this.subscription.add(newSubscription);
   }
 
   onSelectChange(matSelectChange : MatSelectChange) {

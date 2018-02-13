@@ -735,6 +735,19 @@ exports.WelcomeComponent = WelcomeComponent;
 
 /***/ }),
 
+/***/ "../../../../../src/app/constants.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.propertyTypes = {
+    HOUSE: 'house'
+};
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/constants/constants.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2179,7 +2192,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
         return result;
     };
     /**
-     * Get a team from server based on the id provided
+     * Get an investment from server based on the id provided
      * @param {string} id
      */
     InvestmentsEditComponent.prototype.getInvestment = function (id) {
@@ -2721,67 +2734,6 @@ exports.Investment = Investment;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<p>\n  houses-edit works!\n</p>\n"
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.ts":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var HousesEditComponent = /** @class */ (function () {
-    function HousesEditComponent() {
-    }
-    HousesEditComponent.prototype.ngOnInit = function () {
-    };
-    HousesEditComponent = __decorate([
-        core_1.Component({
-            selector: 'app-houses-edit',
-            template: __webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.scss")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], HousesEditComponent);
-    return HousesEditComponent;
-}());
-exports.HousesEditComponent = HousesEditComponent;
-
-
-/***/ }),
-
 /***/ "../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html":
 /***/ (function(module, exports) {
 
@@ -2905,6 +2857,385 @@ exports.PropertiesDashboardComponent = PropertiesDashboardComponent;
 
 /***/ }),
 
+/***/ "../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  houses-edit works!\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("../../../core/esm5/core.js");
+var rxjs_1 = __webpack_require__("../../../../rxjs/Rx.js");
+var router_1 = __webpack_require__("../../../router/esm5/router.js");
+var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var properties_service_1 = __webpack_require__("../../../../../src/app/modules/properties/properties.service.ts");
+var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var constants_1 = __webpack_require__("../../../../../src/app/constants.ts");
+var house_1 = __webpack_require__("../../../../../src/app/modules/properties/models/house.ts");
+var PropertiesEditComponent = /** @class */ (function () {
+    function PropertiesEditComponent(route, mainNavigatorService, propertiesService, appService, router) {
+        this.route = route;
+        this.mainNavigatorService = mainNavigatorService;
+        this.propertiesService = propertiesService;
+        this.appService = appService;
+        this.router = router;
+        this.editMode = false;
+        this.user = null;
+        this.property = null;
+        this.model = {
+            id: null,
+            email: null,
+            type: null,
+            propertyTypeData: {},
+            address: null,
+            askingPrice: null,
+            askingPriceUnit: null,
+            offerPrice: null,
+            offerPriceUnit: null,
+            walkAwayPrice: null,
+            walkAwayPriceUnit: null,
+            salePrice: null,
+            salePriceUnit: null,
+            dateListed: null,
+            reasonForSelling: null,
+            marketValue: null,
+            marketValueUnit: null,
+            renovationCost: null,
+            renovationCostUnit: null,
+            maintainanceCost: null,
+            maintainanceCostUnit: null,
+            description: null,
+            otherCost: null,
+            otherCostUnit: null,
+            notes: null
+        };
+        this.id = null; //investment id
+        this.type = null; //investment type
+        //services flags
+        this.editPropertyServiceRunning = false;
+        this.getPropertyServiceRunning = false;
+        this.subscription = new rxjs_1.Subscription();
+    }
+    PropertiesEditComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.mainNavigatorService.setLinks([
+            { displayName: 'Welcome', url: '/welcome', selected: false },
+            { displayName: 'Investments', url: '/investments', selected: false },
+            { displayName: 'Properties', url: '/properties', selected: false }
+        ]);
+        //generates a user source object from authUser from resolver
+        var user$ = this.route.data.map(function (data) { return data.authUser; });
+        //generates an property id source from id parameter in url
+        var id$ = this.route.paramMap.map(function (params) { return params.get('id'); });
+        //combine user$ and id$ sources into one object and start listen to it for changes
+        var newSubscription = user$.combineLatest(id$, function (user, id) {
+            return { user: user, propertyId: id };
+        }).subscribe(function (data) {
+            _this.user = data.user;
+            _this.model.email = data.user.email;
+            _this.model.askingPriceUnit = _this.model.offerPriceUnit = _this.model.walkAwayPriceUnit =
+                _this.model.salePriceUnit = _this.model.marketValueUnit = _this.model.renovationCostUnit =
+                    _this.model.maintainanceCostUnit = _this.model.otherCostUnit = _this.user.currency;
+            _this.model.id = data.propertyId || null;
+            _this.editPropertyServiceRunning = false;
+            _this.getPropertyServiceRunning = false;
+            if (!data.propertyId) {
+                //we are creating a new property
+                _this.id = null;
+                _this.editMode = false;
+                _this.mainNavigatorService.appendLink({ displayName: 'Create Property', url: '', selected: true });
+            }
+            else {
+                _this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected: true });
+                //we are editing an existing property
+                _this.id = data.propertyId;
+                _this.editMode = true;
+                _this.getProperty(data.propertyId); //get data
+            }
+        });
+        this.subscription.add(newSubscription);
+        //get TYPE parameter
+        this.route.paramMap.map(function (params) { return params.get('type'); }).subscribe(function (type) {
+            if (![constants_1.propertyTypes.HOUSE].includes(type)) {
+                _this.appService.showResults('You must provide a valid property type to continue.', 'error');
+                _this.router.navigate(['welcome']);
+            }
+            else {
+                _this.type = type;
+                _this.model.type = type;
+                _this.model.propertyTypeData.buildingType = type;
+            }
+        });
+    };
+    PropertiesEditComponent.prototype.ngOnDestroy = function () {
+        this.subscription.unsubscribe();
+    };
+    /**
+     * Get a property from server based on the id provided
+     * @param {string} id
+     */
+    PropertiesEditComponent.prototype.getProperty = function (id) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getProperty() > "; //for debugging
+        if (!id) {
+            this.appService.showResults("Invalid property ID", 'error');
+            this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
+            return false;
+        }
+        this.getPropertyServiceRunning = true;
+        var newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(function (property) {
+            _this.property = property;
+            //populate the model
+            // this.model.owner = property.team ? 'team' : 'me';
+            // this.model.team = property.team;
+            // this.model.teamSlug = property.team ? property.team.slug : null;
+            // this.model.investmentDistribution = property.investmentDistribution;
+            // for (let portion of property.investmentDistribution) {
+            //   this.model.membersPercentage[portion.email] = portion.percentage;
+            // }
+            // this.model.investmentAmount = property.investmentAmount;
+            // this.model.investmentAmountUnit = property.investmentAmountUnit;
+            _this.model.type = property.propertyType;
+            if (property instanceof house_1.House) {
+                _this.model.propertyTypeData = {};
+            }
+            _this.getPropertyServiceRunning = false;
+            if (_this.form && !_this.formChangesSubscription) {
+                _this.subscribeFormValueChanges();
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 461 || error.codeno === 462) {
+                _this.appService.showResults(error.msg, 'error');
+                _this.router.navigate(['/welcome']);
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getPropertyServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    PropertiesEditComponent = __decorate([
+        core_1.Component({
+            selector: 'properties-edit',
+            template: __webpack_require__("../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.scss")]
+        }),
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, properties_service_1.PropertiesService,
+            app_service_1.AppService, router_1.Router])
+    ], PropertiesEditComponent);
+    return PropertiesEditComponent;
+}());
+exports.PropertiesEditComponent = PropertiesEditComponent;
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/models/house.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var property_1 = __webpack_require__("../../../../../src/app/modules/properties/models/property.ts");
+var House = /** @class */ (function (_super) {
+    __extends(House, _super);
+    function House(type, address, createdBy, landArea, floorArea, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, registeredValue, registeredValueUnit, rates, ratesUnit, insurance, insuranceUnit, renovationCost, renovationCostUnit, maintainanceCost, maintainanceCostUnit, description, otherCost, otherCostUnit, notes, capitalGrowth, bedrooms, bathrooms, parkingSpaces, fenced, rented, rentPrice, rentPriceUnit, rentPricePeriod, rentAppraisalDone, vacancy, bodyCorporate, bodyCorporateUnit, utilitiesCost, utilitiesCostUnit, agent, managed, buildingType, titleType) {
+        if (type === void 0) { type = 'house'; }
+        if (address === void 0) { address = null; }
+        if (createdBy === void 0) { createdBy = null; }
+        if (landArea === void 0) { landArea = null; }
+        if (floorArea === void 0) { floorArea = null; }
+        if (askingPrice === void 0) { askingPrice = null; }
+        if (askingPriceUnit === void 0) { askingPriceUnit = null; }
+        if (offerPrice === void 0) { offerPrice = null; }
+        if (offerPriceUnit === void 0) { offerPriceUnit = null; }
+        if (walkAwayPrice === void 0) { walkAwayPrice = null; }
+        if (walkAwayPriceUnit === void 0) { walkAwayPriceUnit = null; }
+        if (salePrice === void 0) { salePrice = null; }
+        if (salePriceUnit === void 0) { salePriceUnit = null; }
+        if (dateListed === void 0) { dateListed = null; }
+        if (reasonForSelling === void 0) { reasonForSelling = null; }
+        if (marketValue === void 0) { marketValue = null; }
+        if (marketValueUnit === void 0) { marketValueUnit = null; }
+        if (registeredValue === void 0) { registeredValue = null; }
+        if (registeredValueUnit === void 0) { registeredValueUnit = null; }
+        if (rates === void 0) { rates = null; }
+        if (ratesUnit === void 0) { ratesUnit = null; }
+        if (insurance === void 0) { insurance = null; }
+        if (insuranceUnit === void 0) { insuranceUnit = null; }
+        if (renovationCost === void 0) { renovationCost = null; }
+        if (renovationCostUnit === void 0) { renovationCostUnit = null; }
+        if (maintainanceCost === void 0) { maintainanceCost = null; }
+        if (maintainanceCostUnit === void 0) { maintainanceCostUnit = null; }
+        if (description === void 0) { description = null; }
+        if (otherCost === void 0) { otherCost = null; }
+        if (otherCostUnit === void 0) { otherCostUnit = null; }
+        if (notes === void 0) { notes = null; }
+        if (capitalGrowth === void 0) { capitalGrowth = null; }
+        if (bedrooms === void 0) { bedrooms = null; }
+        if (bathrooms === void 0) { bathrooms = null; }
+        if (parkingSpaces === void 0) { parkingSpaces = null; }
+        if (fenced === void 0) { fenced = false; }
+        if (rented === void 0) { rented = false; }
+        if (rentPrice === void 0) { rentPrice = null; }
+        if (rentPriceUnit === void 0) { rentPriceUnit = null; }
+        if (rentPricePeriod === void 0) { rentPricePeriod = 'week'; }
+        if (rentAppraisalDone === void 0) { rentAppraisalDone = false; }
+        if (vacancy === void 0) { vacancy = null; }
+        if (bodyCorporate === void 0) { bodyCorporate = null; }
+        if (bodyCorporateUnit === void 0) { bodyCorporateUnit = null; }
+        if (utilitiesCost === void 0) { utilitiesCost = null; }
+        if (utilitiesCostUnit === void 0) { utilitiesCostUnit = null; }
+        if (managed === void 0) { managed = null; }
+        if (buildingType === void 0) { buildingType = 'house'; }
+        if (titleType === void 0) { titleType = null; }
+        var _this = _super.call(this, type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, renovationCost, renovationCostUnit, maintainanceCost, maintainanceCostUnit, description, otherCost, otherCostUnit, notes) || this;
+        _this.landArea = landArea;
+        _this.floorArea = floorArea;
+        _this.registeredValue = registeredValue;
+        _this.registeredValueUnit = registeredValueUnit;
+        _this.rates = rates;
+        _this.ratesUnit = ratesUnit;
+        _this.insurance = insurance;
+        _this.insuranceUnit = insuranceUnit;
+        _this.capitalGrowth = capitalGrowth;
+        _this.bedrooms = bedrooms;
+        _this.bathrooms = bathrooms;
+        _this.parkingSpaces = parkingSpaces;
+        _this.fenced = fenced;
+        _this.rented = rented;
+        _this.rentPrice = rentPrice;
+        _this.rentPriceUnit = rentPriceUnit;
+        _this.rentPricePeriod = rentPricePeriod;
+        _this.rentAppraisalDone = rentAppraisalDone;
+        _this.vacancy = vacancy;
+        _this.bodyCorporate = bodyCorporate;
+        _this.bodyCorporateUnit = bodyCorporateUnit;
+        _this.utilitiesCost = utilitiesCost;
+        _this.utilitiesCostUnit = utilitiesCostUnit;
+        _this.agent = agent;
+        _this.managed = managed;
+        _this.buildingType = buildingType;
+        _this.titleType = titleType;
+        return _this;
+    }
+    return House;
+}(property_1.Property));
+exports.House = House;
+
+
+/***/ }),
+
+/***/ "../../../../../src/app/modules/properties/models/property.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Property = /** @class */ (function () {
+    function Property(type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, renovationCost, renovationCostUnit, maintainanceCost, maintainanceCostUnit, description, otherCost, otherCostUnit, notes) {
+        if (type === void 0) { type = 'house'; }
+        if (address === void 0) { address = null; }
+        if (createdBy === void 0) { createdBy = null; }
+        if (askingPrice === void 0) { askingPrice = null; }
+        if (askingPriceUnit === void 0) { askingPriceUnit = null; }
+        if (offerPrice === void 0) { offerPrice = null; }
+        if (offerPriceUnit === void 0) { offerPriceUnit = null; }
+        if (walkAwayPrice === void 0) { walkAwayPrice = null; }
+        if (walkAwayPriceUnit === void 0) { walkAwayPriceUnit = null; }
+        if (salePrice === void 0) { salePrice = null; }
+        if (salePriceUnit === void 0) { salePriceUnit = null; }
+        if (dateListed === void 0) { dateListed = null; }
+        if (reasonForSelling === void 0) { reasonForSelling = null; }
+        if (marketValue === void 0) { marketValue = null; }
+        if (marketValueUnit === void 0) { marketValueUnit = null; }
+        if (renovationCost === void 0) { renovationCost = null; }
+        if (renovationCostUnit === void 0) { renovationCostUnit = null; }
+        if (maintainanceCost === void 0) { maintainanceCost = null; }
+        if (maintainanceCostUnit === void 0) { maintainanceCostUnit = null; }
+        if (description === void 0) { description = null; }
+        if (otherCost === void 0) { otherCost = null; }
+        if (otherCostUnit === void 0) { otherCostUnit = null; }
+        if (notes === void 0) { notes = null; }
+        this.type = type;
+        this.address = address;
+        this.createdBy = createdBy;
+        this.askingPrice = askingPrice;
+        this.askingPriceUnit = askingPriceUnit;
+        this.offerPrice = offerPrice;
+        this.offerPriceUnit = offerPriceUnit;
+        this.walkAwayPrice = walkAwayPrice;
+        this.walkAwayPriceUnit = walkAwayPriceUnit;
+        this.salePrice = salePrice;
+        this.salePriceUnit = salePriceUnit;
+        this.dateListed = dateListed;
+        this.reasonForSelling = reasonForSelling;
+        this.marketValue = marketValue;
+        this.marketValueUnit = marketValueUnit;
+        this.renovationCost = renovationCost;
+        this.renovationCostUnit = renovationCostUnit;
+        this.maintainanceCost = maintainanceCost;
+        this.maintainanceCostUnit = maintainanceCostUnit;
+        this.description = description;
+        this.otherCost = otherCost;
+        this.otherCostUnit = otherCostUnit;
+        this.notes = notes;
+    }
+    return Property;
+}());
+exports.Property = Property;
+
+
+/***/ }),
+
 /***/ "../../../../../src/app/modules/properties/properties-routing.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2919,7 +3250,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("../../../core/esm5/core.js");
 var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var houses_edit_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.ts");
+var properties_edit_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
 var auth_resolver_service_1 = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
 var properties_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
 var routes = [
@@ -2927,15 +3258,15 @@ var routes = [
         path: 'properties',
         children: [
             {
-                path: 'house/create',
-                component: houses_edit_component_1.HousesEditComponent,
+                path: ':type/create',
+                component: properties_edit_component_1.PropertiesEditComponent,
                 resolve: {
                     authUser: auth_resolver_service_1.AuthResolver
                 }
             },
             {
-                path: 'house/edit/:id',
-                component: houses_edit_component_1.HousesEditComponent,
+                path: ':type/edit/:id',
+                component: properties_edit_component_1.PropertiesEditComponent,
                 resolve: {
                     authUser: auth_resolver_service_1.AuthResolver
                 }
@@ -2983,11 +3314,11 @@ var core_1 = __webpack_require__("../../../core/esm5/core.js");
 var common_1 = __webpack_require__("../../../common/esm5/common.js");
 var properties_routing_module_1 = __webpack_require__("../../../../../src/app/modules/properties/properties-routing.module.ts");
 var properties_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
-var houses_edit_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.ts");
 var shared_module_1 = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
 var properties_service_1 = __webpack_require__("../../../../../src/app/modules/properties/properties.service.ts");
 var custom_material_design_module_1 = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 var flex_layout_1 = __webpack_require__("../../../flex-layout/esm5/flex-layout.es5.js");
+var properties_edit_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
 var PropertiesModule = /** @class */ (function () {
     function PropertiesModule() {
     }
@@ -3001,7 +3332,7 @@ var PropertiesModule = /** @class */ (function () {
                 custom_material_design_module_1.CustomMaterialDesignModule,
                 shared_module_1.SharedModule
             ],
-            declarations: [properties_dashboard_component_1.PropertiesDashboardComponent, houses_edit_component_1.HousesEditComponent],
+            declarations: [properties_dashboard_component_1.PropertiesDashboardComponent, properties_edit_component_1.PropertiesEditComponent],
             providers: [properties_service_1.PropertiesService]
         })
     ], PropertiesModule);

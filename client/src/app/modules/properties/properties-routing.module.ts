@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HousesEditComponent } from './components/houses-edit/houses-edit.component';
+import { PropertiesEditComponent } from './components/properties-edit/properties-edit.component';
 import { AuthResolver } from '../../auth-resolver.service';
 import { PropertiesDashboardComponent } from './components/properties-dashboard/properties-dashboard.component';
 
@@ -9,15 +9,15 @@ const routes: Routes = [
     path : 'properties',
     children : [
       { 
-        path : 'house/create', 
-        component : HousesEditComponent,
+        path : ':type/create', 
+        component : PropertiesEditComponent,
         resolve : {
           authUser : AuthResolver
         } 
       },
       { 
-        path : 'house/edit/:id', 
-        component : HousesEditComponent,
+        path : ':type/edit/:id', 
+        component : PropertiesEditComponent,
         resolve : {
           authUser : AuthResolver
         } 
