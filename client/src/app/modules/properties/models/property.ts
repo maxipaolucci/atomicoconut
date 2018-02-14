@@ -19,8 +19,8 @@ export class Property {
   marketValueUnit : string;
   renovationCost : number;
   renovationCostUnit : string;
-  maintainanceCost : number;
-  maintainanceCostUnit : string;
+  maintenanceCost : number;
+  maintenanceCostUnit : string;
   description : string;
   otherCost : number;
   otherCostUnit : string;
@@ -44,8 +44,8 @@ export class Property {
       marketValueUnit : string = null,
       renovationCost : number = null,
       renovationCostUnit : string = null,
-      maintainanceCost : number = null,
-      maintainanceCostUnit : string = null,
+      maintenanceCost : number = null,
+      maintenanceCostUnit : string = null,
       description : string = null,
       otherCost : number = null,
       otherCostUnit : string = null,
@@ -68,8 +68,8 @@ export class Property {
     this.marketValueUnit = marketValueUnit;
     this.renovationCost = renovationCost;
     this.renovationCostUnit = renovationCostUnit;
-    this.maintainanceCost = maintainanceCost;
-    this.maintainanceCostUnit = maintainanceCostUnit;
+    this.maintenanceCost = maintenanceCost;
+    this.maintenanceCostUnit = maintenanceCostUnit;
     this.description = description;
     this.otherCost = otherCost;
     this.otherCostUnit = otherCostUnit;

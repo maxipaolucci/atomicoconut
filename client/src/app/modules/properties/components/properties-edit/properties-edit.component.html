@@ -127,10 +127,144 @@
               <mat-error *ngIf="salePrice.invalid && (salePrice.dirty || salePrice.touched) && salePrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             </mat-form-field>
           </div>
+
+          <!-- Market value -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'marketValueUnit'" 
+                [value]="model.marketValueUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="marketValue" name="marketValue" placeholder="Market value"
+                  [(ngModel)]="model.marketValue" 
+                  [value]="model.marketValue"
+                  numberValidator
+                  #marketValue="ngModel">
+              
+              <mat-hint align="start">Last sale price.</mat-hint>
+              <mat-error *ngIf="marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
         </div>
       </div>
-  
       
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          Costs
+        </h3>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Reno cost -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'renovationCostUnit'" 
+                [value]="model.renovationCostUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="renovationCost" name="renovationCost" placeholder="Renovation cost"
+                  [(ngModel)]="model.renovationCost" 
+                  [value]="model.renovationCost"
+                  numberValidator
+                  #renovationCost="ngModel">
+              
+              <mat-hint align="start">Last sale price.</mat-hint>
+              <mat-error *ngIf="renovationCost.invalid && (renovationCost.dirty || renovationCost.touched) && renovationCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Maintenance cost -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'maintenanceCostUnit'" 
+                [value]="model.maintenanceCostUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="maintenanceCost" name="maintenanceCost" placeholder="Maintenance cost"
+                  [(ngModel)]="model.maintenanceCost" 
+                  [value]="model.maintenanceCost"
+                  numberValidator
+                  #maintenanceCost="ngModel">
+              
+              <mat-hint align="start">Last sale price.</mat-hint>
+              <mat-error *ngIf="maintenanceCost.invalid && (maintenanceCost.dirty || maintenanceCost.touched) && maintenanceCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+          
+          <!-- Other cost -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'otherCostUnit'" 
+                [value]="model.otherCostUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="otherCost" name="otherCost" placeholder="Other cost"
+                  [(ngModel)]="model.otherCost" 
+                  [value]="model.otherCost"
+                  numberValidator
+                  #otherCost="ngModel">
+              
+              <mat-hint align="start">Last sale price.</mat-hint>
+              <mat-error *ngIf="otherCost.invalid && (otherCost.dirty || otherCost.touched) && otherCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          Other information
+        </h3>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Date listed -->
+          <mat-form-field fxFlex fxFlex.gt-xs="100px" class="form__field">
+            <input placeholder="Listing date"
+                id="dateListed"
+                name="dateListed"
+                readonly
+                #dateListed="ngModel"
+                matInput 
+                [(ngModel)]="model.dateListed" 
+                [matDatepicker]="pickerDateListed"
+                (click)="pickerDateListed.open()">
+            <mat-datepicker-toggle matSuffix [for]="pickerDateListed"></mat-datepicker-toggle>
+            <mat-datepicker [touchUi]="utilService.isGtSm() ? false : true" #pickerDateListed></mat-datepicker>
+            <mat-error *ngIf="dateListed.invalid && (dateListed.dirty || dateListed.touched) && dateListed.errors.matDatepickerParse">Buying date is invalid or not follows the pattern "mm/dd/yyyy"</mat-error>
+          </mat-form-field>
+  
+          <!-- Reason for selling -->
+          <mat-form-field fxFlex class="form__field">
+            <textarea matInput id="reasonForSelling" name="reasonForSelling" placeholder="Reason for selling"
+                [(ngModel)]="model.reasonForSelling" 
+                value="model.reasonForSelling"
+                #reasonForSelling="ngModel">
+            </textarea>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Notes -->
+          <mat-form-field fxFlex class="form__field">
+            <textarea matInput id="notes" name="notes" placeholder="Other notes"
+                [(ngModel)]="model.notes" 
+                value="model.notes"
+                #notes="ngModel">
+            </textarea>
+          </mat-form-field>
+        </div>
+      </div>
     </section>
 
     <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--edit-property">

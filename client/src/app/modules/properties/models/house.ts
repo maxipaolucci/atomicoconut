@@ -57,8 +57,8 @@ export class House extends Property {
       insuranceUnit : string = null,
       renovationCost : number = null,
       renovationCostUnit : string = null,
-      maintainanceCost : number = null,
-      maintainanceCostUnit : string = null,
+      maintenanceCost : number = null,
+      maintenanceCostUnit : string = null,
       description : string = null,
       otherCost : number = null,
       otherCostUnit : string = null,
@@ -85,7 +85,7 @@ export class House extends Property {
     
     super(type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit,
         walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue,
-        marketValueUnit, renovationCost, renovationCostUnit, maintainanceCost, maintainanceCostUnit, description, otherCost,
+        marketValueUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost,
         otherCostUnit, notes);
     
     this.landArea = landArea;

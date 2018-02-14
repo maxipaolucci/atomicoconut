@@ -89,11 +89,11 @@ const propertySchema = new mongoose.Schema({
     type : String,
     default : 'USD'
   },
-  mantainanceCost : {
+  maintenanceCost : {
     type : Number,
     default : null
   },
-  mantainanceCostUnit : {
+  maintenanceCostUnit : {
     type : String,
     default : 'USD'
   },

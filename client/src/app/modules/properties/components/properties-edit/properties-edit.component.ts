@@ -9,6 +9,7 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 import { propertyTypes } from '../../../../constants';
 import { House } from '../../models/house';
 import { MatSelectChange } from '@angular/material';
+import { UtilService } from '../../../../util.service';
 
 @Component({
   selector: 'properties-edit',
@@ -40,8 +41,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     marketValueUnit : null,
     renovationCost : null,
     renovationCostUnit : null,
-    maintainanceCost : null,
-    maintainanceCostUnit : null,
+    maintenanceCost : null,
+    maintenanceCostUnit : null,
     description : null,
     otherCost : null,
     otherCostUnit : null,
@@ -57,7 +58,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   propertyTypeDataValid : boolean = false; //this value is set when property type data form is updated
   
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private propertiesService : PropertiesService, 
-      private appService : AppService, private router : Router) { }
+      private appService : AppService, private router : Router, public utilService : UtilService) { }
 
   ngOnInit() {
     this.mainNavigatorService.setLinks([
@@ -80,7 +81,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       this.model.email = data.user.email;
       this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit = 
           this.model.salePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit = 
-          this.model.maintainanceCostUnit = this.model.otherCostUnit = this.user.currency;
+          this.model.maintenanceCostUnit = this.model.otherCostUnit = this.user.currency;
       this.model.id = data.propertyId || null;
 
       this.editPropertyServiceRunning = false;
@@ -153,8 +154,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
         this.model.marketValueUnit = property.marketValueUnit;
         this.model.renovationCost = property.renovationCost;
         this.model.renovationCostUnit = property.renovationCostUnit;
-        this.model.maintainanceCost = property.maintainanceCost;
-        this.model.maintainanceCostUnit = property.maintainanceCostUnit;
+        this.model.maintenanceCost = property.maintenanceCost;
+        this.model.maintenanceCostUnit = property.maintenanceCostUnit;
         this.model.description = property.description;
         this.model.otherCost = property.otherCost;
         this.model.otherCostUnit = property.otherCostUnit;
