@@ -14,6 +14,12 @@ export class NumberValidatorDirective {
 
   validate(control : AbstractControl) : { [key : string] : any } {
     
+    //if the field is empty return valid
+    const val : number = control.value;
+    if (!val) {
+      return null;
+    } 
+
     let validationObj : any = {};
     if (this.validationType) {
       validationObj = JSON.parse(this.validationType);
@@ -27,8 +33,6 @@ export class NumberValidatorDirective {
     pattern += '})?$';
 
     const numberRegExp = new RegExp(pattern);
-
-    const val: number = control.value;
 
     if(!numberRegExp.test(val + '')) {
       return {"numberValidator": true};

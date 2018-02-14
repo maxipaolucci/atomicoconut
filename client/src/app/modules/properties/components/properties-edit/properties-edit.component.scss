@@ -1,0 +1,32 @@
+@import '../../../../../variables';
+
+form {
+  
+  .form__actions {
+
+    .progress-bar {
+      width: 100%;
+    }
+  }
+}
+
+.progress-bar--get-property {
+  width: 100%;
+}
+
+@media screen and (min-width: $screenGtXs) {
+  
+  form {
+    
+    .form__actions {
+  
+      .progress-bar {
+        width: 88px;
+      }
+    }
+  }
+
+  .progress-bar--get-property {
+    width: 300px;
+  }
+}

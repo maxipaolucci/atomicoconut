@@ -2860,7 +2860,7 @@ exports.PropertiesDashboardComponent = PropertiesDashboardComponent;
 /***/ "../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  houses-edit works!\n</p>\n"
+module.exports = "<div class=\"container__edit-property\" fxLayout=\"column\" fxLayoutAlign=\"none none\" fxLayout.gt-xs=\"row\" fxLayoutAlign.gt-xs=\"center none\" fxLayoutGap=\"10px\">\n  <!-- Form  -->\n  <form *ngIf=\"!getPropertyServiceRunning\" class=\"form__container form__edit-property\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editPropertyForm=\"ngForm\" \n      novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\n    <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\n\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\n        <h3 class=\"title\">\n          Basic info\n        </h3>\n  \n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\n          <!-- Address -->\n          <mat-form-field fxFlex class=\"form__field\">\n            <input matInput type=\"text\" id=\"address\" name=\"address\" placeholder=\"Address\" \n                [(ngModel)]=\"model.address\" \n                required\n                [value]=\"model.address\"\n                #address=\"ngModel\">\n            \n            <mat-error *ngIf=\"address.invalid && (address.dirty || address.touched) && address.errors.required\">This field is required.</mat-error>\n          </mat-form-field>\n          \n        </div>\n\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\n          <!-- Description -->\n          <mat-form-field fxFlex class=\"form__field\">\n            <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\n                [(ngModel)]=\"model.description\" \n                value=\"model.description\"\n                #description=\"ngModel\">\n            </textarea>\n          </mat-form-field>\n        </div>\n      </div>\n  \n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\n        <h3 class=\"title\">\n          Pricing information\n        </h3>\n      \n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\n          <!-- Asking price -->\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\n            <currency-unit fxFlex=\"50px\"\n                [id]=\"'askingPriceUnit'\" \n                [value]=\"model.askingPriceUnit\"\n                [view]=\"'narrow'\"\n                (newValue)=\"onCurrencyUnitChange($event)\">\n            </currency-unit>\n            \n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\n              <input matInput type=\"number\" id=\"askingPrice\" name=\"askingPrice\" placeholder=\"Asking price\"\n                  [(ngModel)]=\"model.askingPrice\" \n                  [value]=\"model.askingPrice\"\n                  numberValidator\n                  #askingPrice=\"ngModel\">\n              \n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\n              <mat-error *ngIf=\"askingPrice.invalid && (askingPrice.dirty || askingPrice.touched) && askingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\n            </mat-form-field>\n          </div>\n          \n          <!-- Offer price -->\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\n            <currency-unit fxFlex=\"50px\"\n                [id]=\"'offerPriceUnit'\" \n                [value]=\"model.offerPriceUnit\"\n                [view]=\"'narrow'\"\n                (newValue)=\"onCurrencyUnitChange($event)\">\n            </currency-unit>\n            \n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\n              <input matInput type=\"number\" id=\"offerPrice\" name=\"offerPrice\" placeholder=\"Offer price\"\n                  [(ngModel)]=\"model.offerPrice\" \n                  [value]=\"model.offerPrice\"\n                  numberValidator\n                  #offerPrice=\"ngModel\">\n              \n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\n              <mat-error *ngIf=\"offerPrice.invalid && (offerPrice.dirty || offerPrice.touched) && offerPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\n            </mat-form-field>\n          </div>\n\n          <!-- Walk away price -->\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\n            <currency-unit fxFlex=\"50px\"\n                [id]=\"'walkAwayPriceUnit'\" \n                [value]=\"model.walkAwayPriceUnit\"\n                [view]=\"'narrow'\"\n                (newValue)=\"onCurrencyUnitChange($event)\">\n            </currency-unit>\n            \n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\n              <input matInput type=\"number\" id=\"walkAwayPrice\" name=\"walkAwayPrice\" placeholder=\"Walk away price\"\n                  [(ngModel)]=\"model.walkAwayPrice\" \n                  [value]=\"model.walkAwayPrice\"\n                  numberValidator\n                  #walkAwayPrice=\"ngModel\">\n              \n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\n              <mat-error *ngIf=\"walkAwayPrice.invalid && (walkAwayPrice.dirty || walkAwayPrice.touched) && walkAwayPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\n            </mat-form-field>\n          </div>\n\n        </div>\n\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\n          <!-- Sale price -->\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\n            <currency-unit fxFlex=\"50px\"\n                [id]=\"'salePriceUnit'\" \n                [value]=\"model.salePriceUnit\"\n                [view]=\"'narrow'\"\n                (newValue)=\"onCurrencyUnitChange($event)\">\n            </currency-unit>\n            \n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\n              <input matInput type=\"number\" id=\"salePrice\" name=\"salePrice\" placeholder=\"Sale price\"\n                  [(ngModel)]=\"model.salePrice\" \n                  [value]=\"model.salePrice\"\n                  numberValidator\n                  #salePrice=\"ngModel\">\n              \n              <mat-hint align=\"start\">Last sale price.</mat-hint>\n              <mat-error *ngIf=\"salePrice.invalid && (salePrice.dirty || salePrice.touched) && salePrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\n            </mat-form-field>\n          </div>\n        </div>\n      </div>\n  \n      \n    </section>\n\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-property\">\n      <button *ngIf=\"!editPropertyServiceRunning\" \n          class=\"form__action mat-raised-button\" \n          mat-raised-button \n          type=\"submit\" \n          color=\"accent\" \n          [disabled]=\"!editPropertyForm.form.valid || !propertyTypeDataValid\">Save</button>\n      \n      <mat-progress-bar *ngIf=\"editPropertyServiceRunning\"\n          class=\"progress-bar progress-bar--edit-property\"\n          color=\"primary\"\n          mode=\"indeterminate\">\n      </mat-progress-bar>\n    </section>\n  </form>\n  \n  <mat-progress-bar *ngIf=\"getPropertyServiceRunning\"\n      fxFlexAlign=\"center\"\n      class=\"progress-bar progress-bar--get-property\"\n      color=\"primary\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n</div>"
 
 /***/ }),
 
@@ -2872,7 +2872,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.progress-bar--get-property {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-property {\n    width: 300px; } }\n", ""]);
 
 // exports
 
@@ -3414,6 +3414,7 @@ var properties_service_1 = __webpack_require__("../../../../../src/app/modules/p
 var custom_material_design_module_1 = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
 var flex_layout_1 = __webpack_require__("../../../flex-layout/esm5/flex-layout.es5.js");
 var properties_edit_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
+var forms_1 = __webpack_require__("../../../forms/esm5/forms.js");
 var PropertiesModule = /** @class */ (function () {
     function PropertiesModule() {
     }
@@ -3422,7 +3423,7 @@ var PropertiesModule = /** @class */ (function () {
             imports: [
                 common_1.CommonModule,
                 properties_routing_module_1.PropertiesRoutingModule,
-                // FormsModule,
+                forms_1.FormsModule,
                 flex_layout_1.FlexLayoutModule,
                 custom_material_design_module_1.CustomMaterialDesignModule,
                 shared_module_1.SharedModule
@@ -4188,6 +4189,11 @@ var NumberValidatorDirective = /** @class */ (function () {
     }
     NumberValidatorDirective_1 = NumberValidatorDirective;
     NumberValidatorDirective.prototype.validate = function (control) {
+        //if the field is empty return valid
+        var val = control.value;
+        if (!val) {
+            return null;
+        }
         var validationObj = {};
         if (this.validationType) {
             validationObj = JSON.parse(this.validationType);
@@ -4199,7 +4205,6 @@ var NumberValidatorDirective = /** @class */ (function () {
         pattern += !isNaN(validationObj.maxFractionDigits) && validationObj.maxFractionDigits > 1 ? validationObj.maxFractionDigits : 2;
         pattern += '})?$';
         var numberRegExp = new RegExp(pattern);
-        var val = control.value;
         if (!numberRegExp.test(val + '')) {
             return { "numberValidator": true };
         }

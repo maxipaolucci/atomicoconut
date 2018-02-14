@@ -84,11 +84,11 @@ router.get('/app/properties', (req, res) => {
   res.render('home', {title: 'Properties'});
 });
 
-router.get('/app/properties/create', (req, res) => {
+router.get('/app/properties/house/create', (req, res) => {
   res.render('home', {title: 'Create Property'});
 });
 
-router.get('/app/properties/edit/:id', (req, res) => {
+router.get('/app/properties/house/edit/:id', (req, res) => {
   res.render('home', {title: 'Edit Property'});
 });
 

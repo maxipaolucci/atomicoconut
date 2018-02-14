@@ -1,3 +1,158 @@
-<p>
-  houses-edit works!
-</p>
+<div class="container__edit-property" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
+  <!-- Form  -->
+  <form *ngIf="!getPropertyServiceRunning" class="form__container form__edit-property" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editPropertyForm="ngForm" 
+      novalidate fxLayout="column" fxLayoutGap="10px">
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
+
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          Basic info
+        </h3>
+  
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Address -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="text" id="address" name="address" placeholder="Address" 
+                [(ngModel)]="model.address" 
+                required
+                [value]="model.address"
+                #address="ngModel">
+            
+            <mat-error *ngIf="address.invalid && (address.dirty || address.touched) && address.errors.required">This field is required.</mat-error>
+          </mat-form-field>
+          
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Description -->
+          <mat-form-field fxFlex class="form__field">
+            <textarea matInput id="description" name="description" placeholder="Description"
+                [(ngModel)]="model.description" 
+                value="model.description"
+                #description="ngModel">
+            </textarea>
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          Pricing information
+        </h3>
+      
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Asking price -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'askingPriceUnit'" 
+                [value]="model.askingPriceUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="askingPrice" name="askingPrice" placeholder="Asking price"
+                  [(ngModel)]="model.askingPrice" 
+                  [value]="model.askingPrice"
+                  numberValidator
+                  #askingPrice="ngModel">
+              
+              <mat-hint align="start">The price the owner ask for sell the house.</mat-hint>
+              <mat-error *ngIf="askingPrice.invalid && (askingPrice.dirty || askingPrice.touched) && askingPrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+          
+          <!-- Offer price -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'offerPriceUnit'" 
+                [value]="model.offerPriceUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="offerPrice" name="offerPrice" placeholder="Offer price"
+                  [(ngModel)]="model.offerPrice" 
+                  [value]="model.offerPrice"
+                  numberValidator
+                  #offerPrice="ngModel">
+              
+              <mat-hint align="start">The price the owner ask for sell the house.</mat-hint>
+              <mat-error *ngIf="offerPrice.invalid && (offerPrice.dirty || offerPrice.touched) && offerPrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Walk away price -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'walkAwayPriceUnit'" 
+                [value]="model.walkAwayPriceUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="walkAwayPrice" name="walkAwayPrice" placeholder="Walk away price"
+                  [(ngModel)]="model.walkAwayPrice" 
+                  [value]="model.walkAwayPrice"
+                  numberValidator
+                  #walkAwayPrice="ngModel">
+              
+              <mat-hint align="start">The price the owner ask for sell the house.</mat-hint>
+              <mat-error *ngIf="walkAwayPrice.invalid && (walkAwayPrice.dirty || walkAwayPrice.touched) && walkAwayPrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Sale price -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'salePriceUnit'" 
+                [value]="model.salePriceUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="salePrice" name="salePrice" placeholder="Sale price"
+                  [(ngModel)]="model.salePrice" 
+                  [value]="model.salePrice"
+                  numberValidator
+                  #salePrice="ngModel">
+              
+              <mat-hint align="start">Last sale price.</mat-hint>
+              <mat-error *ngIf="salePrice.invalid && (salePrice.dirty || salePrice.touched) && salePrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+  
+      
+    </section>
+
+    <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--edit-property">
+      <button *ngIf="!editPropertyServiceRunning" 
+          class="form__action mat-raised-button" 
+          mat-raised-button 
+          type="submit" 
+          color="accent" 
+          [disabled]="!editPropertyForm.form.valid || !propertyTypeDataValid">Save</button>
+      
+      <mat-progress-bar *ngIf="editPropertyServiceRunning"
+          class="progress-bar progress-bar--edit-property"
+          color="primary"
+          mode="indeterminate">
+      </mat-progress-bar>
+    </section>
+  </form>
+  
+  <mat-progress-bar *ngIf="getPropertyServiceRunning"
+      fxFlexAlign="center"
+      class="progress-bar progress-bar--get-property"
+      color="primary"
+      mode="indeterminate">
+  </mat-progress-bar>
+</div>

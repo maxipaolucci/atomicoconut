@@ -8,12 +8,13 @@ import { PropertiesService } from './properties.service';
 import { CustomMaterialDesignModule } from '../shared/custom-material-design.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { PropertiesEditComponent } from './components/properties-edit/properties-edit.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     PropertiesRoutingModule,
-    // FormsModule,
+    FormsModule,
     FlexLayoutModule,
     CustomMaterialDesignModule,
     SharedModule
