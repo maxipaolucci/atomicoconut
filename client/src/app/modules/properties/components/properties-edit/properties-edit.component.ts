@@ -8,7 +8,7 @@ import { PropertiesService } from '../../properties.service';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { propertyTypes } from '../../../../constants';
 import { House } from '../../models/house';
-import { MatSelectChange } from '@angular/material';
+import { MatSelectChange, DateAdapter, NativeDateAdapter } from '@angular/material';
 import { UtilService } from '../../../../util.service';
 
 @Component({
@@ -58,7 +58,10 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   propertyTypeDataValid : boolean = false; //this value is set when property type data form is updated
   
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private propertiesService : PropertiesService, 
-      private appService : AppService, private router : Router, public utilService : UtilService) { }
+      private appService : AppService, private router : Router, public utilService : UtilService, private dateAdapter: DateAdapter<NativeDateAdapter> ) {
+
+    this.dateAdapter.setLocale('en-GB');
+  }
 
   ngOnInit() {
     this.mainNavigatorService.setLinks([

@@ -1,0 +1,136 @@
+<div class="container__edit-house" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
+  <!-- Form  -->
+  <form class="form__container form__edit-house" #editHouseForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
+
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          <p class="header"></p>
+        </h3>
+  
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Building type -->
+          <mat-form-field fxFlex class="form__field">
+            <mat-select id="buildingType" placeholder="Building type" [value]="model.buildingType" [(ngModel)]="model.buildingType">
+              <mat-option value="house">House</mat-option>
+              <mat-option value="apartment">Apartment</mat-option>
+              <mat-option value="unit">Unit</mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <!-- Title type -->
+          <mat-form-field fxFlex class="form__field">
+            <mat-select id="titleType" placeholder="Building type" [value]="model.titleType" [(ngModel)]="model.titleType">
+              <mat-option value="feeSimple">Fee simple</mat-option>
+              <mat-option value="crossLease">Cross lease</mat-option>
+              <mat-option value="leaseHold">Lease hold</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Land area -->
+          <mat-form-field fxFlex  class="form__field">
+            <input matInput type="number" id="landArea" name="landArea" placeholder="Land area" 
+                [(ngModel)]="model.landArea" 
+                [value]="model.landArea"
+                numberValidator
+                #landArea="ngModel">
+                
+            <span matSuffix>m2</span>
+            <mat-hint align="start">Land area in square meters.</mat-hint>
+            <mat-error *ngIf="landArea.invalid && (landArea.dirty || landArea.touched) && landArea.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+          </mat-form-field>
+
+          <!-- Floor area -->
+          <mat-form-field fxFlex  class="form__field">
+            <input matInput type="number" id="floorArea" name="floorArea" placeholder="Floor area" 
+                [(ngModel)]="model.floorArea" 
+                [value]="model.floorArea"
+                numberValidator
+                #floorArea="ngModel">
+                
+            <span matSuffix>m2</span>
+            <mat-hint align="start">Floor area in square meters.</mat-hint>
+            <mat-error *ngIf="floorArea.invalid && (floorArea.dirty || floorArea.touched) && floorArea.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Bedrooms -->
+          <mat-form-field fxFlex  class="form__field">
+            <input matInput type="number" id="bedrooms" name="bedrooms" placeholder="Bedrooms" 
+                [(ngModel)]="model.bedrooms" 
+                [value]="model.bedrooms"
+                numberValidator
+                #bedrooms="ngModel">
+                
+            <mat-error *ngIf="bedrooms.invalid && (bedrooms.dirty || bedrooms.touched) && bedrooms.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+          </mat-form-field>
+
+          <!-- Bathrooms -->
+          <mat-form-field fxFlex  class="form__field">
+            <input matInput type="number" id="bathrooms" name="bathrooms" placeholder="Bathrooms" 
+                [(ngModel)]="model.bathrooms" 
+                [value]="model.bathrooms"
+                numberValidator
+                #bathrooms="ngModel">
+                
+            <mat-error *ngIf="bathrooms.invalid && (bathrooms.dirty || bathrooms.touched) && bathrooms.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+          </mat-form-field>
+
+          <!-- Parking spaces -->
+          <mat-form-field fxFlex  class="form__field">
+            <input matInput type="number" id="parkingSpaces" name="parkingSpaces" placeholder="Parking spaces" 
+                [(ngModel)]="model.parkingSpaces" 
+                [value]="model.parkingSpaces"
+                numberValidator
+                #parkingSpaces="ngModel">
+                
+            <mat-error *ngIf="parkingSpaces.invalid && (parkingSpaces.dirty || parkingSpaces.touched) && parkingSpaces.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+  
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          <p class="header">Rent information</p>
+        </h3>
+      
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          
+        </div>
+      </div>
+      
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          <p class="header"></p>
+        </h3>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          
+        </div>
+      </div>
+      
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          <p class="header"></p>
+        </h3>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          
+        </div>
+      </div>
+    </section>
+
+  </form>
+
+</div>
