@@ -5,6 +5,11 @@
     .title {
       margin-top : 20px;
       color: $accent;
+
+      .header {
+        width: 100%;
+        border-bottom: 1px solid $accent;
+      }
     }
 
     &:first-child {

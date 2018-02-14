@@ -11,7 +11,7 @@
 
         <div *ngIf="teams.length && !getTeamsServiceRunning" fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
           <h3 class="title">
-            Owner
+            <p class="header">Owner</p>
             <p class="mat-caption">Specify the owner of this investment</p>
           </h3>
   
@@ -45,7 +45,7 @@
         
         <div *ngIf="model.team" fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
           <h3 class="title">
-            Split between team members
+            <p class="header">Split between team members</p>
             <p class="mat-caption">Specify how to split the returns setting a percentage of the total investment amount to each member</p>
           </h3>
   
@@ -83,7 +83,7 @@
   
         <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
           <h3 class="title title__investment-amount">
-            Investment details
+            <p class="header">Investment details</p>
           </h3>
   
           <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="form__fields__row">
