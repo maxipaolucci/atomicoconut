@@ -11,7 +11,7 @@
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Building type -->
           <mat-form-field fxFlex class="form__field">
-            <mat-select id="buildingType" placeholder="Building type" [value]="model.buildingType" [(ngModel)]="model.buildingType">
+            <mat-select id="buildingType" name="buildingType" placeholder="Building type" [value]="model.buildingType" [(ngModel)]="model.buildingType">
               <mat-option value="house">House</mat-option>
               <mat-option value="apartment">Apartment</mat-option>
               <mat-option value="unit">Unit</mat-option>
@@ -20,7 +20,7 @@
           
           <!-- Title type -->
           <mat-form-field fxFlex class="form__field">
-            <mat-select id="titleType" placeholder="Building type" [value]="model.titleType" [(ngModel)]="model.titleType">
+            <mat-select id="titleType" name="titleType" placeholder="Building type" [value]="model.titleType" [(ngModel)]="model.titleType">
               <mat-option value="feeSimple">Fee simple</mat-option>
               <mat-option value="crossLease">Cross lease</mat-option>
               <mat-option value="leaseHold">Lease hold</mat-option>
@@ -129,7 +129,7 @@
 
           <!-- Rent payment period -->
           <mat-form-field fxFlex class="form__field">
-            <mat-select id="rentPricePeriod" placeholder="Building type" [value]="model.rentPricePeriod" [(ngModel)]="model.rentPricePeriod">
+            <mat-select id="rentPricePeriod" name="rentPricePeriod" placeholder="Building type" [value]="model.rentPricePeriod" [(ngModel)]="model.rentPricePeriod">
               <mat-option value="week">per week</mat-option>
               <mat-option value="month">per month</mat-option>
             </mat-select>

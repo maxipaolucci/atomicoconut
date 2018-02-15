@@ -21,6 +21,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   editMode : boolean = false;
   user : User = null;
   property : Property = null;
+  propertyTypes : any = null;
   model : any = {
     id : null,
     email : null, //user email for api check
@@ -61,6 +62,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       private appService : AppService, private router : Router, public utilService : UtilService, private dateAdapter: DateAdapter<NativeDateAdapter> ) {
 
     this.dateAdapter.setLocale('en-GB');
+    this.propertyTypes = propertyTypes;
   }
 
   ngOnInit() {
