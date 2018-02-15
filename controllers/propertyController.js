@@ -70,9 +70,9 @@ exports.create = async (req, res, next) => {
     })).save();
 
     if (property) {
-        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Investment')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Property')}`);
 
-        const propertyType = null;
+        let propertyType = null;
         if (property.propertyType === propertyTypes.HOUSE) {
             //save a new house record in DB
             console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'House')}`);
@@ -149,7 +149,7 @@ exports.update = async (req, res, next) => {
 
     //1 - get the record by ID
     let property = await getByIdObject(req.body.id, user.email, {
-        propertyTypeData : true
+        propertyTypeDataId : true
     });
 
     if (!property) {
@@ -167,7 +167,7 @@ exports.update = async (req, res, next) => {
         //check the property was created by the user or part of an investment of the user
         let found = false;
         
-        if (property.createdBy === user._id) {
+        if (property.createdBy.email === user.email) {
             found = true;
         }
         // for (let portion of property.investmentDistribution) {
@@ -178,7 +178,7 @@ exports.update = async (req, res, next) => {
         // }
 
         if (!found) {
-            //the client is not an owner  of the investment requested
+            //the client is not an owner  of the property requested
             console.log(`${methodTrace} ${getMessage('error', 470, user.email, true, 'Property')}`);
             res.status(401).json({ 
                 status : "error", 
@@ -192,7 +192,7 @@ exports.update = async (req, res, next) => {
     }
 
     //fields to update
-    const originalProperty = property; //we save the property id for logs
+    const originalProperty = property; //we save the "beautified" version of property to easily access data
     const updates = {
         updatedBy: user._id,
         updatedOn : req.body.updatedOn,
@@ -231,7 +231,7 @@ exports.update = async (req, res, next) => {
         //update property type data
         console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Property')}`);
 
-        const propertyType = null;
+        let propertyType = null;
         if (property.propertyType === propertyTypes.HOUSE) {
             const propertyTypeUpdates = {
                 buildingType : req.body.propertyTypeData.buildingType,
@@ -265,7 +265,7 @@ exports.update = async (req, res, next) => {
             };
             
             propertyType = await House.findOneAndUpdate(
-                { _id : property.propertyTypeData._id },
+                { _id : originalProperty.propertyTypeData._id },
                 { $set : propertyTypeUpdates },
                 { new : true, runValidators : true, context : 'query' }
             );
@@ -319,7 +319,7 @@ exports.delete = async (req, res) => {
     //2 - check that the property was created by the user or he is part of an investment on that property
     if (property /* && property.investmentDistribution*/) {
         let found = false;
-        if (property.createdBy === user._id) {
+        if (property.createdBy.email === user.email) {
             found = true;
         }
         // for (let member of property.investmentDistribution) {
@@ -405,7 +405,7 @@ exports.delete = async (req, res) => {
 };
 
 /**
- * Deletes a currency investment record from db
+ * Deletes a property type (House, Condo) record from db
  * @param {string} model - The model (table) where to delete the record
  * @param {string} id . The record id
  * @param {string} userEmail . The user email for debug purposes 
@@ -444,7 +444,7 @@ exports.getById = async (req, res) => {
     if (result /*&& result.investmentDistribution*/) {
         let found = false;
 
-        if (result.createdBy === req.user._id) {
+        if (result.createdBy.email === req.user.email) {
             found = true;
         }
         // for (let member of result.investmentDistribution) {
@@ -503,12 +503,12 @@ const getByIdObject = async (id, userEmail = null, options = null) => {
     let results = await Property.aggregate(aggregationStagesArr);
 
     //2 - Parse the recordset from DB and organize the info better.
-    let result = await beautifyInvestmentsFormat(results, options);
+    let result = await beautifyPropertiesFormat(results, options);
     
     //3 - Get the first result
     result = result.length ? result[0] : null;
     
-    //4 - Return investment info to the user.
+    //4 - Return property info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, result ? 1 : 0, 'Property(s)')}`);
     return result;
 };
@@ -529,7 +529,7 @@ exports.getAllProperties = async (req, res) => {
     //2 - Parse the recordset from DB and organize the info better.
     let result = await beautifyPropertiesFormat(properties);
 
-    //3- Return investments info to the user.
+    //3- Return properties info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, user.email, true, result.length, 'Property(s)')}`);
     res.json({
         status : 'success', 

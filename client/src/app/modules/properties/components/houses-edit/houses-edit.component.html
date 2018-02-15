@@ -1,11 +1,11 @@
-<div class="container__edit-house" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
+
   <!-- Form  -->
   <form class="form__container form__edit-house" #editHouseForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
 
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <h3 class="title">
-          <p class="header"></p>
+          <p class="header">Features</p>
         </h3>
   
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
@@ -20,7 +20,7 @@
           
           <!-- Title type -->
           <mat-form-field fxFlex class="form__field">
-            <mat-select id="titleType" name="titleType" placeholder="Building type" [value]="model.titleType" [(ngModel)]="model.titleType">
+            <mat-select id="titleType" name="titleType" placeholder="Title type" [value]="model.titleType" [(ngModel)]="model.titleType">
               <mat-option value="feeSimple">Fee simple</mat-option>
               <mat-option value="crossLease">Cross lease</mat-option>
               <mat-option value="leaseHold">Lease hold</mat-option>
@@ -58,7 +58,7 @@
 
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Bedrooms -->
-          <mat-form-field fxFlex  class="form__field">
+          <mat-form-field fxFlex fxFlex.sm="140px" fxFlex.gt-sm="200px" class="form__field">
             <input matInput type="number" id="bedrooms" name="bedrooms" placeholder="Bedrooms" 
                 [(ngModel)]="model.bedrooms" 
                 [value]="model.bedrooms"
@@ -69,7 +69,7 @@
           </mat-form-field>
 
           <!-- Bathrooms -->
-          <mat-form-field fxFlex  class="form__field">
+          <mat-form-field fxFlex fxFlex.sm="140px" fxFlex.gt-sm="200px" class="form__field">
             <input matInput type="number" id="bathrooms" name="bathrooms" placeholder="Bathrooms" 
                 [(ngModel)]="model.bathrooms" 
                 [value]="model.bathrooms"
@@ -80,7 +80,7 @@
           </mat-form-field>
 
           <!-- Parking spaces -->
-          <mat-form-field fxFlex class="form__field">
+          <mat-form-field fxFlex fxFlex.sm="140px" fxFlex.gt-sm="200px" class="form__field">
             <input matInput type="number" id="parkingSpaces" name="parkingSpaces" placeholder="Parking spaces" 
                 [(ngModel)]="model.parkingSpaces" 
                 [value]="model.parkingSpaces"
@@ -91,13 +91,13 @@
           </mat-form-field>
 
           <!-- Fenced? -->
-          <mat-form-field fxFlex class="form__field">
-            <mat-checkbox
-                class=""
+          <div fxFlex class="form__field">
+            <mat-checkbox id="fenced" name="fenced" class=""
+                labelPosition="before"
                 [(ngModel)]="model.fenced">
               Fenced?
             </mat-checkbox>
-          </mat-form-field>
+          </div>
         </div>
       </div>
   
@@ -129,20 +129,23 @@
 
           <!-- Rent payment period -->
           <mat-form-field fxFlex class="form__field">
-            <mat-select id="rentPricePeriod" name="rentPricePeriod" placeholder="Building type" [value]="model.rentPricePeriod" [(ngModel)]="model.rentPricePeriod">
+            <mat-select id="rentPricePeriod" name="rentPricePeriod" placeholder="Pay frecuency" [value]="model.rentPricePeriod" [(ngModel)]="model.rentPricePeriod">
               <mat-option value="week">per week</mat-option>
               <mat-option value="month">per month</mat-option>
             </mat-select>
           </mat-form-field>
+        </div>
 
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Managed? -->
-          <mat-form-field fxFlex class="form__field">
-            <mat-checkbox
-                class=""
-                [(ngModel)]="model.managed">
+          <div fxFlex class="form__field">
+            <mat-slide-toggle class="" id="managed" name="managed"
+                color="accent"
+                [checked]="model.managed"
+                (change)="onSlideToggleChange($event)">
               Managed?
-            </mat-checkbox>
-          </mat-form-field>
+            </mat-slide-toggle>
+          </div>
 
           <!-- Manager rate -->
           <div fxFlex="none" fxFlex.gt-xs fxLayout="column" class="form__field">
@@ -151,21 +154,30 @@
               <mat-slider fxFlex id="managerRate" name="managerRate"
                   color="accent"
                   [max]="20"
-                  [min]="1"
+                  [min]="0"
                   [step]="1"
+                  [disabled]="!model.managed"
                   [thumb-label]="true"
                   [tick-interval]="1"
                   [(ngModel)]="model.managerRate"
                   [value]="model.managerRate"> 
               </mat-slider>
-              <span>{{model.managerRate}}%</span>
+              <span *ngIf="model.managerRate">{{model.managerRate}}%</span>
             </div>
           </div>
+
+          <!-- Address -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="text" id="agent" name="agent" placeholder="Agent" 
+                [(ngModel)]="model.agent"
+                [value]="model.agent"
+                #agent="ngModel">
+          </mat-form-field>
         </div>
 
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Vacancy -->
-          <div fxFlex="none" fxFlex.gt-xs fxLayout="column" class="form__field">
+          <div fxFlex="none" fxFlex.gt-xs="250px" fxLayout="column" class="form__field">
             <label class="slider__label">Vacancy</label>
             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
               <mat-slider fxFlex id="vacancy" name="vacancy"
@@ -178,27 +190,27 @@
                   [(ngModel)]="model.vacancy"
                   [value]="model.vacancy"> 
               </mat-slider>
-              <span>{{model.vacancy}} weeks</span>
+              <span *ngIf="model.vacancy">{{model.vacancy}} weeks</span>
             </div>
           </div>
 
           <!-- Rent appraisal done? -->
-          <mat-form-field fxFlex class="form__field">
-            <mat-checkbox
-                class=""
+          <div fxFlex class="form__field">
+            <mat-checkbox id="rentAppraisalDone" name="rentAppraisalDone" class=""
+                labelPosition="before"
                 [(ngModel)]="model.rentAppraisalDone">
               Rent appraisal done?
             </mat-checkbox>
-          </mat-form-field>
+          </div>
 
           <!-- Rented? -->
-          <mat-form-field fxFlex class="form__field">
-            <mat-checkbox
-                class=""
+          <div fxFlex class="form__field">
+            <mat-checkbox id="rented" name="rented" class=""
+                labelPosition="before"
                 [(ngModel)]="model.rented">
               Rented?
             </mat-checkbox>
-          </mat-form-field>
+          </div>
         </div>
       </div>
       
@@ -229,6 +241,71 @@
             </mat-form-field>
           </div>
 
+          <!-- Capital growth -->
+          <mat-form-field fxFlex fxFlex.sm="140px" fxFlex.gt-sm="200px" class="form__field">
+            <input matInput type="number" id="capitalGrowth" name="capitalGrowth" placeholder="Capital growth" 
+                [(ngModel)]="model.capitalGrowth" 
+                [value]="model.capitalGrowth"
+                numberValidator='{"min": 0, "max": 100}' 
+                #capitalGrowth="ngModel">
+            
+            <span matSuffix>%</span>
+            <mat-hint align="start">Annual capital growth percentage for owning the property.</mat-hint>
+            <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
+            <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          <p class="header">Living costs</p>
+        </h3>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Body corporate -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'bodyCorporateUnit'" 
+                [value]="model.bodyCorporateUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="bodyCorporate" name="bodyCorporate" placeholder="Body corporate"
+                  [(ngModel)]="model.bodyCorporate" 
+                  [value]="model.bodyCorporate"
+                  numberValidator
+                  #bodyCorporate="ngModel">
+              
+              <mat-hint align="start">The bodyCorporate rates this property pays annually.</mat-hint>
+              <mat-error *ngIf="bodyCorporate.invalid && (bodyCorporate.dirty || bodyCorporate.touched) && bodyCorporate.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Utilities -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'utilitiesCostUnit'" 
+                [value]="model.utilitiesCostUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="utilitiesCost" name="utilitiesCost" placeholder="Utilities"
+                  [(ngModel)]="model.utilitiesCost" 
+                  [value]="model.utilitiesCost"
+                  numberValidator
+                  #utilitiesCost="ngModel">
+              
+              <mat-hint align="start">Electricity, water, gas, internet, ...</mat-hint>
+              <mat-error *ngIf="utilitiesCost.invalid && (utilitiesCost.dirty || utilitiesCost.touched) && utilitiesCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+
           <!-- Rates -->
           <div fxLayout="row" fxLayoutGap="10px">
             <currency-unit fxFlex="50px"
@@ -249,7 +326,9 @@
               <mat-error *ngIf="rates.invalid && (rates.dirty || rates.touched) && rates.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             </mat-form-field>
           </div>
+        </div>
 
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Insurance -->
           <div fxLayout="row" fxLayoutGap="10px">
             <currency-unit fxFlex="50px"
@@ -272,73 +351,6 @@
           </div>
         </div>
       </div>
-      
-      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
-        <h3 class="title">
-          <p class="header"></p>
-        </h3>
-
-        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
-          <!-- Capital growth -->
-          <mat-form-field fxFlex  class="form__field">
-            <input matInput type="number" id="capitalGrowth" name="capitalGrowth" placeholder="Bathrooms" 
-                [(ngModel)]="model.capitalGrowth" 
-                [value]="model.capitalGrowth"
-                numberValidator='{"min": 0, "max": 100}' 
-                #capitalGrowth="ngModel">
-            
-            <span matSuffix>%</span>
-            <mat-hint align="start">Annual capital growth percentage for owning the property.</mat-hint>
-            <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-            <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
-            <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
-          </mat-form-field>
-
-          <!-- Body corporate -->
-          <div fxLayout="row" fxLayoutGap="10px">
-            <currency-unit fxFlex="50px"
-                [id]="'bodyCorporateUnit'" 
-                [value]="model.bodyCorporateUnit"
-                [view]="'narrow'"
-                (newValue)="onCurrencyUnitChange($event)">
-            </currency-unit>
-            
-            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
-              <input matInput type="number" id="bodyCorporate" name="bodyCorporate" placeholder="Rates"
-                  [(ngModel)]="model.bodyCorporate" 
-                  [value]="model.bodyCorporate"
-                  numberValidator
-                  #bodyCorporate="ngModel">
-              
-              <mat-hint align="start">The bodyCorporate rates this property pays annually.</mat-hint>
-              <mat-error *ngIf="bodyCorporate.invalid && (bodyCorporate.dirty || bodyCorporate.touched) && bodyCorporate.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-            </mat-form-field>
-          </div>
-
-          <!-- Utilities -->
-          <div fxLayout="row" fxLayoutGap="10px">
-            <currency-unit fxFlex="50px"
-                [id]="'utilitiesUnit'" 
-                [value]="model.utilitiesUnit"
-                [view]="'narrow'"
-                (newValue)="onCurrencyUnitChange($event)">
-            </currency-unit>
-            
-            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
-              <input matInput type="number" id="utilities" name="utilities" placeholder="Rates"
-                  [(ngModel)]="model.utilities" 
-                  [value]="model.utilities"
-                  numberValidator
-                  #utilities="ngModel">
-              
-              <mat-hint align="start">Electricity, water, gas, internet, ...</mat-hint>
-              <mat-error *ngIf="utilities.invalid && (utilities.dirty || utilities.touched) && utilities.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
     </section>
 
   </form>
-
-</div>

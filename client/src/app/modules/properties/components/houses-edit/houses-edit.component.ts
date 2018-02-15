@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, Input, Output, 
 import { Subscription } from 'rxjs/Subscription';
 import { UtilService } from '../../../../util.service';
 import { AppService } from '../../../../app.service';
-import { MatSelectChange } from '@angular/material';
+import { MatSelectChange, MatSlideToggleChange } from '@angular/material';
 import { houseBuildingTypes } from '../../../../constants';
 
 @Component({
@@ -67,38 +67,34 @@ export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onCurrencyUnitChange($event : MatSelectChange) {
-    if ($event.source.id === 'registeredValueUnit') {
-      this.model.registeredValueUnit = $event.value;
-    } else if ($event.source.id === 'ratesUnit') {
-      this.model.buyingPriceUnit = $event.value;
-    }
+    this.model[$event.source.id] = $event.value;
     
-    this.values.emit({ 
-      value : {
-        model : this.model,
-        valid : this.form.valid
-      } 
-    });
+    this.emitValues();
+  }
+
+  onSlideToggleChange($event : MatSlideToggleChange) {
+    this.model[$event.source.id] = $event.checked;
+
+    this.emitValues();
   }
 
   ngAfterViewInit(): void {
     //send data before touching any value
+    this.emitValues();
+
+    //after any event in the form we send updated data
+    const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
+      this.emitValues();
+    });
+    this.subscription.add(newSubscription);
+  }
+
+  emitValues() {
     this.values.emit({ 
       value : {
         model : this.model,
         valid : this.form.valid
       } 
     });
-
-    //after any event in the form we send updated data
-    const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
-      this.values.emit({ 
-        value : {
-          model : this.model,
-          valid : this.form.valid
-        } 
-      });
-    });
-    this.subscription.add(newSubscription);
   }
 }

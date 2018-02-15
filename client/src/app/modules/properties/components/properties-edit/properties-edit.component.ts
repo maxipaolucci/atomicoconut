@@ -143,6 +143,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     const newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(
       (property : Property) => {
         this.property = property;
+        
         //populate the model
         this.model.address = property.address;
         this.model.askingPrice = property.askingPrice;
@@ -199,6 +200,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
             agent : property.agent
           };
         }
+        
 
         this.getPropertyServiceRunning = false;
       },
