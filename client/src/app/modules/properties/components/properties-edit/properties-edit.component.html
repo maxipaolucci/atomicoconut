@@ -265,6 +265,14 @@
           </mat-form-field>
         </div>
       </div>
+
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <houses-edit *ngIf="type === propertyTypes.HOUSE" 
+            [defaultValues]="model.propertyTypeData"
+            [defaultCurrencyUnit]="user.currency"
+            (values)="onPropertyTypeDataChange($event)">
+        </houses-edit>
+      </div>
     </section>
 
     <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--edit-property">

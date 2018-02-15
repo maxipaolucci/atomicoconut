@@ -49,8 +49,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     notes : null
   };
   
-  id : string = null; //investment id
-  type : string = null; //investment type
+  id : string = null; //property id
+  type : string = null; //property type
   //services flags
   editPropertyServiceRunning : boolean = false;
   getPropertyServiceRunning : boolean = false;

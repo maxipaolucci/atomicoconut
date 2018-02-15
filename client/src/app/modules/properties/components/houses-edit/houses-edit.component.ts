@@ -6,7 +6,7 @@ import { MatSelectChange } from '@angular/material';
 import { houseBuildingTypes } from '../../../../constants';
 
 @Component({
-  selector: 'app-houses-edit',
+  selector: 'houses-edit',
   templateUrl: './houses-edit.component.html',
   styleUrls: ['./houses-edit.component.scss']
 })
