@@ -28,7 +28,8 @@ export class House extends Property {
   bodyCorporateUnit : string;
   utilitiesCost : number;
   utilitiesCostUnit : string;
-  managed : number;
+  managed : boolean;
+  managerRate : number;
   agent : string; //this must be a contact in a contact persons module like networking
   
 
@@ -79,7 +80,8 @@ export class House extends Property {
       utilitiesCost : number = null,
       utilitiesCostUnit : string= null,
       agent : string,
-      managed : number = null,
+      managed : boolean = false,
+      managerRate : number = null,
       buildingType : 'house'  | 'unit' | 'apartment' = 'house',
       titleType : string = null) {
     
@@ -113,6 +115,7 @@ export class House extends Property {
     this.utilitiesCostUnit = utilitiesCostUnit;
     this.agent = agent;
     this.managed = managed;
+    this.managerRate = managerRate;
     this.buildingType = buildingType;
     this.titleType = titleType;
   }

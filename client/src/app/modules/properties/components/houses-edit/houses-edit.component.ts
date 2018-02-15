@@ -42,7 +42,8 @@ export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
     bodyCorporateUnit : null,
     utilitiesCost : null,
     utilitiesCostUnit : null,
-    managed : null,
+    managed : false,
+    managerRate : null,
     agent : null
   }
   subscription : Subscription = new Subscription();
@@ -53,6 +54,7 @@ export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
     this.model.registeredValueUnit = this.model.ratesUnit = this.model.insuranceUnit = this.model.rentPriceUnit = this.model.bodyCorporateUnit = 
         this.model.utilitiesCostUnit = this.defaultCurrencyUnit;
     this.model.buildingType = houseBuildingTypes.HOUSE;
+    this.model.rentPricePeriod = 'week';
     
     Object.assign(this.model, this.defaultValues);
   }

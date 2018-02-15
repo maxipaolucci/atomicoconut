@@ -72,7 +72,7 @@ export class PropertiesService {
               data.insurance, data.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, 
               data.description, data.otherCost, data.otherCostUnit, data.notes, data.capitalGrowth, data.bedrooms, data.bathrooms, data.parkingSpaces,
               data.fenced, data.rented, data.rentPrice, data.rentPriceUnit, data.rentPricePeriod, data.rentAppraisalDone, data.vacancy, data.bodyCorporate,
-              data.bodyCorporateUnit, data.utilitiesCost, data.utilitiesCostUnit, data.agent, data.managed, data.buildingType, data.titleType);
+              data.bodyCorporateUnit, data.utilitiesCost, data.utilitiesCostUnit, data.agent, data.managed, data.managerRate, data.buildingType, data.titleType);
         }
       } else {
         this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
@@ -116,7 +116,7 @@ export class PropertiesService {
                 item.insurance, item.insuranceUnit, item.renovationCost, item.renovationCostUnit, item.maintenanceCost, item.maintenanceCostUnit, 
                 item.description, item.otherCost, item.otherCostUnit, item.notes, item.capitalGrowth, item.bedrooms, item.bathrooms, item.parkingSpaces,
                 item.fenced, item.rented, item.rentPrice, item.rentPriceUnit, item.rentPricePeriod, item.rentAppraisalDone, item.vacancy, item.bodyCorporate,
-                item.bodyCorporateUnit, item.utilitiesCost, item.utilitiesCostUnit, item.agent, item.managed, item.buildingType, item.titleType))
+                item.bodyCorporateUnit, item.utilitiesCost, item.utilitiesCostUnit, item.agent, item.managed, item.managerRate, item.buildingType, item.titleType))
           }
         }
       } else {

@@ -104,6 +104,7 @@ exports.create = async (req, res, next) => {
                 utilitiesCost : req.body.propertyTypeData.utilitiesCost,
                 utilitiesCostUnit : req.body.propertyTypeData.utilitiesCostUnit,
                 managed : req.body.propertyTypeData.managed,
+                managerRate : req.body.propertyTypeData.managerRate,
                 agent : req.body.propertyTypeData.agent
             })).save();
         }
@@ -259,6 +260,7 @@ exports.update = async (req, res, next) => {
                 utilitiesCost : req.body.propertyTypeData.utilitiesCost,
                 utilitiesCostUnit : req.body.propertyTypeData.utilitiesCostUnit,
                 managed : req.body.propertyTypeData.managed,
+                managerRate : req.body.propertyTypeData.managerRate,
                 agent : req.body.propertyTypeData.agent
             };
             

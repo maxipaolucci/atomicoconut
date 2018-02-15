@@ -193,6 +193,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
             utilitiesCost : property.utilitiesCost,
             utilitiesCostUnit : property.utilitiesCostUnit,
             managed : property.managed,
+            managerRate : property.managerRate,
             agent : property.agent
           };
         }

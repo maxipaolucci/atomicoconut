@@ -113,6 +113,10 @@ const houseSchema = new mongoose.Schema({
     default : 'USD'
   },
   managed : {
+    type : Boolean,
+    default : false
+  },
+  managerRate : {
     type : Number,
     default : null
   },
