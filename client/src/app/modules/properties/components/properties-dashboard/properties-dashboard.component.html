@@ -1,8 +1,40 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__properties">
   <section *ngIf="!getPropertiesServiceRunning && properties.length > 0" fxLayout="column" fxLayoutGap="10px">
+    <mat-table #table [dataSource]="propertiesDataSource">
 
+      <!-- Position Column -->
+      <ng-container matColumnDef="address">
+        <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-mini-fab routerLink="/properties/{{element.type}}/edit/{{element.id}}" color="primary">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-mini-fab routerLink="/properties/{{element.type}}/edit/{{element.id}}" color="warn">
+            <mat-icon aria-label="Edit">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      
+      <mat-header-row *matHeaderRowDef="['address', 'edit', 'delete']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['address', 'edit', 'delete'];"></mat-row>
+    </mat-table>
   </section>
-
+  <mat-paginator [fxShow]="properties.length > 0" #propertiesPaginator 
+      [pageSize]="10" 
+      [pageSizeOptions]="[10,20,50,100]">
+  </mat-paginator>
+  
   <section *ngIf="!getPropertiesServiceRunning && properties.length == 0" fxLayout="column" fxLayoutGap="10px">
     <mat-card fxFlex class="no-properties__card">
       <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"

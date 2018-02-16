@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { UsersService } from '../../../users/users.service';
@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { Property } from '../../models/property';
 import { Subscription } from 'rxjs/Subscription';
 import { PropertiesService } from '../../properties.service';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'properties-dashboard',
@@ -15,9 +16,10 @@ import { PropertiesService } from '../../properties.service';
   styleUrls: ['./properties-dashboard.component.scss']
 })
 export class PropertiesDashboardComponent implements OnInit, OnDestroy {
-
+  @ViewChild('propertiesPaginator') paginator : MatPaginator;
   user : User = null;
   properties : Property[] = [];
+  propertiesDataSource : MatTableDataSource<Property> = new MatTableDataSource([]);
   subscription : Subscription = new Subscription();
   getPropertiesServiceRunning : boolean = false;
 
@@ -61,15 +63,19 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > getProperties() > `; //for debugging
 
     this.properties = [];
-    this.getPropertiesServiceRunning = true;
+    this.propertiesDataSource = new MatTableDataSource([]);
+    this.propertiesDataSource.paginator = this.paginator;
 
+    this.getPropertiesServiceRunning = true;
     
     const newSubscription = user$.switchMap((user) => {
       return this.propertiesService.getProperties(user.email);
     }).subscribe(
       (properties : Property[]) => {
         this.properties = properties;
-        console.log(methodTrace, this.properties);
+        
+        this.propertiesDataSource = new MatTableDataSource(properties);
+        this.propertiesDataSource.paginator = this.paginator;
 
         this.getPropertiesServiceRunning = false;
       },

@@ -2,6 +2,7 @@ import { User } from '../../users/models/user';
 
 export class Property {
 
+  id : string;
   type : 'house' /*| 'building' | 'condo'*/;
   address : string;
   createdBy : User;
@@ -27,6 +28,7 @@ export class Property {
   notes : string;
 
   constructor(
+      id : string = null,
       type : 'house' = 'house',
       address : string = null,
       createdBy : User = null,
@@ -51,6 +53,7 @@ export class Property {
       otherCostUnit : string = null,
       notes : string = null) {
     
+    this.id = id;
     this.type = type;
     this.address = address;
     this.createdBy = createdBy;

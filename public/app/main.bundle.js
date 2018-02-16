@@ -2900,7 +2900,7 @@ exports.HousesEditComponent = HousesEditComponent;
 /***/ "../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties\">\r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab routerLink=\"house/create\" class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new property\" matTooltipPosition=\"left\">\r\n      <mat-icon aria-label=\"Create new property\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties\">\r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-table #table [dataSource]=\"propertiesDataSource\">\r\n\r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\"> {{element.address}} </mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"edit\">\r\n        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab routerLink=\"/properties/{{element.type}}/edit/{{element.id}}\" color=\"primary\">\r\n            <mat-icon aria-label=\"Edit\">edit</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab routerLink=\"/properties/{{element.type}}/edit/{{element.id}}\" color=\"warn\">\r\n            <mat-icon aria-label=\"Edit\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"['address', 'edit', 'delete']\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: ['address', 'edit', 'delete'];\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [pageSizeOptions]=\"[10,20,50,100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab routerLink=\"house/create\" class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new property\" matTooltipPosition=\"left\">\r\n      <mat-icon aria-label=\"Create new property\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -2944,6 +2944,7 @@ var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/
 var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
 var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
 var properties_service_1 = __webpack_require__("../../../../../src/app/modules/properties/properties.service.ts");
+var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
 var PropertiesDashboardComponent = /** @class */ (function () {
     function PropertiesDashboardComponent(route, mainNavigatorService, usersService, appService, propertiesService) {
         this.route = route;
@@ -2953,6 +2954,7 @@ var PropertiesDashboardComponent = /** @class */ (function () {
         this.propertiesService = propertiesService;
         this.user = null;
         this.properties = [];
+        this.propertiesDataSource = new material_1.MatTableDataSource([]);
         this.subscription = new Subscription_1.Subscription();
         this.getPropertiesServiceRunning = false;
     }
@@ -2986,12 +2988,15 @@ var PropertiesDashboardComponent = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
         this.properties = [];
+        this.propertiesDataSource = new material_1.MatTableDataSource([]);
+        this.propertiesDataSource.paginator = this.paginator;
         this.getPropertiesServiceRunning = true;
         var newSubscription = user$.switchMap(function (user) {
             return _this.propertiesService.getProperties(user.email);
         }).subscribe(function (properties) {
             _this.properties = properties;
-            console.log(methodTrace, _this.properties);
+            _this.propertiesDataSource = new material_1.MatTableDataSource(properties);
+            _this.propertiesDataSource.paginator = _this.paginator;
             _this.getPropertiesServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
@@ -3004,6 +3009,10 @@ var PropertiesDashboardComponent = /** @class */ (function () {
             _this.getPropertiesServiceRunning = false;
         });
     };
+    __decorate([
+        core_1.ViewChild('propertiesPaginator'),
+        __metadata("design:type", material_1.MatPaginator)
+    ], PropertiesDashboardComponent.prototype, "paginator", void 0);
     PropertiesDashboardComponent = __decorate([
         core_1.Component({
             selector: 'properties-dashboard',
@@ -3353,7 +3362,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var property_1 = __webpack_require__("../../../../../src/app/modules/properties/models/property.ts");
 var House = /** @class */ (function (_super) {
     __extends(House, _super);
-    function House(type, address, createdBy, landArea, floorArea, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, registeredValue, registeredValueUnit, rates, ratesUnit, insurance, insuranceUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost, otherCostUnit, notes, capitalGrowth, bedrooms, bathrooms, parkingSpaces, fenced, rented, rentPrice, rentPriceUnit, rentPricePeriod, rentAppraisalDone, vacancy, bodyCorporate, bodyCorporateUnit, utilitiesCost, utilitiesCostUnit, agent, managed, managerRate, buildingType, titleType) {
+    function House(id, type, address, createdBy, landArea, floorArea, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, registeredValue, registeredValueUnit, rates, ratesUnit, insurance, insuranceUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost, otherCostUnit, notes, capitalGrowth, bedrooms, bathrooms, parkingSpaces, fenced, rented, rentPrice, rentPriceUnit, rentPricePeriod, rentAppraisalDone, vacancy, bodyCorporate, bodyCorporateUnit, utilitiesCost, utilitiesCostUnit, agent, managed, managerRate, buildingType, titleType) {
+        if (id === void 0) { id = null; }
         if (type === void 0) { type = 'house'; }
         if (address === void 0) { address = null; }
         if (createdBy === void 0) { createdBy = null; }
@@ -3404,7 +3414,7 @@ var House = /** @class */ (function (_super) {
         if (managerRate === void 0) { managerRate = null; }
         if (buildingType === void 0) { buildingType = 'house'; }
         if (titleType === void 0) { titleType = null; }
-        var _this = _super.call(this, type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost, otherCostUnit, notes) || this;
+        var _this = _super.call(this, id, type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost, otherCostUnit, notes) || this;
         _this.landArea = landArea;
         _this.floorArea = floorArea;
         _this.registeredValue = registeredValue;
@@ -3449,7 +3459,8 @@ exports.House = House;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var Property = /** @class */ (function () {
-    function Property(type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost, otherCostUnit, notes) {
+    function Property(id, type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost, otherCostUnit, notes) {
+        if (id === void 0) { id = null; }
         if (type === void 0) { type = 'house'; }
         if (address === void 0) { address = null; }
         if (createdBy === void 0) { createdBy = null; }
@@ -3473,6 +3484,7 @@ var Property = /** @class */ (function () {
         if (otherCost === void 0) { otherCost = null; }
         if (otherCostUnit === void 0) { otherCostUnit = null; }
         if (notes === void 0) { notes = null; }
+        this.id = id;
         this.type = type;
         this.address = address;
         this.createdBy = createdBy;
@@ -3686,7 +3698,7 @@ var PropertiesService = /** @class */ (function () {
             if (data && data._id) {
                 var createdBy = new user_1.User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
                 if (data.propertyType === constants_1.propertyTypes.HOUSE) {
-                    result = new house_1.House(data.propertyType, data.address, createdBy, data.propertyTypeData.landArea, data.propertyTypeData.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit, data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces, data.propertyTypeData.fenced, data.propertyTypeData.rented, data.propertyTypeData.rentPrice, data.propertyTypeData.rentPriceUnit, data.propertyTypeData.rentPricePeriod, data.propertyTypeData.rentAppraisalDone, data.propertyTypeData.vacancy, data.propertyTypeData.bodyCorporate, data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
+                    result = new house_1.House(data._id, data.propertyType, data.address, createdBy, data.propertyTypeData.landArea, data.propertyTypeData.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit, data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces, data.propertyTypeData.fenced, data.propertyTypeData.rented, data.propertyTypeData.rentPrice, data.propertyTypeData.rentPriceUnit, data.propertyTypeData.rentPricePeriod, data.propertyTypeData.rentAppraisalDone, data.propertyTypeData.vacancy, data.propertyTypeData.bodyCorporate, data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
                 }
             }
             else {
@@ -3716,10 +3728,9 @@ var PropertiesService = /** @class */ (function () {
             if (responseData && responseData instanceof Array) {
                 for (var _i = 0, responseData_1 = responseData; _i < responseData_1.length; _i++) {
                     var item = responseData_1[_i];
-                    properties.push(item); //TODO create clases of property
                     var createdBy = new user_1.User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
                     if (item.propertyType === constants_1.propertyTypes.HOUSE) {
-                        properties.push(new house_1.House(item.propertyType, item.address, createdBy, item.landArea, item.floorArea, item.askingPrice, item.askingPriceUnit, item.offerPrice, item.offerPriceUnit, item.walkAwayPrice, item.walkAwayPriceUnit, item.salePrice, item.salePriceUnit, item.dateListed, item.reasonForSelling, item.marketValue, item.marketValueUnit, item.registeredValue, item.registeredValueUnit, item.rates, item.ratesUnit, item.insurance, item.insuranceUnit, item.renovationCost, item.renovationCostUnit, item.maintenanceCost, item.maintenanceCostUnit, item.description, item.otherCost, item.otherCostUnit, item.notes, item.capitalGrowth, item.bedrooms, item.bathrooms, item.parkingSpaces, item.fenced, item.rented, item.rentPrice, item.rentPriceUnit, item.rentPricePeriod, item.rentAppraisalDone, item.vacancy, item.bodyCorporate, item.bodyCorporateUnit, item.utilitiesCost, item.utilitiesCostUnit, item.agent, item.managed, item.managerRate, item.buildingType, item.titleType));
+                        properties.push(new house_1.House(item._id, item.propertyType, item.address, createdBy, item.landArea, item.floorArea, item.askingPrice, item.askingPriceUnit, item.offerPrice, item.offerPriceUnit, item.walkAwayPrice, item.walkAwayPriceUnit, item.salePrice, item.salePriceUnit, item.dateListed, item.reasonForSelling, item.marketValue, item.marketValueUnit, item.registeredValue, item.registeredValueUnit, item.rates, item.ratesUnit, item.insurance, item.insuranceUnit, item.renovationCost, item.renovationCostUnit, item.maintenanceCost, item.maintenanceCostUnit, item.description, item.otherCost, item.otherCostUnit, item.notes, item.capitalGrowth, item.bedrooms, item.bathrooms, item.parkingSpaces, item.fenced, item.rented, item.rentPrice, item.rentPriceUnit, item.rentPricePeriod, item.rentAppraisalDone, item.vacancy, item.bodyCorporate, item.bodyCorporateUnit, item.utilitiesCost, item.utilitiesCostUnit, item.agent, item.managed, item.managerRate, item.buildingType, item.titleType));
                     }
                 }
             }
@@ -4227,7 +4238,9 @@ var CustomMaterialDesignModule = /** @class */ (function () {
                 material_1.MatSelectModule,
                 material_1.MatButtonToggleModule,
                 material_1.MatRadioModule,
-                material_1.MatSliderModule
+                material_1.MatSliderModule,
+                material_1.MatTableModule,
+                material_1.MatPaginatorModule
             ],
             exports: [
                 material_1.MatButtonModule,
@@ -4252,7 +4265,9 @@ var CustomMaterialDesignModule = /** @class */ (function () {
                 material_1.MatSelectModule,
                 material_1.MatButtonToggleModule,
                 material_1.MatRadioModule,
-                material_1.MatSliderModule
+                material_1.MatSliderModule,
+                material_1.MatTableModule,
+                material_1.MatPaginatorModule
             ]
         })
     ], CustomMaterialDesignModule);

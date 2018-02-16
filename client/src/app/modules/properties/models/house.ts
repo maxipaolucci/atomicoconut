@@ -33,7 +33,9 @@ export class House extends Property {
   agent : string; //this must be a contact in a contact persons module like networking
   
 
-  constructor(type : 'house' = 'house',
+  constructor(
+      id : string = null,
+      type : 'house' = 'house',
       address : string = null,
       createdBy : User = null,
       landArea : number = null,
@@ -85,7 +87,7 @@ export class House extends Property {
       buildingType : 'house'  | 'unit' | 'apartment' = 'house',
       titleType : string = null) {
     
-    super(type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit,
+    super(id, type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit,
         walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue,
         marketValueUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost,
         otherCostUnit, notes);

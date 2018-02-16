@@ -315,7 +315,7 @@ const beautifyInvestmentsFormat = async (investments, options = null) => {
         investment.createdBy.email = investment.createdBy.email[0];
         investment.createdBy.gravatar = 'https://gravatar.com/avatar/' + md5(investment.createdBy.email) + '?s=200';
 
-        //created by data
+        //updated by data
         investment.updatedBy.name = investment.updatedBy.name[0];
         investment.updatedBy.email = investment.updatedBy.email[0];
         investment.updatedBy.gravatar = 'https://gravatar.com/avatar/' + md5(investment.updatedBy.email) + '?s=200';

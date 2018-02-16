@@ -66,7 +66,7 @@ export class PropertiesService {
         const createdBy = new User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
         
         if (data.propertyType === propertyTypes.HOUSE) {
-          result = new House(data.propertyType, data.address, createdBy, data.propertyTypeData.landArea, data.propertyTypeData.floorArea, data.askingPrice, data.askingPriceUnit,
+          result = new House(data._id, data.propertyType, data.address, createdBy, data.propertyTypeData.landArea, data.propertyTypeData.floorArea, data.askingPrice, data.askingPriceUnit,
               data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, 
               data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit,
               data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, 
@@ -106,11 +106,10 @@ export class PropertiesService {
 
       if (responseData && responseData instanceof Array) {
         for (let item of responseData) {
-          properties.push(item); //TODO create clases of property
           const createdBy = new User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
 
           if (item.propertyType === propertyTypes.HOUSE) {
-            properties.push(new House(item.propertyType, item.address, createdBy, item.landArea, item.floorArea, item.askingPrice, item.askingPriceUnit,
+            properties.push(new House(item._id, item.propertyType, item.address, createdBy, item.landArea, item.floorArea, item.askingPrice, item.askingPriceUnit,
                 item.offerPrice, item.offerPriceUnit, item.walkAwayPrice, item.walkAwayPriceUnit, item.salePrice, item.salePriceUnit, item.dateListed, 
                 item.reasonForSelling, item.marketValue, item.marketValueUnit, item.registeredValue, item.registeredValueUnit, item.rates, item.ratesUnit,
                 item.insurance, item.insuranceUnit, item.renovationCost, item.renovationCostUnit, item.maintenanceCost, item.maintenanceCostUnit, 

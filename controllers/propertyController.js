@@ -592,6 +592,11 @@ const beautifyPropertiesFormat = async (properties, options = null) => {
         property.createdBy.email = property.createdBy.email[0];
         property.createdBy.gravatar = 'https://gravatar.com/avatar/' + md5(property.createdBy.email) + '?s=200';
 
+        //updated by data
+        property.updatedBy.name = property.updatedBy.name[0];
+        property.updatedBy.email = property.updatedBy.email[0];
+        property.updatedBy.gravatar = 'https://gravatar.com/avatar/' + md5(property.updatedBy.email) + '?s=200';
+
         //property type data
         if (property.houseData[0]) {
             property.propertyTypeData = property.houseData[0];
