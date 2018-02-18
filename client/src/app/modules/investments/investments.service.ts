@@ -28,7 +28,7 @@ export class InvestmentsService {
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   } 
   
   /**
@@ -40,7 +40,7 @@ export class InvestmentsService {
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   } 
 
   /**
@@ -61,7 +61,7 @@ export class InvestmentsService {
 
     const investmentData$ = this.http.get<Response>(`${this.serverHost}/getbyId`, { params })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
 
     return investmentData$.switchMap((investmentData) => {
       let investment : Investment = null;
@@ -113,7 +113,7 @@ export class InvestmentsService {
 
     const investmentsData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
     
     return investmentsData$.switchMap((investmentsData) => {
       let investments : Investment[] = [];
@@ -153,6 +153,6 @@ export class InvestmentsService {
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } )
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 }

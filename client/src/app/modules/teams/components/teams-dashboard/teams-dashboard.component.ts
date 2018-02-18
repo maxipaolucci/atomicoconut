@@ -7,18 +7,21 @@ import { AppService } from "../../../../app.service";
 import { Team } from '../../models/team';
 import { User } from '../../../users/models/user';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
+import { Subscription } from 'rxjs/Subscription';
+import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-teams-dashboard',
   templateUrl: './teams-dashboard.component.html',
   styleUrls: ['./teams-dashboard.component.scss']
 })
-export class TeamsDashboardComponent implements OnInit {
+export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
   user : User = null;
   getTeamsServiceRunning : boolean = false;
   teamActionRunning : boolean[] = [];
   teams : Team[] = [];
+  subscription : Subscription = new Subscription();
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private teamsService : TeamsService,
     private appService : AppService, private router : Router, public dialog: MatDialog) { }
@@ -41,6 +44,13 @@ export class TeamsDashboardComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+
+    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
+  }
+
   /**
    * Get my teams from server
    */
@@ -50,14 +60,16 @@ export class TeamsDashboardComponent implements OnInit {
     this.teams = [];
     this.getTeamsServiceRunning = true;
 
-    this.teamsService.getTeams(this.user.email).subscribe(
+    const newSubscription = this.teamsService.getTeams(this.user.email).subscribe(
       (teams : Team[]) => {
-        let index = 0;
+        //let index = 0;
         this.teams = teams;
-        for (let item of teams) {
-          this.teamActionRunning[index] = false;
-          index += 1;
-        }
+        this.teamActionRunning = new Array(teams.length).fill(false);
+        
+        // for (let item of teams) {
+        //   this.teamActionRunning[index] = false;
+        //   index += 1;
+        // }
 
         this.getTeamsServiceRunning = false;
       },
@@ -72,6 +84,8 @@ export class TeamsDashboardComponent implements OnInit {
         this.getTeamsServiceRunning = false;
       }
     );
+
+    this.subscription.add(newSubscription);
   }
 
   openDeleteTeamDialog(index : number, team : Team = null) {
@@ -91,13 +105,14 @@ export class TeamsDashboardComponent implements OnInit {
       }
     });
 
-    yesNoDialogRef.afterClosed().subscribe(result => {
+    const newSubscription = yesNoDialogRef.afterClosed().subscribe(result => {
       if (result === 'yes') {
         this.delete(index, team);
       } else {
         this.teamActionRunning[index] = false;
       }
     });
+    this.subscription.add(newSubscription);
 
     return false;
   }
@@ -107,7 +122,7 @@ export class TeamsDashboardComponent implements OnInit {
 
     this.teamActionRunning[index] = true;
 
-    this.teamsService.delete(team.slug, this.user.email).subscribe(
+    const newSubscription = this.teamsService.delete(team.slug, this.user.email).subscribe(
       (data : any) => {
         if (data && data.removed > 0) {
           this.teams.splice(index, 1);
@@ -132,6 +147,8 @@ export class TeamsDashboardComponent implements OnInit {
         this.teamActionRunning[index] = false;
       }
     );
+
+    this.subscription.add(newSubscription);
   }
 
 }

@@ -27,7 +27,7 @@ export class TeamsService {
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   } 
   
   /**
@@ -39,7 +39,7 @@ export class TeamsService {
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   } 
 
   /**
@@ -60,7 +60,7 @@ export class TeamsService {
 
     return this.http.get<Response>(`${this.serverHost}/getMyTeamBySlug`, { params })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -79,7 +79,7 @@ export class TeamsService {
 
     const teamsData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
     
     return teamsData$.switchMap((teamsData) => {
       let teams : Team[] = [];
@@ -122,6 +122,6 @@ export class TeamsService {
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${slug}`, {headers : this.headers, params } )
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 }

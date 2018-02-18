@@ -45,7 +45,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/register`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -57,7 +57,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/account`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -69,7 +69,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/accountPersonalInfo`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -81,7 +81,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/accountFinancialInfo`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -100,7 +100,7 @@ export class UsersService {
     
     return this.http.get<Response>(`${this.serverHost}/getUser`, { params })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -111,7 +111,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/login`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -122,7 +122,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/account/forgot`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -133,7 +133,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/account/reset/${token}`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -144,6 +144,6 @@ export class UsersService {
 
     return this.http.get<Response>(`${this.serverHost}/logout`)
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 }

@@ -205,7 +205,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
         this.getPropertyServiceRunning = false;
       },
       (error : any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > `, error);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
         } else if (error.codeno === 461 || error.codeno === 462) {

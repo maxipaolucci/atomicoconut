@@ -27,7 +27,7 @@ export class PropertiesService {
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   } 
   
   /**
@@ -39,7 +39,7 @@ export class PropertiesService {
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 
   /**
@@ -58,7 +58,7 @@ export class PropertiesService {
 
     const data$ = this.http.get<Response>(`${this.serverHost}/${id}`, { params })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
 
     return data$.switchMap((data) => {
       let result : Property = null;
@@ -99,7 +99,7 @@ export class PropertiesService {
 
     const responseData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
     
     return responseData$.switchMap((responseData) => {
       let properties : Property[] = [];
@@ -143,6 +143,6 @@ export class PropertiesService {
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } )
         .map(this.appService.extractData)
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 }

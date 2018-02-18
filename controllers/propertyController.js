@@ -337,6 +337,7 @@ exports.delete = async (req, res) => {
             if (property.propertyType === propertyTypes.HOUSE) {
                 propertyTypeDataModel = 'House';
                 propertyTypeDataId = property.propertyTypeData._id;
+                console.log(property._id, propertyTypeDataId);
                 writeResult = await deletePropertyTypeData(propertyTypeDataModel, propertyTypeDataId, user.email);
             }
             
@@ -415,8 +416,8 @@ const deletePropertyTypeData = async (model, id, userEmail) => {
     
     console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, model, '_id', id)}`);
     
-    const writeResult = null;
-    if (model.toLowerCase === propertyTypes.HOUSE) {
+    let writeResult = null;
+    if (model.toLowerCase() === propertyTypes.HOUSE) {
         writeResult = await House.remove({ _id : id });
     }
     

@@ -4,6 +4,8 @@ import { environment } from '../environments/environment';
 import { SnackbarSimpleComponent } from './modules/shared/components/snackbar-simple/snackbar-simple.component';
 import { Response } from './models/response';
 import { Observable } from 'rxjs/Observable';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 @Injectable()
 export class AppService {
@@ -27,12 +29,9 @@ export class AppService {
    * @param operation (string). The operation performed
    * @param result (T). Optional, a result to handle the fail. 
    */
-  public handleError<T>(operation = 'operation', result?: T) {
-    return (error : any) : Observable<T> => {
-      this.consoleLog('error', `Operation "${operation}" failed with message:  ${error.message}`, error);
-      
-      return Observable.throw(error.message);
-    };
+  public handleError(result: HttpErrorResponse) {
+    console.error(result);
+    return new ErrorObservable(result.error);
   }
 
   /**

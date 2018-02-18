@@ -1,6 +1,6 @@
 webpackJsonp(["main"],{
 
-/***/ "../../../../../configuration.ts":
+/***/ "./configuration.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13,7 +13,7 @@ exports.configuration = {
 
 /***/ }),
 
-/***/ "../../../../../src/$$_lazy_route_resource lazy recursive":
+/***/ "./src/$$_lazy_route_resource lazy recursive":
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -26,36 +26,25 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = "../../../../../src/$$_lazy_route_resource lazy recursive";
+webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 
 /***/ }),
 
-/***/ "../../../../../src/app/app.component.html":
+/***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"inner mat-typography\">  \r\n  <mat-toolbar fxLayout=\"row\" fxLayoutAlign=\"space-between center\" class=\"toolbar__primary mat-elevation-z1\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    \r\n    <span *ngIf=\"!user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"user.avatar\"/>\r\n      <mat-icon *ngIf=\"!user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n  </mat-toolbar>\r\n  <div class=\"toolbar__primary__spacer\"><!-- This is a spacer with main toolbar height to avoid any content going behind the toolbar --></div>\r\n\r\n  <mat-toolbar fxLayout=\"row\" fxLayoutAlign=\"space-between center\" class=\"toolbar__secondary\" *ngIf=\"user && user.currency !== 'USD' && currencyExchangeService.currencyRates\">\r\n    <span>Preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{user.currency}}</strong></a></span>   \r\n    <span>1 USD = {{currencyExchangeService.currencyRates[user.currency]}} {{user.currency}}</span>\r\n  </mat-toolbar>\r\n\r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/app.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/app.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".toolbar__primary {\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 100; }\n  .toolbar__primary .toolbar__brand-name {\n    text-decoration: none; }\n  .toolbar__primary .toolbar__icon {\n    padding: 0 10px;\n    cursor: pointer; }\n  .toolbar__primary .user__avatar {\n    border-radius: 50%;\n    width: 30px;\n    padding: 0 10px; }\n  .toolbar__primary .user__icon--logged-in {\n    color: #28FE7C; }\n  .toolbar__primary__spacer {\n  height: 54px; }\n  .toolbar__secondary {\n  margin-bottom: 10px;\n  background-color: #9c27b0;\n  font-size: 12px;\n  height: 30px; }\n  /* Chip navigation */\n  ::ng-deep nav.navigation--main {\n  margin-bottom: 20px; }\n  @media screen and (min-width: 600px) {\n  .toolbar__primary__spacer {\n    height: 62px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ".toolbar__primary {\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 100; }\n  .toolbar__primary .toolbar__brand-name {\n    text-decoration: none; }\n  .toolbar__primary .toolbar__icon {\n    padding: 0 10px;\n    cursor: pointer; }\n  .toolbar__primary .user__avatar {\n    border-radius: 50%;\n    width: 30px;\n    padding: 0 10px; }\n  .toolbar__primary .user__icon--logged-in {\n    color: #28FE7C; }\n  .toolbar__primary__spacer {\n  height: 54px; }\n  .toolbar__secondary {\n  margin-bottom: 10px;\n  background-color: #9c27b0;\n  font-size: 12px;\n  height: 30px; }\n  /* Chip navigation */\n  ::ng-deep nav.navigation--main {\n  margin-bottom: 20px; }\n  @media screen and (min-width: 600px) {\n  .toolbar__primary__spacer {\n    height: 62px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/app.component.ts":
+/***/ "./src/app/app.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70,14 +59,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var configuration_1 = __webpack_require__("../../../../../configuration.ts");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-var currency_exchange_service_1 = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var configuration_1 = __webpack_require__("./configuration.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
 var AppComponent = /** @class */ (function () {
     function AppComponent(router, appService, usersService, currencyExchangeService) {
         this.router = router;
@@ -152,8 +141,8 @@ var AppComponent = /** @class */ (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app-root',
-            template: __webpack_require__("../../../../../src/app/app.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/app.component.scss")],
+            template: __webpack_require__("./src/app/app.component.html"),
+            styles: [__webpack_require__("./src/app/app.component.scss")],
             providers: [main_navigator_service_1.MainNavigatorService]
         }),
         __metadata("design:paramtypes", [router_1.Router, app_service_1.AppService, users_service_1.UsersService, currency_exchange_service_1.CurrencyExchangeService])
@@ -165,7 +154,7 @@ exports.AppComponent = AppComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/app.module.ts":
+/***/ "./src/app/app.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -177,27 +166,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var platform_browser_1 = __webpack_require__("../../../platform-browser/esm5/platform-browser.js");
-var animations_1 = __webpack_require__("../../../platform-browser/esm5/animations.js");
-var http_1 = __webpack_require__("../../../common/esm5/http.js");
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var flex_layout_1 = __webpack_require__("../../../flex-layout/esm5/flex-layout.es5.js");
-__webpack_require__("../../../../hammerjs/hammer.js");
-var app_routing_module_1 = __webpack_require__("../../../../../src/app/app.routing.module.ts");
-var app_component_1 = __webpack_require__("../../../../../src/app/app.component.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var util_service_1 = __webpack_require__("../../../../../src/app/util.service.ts");
-var auth_resolver_service_1 = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
-var currency_exchange_service_1 = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
-var auth_guard_1 = __webpack_require__("../../../../../src/app/auth.guard.ts");
-var custom_material_design_module_1 = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
-var users_module_1 = __webpack_require__("../../../../../src/app/modules/users/users.module.ts");
-var teams_module_1 = __webpack_require__("../../../../../src/app/modules/teams/teams.module.ts");
-var investments_module_1 = __webpack_require__("../../../../../src/app/modules/investments/investments.module.ts");
-var calculators_module_1 = __webpack_require__("../../../../../src/app/modules/calculators/calculators.module.ts");
-var welcome_component_1 = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
-var shared_module_1 = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
-var properties_module_1 = __webpack_require__("../../../../../src/app/modules/properties/properties.module.ts");
+var platform_browser_1 = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
+var animations_1 = __webpack_require__("./node_modules/@angular/platform-browser/esm5/animations.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+__webpack_require__("./node_modules/hammerjs/hammer.js");
+var app_routing_module_1 = __webpack_require__("./src/app/app.routing.module.ts");
+var app_component_1 = __webpack_require__("./src/app/app.component.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var auth_resolver_service_1 = __webpack_require__("./src/app/auth-resolver.service.ts");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var auth_guard_1 = __webpack_require__("./src/app/auth.guard.ts");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var users_module_1 = __webpack_require__("./src/app/modules/users/users.module.ts");
+var teams_module_1 = __webpack_require__("./src/app/modules/teams/teams.module.ts");
+var investments_module_1 = __webpack_require__("./src/app/modules/investments/investments.module.ts");
+var calculators_module_1 = __webpack_require__("./src/app/modules/calculators/calculators.module.ts");
+var welcome_component_1 = __webpack_require__("./src/app/components/welcome/welcome.component.ts");
+var shared_module_1 = __webpack_require__("./src/app/modules/shared/shared.module.ts");
+var properties_module_1 = __webpack_require__("./src/app/modules/properties/properties.module.ts");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -232,7 +221,7 @@ exports.AppModule = AppModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/app.routing.module.ts":
+/***/ "./src/app/app.routing.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -247,9 +236,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by mpaoluc on 13/01/2017.
  */
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var welcome_component_1 = __webpack_require__("../../../../../src/app/components/welcome/welcome.component.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var welcome_component_1 = __webpack_require__("./src/app/components/welcome/welcome.component.ts");
 var appRoutes = [
     {
         path: 'welcome',
@@ -289,7 +278,7 @@ exports.AppRoutingModule = AppRoutingModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/app.service.ts":
+/***/ "./src/app/app.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -304,11 +293,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
-var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
-var snackbar_simple_component_1 = __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
-var Observable_1 = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var snackbar_simple_component_1 = __webpack_require__("./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
+var ErrorObservable_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/ErrorObservable.js");
 var AppService = /** @class */ (function () {
     function AppService(snackBar) {
         this.snackBar = snackBar;
@@ -330,13 +319,9 @@ var AppService = /** @class */ (function () {
      * @param operation (string). The operation performed
      * @param result (T). Optional, a result to handle the fail.
      */
-    AppService.prototype.handleError = function (operation, result) {
-        var _this = this;
-        if (operation === void 0) { operation = 'operation'; }
-        return function (error) {
-            _this.consoleLog('error', "Operation \"" + operation + "\" failed with message:  " + error.message, error);
-            return Observable_1.Observable.throw(error.message);
-        };
+    AppService.prototype.handleError = function (result) {
+        console.error(result);
+        return new ErrorObservable_1.ErrorObservable(result.error);
     };
     /**
      * Shows messages in snackbar component
@@ -406,7 +391,7 @@ exports.AppService = AppService;
 
 /***/ }),
 
-/***/ "../../../../../src/app/auth-resolver.service.ts":
+/***/ "./src/app/auth-resolver.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -421,13 +406,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var account_personal_1 = __webpack_require__("../../../../../src/app/modules/users/models/account-personal.ts");
-var account_finance_1 = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var account_personal_1 = __webpack_require__("./src/app/modules/users/models/account-personal.ts");
+var account_finance_1 = __webpack_require__("./src/app/modules/users/models/account-finance.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var AuthResolver = /** @class */ (function () {
     function AuthResolver(appService, usersService, router) {
         this.appService = appService;
@@ -482,7 +467,7 @@ exports.AuthResolver = AuthResolver;
 
 /***/ }),
 
-/***/ "../../../../../src/app/auth.guard.ts":
+/***/ "./src/app/auth.guard.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -497,10 +482,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var AuthGuard = /** @class */ (function () {
     function AuthGuard(appService, usersService, router) {
         this.appService = appService;
@@ -538,32 +523,21 @@ exports.AuthGuard = AuthGuard;
 
 /***/ }),
 
-/***/ "../../../../../src/app/components/welcome/welcome.component.html":
+/***/ "./src/app/components/welcome/welcome.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div *ngIf=\"user\" class=\"container__net-worth\">\r\n  <!-- Net Worth Card -->\r\n  <mat-card *ngIf=\"expectedWealth && user.personalInfo.age\"\r\n      fxLayout=\"column\" class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n      <div class=\"wealth__container\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"none center\" fxLayoutAlign.gt-xs=\"space-between none\">\r\n        <span [class.color__accent]=\"wealthAmount >= expectedWealth\" \r\n            [class.color__red]=\"wealthAmount < expectedWealth\">\r\n          Current net worth is <strong>{{ wealthAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>\r\n        </span>\r\n        <span class=\"accent\">\r\n          Expected net worth at your age ({{user.personalInfo.age}}) is \r\n          <strong>{{ expectedWealth | currency : 'USD' : 'code' : '1.2-2' }}</strong>\r\n        </span>\r\n      </div>\r\n      <div>\r\n        <mat-progress-bar \r\n          class=\"progress-spinner progress-spinner--wealth\"\r\n          [color]=\"wealthAmount < expectedWealth ? 'warn' : 'accent'\"\r\n          [value]=\"progressBarWealthValue\"\r\n          mode=\"determinate\">\r\n        </mat-progress-bar>\r\n      </div>\r\n    </mat-card-content>\r\n  </mat-card>\r\n    <!-- EOF Net Worth Card -->\r\n\r\n  <!-- Net Worth Card when Personal and Financial info is incomplete -->\r\n  <mat-card *ngIf=\"!user.financialInfo || !user.personalInfo\"\r\n      fxFlex class=\"totals-card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p>\r\n        <a class=\"color__almost-white\" routerLink=\"/users/account\">\r\n          <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n          Go to your account and complete your Personal and Financial Info to see expected and current Net Worth\r\n        </a>\r\n      </p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  <!-- EOF Net Worth Card when Personal and Financial info is incomplete -->\r\n</div>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/components/welcome/welcome.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/components/welcome/welcome.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".container__net-worth {\n  margin-bottom: 10px; }\n  .container__net-worth .icon--arrow_forward {\n    float: left; }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ".container__net-worth {\n  margin-bottom: 10px; }\n  .container__net-worth .icon--arrow_forward {\n    float: left; }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/components/welcome/welcome.component.ts":
+/***/ "./src/app/components/welcome/welcome.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -578,19 +552,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var account_personal_1 = __webpack_require__("../../../../../src/app/modules/users/models/account-personal.ts");
-var account_finance_1 = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
-var investments_service_1 = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
-var currency_exchange_service_1 = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
-var currencyInvestment_1 = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
-var constants_1 = __webpack_require__("../../../../../src/app/constants/constants.ts");
-var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
-var of_1 = __webpack_require__("../../../../rxjs/_esm5/observable/of.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var account_personal_1 = __webpack_require__("./src/app/modules/users/models/account-personal.ts");
+var account_finance_1 = __webpack_require__("./src/app/modules/users/models/account-finance.ts");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
+var constants_1 = __webpack_require__("./src/app/constants/constants.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
 var WelcomeComponent = /** @class */ (function () {
     function WelcomeComponent(mainNavigatorService, usersService, appService, investmentsService, currencyExchangeService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -722,8 +696,8 @@ var WelcomeComponent = /** @class */ (function () {
     WelcomeComponent = __decorate([
         core_1.Component({
             selector: 'welcome',
-            template: __webpack_require__("../../../../../src/app/components/welcome/welcome.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/components/welcome/welcome.component.scss")]
+            template: __webpack_require__("./src/app/components/welcome/welcome.component.html"),
+            styles: [__webpack_require__("./src/app/components/welcome/welcome.component.scss")]
         }),
         __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService, users_service_1.UsersService, app_service_1.AppService,
             investments_service_1.InvestmentsService, currency_exchange_service_1.CurrencyExchangeService])
@@ -735,7 +709,7 @@ exports.WelcomeComponent = WelcomeComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/constants.ts":
+/***/ "./src/app/constants.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -758,7 +732,7 @@ exports.nzHouseTitleTypes = {
 
 /***/ }),
 
-/***/ "../../../../../src/app/constants/constants.ts":
+/***/ "./src/app/constants/constants.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -773,7 +747,7 @@ exports.INVESTMENTS_TYPES = {
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/calculators/calculators-routing.module.ts":
+/***/ "./src/app/modules/calculators/calculators-routing.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -785,11 +759,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var equity_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.ts");
-var calculators_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
-var house_figures_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var equity_component_1 = __webpack_require__("./src/app/modules/calculators/components/equity/equity.component.ts");
+var calculators_dashboard_component_1 = __webpack_require__("./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var house_figures_component_1 = __webpack_require__("./src/app/modules/calculators/components/house-figures/house-figures.component.ts");
 var routes = [{
         path: 'calculators',
         children: [
@@ -814,7 +788,7 @@ exports.CalculatorsRoutingModule = CalculatorsRoutingModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/calculators/calculators.module.ts":
+/***/ "./src/app/modules/calculators/calculators.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -826,16 +800,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var common_1 = __webpack_require__("../../../common/esm5/common.js");
-var forms_1 = __webpack_require__("../../../forms/esm5/forms.js");
-var flex_layout_1 = __webpack_require__("../../../flex-layout/esm5/flex-layout.es5.js");
-var custom_material_design_module_1 = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
-var shared_module_1 = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
-var calculators_routing_module_1 = __webpack_require__("../../../../../src/app/modules/calculators/calculators-routing.module.ts");
-var equity_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.ts");
-var calculators_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
-var house_figures_component_1 = __webpack_require__("../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var shared_module_1 = __webpack_require__("./src/app/modules/shared/shared.module.ts");
+var calculators_routing_module_1 = __webpack_require__("./src/app/modules/calculators/calculators-routing.module.ts");
+var equity_component_1 = __webpack_require__("./src/app/modules/calculators/components/equity/equity.component.ts");
+var calculators_dashboard_component_1 = __webpack_require__("./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var house_figures_component_1 = __webpack_require__("./src/app/modules/calculators/components/house-figures/house-figures.component.ts");
 var CalculatorsModule = /** @class */ (function () {
     function CalculatorsModule() {
     }
@@ -863,32 +837,21 @@ exports.CalculatorsModule = CalculatorsModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html":
+/***/ "./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html":
 /***/ (function(module, exports) {
 
 module.exports = ""
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ""
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts":
+/***/ "./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -903,8 +866,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var CalculatorsDashboardComponent = /** @class */ (function () {
     function CalculatorsDashboardComponent(mainNavigatorService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -920,8 +883,8 @@ var CalculatorsDashboardComponent = /** @class */ (function () {
     CalculatorsDashboardComponent = __decorate([
         core_1.Component({
             selector: 'app-calculators-dashboard',
-            template: __webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.scss")]
+            template: __webpack_require__("./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html"),
+            styles: [__webpack_require__("./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.scss")]
         }),
         __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService])
     ], CalculatorsDashboardComponent);
@@ -932,32 +895,21 @@ exports.CalculatorsDashboardComponent = CalculatorsDashboardComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.html":
+/***/ "./src/app/modules/calculators/components/equity/equity.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"calculator__container\" fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-sm=\"space-between none\">\r\n  <!--  form  -->\r\n  <form class=\"form__container form__equity-calc\" #equityForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n    <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Purchase price -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\" \r\n                [(ngModel)]=\"model.purchasePrice\" \r\n                numberValidator\r\n                [value]=\"model.purchasePrice\"\r\n                #purchasePrice=\"ngModel\">\r\n            \r\n            <mat-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n          \r\n          <!-- Market value -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\" \r\n                [(ngModel)]=\"model.marketValue\" \r\n                numberValidator\r\n                [value]=\"model.marketValue\"\r\n                #marketValue=\"ngModel\">\r\n\r\n            <mat-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n           <!-- Loan coverage -->\r\n           <mat-form-field fxFlex  class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"loanCoverage\" name=\"loanCoverage\" placeholder=\"Loan coverage %\" \r\n                  [(ngModel)]=\"model.loanCoverage\" \r\n                  numberValidator='{\"min\": 0, \"max\": 100}' \r\n                  [value]=\"model.loanCoverage\"\r\n                  #loanCoverage=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Percentage of the purchase price covered by the loan.</mat-hint>\r\n              <mat-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n              <mat-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n              <mat-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n            </mat-form-field>\r\n\r\n            <!-- Savings -->\r\n            <mat-form-field fxFlex  class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"savings\" name=\"savings\" placeholder=\"Savings\" \r\n                  [(ngModel)]=\"model.savings\" \r\n                  numberValidator\r\n                  [value]=\"model.savings\"\r\n                  #savings=\"ngModel\">\r\n  \r\n              <mat-error *ngIf=\"savings.invalid && (savings.dirty || savings.touched) && savings.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n           <!-- Renovation cost -->\r\n           <mat-form-field fxFlex  class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\" \r\n                  [(ngModel)]=\"model.renovationCost\" \r\n                  [value]=\"model.renovationCost\"\r\n                  numberValidator\r\n                  #renovationCost=\"ngModel\">\r\n  \r\n                  <mat-hint align=\"start\">The cost to do all the renovations.</mat-hint>\r\n                  <mat-error *ngIf=\"renovationCost.invalid && (renovationCost.dirty || renovationCost.touched) && renovationCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n\r\n            <!-- Loan amount paid -->\r\n            <mat-form-field fxFlex  class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"loanAmountPaid\" name=\"loanAmountPaid\" placeholder=\"Loan amount paid\" \r\n                  [(ngModel)]=\"model.loanAmountPaid\" \r\n                  [value]=\"model.loanAmountPaid\"\r\n                  numberValidator\r\n                  #loanAmountPaid=\"ngModel\">\r\n  \r\n                  <mat-hint align=\"start\">The amount of money paid back to the lender.</mat-hint>\r\n                  <mat-error *ngIf=\"loanAmountPaid.invalid && (loanAmountPaid.dirty || loanAmountPaid.touched) && loanAmountPaid.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n            <!-- Loan coverage -->\r\n            <mat-form-field fxFlex  class=\"form__field\">\r\n               <input matInput type=\"number\" id=\"secondLoanCoverage\" name=\"secondLoanCoverage\" placeholder=\"Second Loan coverage %\" \r\n                   [(ngModel)]=\"model.secondLoanCoverage\" \r\n                   numberValidator='{\"min\": 0, \"max\": 100}' \r\n                   [value]=\"model.secondLoanCoverage\"\r\n                   #secondLoanCoverage=\"ngModel\">\r\n               \r\n               <mat-hint align=\"start\">Percentage of the purchase price of a new property covered by a second loan.</mat-hint>\r\n               <mat-error *ngIf=\"secondLoanCoverage.invalid && (secondLoanCoverage.dirty || secondLoanCoverage.touched) && secondLoanCoverage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n               <mat-error *ngIf=\"secondLoanCoverage.invalid && (secondLoanCoverage.dirty || secondLoanCoverage.touched) && secondLoanCoverage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n               <mat-error *ngIf=\"secondLoanCoverage.invalid && (secondLoanCoverage.dirty || secondLoanCoverage.touched) && secondLoanCoverage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n             </mat-form-field>\r\n         </div>\r\n      </div>\r\n    </section>\r\n  </form>\r\n\r\n  <!-- Results -->\r\n  <section fxLayout=\"column\" fxLayoutGap=\"10px\" fxFlex fxFlex.gt-sm=\"300px\" class=\"calculator__results\">\r\n    <mat-card>\r\n      <mat-card-title class=\"mat-card-title--ac\">Results</mat-card-title>\r\n\r\n      <mat-card-content fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n\r\n        <div fxLayout.xs=\"column\" fxLayout.gt-xs=\"row\" fxLayout.gt-sm=\"column\" \r\n            fxLayoutGap.xs=\"10px\"fxLayoutGap.gt-xs=\"50px\" fxLayoutGap.gt-sm=\"10px\"\r\n            fxLayoutAlign.xs=\"start none\" fxLayoutAlign.gt-xs=\"space-between none\" fxLayoutAlign.gt-sm=\"start none\">\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip\r\n                title=\"Loan amount\"></info-tooltip>\r\n            <span>{{loanAmount | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n  \r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip\r\n                title=\"Deposit amount\"></info-tooltip>\r\n            <span>{{depositAmount | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n\r\n        </div>\r\n\r\n        <div fxLayout.xs=\"column\" fxLayout.gt-xs=\"row\" fxLayout.gt-sm=\"column\" \r\n            fxLayoutGap.xs=\"10px\"fxLayoutGap.gt-xs=\"50px\" fxLayoutGap.gt-sm=\"10px\"\r\n            fxLayoutAlign.xs=\"start none\" fxLayoutAlign.gt-xs=\"space-between none\" fxLayoutAlign.gt-sm=\"start none\">\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip\r\n                title=\"Discount\"></info-tooltip>\r\n            <span>{{discount | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n  \r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip\r\n                title=\"Equity\"></info-tooltip>\r\n            <span>{{equity | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n\r\n        </div>\r\n\r\n        <div fxLayout.xs=\"column\" fxLayout.gt-xs=\"row\" fxLayout.gt-sm=\"column\" \r\n            fxLayoutGap.xs=\"10px\"fxLayoutGap.gt-xs=\"50px\" fxLayoutGap.gt-sm=\"10px\"\r\n            fxLayoutAlign.xs=\"start none\" fxLayoutAlign.gt-xs=\"space-between none\" fxLayoutAlign.gt-sm=\"start none\">\r\n  \r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip\r\n                title=\"Usable equity\"></info-tooltip>\r\n            <span>{{usableEquity | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip\r\n                title=\"Purchase capacity\"\r\n                text=\"Maximum purchase capacity based on the usable equity and the second loan coverage.\"></info-tooltip>\r\n            <span>{{purchaseCapacity | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n        </div>\r\n\r\n      </mat-card-content>\r\n    </mat-card>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/calculators/components/equity/equity.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ""
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/calculators/components/equity/equity.component.ts":
+/***/ "./src/app/modules/calculators/components/equity/equity.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -972,8 +924,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var EquityComponent = /** @class */ (function () {
     function EquityComponent(mainNavigatorService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -1019,8 +971,8 @@ var EquityComponent = /** @class */ (function () {
     EquityComponent = __decorate([
         core_1.Component({
             selector: 'app-equity',
-            template: __webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/calculators/components/equity/equity.component.scss")]
+            template: __webpack_require__("./src/app/modules/calculators/components/equity/equity.component.html"),
+            styles: [__webpack_require__("./src/app/modules/calculators/components/equity/equity.component.scss")]
         }),
         __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService])
     ], EquityComponent);
@@ -1031,32 +983,21 @@ exports.EquityComponent = EquityComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.html":
+/***/ "./src/app/modules/calculators/components/house-figures/house-figures.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"calculator__container\" fxLayout=\"column\" fxLayout.gt-sm=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-sm=\"space-between none\">\r\n  <!-- Form  -->\r\n  <form class=\"form__container form__house-figures-calc\" #houseFiguresForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n    <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Property value</p>\r\n        </h3>\r\n  \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Purchase price -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\" \r\n                [(ngModel)]=\"model.purchasePrice\" \r\n                numberValidator\r\n                [value]=\"model.purchasePrice\"\r\n                #purchasePrice=\"ngModel\">\r\n            \r\n            <mat-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n          \r\n          <!-- Market value -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\" \r\n                [(ngModel)]=\"model.marketValue\" \r\n                numberValidator\r\n                [value]=\"model.marketValue\"\r\n                #marketValue=\"ngModel\">\r\n\r\n            <mat-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n  \r\n          <!-- Capital growth -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"capitalGrowth\" name=\"capitalGrowth\" placeholder=\"Capital growth %\" \r\n                [(ngModel)]=\"model.capitalGrowth\" \r\n                numberValidator='{\"min\": 0, \"max\": 100}' \r\n                [value]=\"model.capitalGrowth\"\r\n                #capitalGrowth=\"ngModel\">\r\n            \r\n            <mat-error *ngIf=\"capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            <mat-error *ngIf=\"capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n            <mat-error *ngIf=\"capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n  \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Loan figures</p>\r\n        </h3>\r\n      \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Loan coverage -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"loanCoverage\" name=\"loanCoverage\" placeholder=\"Loan coverage %\" \r\n                [(ngModel)]=\"model.loanCoverage\" \r\n                numberValidator='{\"min\": 0, \"max\": 100}' \r\n                [value]=\"model.loanCoverage\"\r\n                #loanCoverage=\"ngModel\">\r\n            \r\n            <mat-hint align=\"start\">Percentage of the purchase price covered by the loan.</mat-hint>\r\n            <mat-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            <mat-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n            <mat-error *ngIf=\"loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n          </mat-form-field>\r\n  \r\n          <!-- Interest rates -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"interestRates\" name=\"interestRates\" placeholder=\"Interest rates %\" \r\n                [(ngModel)]=\"model.interestRates\" \r\n                numberValidator='{\"min\": 0, \"max\": 100}' \r\n                [value]=\"model.interestRates\"\r\n                #interestRates=\"ngModel\">\r\n\r\n            <mat-hint align=\"start\">Average loan interest rates (as a percentage).</mat-hint>\r\n            <mat-error *ngIf=\"interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            <mat-error *ngIf=\"interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n            <mat-error *ngIf=\"interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Loan term -->\r\n          <div fxFlex=\"none\" fxFlex.gt-xs fxLayout=\"column\" class=\"form__field\">\r\n            <label class=\"slider__label\">Term</label>\r\n            <div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n              <mat-slider fxFlex id=\"loanTerm\" name=\"loanTerm\"\r\n                  color=\"accent\"\r\n                  [max]=\"30\"\r\n                  [min]=\"1\"\r\n                  [step]=\"1\"\r\n                  [thumb-label]=\"true\"\r\n                  [tick-interval]=\"1\"\r\n                  [(ngModel)]=\"model.loanTerm\"\r\n                  [value]=\"model.loanTerm\"> \r\n              </mat-slider>\r\n              <span>{{model.loanTerm}}</span>\r\n            </div>\r\n            \r\n          </div>\r\n\r\n          <!-- Payment frecuency -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <mat-select id=\"paymentFrecuency\" name=\"paymentFrecuency\" placeholder=\"Frecuency\" \r\n                [(ngModel)]=\"model.paymentFrecuency\" [value]=\"model.paymentFrecuency\">\r\n              <mat-option value=\"12\">Monthly</mat-option>\r\n              <mat-option value=\"26\">Fornightly</mat-option>\r\n              <mat-option value=\"52\">Weekly</mat-option>\r\n            </mat-select>\r\n            \r\n            <mat-hint align=\"start\">Payment frecuency</mat-hint>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n  \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Rent figures</p>\r\n        </h3>\r\n      \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Weekly rent -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"weeklyRent\" name=\"weeklyRent\" placeholder=\"Weekly rent\" \r\n                [(ngModel)]=\"model.weeklyRent\" \r\n                numberValidator\r\n                [value]=\"model.weeklyRent\"\r\n                #weeklyRent=\"ngModel\">\r\n  \r\n            \r\n            <mat-error *ngIf=\"weeklyRent.invalid && (weeklyRent.dirty || weeklyRent.touched) && weeklyRent.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n  \r\n          <!-- Vacancy -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"vacancy\" name=\"vacancy\" placeholder=\"Vacancy\" \r\n                [(ngModel)]=\"model.vacancy\" \r\n                numberValidator\r\n                [value]=\"model.vacancy\"\r\n                #vacancy=\"ngModel\">\r\n  \r\n            <mat-hint align=\"start\">The number of weeks per year with no rent.</mat-hint>\r\n            <mat-error *ngIf=\"vacancy.invalid && (vacancy.dirty || vacancy.touched) && vacancy.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n  \r\n          <!-- Rental manager -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"managed\" name=\"managed\" placeholder=\"Managed %\" \r\n                [(ngModel)]=\"model.managed\" \r\n                numberValidator='{\"min\": 0, \"max\": 100}' \r\n                [value]=\"model.managed\"\r\n                #managed=\"ngModel\">\r\n  \r\n            <mat-hint align=\"start\">Rental manager charges as a percentage of net annual rental income.</mat-hint>\r\n            <mat-error *ngIf=\"managed.invalid && (managed.dirty || managed.touched) && managed.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            <mat-error *ngIf=\"managed.invalid && (managed.dirty || managed.touched) && managed.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n            <mat-error *ngIf=\"managed.invalid && (managed.dirty || managed.touched) && managed.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n        \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Expenses</p>\r\n        </h3>\r\n  \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Renovation cost -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\" \r\n                [(ngModel)]=\"model.renovationCost\" \r\n                [value]=\"model.renovationCost\"\r\n                numberValidator\r\n                #renovationCost=\"ngModel\">\r\n\r\n                <mat-hint align=\"start\">The cost to do all the renovations.</mat-hint>\r\n                <mat-error *ngIf=\"renovationCost.invalid && (renovationCost.dirty || renovationCost.touched) && renovationCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n  \r\n          <!-- Mantainance cost -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"mantainanceCost\" name=\"mantainanceCost\" placeholder=\"Mantainance cost\" \r\n                [(ngModel)]=\"model.mantainanceCost\" \r\n                [value]=\"model.mantainanceCost\"\r\n                numberValidator\r\n                #mantainanceCost=\"ngModel\">\r\n\r\n                <mat-hint align=\"start\">The annual cost to maintain the property.</mat-hint>\r\n                <mat-error *ngIf=\"mantainanceCost.invalid && (mantainanceCost.dirty || mantainanceCost.touched) && mantainanceCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Body corporate -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"bodyCorporate\" name=\"bodyCorporate\" placeholder=\"Body corporate\" \r\n                [(ngModel)]=\"model.bodyCorporate\" \r\n                [value]=\"model.bodyCorporate\"\r\n                numberValidator\r\n                #bodyCorporate=\"ngModel\">\r\n  \r\n                <mat-error *ngIf=\"bodyCorporate.invalid && (bodyCorporate.dirty || bodyCorporate.touched) && bodyCorporate.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n  \r\n          <!-- House rates -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"houseRates\" name=\"houseRates\" placeholder=\"House rates\" \r\n                [(ngModel)]=\"model.houseRates\" \r\n                [value]=\"model.houseRates\"\r\n                numberValidator\r\n                #houseRates=\"ngModel\">\r\n  \r\n                <mat-error *ngIf=\"houseRates.invalid && (houseRates.dirty || houseRates.touched) && houseRates.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n  \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- utilities -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"utilities\" name=\"utilities\" placeholder=\"Utitities\" \r\n                [(ngModel)]=\"model.utilities\" \r\n                [value]=\"model.utilities\"\r\n                numberValidator\r\n                #utilities=\"ngModel\">\r\n  \r\n                <mat-hint align=\"start\">Gas, water, electricity, internet, etc..</mat-hint>\r\n                <mat-error *ngIf=\"utilities.invalid && (utilities.dirty || utilities.touched) && utilities.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n  \r\n          <!-- Insurance -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"insurance\" name=\"insurance\" placeholder=\"Insurances\" \r\n                [(ngModel)]=\"model.insurance\" \r\n                [value]=\"model.insurance\"\r\n                numberValidator\r\n                #insurance=\"ngModel\">\r\n  \r\n                <mat-error *ngIf=\"insurance.invalid && (insurance.dirty || insurance.touched) && insurance.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n  \r\n          <!-- Other costs -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"otherCosts\" name=\"otherCosts\" placeholder=\"Other costs\" \r\n                [(ngModel)]=\"model.otherCosts\" \r\n                [value]=\"model.otherCosts\"\r\n                numberValidator\r\n                #otherCosts=\"ngModel\">\r\n\r\n                <mat-hint align=\"start\">Any other cost to have in mind not declared in the previous fields.</mat-hint>\r\n                <mat-error *ngIf=\"otherCosts.invalid && (otherCosts.dirty || otherCosts.touched) && otherCosts.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n    </section>\r\n  </form>\r\n  \r\n  <!-- Results -->\r\n  <section fxLayout=\"column\" fxLayoutGap=\"10px\" fxFlex fxFlex.gt-sm=\"300px\" class=\"calculator__results\">\r\n    <mat-card>\r\n      <mat-card-title class=\"mat-card-title--ac\">Results</mat-card-title>\r\n\r\n      <mat-card-content fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n\r\n        <div fxLayout.xs=\"column\" fxLayout.gt-xs=\"row\" fxLayout.gt-sm=\"column\" \r\n            fxLayoutGap.xs=\"10px\"fxLayoutGap.gt-xs=\"50px\" fxLayoutGap.gt-sm=\"10px\"\r\n            fxLayoutAlign.xs=\"start none\" fxLayoutAlign.gt-xs=\"space-between none\" fxLayoutAlign.gt-sm=\"start none\">\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip\r\n                title=\"Gross yield\" \r\n                text=\"Ratio between Gross annual rent / purchase price (as percentage)\"\r\n                position=\"right\"></info-tooltip>\r\n            <span>{{grossYield | percent : '1.1-2'}}</span>\r\n          </div>\r\n  \r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip \r\n                title=\"Net yield\" \r\n                text=\"Ratio between (Net annual rent - Expenses) / Purchase price * 100\"\r\n                position=\"right\"></info-tooltip>\r\n            <span>{{netYield | percent : '1.1-2'}}</span>\r\n          </div>\r\n\r\n        </div>\r\n        \r\n        <div fxLayout.xs=\"column\" fxLayout.gt-xs=\"row\" fxLayout.gt-sm=\"column\" \r\n            fxLayoutGap.xs=\"10px\"fxLayoutGap.gt-xs=\"50px\" fxLayoutGap.gt-sm=\"10px\"\r\n            fxLayoutAlign.xs=\"start none\" fxLayoutAlign.gt-xs=\"space-between none\" fxLayoutAlign.gt-sm=\"start none\">\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip title=\"Gross annual rent\" text=\"Rent a week * 52\"></info-tooltip>\r\n            <span>{{grossAnnualRent | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n  \r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip title=\"Net annual rent\" text=\"Gross annual rent - Vacancy\"></info-tooltip>\r\n            <span>{{netAnnualRent | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n\r\n        </div>\r\n        \r\n        <div fxLayout.xs=\"column\" fxLayout.gt-xs=\"row\" fxLayout.gt-sm=\"column\" \r\n            fxLayoutGap.xs=\"10px\"fxLayoutGap.gt-xs=\"50px\" fxLayoutGap.gt-sm=\"10px\"\r\n            fxLayoutAlign.xs=\"start none\" fxLayoutAlign.gt-xs=\"space-between none\" fxLayoutAlign.gt-sm=\"start none\">\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip title=\"Loan interest\" \r\n                text=\"The interest of the loan based in the specified interest rate.\"\r\n                position=\"right\"></info-tooltip>\r\n            <span>{{loanInterest | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip title=\"Loan repayments\" text=\"{{loanRepaymentsLabels[model.paymentFrecuency]}}\"></info-tooltip>\r\n            <span>{{loanRepayments | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n        </div>\r\n\r\n        <div fxLayout.xs=\"column\" fxLayout.gt-xs=\"row\" fxLayout.gt-sm=\"column\" \r\n            fxLayoutGap.xs=\"10px\"fxLayoutGap.gt-xs=\"50px\" fxLayoutGap.gt-sm=\"10px\"\r\n            fxLayoutAlign.xs=\"start none\" fxLayoutAlign.gt-xs=\"space-between none\" fxLayoutAlign.gt-sm=\"start none\">\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip title=\"Pre tax cashflow\" text=\"Net annual rent - Expenses - Loan interest\"></info-tooltip>\r\n            <span>{{preTaxCashflow | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip title=\"Discount\"></info-tooltip>\r\n            <span>{{discount | percent : '1.1-2'}}</span>\r\n          </div>\r\n\r\n        </div>\r\n\r\n        <div fxLayout.xs=\"column\" fxLayout.gt-xs=\"row\" fxLayout.gt-sm=\"column\" \r\n            fxLayoutGap.xs=\"10px\"fxLayoutGap.gt-xs=\"50px\" fxLayoutGap.gt-sm=\"10px\"\r\n            fxLayoutAlign.xs=\"start none\" fxLayoutAlign.gt-xs=\"space-between none\" fxLayoutAlign.gt-sm=\"start none\">\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip title=\"Total 1 year return\" text=\"Capital growth + Market value - Purchase price - Renovations + Pre tax cashflow\"></info-tooltip>\r\n            <span>{{totalFirstYearReturn | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip title=\"Deposit\" text=\"\"></info-tooltip>\r\n            <span>{{deposit | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n\r\n        </div>\r\n\r\n        <div fxLayout.xs=\"column\" fxLayout.gt-xs=\"row\" fxLayout.gt-sm=\"column\" \r\n            fxLayoutGap.xs=\"10px\"fxLayoutGap.gt-xs=\"50px\" fxLayoutGap.gt-sm=\"10px\"\r\n            fxLayoutAlign.xs=\"start none\" fxLayoutAlign.gt-xs=\"space-between none\" fxLayoutAlign.gt-sm=\"start none\">\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip title=\"Return on deposit\" text=\"Ratio between Total 1st year return / Deposit * 100\"></info-tooltip>\r\n            <span>{{returnOnDeposit | percent : '1.1-2'}}</span>\r\n          </div>\r\n          \r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip title=\"Capital growth\" text=\"\"></info-tooltip>\r\n            <span>{{capitalGrowths | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n\r\n        </div>\r\n\r\n        <div fxLayout.xs=\"column\" fxLayout.gt-xs=\"row\" fxLayout.gt-sm=\"column\" \r\n            fxLayoutGap.xs=\"10px\"fxLayoutGap.gt-xs=\"50px\" fxLayoutGap.gt-sm=\"10px\"\r\n            fxLayoutAlign.xs=\"start none\" fxLayoutAlign.gt-xs=\"space-between none\" fxLayoutAlign.gt-sm=\"start none\">\r\n\r\n          <div fxFlex.xs=\"none\" fxFlex.gt-xs fxFlex.gt-sm=\"none\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n            <info-tooltip title=\"Expenses\" text=\"Sums all the expenses in detailed before\"></info-tooltip>\r\n            <span>{{expenses | currency : 'USD' : 'symbol' : '1.2-2'}}</span>\r\n          </div>\r\n\r\n        </div>\r\n\r\n      </mat-card-content>\r\n    </mat-card>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/calculators/components/house-figures/house-figures.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".calculator__container .slider__label {\n  display: block;\n  font-size: 10px; }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ".calculator__container .slider__label {\n  display: block;\n  font-size: 10px; }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.ts":
+/***/ "./src/app/modules/calculators/components/house-figures/house-figures.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1071,8 +1012,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var HouseFiguresComponent = /** @class */ (function () {
     function HouseFiguresComponent(mainNavigatorService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -1147,8 +1088,8 @@ var HouseFiguresComponent = /** @class */ (function () {
     HouseFiguresComponent = __decorate([
         core_1.Component({
             selector: 'app-house-figures',
-            template: __webpack_require__("../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/calculators/components/house-figures/house-figures.component.scss")]
+            template: __webpack_require__("./src/app/modules/calculators/components/house-figures/house-figures.component.html"),
+            styles: [__webpack_require__("./src/app/modules/calculators/components/house-figures/house-figures.component.scss")]
         }),
         __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService])
     ], HouseFiguresComponent);
@@ -1159,32 +1100,21 @@ exports.HouseFiguresComponent = HouseFiguresComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.html":
+/***/ "./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-currency-investment\">\r\n    <form class=\"form__container form__edit-currency-investment\" #editCurrencyInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n      \r\n      <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <currency-unit fxFlex fxFlex.gt-xs=\"200px\"\r\n                [id]=\"'currencyInvestmentUnit'\" \r\n                [value]=\"model.unit\"\r\n                [type]=\"model.type\"\r\n                [hint]=\"'Choose the desired currency to invest on...'\"\r\n                [placeHolder]=\"'Desired currency'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n\r\n            <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"amount\" name=\"amount\" placeholder=\"Amount\"\r\n                  [(ngModel)]=\"model.amount\" \r\n                  [value]=\"model.amount\"\r\n                  numberValidator='{\"maxFractionDigits\": 8}' \r\n                  required\r\n                  #amount=\"ngModel\">\r\n              <mat-hint align=\"start\">Set the buying amount.</mat-hint>\r\n              <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.required\">Amount is required.</mat-error>\r\n              <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.numberValidator\">Value must be numeric, with no more than 8 decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <!-- Buying date -->\r\n            <mat-form-field fxFlex fxFlex.gt-xs=\"200px\" class=\"form__field\">\r\n              <input placeholder=\"Buying date\"\r\n                  id=\"buyingDate\"\r\n                  name=\"buyingDate\"\r\n                  readonly\r\n                  required\r\n                  #buyingDate=\"ngModel\"\r\n                  matInput \r\n                  [(ngModel)]=\"model.buyingDate\" \r\n                  [matDatepicker]=\"pickerBuyingDate\"\r\n                  (click)=\"pickerBuyingDate.open()\">\r\n              <mat-datepicker-toggle matSuffix [for]=\"pickerBuyingDate\"></mat-datepicker-toggle>\r\n              <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBuyingDate></mat-datepicker>\r\n              <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.required\">Buying date is required.</mat-error>\r\n              <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.matDatepickerParse\">Buying date is invalid or not follows the pattern \"mm/dd/yyyy\"</mat-error>\r\n            </mat-form-field>\r\n\r\n            <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n              <!-- Buying price unit -->\r\n              <currency-unit fxFlex=\"50px\"\r\n                  [id]=\"'buyingPriceUnit'\" \r\n                  [view]=\"'narrow'\"\r\n                  [value]=\"model.buyingPriceUnit\"\r\n                  (newValue)=\"onCurrencyUnitChange($event)\">\r\n              </currency-unit>\r\n\r\n              <!-- Buying price -->\r\n              <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n                <input matInput type=\"number\" id=\"buyingPrice\" name=\"buyingPrice\" placeholder=\"Price\"\r\n                    [(ngModel)]=\"model.buyingPrice\" \r\n                    [value]=\"model.buyingPrice\"\r\n                    numberValidator \r\n                    required\r\n                    #buyingPrice=\"ngModel\">\r\n                <mat-hint align=\"start\">Price on buying date.</mat-hint>\r\n                <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.required\">Buying price is required.</mat-error>\r\n                <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n              </mat-form-field>\r\n            </div>\r\n            \r\n          </div>\r\n        </div>\r\n      </section>\r\n    </form>\r\n  </div>\r\n  "
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ""
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts":
+/***/ "./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1199,11 +1129,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
-var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
-var util_service_1 = __webpack_require__("../../../../../src/app/util.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var CurrencyInvestmentFormComponent = /** @class */ (function () {
     function CurrencyInvestmentFormComponent(dateAdapter, appService, utilService) {
         this.dateAdapter = dateAdapter;
@@ -1282,8 +1212,8 @@ var CurrencyInvestmentFormComponent = /** @class */ (function () {
     CurrencyInvestmentFormComponent = __decorate([
         core_1.Component({
             selector: 'currency-investment-form',
-            template: __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.scss")]
+            template: __webpack_require__("./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.html"),
+            styles: [__webpack_require__("./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.scss")]
         }),
         __metadata("design:paramtypes", [material_1.DateAdapter, app_service_1.AppService,
             util_service_1.UtilService])
@@ -1295,32 +1225,21 @@ exports.CurrencyInvestmentFormComponent = CurrencyInvestmentFormComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.html":
+/***/ "./src/app/modules/investments/components/currency-investment/currency-investment.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/' + investment.type + '/' + investment.unit + '.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}\r\n\r\n    <div [class.color__accent]=\"investmentReturn >= investmentValueWhenBought\" \r\n        [class.color__red]=\"investmentReturn < investmentValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let portion of investmentDistribution\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"portion.member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{portion.member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>{{ portion.percentage }}%</p>\r\n                <p>{{ portion.money | currency : 'USD' : 'code' : '1.2-2' }}</p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"card__actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/crypto/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/investments/components/currency-investment/currency-investment.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".currency-card {\n  text-align: left; }\n  .currency-card .header-image img {\n    width: 40px; }\n  .currency-card .card__content {\n    text-align: center; }\n  .currency-card .card__content .team-panel {\n      cursor: default;\n      margin-top: 10px; }\n  .currency-card .card__content .team-panel mat-panel-title {\n        font-size: 18px; }\n  .currency-card .card__content .team-panel .team-panel__content {\n        text-align: left; }\n  .currency-card .card__content .team-panel .team-panel__content .members .member .member__avatar {\n          border-radius: 50%;\n          width: 40px;\n          height: 40px;\n          padding: 0 10px 0 0; }\n  .currency-card .card__content .team-panel .team-panel__content .members .member .member__info .member__email {\n          font-size: 11px; }\n  .currency-card .card__content .card__actions {\n      margin: 10px 0 0; }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ".currency-card {\n  text-align: left; }\n  .currency-card .header-image img {\n    width: 40px; }\n  .currency-card .card__content {\n    text-align: center; }\n  .currency-card .card__content .team-panel {\n      cursor: default;\n      margin-top: 10px; }\n  .currency-card .card__content .team-panel mat-panel-title {\n        font-size: 18px; }\n  .currency-card .card__content .team-panel .team-panel__content {\n        text-align: left; }\n  .currency-card .card__content .team-panel .team-panel__content .members .member .member__avatar {\n          border-radius: 50%;\n          width: 40px;\n          height: 40px;\n          padding: 0 10px 0 0; }\n  .currency-card .card__content .team-panel .team-panel__content .members .member .member__info .member__email {\n          font-size: 11px; }\n  .currency-card .card__content .card__actions {\n      margin: 10px 0 0; }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.ts":
+/***/ "./src/app/modules/investments/components/currency-investment/currency-investment.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1335,17 +1254,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
-var yes_no_dialog_component_1 = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var investments_service_1 = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var currency_exchange_service_1 = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
-var currencyInvestment_1 = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
-var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
-var BehaviorSubject_1 = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var BehaviorSubject_1 = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
 var CurrencyInvestmentComponent = /** @class */ (function () {
     function CurrencyInvestmentComponent(currencyExchangeService, appService, usersService, investmentsService, dialog, router) {
         this.currencyExchangeService = currencyExchangeService;
@@ -1548,8 +1467,8 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
     CurrencyInvestmentComponent = __decorate([
         core_1.Component({
             selector: 'currency-investment',
-            template: __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.scss")]
+            template: __webpack_require__("./src/app/modules/investments/components/currency-investment/currency-investment.component.html"),
+            styles: [__webpack_require__("./src/app/modules/investments/components/currency-investment/currency-investment.component.scss")]
         }),
         __metadata("design:paramtypes", [currency_exchange_service_1.CurrencyExchangeService, app_service_1.AppService, users_service_1.UsersService, investments_service_1.InvestmentsService,
             material_1.MatDialog, router_1.Router])
@@ -1561,32 +1480,21 @@ exports.CurrencyInvestmentComponent = CurrencyInvestmentComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html":
+/***/ "./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<h2 mat-dialog-title>Create investment</h2>\r\n\r\n<mat-dialog-content>\r\n  <mat-button-toggle-group fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"selector__investment-type\" (change)=\"onChange($event)\" #investmentTypesGroup>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"currency\" matTooltip=\"Currency exchange\" routerLink=\"investments/currency/create\"\r\n        [matTooltipPosition]=\"utilService.isXs() ? 'right' : 'below'\">\r\n      <img src=\"/assets/images/exchange.png\" alt=\"currency\" />\r\n    </mat-button-toggle>\r\n    <mat-button-toggle class=\"option__investment-type\" value=\"cryptocurrency\" matTooltip=\"Crypto currency\" routerLink=\"investments/crypto/create\"\r\n        [matTooltipPosition]=\"utilService.isXs() ? 'right' : 'below'\">\r\n      <img src=\"/assets/images/cryptocurrency.png\" alt=\"Crypto currency\" />\r\n    </mat-button-toggle>\r\n    <!-- <mat-button-toggle class=\"option__investment-type\" value=\"property\" matTooltip=\"Property\" routerLink=\"investments/property/create\"\r\n        [matTooltipPosition]=\"utilService.isXs() ? 'right' : 'below'\">\r\n      <img src=\"/assets/images/house.png\" alt=\"Property\" />\r\n    </mat-button-toggle> -->\r\n  </mat-button-toggle-group>\r\n</mat-dialog-content>\r\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ":host {\n  text-align: center; }\n  :host .selector__investment-type .option__investment-type {\n    padding: 10px; }\n  :host .selector__investment-type .option__investment-type img {\n      width: 50px; }\n  @media screen and (min-width: 600px) {\n    :host .selector__investment-type .option__investment-type img {\n      width: 90px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ":host {\n  text-align: center; }\n  :host .selector__investment-type .option__investment-type {\n    padding: 10px; }\n  :host .selector__investment-type .option__investment-type img {\n      width: 50px; }\n  @media screen and (min-width: 600px) {\n    :host .selector__investment-type .option__investment-type img {\n      width: 90px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts":
+/***/ "./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1604,9 +1512,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
-var util_service_1 = __webpack_require__("../../../../../src/app/util.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
 var InvestmentSelectorDialogComponent = /** @class */ (function () {
     function InvestmentSelectorDialogComponent(dialogRef, data, utilService) {
         this.dialogRef = dialogRef;
@@ -1623,8 +1531,8 @@ var InvestmentSelectorDialogComponent = /** @class */ (function () {
     InvestmentSelectorDialogComponent = __decorate([
         core_1.Component({
             selector: 'investment-selector-dialog',
-            template: __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.scss")]
+            template: __webpack_require__("./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html"),
+            styles: [__webpack_require__("./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.scss")]
         }),
         __param(1, core_1.Inject(material_1.MAT_DIALOG_DATA)),
         __metadata("design:paramtypes", [material_1.MatDialogRef, Object, util_service_1.UtilService])
@@ -1636,32 +1544,21 @@ exports.InvestmentSelectorDialogComponent = InvestmentSelectorDialogComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
+/***/ "./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <div *ngFor=\"let row of investmentsUI\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <currency-investment *ngFor=\"let investment of row\" fxFlex fxFlex.gt-xs=\"50\"\r\n        [investment]=\"investment\"\r\n        [teams]=\"teams\"\r\n        (totalReturns)=\"setTotals($event)\"\r\n        (deletedId)=\"removeInvestment($event)\">\r\n      </currency-investment>\r\n    </div>\r\n\r\n    <mat-card fxFlex class=\"totals__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"20px\">\r\n        <!-- Totals -->\r\n        <div *ngIf=\"!myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>Total investments: <strong>{{totalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>\r\n          <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n              [class.color__red]=\"totalReturn < totalInvestment\">\r\n            Total ROI: <strong>{{ totalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- My totals -->\r\n        <div *ngIf=\"myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>My total investments: <strong>{{myTotalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>\r\n          <p [class.color__accent]=\"myTotalReturn >= myTotalInvestment\" \r\n              [class.color__red]=\"myTotalReturn < myTotalInvestment\">\r\n            My total ROI: <strong>{{ myTotalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{myTotalReturn / myTotalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- Totals switcher -->\r\n        <mat-slide-toggle fxFlexAlign.xs=\"center\" color=\"accent\" class=\"form__field form__field__toogle\" [checked]=\"false\" #myTotals>\r\n          My totals\r\n        </mat-slide-toggle>\r\n\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-investments__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have investments yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".totals__card, .no-investments__card {\n  text-align: center; }\n  .totals__card md-card-content p, .no-investments__card md-card-content p {\n    margin-bottom: 0; }\n  .progress-bar--get-investments {\n  width: 100%; }\n  @media screen and (min-width: 600px) {\n  .progress-bar--get-investments {\n    width: 300px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ".totals__card, .no-investments__card {\n  text-align: center; }\n  .totals__card md-card-content p, .no-investments__card md-card-content p {\n    margin-bottom: 0; }\n  .progress-bar--get-investments {\n  width: 100%; }\n  @media screen and (min-width: 600px) {\n  .progress-bar--get-investments {\n    width: 300px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts":
+/***/ "./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1676,18 +1573,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var investment_selector_dialog_component_1 = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var investments_service_1 = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
-var teams_service_1 = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
-var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
-var currency_exchange_service_1 = __webpack_require__("../../../../../src/app/modules/investments/currency-exchange.service.ts");
-var constants_1 = __webpack_require__("../../../../../src/app/constants/constants.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var investment_selector_dialog_component_1 = __webpack_require__("./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
+var teams_service_1 = __webpack_require__("./src/app/modules/teams/teams.service.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var constants_1 = __webpack_require__("./src/app/constants/constants.ts");
 var InvestmentsDashboardComponent = /** @class */ (function () {
     function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog, appService, teamsService, investmentsService, currencyExchangeService) {
         this.route = route;
@@ -1906,8 +1803,8 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
     InvestmentsDashboardComponent = __decorate([
         core_1.Component({
             selector: 'investments-dashboard',
-            template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
+            template: __webpack_require__("./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html"),
+            styles: [__webpack_require__("./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, users_service_1.UsersService, material_1.MatDialog,
             app_service_1.AppService, teams_service_1.TeamsService, investments_service_1.InvestmentsService, currency_exchange_service_1.CurrencyExchangeService])
@@ -1919,32 +1816,21 @@ exports.InvestmentsDashboardComponent = InvestmentsDashboardComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html":
+/***/ "./src/app/modules/investments/components/investments-edit/investments-edit.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-investment\">\r\n  <form class=\"form__container form__edit-investment\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div *ngIf=\"!getInvestmentServiceRunning\">\r\n      <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n        \r\n        <mat-progress-bar *ngIf=\"getTeamsServiceRunning\"\r\n          class=\"progress-bar progress-bar--get-teams\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n        </mat-progress-bar>\r\n\r\n        <div *ngIf=\"teams.length && !getTeamsServiceRunning\" fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title\">\r\n            <p class=\"header\">Owner</p>\r\n            <p class=\"mat-caption\">Specify the owner of this investment</p>\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n            <mat-radio-group fxFlex.gt-xs=\"230px\" class=\"form__field radiogroup__owner\"\r\n                [(ngModel)]=\"model.owner\" \r\n                name=\"owner\" \r\n                id=\"owner\" \r\n                #owner=\"ngModel\"\r\n                (change)=\"onRadioChange($event)\">\r\n              <mat-radio-button class=\"owner__option\" value=\"me\">Just me</mat-radio-button>\r\n              <mat-radio-button class=\"owner__option\" value=\"team\">My team</mat-radio-button>\r\n            </mat-radio-group>\r\n    \r\n            <mat-form-field *ngIf=\"teams.length && model.owner === 'team'\" fxFlex fxFlex.gt-xs=\"350px\" class=\"form__field\">\r\n              <mat-select [(ngModel)]=\"model.team\"\r\n                  name=\"team\" \r\n                  id=\"team\" \r\n                  #team=\"ngModel\" \r\n                  placeholder=\"Select a team\"\r\n                  (selectionChange)=\"onSelectChange($event)\"\r\n                  required>\r\n                <mat-option *ngFor=\"let team of teams\" [value]=\"team\">\r\n                  {{team.name}}\r\n                </mat-option>\r\n              </mat-select>\r\n              <mat-error *ngIf=\"team.invalid && (team.dirty || team.touched) && team.errors.required\">Please choose a team</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n        \r\n        <div *ngIf=\"model.team\" fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title\">\r\n            <p class=\"header\">Split between team members</p>\r\n            <p class=\"mat-caption\">Specify how to split the returns setting a percentage of the total investment amount to each member</p>\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">         \r\n            <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"20px\" class=\"team-members\">\r\n              <div *ngFor=\"let member of model.team.members; index as memberIndex\" fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"member\">\r\n                <div class=\"member-details\" fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n                  <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n                  <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === model.team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n                    <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === model.team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n                    <p class=\"member__email\">{{member.email}}</p>\r\n                  </div>\r\n                </div>\r\n      \r\n                <div class=\"member-percentage\">\r\n                  <mat-form-field class=\"form__field\">\r\n                    <input matInput type=\"number\" id=\"memberPercentage_{{member.email}}\" name=\"memberPercentage_{{member.email}}\" placeholder=\"Percentage of investment\"\r\n                        [(ngModel)]=\"model.membersPercentage[member.email]\" \r\n                        [value]=\"model.membersPercentage[member.email]\"\r\n                        numberValidator='{\"min\": 0, \"max\": 100}'\r\n                        required\r\n                        #memberPercentage=\"ngModel\">\r\n                    <mat-hint align=\"start\">(%) Investment portion for {{member.email}}.</mat-hint>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.required\">Percentage of investment is required.</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n                    <mat-error *ngIf=\"memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n            </div>\r\n            \r\n          </div>\r\n        </div>\r\n  \r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <h3 class=\"title title__investment-amount\">\r\n            <p class=\"header\">Investment details</p>\r\n          </h3>\r\n  \r\n          <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n            <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n                <currency-unit fxFlex=\"50px\"\r\n                    [id]=\"'investmentAmountUnit'\" \r\n                    [value]=\"model.investmentAmountUnit\"\r\n                    [view]=\"'narrow'\"\r\n                    (newValue)=\"onCurrencyUnitChange($event)\">\r\n                </currency-unit>\r\n                \r\n                <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n                  <input matInput type=\"number\" id=\"investmentAmount\" name=\"investmentAmount\" placeholder=\"Investment amount\"\r\n                      [(ngModel)]=\"model.investmentAmount\" \r\n                      [value]=\"model.investmentAmount\"\r\n                      numberValidator \r\n                      required\r\n                      #investmentAmount=\"ngModel\">\r\n                  <mat-hint align=\"start\">Set the amount of money to invest.</mat-hint>\r\n                  <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required\">Investment amount is required.</mat-error>\r\n                  <mat-error *ngIf=\"investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                </mat-form-field>\r\n              </div>\r\n          </div>\r\n        </div>\r\n  \r\n        <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n          <currency-investment-form [defaultValues]=\"model.investmentData\"\r\n              (values)=\"onInvestmentDataChange($event)\">\r\n          </currency-investment-form>\r\n        </div>\r\n      </section>\r\n  \r\n      \r\n      \r\n      <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-investment\">\r\n        <button *ngIf=\"!editInvestmentServiceRunning\" \r\n            class=\"form__action mat-raised-button\" \r\n            mat-raised-button \r\n            type=\"submit\" \r\n            color=\"accent\" \r\n            [disabled]=\"!editInvestmentForm.form.valid || !investmentDataValid\">Save</button>\r\n        \r\n        <mat-progress-bar *ngIf=\"editInvestmentServiceRunning\"\r\n            class=\"progress-bar progress-bar--edit-investment\"\r\n            color=\"primary\"\r\n            mode=\"indeterminate\">\r\n        </mat-progress-bar>\r\n      </section>\r\n    </div>\r\n    \r\n    <!-- <pre>{{model | json}}</pre> -->\r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-investment\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>\r\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/investments/components/investments-edit/investments-edit.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.progress-bar--get-investment, .progress-bar--get-teams {\n  width: 100%; }\n\n.container__edit-investment .form__fields .form__fields__row__container .radiogroup__owner .owner__option {\n  margin-right: 10px; }\n\n.container__edit-investment .form__fields .form__fields__row__container .radiogroup__owner .owner__option:last-child {\n    margin-right: 0; }\n\n.container__edit-investment .form__fields .form__fields__row__container .title__investment-amount {\n  margin-bottom: 5px !important; }\n\n.container__edit-investment .team-members .member .member__avatar {\n  border-radius: 50%;\n  width: 40px;\n  height: 40px;\n  padding: 0 10px 0 0; }\n\n.container__edit-investment .team-members .member .member__info .admin-icon {\n  font-size: 14px;\n  height: auto;\n  width: auto; }\n\n.container__edit-investment .team-members .member .member__info .member__email {\n  font-size: 11px; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-investment, .progress-bar--get-teams {\n    width: 300px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n.progress-bar--get-investment, .progress-bar--get-teams {\n  width: 100%; }\n\n.container__edit-investment .form__fields .form__fields__row__container .radiogroup__owner .owner__option {\n  margin-right: 10px; }\n\n.container__edit-investment .form__fields .form__fields__row__container .radiogroup__owner .owner__option:last-child {\n    margin-right: 0; }\n\n.container__edit-investment .form__fields .form__fields__row__container .title__investment-amount {\n  margin-bottom: 5px !important; }\n\n.container__edit-investment .team-members .member .member__avatar {\n  border-radius: 50%;\n  width: 40px;\n  height: 40px;\n  padding: 0 10px 0 0; }\n\n.container__edit-investment .team-members .member .member__info .admin-icon {\n  font-size: 14px;\n  height: auto;\n  width: auto; }\n\n.container__edit-investment .team-members .member .member__info .member__email {\n  font-size: 11px; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-investment, .progress-bar--get-teams {\n    width: 300px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts":
+/***/ "./src/app/modules/investments/components/investments-edit/investments-edit.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1959,15 +1845,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var common_1 = __webpack_require__("../../../common/esm5/common.js");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var teams_service_1 = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
-var investments_service_1 = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
-var currencyInvestment_1 = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var teams_service_1 = __webpack_require__("./src/app/modules/teams/teams.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
+var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
 var InvestmentsEditComponent = /** @class */ (function () {
     function InvestmentsEditComponent(route, mainNavigatorService, investmentsService, teamsService, appService, router) {
         this.route = route;
@@ -2298,8 +2184,8 @@ var InvestmentsEditComponent = /** @class */ (function () {
     InvestmentsEditComponent = __decorate([
         core_1.Component({
             selector: 'investments-edit',
-            template: __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.scss")]
+            template: __webpack_require__("./src/app/modules/investments/components/investments-edit/investments-edit.component.html"),
+            styles: [__webpack_require__("./src/app/modules/investments/components/investments-edit/investments-edit.component.scss")]
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, investments_service_1.InvestmentsService,
             teams_service_1.TeamsService, app_service_1.AppService, router_1.Router])
@@ -2311,7 +2197,7 @@ exports.InvestmentsEditComponent = InvestmentsEditComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/currency-exchange.service.ts":
+/***/ "./src/app/modules/investments/currency-exchange.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2326,10 +2212,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var http_1 = __webpack_require__("../../../common/esm5/http.js");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var Observable_1 = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var Observable_1 = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
 var CurrencyExchangeService = /** @class */ (function () {
     function CurrencyExchangeService(http, appService) {
         this.http = http;
@@ -2347,7 +2233,7 @@ var CurrencyExchangeService = /** @class */ (function () {
         }
         return this.http.get(this.currencyExchangeServiceUrl + "?base=" + base)
             .map(this.extractCurrencyExchangeData)
-            .catch(this.appService.handleError(methodTrace))
+            .catch(this.appService.handleError)
             .retry(3);
     };
     CurrencyExchangeService.prototype.extractCurrencyExchangeData = function (res) {
@@ -2370,7 +2256,7 @@ var CurrencyExchangeService = /** @class */ (function () {
             _this.cryptoRates[crypto.toUpperCase()] = _this.extractCryptoExchangeData(crypto, res);
             return _this.cryptoRates[crypto.toUpperCase()];
         })
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     CurrencyExchangeService.prototype.extractCryptoExchangeData = function (crypto, res) {
         if (res['id'] === crypto.toUpperCase()) {
@@ -2402,7 +2288,7 @@ exports.CurrencyExchangeService = CurrencyExchangeService;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/investments-routing.module.ts":
+/***/ "./src/app/modules/investments/investments-routing.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2414,11 +2300,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var investments_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
-var investments_edit_component_1 = __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
-var auth_resolver_service_1 = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var investments_dashboard_component_1 = __webpack_require__("./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
+var investments_edit_component_1 = __webpack_require__("./src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
+var auth_resolver_service_1 = __webpack_require__("./src/app/auth-resolver.service.ts");
 var routes = [
     {
         path: 'investments',
@@ -2464,7 +2350,7 @@ exports.InvestmentsRoutingModule = InvestmentsRoutingModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/investments.module.ts":
+/***/ "./src/app/modules/investments/investments.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2476,19 +2362,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var common_1 = __webpack_require__("../../../common/esm5/common.js");
-var investments_routing_module_1 = __webpack_require__("../../../../../src/app/modules/investments/investments-routing.module.ts");
-var forms_1 = __webpack_require__("../../../forms/esm5/forms.js");
-var flex_layout_1 = __webpack_require__("../../../flex-layout/esm5/flex-layout.es5.js");
-var custom_material_design_module_1 = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
-var shared_module_1 = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
-var investments_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
-var currency_investment_component_1 = __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment/currency-investment.component.ts");
-var investment_selector_dialog_component_1 = __webpack_require__("../../../../../src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
-var investments_edit_component_1 = __webpack_require__("../../../../../src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
-var currency_investment_form_component_1 = __webpack_require__("../../../../../src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts");
-var investments_service_1 = __webpack_require__("../../../../../src/app/modules/investments/investments.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var investments_routing_module_1 = __webpack_require__("./src/app/modules/investments/investments-routing.module.ts");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var shared_module_1 = __webpack_require__("./src/app/modules/shared/shared.module.ts");
+var investments_dashboard_component_1 = __webpack_require__("./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
+var currency_investment_component_1 = __webpack_require__("./src/app/modules/investments/components/currency-investment/currency-investment.component.ts");
+var investment_selector_dialog_component_1 = __webpack_require__("./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
+var investments_edit_component_1 = __webpack_require__("./src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
+var currency_investment_form_component_1 = __webpack_require__("./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
 var InvestmentsModule = /** @class */ (function () {
     function InvestmentsModule() {
     }
@@ -2522,7 +2408,7 @@ exports.InvestmentsModule = InvestmentsModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/investments.service.ts":
+/***/ "./src/app/modules/investments/investments.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2537,15 +2423,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var http_1 = __webpack_require__("../../../common/esm5/http.js");
-var Rx_1 = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
-var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var currencyInvestment_1 = __webpack_require__("../../../../../src/app/modules/investments/models/currencyInvestment.ts");
-var team_1 = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
-var of_1 = __webpack_require__("../../../../rxjs/_esm5/observable/of.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var Rx_1 = __webpack_require__("./node_modules/rxjs/_esm5/Rx.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
+var team_1 = __webpack_require__("./src/app/modules/teams/models/team.ts");
+var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
 var InvestmentsService = /** @class */ (function () {
     function InvestmentsService(http, appService) {
         this.http = http;
@@ -2562,7 +2448,7 @@ var InvestmentsService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > create() > "; //for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to Update an investment in the system
@@ -2573,7 +2459,7 @@ var InvestmentsService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > update() > "; //for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to Get an investment from the server based on its ID
@@ -2591,7 +2477,7 @@ var InvestmentsService = /** @class */ (function () {
             .set('email', email);
         var investmentData$ = this.http.get(this.serverHost + "/getbyId", { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
         return investmentData$.switchMap(function (investmentData) {
             var investment = null;
             if (investmentData && investmentData._id) {
@@ -2635,7 +2521,7 @@ var InvestmentsService = /** @class */ (function () {
         var params = new http_1.HttpParams().set('email', email);
         var investmentsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
         return investmentsData$.switchMap(function (investmentsData) {
             var investments = [];
             if (investmentsData && investmentsData instanceof Array) {
@@ -2668,7 +2554,7 @@ var InvestmentsService = /** @class */ (function () {
         var params = new http_1.HttpParams().set('email', email);
         return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     InvestmentsService = __decorate([
         core_1.Injectable(),
@@ -2681,7 +2567,7 @@ exports.InvestmentsService = InvestmentsService;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/models/currencyInvestment.ts":
+/***/ "./src/app/modules/investments/models/currencyInvestment.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2697,7 +2583,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var investment_1 = __webpack_require__("../../../../../src/app/modules/investments/models/investment.ts");
+var investment_1 = __webpack_require__("./src/app/modules/investments/models/investment.ts");
 var CurrencyInvestment = /** @class */ (function (_super) {
     __extends(CurrencyInvestment, _super);
     function CurrencyInvestment(id, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, unit, amount, buyingPrice, buyingPriceUnit, buyingDate, type) {
@@ -2719,7 +2605,7 @@ exports.CurrencyInvestment = CurrencyInvestment;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/investments/models/investment.ts":
+/***/ "./src/app/modules/investments/models/investment.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2744,32 +2630,21 @@ exports.Investment = Investment;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.html":
+/***/ "./src/app/modules/properties/components/houses-edit/houses-edit.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "\r\n  <!-- Form  -->\r\n  <form class=\"form__container form__edit-house\" #editHouseForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Features</p>\r\n        </h3>\r\n  \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Building type -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <mat-select id=\"buildingType\" name=\"buildingType\" placeholder=\"Building type\" [value]=\"model.buildingType\" [(ngModel)]=\"model.buildingType\">\r\n              <mat-option value=\"house\">House</mat-option>\r\n              <mat-option value=\"apartment\">Apartment</mat-option>\r\n              <mat-option value=\"unit\">Unit</mat-option>\r\n            </mat-select>\r\n          </mat-form-field>\r\n          \r\n          <!-- Title type -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <mat-select id=\"titleType\" name=\"titleType\" placeholder=\"Title type\" [value]=\"model.titleType\" [(ngModel)]=\"model.titleType\">\r\n              <mat-option value=\"feeSimple\">Fee simple</mat-option>\r\n              <mat-option value=\"crossLease\">Cross lease</mat-option>\r\n              <mat-option value=\"leaseHold\">Lease hold</mat-option>\r\n            </mat-select>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Land area -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"landArea\" name=\"landArea\" placeholder=\"Land area\" \r\n                [(ngModel)]=\"model.landArea\" \r\n                [value]=\"model.landArea\"\r\n                numberValidator\r\n                #landArea=\"ngModel\">\r\n                \r\n            <span matSuffix>m2</span>\r\n            <mat-hint align=\"start\">Land area in square meters.</mat-hint>\r\n            <mat-error *ngIf=\"landArea.invalid && (landArea.dirty || landArea.touched) && landArea.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n\r\n          <!-- Floor area -->\r\n          <mat-form-field fxFlex  class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"floorArea\" name=\"floorArea\" placeholder=\"Floor area\" \r\n                [(ngModel)]=\"model.floorArea\" \r\n                [value]=\"model.floorArea\"\r\n                numberValidator\r\n                #floorArea=\"ngModel\">\r\n                \r\n            <span matSuffix>m2</span>\r\n            <mat-hint align=\"start\">Floor area in square meters.</mat-hint>\r\n            <mat-error *ngIf=\"floorArea.invalid && (floorArea.dirty || floorArea.touched) && floorArea.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Bedrooms -->\r\n          <mat-form-field fxFlex fxFlex.sm=\"140px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"bedrooms\" name=\"bedrooms\" placeholder=\"Bedrooms\" \r\n                [(ngModel)]=\"model.bedrooms\" \r\n                [value]=\"model.bedrooms\"\r\n                numberValidator\r\n                #bedrooms=\"ngModel\">\r\n                \r\n            <mat-error *ngIf=\"bedrooms.invalid && (bedrooms.dirty || bedrooms.touched) && bedrooms.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n\r\n          <!-- Bathrooms -->\r\n          <mat-form-field fxFlex fxFlex.sm=\"140px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"bathrooms\" name=\"bathrooms\" placeholder=\"Bathrooms\" \r\n                [(ngModel)]=\"model.bathrooms\" \r\n                [value]=\"model.bathrooms\"\r\n                numberValidator\r\n                #bathrooms=\"ngModel\">\r\n                \r\n            <mat-error *ngIf=\"bathrooms.invalid && (bathrooms.dirty || bathrooms.touched) && bathrooms.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n\r\n          <!-- Parking spaces -->\r\n          <mat-form-field fxFlex fxFlex.sm=\"140px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"parkingSpaces\" name=\"parkingSpaces\" placeholder=\"Parking spaces\" \r\n                [(ngModel)]=\"model.parkingSpaces\" \r\n                [value]=\"model.parkingSpaces\"\r\n                numberValidator\r\n                #parkingSpaces=\"ngModel\">\r\n                \r\n            <mat-error *ngIf=\"parkingSpaces.invalid && (parkingSpaces.dirty || parkingSpaces.touched) && parkingSpaces.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n\r\n          <!-- Fenced? -->\r\n          <div fxFlex class=\"form__field\">\r\n            <mat-checkbox id=\"fenced\" name=\"fenced\" class=\"\"\r\n                labelPosition=\"before\"\r\n                [(ngModel)]=\"model.fenced\">\r\n              Fenced?\r\n            </mat-checkbox>\r\n          </div>\r\n        </div>\r\n      </div>\r\n  \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Rent information</p>\r\n        </h3>\r\n      \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Rent price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'rentPriceUnit'\" \r\n                [value]=\"model.rentPriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"rentPrice\" name=\"rentPrice\" placeholder=\"Rent price\"\r\n                  [(ngModel)]=\"model.rentPrice\" \r\n                  [value]=\"model.rentPrice\"\r\n                  numberValidator\r\n                  #rentPrice=\"ngModel\">\r\n              \r\n              <mat-error *ngIf=\"rentPrice.invalid && (rentPrice.dirty || rentPrice.touched) && rentPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Rent payment period -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <mat-select id=\"rentPricePeriod\" name=\"rentPricePeriod\" placeholder=\"Pay frecuency\" [value]=\"model.rentPricePeriod\" [(ngModel)]=\"model.rentPricePeriod\">\r\n              <mat-option value=\"week\">per week</mat-option>\r\n              <mat-option value=\"month\">per month</mat-option>\r\n            </mat-select>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Managed? -->\r\n          <div fxFlex class=\"form__field\">\r\n            <mat-slide-toggle class=\"\" id=\"managed\" name=\"managed\"\r\n                color=\"accent\"\r\n                [checked]=\"model.managed\"\r\n                (change)=\"onSlideToggleChange($event)\">\r\n              Managed?\r\n            </mat-slide-toggle>\r\n          </div>\r\n\r\n          <!-- Manager rate -->\r\n          <div fxFlex=\"none\" fxFlex.gt-xs fxLayout=\"column\" class=\"form__field\">\r\n            <label class=\"slider__label\">Manager rate</label>\r\n            <div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n              <mat-slider fxFlex id=\"managerRate\" name=\"managerRate\"\r\n                  color=\"accent\"\r\n                  [max]=\"20\"\r\n                  [min]=\"0\"\r\n                  [step]=\"1\"\r\n                  [disabled]=\"!model.managed\"\r\n                  [thumb-label]=\"true\"\r\n                  [tick-interval]=\"1\"\r\n                  [(ngModel)]=\"model.managerRate\"\r\n                  [value]=\"model.managerRate\"> \r\n              </mat-slider>\r\n              <span *ngIf=\"model.managerRate\">{{model.managerRate}}%</span>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Address -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <input matInput type=\"text\" id=\"agent\" name=\"agent\" placeholder=\"Agent\" \r\n                [(ngModel)]=\"model.agent\"\r\n                [value]=\"model.agent\"\r\n                #agent=\"ngModel\">\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Vacancy -->\r\n          <div fxFlex=\"none\" fxFlex.gt-xs=\"250px\" fxLayout=\"column\" class=\"form__field\">\r\n            <label class=\"slider__label\">Vacancy</label>\r\n            <div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n              <mat-slider fxFlex id=\"vacancy\" name=\"vacancy\"\r\n                  color=\"accent\"\r\n                  [max]=\"20\"\r\n                  [min]=\"0\"\r\n                  [step]=\"1\"\r\n                  [thumb-label]=\"true\"\r\n                  [tick-interval]=\"1\"\r\n                  [(ngModel)]=\"model.vacancy\"\r\n                  [value]=\"model.vacancy\"> \r\n              </mat-slider>\r\n              <span *ngIf=\"model.vacancy\">{{model.vacancy}} weeks</span>\r\n            </div>\r\n          </div>\r\n\r\n          <!-- Rent appraisal done? -->\r\n          <div fxFlex class=\"form__field\">\r\n            <mat-checkbox id=\"rentAppraisalDone\" name=\"rentAppraisalDone\" class=\"\"\r\n                labelPosition=\"before\"\r\n                [(ngModel)]=\"model.rentAppraisalDone\">\r\n              Rent appraisal done?\r\n            </mat-checkbox>\r\n          </div>\r\n\r\n          <!-- Rented? -->\r\n          <div fxFlex class=\"form__field\">\r\n            <mat-checkbox id=\"rented\" name=\"rented\" class=\"\"\r\n                labelPosition=\"before\"\r\n                [(ngModel)]=\"model.rented\">\r\n              Rented?\r\n            </mat-checkbox>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Additional information</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Registered value -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'registeredValueUnit'\" \r\n                [value]=\"model.registeredValueUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"registeredValue\" name=\"registeredValue\" placeholder=\"Registered value\"\r\n                  [(ngModel)]=\"model.registeredValue\" \r\n                  [value]=\"model.registeredValue\"\r\n                  numberValidator\r\n                  #registeredValue=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The value an independent valuator gives to the house based on the recent sales in the area.</mat-hint>\r\n              <mat-error *ngIf=\"registeredValue.invalid && (registeredValue.dirty || registeredValue.touched) && registeredValue.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Capital growth -->\r\n          <mat-form-field fxFlex fxFlex.sm=\"140px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"capitalGrowth\" name=\"capitalGrowth\" placeholder=\"Capital growth\" \r\n                [(ngModel)]=\"model.capitalGrowth\" \r\n                [value]=\"model.capitalGrowth\"\r\n                numberValidator='{\"min\": 0, \"max\": 100}' \r\n                #capitalGrowth=\"ngModel\">\r\n            \r\n            <span matSuffix>%</span>\r\n            <mat-hint align=\"start\">Annual capital growth percentage for owning the property.</mat-hint>\r\n            <mat-error *ngIf=\"capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            <mat-error *ngIf=\"capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n            <mat-error *ngIf=\"capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Living costs</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Body corporate -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'bodyCorporateUnit'\" \r\n                [value]=\"model.bodyCorporateUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"bodyCorporate\" name=\"bodyCorporate\" placeholder=\"Body corporate\"\r\n                  [(ngModel)]=\"model.bodyCorporate\" \r\n                  [value]=\"model.bodyCorporate\"\r\n                  numberValidator\r\n                  #bodyCorporate=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The bodyCorporate rates this property pays annually.</mat-hint>\r\n              <mat-error *ngIf=\"bodyCorporate.invalid && (bodyCorporate.dirty || bodyCorporate.touched) && bodyCorporate.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Utilities -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'utilitiesCostUnit'\" \r\n                [value]=\"model.utilitiesCostUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"utilitiesCost\" name=\"utilitiesCost\" placeholder=\"Utilities\"\r\n                  [(ngModel)]=\"model.utilitiesCost\" \r\n                  [value]=\"model.utilitiesCost\"\r\n                  numberValidator\r\n                  #utilitiesCost=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Electricity, water, gas, internet, ...</mat-hint>\r\n              <mat-error *ngIf=\"utilitiesCost.invalid && (utilitiesCost.dirty || utilitiesCost.touched) && utilitiesCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Rates -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'ratesUnit'\" \r\n                [value]=\"model.ratesUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"rates\" name=\"rates\" placeholder=\"Rates\"\r\n                  [(ngModel)]=\"model.rates\" \r\n                  [value]=\"model.rates\"\r\n                  numberValidator\r\n                  #rates=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The rates this property pays annually.</mat-hint>\r\n              <mat-error *ngIf=\"rates.invalid && (rates.dirty || rates.touched) && rates.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Insurance -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'insuranceUnit'\" \r\n                [value]=\"model.insuranceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"insurance\" name=\"insurance\" placeholder=\"Insurance\"\r\n                  [(ngModel)]=\"model.insurance\" \r\n                  [value]=\"model.insurance\"\r\n                  numberValidator\r\n                  #insurance=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Annual insurance price for the house.</mat-hint>\r\n              <mat-error *ngIf=\"insurance.invalid && (insurance.dirty || insurance.touched) && insurance.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </section>\r\n\r\n  </form>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/properties/components/houses-edit/houses-edit.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ""
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.ts":
+/***/ "./src/app/modules/properties/components/houses-edit/houses-edit.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2784,11 +2659,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
-var util_service_1 = __webpack_require__("../../../../../src/app/util.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var constants_1 = __webpack_require__("../../../../../src/app/constants.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
 var HousesEditComponent = /** @class */ (function () {
     function HousesEditComponent(appService, utilService) {
         this.appService = appService;
@@ -2885,8 +2760,8 @@ var HousesEditComponent = /** @class */ (function () {
     HousesEditComponent = __decorate([
         core_1.Component({
             selector: 'houses-edit',
-            template: __webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.scss")]
+            template: __webpack_require__("./src/app/modules/properties/components/houses-edit/houses-edit.component.html"),
+            styles: [__webpack_require__("./src/app/modules/properties/components/houses-edit/houses-edit.component.scss")]
         }),
         __metadata("design:paramtypes", [app_service_1.AppService, util_service_1.UtilService])
     ], HousesEditComponent);
@@ -2897,32 +2772,21 @@ exports.HousesEditComponent = HousesEditComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html":
+/***/ "./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties\">\r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-table #table [dataSource]=\"propertiesDataSource\">\r\n\r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\"> {{element.address}} </mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"edit\">\r\n        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab routerLink=\"/properties/{{element.type}}/edit/{{element.id}}\" color=\"primary\">\r\n            <mat-icon aria-label=\"Edit\">edit</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab routerLink=\"/properties/{{element.type}}/edit/{{element.id}}\" color=\"warn\">\r\n            <mat-icon aria-label=\"Edit\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"['address', 'edit', 'delete']\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: ['address', 'edit', 'delete'];\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [pageSizeOptions]=\"[10,20,50,100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab routerLink=\"house/create\" class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new property\" matTooltipPosition=\"left\">\r\n      <mat-icon aria-label=\"Create new property\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties\">\r\n  <section class=\"property-table__container\" *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"property-table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\">\r\n\r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\"> {{element.address}} </mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"edit\">\r\n        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab routerLink=\"/properties/{{element.type}}/edit/{{element.id}}\" color=\"primary\" (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Edit\">edit</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Edit\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"['address', 'edit', 'delete']\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: ['address', 'edit', 'delete'];\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab routerLink=\"house/create\" class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new property\" matTooltipPosition=\"left\">\r\n      <mat-icon aria-label=\"Create new property\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".totals__card, .no-properties__card {\n  text-align: center; }\n  .totals__card md-card-content p, .no-properties__card md-card-content p {\n    margin-bottom: 0; }\n  .progress-bar--get-properties {\n  width: 100%; }\n  @media screen and (min-width: 600px) {\n  .progress-bar--get-properties {\n    width: 300px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ".property-table__container .property-table__overlay {\n  position: absolute;\n  top: 0;\n  left: 0;\n  bottom: 0;\n  right: 0;\n  background: rgba(0, 0, 0, 0.15);\n  z-index: 1;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center; }\n\n.no-properties__card {\n  text-align: center; }\n\n.no-properties__card md-card-content p {\n    margin-bottom: 0; }\n\n.progress-bar--get-properties {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  .progress-bar--get-properties {\n    width: 300px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts":
+/***/ "./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2937,26 +2801,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
-var properties_service_1 = __webpack_require__("../../../../../src/app/modules/properties/properties.service.ts");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var properties_service_1 = __webpack_require__("./src/app/modules/properties/properties.service.ts");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
 var PropertiesDashboardComponent = /** @class */ (function () {
-    function PropertiesDashboardComponent(route, mainNavigatorService, usersService, appService, propertiesService) {
+    function PropertiesDashboardComponent(route, mainNavigatorService, usersService, appService, propertiesService, dialog) {
         this.route = route;
         this.mainNavigatorService = mainNavigatorService;
         this.usersService = usersService;
         this.appService = appService;
         this.propertiesService = propertiesService;
+        this.dialog = dialog;
         this.user = null;
         this.properties = [];
         this.propertiesDataSource = new material_1.MatTableDataSource([]);
         this.subscription = new Subscription_1.Subscription();
         this.getPropertiesServiceRunning = false;
+        this.propertyTableActionRunning = false;
     }
     PropertiesDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -2989,14 +2856,14 @@ var PropertiesDashboardComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
         this.properties = [];
         this.propertiesDataSource = new material_1.MatTableDataSource([]);
-        this.propertiesDataSource.paginator = this.paginator;
+        this.propertiesDataSource.paginator = this.propertiesTablePaginator;
         this.getPropertiesServiceRunning = true;
         var newSubscription = user$.switchMap(function (user) {
             return _this.propertiesService.getProperties(user.email);
         }).subscribe(function (properties) {
             _this.properties = properties;
-            _this.propertiesDataSource = new material_1.MatTableDataSource(properties);
-            _this.propertiesDataSource.paginator = _this.paginator;
+            _this.propertiesDataSource = new material_1.MatTableDataSource(_this.properties);
+            _this.propertiesDataSource.paginator = _this.propertiesTablePaginator;
             _this.getPropertiesServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
@@ -3009,18 +2876,83 @@ var PropertiesDashboardComponent = /** @class */ (function () {
             _this.getPropertiesServiceRunning = false;
         });
     };
+    PropertiesDashboardComponent.prototype.openDeleteTeamDialog = function (indexInPage, property) {
+        var _this = this;
+        if (property === void 0) { property = null; }
+        var methodTrace = this.constructor.name + " > openDeleteTeamDialog() > "; //for debugging
+        if (!property) {
+            this.appService.consoleLog('error', methodTrace + " Property is required to delete.");
+            return false;
+        }
+        //map the index in the table to the indes in the properties array
+        var index = indexInPage + this.propertiesTablePaginator.pageIndex * this.propertiesTablePaginator.pageSize;
+        this.propertyTableActionRunning = true;
+        var yesNoDialogRef = this.dialog.open(yes_no_dialog_component_1.YesNoDialogComponent, {
+            width: '250px',
+            data: {
+                title: 'Delete property',
+                message: "Are you sure you want to delete this property forever?"
+            }
+        });
+        var newSubscription = yesNoDialogRef.afterClosed().subscribe(function (result) {
+            if (result === 'yes') {
+                _this.delete(index, property);
+            }
+            else {
+                _this.propertyTableActionRunning = false;
+            }
+        });
+        this.subscription.add(newSubscription);
+        return false;
+    };
+    PropertiesDashboardComponent.prototype.delete = function (index, property) {
+        var _this = this;
+        if (property === void 0) { property = null; }
+        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        this.propertyTableActionRunning = true;
+        var newSuscription = this.propertiesService.delete(property.id, this.user.email).subscribe(function (data) {
+            if (data && data.removed > 0) {
+                _this.properties.splice(index, 1);
+                _this.propertiesDataSource.data.splice(index, 1);
+                _this.propertiesTable.renderRows();
+                _this.appService.showResults("Property successfully removed!", 'success');
+            }
+            else {
+                _this.appService.showResults("Property could not be removed, please try again.", 'error');
+            }
+            _this.propertyTableActionRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 471) {
+                //property associated to an investment
+                _this.appService.showResults(error.msg, 'error', 7000);
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.propertyTableActionRunning = false;
+        });
+        this.subscription.add(newSuscription);
+    };
     __decorate([
         core_1.ViewChild('propertiesPaginator'),
         __metadata("design:type", material_1.MatPaginator)
-    ], PropertiesDashboardComponent.prototype, "paginator", void 0);
+    ], PropertiesDashboardComponent.prototype, "propertiesTablePaginator", void 0);
+    __decorate([
+        core_1.ViewChild('propertiesTable'),
+        __metadata("design:type", material_1.MatTable)
+    ], PropertiesDashboardComponent.prototype, "propertiesTable", void 0);
     PropertiesDashboardComponent = __decorate([
         core_1.Component({
             selector: 'properties-dashboard',
-            template: __webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.scss")]
+            template: __webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html"),
+            styles: [__webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.scss")]
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, users_service_1.UsersService,
-            app_service_1.AppService, properties_service_1.PropertiesService])
+            app_service_1.AppService, properties_service_1.PropertiesService, material_1.MatDialog])
     ], PropertiesDashboardComponent);
     return PropertiesDashboardComponent;
 }());
@@ -3029,32 +2961,21 @@ exports.PropertiesDashboardComponent = PropertiesDashboardComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.html":
+/***/ "./src/app/modules/properties/components/properties-edit/properties-edit.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"container__edit-property\" fxLayout=\"column\" fxLayoutAlign=\"none none\" fxLayout.gt-xs=\"row\" fxLayoutAlign.gt-xs=\"center none\" fxLayoutGap=\"10px\">\r\n  <!-- Form  -->\r\n  <form *ngIf=\"!getPropertyServiceRunning\" class=\"form__container form__edit-property\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editPropertyForm=\"ngForm\" \r\n      novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Basic info</p>\r\n        </h3>\r\n  \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Address -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <input matInput type=\"text\" id=\"address\" name=\"address\" placeholder=\"Address\" \r\n                [(ngModel)]=\"model.address\" \r\n                required\r\n                [value]=\"model.address\"\r\n                #address=\"ngModel\">\r\n            \r\n            <mat-error *ngIf=\"address.invalid && (address.dirty || address.touched) && address.errors.required\">This field is required.</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Description -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\r\n                [(ngModel)]=\"model.description\" \r\n                value=\"model.description\"\r\n                #description=\"ngModel\">\r\n            </textarea>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n  \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Pricing information</p>\r\n        </h3>\r\n      \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Asking price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'askingPriceUnit'\" \r\n                [value]=\"model.askingPriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"askingPrice\" name=\"askingPrice\" placeholder=\"Asking price\"\r\n                  [(ngModel)]=\"model.askingPrice\" \r\n                  [value]=\"model.askingPrice\"\r\n                  numberValidator\r\n                  #askingPrice=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\r\n              <mat-error *ngIf=\"askingPrice.invalid && (askingPrice.dirty || askingPrice.touched) && askingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n          \r\n          <!-- Offer price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'offerPriceUnit'\" \r\n                [value]=\"model.offerPriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"offerPrice\" name=\"offerPrice\" placeholder=\"Offer price\"\r\n                  [(ngModel)]=\"model.offerPrice\" \r\n                  [value]=\"model.offerPrice\"\r\n                  numberValidator\r\n                  #offerPrice=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\r\n              <mat-error *ngIf=\"offerPrice.invalid && (offerPrice.dirty || offerPrice.touched) && offerPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Walk away price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'walkAwayPriceUnit'\" \r\n                [value]=\"model.walkAwayPriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"walkAwayPrice\" name=\"walkAwayPrice\" placeholder=\"Walk away price\"\r\n                  [(ngModel)]=\"model.walkAwayPrice\" \r\n                  [value]=\"model.walkAwayPrice\"\r\n                  numberValidator\r\n                  #walkAwayPrice=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\r\n              <mat-error *ngIf=\"walkAwayPrice.invalid && (walkAwayPrice.dirty || walkAwayPrice.touched) && walkAwayPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Sale price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'salePriceUnit'\" \r\n                [value]=\"model.salePriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"salePrice\" name=\"salePrice\" placeholder=\"Sale price\"\r\n                  [(ngModel)]=\"model.salePrice\" \r\n                  [value]=\"model.salePrice\"\r\n                  numberValidator\r\n                  #salePrice=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"salePrice.invalid && (salePrice.dirty || salePrice.touched) && salePrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Market value -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'marketValueUnit'\" \r\n                [value]=\"model.marketValueUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\"\r\n                  [(ngModel)]=\"model.marketValue\" \r\n                  [value]=\"model.marketValue\"\r\n                  numberValidator\r\n                  #marketValue=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Costs</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Reno cost -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'renovationCostUnit'\" \r\n                [value]=\"model.renovationCostUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\"\r\n                  [(ngModel)]=\"model.renovationCost\" \r\n                  [value]=\"model.renovationCost\"\r\n                  numberValidator\r\n                  #renovationCost=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"renovationCost.invalid && (renovationCost.dirty || renovationCost.touched) && renovationCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Maintenance cost -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'maintenanceCostUnit'\" \r\n                [value]=\"model.maintenanceCostUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"maintenanceCost\" name=\"maintenanceCost\" placeholder=\"Maintenance cost\"\r\n                  [(ngModel)]=\"model.maintenanceCost\" \r\n                  [value]=\"model.maintenanceCost\"\r\n                  numberValidator\r\n                  #maintenanceCost=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"maintenanceCost.invalid && (maintenanceCost.dirty || maintenanceCost.touched) && maintenanceCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n          \r\n          <!-- Other cost -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'otherCostUnit'\" \r\n                [value]=\"model.otherCostUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"otherCost\" name=\"otherCost\" placeholder=\"Other cost\"\r\n                  [(ngModel)]=\"model.otherCost\" \r\n                  [value]=\"model.otherCost\"\r\n                  numberValidator\r\n                  #otherCost=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"otherCost.invalid && (otherCost.dirty || otherCost.touched) && otherCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Other information</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Date listed -->\r\n          <mat-form-field fxFlex fxFlex.gt-xs=\"100px\" class=\"form__field\">\r\n            <input placeholder=\"Listing date\"\r\n                id=\"dateListed\"\r\n                name=\"dateListed\"\r\n                readonly\r\n                #dateListed=\"ngModel\"\r\n                matInput \r\n                [(ngModel)]=\"model.dateListed\" \r\n                [matDatepicker]=\"pickerDateListed\"\r\n                (click)=\"pickerDateListed.open()\">\r\n            <mat-datepicker-toggle matSuffix [for]=\"pickerDateListed\"></mat-datepicker-toggle>\r\n            <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerDateListed></mat-datepicker>\r\n            <mat-error *ngIf=\"dateListed.invalid && (dateListed.dirty || dateListed.touched) && dateListed.errors.matDatepickerParse\">Buying date is invalid or not follows the pattern \"mm/dd/yyyy\"</mat-error>\r\n          </mat-form-field>\r\n  \r\n          <!-- Reason for selling -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <textarea matInput id=\"reasonForSelling\" name=\"reasonForSelling\" placeholder=\"Reason for selling\"\r\n                [(ngModel)]=\"model.reasonForSelling\" \r\n                value=\"model.reasonForSelling\"\r\n                #reasonForSelling=\"ngModel\">\r\n            </textarea>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Notes -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <textarea matInput id=\"notes\" name=\"notes\" placeholder=\"Other notes\"\r\n                [(ngModel)]=\"model.notes\" \r\n                value=\"model.notes\"\r\n                #notes=\"ngModel\">\r\n            </textarea>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <houses-edit *ngIf=\"type === propertyTypes.HOUSE\" \r\n            [defaultValues]=\"model.propertyTypeData\"\r\n            [defaultCurrencyUnit]=\"user.currency\"\r\n            (values)=\"onPropertyTypeDataChange($event)\">\r\n        </houses-edit>\r\n      </div>\r\n    </section>\r\n\r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-property\">\r\n      <button *ngIf=\"!editPropertyServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!editPropertyForm.form.valid || !propertyTypeDataValid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"editPropertyServiceRunning\"\r\n          class=\"progress-bar progress-bar--edit-property\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n  </form>\r\n  <!-- <pre>{{model | json}}</pre> -->\r\n\r\n  <mat-progress-bar *ngIf=\"getPropertyServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-property\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/properties/components/properties-edit/properties-edit.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.progress-bar--get-property {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-property {\n    width: 300px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n.progress-bar--get-property {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-property {\n    width: 300px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.ts":
+/***/ "./src/app/modules/properties/components/properties-edit/properties-edit.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3069,16 +2990,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var rxjs_1 = __webpack_require__("../../../../rxjs/Rx.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var properties_service_1 = __webpack_require__("../../../../../src/app/modules/properties/properties.service.ts");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-var constants_1 = __webpack_require__("../../../../../src/app/constants.ts");
-var house_1 = __webpack_require__("../../../../../src/app/modules/properties/models/house.ts");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
-var util_service_1 = __webpack_require__("../../../../../src/app/util.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var rxjs_1 = __webpack_require__("./node_modules/rxjs/Rx.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var properties_service_1 = __webpack_require__("./src/app/modules/properties/properties.service.ts");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
+var house_1 = __webpack_require__("./src/app/modules/properties/models/house.ts");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
 var PropertiesEditComponent = /** @class */ (function () {
     function PropertiesEditComponent(route, mainNavigatorService, propertiesService, appService, router, utilService, dateAdapter) {
         this.route = route;
@@ -3255,7 +3176,7 @@ var PropertiesEditComponent = /** @class */ (function () {
             }
             _this.getPropertyServiceRunning = false;
         }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > ", error);
             if (error.codeno === 400) {
                 _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
             }
@@ -3330,8 +3251,8 @@ var PropertiesEditComponent = /** @class */ (function () {
     PropertiesEditComponent = __decorate([
         core_1.Component({
             selector: 'properties-edit',
-            template: __webpack_require__("../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.scss")]
+            template: __webpack_require__("./src/app/modules/properties/components/properties-edit/properties-edit.component.html"),
+            styles: [__webpack_require__("./src/app/modules/properties/components/properties-edit/properties-edit.component.scss")]
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, properties_service_1.PropertiesService,
             app_service_1.AppService, router_1.Router, util_service_1.UtilService, material_1.DateAdapter])
@@ -3343,7 +3264,7 @@ exports.PropertiesEditComponent = PropertiesEditComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/models/house.ts":
+/***/ "./src/app/modules/properties/models/house.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3359,7 +3280,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var property_1 = __webpack_require__("../../../../../src/app/modules/properties/models/property.ts");
+var property_1 = __webpack_require__("./src/app/modules/properties/models/property.ts");
 var House = /** @class */ (function (_super) {
     __extends(House, _super);
     function House(id, type, address, createdBy, landArea, floorArea, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, registeredValue, registeredValueUnit, rates, ratesUnit, insurance, insuranceUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost, otherCostUnit, notes, capitalGrowth, bedrooms, bathrooms, parkingSpaces, fenced, rented, rentPrice, rentPriceUnit, rentPricePeriod, rentAppraisalDone, vacancy, bodyCorporate, bodyCorporateUnit, utilitiesCost, utilitiesCostUnit, agent, managed, managerRate, buildingType, titleType) {
@@ -3452,7 +3373,7 @@ exports.House = House;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/models/property.ts":
+/***/ "./src/app/modules/properties/models/property.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3516,7 +3437,7 @@ exports.Property = Property;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/properties-routing.module.ts":
+/***/ "./src/app/modules/properties/properties-routing.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3528,11 +3449,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var properties_edit_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
-var auth_resolver_service_1 = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
-var properties_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var properties_edit_component_1 = __webpack_require__("./src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
+var auth_resolver_service_1 = __webpack_require__("./src/app/auth-resolver.service.ts");
+var properties_dashboard_component_1 = __webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
 var routes = [
     {
         path: 'properties',
@@ -3578,7 +3499,7 @@ exports.PropertiesRoutingModule = PropertiesRoutingModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/properties.module.ts":
+/***/ "./src/app/modules/properties/properties.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3590,17 +3511,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var common_1 = __webpack_require__("../../../common/esm5/common.js");
-var properties_routing_module_1 = __webpack_require__("../../../../../src/app/modules/properties/properties-routing.module.ts");
-var properties_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
-var shared_module_1 = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
-var properties_service_1 = __webpack_require__("../../../../../src/app/modules/properties/properties.service.ts");
-var custom_material_design_module_1 = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
-var flex_layout_1 = __webpack_require__("../../../flex-layout/esm5/flex-layout.es5.js");
-var properties_edit_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
-var forms_1 = __webpack_require__("../../../forms/esm5/forms.js");
-var houses_edit_component_1 = __webpack_require__("../../../../../src/app/modules/properties/components/houses-edit/houses-edit.component.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var properties_routing_module_1 = __webpack_require__("./src/app/modules/properties/properties-routing.module.ts");
+var properties_dashboard_component_1 = __webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
+var shared_module_1 = __webpack_require__("./src/app/modules/shared/shared.module.ts");
+var properties_service_1 = __webpack_require__("./src/app/modules/properties/properties.service.ts");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var properties_edit_component_1 = __webpack_require__("./src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var houses_edit_component_1 = __webpack_require__("./src/app/modules/properties/components/houses-edit/houses-edit.component.ts");
 var PropertiesModule = /** @class */ (function () {
     function PropertiesModule() {
     }
@@ -3625,7 +3546,7 @@ exports.PropertiesModule = PropertiesModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/properties/properties.service.ts":
+/***/ "./src/app/modules/properties/properties.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3640,15 +3561,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
-var http_1 = __webpack_require__("../../../common/esm5/http.js");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var Observable_1 = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var constants_1 = __webpack_require__("../../../../../src/app/constants.ts");
-var house_1 = __webpack_require__("../../../../../src/app/modules/properties/models/house.ts");
-var of_1 = __webpack_require__("../../../../rxjs/_esm5/observable/of.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var Observable_1 = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
+var house_1 = __webpack_require__("./src/app/modules/properties/models/house.ts");
+var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
 var PropertiesService = /** @class */ (function () {
     function PropertiesService(http, appService) {
         this.http = http;
@@ -3665,7 +3586,7 @@ var PropertiesService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > create() > "; //for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to Update an investment in the system
@@ -3676,7 +3597,7 @@ var PropertiesService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > update() > "; //for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to Get a property from the server based on its ID
@@ -3692,7 +3613,7 @@ var PropertiesService = /** @class */ (function () {
         var params = new http_1.HttpParams().set('email', email);
         var data$ = this.http.get(this.serverHost + "/" + id, { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
         return data$.switchMap(function (data) {
             var result = null;
             if (data && data._id) {
@@ -3722,7 +3643,7 @@ var PropertiesService = /** @class */ (function () {
         var params = new http_1.HttpParams().set('email', email);
         var responseData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
         return responseData$.switchMap(function (responseData) {
             var properties = [];
             if (responseData && responseData instanceof Array) {
@@ -3754,7 +3675,7 @@ var PropertiesService = /** @class */ (function () {
         var params = new http_1.HttpParams().set('email', email);
         return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     PropertiesService = __decorate([
         core_1.Injectable(),
@@ -3767,32 +3688,21 @@ exports.PropertiesService = PropertiesService;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.html":
+/***/ "./src/app/modules/shared/components/currency-unit/currency-unit.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<mat-form-field class=\"form__field\">\r\n  <mat-select *ngIf=\"type === 'currency'\" id=\"{{id}}\" placeholder=\"{{placeHolder}}\" value=\"{{value}}\" (selectionChange)=\"onSelectionChange($event)\">\r\n    <mat-option value=\"AUD\">{{view === 'narrow' ? 'AUD' : 'Australian Dollar'}}</mat-option>\r\n    <mat-option value=\"EUR\">{{view === 'narrow' ? 'EUR' : 'Euro'}}</mat-option>\r\n    <mat-option value=\"NZD\">{{view === 'narrow' ? 'NZD' : 'New Zealand Dollar'}}</mat-option>\r\n    <mat-option value=\"USD\">{{view === 'narrow' ? 'USD' : 'US Dollar'}}</mat-option>\r\n  </mat-select>\r\n\r\n  <mat-select *ngIf=\"type === 'crypto'\" id=\"{{id}}\" placeholder=\"{{placeHolder}}\" value=\"{{value}}\" (selectionChange)=\"onSelectionChange($event)\">\r\n    <mat-option value=\"BTC\">{{view === 'narrow' ? 'BTC' : 'Bitcoin'}}</mat-option>\r\n    <mat-option value=\"XMR\">{{view === 'narrow' ? 'XMR' : 'Monero'}}</mat-option>\r\n  </mat-select>\r\n  \r\n  <mat-hint align=\"start\">{{hint}}</mat-hint>\r\n</mat-form-field>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/shared/components/currency-unit/currency-unit.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ""
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.ts":
+/***/ "./src/app/modules/shared/components/currency-unit/currency-unit.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3807,7 +3717,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var CurrencyUnitComponent = /** @class */ (function () {
     function CurrencyUnitComponent() {
         this.view = 'normal';
@@ -3850,8 +3760,8 @@ var CurrencyUnitComponent = /** @class */ (function () {
     CurrencyUnitComponent = __decorate([
         core_1.Component({
             selector: 'currency-unit',
-            template: __webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.scss")]
+            template: __webpack_require__("./src/app/modules/shared/components/currency-unit/currency-unit.component.html"),
+            styles: [__webpack_require__("./src/app/modules/shared/components/currency-unit/currency-unit.component.scss")]
         }),
         __metadata("design:paramtypes", [])
     ], CurrencyUnitComponent);
@@ -3862,32 +3772,21 @@ exports.CurrencyUnitComponent = CurrencyUnitComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/info-tooltip/info-tooltip.component.html":
+/***/ "./src/app/modules/shared/components/info-tooltip/info-tooltip.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<span fxLayout=\"row\" fxLayoutGap=\"5px\" fxLayoutAlign=\"start center\" *ngIf=\"(title && title.length > 0) || (text && text.length > 0)\">\r\n    <label *ngIf=\"title && title.length > 0\">{{title}}</label>\r\n    <mat-icon *ngIf=\"text && text.length > 0\" \r\n        [matTooltip]=\"text\" \r\n        [matTooltipPosition]=\"position\"\r\n        [matTooltipHideDelay]=\"5000\">info_outline</mat-icon>  \r\n</span>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/info-tooltip/info-tooltip.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/shared/components/info-tooltip/info-tooltip.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ""
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/info-tooltip/info-tooltip.component.ts":
+/***/ "./src/app/modules/shared/components/info-tooltip/info-tooltip.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3902,7 +3801,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var InfoTooltipComponent = /** @class */ (function () {
     function InfoTooltipComponent() {
         this.title = "";
@@ -3926,8 +3825,8 @@ var InfoTooltipComponent = /** @class */ (function () {
     InfoTooltipComponent = __decorate([
         core_1.Component({
             selector: 'info-tooltip',
-            template: __webpack_require__("../../../../../src/app/modules/shared/components/info-tooltip/info-tooltip.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/shared/components/info-tooltip/info-tooltip.component.scss")]
+            template: __webpack_require__("./src/app/modules/shared/components/info-tooltip/info-tooltip.component.html"),
+            styles: [__webpack_require__("./src/app/modules/shared/components/info-tooltip/info-tooltip.component.scss")]
         }),
         __metadata("design:paramtypes", [])
     ], InfoTooltipComponent);
@@ -3938,32 +3837,21 @@ exports.InfoTooltipComponent = InfoTooltipComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.html":
+/***/ "./src/app/modules/shared/components/main-navigator/main-navigator.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<nav class=\"navigation--main\">\r\n  <mat-chip-list fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutWrap>\r\n    <mat-chip class=\"nav--item\" *ngFor=\"let link of links\" [routerLink]=\"link.url\" [selected]=\"link.selected\">{{link.displayName}}</mat-chip>\r\n  </mat-chip-list>      \r\n</nav>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/shared/components/main-navigator/main-navigator.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".navigation--main mat-chip.nav--item {\n  margin: 0 8px 8px 0; }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ".navigation--main mat-chip.nav--item {\n  margin: 0 8px 8px 0; }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.ts":
+/***/ "./src/app/modules/shared/components/main-navigator/main-navigator.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3978,10 +3866,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var MainNavigatorComponent = /** @class */ (function () {
     function MainNavigatorComponent(mainNavigatorService, appService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -4000,8 +3888,8 @@ var MainNavigatorComponent = /** @class */ (function () {
     MainNavigatorComponent = __decorate([
         core_1.Component({
             selector: 'main-navigator',
-            template: __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.scss")]
+            template: __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.component.html"),
+            styles: [__webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.component.scss")]
         }),
         __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService, app_service_1.AppService])
     ], MainNavigatorComponent);
@@ -4012,7 +3900,7 @@ exports.MainNavigatorComponent = MainNavigatorComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts":
+/***/ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4027,8 +3915,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var BehaviorSubject_1 = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var BehaviorSubject_1 = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
 var MainNavigatorService = /** @class */ (function () {
     function MainNavigatorService() {
         this.linksSource = new BehaviorSubject_1.BehaviorSubject(null);
@@ -4055,32 +3943,21 @@ exports.MainNavigatorService = MainNavigatorService;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html":
+/***/ "./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutWrap fxLayoutAlign=\"space-around center\" class=\"snackbar--simple\">\r\n  <p fxFlex class=\"message\">{{data.message}}</p>\r\n  <mat-icon class=\"icon\" aria-label=\"Close\" (click)=\"actionClicked()\">clear</mat-icon>\r\n</div>\r\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".snackbar--simple {\n  font-size: 12px;\n  cursor: default; }\n  .snackbar--simple .icon {\n    cursor: pointer; }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ".snackbar--simple {\n  font-size: 12px;\n  cursor: default; }\n  .snackbar--simple .icon {\n    cursor: pointer; }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts":
+/***/ "./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4098,8 +3975,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 var SnackbarSimpleComponent = /** @class */ (function () {
     function SnackbarSimpleComponent(snackBarRef, data) {
         this.snackBarRef = snackBarRef;
@@ -4112,8 +3989,8 @@ var SnackbarSimpleComponent = /** @class */ (function () {
     SnackbarSimpleComponent = __decorate([
         core_1.Component({
             selector: 'app-snackbar-simple',
-            template: __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.scss")]
+            template: __webpack_require__("./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html"),
+            styles: [__webpack_require__("./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.scss")]
         }),
         __param(1, core_1.Inject(material_1.MAT_SNACK_BAR_DATA)),
         __metadata("design:paramtypes", [material_1.MatSnackBarRef, Object])
@@ -4125,32 +4002,21 @@ exports.SnackbarSimpleComponent = SnackbarSimpleComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html":
+/***/ "./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<h2 mat-dialog-title>{{data.title}}</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\r\n    {{data.message}}\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" mat-dialog-close=\"no\">\r\n    <mat-icon aria-label=\"No\">clear</mat-icon>\r\n  </button>\r\n  <button mat-mini-fab color=\"accent\" mat-dialog-close=\"yes\">\r\n    <mat-icon aria-label=\"Yes\">done</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ""
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts":
+/***/ "./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4168,8 +4034,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 var YesNoDialogComponent = /** @class */ (function () {
     function YesNoDialogComponent(dialogRef, data) {
         this.dialogRef = dialogRef;
@@ -4182,8 +4048,8 @@ var YesNoDialogComponent = /** @class */ (function () {
     YesNoDialogComponent = __decorate([
         core_1.Component({
             selector: 'app-yes-no-dialog',
-            template: __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.scss")]
+            template: __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html"),
+            styles: [__webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.scss")]
         }),
         __param(1, core_1.Inject(material_1.MAT_DIALOG_DATA)),
         __metadata("design:paramtypes", [material_1.MatDialogRef, Object])
@@ -4195,7 +4061,7 @@ exports.YesNoDialogComponent = YesNoDialogComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/custom-material-design.module.ts":
+/***/ "./src/app/modules/shared/custom-material-design.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4207,9 +4073,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var common_1 = __webpack_require__("../../../common/esm5/common.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 var CustomMaterialDesignModule = /** @class */ (function () {
     function CustomMaterialDesignModule() {
     }
@@ -4278,7 +4144,7 @@ exports.CustomMaterialDesignModule = CustomMaterialDesignModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/directives/equal-validator.directive.ts":
+/***/ "./src/app/modules/shared/directives/equal-validator.directive.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4296,8 +4162,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var forms_1 = __webpack_require__("../../../forms/esm5/forms.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var EqualValidatorDirective = /** @class */ (function () {
     function EqualValidatorDirective(equalFormControlName, reverse) {
         this.equalFormControlName = equalFormControlName;
@@ -4352,7 +4218,7 @@ exports.EqualValidatorDirective = EqualValidatorDirective;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/directives/number-validator.directive.ts":
+/***/ "./src/app/modules/shared/directives/number-validator.directive.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4370,8 +4236,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var forms_1 = __webpack_require__("../../../forms/esm5/forms.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var NumberValidatorDirective = /** @class */ (function () {
     function NumberValidatorDirective(validationType) {
         this.validationType = validationType;
@@ -4422,7 +4288,7 @@ exports.NumberValidatorDirective = NumberValidatorDirective;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/shared/shared.module.ts":
+/***/ "./src/app/modules/shared/shared.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4434,19 +4300,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var common_1 = __webpack_require__("../../../common/esm5/common.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var forms_1 = __webpack_require__("../../../forms/esm5/forms.js");
-var flex_layout_1 = __webpack_require__("../../../flex-layout/esm5/flex-layout.es5.js");
-var main_navigator_component_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.component.ts");
-var currency_unit_component_1 = __webpack_require__("../../../../../src/app/modules/shared/components/currency-unit/currency-unit.component.ts");
-var custom_material_design_module_1 = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
-var yes_no_dialog_component_1 = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
-var snackbar_simple_component_1 = __webpack_require__("../../../../../src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
-var equal_validator_directive_1 = __webpack_require__("../../../../../src/app/modules/shared/directives/equal-validator.directive.ts");
-var number_validator_directive_1 = __webpack_require__("../../../../../src/app/modules/shared/directives/number-validator.directive.ts");
-var info_tooltip_component_1 = __webpack_require__("../../../../../src/app/modules/shared/components/info-tooltip/info-tooltip.component.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var main_navigator_component_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.component.ts");
+var currency_unit_component_1 = __webpack_require__("./src/app/modules/shared/components/currency-unit/currency-unit.component.ts");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var snackbar_simple_component_1 = __webpack_require__("./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
+var equal_validator_directive_1 = __webpack_require__("./src/app/modules/shared/directives/equal-validator.directive.ts");
+var number_validator_directive_1 = __webpack_require__("./src/app/modules/shared/directives/number-validator.directive.ts");
+var info_tooltip_component_1 = __webpack_require__("./src/app/modules/shared/components/info-tooltip/info-tooltip.component.ts");
 var SharedModule = /** @class */ (function () {
     function SharedModule() {
     }
@@ -4490,32 +4356,21 @@ exports.SharedModule = SharedModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.html":
+/***/ "./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "\r\n\r\n<h2 mat-dialog-title>Add team member</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__add-person-to-team\">\r\n    <form class=\"form__container form__add-person-to-team\" #addPersonToTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n      \r\n      <section fxLayout=\"column\" class=\"form__fields\">\r\n        <div fxLayout=\"column\" class=\"form__fields__row\">\r\n          <!-- Member email -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <input matInput type=\"tezt\" id=\"email\" name=\"email\" placeholder=\"Member email\" \r\n                [(ngModel)]=\"model.email\"\r\n                required \r\n                email\r\n                #email=\"ngModel\">\r\n            <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n            <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n      </section>\r\n    </form>\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" mat-dialog-close>\r\n    <mat-icon aria-label=\"Cancel\">clear</mat-icon>\r\n  </button>\r\n  <button mat-mini-fab color=\"accent\" [mat-dialog-close]=\"email.value || null\" [disabled]=\"!addPersonToTeamForm.form.valid\">\r\n    <mat-icon aria-label=\"Add\">done</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ""
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts":
+/***/ "./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4533,8 +4388,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 var AddPersonToTeamDialogComponent = /** @class */ (function () {
     function AddPersonToTeamDialogComponent(dialogRef, data) {
         this.dialogRef = dialogRef;
@@ -4548,8 +4403,8 @@ var AddPersonToTeamDialogComponent = /** @class */ (function () {
     AddPersonToTeamDialogComponent = __decorate([
         core_1.Component({
             selector: 'app-add-person-to-team-dialog',
-            template: __webpack_require__("../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.scss")]
+            template: __webpack_require__("./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.html"),
+            styles: [__webpack_require__("./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.scss")]
         }),
         __param(1, core_1.Inject(material_1.MAT_DIALOG_DATA)),
         __metadata("design:paramtypes", [material_1.MatDialogRef, Object])
@@ -4561,32 +4416,21 @@ exports.AddPersonToTeamDialogComponent = AddPersonToTeamDialogComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html":
+/***/ "./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__teams\">\r\n  <section fxLayoutWrap \r\n      fxLayout=\"row\" fxLayout.xs=\"column\" \r\n      fxLayoutGap.xs=\"10px\" \r\n      fxLayoutAlign=\"space-around center\" fxLayoutAlign.xs=\"none none\" >\r\n    \r\n    <div *ngIf=\"!teams.length && !getTeamsServiceRunning\" fxFlexAlign=\"center\">You are not member of any team yet.</div>\r\n    <!-- Team Cards -->\r\n    <mat-expansion-panel *ngFor=\"let team of teams; index as teamIndex\"\r\n        fxFlex.sm=\"45\" fxFlex.gt-sm=\"30\" \r\n        class=\"team-card\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-card__content\">\r\n        <section *ngIf=\"team.description\" class=\"description\">\r\n          <p>{{team.description}}</p>\r\n        </section>\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let member of team.members\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n            <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n              <p class=\"member__name\">{{member.name}} <mat-icon *ngIf=\"member.email === team.admin.email\" class=\"admin-icon\" aria-label=\"Admin\" >lock</mat-icon></p>\r\n              <p class=\"member__email\">{{member.email}}</p>\r\n            </div>\r\n          </div>\r\n        </section>\r\n\r\n        <section *ngIf=\"team.admin.email === user.email\" class=\"card__actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n          <button *ngIf=\"!teamActionRunning[teamIndex]\" mat-mini-fab routerLink=\"/teams/edit/{{team.slug}}\" color=\"primary\" (click)=\"teamActionRunning[teamIndex] = true\">\r\n            <mat-icon aria-label=\"Edit team\">edit</mat-icon>\r\n          </button>\r\n\r\n          <button *ngIf=\"!teamActionRunning[teamIndex]\" mat-mini-fab color=\"warn\" (click)=\"openDeleteTeamDialog(teamIndex, team)\">\r\n            <mat-icon aria-label=\"Delete team\">delete</mat-icon>\r\n          </button>\r\n\r\n          <mat-progress-spinner *ngIf=\"teamActionRunning[teamIndex]\"\r\n            class=\"progress-spinner progress-spinner--delete-team\"\r\n            color=\"warn\"\r\n            [diameter]=\"40\" [strokeWidth]=\"7\"\r\n            mode=\"indeterminate\">\r\n          </mat-progress-spinner>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team Cards -->\r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getTeamsServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-teams\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab routerLink=\"create\" color=\"accent\" class=\"fab mat-elevation-z10\" matTooltip=\"Create team\" matTooltipPosition=\"left\">\r\n      <mat-icon class=\"mat-24\" aria-label=\"Create team\">group_add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".container__teams .team-card {\n  cursor: default; }\n  .container__teams .team-card mat-panel-title {\n    font-size: 18px; }\n  .container__teams .team-card .team-card__content .description {\n    margin-bottom: 20px;\n    font-size: 13px; }\n  .container__teams .team-card .team-card__content .members .member .member__avatar {\n    border-radius: 50%;\n    width: 40px;\n    height: 40px;\n    padding: 0 10px 0 0; }\n  .container__teams .team-card .team-card__content .members .member .member__info .admin-icon {\n    font-size: 14px;\n    height: auto;\n    width: auto; }\n  .container__teams .team-card .team-card__content .members .member .member__info .member__email {\n    font-size: 11px; }\n  .container__teams .team-card .team-card__content .card__actions {\n    margin: 0 8px 8px 0; }\n  .container__teams .progress-bar--get-teams {\n  width: 100%; }\n  @media screen and (min-width: 600px) {\n  .container__teams .team-card {\n    margin-bottom: 10px; }\n  .container__teams .progress-bar--get-teams {\n    width: 300px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ".container__teams .team-card {\n  cursor: default; }\n  .container__teams .team-card mat-panel-title {\n    font-size: 18px; }\n  .container__teams .team-card .team-card__content .description {\n    margin-bottom: 20px;\n    font-size: 13px; }\n  .container__teams .team-card .team-card__content .members .member .member__avatar {\n    border-radius: 50%;\n    width: 40px;\n    height: 40px;\n    padding: 0 10px 0 0; }\n  .container__teams .team-card .team-card__content .members .member .member__info .admin-icon {\n    font-size: 14px;\n    height: auto;\n    width: auto; }\n  .container__teams .team-card .team-card__content .members .member .member__info .member__email {\n    font-size: 11px; }\n  .container__teams .team-card .team-card__content .card__actions {\n    margin: 0 8px 8px 0; }\n  .container__teams .progress-bar--get-teams {\n  width: 100%; }\n  @media screen and (min-width: 600px) {\n  .container__teams .team-card {\n    margin-bottom: 10px; }\n  .container__teams .progress-bar--get-teams {\n    width: 300px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts":
+/***/ "./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4601,13 +4445,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var teams_service_1 = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var yes_no_dialog_component_1 = __webpack_require__("../../../../../src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var teams_service_1 = __webpack_require__("./src/app/modules/teams/teams.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
 var TeamsDashboardComponent = /** @class */ (function () {
     function TeamsDashboardComponent(route, mainNavigatorService, teamsService, appService, router, dialog) {
         this.route = route;
@@ -4620,6 +4465,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
         this.getTeamsServiceRunning = false;
         this.teamActionRunning = [];
         this.teams = [];
+        this.subscription = new Subscription_1.Subscription();
     }
     TeamsDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -4636,6 +4482,11 @@ var TeamsDashboardComponent = /** @class */ (function () {
             this.getTeams();
         }
     };
+    TeamsDashboardComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
     /**
      * Get my teams from server
      */
@@ -4644,14 +4495,14 @@ var TeamsDashboardComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
         this.teams = [];
         this.getTeamsServiceRunning = true;
-        this.teamsService.getTeams(this.user.email).subscribe(function (teams) {
-            var index = 0;
+        var newSubscription = this.teamsService.getTeams(this.user.email).subscribe(function (teams) {
+            //let index = 0;
             _this.teams = teams;
-            for (var _i = 0, teams_1 = teams; _i < teams_1.length; _i++) {
-                var item = teams_1[_i];
-                _this.teamActionRunning[index] = false;
-                index += 1;
-            }
+            _this.teamActionRunning = new Array(teams.length).fill(false);
+            // for (let item of teams) {
+            //   this.teamActionRunning[index] = false;
+            //   index += 1;
+            // }
             _this.getTeamsServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
@@ -4663,6 +4514,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
             }
             _this.getTeamsServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     TeamsDashboardComponent.prototype.openDeleteTeamDialog = function (index, team) {
         var _this = this;
@@ -4680,7 +4532,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
                 message: "Are you sure you want to delete the team \"" + team.name + "\" forever?"
             }
         });
-        yesNoDialogRef.afterClosed().subscribe(function (result) {
+        var newSubscription = yesNoDialogRef.afterClosed().subscribe(function (result) {
             if (result === 'yes') {
                 _this.delete(index, team);
             }
@@ -4688,6 +4540,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
                 _this.teamActionRunning[index] = false;
             }
         });
+        this.subscription.add(newSubscription);
         return false;
     };
     TeamsDashboardComponent.prototype.delete = function (index, team) {
@@ -4695,7 +4548,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
         if (team === void 0) { team = null; }
         var methodTrace = this.constructor.name + " > delete() > "; //for debugging
         this.teamActionRunning[index] = true;
-        this.teamsService.delete(team.slug, this.user.email).subscribe(function (data) {
+        var newSubscription = this.teamsService.delete(team.slug, this.user.email).subscribe(function (data) {
             if (data && data.removed > 0) {
                 _this.teams.splice(index, 1);
                 _this.teamActionRunning.splice(index, 1);
@@ -4718,12 +4571,13 @@ var TeamsDashboardComponent = /** @class */ (function () {
             }
             _this.teamActionRunning[index] = false;
         });
+        this.subscription.add(newSubscription);
     };
     TeamsDashboardComponent = __decorate([
         core_1.Component({
             selector: 'app-teams-dashboard',
-            template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss")]
+            template: __webpack_require__("./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html"),
+            styles: [__webpack_require__("./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss")]
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, teams_service_1.TeamsService,
             app_service_1.AppService, router_1.Router, material_1.MatDialog])
@@ -4735,32 +4589,21 @@ exports.TeamsDashboardComponent = TeamsDashboardComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.html":
+/***/ "./src/app/modules/teams/components/teams-edit/teams-edit.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__edit-team\">\r\n  <form *ngIf=\"!getTeamServiceRunning\" \r\n      class=\"form__container form__edit-team\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editTeamForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <section fxLayout=\"column\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" fxLayoutAlign.gt-xs=\"none end\" class=\"form__fields__row\">\r\n        <!-- Team name -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <input matInput type=\"tezt\" id=\"name\" name=\"name\" placeholder=\"Team name\" \r\n              [(ngModel)]=\"model.name\" \r\n              value=\"model.name\"\r\n              required\r\n              minlength=\"4\"\r\n              #name=\"ngModel\">\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n          <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Value must be longer than 3 characters</mat-error>\r\n        </mat-form-field>\r\n\r\n        <!-- Description -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\r\n              [(ngModel)]=\"model.description\" \r\n              value=\"model.description\"\r\n              #description=\"ngModel\"></textarea>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n\r\n    <section *ngIf=\"editMode\" class=\"members\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutWrap>\r\n      <mat-card *ngFor=\"let member of team.members; index as memberIndex\" class=\"member\" [class.not-saved-yet]=\"!member.name && !member.avatar\">\r\n        <mat-card-content fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"none center\">\r\n          \r\n          <img *ngIf=\"member.avatar\" class=\"member__avatar\" [src]=\"member.avatar\"/>\r\n          <mat-icon *ngIf=\"!member.avatar\" class=\"member__avatar member__avatar--default\">account_circle</mat-icon>\r\n          \r\n          <div class=\"member__info\" fxLayout=\"column\" [matTooltip]=\"member.email === team.admin.email ? 'Administrator' : ''\" matTooltipPosition=\"right\">\r\n            <p *ngIf=\"member.name\" class=\"member__name\">\r\n              {{member.name}}\r\n              <mat-icon *ngIf=\"member.email === team.admin.email\" class=\"icon__admin\" aria-label=\"Admin\" >lock</mat-icon>\r\n            </p>\r\n            <p class=\"member__email\">{{member.email}}</p>\r\n          </div>\r\n\r\n          <mat-icon *ngIf=\"member.email !== team.admin.email\" matTooltip=\"Remove\" class=\"icon__remove-member\" (click)=\"removeMember(memberIndex)\">clear</mat-icon>\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </section>\r\n\r\n    <section *ngIf=\"editMode\" class=\"add-members\" fxLayout=\"column\" fxLayoutAlign=\"start end\">\r\n      <button mat-fab color=\"accent\" (click)=\"openAddPersonDialog()\">\r\n        <mat-icon aria-label=\"Add new member\">person_add</mat-icon>\r\n      </button>\r\n    </section>\r\n\r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--edit-team\">\r\n      <button *ngIf=\"!editTeamServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!editTeamForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"editTeamServiceRunning\"\r\n          class=\"progress-bar progress-bar--edit-team\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n    \r\n  </form>\r\n\r\n  <mat-progress-bar *ngIf=\"getTeamServiceRunning\"\r\n      fxFlexAlign=\"center\"\r\n      class=\"progress-bar progress-bar--get-team\"\r\n      color=\"primary\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/teams/components/teams-edit/teams-edit.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.progress-bar--get-team {\n  width: 100%; }\n\n.form__edit-team .form__actions--edit-team {\n  margin: 20px 0; }\n\n.members .member {\n  margin-bottom: 10px;\n  padding: 14px;\n  border-radius: 50px;\n  cursor: default; }\n\n.members .member .member__avatar {\n    border-radius: 50%;\n    width: 40px;\n    height: 40px; }\n\n.members .member .member__info .icon__admin {\n    font-size: 14px;\n    height: auto;\n    width: auto; }\n\n.members .member .member__info .member__email {\n    font-size: 11px; }\n\n.members .member .icon__remove-member {\n    font-size: 16px;\n    height: auto;\n    width: auto;\n    cursor: pointer; }\n\n.members .member.not-saved-yet .member__avatar--default {\n    font-size: 40px;\n    color: #f44336; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-team {\n    width: 300px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n.progress-bar--get-team {\n  width: 100%; }\n\n.form__edit-team .form__actions--edit-team {\n  margin: 20px 0; }\n\n.members .member {\n  margin-bottom: 10px;\n  padding: 14px;\n  border-radius: 50px;\n  cursor: default; }\n\n.members .member .member__avatar {\n    border-radius: 50%;\n    width: 40px;\n    height: 40px; }\n\n.members .member .member__info .icon__admin {\n    font-size: 14px;\n    height: auto;\n    width: auto; }\n\n.members .member .member__info .member__email {\n    font-size: 11px; }\n\n.members .member .icon__remove-member {\n    font-size: 16px;\n    height: auto;\n    width: auto;\n    cursor: pointer; }\n\n.members .member.not-saved-yet .member__avatar--default {\n    font-size: 40px;\n    color: #f44336; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; }\n  .progress-bar--get-team {\n    width: 300px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.ts":
+/***/ "./src/app/modules/teams/components/teams-edit/teams-edit.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4775,16 +4618,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-var add_person_to_team_dialog_component_1 = __webpack_require__("../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var teams_service_1 = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var team_1 = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
-var Subscription_1 = __webpack_require__("../../../../rxjs/_esm5/Subscription.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var add_person_to_team_dialog_component_1 = __webpack_require__("./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var teams_service_1 = __webpack_require__("./src/app/modules/teams/teams.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var team_1 = __webpack_require__("./src/app/modules/teams/models/team.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
 var TeamsEditComponent = /** @class */ (function () {
     function TeamsEditComponent(route, mainNavigatorService, teamsService, appService, router, dialog) {
         this.route = route;
@@ -5015,8 +4858,8 @@ var TeamsEditComponent = /** @class */ (function () {
     TeamsEditComponent = __decorate([
         core_1.Component({
             selector: 'app-teams-edit',
-            template: __webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.scss")]
+            template: __webpack_require__("./src/app/modules/teams/components/teams-edit/teams-edit.component.html"),
+            styles: [__webpack_require__("./src/app/modules/teams/components/teams-edit/teams-edit.component.scss")]
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, teams_service_1.TeamsService,
             app_service_1.AppService, router_1.Router, material_1.MatDialog])
@@ -5028,7 +4871,7 @@ exports.TeamsEditComponent = TeamsEditComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/models/team.ts":
+/***/ "./src/app/modules/teams/models/team.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5054,7 +4897,7 @@ exports.Team = Team;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/teams-routing.module.ts":
+/***/ "./src/app/modules/teams/teams-routing.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5066,11 +4909,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var teams_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts");
-var teams_edit_component_1 = __webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.ts");
-var auth_resolver_service_1 = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var teams_dashboard_component_1 = __webpack_require__("./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts");
+var teams_edit_component_1 = __webpack_require__("./src/app/modules/teams/components/teams-edit/teams-edit.component.ts");
+var auth_resolver_service_1 = __webpack_require__("./src/app/auth-resolver.service.ts");
 var routes = [
     {
         path: 'teams',
@@ -5116,7 +4959,7 @@ exports.TeamsRoutingModule = TeamsRoutingModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/teams.module.ts":
+/***/ "./src/app/modules/teams/teams.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5128,16 +4971,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var common_1 = __webpack_require__("../../../common/esm5/common.js");
-var forms_1 = __webpack_require__("../../../forms/esm5/forms.js");
-var flex_layout_1 = __webpack_require__("../../../flex-layout/esm5/flex-layout.es5.js");
-var teams_routing_module_1 = __webpack_require__("../../../../../src/app/modules/teams/teams-routing.module.ts");
-var teams_dashboard_component_1 = __webpack_require__("../../../../../src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts");
-var custom_material_design_module_1 = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
-var teams_edit_component_1 = __webpack_require__("../../../../../src/app/modules/teams/components/teams-edit/teams-edit.component.ts");
-var teams_service_1 = __webpack_require__("../../../../../src/app/modules/teams/teams.service.ts");
-var add_person_to_team_dialog_component_1 = __webpack_require__("../../../../../src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var teams_routing_module_1 = __webpack_require__("./src/app/modules/teams/teams-routing.module.ts");
+var teams_dashboard_component_1 = __webpack_require__("./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var teams_edit_component_1 = __webpack_require__("./src/app/modules/teams/components/teams-edit/teams-edit.component.ts");
+var teams_service_1 = __webpack_require__("./src/app/modules/teams/teams.service.ts");
+var add_person_to_team_dialog_component_1 = __webpack_require__("./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts");
 var TeamsModule = /** @class */ (function () {
     function TeamsModule() {
     }
@@ -5168,7 +5011,7 @@ exports.TeamsModule = TeamsModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/teams/teams.service.ts":
+/***/ "./src/app/modules/teams/teams.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5183,15 +5026,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var http_1 = __webpack_require__("../../../common/esm5/http.js");
-var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var team_1 = __webpack_require__("../../../../../src/app/modules/teams/models/team.ts");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var Observable_1 = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
-var of_1 = __webpack_require__("../../../../rxjs/_esm5/observable/of.js");
-var from_1 = __webpack_require__("../../../../rxjs/_esm5/observable/from.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var team_1 = __webpack_require__("./src/app/modules/teams/models/team.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var Observable_1 = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
+var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
+var from_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/from.js");
 var TeamsService = /** @class */ (function () {
     function TeamsService(http, appService) {
         this.http = http;
@@ -5208,7 +5051,7 @@ var TeamsService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > register() > "; //for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to Update a team in the system
@@ -5219,7 +5062,7 @@ var TeamsService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > register() > "; //for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to Get a team from the server based on its slug
@@ -5236,7 +5079,7 @@ var TeamsService = /** @class */ (function () {
             .set('slug', slug);
         return this.http.get(this.serverHost + "/getMyTeamBySlug", { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to Get all the teams for the current user from the server
@@ -5252,7 +5095,7 @@ var TeamsService = /** @class */ (function () {
         var params = new http_1.HttpParams().set('email', email);
         var teamsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
         return teamsData$.switchMap(function (teamsData) {
             var teams = [];
             if (teamsData && teamsData instanceof Array) {
@@ -5291,7 +5134,7 @@ var TeamsService = /** @class */ (function () {
         var params = new http_1.HttpParams().set('email', email);
         return this.http.delete(this.serverHost + "/delete/" + slug, { headers: this.headers, params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     TeamsService = __decorate([
         core_1.Injectable(),
@@ -5304,32 +5147,21 @@ exports.TeamsService = TeamsService;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.html":
+/***/ "./src/app/modules/users/components/account-finance-info/account-finance-info.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<form class=\"form__container form__account-finance\" (ngSubmit)=\"onSubmit()\" #financeForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Active income -->\r\n      <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n        <currency-unit fxFlex=\"50px\"\r\n            [id]=\"'annualIncomeUnit'\" \r\n            [value]=\"model.annualIncomeUnit\"\r\n            [view]=\"'narrow'\"\r\n            (newValue)=\"onCurrencyUnitChange($event)\">\r\n        </currency-unit>\r\n        \r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n          <input matInput type=\"number\" id=\"annualIncome\" name=\"annualIncome\" placeholder=\"Annual Income\"\r\n              [(ngModel)]=\"model.annualIncome\" \r\n              value=\"model.annualIncome\"\r\n              numberValidator \r\n              #annualIncome=\"ngModel\">\r\n          <mat-hint align=\"start\">Annual income amount pre-tax.</mat-hint>\r\n          <mat-error *ngIf=\"annualIncome.invalid && (annualIncome.dirty || annualIncome.touched) && annualIncome.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        </mat-form-field>\r\n        <!-- <pre>{{annualIncome.errors | json}}</pre> -->\r\n      </div>\r\n\r\n      <!-- Tax rate -->\r\n      <mat-form-field fxFlex fxFlex.gt-xs=\"150px\" class=\"form__field\">\r\n        <input matInput type=\"number\" id=\"incomeTaxRate\" name=\"incomeTaxRate\" placeholder=\"Income tax rate (%)\" \r\n            [(ngModel)]=\"model.incomeTaxRate\" \r\n            value=\"model.incomeTaxRate\"\r\n            numberValidator='{\"min\": 0, \"max\": 100}' \r\n            #incomeTaxRate=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n        <mat-error *ngIf=\"incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n      </mat-form-field>\r\n      <!-- <pre>{{incomeTaxRate.errors | json}}</pre> -->\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Savings -->\r\n      <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n        <currency-unit fxFlex=\"50px\"\r\n            [id]=\"'savingsUnit'\" \r\n            [value]=\"model.savingsUnit\"\r\n            [view]=\"'narrow'\"\r\n            (newValue)=\"onCurrencyUnitChange($event)\">\r\n        </currency-unit>\r\n        \r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n          <input matInput type=\"number\" id=\"savings\" name=\"savings\" placeholder=\"Current savings\" \r\n              [(ngModel)]=\"model.savings\" \r\n              value=\"model.savings\"\r\n              numberValidator\r\n              #savings=\"ngModel\">\r\n\r\n          <mat-error *ngIf=\"savings.invalid && (savings.dirty || savings.touched) && savings.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n\r\n      <div fxFlex fxFlex.gt-xs=\"150px\" class=\"form__spacer\"></div>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-finance\">\r\n    <button *ngIf=\"!accountFinanceServiceRunning\" \r\n        class=\"form__action mat-raised-button\" \r\n        mat-raised-button \r\n        type=\"submit\" \r\n        color=\"accent\" \r\n        [disabled]=\"!financeForm.form.valid\">Save</button>\r\n    \r\n    <mat-progress-bar *ngIf=\"accountFinanceServiceRunning\"\r\n        class=\"progress-bar progress-bar--account-finance\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </section>\r\n\r\n</form>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/users/components/account-finance-info/account-finance-info.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.ts":
+/***/ "./src/app/modules/users/components/account-finance-info/account-finance-info.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5344,11 +5176,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var account_finance_1 = __webpack_require__("../../../../../src/app/modules/users/models/account-finance.ts");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var account_finance_1 = __webpack_require__("./src/app/modules/users/models/account-finance.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var AccountFinanceInfoComponent = /** @class */ (function () {
     function AccountFinanceInfoComponent(usersService, appService) {
         this.usersService = usersService;
@@ -5420,8 +5252,8 @@ var AccountFinanceInfoComponent = /** @class */ (function () {
     AccountFinanceInfoComponent = __decorate([
         core_1.Component({
             selector: 'account-finance-info',
-            template: __webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.scss")]
+            template: __webpack_require__("./src/app/modules/users/components/account-finance-info/account-finance-info.component.html"),
+            styles: [__webpack_require__("./src/app/modules/users/components/account-finance-info/account-finance-info.component.scss")]
         }),
         __metadata("design:paramtypes", [users_service_1.UsersService, app_service_1.AppService])
     ], AccountFinanceInfoComponent);
@@ -5432,32 +5264,21 @@ exports.AccountFinanceInfoComponent = AccountFinanceInfoComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.html":
+/***/ "./src/app/modules/users/components/account-personal-info/account-personal-info.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<form class=\"form__container form__account-personal\" #personalInfoForm=\"ngForm\" (ngSubmit)=\"onSubmit()\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n    <section fxLayout=\"column\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n        \r\n        <!-- Birthday -->\r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"300px\" class=\"form__field\">\r\n          <input \r\n              placeholder=\"Day of birth\"\r\n              id=\"birthday\"\r\n              name=\"birthday\"\r\n              readonly\r\n              required\r\n              #birthday=\"ngModel\"\r\n              matInput \r\n              [(ngModel)]=\"model.birthday\" \r\n              [matDatepicker]=\"pickerBirthday\"\r\n              (click)=\"pickerBirthday.open()\">\r\n          <mat-datepicker-toggle matSuffix [for]=\"pickerBirthday\"></mat-datepicker-toggle>\r\n          <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBirthday startView=\"year\" [startAt]=\"startAt\"></mat-datepicker>\r\n          <mat-error *ngIf=\"birthday.invalid && (birthday.dirty || birthday.touched) && birthday.errors.matDatepickerParse\">Day of birth is invalid or not follow the pattern \"mm/dd/yyyy\"</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n    </section>\r\n    \r\n    <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--account-personal\">\r\n      <button *ngIf=\"!accountPersonalServiceRunning\" \r\n          class=\"form__action mat-raised-button\" \r\n          mat-raised-button \r\n          type=\"submit\" \r\n          color=\"accent\" \r\n          [disabled]=\"!personalInfoForm.form.valid\">Save</button>\r\n      \r\n      <mat-progress-bar *ngIf=\"accountPersonalServiceRunning\"\r\n          class=\"progress-bar progress-bar--account-personal\"\r\n          color=\"primary\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-bar>\r\n    </section>\r\n  </form>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/users/components/account-personal-info/account-personal-info.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.ts":
+/***/ "./src/app/modules/users/components/account-personal-info/account-personal-info.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5472,13 +5293,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var material_1 = __webpack_require__("../../../material/esm5/material.es5.js");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var account_personal_1 = __webpack_require__("../../../../../src/app/modules/users/models/account-personal.ts");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var util_service_1 = __webpack_require__("../../../../../src/app/util.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var account_personal_1 = __webpack_require__("./src/app/modules/users/models/account-personal.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
 var AccountPersonalInfoComponent = /** @class */ (function () {
     function AccountPersonalInfoComponent(dateAdapter, usersService, appService, utilService) {
         this.dateAdapter = dateAdapter;
@@ -5533,8 +5354,8 @@ var AccountPersonalInfoComponent = /** @class */ (function () {
     AccountPersonalInfoComponent = __decorate([
         core_1.Component({
             selector: 'account-personal-info',
-            template: __webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.scss")]
+            template: __webpack_require__("./src/app/modules/users/components/account-personal-info/account-personal-info.component.html"),
+            styles: [__webpack_require__("./src/app/modules/users/components/account-personal-info/account-personal-info.component.scss")]
         }),
         __metadata("design:paramtypes", [material_1.DateAdapter, users_service_1.UsersService, app_service_1.AppService,
             util_service_1.UtilService])
@@ -5546,32 +5367,21 @@ exports.AccountPersonalInfoComponent = AccountPersonalInfoComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.html":
+/***/ "./src/app/modules/users/components/account-user-info/account-user-info.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #accountForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            value=\"model.name\"\r\n            #name=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            value=\"model.email\"\r\n            #email=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Preferred currency -->\r\n      <currency-unit fxFlex fxFlex.gt-xs=\"200px\"\r\n          [id]=\"'preferredCurrency'\"\r\n          [hint]=\"'Your preferred currency format to use across the platform'\" \r\n          [placeHolder]=\"'Preferred currency'\" \r\n          [value]=\"model.currency\"\r\n          (newValue)=\"onCurrencyUnitChange($event)\">\r\n      </currency-unit>\r\n    </div>\r\n\r\n    <div fxFlex class=\"form__spacer\"></div>\r\n  </div>\r\n\r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!updateAccountServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!accountForm.form.valid\">Save</button>\r\n\r\n    <mat-progress-bar *ngIf=\"updateAccountServiceRunning\"\r\n        class=\"progress-bar progress-bar--update-account\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/users/components/account-user-info/account-user-info.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.ts":
+/***/ "./src/app/modules/users/components/account-user-info/account-user-info.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5586,10 +5396,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var AccountUserInfoComponent = /** @class */ (function () {
     function AccountUserInfoComponent(usersService, appService) {
         this.usersService = usersService;
@@ -5645,8 +5455,8 @@ var AccountUserInfoComponent = /** @class */ (function () {
     AccountUserInfoComponent = __decorate([
         core_1.Component({
             selector: 'account-user-info',
-            template: __webpack_require__("../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.scss")]
+            template: __webpack_require__("./src/app/modules/users/components/account-user-info/account-user-info.component.html"),
+            styles: [__webpack_require__("./src/app/modules/users/components/account-user-info/account-user-info.component.scss")]
         }),
         __metadata("design:paramtypes", [users_service_1.UsersService, app_service_1.AppService])
     ], AccountUserInfoComponent);
@@ -5657,32 +5467,21 @@ exports.AccountUserInfoComponent = AccountUserInfoComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account/account.component.html":
+/***/ "./src/app/modules/users/components/account/account.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<!-- SM and higher view -->\r\n<mat-tab-group *ngIf=\"utilService.isGtXs()\">\r\n  <mat-tab label=\"Account info\">\r\n    <account-user-info [user]=\"user\"></account-user-info>\r\n  </mat-tab>\r\n  <mat-tab label=\"Personal info\">\r\n    <account-personal-info [user]=\"user\"></account-personal-info>\r\n  </mat-tab>\r\n  <mat-tab label=\"Financial info\">\r\n    <account-finance-info [user]=\"user\"></account-finance-info>\r\n  </mat-tab>\r\n</mat-tab-group>\r\n\r\n<!-- XS view -->\r\n<mat-accordion *ngIf=\"utilService.isXs()\">  \r\n    <mat-expansion-panel>\r\n      <mat-expansion-panel-header>\r\n        Account info\r\n      </mat-expansion-panel-header>\r\n\r\n      <account-user-info [user]=\"user\"></account-user-info>\r\n    </mat-expansion-panel>\r\n  \r\n    <mat-expansion-panel>\r\n      <mat-expansion-panel-header>\r\n        Personal info\r\n      </mat-expansion-panel-header>\r\n\r\n      <account-personal-info [user]=\"user\"></account-personal-info>\r\n    </mat-expansion-panel>\r\n\r\n    <mat-expansion-panel>\r\n      <mat-expansion-panel-header>\r\n        Financial info\r\n      </mat-expansion-panel-header>\r\n\r\n      <account-finance-info [user]=\"user\"></account-finance-info>\r\n    </mat-expansion-panel>\r\n\r\n  </mat-accordion>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account/account.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/users/components/account/account.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = ""
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/account/account.component.ts":
+/***/ "./src/app/modules/users/components/account/account.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5697,10 +5496,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var util_service_1 = __webpack_require__("../../../../../src/app/util.service.ts");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var AccountComponent = /** @class */ (function () {
     function AccountComponent(mainNavigatorService, route, utilService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -5722,8 +5521,8 @@ var AccountComponent = /** @class */ (function () {
     AccountComponent = __decorate([
         core_1.Component({
             selector: 'app-account',
-            template: __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/users/components/account/account.component.scss")]
+            template: __webpack_require__("./src/app/modules/users/components/account/account.component.html"),
+            styles: [__webpack_require__("./src/app/modules/users/components/account/account.component.scss")]
         }),
         __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService, router_1.ActivatedRoute, util_service_1.UtilService])
     ], AccountComponent);
@@ -5734,32 +5533,21 @@ exports.AccountComponent = AccountComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/login/login.component.html":
+/***/ "./src/app/modules/users/components/login/login.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<form class=\"form__container form__login\" (ngSubmit)=\"onSubmit()\" #loginForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            #email=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Password -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\"\r\n            #password=\"ngModel\">\r\n  \r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center center\" class=\"form__actions form__actions--login\">\r\n    <button *ngIf=\"!loginServiceRunning\" class=\"form__action mat-raised-button\" mat-raised-button type=\"submit\" \r\n        color=\"accent\" [disabled]=\"!loginForm.form.valid\">Login</button>\r\n    \r\n    <mat-progress-bar *ngIf=\"loginServiceRunning\"\r\n        class=\"progress-bar progress-bar--login\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n    \r\n    <mat-checkbox fxLayoutAlign.xs=\"center center\" class=\"form__action\" [(ngModel)]=\"forgotModel.forgot\" name=\"forgot\" id=\"forgot\">Forgot my password</mat-checkbox>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"center center\" class=\"form__actions form__actions--create-account\">\r\n    <a mat-button color=\"accent\" class=\"color__almost-white ac__link\" routerLink=\"/users/register\">Create an account</a>\r\n  </section>\r\n\r\n</form>\r\n\r\n<form class=\"form__container form__forgot\" (ngSubmit)=\"onForgotSubmit()\" #forgotForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" *ngIf=\"forgotModel.forgot\">\r\n  \r\n  <section fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\">\r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        \r\n        <input matInput type=\"email\" id=\"emailForgot\" name=\"emailForgot\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"forgotModel.email\" \r\n            required email\r\n            #emailForgot=\"ngModel\">\r\n        <mat-hint align=\"start\">Type your email and we will send you an email to reset your password.</mat-hint>\r\n        <mat-error *ngIf=\"emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n  </section>\r\n\r\n  <section fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!forgotServiceRunning\" class=\"form__action mat-raised-button\" \r\n        color=\"accent\" mat-raised-button type=\"submit\" [disabled]=\"!forgotForm.form.valid\">Send</button>\r\n\r\n    <mat-progress-bar *ngIf=\"forgotServiceRunning\"\r\n        class=\"progress-bar progress-bar--forgot\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </section>\r\n\r\n</form>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/login/login.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/users/components/login/login.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n.form__login .form__actions--create-account {\n  margin: 20px 0; }\n\n.form__forgot {\n  margin-top: 50px; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n.form__login .form__actions--create-account {\n  margin: 20px 0; }\n\n.form__forgot {\n  margin-top: 50px; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 88px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/login/login.component.ts":
+/***/ "./src/app/modules/users/components/login/login.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5774,12 +5562,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var LoginComponent = /** @class */ (function () {
     function LoginComponent(usersService, appService, mainNavigatorService, router, route) {
         this.usersService = usersService;
@@ -5870,8 +5658,8 @@ var LoginComponent = /** @class */ (function () {
     LoginComponent = __decorate([
         core_1.Component({
             selector: 'app-login',
-            template: __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/users/components/login/login.component.scss")]
+            template: __webpack_require__("./src/app/modules/users/components/login/login.component.html"),
+            styles: [__webpack_require__("./src/app/modules/users/components/login/login.component.scss")]
         }),
         __metadata("design:paramtypes", [users_service_1.UsersService, app_service_1.AppService,
             main_navigator_service_1.MainNavigatorService, router_1.Router, router_1.ActivatedRoute])
@@ -5883,32 +5671,21 @@ exports.LoginComponent = LoginComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/register/register.component.html":
+/***/ "./src/app/modules/users/components/register/register.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #registerForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Name -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"text\" id=\"name\" name=\"name\" placeholder=\"Name\" \r\n            [(ngModel)]=\"model.name\" \r\n            required minlength=\"4\"\r\n            #name=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.required\">Name is required</mat-error>\r\n        <mat-error *ngIf=\"name.invalid && (name.dirty || name.touched) && name.errors.minlength\">Name must contains more than 4 characters</mat-error>\r\n      </mat-form-field>\r\n      \r\n      <!-- Email -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"email\" id=\"email\" name=\"email\" placeholder=\"Email address\" \r\n            [(ngModel)]=\"model.email\" \r\n            required email\r\n            #email=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.required\">Email is required</mat-error>\r\n        <mat-error *ngIf=\"email.invalid && (email.dirty || email.touched) && email.errors.email\">Email must be a valid email address</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"passwordConfirm\" reverse=\"true\"\r\n            #password=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</mat-error>\r\n      </mat-form-field>\r\n\r\n      <!-- Password confirm -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model['password-confirm']\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"password\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator\">Confirm password must match password</mat-error>\r\n      </mat-form-field>\r\n      <!-- <pre>{{passwordConfirm.errors | json}}</pre> -->\r\n    </div>\r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!registerServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!registerForm.form.valid\">Create account</button>\r\n\r\n    <mat-progress-bar *ngIf=\"registerServiceRunning\"\r\n        class=\"progress-bar progress-bar--register\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/register/register.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/users/components/register/register.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 127px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 127px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/register/register.component.ts":
+/***/ "./src/app/modules/users/components/register/register.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5923,12 +5700,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var RegisterComponent = /** @class */ (function () {
     function RegisterComponent(usersService, appService, router, mainNavigatorService) {
         this.usersService = usersService;
@@ -5992,8 +5769,8 @@ var RegisterComponent = /** @class */ (function () {
     RegisterComponent = __decorate([
         core_1.Component({
             selector: 'users-register',
-            template: __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/users/components/register/register.component.scss")]
+            template: __webpack_require__("./src/app/modules/users/components/register/register.component.html"),
+            styles: [__webpack_require__("./src/app/modules/users/components/register/register.component.scss")]
         }),
         __metadata("design:paramtypes", [users_service_1.UsersService, app_service_1.AppService, router_1.Router,
             main_navigator_service_1.MainNavigatorService])
@@ -6005,32 +5782,21 @@ exports.RegisterComponent = RegisterComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/reset-password/reset-password.component.html":
+/***/ "./src/app/modules/users/components/reset-password/reset-password.component.html":
 /***/ (function(module, exports) {
 
 module.exports = "<form class=\"form__container\" (ngSubmit)=\"onSubmit()\" #resetForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n  \r\n  <div fxLayout=\"column\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap.gt-xs=\"10px\" class=\"form__fields__row\" >\r\n      <!-- Password -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"password\" name=\"password\" placeholder=\"Password\" \r\n            [(ngModel)]=\"model.password\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"passwordConfirm\" reverse=\"true\"\r\n            #password=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.required\">Password is required</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.minlength\">Password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"password.invalid && (password.dirty || password.touched) && password.errors.maxlength\">Password must be shorter than 8 characters</mat-error>\r\n      </mat-form-field>\r\n\r\n      <!-- Password confirm -->\r\n      <mat-form-field fxFlex class=\"form__field\">\r\n        <input matInput type=\"password\" id=\"passwordConfirm\" name=\"passwordConfirm\" placeholder=\"Confirm password\" \r\n            [(ngModel)]=\"model['password-confirm']\" \r\n            required minlength=\"3\" maxlength=\"8\" equalvalidator=\"password\"\r\n            #passwordConfirm=\"ngModel\">\r\n\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required\">Confirm password is required</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength\">Confirm password must be longer than 3 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength\">Confirm password must be shorter than 8 characters</mat-error>\r\n        <mat-error *ngIf=\"passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator\">Confirm password must match password</mat-error>\r\n      </mat-form-field>\r\n    </div>\r\n    \r\n    \r\n    \r\n  </div>\r\n  \r\n  <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"center none\" class=\"form__actions\">\r\n    <button *ngIf=\"!resetPasswordServiceRunning\" class=\"form__action mat-raised-button\" color=\"accent\" mat-raised-button type=\"submit\" \r\n        [disabled]=\"!resetForm.form.valid\">Reset password</button>\r\n\r\n    <mat-progress-bar *ngIf=\"resetPasswordServiceRunning\"\r\n        class=\"progress-bar progress-bar--reset-password\"\r\n        color=\"primary\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-bar>\r\n  </div>\r\n\r\n</form>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/reset-password/reset-password.component.scss":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/modules/users/components/reset-password/reset-password.component.scss":
+/***/ (function(module, exports) {
 
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 127px; } }\n", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  form .form__actions .progress-bar {\n    width: 127px; } }\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/components/reset-password/reset-password.component.ts":
+/***/ "./src/app/modules/users/components/reset-password/reset-password.component.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6045,12 +5811,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var user_1 = __webpack_require__("../../../../../src/app/modules/users/models/user.ts");
-var main_navigator_service_1 = __webpack_require__("../../../../../src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var ResetPasswordComponent = /** @class */ (function () {
     function ResetPasswordComponent(appService, usersService, router, route, mainNavigatorService) {
         this.appService = appService;
@@ -6118,8 +5884,8 @@ var ResetPasswordComponent = /** @class */ (function () {
     ResetPasswordComponent = __decorate([
         core_1.Component({
             selector: 'app-reset-password',
-            template: __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.html"),
-            styles: [__webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.scss")]
+            template: __webpack_require__("./src/app/modules/users/components/reset-password/reset-password.component.html"),
+            styles: [__webpack_require__("./src/app/modules/users/components/reset-password/reset-password.component.scss")]
         }),
         __metadata("design:paramtypes", [app_service_1.AppService, users_service_1.UsersService, router_1.Router, router_1.ActivatedRoute,
             main_navigator_service_1.MainNavigatorService])
@@ -6131,7 +5897,7 @@ exports.ResetPasswordComponent = ResetPasswordComponent;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/models/account-finance.ts":
+/***/ "./src/app/modules/users/models/account-finance.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6157,7 +5923,7 @@ exports.AccountFinance = AccountFinance;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/models/account-personal.ts":
+/***/ "./src/app/modules/users/models/account-personal.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6188,7 +5954,7 @@ exports.AccountPersonal = AccountPersonal;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/models/user.ts":
+/***/ "./src/app/modules/users/models/user.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6226,7 +5992,7 @@ exports.User = User;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/users-routing.module.ts":
+/***/ "./src/app/modules/users/users-routing.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6238,13 +6004,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var router_1 = __webpack_require__("../../../router/esm5/router.js");
-var register_component_1 = __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.ts");
-var login_component_1 = __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.ts");
-var reset_password_component_1 = __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.ts");
-var account_component_1 = __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.ts");
-var auth_resolver_service_1 = __webpack_require__("../../../../../src/app/auth-resolver.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var register_component_1 = __webpack_require__("./src/app/modules/users/components/register/register.component.ts");
+var login_component_1 = __webpack_require__("./src/app/modules/users/components/login/login.component.ts");
+var reset_password_component_1 = __webpack_require__("./src/app/modules/users/components/reset-password/reset-password.component.ts");
+var account_component_1 = __webpack_require__("./src/app/modules/users/components/account/account.component.ts");
+var auth_resolver_service_1 = __webpack_require__("./src/app/auth-resolver.service.ts");
 var routes = [
     {
         path: 'users',
@@ -6284,7 +6050,7 @@ exports.UsersRoutingModule = UsersRoutingModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/users.module.ts":
+/***/ "./src/app/modules/users/users.module.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6296,21 +6062,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var common_1 = __webpack_require__("../../../common/esm5/common.js");
-var users_routing_module_1 = __webpack_require__("../../../../../src/app/modules/users/users-routing.module.ts");
-var forms_1 = __webpack_require__("../../../forms/esm5/forms.js");
-var flex_layout_1 = __webpack_require__("../../../flex-layout/esm5/flex-layout.es5.js");
-var custom_material_design_module_1 = __webpack_require__("../../../../../src/app/modules/shared/custom-material-design.module.ts");
-var shared_module_1 = __webpack_require__("../../../../../src/app/modules/shared/shared.module.ts");
-var register_component_1 = __webpack_require__("../../../../../src/app/modules/users/components/register/register.component.ts");
-var users_service_1 = __webpack_require__("../../../../../src/app/modules/users/users.service.ts");
-var login_component_1 = __webpack_require__("../../../../../src/app/modules/users/components/login/login.component.ts");
-var reset_password_component_1 = __webpack_require__("../../../../../src/app/modules/users/components/reset-password/reset-password.component.ts");
-var account_component_1 = __webpack_require__("../../../../../src/app/modules/users/components/account/account.component.ts");
-var account_finance_info_component_1 = __webpack_require__("../../../../../src/app/modules/users/components/account-finance-info/account-finance-info.component.ts");
-var account_personal_info_component_1 = __webpack_require__("../../../../../src/app/modules/users/components/account-personal-info/account-personal-info.component.ts");
-var account_user_info_component_1 = __webpack_require__("../../../../../src/app/modules/users/components/account-user-info/account-user-info.component.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var users_routing_module_1 = __webpack_require__("./src/app/modules/users/users-routing.module.ts");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var shared_module_1 = __webpack_require__("./src/app/modules/shared/shared.module.ts");
+var register_component_1 = __webpack_require__("./src/app/modules/users/components/register/register.component.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var login_component_1 = __webpack_require__("./src/app/modules/users/components/login/login.component.ts");
+var reset_password_component_1 = __webpack_require__("./src/app/modules/users/components/reset-password/reset-password.component.ts");
+var account_component_1 = __webpack_require__("./src/app/modules/users/components/account/account.component.ts");
+var account_finance_info_component_1 = __webpack_require__("./src/app/modules/users/components/account-finance-info/account-finance-info.component.ts");
+var account_personal_info_component_1 = __webpack_require__("./src/app/modules/users/components/account-personal-info/account-personal-info.component.ts");
+var account_user_info_component_1 = __webpack_require__("./src/app/modules/users/components/account-user-info/account-user-info.component.ts");
 var UsersModule = /** @class */ (function () {
     function UsersModule() {
     }
@@ -6343,7 +6109,7 @@ exports.UsersModule = UsersModule;
 
 /***/ }),
 
-/***/ "../../../../../src/app/modules/users/users.service.ts":
+/***/ "./src/app/modules/users/users.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6358,11 +6124,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var http_1 = __webpack_require__("../../../common/esm5/http.js");
-var BehaviorSubject_1 = __webpack_require__("../../../../rxjs/_esm5/BehaviorSubject.js");
-var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
-var app_service_1 = __webpack_require__("../../../../../src/app/app.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var BehaviorSubject_1 = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var UsersService = /** @class */ (function () {
     function UsersService(http, appService) {
         this.http = http;
@@ -6395,7 +6161,7 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > register() > "; //for debugging
         return this.http.post(this.serverHost + "/register", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to update account user details
@@ -6406,7 +6172,7 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > updateAccount() > "; //for debugging
         return this.http.post(this.serverHost + "/account", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to update account personal details
@@ -6417,7 +6183,7 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > updatePersonalInfo() > "; //for debugging
         return this.http.post(this.serverHost + "/accountPersonalInfo", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to update account financial details
@@ -6428,7 +6194,7 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > updateFinancialInfo() > "; //for debugging
         return this.http.post(this.serverHost + "/accountFinancialInfo", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to retrieve the currently authenticated user, or null if nobody .
@@ -6446,7 +6212,7 @@ var UsersService = /** @class */ (function () {
         }
         return this.http.get(this.serverHost + "/getUser", { params: params })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to login the provided user email and pass.
@@ -6456,7 +6222,7 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > login() > "; //for debugging
         return this.http.post(this.serverHost + "/login", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to forgot with the provided user email.
@@ -6466,7 +6232,7 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > forgot() > "; //for debugging
         return this.http.post(this.serverHost + "/account/forgot", postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to reset password api with the provided new password.
@@ -6476,7 +6242,7 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > reset() > "; //for debugging
         return this.http.post(this.serverHost + "/account/reset/" + token, postData, { headers: this.headers })
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     /**
      * Server call to login the provided user email and pass.
@@ -6485,7 +6251,7 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > logout() > "; //for debugging
         return this.http.get(this.serverHost + "/logout")
             .map(this.appService.extractData)
-            .catch(this.appService.handleError(methodTrace));
+            .catch(this.appService.handleError);
     };
     UsersService = __decorate([
         core_1.Injectable(),
@@ -6498,7 +6264,7 @@ exports.UsersService = UsersService;
 
 /***/ }),
 
-/***/ "../../../../../src/app/util.service.ts":
+/***/ "./src/app/util.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6513,8 +6279,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
 var UtilService = /** @class */ (function () {
     function UtilService() {
         this.settings = {
@@ -6574,7 +6340,7 @@ exports.UtilService = UtilService;
 
 /***/ }),
 
-/***/ "../../../../../src/environments/environment.ts":
+/***/ "./src/environments/environment.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6593,16 +6359,16 @@ exports.environment = {
 
 /***/ }),
 
-/***/ "../../../../../src/main.ts":
+/***/ "./src/main.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("../../../core/esm5/core.js");
-var platform_browser_dynamic_1 = __webpack_require__("../../../platform-browser-dynamic/esm5/platform-browser-dynamic.js");
-var app_module_1 = __webpack_require__("../../../../../src/app/app.module.ts");
-var environment_1 = __webpack_require__("../../../../../src/environments/environment.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var platform_browser_dynamic_1 = __webpack_require__("./node_modules/@angular/platform-browser-dynamic/esm5/platform-browser-dynamic.js");
+var app_module_1 = __webpack_require__("./src/app/app.module.ts");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
 if (environment_1.environment.production) {
     core_1.enableProdMode();
     console.log('ENV: Production');
@@ -6615,7 +6381,7 @@ platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("../../../../../src/main.ts");
+module.exports = __webpack_require__("./src/main.ts");
 
 
 /***/ })

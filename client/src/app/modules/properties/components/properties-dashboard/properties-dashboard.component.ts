@@ -8,7 +8,8 @@ import { Observable } from 'rxjs/Observable';
 import { Property } from '../../models/property';
 import { Subscription } from 'rxjs/Subscription';
 import { PropertiesService } from '../../properties.service';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog, MatTable } from '@angular/material';
+import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 
 @Component({
   selector: 'properties-dashboard',
@@ -16,15 +17,17 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
   styleUrls: ['./properties-dashboard.component.scss']
 })
 export class PropertiesDashboardComponent implements OnInit, OnDestroy {
-  @ViewChild('propertiesPaginator') paginator : MatPaginator;
+  @ViewChild('propertiesPaginator') propertiesTablePaginator : MatPaginator;
+  @ViewChild('propertiesTable') propertiesTable : MatTable<Property>;
   user : User = null;
   properties : Property[] = [];
   propertiesDataSource : MatTableDataSource<Property> = new MatTableDataSource([]);
   subscription : Subscription = new Subscription();
   getPropertiesServiceRunning : boolean = false;
+  propertyTableActionRunning : boolean = false;
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private usersService : UsersService,  
-    private appService : AppService, private propertiesService : PropertiesService ) { }
+    private appService : AppService, private propertiesService : PropertiesService, public dialog: MatDialog ) { }
 
 
   ngOnInit() {
@@ -64,7 +67,7 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
 
     this.properties = [];
     this.propertiesDataSource = new MatTableDataSource([]);
-    this.propertiesDataSource.paginator = this.paginator;
+    this.propertiesDataSource.paginator = this.propertiesTablePaginator;
 
     this.getPropertiesServiceRunning = true;
     
@@ -74,8 +77,8 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
       (properties : Property[]) => {
         this.properties = properties;
         
-        this.propertiesDataSource = new MatTableDataSource(properties);
-        this.propertiesDataSource.paginator = this.paginator;
+        this.propertiesDataSource = new MatTableDataSource(this.properties);
+        this.propertiesDataSource.paginator = this.propertiesTablePaginator;
 
         this.getPropertiesServiceRunning = false;
       },
@@ -90,5 +93,73 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
         this.getPropertiesServiceRunning = false;
       }
     );
+  }
+
+  openDeleteTeamDialog(indexInPage : number, property : Property = null) {
+    const methodTrace = `${this.constructor.name} > openDeleteTeamDialog() > `; //for debugging
+    
+    if (!property) {
+      this.appService.consoleLog('error', `${methodTrace} Property is required to delete.`);
+      return false;
+    }
+
+    //map the index in the table to the indes in the properties array
+    let index = indexInPage + this.propertiesTablePaginator.pageIndex * this.propertiesTablePaginator.pageSize;
+
+    this.propertyTableActionRunning = true;
+    let yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
+      width: '250px',
+      data: {
+        title : 'Delete property', 
+        message : `Are you sure you want to delete this property forever?`
+      }
+    });
+
+    const newSubscription = yesNoDialogRef.afterClosed().subscribe(result => {
+      if (result === 'yes') {
+        this.delete(index, property);
+      } else {
+        this.propertyTableActionRunning = false;
+      }
+    });
+    this.subscription.add(newSubscription);
+
+    return false;
+  }
+
+  delete(index : number, property : Property = null) {
+    const methodTrace = `${this.constructor.name} > delete() > `; //for debugging
+
+    this.propertyTableActionRunning = true;
+
+    const newSuscription = this.propertiesService.delete(property.id, this.user.email).subscribe(
+      (data : any) => {
+        if (data && data.removed > 0) {
+          this.properties.splice(index, 1);
+          this.propertiesDataSource.data.splice(index, 1);
+          this.propertiesTable.renderRows();
+          this.appService.showResults(`Property successfully removed!`, 'success');
+        } else {
+          this.appService.showResults(`Property could not be removed, please try again.`, 'error');
+        }
+
+        this.propertyTableActionRunning = false;
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else if (error.codeno === 471) {
+          //property associated to an investment
+          this.appService.showResults(error.msg, 'error', 7000);
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+        }
+
+        this.propertyTableActionRunning = false;
+      }
+    );
+
+    this.subscription.add(newSuscription);
   }
 }

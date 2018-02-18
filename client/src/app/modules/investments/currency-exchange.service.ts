@@ -26,7 +26,7 @@ export class CurrencyExchangeService {
 
     return this.http.get<CurrencyExchangeResponse>(`${this.currencyExchangeServiceUrl}?base=${base}`)
       .map(this.extractCurrencyExchangeData)
-      .catch(this.appService.handleError(methodTrace))
+      .catch(this.appService.handleError)
       .retry(3);
   }
 
@@ -50,7 +50,7 @@ export class CurrencyExchangeService {
           this.cryptoRates[crypto.toUpperCase()] = this.extractCryptoExchangeData(crypto, res);
           return this.cryptoRates[crypto.toUpperCase()];
         })
-        .catch(this.appService.handleError(methodTrace));
+        .catch(this.appService.handleError);
   }
 
   private extractCryptoExchangeData(crypto: string, res: Object) : any {
