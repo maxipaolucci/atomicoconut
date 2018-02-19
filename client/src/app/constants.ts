@@ -13,3 +13,9 @@ export const nzHouseTitleTypes = {
   CROSS_LEASE : 'crossLease',
   LEASE_HOLD : 'leaseHold'
 };
+
+export const INVESTMENTS_TYPES = {
+  CURRENCY: 'currency',
+  CRYPTO : 'crypto',
+  PROPERTY : 'property'
+};

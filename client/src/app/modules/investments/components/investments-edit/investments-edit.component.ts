@@ -11,6 +11,7 @@ import { MatSelectChange, MatRadioChange } from '@angular/material';
 import { InvestmentsService } from '../../investments.service';
 import { Investment } from '../../models/investment';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
+import { INVESTMENTS_TYPES } from '../../../../constants';
 
 @Component({
   selector: 'investments-edit',
@@ -46,12 +47,11 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   subscription : Subscription = new Subscription();
   formChangesSubscription : any = null;
   investmentDataValid : boolean = false; //this value is set when investment data form is updated
+  INVESTMENT_TYPES : any = INVESTMENTS_TYPES;
 
   
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private investmentsService : InvestmentsService,
-      private teamsService : TeamsService, private appService : AppService, private router : Router) {
-    
-  }
+      private teamsService : TeamsService, private appService : AppService, private router : Router) { }
 
   ngOnInit() {
     this.mainNavigatorService.setLinks([
@@ -99,7 +99,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
 
     //get TYPE parameter
     this.route.paramMap.map((params: ParamMap) => params.get('type')).subscribe(type => {
-      if (!['currency', 'crypto', 'property'].includes(type)) {
+      if (![INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO, INVESTMENTS_TYPES.PROPERTY].includes(type)) {
         this.appService.showResults('You must provide a valid investment type to continue.', 'error');
         this.router.navigate(['welcome']);
       } else {

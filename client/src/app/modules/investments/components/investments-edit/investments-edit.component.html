@@ -111,9 +111,13 @@
         </div>
   
         <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
-          <currency-investment-form [defaultValues]="model.investmentData"
+          <currency-investment-form *ngIf="type === INVESTMENT_TYPES.CRYPTO || type === INVESTMENT_TYPES.CURRENCY" [defaultValues]="model.investmentData"
               (values)="onInvestmentDataChange($event)">
           </currency-investment-form>
+
+          <property-investment-form *ngIf="type === INVESTMENT_TYPES.PROPERTY" [defaultValues]="model.investmentData"
+              (values)="onInvestmentDataChange($event)">
+          </property-investment-form>
         </div>
       </section>
   

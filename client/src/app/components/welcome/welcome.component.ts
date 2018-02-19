@@ -9,9 +9,9 @@ import { InvestmentsService } from '../../modules/investments/investments.servic
 import { CurrencyExchangeService } from '../../modules/investments/currency-exchange.service';
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
-import { INVESTMENTS_TYPES } from '../../constants/constants';
 import { Subscription } from 'rxjs/Subscription';
 import { of } from 'rxjs/observable/of';
+import { INVESTMENTS_TYPES } from '../../constants';
 
 @Component({
   selector: 'welcome',

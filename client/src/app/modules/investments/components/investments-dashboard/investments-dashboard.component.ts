@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { INVESTMENTS_TYPES } from '../../../../constants/constants';
+import { INVESTMENTS_TYPES } from '../../../../constants';
 
 @Component({
   selector: 'investments-dashboard',
