@@ -14,8 +14,8 @@
       <ng-container matColumnDef="invest">
         <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button mat-mini-fab color="accent" (click)="propertyTableActionRunning = true">
-            <mat-icon aria-label="Create investment">add</mat-icon>
+          <button mat-mini-fab color="primary" routerLink="/investments/property/create/{{element.id}}" (click)="propertyTableActionRunning = true">
+            <mat-icon aria-label="Create investment">trending_up</mat-icon>
           </button>
         </mat-cell>
       </ng-container>

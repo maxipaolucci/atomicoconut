@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="10px" class="container__edit-investment">
+<div class="container__edit-investment" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
   <form class="form__container form__edit-investment" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editInvestmentForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
     <div *ngIf="!getInvestmentServiceRunning">
       <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
@@ -14,9 +14,9 @@
             <p class="header">Owner</p>
             <p class="mat-caption">Specify the owner of this investment</p>
           </h3>
-  
+          
           <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
-            <mat-radio-group fxFlex.gt-xs="230px" class="form__field radiogroup__owner"
+            <mat-radio-group fxFlex fxFlex.gt-xs="230px" class="form__field radiogroup__owner"
                 [(ngModel)]="model.owner" 
                 name="owner" 
                 id="owner" 
@@ -49,9 +49,9 @@
             <p class="mat-caption">Specify how to split the returns setting a percentage of the total investment amount to each member</p>
           </h3>
   
-          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="form__fields__row">         
-            <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="20px" class="team-members">
-              <div *ngFor="let member of model.team.members; index as memberIndex" fxLayout="column" fxLayoutGap="10px" class="member">
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+            <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="20px" class="team-members" fxLayoutWrap>
+              <div *ngFor="let member of model.team.members; index as memberIndex" fxFlex="none" fxFlex.gt-xs="250px" fxLayout="column" fxLayoutGap="10px" class="member">
                 <div class="member-details" fxLayout="row" fxLayoutGap="10px">
                   <img class="member__avatar" [src]="member.avatar"/>
                   <div class="member__info" fxLayout="column" [matTooltip]="member.email === model.team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
@@ -86,7 +86,7 @@
             <p class="header">Investment details</p>
           </h3>
   
-          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" class="form__fields__row">
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
             <div fxLayout="row" fxLayoutGap="10px">
                 <currency-unit fxFlex="50px"
                     [id]="'investmentAmountUnit'" 
@@ -95,7 +95,7 @@
                     (newValue)="onCurrencyUnitChange($event)">
                 </currency-unit>
                 
-                <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
+                <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
                   <input matInput type="number" id="investmentAmount" name="investmentAmount" placeholder="Investment amount"
                       [(ngModel)]="model.investmentAmount" 
                       [value]="model.investmentAmount"

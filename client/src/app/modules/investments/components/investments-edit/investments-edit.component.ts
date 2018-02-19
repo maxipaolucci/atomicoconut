@@ -12,6 +12,7 @@ import { InvestmentsService } from '../../investments.service';
 import { Investment } from '../../models/investment';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES } from '../../../../constants';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'investments-edit',
@@ -66,8 +67,19 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     const id$ = this.route.paramMap.map((params: ParamMap) => params.get('id'));
     
     //combine user$ and id$ sources into one object and start listen to it for changes
-    this.subscription = user$.combineLatest(id$, (user, id) => { 
-      return { user, investmentId : id } 
+    this.subscription = user$.combineLatest(id$, (user, id) => {
+      const urlObject = (<BehaviorSubject<any>>this.route.url).getValue(); 
+      let investmentId = null;
+      let propertyId = null;
+      if (urlObject[0]['path'] === INVESTMENTS_TYPES.PROPERTY && urlObject[1]['path'] === 'create') {
+        //we are creating a property investment coming from the property component
+        propertyId = id;
+      } else {
+        //we are editing an investment or creating a new one coming from the investment dashboard
+        investmentId = id;
+      }
+      
+      return { user, investmentId, propertyId }; 
     }).subscribe(data => {
       this.user = data.user;
       this.model.email = data.user.email;
