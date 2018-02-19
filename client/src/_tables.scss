@@ -1,0 +1,33 @@
+.table__container {
+  
+  .table__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  mat-table {
+      
+    .mat-column-edit, .mat-column-delete {
+      flex: 0 0 40px;
+      margin-left: 10px;
+      align-self: center;
+    }
+    
+    mat-header-row {
+      
+      .mat-column-edit, .mat-column-delete {
+        text-align: center;
+      }
+    }
+  }
+}
+
+

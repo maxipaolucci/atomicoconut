@@ -136,8 +136,8 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
       (data : any) => {
         if (data && data.removed > 0) {
           this.properties.splice(index, 1);
-          this.propertiesDataSource.data.splice(index, 1);
-          this.propertiesTable.renderRows();
+          this.propertiesDataSource.data = this.properties;
+          //this.propertiesTable.renderRows();
           this.appService.showResults(`Property successfully removed!`, 'success');
         } else {
           this.appService.showResults(`Property could not be removed, please try again.`, 'error');

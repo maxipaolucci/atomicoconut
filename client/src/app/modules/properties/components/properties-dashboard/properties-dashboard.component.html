@@ -1,18 +1,18 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__properties">
-  <section class="property-table__container" *ngIf="!getPropertiesServiceRunning && properties.length > 0" fxLayout="column" fxLayoutGap="10px">
-    <div class="property-table__overlay" *ngIf="propertyTableActionRunning">
+  <section class="table__container" *ngIf="!getPropertiesServiceRunning && properties.length > 0" fxLayout="column" fxLayoutGap="10px">
+    <div class="table__overlay" *ngIf="propertyTableActionRunning">
         <mat-spinner color="warn"></mat-spinner>
     </div>
     <mat-table #propertiesTable [dataSource]="propertiesDataSource">
 
       <!-- Position Column -->
       <ng-container matColumnDef="address">
-        <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.address}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="edit">
-        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Edit</mat-header-cell>
         <mat-cell *matCellDef="let element">
           <button mat-mini-fab routerLink="/properties/{{element.type}}/edit/{{element.id}}" color="primary" (click)="propertyTableActionRunning = true">
             <mat-icon aria-label="Edit">edit</mat-icon>
@@ -21,7 +21,7 @@
       </ng-container>
 
       <ng-container matColumnDef="delete">
-        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
         <mat-cell *matCellDef="let element; let propertyIndex = index;">
           <button mat-mini-fab color="warn" (click)="openDeleteTeamDialog(propertyIndex, element)">
             <mat-icon aria-label="Edit">delete</mat-icon>
