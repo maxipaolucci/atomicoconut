@@ -8,14 +8,14 @@
       <!-- Position Column -->
       <ng-container matColumnDef="address">
         <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.address}}</mat-cell>
+        <mat-cell *matCellDef="let element" routerLink="/properties/{{element.type}}/edit/{{element.id}}" (click)="propertyTableActionRunning = true">{{element.address}}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="edit">
-        <mat-header-cell *matHeaderCellDef>Edit</mat-header-cell>
+      <ng-container matColumnDef="invest">
+        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button mat-mini-fab routerLink="/properties/{{element.type}}/edit/{{element.id}}" color="primary" (click)="propertyTableActionRunning = true">
-            <mat-icon aria-label="Edit">edit</mat-icon>
+          <button mat-mini-fab color="accent" (click)="propertyTableActionRunning = true">
+            <mat-icon aria-label="Create investment">add</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
@@ -29,8 +29,8 @@
         </mat-cell>
       </ng-container>
       
-      <mat-header-row *matHeaderRowDef="['address', 'edit', 'delete']"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: ['address', 'edit', 'delete'];"></mat-row>
+      <mat-header-row *matHeaderRowDef="['address', 'invest', 'delete']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['address', 'invest', 'delete'];"></mat-row>
     </mat-table>
   </section>
   <mat-paginator [fxShow]="properties.length > 0" #propertiesPaginator 

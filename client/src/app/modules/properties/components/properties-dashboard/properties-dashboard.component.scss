@@ -1,5 +1,16 @@
 @import '../../../../../variables';
 
+.table__container {
+
+  mat-table {
+    
+    mat-row  .mat-column-address {
+      cursor: pointer;
+    }
+
+  }
+}
+
 .no-properties__card {
   text-align: center;
 
