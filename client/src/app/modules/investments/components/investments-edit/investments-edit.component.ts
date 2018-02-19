@@ -85,6 +85,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       this.model.email = data.user.email;
       this.model.investmentAmountUnit = this.user.currency;
       this.model.id = data.investmentId || null;
+      if (data.propertyId) {
+        this.model.investmentData.id = data.propertyId;
+      }
 
       this.editInvestmentServiceRunning = false;
       this.getInvestmentServiceRunning = false;

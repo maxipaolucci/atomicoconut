@@ -32,6 +32,14 @@
         .mat-input-placeholder-wrapper .mat-input-placeholder {
           color: #ffffff;
         }
+
+        .mat-input-prefix mat-icon {
+          margin-right: 5px;
+        }
+
+        .mat-input-suffix mat-icon {
+          margin-left: 5px;
+        }
       }
       
       .mat-input-underline {

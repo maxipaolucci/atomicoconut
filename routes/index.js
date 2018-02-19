@@ -26,6 +26,10 @@ router.get('/app/investments/:type/create', (req, res) => {
   res.render('home', {title: 'Create Investment'});
 });
 
+router.get('/app/investments/:type/create/:id', (req, res) => {
+  res.render('home', {title: 'Create Investment'});
+});
+
 router.get('/app/investments/:type/edit/:id', (req, res) => {
   res.render('home', {title: 'Edit Investment'});
 });

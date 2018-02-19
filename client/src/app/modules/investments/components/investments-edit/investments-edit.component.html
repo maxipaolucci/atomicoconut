@@ -116,6 +116,7 @@
           </currency-investment-form>
 
           <property-investment-form *ngIf="type === INVESTMENT_TYPES.PROPERTY" [defaultValues]="model.investmentData"
+              [user]="user"
               (values)="onInvestmentDataChange($event)">
           </property-investment-form>
         </div>
