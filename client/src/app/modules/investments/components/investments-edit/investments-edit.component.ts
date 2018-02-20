@@ -13,6 +13,7 @@ import { Investment } from '../../models/investment';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES } from '../../../../constants';
 import { BehaviorSubject } from 'rxjs';
+import { PropertyInvestment } from '../../models/PropertyInvestment';
 
 @Component({
   selector: 'investments-edit',
@@ -86,7 +87,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       this.model.investmentAmountUnit = this.user.currency;
       this.model.id = data.investmentId || null;
       if (data.propertyId) {
-        this.model.investmentData.id = data.propertyId;
+        this.model.investmentData.propertyId = data.propertyId;
       }
 
       this.editInvestmentServiceRunning = false;
@@ -177,8 +178,6 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.model.createdOn = new Date(Date.now());
     this.model.updatedOn = new Date(Date.now());
 
-    console.log(this.model);
-    //return false;
     //call the investment create service
     const newSubscription = this.investmentsService.create(this.model).subscribe(
       (data : any) => {
@@ -336,6 +335,15 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
             type : investment.type,
             unit : investment.unit,
             amount : investment.amount,
+            buyingPrice : investment.buyingPrice,
+            buyingPriceUnit : investment.buyingPriceUnit,
+            buyingDate : investment.buyingDate
+          };
+        } else if (investment instanceof PropertyInvestment) {
+          this.model.investmentData = {
+            type : investment.type,
+            property : investment.property,
+            address : investment.property.address,
             buyingPrice : investment.buyingPrice,
             buyingPriceUnit : investment.buyingPriceUnit,
             buyingDate : investment.buyingDate

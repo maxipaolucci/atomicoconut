@@ -1845,6 +1845,7 @@ var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription
 var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
 var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
 var constants_1 = __webpack_require__("./src/app/constants.ts");
+var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
 var InvestmentsEditComponent = /** @class */ (function () {
     function InvestmentsEditComponent(route, mainNavigatorService, investmentsService, teamsService, appService, router) {
         this.route = route;
@@ -1911,7 +1912,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
             _this.model.investmentAmountUnit = _this.user.currency;
             _this.model.id = data.investmentId || null;
             if (data.propertyId) {
-                _this.model.investmentData.id = data.propertyId;
+                _this.model.investmentData.propertyId = data.propertyId;
             }
             _this.editInvestmentServiceRunning = false;
             _this.getInvestmentServiceRunning = false;
@@ -1990,8 +1991,6 @@ var InvestmentsEditComponent = /** @class */ (function () {
         this.model.investmentDistribution = this.populateInvestmentDistributionArray();
         this.model.createdOn = new Date(Date.now());
         this.model.updatedOn = new Date(Date.now());
-        console.log(this.model);
-        //return false;
         //call the investment create service
         var newSubscription = this.investmentsService.create(this.model).subscribe(function (data) {
             if (data && data.id && data.type) {
@@ -2133,6 +2132,16 @@ var InvestmentsEditComponent = /** @class */ (function () {
                     buyingDate: investment.buyingDate
                 };
             }
+            else if (investment instanceof PropertyInvestment_1.PropertyInvestment) {
+                _this.model.investmentData = {
+                    type: investment.type,
+                    property: investment.property,
+                    address: investment.property.address,
+                    buyingPrice: investment.buyingPrice,
+                    buyingPriceUnit: investment.buyingPriceUnit,
+                    buyingDate: investment.buyingDate
+                };
+            }
             _this.getInvestmentServiceRunning = false;
             if (_this.form && !_this.formChangesSubscription) {
                 _this.subscribeFormValueChanges();
@@ -2208,7 +2217,7 @@ exports.InvestmentsEditComponent = InvestmentsEditComponent;
 /***/ "./src/app/modules/investments/components/property-investment-form/property-investment-form.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container form__edit-property-investment\" #editPropertyInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertyServiceRunning\"\r\n    class=\"progress-bar progress-bar--get-property\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  \r\n  <section *ngIf=\"!getPropertyServiceRunning\" fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n    \r\n    <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n        <!-- Address -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <input matInput type=\"text\" id=\"property\" name=\"property\" placeholder=\"Property\" \r\n              [(ngModel)]=\"model.property.address\" \r\n              required\r\n              readonly\r\n              [value]=\"model.property.address\"\r\n              #property=\"ngModel\"\r\n              (click)=\"openPropertySelectionDialog()\">\r\n          \r\n          <mat-icon matPrefix>home</mat-icon>\r\n          <button mat-button matSuffix mat-icon-button aria-label=\"Choose property...\" (click)=\"openPropertySelectionDialog()\">\r\n            <mat-icon>view_list</mat-icon>\r\n          </button>\r\n              \r\n          <mat-error *ngIf=\"property.invalid && (property.dirty || property.touched) && property.errors.required\">This field is required.</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n        <!-- Buying date -->\r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"100px\" class=\"form__field\">\r\n          <input placeholder=\"Buying date\"\r\n              id=\"buyingDate\"\r\n              name=\"buyingDate\"\r\n              readonly\r\n              required\r\n              #buyingDate=\"ngModel\"\r\n              matInput \r\n              [(ngModel)]=\"model.buyingDate\" \r\n              [matDatepicker]=\"pickerBuyingDate\"\r\n              (click)=\"pickerBuyingDate.open()\">\r\n          <mat-datepicker-toggle matSuffix [for]=\"pickerBuyingDate\"></mat-datepicker-toggle>\r\n          <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBuyingDate></mat-datepicker>\r\n          <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.required\">Buying date is required.</mat-error>\r\n          <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.matDatepickerParse\">Buying date is invalid or not follows the pattern \"mm/dd/yyyy\"</mat-error>\r\n        </mat-form-field>\r\n\r\n        <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n          <!-- Buying price unit -->\r\n          <currency-unit fxFlex=\"50px\"\r\n              [id]=\"'buyingPriceUnit'\" \r\n              [view]=\"'narrow'\"\r\n              [value]=\"model.buyingPriceUnit\"\r\n              (newValue)=\"onCurrencyUnitChange($event)\">\r\n          </currency-unit>\r\n\r\n          <!-- Buying price -->\r\n          <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"buyingPrice\" name=\"buyingPrice\" placeholder=\"Price\"\r\n                [(ngModel)]=\"model.buyingPrice\" \r\n                [value]=\"model.buyingPrice\"\r\n                numberValidator \r\n                required\r\n                #buyingPrice=\"ngModel\">\r\n            <mat-hint align=\"start\">Price on buying date.</mat-hint>\r\n            <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.required\">Buying price is required.</mat-error>\r\n            <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n        \r\n      </div>\r\n    </div>\r\n  </section>\r\n</form>\r\n"
+module.exports = "<form class=\"form__container form__edit-property-investment\" #editPropertyInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertyServiceRunning\"\r\n    class=\"progress-bar progress-bar--get-property\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  \r\n  <section *ngIf=\"!getPropertyServiceRunning\" fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n    \r\n    <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n        <!-- Address -->\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          <input matInput type=\"text\" id=\"property\" name=\"property\" placeholder=\"Property\" \r\n              [(ngModel)]=\"model.address\" \r\n              required\r\n              readonly\r\n              [value]=\"model.address\"\r\n              #property=\"ngModel\"\r\n              (click)=\"openPropertySelectionDialog()\">\r\n          \r\n          <mat-icon matPrefix>home</mat-icon>\r\n          <button mat-button matSuffix mat-icon-button aria-label=\"Choose property...\" (click)=\"openPropertySelectionDialog()\">\r\n            <mat-icon>view_list</mat-icon>\r\n          </button>\r\n              \r\n          <mat-error *ngIf=\"property.invalid && (property.dirty || property.touched) && property.errors.required\">This field is required.</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n        <!-- Buying date -->\r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"100px\" class=\"form__field\">\r\n          <input placeholder=\"Buying date\"\r\n              id=\"buyingDate\"\r\n              name=\"buyingDate\"\r\n              readonly\r\n              required\r\n              #buyingDate=\"ngModel\"\r\n              matInput \r\n              [(ngModel)]=\"model.buyingDate\" \r\n              [matDatepicker]=\"pickerBuyingDate\"\r\n              (click)=\"pickerBuyingDate.open()\">\r\n          <mat-datepicker-toggle matSuffix [for]=\"pickerBuyingDate\"></mat-datepicker-toggle>\r\n          <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBuyingDate></mat-datepicker>\r\n          <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.required\">Buying date is required.</mat-error>\r\n          <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.matDatepickerParse\">Buying date is invalid or not follows the pattern \"mm/dd/yyyy\"</mat-error>\r\n        </mat-form-field>\r\n\r\n        <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n          <!-- Buying price unit -->\r\n          <currency-unit fxFlex=\"50px\"\r\n              [id]=\"'buyingPriceUnit'\" \r\n              [view]=\"'narrow'\"\r\n              [value]=\"model.buyingPriceUnit\"\r\n              (newValue)=\"onCurrencyUnitChange($event)\">\r\n          </currency-unit>\r\n\r\n          <!-- Buying price -->\r\n          <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"buyingPrice\" name=\"buyingPrice\" placeholder=\"Price\"\r\n                [(ngModel)]=\"model.buyingPrice\" \r\n                [value]=\"model.buyingPrice\"\r\n                numberValidator \r\n                required\r\n                #buyingPrice=\"ngModel\">\r\n            <mat-hint align=\"start\">Price on buying date.</mat-hint>\r\n            <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.required\">Buying price is required.</mat-error>\r\n            <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n        \r\n      </div>\r\n    </div>\r\n  </section>\r\n</form>\r\n"
 
 /***/ }),
 
@@ -2254,9 +2263,10 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
         this.user = null;
         this.values = new core_1.EventEmitter();
         this.model = {
-            id: null,
             type: null,
             property: null,
+            propertyId: null,
+            address: null,
             buyingPrice: null,
             buyingPriceUnit: null,
             buyingDate: null
@@ -2270,9 +2280,9 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
         this.model.buyingDate = new Date(Date.now());
         this.model.buyingPriceUnit = this.user.currency;
         Object.assign(this.model, this.defaultValues);
-        if (this.defaultValues.id) {
+        if (this.model.propertyId) {
             //when creating from the property "invest action" on some component that shows properties
-            this.getProperty(this.model.id);
+            this.getProperty(this.model.propertyId);
         }
     };
     PropertyInvestmentFormComponent.prototype.ngOnDestroy = function () {
@@ -2317,6 +2327,7 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
         this.getPropertyServiceRunning = true;
         var newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(function (property) {
             _this.model.property = property;
+            _this.model.address = property.address;
             var buyingPrice = null;
             var buyingPriceUnit = null;
             if (property.salePrice) {
@@ -2631,9 +2642,11 @@ var environment_1 = __webpack_require__("./src/environments/environment.ts");
 var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
 var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
+var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
 var team_1 = __webpack_require__("./src/app/modules/teams/models/team.ts");
 var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
 var constants_1 = __webpack_require__("./src/app/constants.ts");
+var house_1 = __webpack_require__("./src/app/modules/properties/models/house.ts");
 var InvestmentsService = /** @class */ (function () {
     function InvestmentsService(http, appService) {
         this.http = http;
@@ -2677,19 +2690,19 @@ var InvestmentsService = /** @class */ (function () {
         var params = new http_1.HttpParams()
             .set('id', id)
             .set('email', email);
-        var investmentData$ = this.http.get(this.serverHost + "/getbyId", { params: params })
+        var investment$ = this.http.get(this.serverHost + "/getbyId", { params: params })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
-        return investmentData$.switchMap(function (investmentData) {
-            var investment = null;
-            if (investmentData && investmentData._id) {
-                var createdBy = new user_1.User(investmentData.createdBy.name, investmentData.createdBy.email, investmentData.createdBy.gravatar);
+        return investment$.switchMap(function (investment) {
+            var result = null;
+            if (investment && investment._id) {
+                var createdBy = new user_1.User(investment.createdBy.name, investment.createdBy.email, investment.createdBy.gravatar);
                 var team = null;
-                if (investmentData.team) {
+                if (investment.team) {
                     //fill team members
                     var admin = null;
                     var members = [];
-                    for (var _i = 0, _a = investmentData.team.members; _i < _a.length; _i++) {
+                    for (var _i = 0, _a = investment.team.members; _i < _a.length; _i++) {
                         var member = _a[_i];
                         var newMember = new user_1.User(member.name, member.email, member.gravatar);
                         members.push(newMember);
@@ -2697,18 +2710,25 @@ var InvestmentsService = /** @class */ (function () {
                             admin = newMember;
                         }
                     }
-                    team = new team_1.Team(investmentData.team.name, investmentData.team.description, investmentData.team.slug, admin, members);
+                    team = new team_1.Team(investment.team.name, investment.team.description, investment.team.slug, admin, members);
                 }
-                if (investmentData.investmentType === constants_1.INVESTMENTS_TYPES.CURRENCY || investmentData.investmentType === constants_1.INVESTMENTS_TYPES.CRYPTO) {
-                    investment = new currencyInvestment_1.CurrencyInvestment(investmentData._id, investmentData.amount, investmentData.amountUnit, createdBy, team, investmentData.investmentDistribution, investmentData.currencyInvestmentData.amountUnit, investmentData.currencyInvestmentData.amount, investmentData.currencyInvestmentData.buyingPrice, investmentData.currencyInvestmentData.buyingPriceUnit, investmentData.currencyInvestmentData.buyingDate, investmentData.investmentType);
+                if (investment.investmentType === constants_1.INVESTMENTS_TYPES.CURRENCY || investment.investmentType === constants_1.INVESTMENTS_TYPES.CRYPTO) {
+                    result = new currencyInvestment_1.CurrencyInvestment(investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, investment.investmentData.amountUnit, investment.investmentData.amount, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, investment.investmentType);
                 }
-                else if (investmentData.investmentType === constants_1.INVESTMENTS_TYPES.PROPERTY) {
+                else if (investment.investmentType === constants_1.INVESTMENTS_TYPES.PROPERTY) {
+                    var property = null;
+                    var propertyData = investment.investmentData.property;
+                    if (propertyData.propertyType === constants_1.propertyTypes.HOUSE) {
+                        //we share the createdBy of the investment because we know is the same
+                        property = new house_1.House(propertyData._id, propertyData.propertyType, propertyData.address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
+                    }
+                    result = new PropertyInvestment_1.PropertyInvestment(investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, property, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, investment.investmentType);
                 }
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return Rx_1.Observable.of(investment);
+            return Rx_1.Observable.of(result);
         });
     };
     /**
@@ -2734,7 +2754,7 @@ var InvestmentsService = /** @class */ (function () {
                     var createdBy = new user_1.User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
                     var team = item.team ? new team_1.Team(item.team.name, item.team.description, item.team.slug) : null;
                     if (item.investmentType === 'currency' || item.investmentType === 'crypto') {
-                        investments.push(new currencyInvestment_1.CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.currencyInvestmentData.amountUnit, item.currencyInvestmentData.amount, item.currencyInvestmentData.buyingPrice, item.currencyInvestmentData.buyingPriceUnit, item.currencyInvestmentData.buyingDate, item.investmentType));
+                        investments.push(new currencyInvestment_1.CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.investmentData.amountUnit, item.investmentData.amount, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType));
                     }
                 }
             }
@@ -2767,6 +2787,43 @@ var InvestmentsService = /** @class */ (function () {
     return InvestmentsService;
 }());
 exports.InvestmentsService = InvestmentsService;
+
+
+/***/ }),
+
+/***/ "./src/app/modules/investments/models/PropertyInvestment.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var investment_1 = __webpack_require__("./src/app/modules/investments/models/investment.ts");
+var PropertyInvestment = /** @class */ (function (_super) {
+    __extends(PropertyInvestment, _super);
+    function PropertyInvestment(id, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, property, buyingPrice, buyingPriceUnit, buyingDate, type) {
+        if (team === void 0) { team = null; }
+        if (investmentDistribution === void 0) { investmentDistribution = []; }
+        if (type === void 0) { type = 'property'; }
+        var _this = _super.call(this, id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution) || this;
+        _this.property = property;
+        _this.buyingDate = buyingDate;
+        _this.buyingPrice = buyingPrice;
+        _this.buyingPriceUnit = buyingPriceUnit;
+        return _this;
+    }
+    return PropertyInvestment;
+}(investment_1.Investment));
+exports.PropertyInvestment = PropertyInvestment;
 
 
 /***/ }),

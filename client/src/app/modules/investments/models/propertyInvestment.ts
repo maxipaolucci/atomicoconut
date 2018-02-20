@@ -4,7 +4,6 @@ import { User } from "../../users/models/user";
 import { Property } from "../../properties/models/property";
 
 export class PropertyInvestment extends Investment {
-  unit : string; //crypto unit
   property : Property;
   buyingPrice : number;
   buyingDate : Date;

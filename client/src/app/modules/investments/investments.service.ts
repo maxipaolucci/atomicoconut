@@ -6,10 +6,12 @@ import { AppService } from "../../app.service";
 import { User } from '../users/models/user';
 import { Investment } from './models/investment';
 import { CurrencyInvestment } from './models/currencyInvestment';
+import { PropertyInvestment } from './models/PropertyInvestment';
 import { Team } from '../teams/models/team';
 import { Response } from '../../models/response';
 import { of } from 'rxjs/observable/of';
-import { INVESTMENTS_TYPES } from '../../constants';
+import { INVESTMENTS_TYPES, propertyTypes } from '../../constants';
+import { House } from '../properties/models/house';
 
 
 @Injectable()
@@ -60,43 +62,58 @@ export class InvestmentsService {
         .set('id', id)
         .set('email', email);
 
-    const investmentData$ = this.http.get<Response>(`${this.serverHost}/getbyId`, { params })
+    const investment$ = this.http.get<Response>(`${this.serverHost}/getbyId`, { params })
         .map(this.appService.extractData)
         .catch(this.appService.handleError);
 
-    return investmentData$.switchMap((investmentData) => {
-      let investment : Investment = null;
-      if (investmentData && investmentData._id) {
-        const createdBy = new User(investmentData.createdBy.name, investmentData.createdBy.email, investmentData.createdBy.gravatar);
+    return investment$.switchMap((investment) => {
+      let result : Investment = null;
+      if (investment && investment._id) {
+        const createdBy = new User(investment.createdBy.name, investment.createdBy.email, investment.createdBy.gravatar);
         
         let team : Team = null;
-        if (investmentData.team) {
+        if (investment.team) {
           //fill team members
           let admin : User = null;
           let members : User[] = [];
-          for (let member of investmentData.team.members) {
+          for (let member of investment.team.members) {
             const newMember = new User(member.name, member.email, member.gravatar);
             members.push(newMember);
             if (member.isAdmin) {
               admin = newMember;
             }
           }
-          team = new Team(investmentData.team.name, investmentData.team.description, investmentData.team.slug, admin, members);
+          team = new Team(investment.team.name, investment.team.description, investment.team.slug, admin, members);
         }
         
 
-        if (investmentData.investmentType === INVESTMENTS_TYPES.CURRENCY || investmentData.investmentType === INVESTMENTS_TYPES.CRYPTO) {
-          investment = new CurrencyInvestment(investmentData._id, investmentData.amount, investmentData.amountUnit, createdBy, team, investmentData.investmentDistribution, 
-              investmentData.currencyInvestmentData.amountUnit, investmentData.currencyInvestmentData.amount, investmentData.currencyInvestmentData.buyingPrice, 
-              investmentData.currencyInvestmentData.buyingPriceUnit, investmentData.currencyInvestmentData.buyingDate, investmentData.investmentType);
-        } else if (investmentData.investmentType === INVESTMENTS_TYPES.PROPERTY) {
-          
+        if (investment.investmentType === INVESTMENTS_TYPES.CURRENCY || investment.investmentType === INVESTMENTS_TYPES.CRYPTO) {
+          result = new CurrencyInvestment(investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, 
+              investment.investmentData.amountUnit, investment.investmentData.amount, investment.investmentData.buyingPrice, 
+              investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, investment.investmentType);
+        } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
+          let property = null;
+          const propertyData = investment.investmentData.property;
+          if (propertyData.propertyType === propertyTypes.HOUSE) {
+            //we share the createdBy of the investment because we know is the same
+            property = new House(propertyData._id, propertyData.propertyType, propertyData.address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
+                propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, 
+                propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit,
+                propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, 
+                propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces,
+                propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate,
+                propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType)
+          }  
+
+          result = new PropertyInvestment(investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, 
+            property, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, 
+            investment.investmentType);
         }
       } else {
         this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
       }
 
-      return Observable.of(investment);
+      return Observable.of(result);
     });
   }
 
@@ -127,8 +144,8 @@ export class InvestmentsService {
           const team = item.team ? new Team(item.team.name, item.team.description, item.team.slug) : null;
 
           if (item.investmentType === 'currency' || item.investmentType === 'crypto') {
-            investments.push(new CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.currencyInvestmentData.amountUnit, 
-                item.currencyInvestmentData.amount, item.currencyInvestmentData.buyingPrice, item.currencyInvestmentData.buyingPriceUnit, item.currencyInvestmentData.buyingDate, item.investmentType));
+            investments.push(new CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.investmentData.amountUnit, 
+                item.investmentData.amount, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType));
           }
         }
       } else {

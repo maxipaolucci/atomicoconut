@@ -21,9 +21,10 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
   @Input() user : User = null;
   @Output() values: EventEmitter<any> = new EventEmitter();
   model : any = {
-    id : null,
     type : null,
     property : null,
+    propertyId : null,
+    address : null,
     buyingPrice : null,
     buyingPriceUnit : null,
     buyingDate : null
@@ -43,9 +44,9 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     this.model.buyingPriceUnit = this.user.currency;
     Object.assign(this.model, this.defaultValues);
 
-    if (this.defaultValues.id) {
+    if (this.model.propertyId) {
       //when creating from the property "invest action" on some component that shows properties
-      this.getProperty(this.model.id);
+      this.getProperty(this.model.propertyId);
     }
   }
 
@@ -100,6 +101,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     const newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(
       (property : Property) => {
         this.model.property = property;
+        this.model.address = property.address;
         let buyingPrice = null;
         let buyingPriceUnit = null;
 

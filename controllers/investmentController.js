@@ -323,6 +323,12 @@ const aggregationStages = () => {
         },
         { $lookup : { from : 'currencyinvestments', localField : '_id', foreignField : 'parent', as : 'currencyInvestmentData' } }, //for currency investments
         { $lookup : { from : 'propertyinvestments', localField : '_id', foreignField : 'parent', as : 'propertyInvestmentData' } }, //For property investments
+        { 
+            $addFields : {
+                propertyId : '$propertyInvestmentData.property'
+            }
+        },
+        { $lookup : { from : 'properties', localField : 'propertyId', foreignField : '_id', as : 'propertyData' } }, //For property investments
         {
             $project : {
                 __v : false,
@@ -335,7 +341,11 @@ const aggregationStages = () => {
                 propertyInvestmentData : { 
                     __v : false
                 },
-                "investmentDistribution._id" : false
+                "investmentDistribution._id" : false,
+                propertyId : false,
+                propertyData : {
+                    __v : false
+                }
             }
         }
     ];
@@ -380,8 +390,10 @@ const beautifyInvestmentsFormat = async (investments, options = null) => {
             investment.investmentData = investment.currencyInvestmentData[0];
         } else if (investment.propertyInvestmentData[0]) {
             investment.investmentData = investment.propertyInvestmentData[0];
+            investment.investmentData.property = investment.propertyData[0];
         }
 
+        delete investment['propertyData'];
         delete investment['propertyInvestmentData'];
         delete investment['currencyInvestmentData'];
 
