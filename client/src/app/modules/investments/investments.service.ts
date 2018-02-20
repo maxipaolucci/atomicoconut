@@ -143,9 +143,26 @@ export class InvestmentsService {
           const createdBy = new User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
           const team = item.team ? new Team(item.team.name, item.team.description, item.team.slug) : null;
 
-          if (item.investmentType === 'currency' || item.investmentType === 'crypto') {
+          if (item.investmentType === INVESTMENTS_TYPES.CURRENCY || item.investmentType === INVESTMENTS_TYPES.CRYPTO) {
             investments.push(new CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.investmentData.amountUnit, 
                 item.investmentData.amount, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType));
+          } else if (item.investmentType === INVESTMENTS_TYPES.PROPERTY) {
+            let property = null;
+            const propertyData = item.investmentData.property;
+            if (propertyData.propertyType === propertyTypes.HOUSE) {
+              //we share the createdBy of the investment because we know is the same
+              property = new House(propertyData._id, propertyData.propertyType, propertyData.address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
+                  propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, 
+                  propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit,
+                  propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, 
+                  propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces,
+                  propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate,
+                  propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType)
+            }  
+
+            investments.push(new PropertyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, 
+                property, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, 
+                item.investmentType));
           }
         }
       } else {
