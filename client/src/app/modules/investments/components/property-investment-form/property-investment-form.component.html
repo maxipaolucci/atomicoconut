@@ -12,15 +12,20 @@
       <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
         <!-- Address -->
         <mat-form-field fxFlex class="form__field">
-          <input matInput type="text" id="address" name="address" placeholder="Address" 
-              [(ngModel)]="model.address" 
+          <input matInput type="text" id="property" name="property" placeholder="Property" 
+              [(ngModel)]="model.property.address" 
               required
-              [value]="model.address"
-              #address="ngModel">
+              readonly
+              [value]="model.property.address"
+              #property="ngModel"
+              (click)="openPropertySelectionDialog()">
           
-              <mat-icon matPrefix>directions</mat-icon>
-              <mat-icon matSuffix (click)="true">view_list</mat-icon>
-          <mat-error *ngIf="address.invalid && (address.dirty || address.touched) && address.errors.required">This field is required.</mat-error>
+          <mat-icon matPrefix>home</mat-icon>
+          <button mat-button matSuffix mat-icon-button aria-label="Choose property..." (click)="openPropertySelectionDialog()">
+            <mat-icon>view_list</mat-icon>
+          </button>
+              
+          <mat-error *ngIf="property.invalid && (property.dirty || property.touched) && property.errors.required">This field is required.</mat-error>
         </mat-form-field>
       </div>
     </div>

@@ -1,8 +1,10 @@
+const { INVESTMENTS_TYPES } = require('../constants/constants');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 const md5 = require('md5');
 const Investment = mongoose.model('Investment');
 const CurrencyInvestment = mongoose.model('CurrencyInvestment');
+const PropertyInvestment = mongoose.model('PropertyInvestment');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
@@ -36,9 +38,23 @@ exports.create = async (req, res, next) => {
     //get the logged in user from req
     let user = req.user;
 
+    //check the investment type to be a valid one
+    if (!(req.body.type === INVESTMENTS_TYPES.CRYPTO || req.body.type === INVESTMENTS_TYPES.CURRENCY || 
+            req.body.type === INVESTMENTS_TYPES.PROPERTY)) {
+        
+        console.log(`${methodTrace} ${getMessage('error', 474, user.email, true, req.body.type)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 474,
+            msg : getMessage('error', 474, null, false, req.body.type),
+            data : null
+        });
+
+        return;
+    }
+
     //get the team if provided
     let team = null;
-    
     if (req.body.team) {
         team = await teamController.getTeamBySlugObject(req.body.team.slug, user.email, { withId : true });
     }
@@ -60,17 +76,14 @@ exports.create = async (req, res, next) => {
     if (investment) {
         //save a new currency investment record in DB
         console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Investment')}`);
-        let currencyInvestment = await (new CurrencyInvestment({
-            currencyType : req.body.type,
-            parent : investment._id,
-            amount : req.body.investmentData.amount,
-            amountUnit : req.body.investmentData.unit,
-            buyingPrice : req.body.investmentData.buyingPrice,
-            buyingPriceUnit : req.body.investmentData.buyingPriceUnit,
-            buyingDate : req.body.investmentData.buyingDate
-        })).save();
-
-        if (currencyInvestment) {
+        let investmentType = null;
+        if (investment.investmentType === INVESTMENTS_TYPES.CRYPTO || investment.investmentType === INVESTMENTS_TYPES.CURRENCY) {
+            investmentType = await createCurrencyInvestment(req.body.type, investment._id, req.body.investmentData);
+        } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
+            investmentType = await createPropertyInvestment(investment._id, req.body.investmentData);
+        }
+        
+        if (investmentType) {
             console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'CurrencyInvestment')}`);
             
             console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Investment')}`);
@@ -100,6 +113,32 @@ exports.create = async (req, res, next) => {
             data : null
         });
     }
+};
+
+const createCurrencyInvestment = async (currencyType, parentId, investmentData) => {
+    const methodTrace = `${errorTrace} create() > createCurrencyInvestment() > `;
+
+    return await (new CurrencyInvestment({
+        currencyType,
+        parent : parentId,
+        amount : investmentData.amount,
+        amountUnit : investmentData.unit,
+        buyingPrice : investmentData.buyingPrice,
+        buyingPriceUnit : investmentData.buyingPriceUnit,
+        buyingDate : investmentData.buyingDate
+    })).save();
+};
+
+const createPropertyInvestment = async (parentId, investmentData) => {
+    const methodTrace = `${errorTrace} create() > createPropetyInvestment() > `;
+
+    return await (new PropertyInvestment({
+        parent : parentId,
+        property : investmentData.property.id,
+        buyingPrice : investmentData.buyingPrice,
+        buyingPriceUnit : investmentData.buyingPriceUnit,
+        buyingDate : investmentData.buyingDate
+    })).save();
 };
 
 exports.update = async (req, res, next) => {
@@ -283,7 +322,7 @@ const aggregationStages = () => {
             }
         },
         { $lookup : { from : 'currencyinvestments', localField : '_id', foreignField : 'parent', as : 'currencyInvestmentData' } }, //for currency investments
-        //{ $lookup : { from : 'propertyinvestments', localField : '_id', foreignField : 'parent', as : 'propertyInvestmentData' } } //For property investments
+        { $lookup : { from : 'propertyinvestments', localField : '_id', foreignField : 'parent', as : 'propertyInvestmentData' } }, //For property investments
         {
             $project : {
                 __v : false,
@@ -291,6 +330,9 @@ const aggregationStages = () => {
                 updatorData : false,
                 teamData : false,
                 currencyInvestmentData : { 
+                    __v : false
+                },
+                propertyInvestmentData : { 
                     __v : false
                 },
                 "investmentDistribution._id" : false
@@ -334,9 +376,17 @@ const beautifyInvestmentsFormat = async (investments, options = null) => {
         }
 
         //investment data
-        investment.currencyInvestmentData = investment.currencyInvestmentData[0];
-        if (!(options && options.investmentDataId)) {
-            delete investment.currencyInvestmentData['_id'];
+        if (investment.currencyInvestmentData[0]) {
+            investment.investmentData = investment.currencyInvestmentData[0];
+        } else if (investment.propertyInvestmentData[0]) {
+            investment.investmentData = investment.propertyInvestmentData[0];
+        }
+
+        delete investment['propertyInvestmentData'];
+        delete investment['currencyInvestmentData'];
+
+        if (investment.investmentData && !(options && options.investmentDataId)) {
+            delete investment.investmentData['_id'];
         }
         
         result.push(investment);
@@ -362,10 +412,10 @@ const getByIdObject = async (id, userEmail = null, options = null) => {
     } catch(error) {
         id = null; //this is going to make the query do not return anything
     }
-
+    
     const aggregationStagesArr = [{ $match : { _id : id } }].concat(aggregationStages());
     let investments = await Investment.aggregate(aggregationStagesArr);
-
+    
     //2 - Parse the recordset from DB and organize the info better.
     let result = await beautifyInvestmentsFormat(investments, options);
     
@@ -458,7 +508,7 @@ exports.delete = async (req, res) => {
             let writeResult = null;
             let investmentDataId = null;
             let investmentDataModel = null;
-            if (investment.investmentType === 'currency' || investment.investmentType === 'crypto') {
+            if (investment.investmentType === INVESTMENTS_TYPES.CURRENCY || investment.investmentType === INVESTMENTS_TYPES.CRYPTO) {
                 investmentDataModel = 'CurrencyInvestment';
                 investmentDataId = investment.currencyInvestmentData._id;
                 writeResult = await deleteCurrencyInvestment(investmentDataId, user.email);

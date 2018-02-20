@@ -20,11 +20,9 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
   @Input() defaultValues : any = null; //the default values of the component model  
   @Input() user : User = null;
   @Output() values: EventEmitter<any> = new EventEmitter();
-  property : Property = null;
   model : any = {
     id : null,
     type : null,
-    address : null,
     property : null,
     buyingPrice : null,
     buyingPriceUnit : null,
@@ -101,8 +99,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
 
     const newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(
       (property : Property) => {
-        this.property = property;
-        this.model.address = property.address;
+        this.model.property = property;
         let buyingPrice = null;
         let buyingPriceUnit = null;
 
@@ -143,4 +140,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     this.subscription.add(newSubscription);
   }
 
+  openPropertySelectionDialog() {
+    console.log(123);
+  }
 }

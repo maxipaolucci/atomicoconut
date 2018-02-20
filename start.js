@@ -26,6 +26,7 @@ require('./models/Team');
 require('./models/Team_User');
 require('./models/Investment');
 require('./models/CurrencyInvestment');
+require('./models/PropertyInvestment');
 require('./models/Property');
 require('./models/House');
 

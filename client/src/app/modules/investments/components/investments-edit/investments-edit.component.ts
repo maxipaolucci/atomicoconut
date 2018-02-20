@@ -176,6 +176,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.model.investmentDistribution = this.populateInvestmentDistributionArray();
     this.model.createdOn = new Date(Date.now());
     this.model.updatedOn = new Date(Date.now());
+
+    console.log(this.model);
+    //return false;
     //call the investment create service
     const newSubscription = this.investmentsService.create(this.model).subscribe(
       (data : any) => {

@@ -9,6 +9,7 @@ import { CurrencyInvestment } from './models/currencyInvestment';
 import { Team } from '../teams/models/team';
 import { Response } from '../../models/response';
 import { of } from 'rxjs/observable/of';
+import { INVESTMENTS_TYPES } from '../../constants';
 
 
 @Injectable()
@@ -84,10 +85,12 @@ export class InvestmentsService {
         }
         
 
-        if (investmentData.investmentType === 'currency' || investmentData.investmentType === 'crypto') {
+        if (investmentData.investmentType === INVESTMENTS_TYPES.CURRENCY || investmentData.investmentType === INVESTMENTS_TYPES.CRYPTO) {
           investment = new CurrencyInvestment(investmentData._id, investmentData.amount, investmentData.amountUnit, createdBy, team, investmentData.investmentDistribution, 
               investmentData.currencyInvestmentData.amountUnit, investmentData.currencyInvestmentData.amount, investmentData.currencyInvestmentData.buyingPrice, 
               investmentData.currencyInvestmentData.buyingPriceUnit, investmentData.currencyInvestmentData.buyingDate, investmentData.investmentType);
+        } else if (investmentData.investmentType === INVESTMENTS_TYPES.PROPERTY) {
+          
         }
       } else {
         this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);

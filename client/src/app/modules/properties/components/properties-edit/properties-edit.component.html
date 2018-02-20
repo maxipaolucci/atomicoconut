@@ -26,6 +26,7 @@
           <!-- Description -->
           <mat-form-field fxFlex class="form__field">
             <textarea matInput id="description" name="description" placeholder="Description"
+                matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"
                 [(ngModel)]="model.description" 
                 value="model.description"
                 #description="ngModel">
@@ -246,6 +247,7 @@
           <!-- Reason for selling -->
           <mat-form-field fxFlex class="form__field">
             <textarea matInput id="reasonForSelling" name="reasonForSelling" placeholder="Reason for selling"
+                matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"
                 [(ngModel)]="model.reasonForSelling" 
                 value="model.reasonForSelling"
                 #reasonForSelling="ngModel">
@@ -257,6 +259,7 @@
           <!-- Notes -->
           <mat-form-field fxFlex class="form__field">
             <textarea matInput id="notes" name="notes" placeholder="Other notes"
+                matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"
                 [(ngModel)]="model.notes" 
                 value="model.notes"
                 #notes="ngModel">
