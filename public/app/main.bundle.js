@@ -1255,6 +1255,7 @@ var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investm
 var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
 var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
 var BehaviorSubject_1 = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
 var CurrencyInvestmentComponent = /** @class */ (function () {
     function CurrencyInvestmentComponent(currencyExchangeService, appService, usersService, investmentsService, dialog, router) {
         this.currencyExchangeService = currencyExchangeService;
@@ -1297,7 +1298,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
         }); //(currency rates and user) source
-        if (this.investment.type === 'crypto') {
+        if (this.investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
             //crypto investment
             var cryptoRates$ = this.currencyExchangeService.getCryptoRates(this.investment.unit); //get crypto rates observable source
             newSubscription = cryptoRates$.combineLatest(currencyRatesAndUser$, function (cryptoRates, currencyRatesAndUser) {
@@ -1537,7 +1538,7 @@ exports.InvestmentSelectorDialogComponent = InvestmentSelectorDialogComponent;
 /***/ "./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <div *ngFor=\"let row of investmentsUI\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <currency-investment *ngFor=\"let investment of row\" fxFlex fxFlex.gt-xs=\"50\"\r\n        [investment]=\"investment\"\r\n        [teams]=\"teams\"\r\n        (totalReturns)=\"setTotals($event)\"\r\n        (deletedId)=\"removeInvestment($event)\">\r\n      </currency-investment>\r\n    </div>\r\n\r\n    <mat-card fxFlex class=\"totals__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"20px\">\r\n        <!-- Totals -->\r\n        <div *ngIf=\"!myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>Total investments: <strong>{{totalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>\r\n          <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n              [class.color__red]=\"totalReturn < totalInvestment\">\r\n            Total ROI: <strong>{{ totalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- My totals -->\r\n        <div *ngIf=\"myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>My total investments: <strong>{{myTotalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>\r\n          <p [class.color__accent]=\"myTotalReturn >= myTotalInvestment\" \r\n              [class.color__red]=\"myTotalReturn < myTotalInvestment\">\r\n            My total ROI: <strong>{{ myTotalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{myTotalReturn / myTotalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- Totals switcher -->\r\n        <mat-slide-toggle fxFlexAlign.xs=\"center\" color=\"accent\" class=\"form__field form__field__toogle\" [checked]=\"false\" #myTotals>\r\n          My totals\r\n        </mat-slide-toggle>\r\n\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-investments__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have investments yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <div *ngFor=\"let row of investmentsUI\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <div *ngFor=\"let investment of row\" fxFlex fxFlex.gt-xs=\"50\">\r\n        <currency-investment \r\n          [investment]=\"investment\"\r\n          [teams]=\"teams\"\r\n          (totalReturns)=\"setTotals($event)\"\r\n          (deletedId)=\"removeInvestment($event)\">\r\n        </currency-investment>\r\n      </div>\r\n      \r\n    </div>\r\n\r\n    <mat-card fxFlex class=\"totals__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"20px\">\r\n        <!-- Totals -->\r\n        <div *ngIf=\"!myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>Total investments: <strong>{{totalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>\r\n          <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n              [class.color__red]=\"totalReturn < totalInvestment\">\r\n            Total ROI: <strong>{{ totalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- My totals -->\r\n        <div *ngIf=\"myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>My total investments: <strong>{{myTotalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>\r\n          <p [class.color__accent]=\"myTotalReturn >= myTotalInvestment\" \r\n              [class.color__red]=\"myTotalReturn < myTotalInvestment\">\r\n            My total ROI: <strong>{{ myTotalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{myTotalReturn / myTotalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- Totals switcher -->\r\n        <mat-slide-toggle fxFlexAlign.xs=\"center\" color=\"accent\" class=\"form__field form__field__toogle\" [checked]=\"false\" #myTotals>\r\n          My totals\r\n        </mat-slide-toggle>\r\n\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-investments__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have investments yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -2400,6 +2401,234 @@ exports.PropertyInvestmentFormComponent = PropertyInvestmentFormComponent;
 
 /***/ }),
 
+/***/ "./src/app/modules/investments/components/property-investment/property-investment.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  property-investment works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/modules/investments/components/property-investment/property-investment.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/modules/investments/components/property-investment/property-investment.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
+var rxjs_1 = __webpack_require__("./node_modules/rxjs/Rx.js");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var PropertyInvestmentComponent = /** @class */ (function () {
+    function PropertyInvestmentComponent(currencyExchangeService, appService, usersService, investmentsService, dialog, router) {
+        this.currencyExchangeService = currencyExchangeService;
+        this.appService = appService;
+        this.usersService = usersService;
+        this.investmentsService = investmentsService;
+        this.dialog = dialog;
+        this.router = router;
+        this.totalReturns = new core_1.EventEmitter();
+        this.deletedId = new core_1.EventEmitter();
+        this.teams$ = new rxjs_1.BehaviorSubject([]);
+        this.investmentAmount = 0;
+        this.buyingPrice = 0;
+        this.investmentReturn = 0;
+        this.investmentValueWhenBought = 0;
+        this.currentPrice = 0;
+        this.actionRunning = false;
+        this.user = null;
+        this.team = null; //if the investment has a tema this will be populated with the full info of the team
+        this.investmentDistribution = [];
+        this.subscription = new rxjs_1.Subscription();
+    }
+    Object.defineProperty(PropertyInvestmentComponent.prototype, "teams", {
+        get: function () {
+            return this.teams$.getValue();
+        },
+        set: function (teams) {
+            this.teams$.next(teams);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    PropertyInvestmentComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        //get the team of the investmetn if exists
+        var newSubscription = null;
+        var currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
+        var currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, function (user, currencyRates) {
+            _this.user = user;
+            return { user: user, currencyRates: currencyRates };
+        }); //(currency rates and user) source
+        newSubscription = currencyRatesAndUser$.switchMap(function (data) {
+            _this.currentPrice = data.currencyRates[_this.investment.investmentAmountUnit] || 1;
+            _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
+            _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
+            _this.investmentValueWhenBought = _this.buyingPrice;
+            _this.investmentReturn = _this.investmentAmount;
+            return _this.teams$;
+        }).subscribe(function (teams) {
+            _this.setInvestmentTeamData(teams);
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error trying to generate investment data > ", error);
+            _this.appService.showResults("There was an error trying to generate investment data, please try again in a few minutes.", 'error');
+        });
+        this.subscription.add(newSubscription);
+    };
+    PropertyInvestmentComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    /**
+     * Populates team data as well as the distribution on the investment between team members when the investment is asigned to a team
+     *
+     * @param {Team[]} teams . The teams of the current user
+     */
+    PropertyInvestmentComponent.prototype.setInvestmentTeamData = function (teams) {
+        var _this = this;
+        this.team = this.investment.team ? teams.filter(function (team) { return team.slug === _this.investment.team.slug; })[0] : null; //look for the team of the investment
+        //set totals to emit to parent component. If no team assigned then the total of the investment is the same as my portion
+        var totals = {
+            investmentId: this.investment.id,
+            investmentAmount: this.investmentAmount,
+            investmentReturn: this.investmentReturn,
+            myInvestmentAmount: this.investmentAmount,
+            myInvestmentReturn: this.investmentReturn
+        };
+        if (this.team) {
+            var _loop_1 = function (member) {
+                var percentage = (this_1.investment.investmentDistribution.filter(function (portion) { return portion.email === member.email; })[0]).percentage;
+                this_1.investmentDistribution.push({
+                    member: member,
+                    percentage: percentage,
+                    money: this_1.investmentReturn * percentage / 100
+                });
+                if (this_1.user && this_1.user.email === member.email) {
+                    totals.myInvestmentAmount = this_1.investmentAmount * percentage / 100;
+                    totals.myInvestmentReturn = this_1.investmentReturn * percentage / 100;
+                }
+            };
+            var this_1 = this;
+            //if team is present then get my portion of the investment
+            for (var _i = 0, _a = this.team.members; _i < _a.length; _i++) {
+                var member = _a[_i];
+                _loop_1(member);
+            }
+        }
+        this.totalReturns.emit(totals);
+    };
+    PropertyInvestmentComponent.prototype.openDeleteDialog = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > openDeleteDialog() > "; //for debugging
+        if (!this.investment.id) {
+            this.appService.consoleLog('error', methodTrace + " Investment ID is required to delete.");
+            return false;
+        }
+        this.actionRunning = true;
+        var yesNoDialogRef = this.dialog.open(yes_no_dialog_component_1.YesNoDialogComponent, {
+            width: '250px',
+            data: {
+                title: 'Delete investment',
+                message: "Are you sure you want to delete this investment forever?"
+            }
+        });
+        yesNoDialogRef.afterClosed().subscribe(function (result) {
+            if (result === 'yes') {
+                _this.delete();
+            }
+            else {
+                _this.actionRunning = false;
+            }
+        });
+        return false;
+    };
+    PropertyInvestmentComponent.prototype.delete = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        if (this.user) {
+            this.actionRunning = true;
+            var newSubscription = this.investmentsService.delete(this.investment.id, this.user.email).subscribe(function (data) {
+                if (data && data.removed > 0) {
+                    _this.appService.showResults("Investment successfully removed!", 'success');
+                    _this.deletedId.emit(_this.investment.id);
+                }
+                else {
+                    _this.appService.showResults("Investment could not be removed, please try again.", 'error');
+                    _this.actionRunning = false;
+                }
+            }, function (error) {
+                _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+                if (error.codeno === 400) {
+                    _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+                }
+                else {
+                    _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+                }
+                _this.actionRunning = false;
+            });
+            this.subscription.add(newSubscription);
+        }
+        else {
+            this.appService.showResults("You are not logged into AtomiCoconut, you must login first.", 'error');
+            this.router.navigate(['/users/login']);
+        }
+    };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", PropertyInvestment_1.PropertyInvestment)
+    ], PropertyInvestmentComponent.prototype, "investment", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Array),
+        __metadata("design:paramtypes", [Array])
+    ], PropertyInvestmentComponent.prototype, "teams", null);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], PropertyInvestmentComponent.prototype, "totalReturns", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], PropertyInvestmentComponent.prototype, "deletedId", void 0);
+    PropertyInvestmentComponent = __decorate([
+        core_1.Component({
+            selector: 'app-property-investment',
+            template: __webpack_require__("./src/app/modules/investments/components/property-investment/property-investment.component.html"),
+            styles: [__webpack_require__("./src/app/modules/investments/components/property-investment/property-investment.component.scss")]
+        }),
+        __metadata("design:paramtypes", [currency_exchange_service_1.CurrencyExchangeService, app_service_1.AppService, users_service_1.UsersService, investments_service_1.InvestmentsService,
+            material_1.MatDialog, router_1.Router])
+    ], PropertyInvestmentComponent);
+    return PropertyInvestmentComponent;
+}());
+exports.PropertyInvestmentComponent = PropertyInvestmentComponent;
+
+
+/***/ }),
+
 /***/ "./src/app/modules/investments/currency-exchange.service.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2586,6 +2815,7 @@ var investments_edit_component_1 = __webpack_require__("./src/app/modules/invest
 var currency_investment_form_component_1 = __webpack_require__("./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts");
 var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
 var property_investment_form_component_1 = __webpack_require__("./src/app/modules/investments/components/property-investment-form/property-investment-form.component.ts");
+var property_investment_component_1 = __webpack_require__("./src/app/modules/investments/components/property-investment/property-investment.component.ts");
 var InvestmentsModule = /** @class */ (function () {
     function InvestmentsModule() {
     }
@@ -2605,7 +2835,8 @@ var InvestmentsModule = /** @class */ (function () {
                 investment_selector_dialog_component_1.InvestmentSelectorDialogComponent,
                 investments_edit_component_1.InvestmentsEditComponent,
                 currency_investment_form_component_1.CurrencyInvestmentFormComponent,
-                property_investment_form_component_1.PropertyInvestmentFormComponent
+                property_investment_form_component_1.PropertyInvestmentFormComponent,
+                property_investment_component_1.PropertyInvestmentComponent
             ],
             entryComponents: [
                 investment_selector_dialog_component_1.InvestmentSelectorDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
@@ -2753,8 +2984,17 @@ var InvestmentsService = /** @class */ (function () {
                     var item = investmentsData_1[_i];
                     var createdBy = new user_1.User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
                     var team = item.team ? new team_1.Team(item.team.name, item.team.description, item.team.slug) : null;
-                    if (item.investmentType === 'currency' || item.investmentType === 'crypto') {
+                    if (item.investmentType === constants_1.INVESTMENTS_TYPES.CURRENCY || item.investmentType === constants_1.INVESTMENTS_TYPES.CRYPTO) {
                         investments.push(new currencyInvestment_1.CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.investmentData.amountUnit, item.investmentData.amount, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType));
+                    }
+                    else if (item.investmentType === constants_1.INVESTMENTS_TYPES.PROPERTY) {
+                        var property = null;
+                        var propertyData = item.investmentData.property;
+                        if (propertyData.propertyType === constants_1.propertyTypes.HOUSE) {
+                            //we share the createdBy of the investment because we know is the same
+                            property = new house_1.House(propertyData._id, propertyData.propertyType, propertyData.address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
+                        }
+                        investments.push(new PropertyInvestment_1.PropertyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, property, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType));
                     }
                 }
             }

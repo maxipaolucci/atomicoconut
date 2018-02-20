@@ -1,27 +1,24 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { PropertyInvestment } from '../../models/PropertyInvestment';
+import { Team } from '../../../teams/models/team';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { User } from '../../../users/models/user';
+import { CurrencyExchangeService } from '../../currency-exchange.service';
+import { AppService } from '../../../../app.service';
+import { UsersService } from '../../../users/users.service';
+import { InvestmentsService } from '../../investments.service';
+import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 
-import { AppService } from '../../../../app.service';
-import { InvestmentsService } from '../../investments.service';
-import { User } from '../../../users/models/user';
-import { UsersService } from '../../../users/users.service';
-import { Router } from '@angular/router';
-import { CurrencyExchangeService } from '../../currency-exchange.service';
-import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { Subscription } from 'rxjs/Subscription';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Team } from '../../../teams/models/team';
-import { INVESTMENTS_TYPES } from '../../../../constants';
-
 @Component({
-  selector: 'currency-investment',
-  templateUrl: './currency-investment.component.html',
-  styleUrls: ['./currency-investment.component.scss']
+  selector: 'app-property-investment',
+  templateUrl: './property-investment.component.html',
+  styleUrls: ['./property-investment.component.scss']
 })
-export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
+export class PropertyInvestmentComponent implements OnInit {
 
-  @Input() investment : CurrencyInvestment;
+  @Input() investment : PropertyInvestment;
   @Input()
   set teams(teams : Team[]) {
     this.teams$.next(teams);
@@ -61,54 +58,24 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       }
     ); //(currency rates and user) source
     
-    
-    if (this.investment.type === INVESTMENTS_TYPES.CRYPTO) {
-      //crypto investment
-      const cryptoRates$ = this.currencyExchangeService.getCryptoRates(this.investment.unit); //get crypto rates observable source
-      
-      newSubscription = cryptoRates$.combineLatest(currencyRatesAndUser$, (cryptoRates, currencyRatesAndUser) => { 
-        return  {
-          currencyRates : currencyRatesAndUser.currencyRates,
-          user : currencyRatesAndUser.user, 
-          cryptoRates 
-        }; 
-      }).switchMap(
-        (data) => {
-          this.currentPrice = data.cryptoRates.price;
-          this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
-          this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
-          this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
-          this.investmentReturn = this.currentPrice * this.investment.amount;
+    newSubscription = currencyRatesAndUser$.switchMap(
+      (data) => {
+        this.currentPrice = data.currencyRates[this.investment.investmentAmountUnit] || 1;
+        this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
+        this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
+        this.investmentValueWhenBought = this.buyingPrice;
+        this.investmentReturn = this.investmentAmount;
 
-          return this.teams$;
-        }
-      ).subscribe((teams : Team[]) => {
-        this.setInvestmentTeamData(teams);
-      },
-      (error : any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error trying to generate investment data > `, error);
-        this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, 'error');
-      });
-    } else {
-      //currency exchange
-      newSubscription = currencyRatesAndUser$.switchMap(
-        (data) => {
-          this.currentPrice = data.currencyRates[this.investment.unit] || 1;
-          this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
-          this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
-          this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
-          this.investmentReturn = this.currentPrice * this.investment.amount;
+        return this.teams$;
+      }
+    ).subscribe((teams : Team[]) => {
+      this.setInvestmentTeamData(teams);
+    },
+    (error : any) => {
+      this.appService.consoleLog('error', `${methodTrace} There was an error trying to generate investment data > `, error);
+      this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, 'error');
+    });
 
-          return this.teams$;
-        }
-      ).subscribe((teams : Team[]) => {
-        this.setInvestmentTeamData(teams);
-      },
-      (error : any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error trying to generate investment data > `, error);
-        this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, 'error');
-      });
-    }
     this.subscription.add(newSubscription);
   }
 
@@ -217,5 +184,5 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       this.router.navigate(['/users/login']);
     }
   }
-    
+
 }

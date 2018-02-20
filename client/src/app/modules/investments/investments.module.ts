@@ -14,6 +14,7 @@ import { InvestmentsEditComponent } from './components/investments-edit/investme
 import { CurrencyInvestmentFormComponent } from './components/currency-investment-form/currency-investment-form.component';
 import { InvestmentsService } from './investments.service';
 import { PropertyInvestmentFormComponent } from './components/property-investment-form/property-investment-form.component';
+import { PropertyInvestmentComponent } from './components/property-investment/property-investment.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { PropertyInvestmentFormComponent } from './components/property-investmen
     InvestmentSelectorDialogComponent,
     InvestmentsEditComponent,
     CurrencyInvestmentFormComponent,
-    PropertyInvestmentFormComponent
+    PropertyInvestmentFormComponent,
+    PropertyInvestmentComponent
   ],
   entryComponents: [
     InvestmentSelectorDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
