@@ -28,7 +28,8 @@ const errorCodes = {
   471 : 'Sorry, this {{param}} has {{param}} associated to it. We cannot delete it until all the related data is removed or associated to another entity.',
   472 : 'Error trying to add a new member to each investment distribution array of the team investments.',
   473 : 'Error trying to remove member from each investment distribution array from team investments.',
-  474 : 'The investment type provided "{{param}}" does not match any of the invesment types supported by the platform.'
+  474 : 'The investment type provided "{{param}}" does not match any of the invesment types supported by the platform.',
+  475 : 'Sorry, this {{param}} has {{param}} associated to it. We cannot delete it until all the related data is removed.',
 };
 
 const messageCodes = {
@@ -86,7 +87,7 @@ const messageCodes = {
  * @param {*} codeno . The number of message to get back
  * @param {*} params . The params to configure the message
  */
-const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = false,...params) => {
+const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = false, ...params) => {
   if (codeno === -1) {
     return '';
   }

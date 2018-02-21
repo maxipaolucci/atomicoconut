@@ -149,9 +149,11 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-        } else if (error.codeno === 471) {
+        } else if (error.codeno === 475) {
           //property associated to an investment
           this.appService.showResults(error.msg, 'error', 7000);
+        } else if (error.codeno === 462) {
+          this.appService.showResults(`You cannot delete this property because you are not the creator of it. Ask ${error.data.creator.name} to do it.`, 'error');
         } else {
           this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
         }

@@ -14,7 +14,12 @@
       <ng-container matColumnDef="invest">
         <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <button mat-mini-fab color="primary" routerLink="/investments/property/create/{{element.id}}" (click)="propertyTableActionRunning = true">
+          <button mat-mini-fab color="primary" 
+              routerLink="/investments/property/create/{{element.id}}" 
+              [disabled]="user.email !== element.createdBy.email"
+              [matTooltip]="user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''"
+              matTooltipPosition="left"
+              (click)="propertyTableActionRunning = true">
             <mat-icon aria-label="Create investment">trending_up</mat-icon>
           </button>
         </mat-cell>
@@ -23,8 +28,12 @@
       <ng-container matColumnDef="delete">
         <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
         <mat-cell *matCellDef="let element; let propertyIndex = index;">
-          <button mat-mini-fab color="warn" (click)="openDeleteTeamDialog(propertyIndex, element)">
-            <mat-icon aria-label="Edit">delete</mat-icon>
+          <button mat-mini-fab color="warn" 
+              [disabled]="user.email !== element.createdBy.email"
+              [matTooltip]="user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''"
+              matTooltipPosition="left"
+              (click)="openDeleteTeamDialog(propertyIndex, element)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </mat-cell>
       </ng-container>

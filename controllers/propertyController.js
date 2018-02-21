@@ -8,6 +8,8 @@ const House = mongoose.model('House');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
+const { getPropertyIdsInInvestments } = require('./investmentController');
+
 
 const errorTrace = 'propertyController >';
 
@@ -168,13 +170,17 @@ exports.update = async (req, res, next) => {
         
         if (property.createdBy.email === user.email) {
             found = true;
+        } else {
+            //get my property investments to see if I have an investment in this property
+            const propertyIds = await getPropertyIdsInInvestments(user.email);
+        
+            for (let propertyId of propertyIds) {
+                if (property._id.equals(propertyId)) {
+                    found = true;
+                    break;
+                }
+            }
         }
-        // for (let portion of property.investmentDistribution) {
-        //     if (user.email === portion.email) {
-        //         found = true;
-        //         break;
-        //     }
-        // }
 
         if (!found) {
             //the client is not an owner  of the property requested
@@ -314,29 +320,42 @@ exports.delete = async (req, res) => {
     const property = await getByIdObject(req.params.id, user.email, {
         propertyTypeDataId : true
     });
+
+    let creator = null;
     
-    //2 - check that the property was created by the user or he is part of an investment on that property
-    if (property /* && property.investmentDistribution*/) {
+    //2 - check that the property was created by the user
+    if (property) {
+        creator = property.createdBy;
+
         let found = false;
-        if (property.createdBy.email === user.email) {
+        if (creator.email === user.email) {
             found = true;
+
+            //get my property investments to see if I have an investment in this property. If true then we cannot delete the property
+            const propertyIds = await getPropertyIdsInInvestments(user.email);
+            for (let propertyId of propertyIds) {
+                if (property._id.equals(propertyId)) {
+                    console.log(`${methodTrace} ${getMessage('error', 475, user.email, true, 'Property', 'Investments')}`);
+                    res.status(401).json({ 
+                        status : "error", 
+                        codeno : 475,
+                        msg : getMessage('error', 475, null, false, 'Property', 'Investments'),
+                        data : null
+                    });
+            
+                    return;
+                }
+            }
         }
-        // for (let member of property.investmentDistribution) {
-        //     if (user.email === member.email) {
-        //         found = true;
-        //         break;
-        //     }
-        // }
 
         if (found) {
-            //3.1 - The property,in some way, belongs to the user, we proceed to delete
+            //3.1 - The property belongs to the user, we proceed to delete
             let writeResult = null;
             let propertyTypeDataId = null;
             let propertyTypeDataModel = null;
             if (property.propertyType === PROPERTY_TYPES.HOUSE) {
                 propertyTypeDataModel = 'House';
                 propertyTypeDataId = property.propertyTypeData._id;
-                console.log(property._id, propertyTypeDataId);
                 writeResult = await deletePropertyTypeData(propertyTypeDataModel, propertyTypeDataId, user.email);
             }
             
@@ -394,13 +413,13 @@ exports.delete = async (req, res) => {
         return;
     }
 
-    //3.2 - the user it is not the creator of the property or a member of an investment in that property
+    //3.2 - the user it is not the creator of the property
     console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Property', req.user.email)}`);
     res.status(401).json({ 
         status : "error", 
         codeno : 462,
         msg : getMessage('error', 462, null, false, 'Property', req.user.email),
-        data : null
+        data : { creator }
     });
 };
 
@@ -439,21 +458,26 @@ exports.getById = async (req, res) => {
     const result = await getByIdObject(req.params.id, req.user.email, {
         propertyTypeDataId : false
     });
+
     
     //2 - check that the user is the creator of the property or he is investing in it
-    if (result /*&& result.investmentDistribution*/) {
+    if (result) {
         let found = false;
 
         if (result.createdBy.email === req.user.email) {
             found = true;
+        } else {
+            //get my property investments to see if I have an investment in this property
+            const propertyIds = await getPropertyIdsInInvestments(req.user.email);
+        
+            for (let propertyId of propertyIds) {
+                if (result._id.equals(propertyId)) {
+                    found = true;
+                    break;
+                }
+            }
         }
-        // for (let member of result.investmentDistribution) {
-        //     if (req.user.email === member.email) {
-        //         found = true;
-        //         break;
-        //     }
-        // }
-
+        
         if (found) {
             //3.1 - The user is member of the property, send it back to the client
             res.json({
@@ -522,43 +546,18 @@ exports.getAllProperties = async (req, res) => {
 
     const user = req.user;
 
-    //get the property investments where I am involved
-    let propertiesInInvestments = await Investment.aggregate([
-        { 
-            $match : { 
-                investmentType : INVESTMENTS_TYPES.PROPERTY, 
-                investmentDistribution : { $elemMatch : { email : req.user.email } } 
-            } 
-        },
-        { $lookup : { from : 'propertyinvestments', localField : '_id', foreignField : 'parent', as : 'propertyInvestmentData' } }, //For property investments
-        { 
-            $addFields : {
-                propertyId : '$propertyInvestmentData.property'
-            }
-        }, 
-        {
-            $project : {
-                _id : false,
-                propertyId : true
-            }
-        }
-    ]);
+    // Get all the properties from property investments where I am a member of.
+    const propertyIds = await getPropertyIdsInInvestments(user.email)
 
-    let propertyIds = [];
-    for (let property of propertiesInInvestments) {
-        propertyIds.push(property.propertyId[0]);
-    }
-    console.log(propertyIds);
-
-    //1 - Get all the properties where user is involved (created or has a part of an investment in the property)
+    // - Get all the properties where user is involved (created or has a part of an investment in the property)
     console.log(`${methodTrace} ${getMessage('message', 1034, user.email, true, 'all Properties', 'user', user.email)}`);
-    const aggregationStagesArr = [{ $match : { createdBy : user._id } }].concat(aggregationStages());
+    const aggregationStagesArr = [{ $match : { $or : [ { createdBy : user._id }, { _id : { $in : propertyIds } } ] } }].concat(aggregationStages());
     let properties = await Property.aggregate(aggregationStagesArr);
 
-    //2 - Parse the recordset from DB and organize the info better.
+    // - Parse the recordset from DB and organize the info better.
     let result = await beautifyPropertiesFormat(properties);
 
-    //3- Return properties info to the user.
+    //- Return properties info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, user.email, true, result.length, 'Property(s)')}`);
     res.json({
         status : 'success', 

@@ -663,3 +663,45 @@ const deletePropertyInvestment = async (id, userEmail) => {
     
     return writeResult;
 };
+
+/**
+ * Return an array with the property ids of all the investments properties where the user email provided is investing.
+ * 
+ * @param {string} userEmail 
+ * @return {array} . An array of property ids.
+ */
+exports.getPropertyIdsInInvestments = async(userEmail) => {
+    const methodTrace = `${errorTrace} getPropertyIdsInInvestments() >`;
+    
+    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'PropertyInvestment(s)', 'user email', userEmail)}`);
+
+    let propertiesInInvestments = await Investment.aggregate([
+        { 
+            $match : { 
+                investmentType : INVESTMENTS_TYPES.PROPERTY, 
+                investmentDistribution : { $elemMatch : { email : userEmail } } 
+            } 
+        },
+        { $lookup : { from : 'propertyinvestments', localField : '_id', foreignField : 'parent', as : 'propertyInvestmentData' } }, //For property investments
+        { 
+            $addFields : {
+                propertyId : '$propertyInvestmentData.property'
+            }
+        }, 
+        {
+            $project : {
+                _id : false,
+                propertyId : true
+            }
+        }
+    ]);
+
+    let propertyIds = [];
+    for (let property of propertiesInInvestments) {
+        propertyIds.push(property.propertyId[0]);
+    }
+
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, propertyIds.length, 'PropertyInvestment(s)')}`);
+
+    return propertyIds;
+};

@@ -2328,29 +2328,36 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
         }
         this.getPropertyServiceRunning = true;
         var newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(function (property) {
-            _this.model.property = property;
-            _this.model.address = property.address;
-            var buyingPrice = null;
-            var buyingPriceUnit = null;
-            if (property.salePrice) {
-                buyingPrice = property.salePrice;
-                buyingPriceUnit = property.salePriceUnit;
+            if (property.createdBy.email !== _this.user.email) {
+                //we cannot create an investment of a property not created by me
+                _this.appService.showResults("Only the property creator (" + property.createdBy.name + ") is allowed to create an investment with this property.", 'error');
+                return _this.router.navigate(['/properties']);
             }
-            else if (property.offerPrice) {
-                buyingPrice = property.offerPrice;
-                buyingPriceUnit = property.offerPriceUnit;
+            else {
+                _this.model.property = property;
+                _this.model.address = property.address;
+                var buyingPrice = null;
+                var buyingPriceUnit = null;
+                if (property.salePrice) {
+                    buyingPrice = property.salePrice;
+                    buyingPriceUnit = property.salePriceUnit;
+                }
+                else if (property.offerPrice) {
+                    buyingPrice = property.offerPrice;
+                    buyingPriceUnit = property.offerPriceUnit;
+                }
+                else if (property.askingPrice) {
+                    buyingPrice = property.askingPrice;
+                    buyingPriceUnit = property.askingPriceUnit;
+                }
+                else if (property.walkAwayPrice) {
+                    buyingPrice = property.walkAwayPrice;
+                    buyingPriceUnit = property.walkAwayPriceUnit;
+                }
+                _this.model.buyingPrice = buyingPrice;
+                _this.model.buyingPriceUnit = buyingPriceUnit || _this.user.currency;
+                _this.getPropertyServiceRunning = false;
             }
-            else if (property.askingPrice) {
-                buyingPrice = property.askingPrice;
-                buyingPriceUnit = property.askingPriceUnit;
-            }
-            else if (property.walkAwayPrice) {
-                buyingPrice = property.walkAwayPrice;
-                buyingPriceUnit = property.walkAwayPriceUnit;
-            }
-            _this.model.buyingPrice = buyingPrice;
-            _this.model.buyingPriceUnit = buyingPriceUnit || _this.user.currency;
-            _this.getPropertyServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > ", error);
             if (error.codeno === 400) {
@@ -3284,7 +3291,7 @@ exports.HousesEditComponent = HousesEditComponent;
 /***/ "./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties\">\r\n  <section class=\"table__container\" *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\">\r\n\r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" routerLink=\"/properties/{{element.type}}/edit/{{element.id}}\" (click)=\"propertyTableActionRunning = true\">{{element.address}}</mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" routerLink=\"/investments/property/create/{{element.id}}\" (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Edit\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"['address', 'invest', 'delete']\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: ['address', 'invest', 'delete'];\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab routerLink=\"house/create\" class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new property\" matTooltipPosition=\"left\">\r\n      <mat-icon aria-label=\"Create new property\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties\">\r\n  <section class=\"table__container\" *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\">\r\n\r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" routerLink=\"/properties/{{element.type}}/edit/{{element.id}}\" (click)=\"propertyTableActionRunning = true\">{{element.address}}</mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"['address', 'invest', 'delete']\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: ['address', 'invest', 'delete'];\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab routerLink=\"house/create\" class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new property\" matTooltipPosition=\"left\">\r\n      <mat-icon aria-label=\"Create new property\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -3435,9 +3442,12 @@ var PropertiesDashboardComponent = /** @class */ (function () {
             if (error.codeno === 400) {
                 _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
             }
-            else if (error.codeno === 471) {
+            else if (error.codeno === 475) {
                 //property associated to an investment
                 _this.appService.showResults(error.msg, 'error', 7000);
+            }
+            else if (error.codeno === 462) {
+                _this.appService.showResults("You cannot delete this property because you are not the creator of it. Ask " + error.data.creator.name + " to do it.", 'error');
             }
             else {
                 _this.appService.showResults("There was an error with this service and the information provided.", 'error');
