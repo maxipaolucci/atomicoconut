@@ -50,7 +50,6 @@ export class PropertyInvestmentComponent implements OnInit {
   ngOnInit() : void {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     
-    console.log(this.investment.property.type);
     if (this.investment.property instanceof House) {
       this.investmentTitle = this.utilService.capitalizeFirstLetter((<House>this.investment.property).buildingType);
     }

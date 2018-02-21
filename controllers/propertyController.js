@@ -1,9 +1,9 @@
-const { PROPERTY_TYPES } = require('../constants/constants');
-
+const { INVESTMENTS_TYPES, PROPERTY_TYPES } = require('../constants/constants');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 const md5 = require('md5');
 const Property = mongoose.model('Property');
+const Investment = mongoose.model('Investment');
 const House = mongoose.model('House');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
@@ -521,6 +521,35 @@ exports.getAllProperties = async (req, res) => {
     const methodTrace = `${errorTrace} getAllProperties() >`;
 
     const user = req.user;
+
+    //get the property investments where I am involved
+    let propertiesInInvestments = await Investment.aggregate([
+        { 
+            $match : { 
+                investmentType : INVESTMENTS_TYPES.PROPERTY, 
+                investmentDistribution : { $elemMatch : { email : req.user.email } } 
+            } 
+        },
+        { $lookup : { from : 'propertyinvestments', localField : '_id', foreignField : 'parent', as : 'propertyInvestmentData' } }, //For property investments
+        { 
+            $addFields : {
+                propertyId : '$propertyInvestmentData.property'
+            }
+        }, 
+        {
+            $project : {
+                _id : false,
+                propertyId : true
+            }
+        }
+    ]);
+
+    let propertyIds = [];
+    for (let property of propertiesInInvestments) {
+        propertyIds.push(property.propertyId[0]);
+    }
+    console.log(propertyIds);
+
     //1 - Get all the properties where user is involved (created or has a part of an investment in the property)
     console.log(`${methodTrace} ${getMessage('message', 1034, user.email, true, 'all Properties', 'user', user.email)}`);
     const aggregationStagesArr = [{ $match : { createdBy : user._id } }].concat(aggregationStages());

@@ -2480,7 +2480,6 @@ var PropertyInvestmentComponent = /** @class */ (function () {
     PropertyInvestmentComponent.prototype.ngOnInit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
-        console.log(this.investment.property.type);
         if (this.investment.property instanceof house_1.House) {
             this.investmentTitle = this.utilService.capitalizeFirstLetter(this.investment.property.buildingType);
         }
