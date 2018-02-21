@@ -3,3 +3,7 @@ exports.INVESTMENTS_TYPES = {
   CRYPTO : 'crypto',
   PROPERTY : 'property'
 };
+
+exports.PROPERTY_TYPES = {
+  HOUSE : 'house'
+};

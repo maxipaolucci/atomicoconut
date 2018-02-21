@@ -1,10 +1,14 @@
 .investment__card {
   text-align: left;
 
-  .header-image {
+  mat-card-header {
+    cursor: pointer;
+
+    .header-image {
     
-    img {
-      width : 40px;
+      img {
+        width : 40px;
+      }
     }
   }
 

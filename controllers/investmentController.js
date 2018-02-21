@@ -343,17 +343,22 @@ const aggregationStages = () => {
         { $lookup : { from : 'currencyinvestments', localField : '_id', foreignField : 'parent', as : 'currencyInvestmentData' } }, //for currency investments
         { 
             $addFields : {
-                buyingDate : '$currencyInvestmentData.buyingDate' //for sorting
+                currencyInvestmentBuyingDate : '$currencyInvestmentData.buyingDate' //for sorting
             }
         },
         { $lookup : { from : 'propertyinvestments', localField : '_id', foreignField : 'parent', as : 'propertyInvestmentData' } }, //For property investments
         { 
             $addFields : {
                 propertyId : '$propertyInvestmentData.property',
-                buyingDate : '$propertyInvestmentData.buyingDate' //for sorting
+                propertyInvestmentBuyingDate : '$propertyInvestmentData.buyingDate' //for sorting
             }
         },
         { $lookup : { from : 'properties', localField : 'propertyId', foreignField : '_id', as : 'propertyData' } }, //For property investments
+        {
+            $addFields : {
+                buyingDate : { $concatArrays: [ "$currencyInvestmentBuyingDate", "$propertyInvestmentBuyingDate" ] } //for sorting , concat both fields retrieved before as we know just one is going to have a date
+            }
+        },
         {
             $project : {
                 __v : false,
@@ -370,7 +375,9 @@ const aggregationStages = () => {
                 propertyId : false,
                 propertyData : {
                     __v : false
-                }
+                },
+                currencyInvestmentBuyingDate : false,
+                propertyInvestmentBuyingDate : false
             }
         }
     ];
@@ -421,6 +428,7 @@ const beautifyInvestmentsFormat = async (investments, options = null) => {
         delete investment['propertyData'];
         delete investment['propertyInvestmentData'];
         delete investment['currencyInvestmentData'];
+        delete investment['buyingDate']; //remove buying date (used JUST for sorting inside the query)
 
         if (investment.investmentData && !(options && options.investmentDataId)) {
             delete investment.investmentData['_id'];

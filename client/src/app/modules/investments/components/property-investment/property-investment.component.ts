@@ -10,6 +10,8 @@ import { InvestmentsService } from '../../investments.service';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
+import { House } from '../../../properties/models/house';
+import { UtilService } from '../../../../util.service';
 
 @Component({
   selector: 'property-investment',
@@ -34,6 +36,7 @@ export class PropertyInvestmentComponent implements OnInit {
   investmentReturn : number = 0;
   investmentValueWhenBought : number = 0;
   currentPrice : number = 0;
+  investmentTitle : string = null;
   actionRunning : boolean = false;
   user : User = null;
   team : Team = null; //if the investment has a tema this will be populated with the full info of the team
@@ -42,11 +45,16 @@ export class PropertyInvestmentComponent implements OnInit {
 
 
   constructor(private currencyExchangeService: CurrencyExchangeService, private appService : AppService, private usersService : UsersService, private investmentsService : InvestmentsService, 
-    public dialog: MatDialog, private router : Router) {}
+    public dialog: MatDialog, private router : Router, private utilService : UtilService) {}
 
   ngOnInit() : void {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     
+    console.log(this.investment.property.type);
+    if (this.investment.property instanceof House) {
+      this.investmentTitle = this.utilService.capitalizeFirstLetter((<House>this.investment.property).buildingType);
+    }
+
     //get the team of the investmetn if exists
     let newSubscription = null;
     const currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
@@ -60,11 +68,11 @@ export class PropertyInvestmentComponent implements OnInit {
     
     newSubscription = currencyRatesAndUser$.switchMap(
       (data) => {
-        this.currentPrice = data.currencyRates[this.investment.investmentAmountUnit] || 1;
+        this.currentPrice = this.currencyExchangeService.getUsdValueOf(this.investment.property.marketValue, this.investment.property.marketValueUnit);
         this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
         this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
         this.investmentValueWhenBought = this.buyingPrice;
-        this.investmentReturn = this.investmentAmount;
+        this.investmentReturn = this.currentPrice;
 
         return this.teams$;
       }

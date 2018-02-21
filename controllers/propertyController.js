@@ -1,3 +1,5 @@
+const { PROPERTY_TYPES } = require('../constants/constants');
+
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 const md5 = require('md5');
@@ -8,9 +10,6 @@ const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
 
 const errorTrace = 'propertyController >';
-const propertyTypes = {
-    HOUSE : 'house'
-};
 
 exports.validateRegister = (req, res, next) => {
     const methodTrace = `${errorTrace} validateRegister() >`;
@@ -73,7 +72,7 @@ exports.create = async (req, res, next) => {
         console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Property')}`);
 
         let propertyType = null;
-        if (property.propertyType === propertyTypes.HOUSE) {
+        if (property.propertyType === PROPERTY_TYPES.HOUSE) {
             //save a new house record in DB
             console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'House')}`);
             propertyType = await (new House({
@@ -230,9 +229,9 @@ exports.update = async (req, res, next) => {
     if (property) {
         //update property type data
         console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Property')}`);
-
+        
         let propertyType = null;
-        if (property.propertyType === propertyTypes.HOUSE) {
+        if (property.propertyType === PROPERTY_TYPES.HOUSE) {
             const propertyTypeUpdates = {
                 buildingType : req.body.propertyTypeData.buildingType,
                 titleType : req.body.propertyTypeData.titleType,
@@ -334,7 +333,7 @@ exports.delete = async (req, res) => {
             let writeResult = null;
             let propertyTypeDataId = null;
             let propertyTypeDataModel = null;
-            if (property.propertyType === propertyTypes.HOUSE) {
+            if (property.propertyType === PROPERTY_TYPES.HOUSE) {
                 propertyTypeDataModel = 'House';
                 propertyTypeDataId = property.propertyTypeData._id;
                 console.log(property._id, propertyTypeDataId);
@@ -417,7 +416,7 @@ const deletePropertyTypeData = async (model, id, userEmail) => {
     console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, model, '_id', id)}`);
     
     let writeResult = null;
-    if (model.toLowerCase() === propertyTypes.HOUSE) {
+    if (model.toLowerCase() === PROPERTY_TYPES.HOUSE) {
         writeResult = await House.remove({ _id : id });
     }
     

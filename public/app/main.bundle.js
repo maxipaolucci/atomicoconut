@@ -2405,14 +2405,14 @@ exports.PropertyInvestmentFormComponent = PropertyInvestmentFormComponent;
 /***/ "./src/app/modules/investments/components/property-investment/property-investment.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"investment__card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/house.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}\r\n\r\n    <div [class.color__accent]=\"investmentReturn >= investmentValueWhenBought\" \r\n        [class.color__red]=\"investmentReturn < investmentValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let portion of investmentDistribution\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"portion.member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{portion.member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>{{ portion.percentage }}%</p>\r\n                <p>{{ portion.money | currency : 'USD' : 'code' : '1.2-2' }}</p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"card__actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/property/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
+module.exports = "<mat-card class=\"investment__card\">\r\n  <mat-card-header routerLink=\"/properties/{{investment.property.type}}/edit/{{investment.property.id}}\">\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/house.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investmentTitle}}</mat-card-title>\r\n    <mat-card-subtitle>{{investment.property.address}}</mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}}\r\n    <br>\r\n    Sold at {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}\r\n    <br>\r\n    today market value at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>\r\n    <div [class.color__accent]=\"investmentReturn >= investmentValueWhenBought\" \r\n        [class.color__red]=\"investmentReturn < investmentValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought | percent : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let portion of investmentDistribution\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"portion.member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{portion.member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>{{ portion.percentage }}%</p>\r\n                <p>{{ portion.money | currency : 'USD' : 'code' : '1.2-2' }}</p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"card__actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/property/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
 
 /***/ }),
 
 /***/ "./src/app/modules/investments/components/property-investment/property-investment.component.scss":
 /***/ (function(module, exports) {
 
-module.exports = ".investment__card {\n  text-align: left; }\n  .investment__card .header-image img {\n    width: 40px; }\n  .investment__card .card__content {\n    text-align: center; }\n  .investment__card .card__content .team-panel {\n      cursor: default;\n      margin-top: 10px; }\n  .investment__card .card__content .team-panel mat-panel-title {\n        font-size: 18px; }\n  .investment__card .card__content .team-panel .team-panel__content {\n        text-align: left; }\n  .investment__card .card__content .team-panel .team-panel__content .members .member .member__avatar {\n          border-radius: 50%;\n          width: 40px;\n          height: 40px;\n          padding: 0 10px 0 0; }\n  .investment__card .card__content .team-panel .team-panel__content .members .member .member__info .member__email {\n          font-size: 11px; }\n  .investment__card .card__content .card__actions {\n      margin: 10px 0 0; }\n"
+module.exports = ".investment__card {\n  text-align: left; }\n  .investment__card mat-card-header {\n    cursor: pointer; }\n  .investment__card mat-card-header .header-image img {\n      width: 40px; }\n  .investment__card .card__content {\n    text-align: center; }\n  .investment__card .card__content .team-panel {\n      cursor: default;\n      margin-top: 10px; }\n  .investment__card .card__content .team-panel mat-panel-title {\n        font-size: 18px; }\n  .investment__card .card__content .team-panel .team-panel__content {\n        text-align: left; }\n  .investment__card .card__content .team-panel .team-panel__content .members .member .member__avatar {\n          border-radius: 50%;\n          width: 40px;\n          height: 40px;\n          padding: 0 10px 0 0; }\n  .investment__card .card__content .team-panel .team-panel__content .members .member .member__info .member__email {\n          font-size: 11px; }\n  .investment__card .card__content .card__actions {\n      margin: 10px 0 0; }\n"
 
 /***/ }),
 
@@ -2441,14 +2441,17 @@ var investments_service_1 = __webpack_require__("./src/app/modules/investments/i
 var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var house_1 = __webpack_require__("./src/app/modules/properties/models/house.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
 var PropertyInvestmentComponent = /** @class */ (function () {
-    function PropertyInvestmentComponent(currencyExchangeService, appService, usersService, investmentsService, dialog, router) {
+    function PropertyInvestmentComponent(currencyExchangeService, appService, usersService, investmentsService, dialog, router, utilService) {
         this.currencyExchangeService = currencyExchangeService;
         this.appService = appService;
         this.usersService = usersService;
         this.investmentsService = investmentsService;
         this.dialog = dialog;
         this.router = router;
+        this.utilService = utilService;
         this.totalReturns = new core_1.EventEmitter();
         this.deletedId = new core_1.EventEmitter();
         this.teams$ = new rxjs_1.BehaviorSubject([]);
@@ -2457,6 +2460,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         this.investmentReturn = 0;
         this.investmentValueWhenBought = 0;
         this.currentPrice = 0;
+        this.investmentTitle = null;
         this.actionRunning = false;
         this.user = null;
         this.team = null; //if the investment has a tema this will be populated with the full info of the team
@@ -2476,6 +2480,10 @@ var PropertyInvestmentComponent = /** @class */ (function () {
     PropertyInvestmentComponent.prototype.ngOnInit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        console.log(this.investment.property.type);
+        if (this.investment.property instanceof house_1.House) {
+            this.investmentTitle = this.utilService.capitalizeFirstLetter(this.investment.property.buildingType);
+        }
         //get the team of the investmetn if exists
         var newSubscription = null;
         var currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
@@ -2484,11 +2492,11 @@ var PropertyInvestmentComponent = /** @class */ (function () {
             return { user: user, currencyRates: currencyRates };
         }); //(currency rates and user) source
         newSubscription = currencyRatesAndUser$.switchMap(function (data) {
-            _this.currentPrice = data.currencyRates[_this.investment.investmentAmountUnit] || 1;
+            _this.currentPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.property.marketValue, _this.investment.property.marketValueUnit);
             _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
             _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
             _this.investmentValueWhenBought = _this.buyingPrice;
-            _this.investmentReturn = _this.investmentAmount;
+            _this.investmentReturn = _this.currentPrice;
             return _this.teams$;
         }).subscribe(function (teams) {
             _this.setInvestmentTeamData(teams);
@@ -2621,7 +2629,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
             styles: [__webpack_require__("./src/app/modules/investments/components/property-investment/property-investment.component.scss")]
         }),
         __metadata("design:paramtypes", [currency_exchange_service_1.CurrencyExchangeService, app_service_1.AppService, users_service_1.UsersService, investments_service_1.InvestmentsService,
-            material_1.MatDialog, router_1.Router])
+            material_1.MatDialog, router_1.Router, util_service_1.UtilService])
     ], PropertyInvestmentComponent);
     return PropertyInvestmentComponent;
 }());
@@ -3742,9 +3750,7 @@ var PropertiesEditComponent = /** @class */ (function () {
         this.subscription.add(newSubscription);
     };
     PropertiesEditComponent.prototype.onCurrencyUnitChange = function ($event) {
-        if ($event.source.id === 'askingPriceUnit') {
-            this.model.askingPriceUnit = $event.value;
-        }
+        this.model[$event.source.id] = $event.value;
     };
     PropertiesEditComponent.prototype.onPropertyTypeDataChange = function ($event) {
         this.model.propertyTypeData = $event.value.model;
@@ -6815,6 +6821,14 @@ var UtilService = /** @class */ (function () {
     };
     UtilService.prototype.isGtSm = function () {
         return window.innerWidth >= this.settings.flexLayoutBkpts.md.min;
+    };
+    /**
+     * Capitalize first letter of a string
+     *
+     * @param word {string} . The string to modify
+     * */
+    UtilService.prototype.capitalizeFirstLetter = function (word) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
     };
     /**
      * Show logs in the console if enabled in the current environment

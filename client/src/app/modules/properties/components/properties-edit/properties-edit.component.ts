@@ -284,9 +284,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   }
 
   onCurrencyUnitChange($event : MatSelectChange) {
-    if ($event.source.id === 'askingPriceUnit') {
-      this.model.askingPriceUnit = $event.value;
-    }
+    this.model[$event.source.id] = $event.value;
   }
 
   onPropertyTypeDataChange($event : any) {

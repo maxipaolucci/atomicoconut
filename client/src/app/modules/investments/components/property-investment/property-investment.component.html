@@ -1,23 +1,24 @@
 <mat-card class="investment__card">
-  <mat-card-header>
+  <mat-card-header routerLink="/properties/{{investment.property.type}}/edit/{{investment.property.id}}">
     <div mat-card-avatar class="header-image">
         <img [src]="'/assets/images/house.png'" [alt]="investment.type" />
     </div>
-    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>
-    <mat-card-subtitle>
-      today at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>
-    </mat-card-subtitle>
+    <mat-card-title>{{investmentTitle}}</mat-card-title>
+    <mat-card-subtitle>{{investment.property.address}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="card__content">
     Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> 
     <br>
 
-    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}
-
+    on {{investment.buyingDate | date}}
+    <br>
+    Sold at {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}
+    <br>
+    today market value at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>
     <div [class.color__accent]="investmentReturn >= investmentValueWhenBought" 
         [class.color__red]="investmentReturn < investmentValueWhenBought">
       <br>
-      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)
+      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought | percent : '1.1-2'}}%)
     </div>
 
     <!-- Team -->

@@ -44,6 +44,15 @@ export class UtilService {
     return window.innerWidth >= this.settings.flexLayoutBkpts.md.min;
   }
 
+  /** 
+   * Capitalize first letter of a string 
+   * 
+   * @param word {string} . The string to modify
+   * */
+  capitalizeFirstLetter(word : string) : string {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
   /**
    * Show logs in the console if enabled in the current environment
    * @param type . Error type
