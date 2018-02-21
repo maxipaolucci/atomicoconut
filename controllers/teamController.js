@@ -124,10 +124,12 @@ const addMemberToTeam = async (member, team, userEmail) => {
         try {
             await Investment.updateMany(
                 { _id : { $in : team.investments } },
-                { $addToSet : { investmentDistribution : {
-                  email : member.email,
-                  percentage : 0  
-                } } }
+                { $addToSet : { 
+                    investmentDistribution : {
+                        email : member.email,
+                        percentage : 0  
+                    } 
+                } }
             );
 
             console.log(`${methodTrace} ${getMessage('message', 1044, userEmail, true)}`);
@@ -184,9 +186,11 @@ const deleteMemberFromTeam = async (member, team, userEmail) => {
         try {
             await Investment.updateMany(
                 { _id : { $in : team.investments } },
-                { $pull : { investmentDistribution : {
-                  email : member.email  
-                } } }
+                { $pull : { 
+                    investmentDistribution : {
+                        email : member.email  
+                    } 
+                } }
             );
 
             console.log(`${methodTrace} ${getMessage('message', 1046, userEmail, true)}`);

@@ -23,8 +23,8 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
   model : any = {
     type : null,
     property : null,
-    propertyId : null,
-    address : null,
+    propertyId : null, //just used here to retireve a property when the parent component set it. Don't use this value in the server, use the one in the property object instead
+    address : null, //just used for the ngmodel in the view. Don't use this value in the server, use the address in the property object instead
     buyingPrice : null,
     buyingPriceUnit : null,
     buyingDate : null

@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 
 @Component({
-  selector: 'app-property-investment',
+  selector: 'property-investment',
   templateUrl: './property-investment.component.html',
   styleUrls: ['./property-investment.component.scss']
 })

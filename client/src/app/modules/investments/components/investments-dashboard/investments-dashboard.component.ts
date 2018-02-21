@@ -35,6 +35,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   subscription : Subscription = new Subscription();
   getInvestmentsServiceRunning : boolean = false;
   getTeamsServiceRunning : boolean = false;
+  INVESTMENTS_TYPES : any = INVESTMENTS_TYPES; //make it available in the view
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private usersService : UsersService, public dialog: MatDialog, 
       private appService : AppService, private teamsService : TeamsService, private investmentsService : InvestmentsService, private currencyExchangeService : CurrencyExchangeService) { }

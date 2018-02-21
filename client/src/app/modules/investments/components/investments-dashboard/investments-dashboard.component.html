@@ -3,12 +3,19 @@
     
     <div *ngFor="let row of investmentsUI" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
       <div *ngFor="let investment of row" fxFlex fxFlex.gt-xs="50">
-        <currency-investment 
+        <currency-investment *ngIf="investment.type === INVESTMENTS_TYPES.CURRENCY || investment.type === INVESTMENTS_TYPES.CRYPTO"
           [investment]="investment"
           [teams]="teams"
           (totalReturns)="setTotals($event)"
           (deletedId)="removeInvestment($event)">
         </currency-investment>
+
+        <property-investment *ngIf="investment.type === INVESTMENTS_TYPES.PROPERTY"
+          [investment]="investment"
+          [teams]="teams"
+          (totalReturns)="setTotals($event)"
+          (deletedId)="removeInvestment($event)">
+        </property-investment>
       </div>
       
     </div>

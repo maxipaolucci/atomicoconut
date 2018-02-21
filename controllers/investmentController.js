@@ -204,14 +204,6 @@ exports.update = async (req, res, next) => {
         investmentDistribution : req.body.investmentDistribution
     };
 
-    const investmentDataUpdates = {
-        amount : req.body.investmentData.amount,
-        amountUnit : req.body.investmentData.unit,
-        buyingPrice : req.body.investmentData.buyingPrice,
-        buyingPriceUnit : req.body.investmentData.buyingPriceUnit,
-        buyingDate : req.body.investmentData.buyingDate
-    };
-
     //update investment
     console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'Investment', '_id', investment._id)}`);
     investment = await Investment.findOneAndUpdate(
@@ -221,17 +213,44 @@ exports.update = async (req, res, next) => {
     );
 
     if (investment) {
-        //update investment data
         console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Investment')}`);
-        const investmentData = await CurrencyInvestment.findOneAndUpdate(
-            { _id : originalInvestment.currencyInvestmentData._id },
-            { $set : investmentDataUpdates },
-            { new : true, runValidators : true, context : 'query' }
-        );
+
+        let investmentData = null;
+        let modelName = null;
+        if (investment.investmentType === INVESTMENTS_TYPES.CRYPTO || investment.investmentType === INVESTMENTS_TYPES.CURRENCY) {
+            modelName = 'CurrencyInvestment';
+            const investmentDataUpdates = {
+                amount : req.body.investmentData.amount,
+                amountUnit : req.body.investmentData.unit,
+                buyingPrice : req.body.investmentData.buyingPrice,
+                buyingPriceUnit : req.body.investmentData.buyingPriceUnit,
+                buyingDate : req.body.investmentData.buyingDate
+            };
+            
+            investmentData = await CurrencyInvestment.findOneAndUpdate(
+                { _id : originalInvestment.investmentData._id },
+                { $set : investmentDataUpdates },
+                { new : true, runValidators : true, context : 'query' }
+            );
+        } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
+            modelName = 'PropertyInvestment';
+            const investmentDataUpdates = {
+                buyingPrice : req.body.investmentData.buyingPrice,
+                buyingPriceUnit : req.body.investmentData.buyingPriceUnit,
+                buyingDate : req.body.investmentData.buyingDate,
+                property : req.body.investmentData.property.id
+            };
+            
+            investmentData = await PropertyInvestment.findOneAndUpdate(
+                { _id : originalInvestment.investmentData._id },
+                { $set : investmentDataUpdates },
+                { new : true, runValidators : true, context : 'query' }
+            );
+        }
 
         if (investmentData) {
             //success
-            console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'CurrencyInvestment')}`);
+            console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, modelName)}`);
             
             console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Investment')}`);
             res.json({
@@ -245,11 +264,11 @@ exports.update = async (req, res, next) => {
         }
         
         //failed to update investment data
-        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'CurrencyInvestment', '_id', investment.currencyInvestmentData._id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'CurrencyInvestment', '_id', investment.investmentData._id)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 465,
-            msg : getMessage('error', 465, null, false, 'CurrencyInvestment', '_id', investment.currencyInvestmentData._id),
+            msg : getMessage('error', 465, null, false, 'CurrencyInvestment', '_id', investment.investmentData._id),
             data : null
         });
     }
@@ -272,7 +291,7 @@ exports.getAllInvestments = async (req, res) => {
     //1 - Get all the investments where user is involved
     console.log(`${methodTrace} ${getMessage('message', 1034, req.user.email, true, 'all Investments', 'user', req.user.email)}`);
     const aggregationStagesArr = [{ $match : { investmentDistribution : { $elemMatch : { email : req.user.email } } } }].concat(aggregationStages(), 
-            { $sort : { "currencyInvestmentData.buyingDate" : 1 } });
+            { $sort : { "buyingDate" : 1 } });
     let investments = await Investment.aggregate(aggregationStagesArr);
 
     //2 - Parse the recordset from DB and organize the info better.
@@ -322,10 +341,16 @@ const aggregationStages = () => {
             }
         },
         { $lookup : { from : 'currencyinvestments', localField : '_id', foreignField : 'parent', as : 'currencyInvestmentData' } }, //for currency investments
+        { 
+            $addFields : {
+                buyingDate : '$currencyInvestmentData.buyingDate' //for sorting
+            }
+        },
         { $lookup : { from : 'propertyinvestments', localField : '_id', foreignField : 'parent', as : 'propertyInvestmentData' } }, //For property investments
         { 
             $addFields : {
-                propertyId : '$propertyInvestmentData.property'
+                propertyId : '$propertyInvestmentData.property',
+                buyingDate : '$propertyInvestmentData.buyingDate' //for sorting
             }
         },
         { $lookup : { from : 'properties', localField : 'propertyId', foreignField : '_id', as : 'propertyData' } }, //For property investments
@@ -522,9 +547,13 @@ exports.delete = async (req, res) => {
             let investmentDataModel = null;
             if (investment.investmentType === INVESTMENTS_TYPES.CURRENCY || investment.investmentType === INVESTMENTS_TYPES.CRYPTO) {
                 investmentDataModel = 'CurrencyInvestment';
-                investmentDataId = investment.currencyInvestmentData._id;
+                investmentDataId = investment.investmentData._id;
                 writeResult = await deleteCurrencyInvestment(investmentDataId, user.email);
-            } //else delete property investment
+            } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
+                investmentDataModel = 'PropertyInvestment';
+                investmentDataId = investment.investmentData._id;
+                writeResult = await deletePropertyInvestment(investmentDataId, user.email);
+            }
             
             if (writeResult && writeResult.result.n > 0) {
                 writeResult = null;
@@ -603,6 +632,25 @@ const deleteCurrencyInvestment = async (id, userEmail) => {
         console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'CurrencyInvestment')}`);
     } else {
         console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, 'CurrencyInvestment', '_id', id)}`);
+    }
+    
+    return writeResult;
+};
+
+/**
+ * Deletes a property investment record from db
+ * @param {string} id . The record id
+ * @param {string} userEmail . The user email for debug purposes 
+ */
+const deletePropertyInvestment = async (id, userEmail) => {
+    const methodTrace = `${errorTrace} deletePropertyInvestment() >`;
+    
+    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'PropertyInvestment', '_id', id)}`);
+    const writeResult = await PropertyInvestment.remove({ _id : id });
+    if (writeResult && writeResult.result.n > 0) {
+        console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'PropertyInvestment')}`);
+    } else {
+        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, 'PropertyInvestment', '_id', id)}`);
     }
     
     return writeResult;
