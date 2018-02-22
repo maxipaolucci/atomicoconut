@@ -37,8 +37,8 @@
       </mat-cell>
     </ng-container>
     
-    <mat-header-row *matHeaderRowDef="['address', 'invest', 'delete']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['address', 'invest', 'delete'];"></mat-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </section>
 <mat-paginator [fxShow]="properties.length > 0" #propertiesPaginator 

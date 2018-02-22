@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DateAdapter, NativeDateAdapter, MatSelectChange } from '@angular/material';
+import { DateAdapter, NativeDateAdapter, MatSelectChange, MatDialog } from '@angular/material';
 import { AppService } from '../../../../app.service';
 import { UtilService } from '../../../../util.service';
 import { INVESTMENTS_TYPES } from '../../../../constants';
@@ -8,6 +8,7 @@ import { PropertiesService } from '../../../properties/properties.service';
 import { Property } from '../../../properties/models/property';
 import { Router } from '@angular/router';
 import { User } from '../../../users/models/user';
+import { PropertySelectorDialogComponent } from '../../../properties/components/property-selector-dialog/property-selector-dialog.component';
 
 @Component({
   selector: 'property-investment-form',
@@ -32,7 +33,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
   subscription : Subscription = new Subscription();
   getPropertyServiceRunning : boolean = false;
 
-  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private appService : AppService, 
+  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private appService : AppService, public dialog: MatDialog,
       public utilService : UtilService, private propertiesService : PropertiesService, private router : Router) {
     
     this.dateAdapter.setLocale('en-GB');
@@ -149,6 +150,26 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
   }
 
   openPropertySelectionDialog() {
-    console.log(123);
+    const methodTrace = `${this.constructor.name} > openDeleteTeamDialog() > `; //for debugging
+      
+    
+    let propertySelectorDialogRef = this.dialog.open(PropertySelectorDialogComponent, {
+      data: {
+        title : 'Select a property', 
+        message : `Lalala lalalal lalall`,
+        user : this.user
+      }
+    });
+
+    const newSubscription = propertySelectorDialogRef.afterClosed().subscribe(result => {
+      if (result === 'yes') {
+        console.log('yes');
+      } else {
+        console.log(result);
+      }
+    });
+    this.subscription.add(newSubscription); 
+
+    return false;
   }
 }

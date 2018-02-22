@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { User } from '../../../users/models/user';
 import { Property } from '../../models/property';
 import { MatTable, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
@@ -15,6 +15,9 @@ import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/y
 export class PropertiesTableComponent implements OnInit, OnDestroy {
   
   @Input() user : User = null;
+  @Input() showActions : boolean = true; //if false we hide FAB buttons
+
+  @Output() selectedProperty: EventEmitter<any> = new EventEmitter();
   
   @ViewChild('propertiesPaginator') propertiesTablePaginator : MatPaginator;
   @ViewChild('propertiesTable') propertiesTable : MatTable<Property>;
@@ -24,12 +27,18 @@ export class PropertiesTableComponent implements OnInit, OnDestroy {
   subscription : Subscription = new Subscription();
   getPropertiesServiceRunning : boolean = false;
   propertyTableActionRunning : boolean = false;
+  displayedColumns : string[] = [];
 
   constructor(private appService : AppService, private propertiesService : PropertiesService, public dialog: MatDialog ) { }
 
 
   ngOnInit() {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+
+    this.displayedColumns = ['address'];
+    if (this.showActions) {
+      this.displayedColumns = this.displayedColumns.concat(['invest', 'delete']);
+    }
 
     if (!this.properties.length) {
       this.getProperties();

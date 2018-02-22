@@ -11,6 +11,7 @@ import { PropertiesEditComponent } from './components/properties-edit/properties
 import { FormsModule } from '@angular/forms';
 import { HousesEditComponent } from './components/houses-edit/houses-edit.component';
 import { PropertiesTableComponent } from './components/properties-table/properties-table.component';
+import { PropertySelectorDialogComponent } from './components/property-selector-dialog/property-selector-dialog.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,10 @@ import { PropertiesTableComponent } from './components/properties-table/properti
     CustomMaterialDesignModule,
     SharedModule
   ],
-  declarations: [ PropertiesDashboardComponent, PropertiesEditComponent, HousesEditComponent, PropertiesTableComponent ],
-  providers: [ PropertiesService ]
+  declarations: [ PropertiesDashboardComponent, PropertiesEditComponent, HousesEditComponent, PropertiesTableComponent, PropertySelectorDialogComponent ],
+  providers: [ PropertiesService ],
+  entryComponents: [
+    PropertySelectorDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
+  ]
 })
 export class PropertiesModule { }
