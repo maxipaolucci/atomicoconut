@@ -10,6 +10,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { PropertiesEditComponent } from './components/properties-edit/properties-edit.component';
 import { FormsModule } from '@angular/forms';
 import { HousesEditComponent } from './components/houses-edit/houses-edit.component';
+import { PropertiesTableComponent } from './components/properties-table/properties-table.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { HousesEditComponent } from './components/houses-edit/houses-edit.compon
     CustomMaterialDesignModule,
     SharedModule
   ],
-  declarations: [ PropertiesDashboardComponent, PropertiesEditComponent, HousesEditComponent ],
+  declarations: [ PropertiesDashboardComponent, PropertiesEditComponent, HousesEditComponent, PropertiesTableComponent ],
   providers: [ PropertiesService ]
 })
 export class PropertiesModule { }

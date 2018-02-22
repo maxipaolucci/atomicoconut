@@ -3291,7 +3291,7 @@ exports.HousesEditComponent = HousesEditComponent;
 /***/ "./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties\">\r\n  <section class=\"table__container\" *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\">\r\n\r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" routerLink=\"/properties/{{element.type}}/edit/{{element.id}}\" (click)=\"propertyTableActionRunning = true\">{{element.address}}</mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n\r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"['address', 'invest', 'delete']\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: ['address', 'invest', 'delete'];\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab routerLink=\"house/create\" class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new property\" matTooltipPosition=\"left\">\r\n      <mat-icon aria-label=\"Create new property\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties\">\r\n  <properties-table [user]=\"user\"></properties-table>\r\n\r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab routerLink=\"house/create\" class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new property\" matTooltipPosition=\"left\">\r\n      <mat-icon aria-label=\"Create new property\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -3320,26 +3320,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
 var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
-var properties_service_1 = __webpack_require__("./src/app/modules/properties/properties.service.ts");
-var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
 var PropertiesDashboardComponent = /** @class */ (function () {
-    function PropertiesDashboardComponent(route, mainNavigatorService, usersService, appService, propertiesService, dialog) {
+    function PropertiesDashboardComponent(route, mainNavigatorService, appService) {
         this.route = route;
         this.mainNavigatorService = mainNavigatorService;
-        this.usersService = usersService;
         this.appService = appService;
-        this.propertiesService = propertiesService;
-        this.dialog = dialog;
         this.user = null;
-        this.properties = [];
-        this.propertiesDataSource = new material_1.MatTableDataSource([]);
         this.subscription = new Subscription_1.Subscription();
-        this.getPropertiesServiceRunning = false;
-        this.propertyTableActionRunning = false;
     }
     PropertiesDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -3351,127 +3340,23 @@ var PropertiesDashboardComponent = /** @class */ (function () {
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
         //get authUser from resolver
-        var user$ = this.route.data.map(function (data) {
+        this.route.data.subscribe(function (data) {
             _this.user = data.authUser;
-            return data.authUser;
         });
-        if (!this.properties.length) {
-            this.getProperties(user$);
-        }
     };
     PropertiesDashboardComponent.prototype.ngOnDestroy = function () {
         var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
         //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
-    /**
-     * Get my properties from the server
-     */
-    PropertiesDashboardComponent.prototype.getProperties = function (user$) {
-        var _this = this;
-        var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
-        this.properties = [];
-        this.propertiesDataSource = new material_1.MatTableDataSource([]);
-        this.propertiesDataSource.paginator = this.propertiesTablePaginator;
-        this.getPropertiesServiceRunning = true;
-        var newSubscription = user$.switchMap(function (user) {
-            return _this.propertiesService.getProperties(user.email);
-        }).subscribe(function (properties) {
-            _this.properties = properties;
-            _this.propertiesDataSource = new material_1.MatTableDataSource(_this.properties);
-            _this.propertiesDataSource.paginator = _this.propertiesTablePaginator;
-            _this.getPropertiesServiceRunning = false;
-        }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
-            if (error.codeno === 400) {
-                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
-            }
-            else {
-                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
-            }
-            _this.getPropertiesServiceRunning = false;
-        });
-    };
-    PropertiesDashboardComponent.prototype.openDeleteTeamDialog = function (indexInPage, property) {
-        var _this = this;
-        if (property === void 0) { property = null; }
-        var methodTrace = this.constructor.name + " > openDeleteTeamDialog() > "; //for debugging
-        if (!property) {
-            this.appService.consoleLog('error', methodTrace + " Property is required to delete.");
-            return false;
-        }
-        //map the index in the table to the indes in the properties array
-        var index = indexInPage + this.propertiesTablePaginator.pageIndex * this.propertiesTablePaginator.pageSize;
-        this.propertyTableActionRunning = true;
-        var yesNoDialogRef = this.dialog.open(yes_no_dialog_component_1.YesNoDialogComponent, {
-            width: '250px',
-            data: {
-                title: 'Delete property',
-                message: "Are you sure you want to delete this property forever?"
-            }
-        });
-        var newSubscription = yesNoDialogRef.afterClosed().subscribe(function (result) {
-            if (result === 'yes') {
-                _this.delete(index, property);
-            }
-            else {
-                _this.propertyTableActionRunning = false;
-            }
-        });
-        this.subscription.add(newSubscription);
-        return false;
-    };
-    PropertiesDashboardComponent.prototype.delete = function (index, property) {
-        var _this = this;
-        if (property === void 0) { property = null; }
-        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
-        this.propertyTableActionRunning = true;
-        var newSuscription = this.propertiesService.delete(property.id, this.user.email).subscribe(function (data) {
-            if (data && data.removed > 0) {
-                _this.properties.splice(index, 1);
-                _this.propertiesDataSource.data = _this.properties;
-                //this.propertiesTable.renderRows();
-                _this.appService.showResults("Property successfully removed!", 'success');
-            }
-            else {
-                _this.appService.showResults("Property could not be removed, please try again.", 'error');
-            }
-            _this.propertyTableActionRunning = false;
-        }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
-            if (error.codeno === 400) {
-                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
-            }
-            else if (error.codeno === 475) {
-                //property associated to an investment
-                _this.appService.showResults(error.msg, 'error', 7000);
-            }
-            else if (error.codeno === 462) {
-                _this.appService.showResults("You cannot delete this property because you are not the creator of it. Ask " + error.data.creator.name + " to do it.", 'error');
-            }
-            else {
-                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
-            }
-            _this.propertyTableActionRunning = false;
-        });
-        this.subscription.add(newSuscription);
-    };
-    __decorate([
-        core_1.ViewChild('propertiesPaginator'),
-        __metadata("design:type", material_1.MatPaginator)
-    ], PropertiesDashboardComponent.prototype, "propertiesTablePaginator", void 0);
-    __decorate([
-        core_1.ViewChild('propertiesTable'),
-        __metadata("design:type", material_1.MatTable)
-    ], PropertiesDashboardComponent.prototype, "propertiesTable", void 0);
     PropertiesDashboardComponent = __decorate([
         core_1.Component({
             selector: 'properties-dashboard',
             template: __webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html"),
             styles: [__webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.scss")]
         }),
-        __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, users_service_1.UsersService,
-            app_service_1.AppService, properties_service_1.PropertiesService, material_1.MatDialog])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService,
+            app_service_1.AppService])
     ], PropertiesDashboardComponent);
     return PropertiesDashboardComponent;
 }());
@@ -3781,6 +3666,182 @@ exports.PropertiesEditComponent = PropertiesEditComponent;
 
 /***/ }),
 
+/***/ "./src/app/modules/properties/components/properties-table/properties-table.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<section class=\"table__container\" *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\n  <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\n      <mat-spinner color=\"warn\"></mat-spinner>\n  </div>\n  <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\">\n\n    <!-- Position Column -->\n    <ng-container matColumnDef=\"address\">\n      <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>\n      <mat-cell *matCellDef=\"let element\" routerLink=\"/properties/{{element.type}}/edit/{{element.id}}\" (click)=\"propertyTableActionRunning = true\">{{element.address}}</mat-cell>\n    </ng-container>\n\n    <ng-container matColumnDef=\"invest\">\n      <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\n      <mat-cell *matCellDef=\"let element\">\n        <button mat-mini-fab color=\"primary\" \n            routerLink=\"/investments/property/create/{{element.id}}\" \n            [disabled]=\"user.email !== element.createdBy.email\"\n            [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\n            matTooltipPosition=\"left\"\n            (click)=\"propertyTableActionRunning = true\">\n          <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\n        </button>\n      </mat-cell>\n    </ng-container>\n\n    <ng-container matColumnDef=\"delete\">\n      <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\n      <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\n        <button mat-mini-fab color=\"warn\" \n            [disabled]=\"user.email !== element.createdBy.email\"\n            [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\n            matTooltipPosition=\"left\"\n            (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\n          <mat-icon aria-label=\"Delete\">delete</mat-icon>\n        </button>\n      </mat-cell>\n    </ng-container>\n    \n    <mat-header-row *matHeaderRowDef=\"['address', 'invest', 'delete']\"></mat-header-row>\n    <mat-row *matRowDef=\"let row; columns: ['address', 'invest', 'delete'];\"></mat-row>\n  </mat-table>\n</section>\n<mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \n    [pageSize]=\"10\" \n    [showFirstLastButtons]=\"true\"\n    [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\n</mat-paginator>\n\n<section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\n  <mat-card fxFlex class=\"no-properties__card\">\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\n        fxLayoutAlign=\"space-around center\">\n      <p> You do not have properties yet.</p>\n    </mat-card-content>\n  </mat-card>\n  \n</section>"
+
+/***/ }),
+
+/***/ "./src/app/modules/properties/components/properties-table/properties-table.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/modules/properties/components/properties-table/properties-table.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var rxjs_1 = __webpack_require__("./node_modules/rxjs/Rx.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var properties_service_1 = __webpack_require__("./src/app/modules/properties/properties.service.ts");
+var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var PropertiesTableComponent = /** @class */ (function () {
+    function PropertiesTableComponent(appService, propertiesService, dialog) {
+        this.appService = appService;
+        this.propertiesService = propertiesService;
+        this.dialog = dialog;
+        this.user = null;
+        this.properties = [];
+        this.propertiesDataSource = new material_1.MatTableDataSource([]);
+        this.subscription = new rxjs_1.Subscription();
+        this.getPropertiesServiceRunning = false;
+        this.propertyTableActionRunning = false;
+    }
+    PropertiesTableComponent.prototype.ngOnInit = function () {
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        if (!this.properties.length) {
+            this.getProperties();
+        }
+    };
+    PropertiesTableComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    /**
+     * Get my properties from the server
+     */
+    PropertiesTableComponent.prototype.getProperties = function () {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
+        this.properties = [];
+        this.propertiesDataSource = new material_1.MatTableDataSource([]);
+        this.propertiesDataSource.paginator = this.propertiesTablePaginator;
+        this.getPropertiesServiceRunning = true;
+        var newSubscription = this.propertiesService.getProperties(this.user.email).subscribe(function (properties) {
+            _this.properties = properties;
+            _this.propertiesDataSource = new material_1.MatTableDataSource(_this.properties);
+            _this.propertiesDataSource.paginator = _this.propertiesTablePaginator;
+            _this.getPropertiesServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getPropertiesServiceRunning = false;
+        });
+    };
+    PropertiesTableComponent.prototype.openDeleteTeamDialog = function (indexInPage, property) {
+        var _this = this;
+        if (property === void 0) { property = null; }
+        var methodTrace = this.constructor.name + " > openDeleteTeamDialog() > "; //for debugging
+        if (!property) {
+            this.appService.consoleLog('error', methodTrace + " Property is required to delete.");
+            return false;
+        }
+        //map the index in the table to the indes in the properties array
+        var index = indexInPage + this.propertiesTablePaginator.pageIndex * this.propertiesTablePaginator.pageSize;
+        this.propertyTableActionRunning = true;
+        var yesNoDialogRef = this.dialog.open(yes_no_dialog_component_1.YesNoDialogComponent, {
+            width: '250px',
+            data: {
+                title: 'Delete property',
+                message: "Are you sure you want to delete this property forever?"
+            }
+        });
+        var newSubscription = yesNoDialogRef.afterClosed().subscribe(function (result) {
+            if (result === 'yes') {
+                _this.delete(index, property);
+            }
+            else {
+                _this.propertyTableActionRunning = false;
+            }
+        });
+        this.subscription.add(newSubscription);
+        return false;
+    };
+    PropertiesTableComponent.prototype.delete = function (index, property) {
+        var _this = this;
+        if (property === void 0) { property = null; }
+        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        this.propertyTableActionRunning = true;
+        var newSuscription = this.propertiesService.delete(property.id, this.user.email).subscribe(function (data) {
+            if (data && data.removed > 0) {
+                _this.properties.splice(index, 1);
+                _this.propertiesDataSource.data = _this.properties;
+                //this.propertiesTable.renderRows();
+                _this.appService.showResults("Property successfully removed!", 'success');
+            }
+            else {
+                _this.appService.showResults("Property could not be removed, please try again.", 'error');
+            }
+            _this.propertyTableActionRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 475) {
+                //property associated to an investment
+                _this.appService.showResults(error.msg, 'error', 7000);
+            }
+            else if (error.codeno === 462) {
+                _this.appService.showResults("You cannot delete this property because you are not the creator of it. Ask " + error.data.creator.name + " to do it.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.propertyTableActionRunning = false;
+        });
+        this.subscription.add(newSuscription);
+    };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", user_1.User)
+    ], PropertiesTableComponent.prototype, "user", void 0);
+    __decorate([
+        core_1.ViewChild('propertiesPaginator'),
+        __metadata("design:type", material_1.MatPaginator)
+    ], PropertiesTableComponent.prototype, "propertiesTablePaginator", void 0);
+    __decorate([
+        core_1.ViewChild('propertiesTable'),
+        __metadata("design:type", material_1.MatTable)
+    ], PropertiesTableComponent.prototype, "propertiesTable", void 0);
+    PropertiesTableComponent = __decorate([
+        core_1.Component({
+            selector: 'properties-table',
+            template: __webpack_require__("./src/app/modules/properties/components/properties-table/properties-table.component.html"),
+            styles: [__webpack_require__("./src/app/modules/properties/components/properties-table/properties-table.component.scss")]
+        }),
+        __metadata("design:paramtypes", [app_service_1.AppService, properties_service_1.PropertiesService, material_1.MatDialog])
+    ], PropertiesTableComponent);
+    return PropertiesTableComponent;
+}());
+exports.PropertiesTableComponent = PropertiesTableComponent;
+
+
+/***/ }),
+
 /***/ "./src/app/modules/properties/models/house.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4039,6 +4100,7 @@ var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm
 var properties_edit_component_1 = __webpack_require__("./src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
 var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var houses_edit_component_1 = __webpack_require__("./src/app/modules/properties/components/houses-edit/houses-edit.component.ts");
+var properties_table_component_1 = __webpack_require__("./src/app/modules/properties/components/properties-table/properties-table.component.ts");
 var PropertiesModule = /** @class */ (function () {
     function PropertiesModule() {
     }
@@ -4052,7 +4114,7 @@ var PropertiesModule = /** @class */ (function () {
                 custom_material_design_module_1.CustomMaterialDesignModule,
                 shared_module_1.SharedModule
             ],
-            declarations: [properties_dashboard_component_1.PropertiesDashboardComponent, properties_edit_component_1.PropertiesEditComponent, houses_edit_component_1.HousesEditComponent],
+            declarations: [properties_dashboard_component_1.PropertiesDashboardComponent, properties_edit_component_1.PropertiesEditComponent, houses_edit_component_1.HousesEditComponent, properties_table_component_1.PropertiesTableComponent],
             providers: [properties_service_1.PropertiesService]
         })
     ], PropertiesModule);

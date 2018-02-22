@@ -1,0 +1,58 @@
+<section class="table__container" *ngIf="!getPropertiesServiceRunning && properties.length > 0" fxLayout="column" fxLayoutGap="10px">
+  <div class="table__overlay" *ngIf="propertyTableActionRunning">
+      <mat-spinner color="warn"></mat-spinner>
+  </div>
+  <mat-table #propertiesTable [dataSource]="propertiesDataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+      <mat-cell *matCellDef="let element" routerLink="/properties/{{element.type}}/edit/{{element.id}}" (click)="propertyTableActionRunning = true">{{element.address}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="invest">
+      <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button mat-mini-fab color="primary" 
+            routerLink="/investments/property/create/{{element.id}}" 
+            [disabled]="user.email !== element.createdBy.email"
+            [matTooltip]="user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''"
+            matTooltipPosition="left"
+            (click)="propertyTableActionRunning = true">
+          <mat-icon aria-label="Create investment">trending_up</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
+      <mat-cell *matCellDef="let element; let propertyIndex = index;">
+        <button mat-mini-fab color="warn" 
+            [disabled]="user.email !== element.createdBy.email"
+            [matTooltip]="user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''"
+            matTooltipPosition="left"
+            (click)="openDeleteTeamDialog(propertyIndex, element)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    
+    <mat-header-row *matHeaderRowDef="['address', 'invest', 'delete']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['address', 'invest', 'delete'];"></mat-row>
+  </mat-table>
+</section>
+<mat-paginator [fxShow]="properties.length > 0" #propertiesPaginator 
+    [pageSize]="10" 
+    [showFirstLastButtons]="true"
+    [pageSizeOptions]="[10, 1, 20, 50, 100]">
+</mat-paginator>
+
+<section *ngIf="!getPropertiesServiceRunning && properties.length == 0" fxLayout="column" fxLayoutGap="10px">
+  <mat-card fxFlex class="no-properties__card">
+    <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+        fxLayoutAlign="space-around center">
+      <p> You do not have properties yet.</p>
+    </mat-card-content>
+  </mat-card>
+  
+</section>
