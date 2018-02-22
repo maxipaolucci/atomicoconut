@@ -101,35 +101,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
 
     const newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(
       (property : Property) => {
-        if (property.createdBy.email !== this.user.email) {
-          //we cannot create an investment of a property not created by me
-          this.appService.showResults(`Only the property creator (${property.createdBy.name}) is allowed to create an investment with this property.`, 'error');
-          return this.router.navigate(['/properties']);
-        } else {
-          this.model.property = property;
-          this.model.address = property.address;
-          let buyingPrice = null;
-          let buyingPriceUnit = null;
-  
-          if (property.salePrice) {
-            buyingPrice = property.salePrice;
-            buyingPriceUnit = property.salePriceUnit;
-          } else if (property.offerPrice) {
-            buyingPrice = property.offerPrice;
-            buyingPriceUnit = property.offerPriceUnit;
-          } else if (property.askingPrice) {
-            buyingPrice = property.askingPrice;
-            buyingPriceUnit = property.askingPriceUnit;
-          } else if (property.walkAwayPrice) {
-            buyingPrice = property.walkAwayPrice;
-            buyingPriceUnit = property.walkAwayPriceUnit;
-          }
-          
-          this.model.buyingPrice = buyingPrice;
-          this.model.buyingPriceUnit = buyingPriceUnit || this.user.currency;
-  
-          this.getPropertyServiceRunning = false;
-        }
+        this.setProperty(property);
       },
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > `, error);
@@ -149,23 +121,52 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     this.subscription.add(newSubscription);
   }
 
+  setProperty(property : Property){
+    if (property.createdBy.email !== this.user.email) {
+      //we cannot create an investment of a property not created by me
+      this.appService.showResults(`Only the property creator (${property.createdBy.name}) is allowed to create an investment with this property.`, 'error');
+      return this.router.navigate(['/properties']);
+    } else {
+      this.model.property = property;
+      this.model.address = property.address;
+      let buyingPrice = null;
+      let buyingPriceUnit = null;
+
+      if (property.salePrice) {
+        buyingPrice = property.salePrice;
+        buyingPriceUnit = property.salePriceUnit;
+      } else if (property.offerPrice) {
+        buyingPrice = property.offerPrice;
+        buyingPriceUnit = property.offerPriceUnit;
+      } else if (property.askingPrice) {
+        buyingPrice = property.askingPrice;
+        buyingPriceUnit = property.askingPriceUnit;
+      } else if (property.walkAwayPrice) {
+        buyingPrice = property.walkAwayPrice;
+        buyingPriceUnit = property.walkAwayPriceUnit;
+      }
+      
+      this.model.buyingPrice = buyingPrice;
+      this.model.buyingPriceUnit = buyingPriceUnit || this.user.currency;
+
+      this.getPropertyServiceRunning = false;
+    }
+  }
+
   openPropertySelectionDialog() {
     const methodTrace = `${this.constructor.name} > openDeleteTeamDialog() > `; //for debugging
       
     
     let propertySelectorDialogRef = this.dialog.open(PropertySelectorDialogComponent, {
       data: {
-        title : 'Select a property', 
-        message : `Lalala lalalal lalall`,
+        title : 'Select a property',
         user : this.user
       }
     });
 
     const newSubscription = propertySelectorDialogRef.afterClosed().subscribe(result => {
-      if (result === 'yes') {
-        console.log('yes');
-      } else {
-        console.log(result);
+      if (result) {
+        this.setProperty(result);
       }
     });
     this.subscription.add(newSubscription); 

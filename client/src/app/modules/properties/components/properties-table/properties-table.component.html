@@ -7,7 +7,7 @@
     <!-- Position Column -->
     <ng-container matColumnDef="address">
       <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
-      <mat-cell *matCellDef="let element" routerLink="/properties/{{element.type}}/edit/{{element.id}}" (click)="propertyTableActionRunning = true">{{element.address}}</mat-cell>
+      <mat-cell *matCellDef="let element" (click)="goToPropertyEdit(element)">{{element.address}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="invest">
@@ -38,7 +38,9 @@
     </ng-container>
     
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+        [ngClass]="{ 'selected': selection.isSelected(row)}"
+        (click)="selection.select(row)"></mat-row>
   </mat-table>
 </section>
 <mat-paginator [fxShow]="properties.length > 0" #propertiesPaginator 
@@ -56,3 +58,10 @@
   </mat-card>
   
 </section>
+
+<mat-progress-bar *ngIf="getPropertiesServiceRunning"
+  fxFlexAlign="center"
+  class="progress-bar progress-bar--get-properties"
+  color="primary"
+  mode="indeterminate">
+</mat-progress-bar>

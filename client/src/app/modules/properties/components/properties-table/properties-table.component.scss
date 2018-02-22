@@ -1,0 +1,39 @@
+@import '../../../../../variables';
+
+.table__container {
+
+  mat-table {
+    
+    mat-row  .mat-column-address {
+      cursor: pointer;
+    }
+
+    .mat-row.selected {
+      background: $accent;
+  
+      .mat-column-address {
+        color: rgba(0,0,0,.87);
+      }
+    }
+
+  }
+}
+
+.no-properties__card {
+  text-align: center;
+
+  md-card-content p {
+    margin-bottom: 0;
+  }
+}
+
+.progress-bar--get-properties {
+  width: 100%;
+}
+
+@media screen and (min-width: $screenGtXs) {
+
+  .progress-bar--get-properties {
+    width: 300px;
+  }
+}

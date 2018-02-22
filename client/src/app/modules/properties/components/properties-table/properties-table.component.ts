@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { AppService } from '../../../../app.service';
 import { PropertiesService } from '../../properties.service';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
+import { SelectionModel, SelectionChange } from '@angular/cdk/collections';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'properties-table',
@@ -16,20 +18,24 @@ export class PropertiesTableComponent implements OnInit, OnDestroy {
   
   @Input() user : User = null;
   @Input() showActions : boolean = true; //if false we hide FAB buttons
+  @Input() allowEdition : boolean = true; //if false we don't redirect to property edit component when click on adrdresss
 
-  @Output() selectedProperty: EventEmitter<any> = new EventEmitter();
+
+  @Output() selectedProperty: EventEmitter<Property> = new EventEmitter();
   
   @ViewChild('propertiesPaginator') propertiesTablePaginator : MatPaginator;
   @ViewChild('propertiesTable') propertiesTable : MatTable<Property>;
   
   properties : Property[] = [];
   propertiesDataSource : MatTableDataSource<Property> = new MatTableDataSource([]);
+  selection = new SelectionModel<Property>(false, []);
+
   subscription : Subscription = new Subscription();
   getPropertiesServiceRunning : boolean = false;
   propertyTableActionRunning : boolean = false;
   displayedColumns : string[] = [];
 
-  constructor(private appService : AppService, private propertiesService : PropertiesService, public dialog: MatDialog ) { }
+  constructor(private appService : AppService, private propertiesService : PropertiesService, public dialog: MatDialog, private router : Router) { }
 
 
   ngOnInit() {
@@ -43,6 +49,11 @@ export class PropertiesTableComponent implements OnInit, OnDestroy {
     if (!this.properties.length) {
       this.getProperties();
     }
+
+    // selection changed
+    this.selection.onChange.subscribe((selectionChange : SelectionChange<Property>) => {
+        this.selectedProperty.emit(this.selection.selected[0]);
+    });
   }
 
   ngOnDestroy() {
@@ -61,6 +72,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy {
     this.properties = [];
     this.propertiesDataSource = new MatTableDataSource([]);
     this.propertiesDataSource.paginator = this.propertiesTablePaginator;
+    
 
     this.getPropertiesServiceRunning = true;
     
@@ -70,6 +82,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy {
         
         this.propertiesDataSource = new MatTableDataSource(this.properties);
         this.propertiesDataSource.paginator = this.propertiesTablePaginator;
+        
 
         this.getPropertiesServiceRunning = false;
       },
@@ -84,6 +97,13 @@ export class PropertiesTableComponent implements OnInit, OnDestroy {
         this.getPropertiesServiceRunning = false;
       }
     );
+  }
+
+  goToPropertyEdit(property : Property) {
+    if (this.allowEdition) {
+      this.propertyTableActionRunning = true;
+      this.router.navigate(['/properties', property.type, 'edit', property.id]);
+    }
   }
 
   openDeleteTeamDialog(indexInPage : number, property : Property = null) {

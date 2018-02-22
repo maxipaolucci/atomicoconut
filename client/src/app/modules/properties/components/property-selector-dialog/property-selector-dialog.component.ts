@@ -12,11 +12,6 @@ export class PropertySelectorDialogComponent implements OnInit {
   
   ngOnInit() { }
 
-  onNoClick(): void {
-    console.log('no click');
-    this.dialogRef.close();
-  }
-
   onPropertySelected($event) {
     this.dialogRef.close($event);
   }

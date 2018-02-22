@@ -2330,36 +2330,7 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
         }
         this.getPropertyServiceRunning = true;
         var newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(function (property) {
-            if (property.createdBy.email !== _this.user.email) {
-                //we cannot create an investment of a property not created by me
-                _this.appService.showResults("Only the property creator (" + property.createdBy.name + ") is allowed to create an investment with this property.", 'error');
-                return _this.router.navigate(['/properties']);
-            }
-            else {
-                _this.model.property = property;
-                _this.model.address = property.address;
-                var buyingPrice = null;
-                var buyingPriceUnit = null;
-                if (property.salePrice) {
-                    buyingPrice = property.salePrice;
-                    buyingPriceUnit = property.salePriceUnit;
-                }
-                else if (property.offerPrice) {
-                    buyingPrice = property.offerPrice;
-                    buyingPriceUnit = property.offerPriceUnit;
-                }
-                else if (property.askingPrice) {
-                    buyingPrice = property.askingPrice;
-                    buyingPriceUnit = property.askingPriceUnit;
-                }
-                else if (property.walkAwayPrice) {
-                    buyingPrice = property.walkAwayPrice;
-                    buyingPriceUnit = property.walkAwayPriceUnit;
-                }
-                _this.model.buyingPrice = buyingPrice;
-                _this.model.buyingPriceUnit = buyingPriceUnit || _this.user.currency;
-                _this.getPropertyServiceRunning = false;
-            }
+            _this.setProperty(property);
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > ", error);
             if (error.codeno === 400) {
@@ -2376,21 +2347,50 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
         });
         this.subscription.add(newSubscription);
     };
+    PropertyInvestmentFormComponent.prototype.setProperty = function (property) {
+        if (property.createdBy.email !== this.user.email) {
+            //we cannot create an investment of a property not created by me
+            this.appService.showResults("Only the property creator (" + property.createdBy.name + ") is allowed to create an investment with this property.", 'error');
+            return this.router.navigate(['/properties']);
+        }
+        else {
+            this.model.property = property;
+            this.model.address = property.address;
+            var buyingPrice = null;
+            var buyingPriceUnit = null;
+            if (property.salePrice) {
+                buyingPrice = property.salePrice;
+                buyingPriceUnit = property.salePriceUnit;
+            }
+            else if (property.offerPrice) {
+                buyingPrice = property.offerPrice;
+                buyingPriceUnit = property.offerPriceUnit;
+            }
+            else if (property.askingPrice) {
+                buyingPrice = property.askingPrice;
+                buyingPriceUnit = property.askingPriceUnit;
+            }
+            else if (property.walkAwayPrice) {
+                buyingPrice = property.walkAwayPrice;
+                buyingPriceUnit = property.walkAwayPriceUnit;
+            }
+            this.model.buyingPrice = buyingPrice;
+            this.model.buyingPriceUnit = buyingPriceUnit || this.user.currency;
+            this.getPropertyServiceRunning = false;
+        }
+    };
     PropertyInvestmentFormComponent.prototype.openPropertySelectionDialog = function () {
+        var _this = this;
         var methodTrace = this.constructor.name + " > openDeleteTeamDialog() > "; //for debugging
         var propertySelectorDialogRef = this.dialog.open(property_selector_dialog_component_1.PropertySelectorDialogComponent, {
             data: {
                 title: 'Select a property',
-                message: "Lalala lalalal lalall",
                 user: this.user
             }
         });
         var newSubscription = propertySelectorDialogRef.afterClosed().subscribe(function (result) {
-            if (result === 'yes') {
-                console.log('yes');
-            }
-            else {
-                console.log(result);
+            if (result) {
+                _this.setProperty(result);
             }
         });
         this.subscription.add(newSubscription);
@@ -3310,7 +3310,7 @@ exports.HousesEditComponent = HousesEditComponent;
 /***/ "./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties\">\r\n  <properties-table [user]=\"user\" [showActions]=\"true\"></properties-table>\r\n\r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab routerLink=\"house/create\" class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new property\" matTooltipPosition=\"left\">\r\n      <mat-icon aria-label=\"Create new property\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties\">\r\n  <properties-table [user]=\"user\" [showActions]=\"true\"></properties-table>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab routerLink=\"house/create\" class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new property\" matTooltipPosition=\"left\">\r\n      <mat-icon aria-label=\"Create new property\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -3688,14 +3688,14 @@ exports.PropertiesEditComponent = PropertiesEditComponent;
 /***/ "./src/app/modules/properties/components/properties-table/properties-table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"table__container\" *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\n  <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\n      <mat-spinner color=\"warn\"></mat-spinner>\n  </div>\n  <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\">\n\n    <!-- Position Column -->\n    <ng-container matColumnDef=\"address\">\n      <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>\n      <mat-cell *matCellDef=\"let element\" routerLink=\"/properties/{{element.type}}/edit/{{element.id}}\" (click)=\"propertyTableActionRunning = true\">{{element.address}}</mat-cell>\n    </ng-container>\n\n    <ng-container matColumnDef=\"invest\">\n      <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\n      <mat-cell *matCellDef=\"let element\">\n        <button mat-mini-fab color=\"primary\" \n            routerLink=\"/investments/property/create/{{element.id}}\" \n            [disabled]=\"user.email !== element.createdBy.email\"\n            [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\n            matTooltipPosition=\"left\"\n            (click)=\"propertyTableActionRunning = true\">\n          <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\n        </button>\n      </mat-cell>\n    </ng-container>\n\n    <ng-container matColumnDef=\"delete\">\n      <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\n      <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\n        <button mat-mini-fab color=\"warn\" \n            [disabled]=\"user.email !== element.createdBy.email\"\n            [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\n            matTooltipPosition=\"left\"\n            (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\n          <mat-icon aria-label=\"Delete\">delete</mat-icon>\n        </button>\n      </mat-cell>\n    </ng-container>\n    \n    <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\n    <mat-row *matRowDef=\"let row; columns: displayedColumns;\"></mat-row>\n  </mat-table>\n</section>\n<mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \n    [pageSize]=\"10\" \n    [showFirstLastButtons]=\"true\"\n    [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\n</mat-paginator>\n\n<section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\n  <mat-card fxFlex class=\"no-properties__card\">\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\n        fxLayoutAlign=\"space-around center\">\n      <p> You do not have properties yet.</p>\n    </mat-card-content>\n  </mat-card>\n  \n</section>"
+module.exports = "<section class=\"table__container\" *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n      <mat-spinner color=\"warn\"></mat-spinner>\r\n  </div>\r\n  <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\">\r\n\r\n    <!-- Position Column -->\r\n    <ng-container matColumnDef=\"address\">\r\n      <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\" (click)=\"goToPropertyEdit(element)\">{{element.address}}</mat-cell>\r\n    </ng-container>\r\n\r\n    <ng-container matColumnDef=\"invest\">\r\n      <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\">\r\n        <button mat-mini-fab color=\"primary\" \r\n            routerLink=\"/investments/property/create/{{element.id}}\" \r\n            [disabled]=\"user.email !== element.createdBy.email\"\r\n            [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n            matTooltipPosition=\"left\"\r\n            (click)=\"propertyTableActionRunning = true\">\r\n          <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n        </button>\r\n      </mat-cell>\r\n    </ng-container>\r\n\r\n    <ng-container matColumnDef=\"delete\">\r\n      <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n        <button mat-mini-fab color=\"warn\" \r\n            [disabled]=\"user.email !== element.createdBy.email\"\r\n            [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n            matTooltipPosition=\"left\"\r\n            (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n          <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n        </button>\r\n      </mat-cell>\r\n    </ng-container>\r\n    \r\n    <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n    <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n        [ngClass]=\"{ 'selected': selection.isSelected(row)}\"\r\n        (click)=\"selection.select(row)\"></mat-row>\r\n  </mat-table>\r\n</section>\r\n<mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \r\n    [pageSize]=\"10\" \r\n    [showFirstLastButtons]=\"true\"\r\n    [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n</mat-paginator>\r\n\r\n<section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <mat-card fxFlex class=\"no-properties__card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p> You do not have properties yet.</p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  \r\n</section>\r\n\r\n<mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n  fxFlexAlign=\"center\"\r\n  class=\"progress-bar progress-bar--get-properties\"\r\n  color=\"primary\"\r\n  mode=\"indeterminate\">\r\n</mat-progress-bar>"
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/components/properties-table/properties-table.component.scss":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".table__container mat-table mat-row .mat-column-address {\n  cursor: pointer; }\n\n.table__container mat-table .mat-row.selected {\n  background: #69f0ae; }\n\n.table__container mat-table .mat-row.selected .mat-column-address {\n    color: rgba(0, 0, 0, 0.87); }\n\n.no-properties__card {\n  text-align: center; }\n\n.no-properties__card md-card-content p {\n    margin-bottom: 0; }\n\n.progress-bar--get-properties {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  .progress-bar--get-properties {\n    width: 300px; } }\n"
 
 /***/ }),
 
@@ -3721,22 +3721,28 @@ var rxjs_1 = __webpack_require__("./node_modules/rxjs/Rx.js");
 var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var properties_service_1 = __webpack_require__("./src/app/modules/properties/properties.service.ts");
 var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var collections_1 = __webpack_require__("./node_modules/@angular/cdk/esm5/collections.es5.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var PropertiesTableComponent = /** @class */ (function () {
-    function PropertiesTableComponent(appService, propertiesService, dialog) {
+    function PropertiesTableComponent(appService, propertiesService, dialog, router) {
         this.appService = appService;
         this.propertiesService = propertiesService;
         this.dialog = dialog;
+        this.router = router;
         this.user = null;
         this.showActions = true; //if false we hide FAB buttons
+        this.allowEdition = true; //if false we don't redirect to property edit component when click on adrdresss
         this.selectedProperty = new core_1.EventEmitter();
         this.properties = [];
         this.propertiesDataSource = new material_1.MatTableDataSource([]);
+        this.selection = new collections_1.SelectionModel(false, []);
         this.subscription = new rxjs_1.Subscription();
         this.getPropertiesServiceRunning = false;
         this.propertyTableActionRunning = false;
         this.displayedColumns = [];
     }
     PropertiesTableComponent.prototype.ngOnInit = function () {
+        var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
         this.displayedColumns = ['address'];
         if (this.showActions) {
@@ -3745,6 +3751,10 @@ var PropertiesTableComponent = /** @class */ (function () {
         if (!this.properties.length) {
             this.getProperties();
         }
+        // selection changed
+        this.selection.onChange.subscribe(function (selectionChange) {
+            _this.selectedProperty.emit(_this.selection.selected[0]);
+        });
     };
     PropertiesTableComponent.prototype.ngOnDestroy = function () {
         var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
@@ -3776,6 +3786,12 @@ var PropertiesTableComponent = /** @class */ (function () {
             }
             _this.getPropertiesServiceRunning = false;
         });
+    };
+    PropertiesTableComponent.prototype.goToPropertyEdit = function (property) {
+        if (this.allowEdition) {
+            this.propertyTableActionRunning = true;
+            this.router.navigate(['/properties', property.type, 'edit', property.id]);
+        }
     };
     PropertiesTableComponent.prototype.openDeleteTeamDialog = function (indexInPage, property) {
         var _this = this;
@@ -3850,6 +3866,10 @@ var PropertiesTableComponent = /** @class */ (function () {
         __metadata("design:type", Boolean)
     ], PropertiesTableComponent.prototype, "showActions", void 0);
     __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], PropertiesTableComponent.prototype, "allowEdition", void 0);
+    __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
     ], PropertiesTableComponent.prototype, "selectedProperty", void 0);
@@ -3867,7 +3887,7 @@ var PropertiesTableComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/properties/components/properties-table/properties-table.component.html"),
             styles: [__webpack_require__("./src/app/modules/properties/components/properties-table/properties-table.component.scss")]
         }),
-        __metadata("design:paramtypes", [app_service_1.AppService, properties_service_1.PropertiesService, material_1.MatDialog])
+        __metadata("design:paramtypes", [app_service_1.AppService, properties_service_1.PropertiesService, material_1.MatDialog, router_1.Router])
     ], PropertiesTableComponent);
     return PropertiesTableComponent;
 }());
@@ -3879,7 +3899,7 @@ exports.PropertiesTableComponent = PropertiesTableComponent;
 /***/ "./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>Select a property</h2>\n\n<mat-dialog-content>\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\n    <properties-table [user]=\"data.user\" [showActions]=\"false\" (selectedProperty)=\"onPropertySelected($event)\"></properties-table>\n    {{data.message}}\n  </div>\n</mat-dialog-content>\n\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\n  <button mat-mini-fab color=\"warn\" mat-dialog-close=\"no\">\n    <mat-icon aria-label=\"No\">clear</mat-icon>\n  </button>\n  <button mat-mini-fab color=\"accent\" mat-dialog-close=\"yes\">\n    <mat-icon aria-label=\"Yes\">done</mat-icon>\n  </button>\n</mat-dialog-actions>"
+module.exports = "<h2 mat-dialog-title>Select a property</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\r\n    <properties-table [user]=\"data.user\" [showActions]=\"false\" [allowEdition]=\"false\" (selectedProperty)=\"onPropertySelected($event)\"></properties-table>\r\n    {{data.message}}\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" [mat-dialog-close]=\"null\">\r\n    <mat-icon aria-label=\"No\">clear</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
 
 /***/ }),
 
@@ -3916,10 +3936,6 @@ var PropertySelectorDialogComponent = /** @class */ (function () {
         this.data = data;
     }
     PropertySelectorDialogComponent.prototype.ngOnInit = function () { };
-    PropertySelectorDialogComponent.prototype.onNoClick = function () {
-        console.log('no click');
-        this.dialogRef.close();
-    };
     PropertySelectorDialogComponent.prototype.onPropertySelected = function ($event) {
         this.dialogRef.close($event);
     };

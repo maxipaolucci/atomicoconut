@@ -1,13 +1,6 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__properties">
   <properties-table [user]="user" [showActions]="true"></properties-table>
 
-  <mat-progress-bar *ngIf="getPropertiesServiceRunning"
-    fxFlexAlign="center"
-    class="progress-bar progress-bar--get-properties"
-    color="primary"
-    mode="indeterminate">
-  </mat-progress-bar>
-
   <section fxLayout="column" fxLayoutAlign="start end" class="actions">
     <button mat-fab routerLink="house/create" class="fab mat-elevation-z10" color="accent" matTooltip="Create new property" matTooltipPosition="left">
       <mat-icon aria-label="Create new property">add</mat-icon>
