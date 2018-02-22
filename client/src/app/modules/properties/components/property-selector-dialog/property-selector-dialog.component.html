@@ -2,7 +2,11 @@
 
 <mat-dialog-content>
   <div fxLayout="column" class="container__yes-no-dialog">
-    <properties-table [user]="data.user" [showActions]="false" [allowEdition]="false" (selectedProperty)="onPropertySelected($event)"></properties-table>
+    <properties-table [user]="data.user" 
+        [showActions]="false" 
+        [allowEdition]="false"
+        [loadJustUserProperties]="true" 
+        (selectedProperty)="onPropertySelected($event)"></properties-table>
     {{data.message}}
   </div>
 </mat-dialog-content>

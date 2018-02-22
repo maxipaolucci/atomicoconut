@@ -546,8 +546,8 @@ exports.getAllProperties = async (req, res) => {
 
     const user = req.user;
 
-    // Get all the properties from property investments where I am a member of.
-    const propertyIds = await getPropertyIdsInInvestments(user.email)
+    // Get all the properties from property investments where I am a member of if justUserProperties is true.
+    const propertyIds = req.query.justUserProperties === 'true' ? [] : await getPropertyIdsInInvestments(user.email);
 
     // - Get all the properties where user is involved (created or has a part of an investment in the property)
     console.log(`${methodTrace} ${getMessage('message', 1034, user.email, true, 'all Properties', 'user', user.email)}`);

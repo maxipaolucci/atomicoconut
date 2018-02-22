@@ -3317,7 +3317,7 @@ module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"containe
 /***/ "./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.scss":
 /***/ (function(module, exports) {
 
-module.exports = ".table__container mat-table mat-row .mat-column-address {\n  cursor: pointer; }\n\n.no-properties__card {\n  text-align: center; }\n\n.no-properties__card md-card-content p {\n    margin-bottom: 0; }\n\n.progress-bar--get-properties {\n  width: 100%; }\n\n@media screen and (min-width: 600px) {\n  .progress-bar--get-properties {\n    width: 300px; } }\n"
+module.exports = ""
 
 /***/ }),
 
@@ -3688,7 +3688,7 @@ exports.PropertiesEditComponent = PropertiesEditComponent;
 /***/ "./src/app/modules/properties/components/properties-table/properties-table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<section class=\"table__container\" *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n      <mat-spinner color=\"warn\"></mat-spinner>\r\n  </div>\r\n  <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\">\r\n\r\n    <!-- Position Column -->\r\n    <ng-container matColumnDef=\"address\">\r\n      <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\" (click)=\"goToPropertyEdit(element)\">{{element.address}}</mat-cell>\r\n    </ng-container>\r\n\r\n    <ng-container matColumnDef=\"invest\">\r\n      <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element\">\r\n        <button mat-mini-fab color=\"primary\" \r\n            routerLink=\"/investments/property/create/{{element.id}}\" \r\n            [disabled]=\"user.email !== element.createdBy.email\"\r\n            [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n            matTooltipPosition=\"left\"\r\n            (click)=\"propertyTableActionRunning = true\">\r\n          <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n        </button>\r\n      </mat-cell>\r\n    </ng-container>\r\n\r\n    <ng-container matColumnDef=\"delete\">\r\n      <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n      <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n        <button mat-mini-fab color=\"warn\" \r\n            [disabled]=\"user.email !== element.createdBy.email\"\r\n            [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n            matTooltipPosition=\"left\"\r\n            (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n          <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n        </button>\r\n      </mat-cell>\r\n    </ng-container>\r\n    \r\n    <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n    <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n        [ngClass]=\"{ 'selected': selection.isSelected(row)}\"\r\n        (click)=\"selection.select(row)\"></mat-row>\r\n  </mat-table>\r\n</section>\r\n<mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \r\n    [pageSize]=\"10\" \r\n    [showFirstLastButtons]=\"true\"\r\n    [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n</mat-paginator>\r\n\r\n<section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <mat-card fxFlex class=\"no-properties__card\">\r\n    <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n        fxLayoutAlign=\"space-around center\">\r\n      <p> You do not have properties yet.</p>\r\n    </mat-card-content>\r\n  </mat-card>\r\n  \r\n</section>\r\n\r\n<mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n  fxFlexAlign=\"center\"\r\n  class=\"progress-bar progress-bar--get-properties\"\r\n  color=\"primary\"\r\n  mode=\"indeterminate\">\r\n</mat-progress-bar>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties-table\">\r\n  <section class=\"table__container\" *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\">\r\n  \r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" (click)=\"goToPropertyEdit(element)\">{{element.address}}</mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n          [ngClass]=\"{ 'selected': selection.isSelected(row)}\"\r\n          (click)=\"selection.select(row)\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
 
 /***/ }),
 
@@ -3732,6 +3732,7 @@ var PropertiesTableComponent = /** @class */ (function () {
         this.user = null;
         this.showActions = true; //if false we hide FAB buttons
         this.allowEdition = true; //if false we don't redirect to property edit component when click on adrdresss
+        this.loadJustUserProperties = false; //if false when it get properties loads current user properties plus properties of investments where the user has a portion of it.
         this.selectedProperty = new core_1.EventEmitter();
         this.properties = [];
         this.propertiesDataSource = new material_1.MatTableDataSource([]);
@@ -3771,7 +3772,7 @@ var PropertiesTableComponent = /** @class */ (function () {
         this.propertiesDataSource = new material_1.MatTableDataSource([]);
         this.propertiesDataSource.paginator = this.propertiesTablePaginator;
         this.getPropertiesServiceRunning = true;
-        var newSubscription = this.propertiesService.getProperties(this.user.email).subscribe(function (properties) {
+        var newSubscription = this.propertiesService.getProperties(this.user.email, this.loadJustUserProperties).subscribe(function (properties) {
             _this.properties = properties;
             _this.propertiesDataSource = new material_1.MatTableDataSource(_this.properties);
             _this.propertiesDataSource.paginator = _this.propertiesTablePaginator;
@@ -3870,6 +3871,10 @@ var PropertiesTableComponent = /** @class */ (function () {
         __metadata("design:type", Boolean)
     ], PropertiesTableComponent.prototype, "allowEdition", void 0);
     __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], PropertiesTableComponent.prototype, "loadJustUserProperties", void 0);
+    __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
     ], PropertiesTableComponent.prototype, "selectedProperty", void 0);
@@ -3899,14 +3904,14 @@ exports.PropertiesTableComponent = PropertiesTableComponent;
 /***/ "./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>Select a property</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\r\n    <properties-table [user]=\"data.user\" [showActions]=\"false\" [allowEdition]=\"false\" (selectedProperty)=\"onPropertySelected($event)\"></properties-table>\r\n    {{data.message}}\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" [mat-dialog-close]=\"null\">\r\n    <mat-icon aria-label=\"No\">clear</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
+module.exports = "<h2 mat-dialog-title>Select a property</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\r\n    <properties-table [user]=\"data.user\" \r\n        [showActions]=\"false\" \r\n        [allowEdition]=\"false\"\r\n        [loadJustUserProperties]=\"true\" \r\n        (selectedProperty)=\"onPropertySelected($event)\"></properties-table>\r\n    {{data.message}}\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" [mat-dialog-close]=\"null\">\r\n    <mat-icon aria-label=\"No\">clear</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.scss":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".mat-dialog-content {\n  padding: 0; }\n\n@media screen and (min-width: 600px) {\n  .mat-dialog-content {\n    padding: 0 24px; } }\n"
 
 /***/ }),
 
@@ -4328,15 +4333,18 @@ var PropertiesService = /** @class */ (function () {
      * Server call to Get all the properties for the current user from the server.
      * This proeprties will be the properties the user created plus the investment properties where she/he has a piece of the cake.
      * @param {string} email . The user email
+     * @param {boolean} justUserProperties . If false it get properties created by the user with the email provided plus properties from investments where the user has a portion of it.
+     *                                       If true it just bring back the properties created by the user with the email provided.
      */
-    PropertiesService.prototype.getProperties = function (email) {
+    PropertiesService.prototype.getProperties = function (email, justUserProperties) {
         var _this = this;
+        if (justUserProperties === void 0) { justUserProperties = false; }
         var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return Observable_1.Observable.from([]);
         }
-        var params = new http_1.HttpParams().set('email', email);
+        var params = new http_1.HttpParams().set('email', email).set('justUserProperties', justUserProperties + '');
         var responseData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);

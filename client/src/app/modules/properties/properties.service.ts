@@ -86,8 +86,10 @@ export class PropertiesService {
    * Server call to Get all the properties for the current user from the server.
    * This proeprties will be the properties the user created plus the investment properties where she/he has a piece of the cake.
    * @param {string} email . The user email
+   * @param {boolean} justUserProperties . If false it get properties created by the user with the email provided plus properties from investments where the user has a portion of it.
+   *                                       If true it just bring back the properties created by the user with the email provided.
    */
-  getProperties(email : string) : Observable<Property[]> {
+  getProperties(email : string, justUserProperties : boolean = false) : Observable<Property[]> {
     let methodTrace = `${this.constructor.name} > getProperties() > `; //for debugging
 
     if (!email) {
@@ -95,7 +97,7 @@ export class PropertiesService {
       return Observable.from([]);
     }
 
-    let params = new HttpParams().set('email', email);
+    let params = new HttpParams().set('email', email).set('justUserProperties', justUserProperties + '');
 
     const responseData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
         .map(this.appService.extractData)

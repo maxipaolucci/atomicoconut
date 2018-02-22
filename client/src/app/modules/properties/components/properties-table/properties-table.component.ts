@@ -19,7 +19,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy {
   @Input() user : User = null;
   @Input() showActions : boolean = true; //if false we hide FAB buttons
   @Input() allowEdition : boolean = true; //if false we don't redirect to property edit component when click on adrdresss
-
+  @Input() loadJustUserProperties : boolean = false; //if false when it get properties loads current user properties plus properties of investments where the user has a portion of it.
 
   @Output() selectedProperty: EventEmitter<Property> = new EventEmitter();
   
@@ -76,7 +76,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy {
 
     this.getPropertiesServiceRunning = true;
     
-    const newSubscription = this.propertiesService.getProperties(this.user.email).subscribe(
+    const newSubscription = this.propertiesService.getProperties(this.user.email, this.loadJustUserProperties).subscribe(
       (properties : Property[]) => {
         this.properties = properties;
         
