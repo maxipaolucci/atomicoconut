@@ -53,6 +53,19 @@ exports.create = async (req, res, next) => {
         return;
     }
 
+    //check the property was created by the user creating the investment
+    if (req.body.type === INVESTMENTS_TYPES.PROPERTY && req.body.investmentData.property.createdBy.email !== user.email) {
+        console.log(`${methodTrace} ${getMessage('error', 476, user.email, true, 'Property Investment', 'Property')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 476,
+            msg : getMessage('error', 476, null, false, req.body.type),
+            data : null
+        });
+
+        return;
+    }
+
     //get the team if provided
     let team = null;
     if (req.body.team) {

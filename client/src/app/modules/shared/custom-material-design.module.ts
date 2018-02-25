@@ -24,7 +24,8 @@ import {
   MatRadioModule,
   MatSliderModule,
   MatTableModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatSortModule
 } from '@angular/material';
 
 @NgModule({
@@ -53,7 +54,8 @@ import {
     MatRadioModule,
     MatSliderModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule
   ],
   exports: [
     MatButtonModule, 
@@ -80,7 +82,8 @@ import {
     MatRadioModule,
     MatSliderModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule
   ]
 })
 export class CustomMaterialDesignModule { }

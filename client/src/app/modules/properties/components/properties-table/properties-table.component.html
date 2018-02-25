@@ -3,11 +3,11 @@
     <div class="table__overlay" *ngIf="propertyTableActionRunning">
         <mat-spinner color="warn"></mat-spinner>
     </div>
-    <mat-table #propertiesTable [dataSource]="propertiesDataSource">
+    <mat-table #propertiesTable [dataSource]="propertiesDataSource" matSort>
   
       <!-- Position Column -->
       <ng-container matColumnDef="address">
-        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
         <mat-cell *matCellDef="let element" (click)="goToPropertyEdit(element)">{{element.address}}</mat-cell>
       </ng-container>
   

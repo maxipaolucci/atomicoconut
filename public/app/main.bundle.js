@@ -3688,7 +3688,7 @@ exports.PropertiesEditComponent = PropertiesEditComponent;
 /***/ "./src/app/modules/properties/components/properties-table/properties-table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties-table\">\r\n  <section class=\"table__container\" *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\">\r\n  \r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" (click)=\"goToPropertyEdit(element)\">{{element.address}}</mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n          [ngClass]=\"{ 'selected': selection.isSelected(row)}\"\r\n          (click)=\"selection.select(row)\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties-table\">\r\n  <section class=\"table__container\" *ngIf=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\" matSort>\r\n  \r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" (click)=\"goToPropertyEdit(element)\">{{element.address}}</mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n          [ngClass]=\"{ 'selected': selection.isSelected(row)}\"\r\n          (click)=\"selection.select(row)\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
 
 /***/ }),
 
@@ -3757,6 +3757,10 @@ var PropertiesTableComponent = /** @class */ (function () {
             _this.selectedProperty.emit(_this.selection.selected[0]);
         });
     };
+    PropertiesTableComponent.prototype.ngAfterViewInit = function () {
+        console.log(this.propertiesSort);
+        this.propertiesDataSource.sort = this.propertiesSort;
+    };
     PropertiesTableComponent.prototype.ngOnDestroy = function () {
         var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
         //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
@@ -3769,13 +3773,15 @@ var PropertiesTableComponent = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
         this.properties = [];
-        this.propertiesDataSource = new material_1.MatTableDataSource([]);
+        this.propertiesDataSource.data = []; //new MatTableDataSource([]);
         this.propertiesDataSource.paginator = this.propertiesTablePaginator;
+        this.propertiesDataSource.sort = this.propertiesSort;
         this.getPropertiesServiceRunning = true;
         var newSubscription = this.propertiesService.getProperties(this.user.email, this.loadJustUserProperties).subscribe(function (properties) {
             _this.properties = properties;
-            _this.propertiesDataSource = new material_1.MatTableDataSource(_this.properties);
+            _this.propertiesDataSource.data = properties; //new MatTableDataSource(this.properties);
             _this.propertiesDataSource.paginator = _this.propertiesTablePaginator;
+            _this.propertiesDataSource.sort = _this.propertiesSort;
             _this.getPropertiesServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
@@ -3883,9 +3889,9 @@ var PropertiesTableComponent = /** @class */ (function () {
         __metadata("design:type", material_1.MatPaginator)
     ], PropertiesTableComponent.prototype, "propertiesTablePaginator", void 0);
     __decorate([
-        core_1.ViewChild('propertiesTable'),
-        __metadata("design:type", material_1.MatTable)
-    ], PropertiesTableComponent.prototype, "propertiesTable", void 0);
+        core_1.ViewChild('MatSort'),
+        __metadata("design:type", material_1.MatSort)
+    ], PropertiesTableComponent.prototype, "propertiesSort", void 0);
     PropertiesTableComponent = __decorate([
         core_1.Component({
             selector: 'properties-table',
@@ -4810,7 +4816,8 @@ var CustomMaterialDesignModule = /** @class */ (function () {
                 material_1.MatRadioModule,
                 material_1.MatSliderModule,
                 material_1.MatTableModule,
-                material_1.MatPaginatorModule
+                material_1.MatPaginatorModule,
+                material_1.MatSortModule
             ],
             exports: [
                 material_1.MatButtonModule,
@@ -4837,7 +4844,8 @@ var CustomMaterialDesignModule = /** @class */ (function () {
                 material_1.MatRadioModule,
                 material_1.MatSliderModule,
                 material_1.MatTableModule,
-                material_1.MatPaginatorModule
+                material_1.MatPaginatorModule,
+                material_1.MatSortModule
             ]
         })
     ], CustomMaterialDesignModule);

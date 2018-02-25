@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { User } from '../../../users/models/user';
 import { Property } from '../../models/property';
-import { MatTable, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTable, MatPaginator, MatTableDataSource, MatDialog, MatSort } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { AppService } from '../../../../app.service';
 import { PropertiesService } from '../../properties.service';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './properties-table.component.html',
   styleUrls: ['./properties-table.component.scss']
 })
-export class PropertiesTableComponent implements OnInit, OnDestroy {
+export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewInit {
   
   @Input() user : User = null;
   @Input() showActions : boolean = true; //if false we hide FAB buttons
@@ -24,7 +24,8 @@ export class PropertiesTableComponent implements OnInit, OnDestroy {
   @Output() selectedProperty: EventEmitter<Property> = new EventEmitter();
   
   @ViewChild('propertiesPaginator') propertiesTablePaginator : MatPaginator;
-  @ViewChild('propertiesTable') propertiesTable : MatTable<Property>;
+  //@ViewChild('propertiesTable') propertiesTable : MatTable<Property>;
+  @ViewChild('MatSort') propertiesSort : MatSort;
   
   properties : Property[] = [];
   propertiesDataSource : MatTableDataSource<Property> = new MatTableDataSource([]);
@@ -56,6 +57,11 @@ export class PropertiesTableComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    console.log(this.propertiesSort);
+    this.propertiesDataSource.sort = this.propertiesSort;
+  }
+
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
 
@@ -70,19 +76,18 @@ export class PropertiesTableComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > getProperties() > `; //for debugging
 
     this.properties = [];
-    this.propertiesDataSource = new MatTableDataSource([]);
+    this.propertiesDataSource.data = [];//new MatTableDataSource([]);
     this.propertiesDataSource.paginator = this.propertiesTablePaginator;
-    
+    this.propertiesDataSource.sort = this.propertiesSort;
 
     this.getPropertiesServiceRunning = true;
     
     const newSubscription = this.propertiesService.getProperties(this.user.email, this.loadJustUserProperties).subscribe(
       (properties : Property[]) => {
         this.properties = properties;
-        
-        this.propertiesDataSource = new MatTableDataSource(this.properties);
+        this.propertiesDataSource.data = properties; //new MatTableDataSource(this.properties);
         this.propertiesDataSource.paginator = this.propertiesTablePaginator;
-        
+        this.propertiesDataSource.sort = this.propertiesSort;
 
         this.getPropertiesServiceRunning = false;
       },
