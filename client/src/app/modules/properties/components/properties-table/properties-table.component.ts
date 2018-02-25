@@ -24,8 +24,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   @Output() selectedProperty: EventEmitter<Property> = new EventEmitter();
   
   @ViewChild('propertiesPaginator') propertiesTablePaginator : MatPaginator;
-  //@ViewChild('propertiesTable') propertiesTable : MatTable<Property>;
-  @ViewChild('MatSort') propertiesSort : MatSort;
+  @ViewChild('propertiesTable') propertiesSort : MatSort;
   
   properties : Property[] = [];
   propertiesDataSource : MatTableDataSource<Property> = new MatTableDataSource([]);
@@ -58,7 +57,6 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   ngAfterViewInit(): void {
-    console.log(this.propertiesSort);
     this.propertiesDataSource.sort = this.propertiesSort;
   }
 
@@ -76,7 +74,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     const methodTrace = `${this.constructor.name} > getProperties() > `; //for debugging
 
     this.properties = [];
-    this.propertiesDataSource.data = [];//new MatTableDataSource([]);
+    this.propertiesDataSource.data = [];
     this.propertiesDataSource.paginator = this.propertiesTablePaginator;
     this.propertiesDataSource.sort = this.propertiesSort;
 
@@ -85,7 +83,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     const newSubscription = this.propertiesService.getProperties(this.user.email, this.loadJustUserProperties).subscribe(
       (properties : Property[]) => {
         this.properties = properties;
-        this.propertiesDataSource.data = properties; //new MatTableDataSource(this.properties);
+        this.propertiesDataSource.data = properties;
         this.propertiesDataSource.paginator = this.propertiesTablePaginator;
         this.propertiesDataSource.sort = this.propertiesSort;
 

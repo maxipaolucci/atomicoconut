@@ -3758,7 +3758,6 @@ var PropertiesTableComponent = /** @class */ (function () {
         });
     };
     PropertiesTableComponent.prototype.ngAfterViewInit = function () {
-        console.log(this.propertiesSort);
         this.propertiesDataSource.sort = this.propertiesSort;
     };
     PropertiesTableComponent.prototype.ngOnDestroy = function () {
@@ -3773,13 +3772,13 @@ var PropertiesTableComponent = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
         this.properties = [];
-        this.propertiesDataSource.data = []; //new MatTableDataSource([]);
+        this.propertiesDataSource.data = [];
         this.propertiesDataSource.paginator = this.propertiesTablePaginator;
         this.propertiesDataSource.sort = this.propertiesSort;
         this.getPropertiesServiceRunning = true;
         var newSubscription = this.propertiesService.getProperties(this.user.email, this.loadJustUserProperties).subscribe(function (properties) {
             _this.properties = properties;
-            _this.propertiesDataSource.data = properties; //new MatTableDataSource(this.properties);
+            _this.propertiesDataSource.data = properties;
             _this.propertiesDataSource.paginator = _this.propertiesTablePaginator;
             _this.propertiesDataSource.sort = _this.propertiesSort;
             _this.getPropertiesServiceRunning = false;
@@ -3889,7 +3888,7 @@ var PropertiesTableComponent = /** @class */ (function () {
         __metadata("design:type", material_1.MatPaginator)
     ], PropertiesTableComponent.prototype, "propertiesTablePaginator", void 0);
     __decorate([
-        core_1.ViewChild('MatSort'),
+        core_1.ViewChild('propertiesTable'),
         __metadata("design:type", material_1.MatSort)
     ], PropertiesTableComponent.prototype, "propertiesSort", void 0);
     PropertiesTableComponent = __decorate([
