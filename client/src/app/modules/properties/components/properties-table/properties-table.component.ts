@@ -24,7 +24,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   @Output() selectedProperty: EventEmitter<Property> = new EventEmitter();
   
   @ViewChild('propertiesPaginator') propertiesTablePaginator : MatPaginator;
-  @ViewChild('propertiesTable') propertiesSort : MatSort;
+  @ViewChild(MatSort) propertiesSort : MatSort;
   
   properties : Property[] = [];
   propertiesDataSource : MatTableDataSource<Property> = new MatTableDataSource([]);
@@ -76,7 +76,6 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     this.properties = [];
     this.propertiesDataSource.data = [];
     this.propertiesDataSource.paginator = this.propertiesTablePaginator;
-    this.propertiesDataSource.sort = this.propertiesSort;
 
     this.getPropertiesServiceRunning = true;
     
@@ -85,7 +84,6 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
         this.properties = properties;
         this.propertiesDataSource.data = properties;
         this.propertiesDataSource.paginator = this.propertiesTablePaginator;
-        this.propertiesDataSource.sort = this.propertiesSort;
 
         this.getPropertiesServiceRunning = false;
       },
@@ -119,6 +117,10 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
 
     //map the index in the table to the indes in the properties array
     let index = indexInPage + this.propertiesTablePaginator.pageIndex * this.propertiesTablePaginator.pageSize;
+    if (this.propertiesSort.direction === 'desc') {
+      index = (-1) * (index + 1); //add one to index and invert sign
+    }
+
 
     this.propertyTableActionRunning = true;
     let yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
@@ -141,17 +143,16 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     return false;
   }
 
-  delete(index : number, property : Property = null) {
+  delete(index : number, propertyToDelete : Property = null) {
     const methodTrace = `${this.constructor.name} > delete() > `; //for debugging
 
     this.propertyTableActionRunning = true;
 
-    const newSuscription = this.propertiesService.delete(property.id, this.user.email).subscribe(
+    const newSuscription = this.propertiesService.delete(propertyToDelete.id, this.user.email).subscribe(
       (data : any) => {
         if (data && data.removed > 0) {
           this.properties.splice(index, 1);
           this.propertiesDataSource.data = this.properties;
-          //this.propertiesTable.renderRows();
           this.appService.showResults(`Property successfully removed!`, 'success');
         } else {
           this.appService.showResults(`Property could not be removed, please try again.`, 'error');

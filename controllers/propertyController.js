@@ -551,7 +551,7 @@ exports.getAllProperties = async (req, res) => {
 
     // - Get all the properties where user is involved (created or has a part of an investment in the property)
     console.log(`${methodTrace} ${getMessage('message', 1034, user.email, true, 'all Properties', 'user', user.email)}`);
-    const aggregationStagesArr = [{ $match : { $or : [ { createdBy : user._id }, { _id : { $in : propertyIds } } ] } }].concat(aggregationStages());
+    const aggregationStagesArr = [{ $match : { $or : [ { createdBy : user._id }, { _id : { $in : propertyIds } } ] } }].concat(aggregationStages(), { $sort : { "address" : 1 } });
     let properties = await Property.aggregate(aggregationStagesArr);
 
     // - Parse the recordset from DB and organize the info better.
