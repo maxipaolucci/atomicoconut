@@ -3688,7 +3688,7 @@ exports.PropertiesEditComponent = PropertiesEditComponent;
 /***/ "./src/app/modules/properties/components/properties-table/properties-table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties-table\">\r\n  <section class=\"table__container\" [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\" matSort>\r\n  \r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" (click)=\"selection.select(element); goToPropertyEdit(element);\">{{element.address}}</mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n          [ngClass]=\"{ 'selected': selection.isSelected(row)}\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties-table\">\r\n  <section class=\"table__container\" [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n\r\n    <!-- Table fliter -->\r\n    <mat-form-field>\r\n      <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Filter\">\r\n    </mat-form-field>\r\n    \r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\" matSort>\r\n  \r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" (click)=\"selection.select(element); goToPropertyEdit(element);\">{{element.address}}</mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n          [ngClass]=\"{ 'selected': selection.isSelected(row)}\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
 
 /***/ }),
 
@@ -3756,6 +3756,15 @@ var PropertiesTableComponent = /** @class */ (function () {
         this.selection.onChange.subscribe(function (selectionChange) {
             _this.selectedProperty.emit(_this.selection.selected[0]);
         });
+        //set filter predicate function to look just in the address field
+        this.propertiesDataSource.filterPredicate = function (data, filter) {
+            var address = data.address.toLowerCase().trim();
+            var filterStr = filter.toLowerCase().trim();
+            if (address.indexOf(filterStr) > -1) {
+                return true;
+            }
+            return false;
+        };
     };
     PropertiesTableComponent.prototype.ngAfterViewInit = function () {
         this.propertiesDataSource.sort = this.propertiesSort;
@@ -3836,13 +3845,6 @@ var PropertiesTableComponent = /** @class */ (function () {
         this.propertyTableActionRunning = true;
         var newSuscription = this.propertiesService.delete(propertyToDelete.id, this.user.email).subscribe(function (data) {
             if (data && data.removed > 0) {
-                // let index = 0;
-                // for (let property of this.properties) {
-                //   if (property.id === propertyToDelete.id) {
-                //     break;
-                //   }
-                //   index += 1;
-                // }
                 _this.properties.splice(index, 1);
                 _this.propertiesDataSource.data = _this.properties;
                 _this.appService.showResults("Property successfully removed!", 'success');
@@ -3869,6 +3871,11 @@ var PropertiesTableComponent = /** @class */ (function () {
             _this.propertyTableActionRunning = false;
         });
         this.subscription.add(newSuscription);
+    };
+    PropertiesTableComponent.prototype.applyFilter = function (filterValue) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+        this.propertiesDataSource.filter = filterValue; //apply filter
     };
     __decorate([
         core_1.Input(),

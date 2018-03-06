@@ -3,6 +3,12 @@
     <div class="table__overlay" *ngIf="propertyTableActionRunning">
         <mat-spinner color="warn"></mat-spinner>
     </div>
+
+    <!-- Table fliter -->
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+    
     <mat-table #propertiesTable [dataSource]="propertiesDataSource" matSort>
   
       <!-- Position Column -->

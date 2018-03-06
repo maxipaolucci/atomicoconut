@@ -54,6 +54,17 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     this.selection.onChange.subscribe((selectionChange : SelectionChange<Property>) => {
         this.selectedProperty.emit(this.selection.selected[0]);
     });
+
+    //set filter predicate function to look just in the address field
+    this.propertiesDataSource.filterPredicate = (data : Property, filter : string) => {
+      const address = data.address.toLowerCase().trim();
+      const filterStr = filter.toLowerCase().trim(); 
+      if (address.indexOf(filterStr) > -1) {
+        return true;
+      }
+
+      return false;
+    };
   }
 
   ngAfterViewInit(): void {
@@ -178,5 +189,11 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     );
 
     this.subscription.add(newSuscription);
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.propertiesDataSource.filter = filterValue; //apply filter
   }
 }
