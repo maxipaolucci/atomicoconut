@@ -3,11 +3,12 @@
   <input matInput type="text" [id]="id" [name]="id" [placeholder]="placeHolder" 
       [value]="value"
       [matAutocomplete]="addressAutocomplete"
-      #addressInput>
+      #addressInput
+      (keyup)="updateResults(addressInput.value)">
   
-  <mat-autocomplete #addressAutocomplete="matAutocomplete">
-    <mat-option *ngFor="let option of options" [value]="option">
-      {{ option }}
+  <mat-autocomplete autoActiveFirstOption #addressAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+    <mat-option *ngFor="let option of options" [value]="option.description">
+      {{ option.description }}
     </mat-option>
   </mat-autocomplete>  
   

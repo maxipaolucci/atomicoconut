@@ -4422,7 +4422,7 @@ exports.PropertiesService = PropertiesService;
 /***/ "./src/app/modules/shared/components/address-autocomplete/address-autocomplete.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-form-field fxFlex class=\"form__field\">\n  \n  <input matInput type=\"text\" [id]=\"id\" [name]=\"id\" [placeholder]=\"placeHolder\" \n      [value]=\"value\"\n      [matAutocomplete]=\"addressAutocomplete\"\n      #addressInput>\n  \n  <mat-autocomplete #addressAutocomplete=\"matAutocomplete\">\n    <mat-option *ngFor=\"let option of options\" [value]=\"option\">\n      {{ option }}\n    </mat-option>\n  </mat-autocomplete>  \n  \n</mat-form-field>\n<pre>{{model | json}}</pre>"
+module.exports = "<mat-form-field fxFlex class=\"form__field\">\r\n  \r\n  <input matInput type=\"text\" [id]=\"id\" [name]=\"id\" [placeholder]=\"placeHolder\" \r\n      [value]=\"value\"\r\n      [matAutocomplete]=\"addressAutocomplete\"\r\n      #addressInput\r\n      (keyup)=\"updateResults(addressInput.value)\">\r\n  \r\n  <mat-autocomplete autoActiveFirstOption #addressAutocomplete=\"matAutocomplete\" (optionSelected)=\"onOptionSelected($event)\">\r\n    <mat-option *ngFor=\"let option of options\" [value]=\"option.description\">\r\n      {{ option.description }}\r\n    </mat-option>\r\n  </mat-autocomplete>  \r\n  \r\n</mat-form-field>\r\n<pre>{{model | json}}</pre>"
 
 /***/ }),
 
@@ -4460,27 +4460,38 @@ var AddressAutocompleteComponent = /** @class */ (function () {
             lng: null,
             lat: null
         };
+        this.options = [];
+        this.autocompleteService = null;
     }
     AddressAutocompleteComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.mapsAPILoader.load().then(function () {
-            var dropdown = new google.maps.places.Autocomplete(_this.addressInputElementRef.nativeElement);
-            dropdown.addListener('place_changed', function () {
-                _this.ngZone.run(function () {
-                    var place = dropdown.getPlace();
-                    //verify result
-                    if (place.geometry === undefined || place.geometry === null) {
-                        return;
-                    }
-                    _this.model.lat = place.geometry.location.lat();
-                    _this.model.lng = place.geometry.location.lng();
-                    _this.model.address = _this.addressInputElementRef.nativeElement.value;
-                });
-            });
+            _this.autocompleteService = new google.maps.places.AutocompleteService();
+            // const dropdown = new google.maps.places.Autocomplete(this.addressInputElementRef.nativeElement);
+            // dropdown.addListener('place_changed', () => {
+            //   this.ngZone.run(() => {
+            //     const place : google.maps.places.PlaceResult = dropdown.getPlace();
+            //     //verify result
+            //     if (place.geometry === undefined || place.geometry === null) {
+            //       return;
+            //     }
+            //     this.model.lat = place.geometry.location.lat();
+            //     this.model.lng = place.geometry.location.lng();
+            //     this.model.address = this.addressInputElementRef.nativeElement.value;
+            //   });
+            // });  
         });
     };
-    AddressAutocompleteComponent.prototype.onChange = function (matAutocompleteSelectedEvent) {
+    AddressAutocompleteComponent.prototype.onOptionSelected = function (matAutocompleteSelectedEvent) {
+        console.log(matAutocompleteSelectedEvent);
         this.newValue.emit(matAutocompleteSelectedEvent);
+    };
+    AddressAutocompleteComponent.prototype.updateResults = function (address) {
+        var _this = this;
+        this.autocompleteService.getQueryPredictions({ input: address || '' }, function (data) {
+            _this.options = data;
+            console.log(data);
+        });
     };
     __decorate([
         core_1.Input(),

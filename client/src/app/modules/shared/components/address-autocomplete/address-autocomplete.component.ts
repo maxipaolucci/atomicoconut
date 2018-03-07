@@ -23,31 +23,45 @@ export class AddressAutocompleteComponent implements OnInit {
     lat : null
   };
 
+  options : any[] = [];
+
+  private autocompleteService : google.maps.places.AutocompleteService = null;
+
   constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) { }
 
   ngOnInit() {
     this.mapsAPILoader.load().then(() => {
-      const dropdown = new google.maps.places.Autocomplete(this.addressInputElementRef.nativeElement);
-      dropdown.addListener('place_changed', () => {
-        this.ngZone.run(() => {
-          const place : google.maps.places.PlaceResult = dropdown.getPlace();
+      this.autocompleteService = new google.maps.places.AutocompleteService();
+
+      // const dropdown = new google.maps.places.Autocomplete(this.addressInputElementRef.nativeElement);
+      // dropdown.addListener('place_changed', () => {
+      //   this.ngZone.run(() => {
+      //     const place : google.maps.places.PlaceResult = dropdown.getPlace();
           
-          //verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return;
-          }
+      //     //verify result
+      //     if (place.geometry === undefined || place.geometry === null) {
+      //       return;
+      //     }
   
-          this.model.lat = place.geometry.location.lat();
-          this.model.lng = place.geometry.location.lng();
-          this.model.address = this.addressInputElementRef.nativeElement.value;
-        });
-      });  
+      //     this.model.lat = place.geometry.location.lat();
+      //     this.model.lng = place.geometry.location.lng();
+      //     this.model.address = this.addressInputElementRef.nativeElement.value;
+      //   });
+      // });  
     });
     
   }
 
-  onChange(matAutocompleteSelectedEvent : MatAutocompleteSelectedEvent) {
+  onOptionSelected(matAutocompleteSelectedEvent : MatAutocompleteSelectedEvent) {
+    console.log(matAutocompleteSelectedEvent);
     this.newValue.emit(matAutocompleteSelectedEvent);
   }
 
+
+  updateResults(address : string) {
+    this.autocompleteService.getQueryPredictions({input : address || ''}, (data) => {
+      this.options = data;
+      console.log(data);
+    });
+  }
 }
