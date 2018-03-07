@@ -8,7 +8,7 @@ import { PropertiesService } from '../../properties.service';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { propertyTypes } from '../../../../constants';
 import { House } from '../../models/house';
-import { MatSelectChange, DateAdapter, NativeDateAdapter } from '@angular/material';
+import { MatSelectChange, DateAdapter, NativeDateAdapter, MatAutocompleteSelectedEvent } from '@angular/material';
 import { UtilService } from '../../../../util.service';
 
 @Component({
@@ -290,5 +290,9 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   onPropertyTypeDataChange($event : any) {
     this.model.propertyTypeData = $event.value.model;
     this.propertyTypeDataValid = $event.value.valid;
+  }
+
+  onAddressChange($event : MatAutocompleteSelectedEvent) {
+    console.log($event);
   }
 }

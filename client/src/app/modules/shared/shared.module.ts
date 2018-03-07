@@ -11,6 +11,7 @@ import { SnackbarSimpleComponent } from './components/snackbar-simple/snackbar-s
 import { EqualValidatorDirective } from './directives/equal-validator.directive';
 import { NumberValidatorDirective } from './directives/number-validator.directive';
 import { InfoTooltipComponent } from './components/info-tooltip/info-tooltip.component';
+import { AddressAutocompleteComponent } from './components/address-autocomplete/address-autocomplete.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { InfoTooltipComponent } from './components/info-tooltip/info-tooltip.com
     SnackbarSimpleComponent, 
     EqualValidatorDirective, 
     NumberValidatorDirective,
-    InfoTooltipComponent
+    InfoTooltipComponent,
+    AddressAutocompleteComponent
   ],
   exports: [ 
     MainNavigatorComponent, 
@@ -36,7 +38,8 @@ import { InfoTooltipComponent } from './components/info-tooltip/info-tooltip.com
     SnackbarSimpleComponent,
     EqualValidatorDirective,
     NumberValidatorDirective,
-    InfoTooltipComponent
+    InfoTooltipComponent,
+    AddressAutocompleteComponent
   ],
   entryComponents: [
     YesNoDialogComponent, //added as material doc suggest to allow AOT on this on the fly created class

@@ -20,6 +20,7 @@ import { CalculatorsModule } from './modules/calculators/calculators.module';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { PropertiesModule } from './modules/properties/properties.module';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
@@ -34,7 +35,11 @@ import { PropertiesModule } from './modules/properties/properties.module';
     InvestmentsModule,
     CalculatorsModule,
     SharedModule,
-    PropertiesModule
+    PropertiesModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyDKc7OEe0rN7hXZx8T-8ngEoK7dLGxyp18",
+      libraries: ["places"]
+    })
   ],
   declarations: [
     AppComponent,

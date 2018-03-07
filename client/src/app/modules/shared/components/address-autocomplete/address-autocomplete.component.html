@@ -1,0 +1,15 @@
+<mat-form-field fxFlex class="form__field">
+  
+  <input matInput type="text" [id]="id" [name]="id" [placeholder]="placeHolder" 
+      [value]="value"
+      [matAutocomplete]="addressAutocomplete"
+      #addressInput>
+  
+  <mat-autocomplete #addressAutocomplete="matAutocomplete">
+    <mat-option *ngFor="let option of options" [value]="option">
+      {{ option }}
+    </mat-option>
+  </mat-autocomplete>  
+  
+</mat-form-field>
+<pre>{{model | json}}</pre>

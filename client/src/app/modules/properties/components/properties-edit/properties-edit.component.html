@@ -11,7 +11,14 @@
   
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Address -->
-          <mat-form-field fxFlex class="form__field">
+          <address-autocomplete fxFlex
+              [id]="'address2'" 
+              [value]="model.address"
+              [placeHolder]="'Address'"
+              (newValue)="onAddressChange($event)">
+          </address-autocomplete>
+
+          <mat-form-field fxHide fxFlex class="form__field">
             <input matInput type="text" id="address" name="address" placeholder="Address" 
                 [(ngModel)]="model.address" 
                 required
