@@ -4,13 +4,12 @@
       [value]="value"
       [matAutocomplete]="addressAutocomplete"
       #addressInput
-      (keyup)="updateResults(addressInput.value)">
+      >
   
-  <mat-autocomplete autoActiveFirstOption #addressAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)">
-    <mat-option *ngFor="let option of options" [value]="option.description">
+  <mat-autocomplete autoActiveFirstOption #addressAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)" [displayWith]="autocompleteDisplayFn">
+    <mat-option *ngFor="let option of options" [value]="option">
       {{ option.description }}
     </mat-option>
   </mat-autocomplete>  
   
 </mat-form-field>
-<pre>{{model | json}}</pre>

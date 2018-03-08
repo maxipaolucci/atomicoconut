@@ -3675,7 +3675,7 @@ var PropertiesEditComponent = /** @class */ (function () {
         this.propertyTypeDataValid = $event.value.valid;
     };
     PropertiesEditComponent.prototype.onAddressChange = function ($event) {
-        console.log($event);
+        console.log('property component', $event);
     };
     PropertiesEditComponent = __decorate([
         core_1.Component({
@@ -4422,7 +4422,7 @@ exports.PropertiesService = PropertiesService;
 /***/ "./src/app/modules/shared/components/address-autocomplete/address-autocomplete.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-form-field fxFlex class=\"form__field\">\r\n  \r\n  <input matInput type=\"text\" [id]=\"id\" [name]=\"id\" [placeholder]=\"placeHolder\" \r\n      [value]=\"value\"\r\n      [matAutocomplete]=\"addressAutocomplete\"\r\n      #addressInput\r\n      (keyup)=\"updateResults(addressInput.value)\">\r\n  \r\n  <mat-autocomplete autoActiveFirstOption #addressAutocomplete=\"matAutocomplete\" (optionSelected)=\"onOptionSelected($event)\">\r\n    <mat-option *ngFor=\"let option of options\" [value]=\"option.description\">\r\n      {{ option.description }}\r\n    </mat-option>\r\n  </mat-autocomplete>  \r\n  \r\n</mat-form-field>\r\n<pre>{{model | json}}</pre>"
+module.exports = "<mat-form-field fxFlex class=\"form__field\">\r\n  \r\n  <input matInput type=\"text\" [id]=\"id\" [name]=\"id\" [placeholder]=\"placeHolder\" \r\n      [value]=\"value\"\r\n      [matAutocomplete]=\"addressAutocomplete\"\r\n      #addressInput\r\n      >\r\n  \r\n  <mat-autocomplete autoActiveFirstOption #addressAutocomplete=\"matAutocomplete\" (optionSelected)=\"onOptionSelected($event)\" [displayWith]=\"autocompleteDisplayFn\">\r\n    <mat-option *ngFor=\"let option of options\" [value]=\"option\">\r\n      {{ option.description }}\r\n    </mat-option>\r\n  </mat-autocomplete>  \r\n  \r\n</mat-form-field>"
 
 /***/ }),
 
@@ -4450,10 +4450,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var core_2 = __webpack_require__("./node_modules/@agm/core/index.js");
+var Observable_1 = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
 var AddressAutocompleteComponent = /** @class */ (function () {
-    function AddressAutocompleteComponent(mapsAPILoader, ngZone) {
+    function AddressAutocompleteComponent(mapsAPILoader) {
         this.mapsAPILoader = mapsAPILoader;
-        this.ngZone = ngZone;
         this.newValue = new core_1.EventEmitter();
         this.model = {
             address: null,
@@ -4462,35 +4462,54 @@ var AddressAutocompleteComponent = /** @class */ (function () {
         };
         this.options = [];
         this.autocompleteService = null;
+        this.placesService = null;
     }
     AddressAutocompleteComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.mapsAPILoader.load().then(function () {
             _this.autocompleteService = new google.maps.places.AutocompleteService();
-            // const dropdown = new google.maps.places.Autocomplete(this.addressInputElementRef.nativeElement);
-            // dropdown.addListener('place_changed', () => {
-            //   this.ngZone.run(() => {
-            //     const place : google.maps.places.PlaceResult = dropdown.getPlace();
-            //     //verify result
-            //     if (place.geometry === undefined || place.geometry === null) {
-            //       return;
-            //     }
-            //     this.model.lat = place.geometry.location.lat();
-            //     this.model.lng = place.geometry.location.lng();
-            //     this.model.address = this.addressInputElementRef.nativeElement.value;
-            //   });
-            // });  
+            _this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
         });
     };
-    AddressAutocompleteComponent.prototype.onOptionSelected = function (matAutocompleteSelectedEvent) {
-        console.log(matAutocompleteSelectedEvent);
-        this.newValue.emit(matAutocompleteSelectedEvent);
-    };
-    AddressAutocompleteComponent.prototype.updateResults = function (address) {
+    AddressAutocompleteComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
-        this.autocompleteService.getQueryPredictions({ input: address || '' }, function (data) {
-            _this.options = data;
-            console.log(data);
+        //Set a keyup event to the address input to look for matching addresses
+        Observable_1.Observable.fromEvent(this.addressInputElementRef.nativeElement, 'keyup').debounceTime(50).subscribe(function (keyboardEvent) {
+            //console.log(keyboardEvent.target['value'].trim());
+            var inp = String.fromCharCode(keyboardEvent.keyCode);
+            if (!(/[a-zA-Z0-9 ]/.test(inp))) {
+                return false;
+            }
+            _this.autocompleteService.getQueryPredictions({ input: keyboardEvent.target['value'].trim() || '' }, function (data, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    _this.options = data;
+                }
+                else {
+                    _this.options = [];
+                }
+            });
+        });
+    };
+    /**
+     * Using this function we can map our selection to the item description intead the whole object
+     */
+    AddressAutocompleteComponent.prototype.autocompleteDisplayFn = function (place) {
+        return place ? place.description : '';
+    };
+    AddressAutocompleteComponent.prototype.onOptionSelected = function (matAutocompleteSelectedEvent) {
+        var _this = this;
+        this.placesService.getDetails({ placeId: matAutocompleteSelectedEvent.option.value.place_id }, function (data, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                _this.model.lat = data.geometry.location.lat();
+                _this.model.lng = data.geometry.location.lng();
+                _this.model.address = _this.addressInputElementRef.nativeElement.value;
+            }
+            else {
+                _this.model.lat = null;
+                _this.model.lng = null;
+                _this.model.address = null;
+            }
+            _this.newValue.emit(_this.model);
         });
     };
     __decorate([
@@ -4519,7 +4538,7 @@ var AddressAutocompleteComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/modules/shared/components/address-autocomplete/address-autocomplete.component.html"),
             styles: [__webpack_require__("./src/app/modules/shared/components/address-autocomplete/address-autocomplete.component.scss")]
         }),
-        __metadata("design:paramtypes", [core_2.MapsAPILoader, core_1.NgZone])
+        __metadata("design:paramtypes", [core_2.MapsAPILoader])
     ], AddressAutocompleteComponent);
     return AddressAutocompleteComponent;
 }());

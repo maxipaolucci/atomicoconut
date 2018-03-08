@@ -292,7 +292,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.propertyTypeDataValid = $event.value.valid;
   }
 
-  onAddressChange($event : MatAutocompleteSelectedEvent) {
-    console.log($event);
+  onAddressChange($event : any) {
+    console.log('property component',$event);
   }
 }
