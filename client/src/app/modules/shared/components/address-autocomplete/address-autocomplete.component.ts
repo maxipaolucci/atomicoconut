@@ -1,30 +1,32 @@
-import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
 import {Observable} from 'rxjs/Observable';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'address-autocomplete',
   templateUrl: './address-autocomplete.component.html',
   styleUrls: ['./address-autocomplete.component.scss']
 })
-export class AddressAutocompleteComponent implements OnInit, AfterViewInit {
+export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  @ViewChild('editHouseForm') form;
+  @ViewChild("addressInput") addressInputElementRef: ElementRef;
   @Input() id : string;
   @Input() placeHolder : string;
-  @Input() value : string;
-  @Output() newValue: EventEmitter<any> = new EventEmitter();
-
-  @ViewChild("addressInput") addressInputElementRef: ElementRef;
+  @Input() defaultValues : any = null; //the default values of the component model
+  //@Input() required : boolean = false;
+  @Output() values: EventEmitter<any> = new EventEmitter();
 
   model : any = {
     address : null,
     lng : null,
     lat : null
   };
-
   options : any[] = [];
+  subscription : Subscription = new Subscription();
 
   private autocompleteService : google.maps.places.AutocompleteService = null;
   private placesService : google.maps.places.PlacesService = null;
@@ -32,6 +34,8 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit {
   constructor(private mapsAPILoader: MapsAPILoader) { }
 
   ngOnInit() {
+    Object.assign(this.model, this.defaultValues);
+
     this.mapsAPILoader.load().then(() => {
       this.autocompleteService = new google.maps.places.AutocompleteService();
       this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
@@ -39,10 +43,25 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit {
     
   }
 
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    
+    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
+  }
+
   ngAfterViewInit(): void {
+    //send data before touching any value
+    this.emitValues();
+
+    //after any event in the form we send updated data
+    const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
+      this.emitValues();
+    });
+    this.subscription.add(newSubscription);
 
     //Set a keyup event to the address input to look for matching addresses
-    Observable.fromEvent(this.addressInputElementRef.nativeElement, 'keyup').debounceTime(50).subscribe((keyboardEvent : KeyboardEvent) => {
+    const newSubscription2 = Observable.fromEvent(this.addressInputElementRef.nativeElement, 'keyup').debounceTime(50).subscribe((keyboardEvent : KeyboardEvent) => {
       //console.log(keyboardEvent.target['value'].trim());
       
       const inp = String.fromCharCode(keyboardEvent.keyCode);
@@ -60,6 +79,7 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit {
         }
       });
     });
+    this.subscription.add(newSubscription2);
   }
 
   /**
@@ -83,7 +103,16 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit {
         this.model.address = null;
       }
 
-      this.newValue.emit(this.model);
+      this.emitValues();
+    });
+  }
+
+  emitValues() {
+    this.values.emit({ 
+      value : {
+        model : this.model,
+        valid : this.form.valid
+      } 
     });
   }
 }

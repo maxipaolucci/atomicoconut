@@ -13,12 +13,13 @@
           <!-- Address -->
           <address-autocomplete fxFlex
               [id]="'address2'" 
-              [value]="model.address"
+              [defaultValues]="model.addressData"
               [placeHolder]="'Address'"
-              (newValue)="onAddressChange($event)">
+              
+              (newValue)="onAddressDataChange($event)">
           </address-autocomplete>
 
-          <mat-form-field fxHide fxFlex class="form__field">
+          <!-- <mat-form-field fxHide fxFlex class="form__field">
             <input matInput type="text" id="address" name="address" placeholder="Address" 
                 [(ngModel)]="model.address" 
                 required
@@ -26,7 +27,7 @@
                 #address="ngModel">
             
             <mat-error *ngIf="address.invalid && (address.dirty || address.touched) && address.errors.required">This field is required.</mat-error>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
 
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">

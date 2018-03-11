@@ -1,15 +1,30 @@
-<mat-form-field fxFlex class="form__field">
-  
-  <input matInput type="text" [id]="id" [name]="id" [placeholder]="placeHolder" 
-      [value]="value"
-      [matAutocomplete]="addressAutocomplete"
-      #addressInput
-      >
-  
-  <mat-autocomplete autoActiveFirstOption #addressAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)" [displayWith]="autocompleteDisplayFn">
-    <mat-option *ngFor="let option of options" [value]="option">
-      {{ option.description }}
-    </mat-option>
-  </mat-autocomplete>  
-  
-</mat-form-field>
+<form class="form__container form__address-autocomplete" #addressAutocompleteForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
+  <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
+
+    <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+      <!-- <h3 class="title">
+        <p class="header">Features</p>
+      </h3> -->
+
+      <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+        <mat-form-field fxFlex class="form__field">
+          
+          <input matInput type="text" [id]="id" [name]="id" [placeholder]="placeHolder" 
+              [value]="value"
+              [matAutocomplete]="addressAutocomplete"
+              required
+              #addressInput>
+          
+              <mat-error *ngIf="addressInput.invalid && (addressInput.dirty || addressInput.touched) && addressInput.errors.required">This field is required.</mat-error>
+          
+          <mat-autocomplete autoActiveFirstOption #addressAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)" [displayWith]="autocompleteDisplayFn">
+            <mat-option *ngFor="let option of options" [value]="option">
+              {{ option.description }}
+            </mat-option>
+          </mat-autocomplete>  
+          
+        </mat-form-field>
+      </div>
+    </div>
+  </section>
+</form>
