@@ -1,10 +1,11 @@
 import { User } from '../../users/models/user';
+import { Address } from './address';
 
 export class Property {
 
   id : string;
   type : 'house' /*| 'building' | 'condo'*/;
-  address : string;
+  address : Address;
   createdBy : User;
   askingPrice : number;
   askingPriceUnit : string;
@@ -30,7 +31,7 @@ export class Property {
   constructor(
       id : string = null,
       type : 'house' = 'house',
-      address : string = null,
+      address : Address = null,
       createdBy : User = null,
       askingPrice : number = null,
       askingPriceUnit : string = null,

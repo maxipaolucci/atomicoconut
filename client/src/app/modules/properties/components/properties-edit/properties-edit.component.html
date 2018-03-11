@@ -12,8 +12,8 @@
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Address -->
           <address-autocomplete fxFlex
-              [id]="'address2'" 
-              [defaultValues]="model.addressData"
+              [id]="'address'" 
+              [defaultValues]="model.address"
               [placeHolder]="'Address'"
               
               (newValue)="onAddressDataChange($event)">

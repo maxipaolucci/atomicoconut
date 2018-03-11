@@ -1,5 +1,6 @@
 import { User } from '../../users/models/user';
 import { Property } from './property';
+import { Address } from './address';
 
 export class House extends Property {
 
@@ -36,7 +37,7 @@ export class House extends Property {
   constructor(
       id : string = null,
       type : 'house' = 'house',
-      address : string = null,
+      address : Address = null,
       createdBy : User = null,
       landArea : number = null,
       floorArea : number = null,

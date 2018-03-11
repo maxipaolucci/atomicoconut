@@ -27,10 +27,19 @@ const propertySchema = new mongoose.Schema({
     type : Date,
     default: Date.now
   },
-  address: {
-    type: String,
-    required: 'An address is required!.',
-    trim: true
+  location : {
+    type : {
+      type : String,
+      default : 'Point'
+    },
+    coordinates : [{
+      type : Number,
+      required : 'You must supply coordinates!'
+    }],
+    address : {
+      type : String,
+      required : 'You must supply an address!'
+    }
   },
   askingPrice : {
     type : Number,

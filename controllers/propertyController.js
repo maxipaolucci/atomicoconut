@@ -41,13 +41,14 @@ exports.create = async (req, res, next) => {
 
     //save a new record in DB
     console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'Property')}`);
+    const location = { address : req.body.address.address, coordinates : [req.body.address.longitude, req.body.address.latitude] };
     let property = await (new Property({
         propertyType : req.body.type,
         createdBy: user._id,
         updatedBy: user._id,
         createdOn : req.body.createdOn,
         updatedOn : req.body.updatedOn,
-        address : req.body.address,
+        location,
         askingPrice : req.body.askingPrice,
         askingPriceUnit : req.body.askingPriceUnit,
         offerPrice : req.body.offerPrice,
@@ -198,10 +199,12 @@ exports.update = async (req, res, next) => {
 
     //fields to update
     const originalProperty = property; //we save the "beautified" version of property to easily access data
+    const location = { address : req.body.address.address, coordinates : [req.body.address.longitude, req.body.address.latitude] };
+
     const updates = {
         updatedBy: user._id,
         updatedOn : req.body.updatedOn,
-        address : req.body.address,
+        location,
         askingPrice : req.body.askingPrice,
         askingPriceUnit : req.body.askingPriceUnit,
         offerPrice : req.body.offerPrice,
@@ -551,7 +554,7 @@ exports.getAllProperties = async (req, res) => {
 
     // - Get all the properties where user is involved (created or has a part of an investment in the property)
     console.log(`${methodTrace} ${getMessage('message', 1034, user.email, true, 'all Properties', 'user', user.email)}`);
-    const aggregationStagesArr = [{ $match : { $or : [ { createdBy : user._id }, { _id : { $in : propertyIds } } ] } }].concat(aggregationStages(), { $sort : { "address" : 1 } });
+    const aggregationStagesArr = [{ $match : { $or : [ { createdBy : user._id }, { _id : { $in : propertyIds } } ] } }].concat(aggregationStages(), { $sort : { "location.address" : 1 } });
     let properties = await Property.aggregate(aggregationStagesArr);
 
     // - Parse the recordset from DB and organize the info better.

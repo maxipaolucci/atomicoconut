@@ -12,6 +12,7 @@ import { Response } from '../../models/response';
 import { of } from 'rxjs/observable/of';
 import { INVESTMENTS_TYPES, propertyTypes } from '../../constants';
 import { House } from '../properties/models/house';
+import { Address } from '../properties/models/address';
 
 
 @Injectable()
@@ -94,9 +95,11 @@ export class InvestmentsService {
         } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
           let property = null;
           const propertyData = investment.investmentData.property;
+          const address = new Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude);
+
           if (propertyData.propertyType === propertyTypes.HOUSE) {
             //we share the createdBy of the investment because we know is the same
-            property = new House(propertyData._id, propertyData.propertyType, propertyData.address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
+            property = new House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
                 propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, 
                 propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit,
                 propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, 
@@ -149,9 +152,11 @@ export class InvestmentsService {
           } else if (item.investmentType === INVESTMENTS_TYPES.PROPERTY) {
             let property = null;
             const propertyData = item.investmentData.property;
+            const address = new Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude);
+
             if (propertyData.propertyType === propertyTypes.HOUSE) {
               //we share the createdBy of the investment because we know is the same
-              property = new House(propertyData._id, propertyData.propertyType, propertyData.address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
+              property = new House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
                   propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, 
                   propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit,
                   propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, 

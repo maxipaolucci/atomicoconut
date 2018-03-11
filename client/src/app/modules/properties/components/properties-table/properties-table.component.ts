@@ -57,7 +57,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
 
     //set filter predicate function to look just in the address field
     this.propertiesDataSource.filterPredicate = (data : Property, filter : string) => {
-      const address = data.address.toLowerCase().trim();
+      const address = data.address.address.toLowerCase().trim();
       const filterStr = filter.toLowerCase().trim(); 
       if (address.indexOf(filterStr) > -1) {
         return true;

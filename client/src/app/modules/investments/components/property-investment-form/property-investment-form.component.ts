@@ -128,7 +128,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
       return this.router.navigate(['/properties']);
     } else {
       this.model.property = property;
-      this.model.address = property.address;
+      this.model.address = property.address.address;
       let buyingPrice = null;
       let buyingPriceUnit = null;
 

@@ -22,8 +22,8 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
 
   model : any = {
     address : null,
-    lng : null,
-    lat : null
+    latitude : null,
+    longitude : null
   };
   options : any[] = [];
   subscription : Subscription = new Subscription();
@@ -94,12 +94,12 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
         (data : google.maps.places.PlaceResult, status : google.maps.places.PlacesServiceStatus) => {
       
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        this.model.lat = data.geometry.location.lat();
-        this.model.lng = data.geometry.location.lng();
+        this.model.latitude = data.geometry.location.lat();
+        this.model.longitude = data.geometry.location.lng();
         this.model.address = this.addressInputElementRef.nativeElement.value;
       } else {
-        this.model.lat = null;
-        this.model.lng = null;
+        this.model.latitude = null;
+        this.model.longitude = null;
         this.model.address = null;
       }
 
