@@ -4,6 +4,8 @@ import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
 import {Observable} from 'rxjs/Observable';
 import { Subscription } from 'rxjs';
+import { Address } from '../../../properties/models/address';
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'address-autocomplete',
@@ -12,8 +14,8 @@ import { Subscription } from 'rxjs';
 })
 export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('editHouseForm') form;
-  @ViewChild("addressInput") addressInputElementRef: ElementRef;
+  @ViewChild('addressAutocompleteForm') form;
+  @ViewChild("addressInput") addressInput: NgModel;
   @Input() id : string;
   @Input() placeHolder : string;
   @Input() defaultValues : any = null; //the default values of the component model
@@ -35,10 +37,20 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
 
   ngOnInit() {
     Object.assign(this.model, this.defaultValues);
-
+    
     this.mapsAPILoader.load().then(() => {
       this.autocompleteService = new google.maps.places.AutocompleteService();
       this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
+
+      this.autocompleteService.getQueryPredictions({input : this.model.address}, 
+          (data : google.maps.places.QueryAutocompletePrediction[], status : google.maps.places.PlacesServiceStatus) => {
+        
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          this.options = data;
+        } else {
+          this.options = [];
+        }
+      });
     });
     
   }
@@ -56,30 +68,36 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
 
     //after any event in the form we send updated data
     const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
+      
+      if (values.address) {
+        let inputAddress = '';
+        if (values.address.description) {
+          //when the user selected an option from the autocomplete suggestions
+          inputAddress = values.address.description;
+        } else {
+          //this is when the user just started writing but did not selected any suggested option
+          inputAddress = values.address.trim();
+          this.model.address = inputAddress;
+          this.model.longitude = null;
+          this.model.latitude = null;
+        }
+
+        this.autocompleteService.getQueryPredictions({input : inputAddress}, 
+            (data : google.maps.places.QueryAutocompletePrediction[], status : google.maps.places.PlacesServiceStatus) => {
+          
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            this.options = data;
+          } else {
+            this.options = [];
+          }
+        });
+      } else {
+        this.options = [];
+      }
+
       this.emitValues();
     });
     this.subscription.add(newSubscription);
-
-    //Set a keyup event to the address input to look for matching addresses
-    const newSubscription2 = Observable.fromEvent(this.addressInputElementRef.nativeElement, 'keyup').debounceTime(50).subscribe((keyboardEvent : KeyboardEvent) => {
-      //console.log(keyboardEvent.target['value'].trim());
-      
-      const inp = String.fromCharCode(keyboardEvent.keyCode);
-      if (!(/[a-zA-Z0-9 ]/.test(inp))) {
-        return false;
-      }
-
-      this.autocompleteService.getQueryPredictions({input : keyboardEvent.target['value'].trim() || ''}, 
-          (data : google.maps.places.QueryAutocompletePrediction[], status : google.maps.places.PlacesServiceStatus) => {
-        
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          this.options = data;
-        } else {
-          this.options = [];
-        }
-      });
-    });
-    this.subscription.add(newSubscription2);
   }
 
   /**
@@ -96,7 +114,7 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         this.model.latitude = data.geometry.location.lat();
         this.model.longitude = data.geometry.location.lng();
-        this.model.address = this.addressInputElementRef.nativeElement.value;
+        this.model.address = matAutocompleteSelectedEvent.option.value.description;
       } else {
         this.model.latitude = null;
         this.model.longitude = null;
@@ -108,9 +126,11 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
   }
 
   emitValues() {
-    this.values.emit({ 
+    const newAddress = new Address(this.model.address, this.model.latitude, this.model.longitude);
+    
+    this.values.emit({
       value : {
-        model : this.model,
+        address : newAddress,
         valid : this.form.valid
       } 
     });

@@ -27,7 +27,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     email : null, //user email for api check
     type : null,
     propertyTypeData : {}, //specific data related to the property type
-    address : null,
+    address : {},
     askingPrice : null,
     askingPriceUnit : null,
     offerPrice : null,
@@ -144,7 +144,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     const newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(
       (property : Property) => {
         this.property = property;
-        
         //populate the model
         this.model.address = property.address;
         this.model.askingPrice = property.askingPrice;
@@ -294,8 +293,11 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   }
 
   onAddressChange($event : any) {
-    console.log('property component',$event);
-    this.model.address = $event.value.model;
+    this.model.address = $event.value.address;
     this.addressValid = $event.value.valid;
+  }
+
+  includedFormsValid() : boolean {
+    return this.propertyTypeDataValid && this.addressValid;
   }
 }

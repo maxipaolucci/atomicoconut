@@ -10,12 +10,14 @@
         <mat-form-field fxFlex class="form__field">
           
           <input matInput type="text" [id]="id" [name]="id" [placeholder]="placeHolder" 
-              [value]="value"
+              [(ngModel)]="model.address" 
+              [value]="model.address"
               [matAutocomplete]="addressAutocomplete"
               required
-              #addressInput>
-          
-              <mat-error *ngIf="addressInput.invalid && (addressInput.dirty || addressInput.touched) && addressInput.errors.required">This field is required.</mat-error>
+              #addressInput="ngModel">
+
+          <mat-icon matPrefix>directions</mat-icon>
+          <mat-error *ngIf="addressInput.invalid && (addressInput.dirty || addressInput.touched) && addressInput.errors.required">This field is required.</mat-error>
           
           <mat-autocomplete autoActiveFirstOption #addressAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)" [displayWith]="autocompleteDisplayFn">
             <mat-option *ngFor="let option of options" [value]="option">

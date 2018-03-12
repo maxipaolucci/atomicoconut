@@ -16,7 +16,7 @@
               [defaultValues]="model.address"
               [placeHolder]="'Address'"
               
-              (newValue)="onAddressDataChange($event)">
+              (values)="onAddressChange($event)">
           </address-autocomplete>
 
           <!-- <mat-form-field fxHide fxFlex class="form__field">
@@ -291,7 +291,7 @@
           mat-raised-button 
           type="submit" 
           color="accent" 
-          [disabled]="!editPropertyForm.form.valid || !propertyTypeDataValid">Save</button>
+          [disabled]="!editPropertyForm.form.valid || !includedFormsValid()">Save</button>
       
       <mat-progress-bar *ngIf="editPropertyServiceRunning"
           class="progress-bar progress-bar--edit-property"

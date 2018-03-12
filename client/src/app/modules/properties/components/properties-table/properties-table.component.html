@@ -14,7 +14,7 @@
       <!-- Position Column -->
       <ng-container matColumnDef="address">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
-        <mat-cell *matCellDef="let element" (click)="selection.select(element); goToPropertyEdit(element);">{{element.address.address}}</mat-cell>
+        <mat-cell *matCellDef="let element" (click)="selection.select(element); goToPropertyEdit(element);">{{element.address ? element.address.address : ''}}</mat-cell>
       </ng-container>
   
       <ng-container matColumnDef="invest">

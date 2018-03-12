@@ -1,10 +1,10 @@
 export class Address {
 
   address : string;
-  latitude : string;
-  longitude : string;
+  latitude : number;
+  longitude : number;
 
-  constructor(address : string = null, latitude : string = null, longitude : string= null) {
+  constructor(address : string = null, latitude : number = null, longitude : number = null) {
     
     this.address = address;
     this.latitude = latitude;
