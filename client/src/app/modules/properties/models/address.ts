@@ -1,13 +1,15 @@
 export class Address {
 
-  address : string;
+  description : string;
+  mapsPlaceId : string;
   latitude : number;
   longitude : number;
 
-  constructor(address : string = null, latitude : number = null, longitude : number = null) {
+  constructor(description : string = null, latitude : number = null, longitude : number = null, mapsPlaceId : string = null) {
     
-    this.address = address;
+    this.description = description;
     this.latitude = latitude;
     this.longitude = longitude;
+    this.mapsPlaceId = mapsPlaceId;
   }
 }

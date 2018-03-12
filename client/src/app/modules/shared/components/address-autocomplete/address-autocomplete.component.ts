@@ -23,9 +23,10 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
   @Output() values: EventEmitter<any> = new EventEmitter();
 
   model : any = {
-    address : null,
+    description : null,
     latitude : null,
-    longitude : null
+    longitude : null,
+    mapsPlaceId : null
   };
   options : any[] = [];
   subscription : Subscription = new Subscription();
@@ -41,16 +42,6 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
     this.mapsAPILoader.load().then(() => {
       this.autocompleteService = new google.maps.places.AutocompleteService();
       this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
-
-      this.autocompleteService.getQueryPredictions({input : this.model.address}, 
-          (data : google.maps.places.QueryAutocompletePrediction[], status : google.maps.places.PlacesServiceStatus) => {
-        
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          this.options = data;
-        } else {
-          this.options = [];
-        }
-      });
     });
     
   }
@@ -68,29 +59,38 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
 
     //after any event in the form we send updated data
     const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
-      
+      console.log('form values: ', values);
       if (values.address) {
         let inputAddress = '';
         if (values.address.description) {
           //when the user selected an option from the autocomplete suggestions
           inputAddress = values.address.description;
-        } else {
-          //this is when the user just started writing but did not selected any suggested option
-          inputAddress = values.address.trim();
-          this.model.address = inputAddress;
+          this.getPlaceDetails(values.address.mapsPlaceId);
+        } else if (values.description) {
+          console.log(111);
+          //this is when the user just started writing but did not selected any suggested option OR q are on edit mode retrieving an address from DB as a javascript object
+          inputAddress = values.description;
+          this.model.description = inputAddress;
           this.model.longitude = null;
           this.model.latitude = null;
-        }
 
-        this.autocompleteService.getQueryPredictions({input : inputAddress}, 
-            (data : google.maps.places.QueryAutocompletePrediction[], status : google.maps.places.PlacesServiceStatus) => {
+          this.options = [];
+        } else if (typeof values.address == 'string') {
+          inputAddress = values.address;
           
-          if (status === google.maps.places.PlacesServiceStatus.OK) {
-            this.options = data;
-          } else {
-            this.options = [];
-          }
-        });
+          this.autocompleteService.getQueryPredictions({input : inputAddress}, 
+              (data : google.maps.places.QueryAutocompletePrediction[], status : google.maps.places.PlacesServiceStatus) => {
+            
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              this.options = data;
+            } else {
+              this.options = [];
+            }
+          });
+        }
+        console.log('inputAddress: ', inputAddress);
+        
+        
       } else {
         this.options = [];
       }
@@ -108,17 +108,27 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
   }
 
   onOptionSelected(matAutocompleteSelectedEvent : MatAutocompleteSelectedEvent) {
-    this.placesService.getDetails({ placeId : matAutocompleteSelectedEvent.option.value.place_id }, 
+    this.getPlaceDetails(matAutocompleteSelectedEvent.option.value.place_id);
+  }
+
+  getPlaceDetails(mapsPlaceId : string) {
+    if (!mapsPlaceId) {
+      return false;
+    }
+
+    this.placesService.getDetails({ placeId : mapsPlaceId }, 
         (data : google.maps.places.PlaceResult, status : google.maps.places.PlacesServiceStatus) => {
       
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         this.model.latitude = data.geometry.location.lat();
         this.model.longitude = data.geometry.location.lng();
-        this.model.address = matAutocompleteSelectedEvent.option.value.description;
+        this.model.description = data.formatted_address;
+        this.model.mapsPlaceId = mapsPlaceId;
       } else {
         this.model.latitude = null;
         this.model.longitude = null;
-        this.model.address = null;
+        this.model.description = null;
+        this.model.place_id = null;
       }
 
       this.emitValues();
@@ -126,7 +136,7 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
   }
 
   emitValues() {
-    const newAddress = new Address(this.model.address, this.model.latitude, this.model.longitude);
+    const newAddress = new Address(this.model.description, this.model.latitude, this.model.longitude, this.model.mapsPlaceId);
     
     this.values.emit({
       value : {

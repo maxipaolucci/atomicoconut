@@ -67,7 +67,7 @@ export class PropertiesService {
         const createdBy = new User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
         let address = null;
         if (data.location) {
-          address = new Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0]);
+          address = new Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
         }
         
         if (data.propertyType === propertyTypes.HOUSE) {
@@ -116,7 +116,7 @@ export class PropertiesService {
           const createdBy = new User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
           let address = null;
           if (data.location) {
-            address = new Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0]);
+            address = new Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
           }
 
           if (data.propertyType === propertyTypes.HOUSE) {

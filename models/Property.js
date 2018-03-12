@@ -39,6 +39,10 @@ const propertySchema = new mongoose.Schema({
     address : {
       type : String,
       required : 'You must supply an address!'
+    },
+    mapsPlaceId : {
+      type : String,
+      required : 'You must supply a maps place_id!'
     }
   },
   askingPrice : {

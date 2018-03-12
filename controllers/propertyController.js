@@ -41,7 +41,7 @@ exports.create = async (req, res, next) => {
 
     //save a new record in DB
     console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'Property')}`);
-    const location = { address : req.body.address.address, coordinates : [req.body.address.longitude, req.body.address.latitude] };
+    const location = { address : req.body.address.description, coordinates : [req.body.address.longitude, req.body.address.latitude], mapsPlaceId : req.body.address.mapsPlaceId };
     let property = await (new Property({
         propertyType : req.body.type,
         createdBy: user._id,
@@ -199,7 +199,7 @@ exports.update = async (req, res, next) => {
 
     //fields to update
     const originalProperty = property; //we save the "beautified" version of property to easily access data
-    const location = { address : req.body.address.address, coordinates : [req.body.address.longitude, req.body.address.latitude] };
+    const location = { address : req.body.address.description, coordinates : [req.body.address.longitude, req.body.address.latitude], mapsPlaceId : req.body.address.mapsPlaceId };
 
     const updates = {
         updatedBy: user._id,

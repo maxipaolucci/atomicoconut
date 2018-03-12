@@ -2360,7 +2360,7 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
         }
         else {
             this.model.property = property;
-            this.model.address = property.address.address;
+            this.model.address = property.address.description;
             var buyingPrice = null;
             var buyingPriceUnit = null;
             if (property.salePrice) {
@@ -2989,7 +2989,7 @@ var InvestmentsService = /** @class */ (function () {
                 else if (investment.investmentType === constants_1.INVESTMENTS_TYPES.PROPERTY) {
                     var property = null;
                     var propertyData = investment.investmentData.property;
-                    var address = new address_1.Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude);
+                    var address = new address_1.Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude, propertyData.address.mapsPlaceId);
                     if (propertyData.propertyType === constants_1.propertyTypes.HOUSE) {
                         //we share the createdBy of the investment because we know is the same
                         property = new house_1.House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
@@ -3031,7 +3031,7 @@ var InvestmentsService = /** @class */ (function () {
                     else if (item.investmentType === constants_1.INVESTMENTS_TYPES.PROPERTY) {
                         var property = null;
                         var propertyData = item.investmentData.property;
-                        var address = new address_1.Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude);
+                        var address = new address_1.Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude, propertyData.address.mapsPlaceId);
                         if (propertyData.propertyType === constants_1.propertyTypes.HOUSE) {
                             //we share the createdBy of the investment because we know is the same
                             property = new house_1.House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
@@ -3704,7 +3704,7 @@ exports.PropertiesEditComponent = PropertiesEditComponent;
 /***/ "./src/app/modules/properties/components/properties-table/properties-table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties-table\">\r\n  <section class=\"table__container\" [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n\r\n    <!-- Table fliter -->\r\n    <mat-form-field>\r\n      <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Filter\">\r\n    </mat-form-field>\r\n    \r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\" matSort>\r\n  \r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" (click)=\"selection.select(element); goToPropertyEdit(element);\">{{element.address ? element.address.address : ''}}</mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n          [ngClass]=\"{ 'selected': selection.isSelected(row)}\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties-table\">\r\n  <section class=\"table__container\" [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n\r\n    <!-- Table fliter -->\r\n    <mat-form-field>\r\n      <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Filter\">\r\n    </mat-form-field>\r\n    \r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\" matSort>\r\n  \r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" (click)=\"selection.select(element); goToPropertyEdit(element);\">{{element.address ? element.address.description : ''}}</mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n          [ngClass]=\"{ 'selected': selection.isSelected(row)}\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
 
 /***/ }),
 
@@ -3774,7 +3774,7 @@ var PropertiesTableComponent = /** @class */ (function () {
         });
         //set filter predicate function to look just in the address field
         this.propertiesDataSource.filterPredicate = function (data, filter) {
-            var address = data.address.address.toLowerCase().trim();
+            var address = data.address.description.toLowerCase().trim();
             var filterStr = filter.toLowerCase().trim();
             if (address.indexOf(filterStr) > -1) {
                 return true;
@@ -4002,13 +4002,15 @@ exports.PropertySelectorDialogComponent = PropertySelectorDialogComponent;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var Address = /** @class */ (function () {
-    function Address(address, latitude, longitude) {
-        if (address === void 0) { address = null; }
+    function Address(description, latitude, longitude, mapsPlaceId) {
+        if (description === void 0) { description = null; }
         if (latitude === void 0) { latitude = null; }
         if (longitude === void 0) { longitude = null; }
-        this.address = address;
+        if (mapsPlaceId === void 0) { mapsPlaceId = null; }
+        this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.mapsPlaceId = mapsPlaceId;
     }
     return Address;
 }());
@@ -4379,7 +4381,7 @@ var PropertiesService = /** @class */ (function () {
                 var createdBy = new user_1.User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
                 var address = null;
                 if (data.location) {
-                    address = new address_1.Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0]);
+                    address = new address_1.Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
                 }
                 if (data.propertyType === constants_1.propertyTypes.HOUSE) {
                     result = new house_1.House(data._id, data.propertyType, address, createdBy, data.propertyTypeData.landArea, data.propertyTypeData.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit, data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces, data.propertyTypeData.fenced, data.propertyTypeData.rented, data.propertyTypeData.rentPrice, data.propertyTypeData.rentPriceUnit, data.propertyTypeData.rentPricePeriod, data.propertyTypeData.rentAppraisalDone, data.propertyTypeData.vacancy, data.propertyTypeData.bodyCorporate, data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
@@ -4418,7 +4420,7 @@ var PropertiesService = /** @class */ (function () {
                     var createdBy = new user_1.User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
                     var address = null;
                     if (data.location) {
-                        address = new address_1.Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0]);
+                        address = new address_1.Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
                     }
                     if (data.propertyType === constants_1.propertyTypes.HOUSE) {
                         properties.push(new house_1.House(data._id, data.propertyType, address, createdBy, data.landArea, data.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.registeredValue, data.registeredValueUnit, data.rates, data.ratesUnit, data.insurance, data.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.capitalGrowth, data.bedrooms, data.bathrooms, data.parkingSpaces, data.fenced, data.rented, data.rentPrice, data.rentPriceUnit, data.rentPricePeriod, data.rentAppraisalDone, data.vacancy, data.bodyCorporate, data.bodyCorporateUnit, data.utilitiesCost, data.utilitiesCostUnit, data.agent, data.managed, data.managerRate, data.buildingType, data.titleType));
@@ -4461,7 +4463,7 @@ exports.PropertiesService = PropertiesService;
 /***/ "./src/app/modules/shared/components/address-autocomplete/address-autocomplete.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container form__address-autocomplete\" #addressAutocompleteForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n\r\n    <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n      <!-- <h3 class=\"title\">\r\n        <p class=\"header\">Features</p>\r\n      </h3> -->\r\n\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          \r\n          <input matInput type=\"text\" [id]=\"id\" [name]=\"id\" [placeholder]=\"placeHolder\" \r\n              [(ngModel)]=\"model.address\" \r\n              [value]=\"model.address\"\r\n              [matAutocomplete]=\"addressAutocomplete\"\r\n              required\r\n              #addressInput=\"ngModel\">\r\n\r\n          <mat-icon matPrefix>directions</mat-icon>\r\n          <mat-error *ngIf=\"addressInput.invalid && (addressInput.dirty || addressInput.touched) && addressInput.errors.required\">This field is required.</mat-error>\r\n          \r\n          <mat-autocomplete autoActiveFirstOption #addressAutocomplete=\"matAutocomplete\" (optionSelected)=\"onOptionSelected($event)\" [displayWith]=\"autocompleteDisplayFn\">\r\n            <mat-option *ngFor=\"let option of options\" [value]=\"option\">\r\n              {{ option.description }}\r\n            </mat-option>\r\n          </mat-autocomplete>  \r\n          \r\n        </mat-form-field>\r\n      </div>\r\n    </div>\r\n  </section>\r\n</form>"
+module.exports = "<form class=\"form__container form__address-autocomplete\" #addressAutocompleteForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n  <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n\r\n    <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n      <!-- <h3 class=\"title\">\r\n        <p class=\"header\">Features</p>\r\n      </h3> -->\r\n\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n        <mat-form-field fxFlex class=\"form__field\">\r\n          \r\n          <input matInput type=\"text\" [id]=\"id\" [name]=\"id\" [placeholder]=\"placeHolder\" \r\n              [(ngModel)]=\"model\"\r\n              [matAutocomplete]=\"addressAutocomplete\"\r\n              required\r\n              #addressInput=\"ngModel\">\r\n\r\n          <mat-icon matPrefix>directions</mat-icon>\r\n          <mat-error *ngIf=\"addressInput.invalid && (addressInput.dirty || addressInput.touched) && addressInput.errors.required\">This field is required.</mat-error>\r\n          \r\n          <mat-autocomplete autoActiveFirstOption #addressAutocomplete=\"matAutocomplete\" (optionSelected)=\"onOptionSelected($event)\" [displayWith]=\"autocompleteDisplayFn\">\r\n            <mat-option *ngFor=\"let option of options\" [value]=\"option\">\r\n              {{ option.description }}\r\n            </mat-option>\r\n          </mat-autocomplete>  \r\n          \r\n        </mat-form-field>\r\n      </div>\r\n    </div>\r\n  </section>\r\n</form>"
 
 /***/ }),
 
@@ -4499,9 +4501,10 @@ var AddressAutocompleteComponent = /** @class */ (function () {
         //@Input() required : boolean = false;
         this.values = new core_1.EventEmitter();
         this.model = {
-            address: null,
+            description: null,
             latitude: null,
-            longitude: null
+            longitude: null,
+            mapsPlaceId: null
         };
         this.options = [];
         this.subscription = new rxjs_1.Subscription();
@@ -4514,14 +4517,6 @@ var AddressAutocompleteComponent = /** @class */ (function () {
         this.mapsAPILoader.load().then(function () {
             _this.autocompleteService = new google.maps.places.AutocompleteService();
             _this.placesService = new google.maps.places.PlacesService(document.createElement('div'));
-            _this.autocompleteService.getQueryPredictions({ input: _this.model.address }, function (data, status) {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    _this.options = data;
-                }
-                else {
-                    _this.options = [];
-                }
-            });
         });
     };
     AddressAutocompleteComponent.prototype.ngOnDestroy = function () {
@@ -4535,27 +4530,35 @@ var AddressAutocompleteComponent = /** @class */ (function () {
         this.emitValues();
         //after any event in the form we send updated data
         var newSubscription = this.form.valueChanges.debounceTime(500).subscribe(function (values) {
+            console.log('form values: ', values);
             if (values.address) {
                 var inputAddress = '';
                 if (values.address.description) {
                     //when the user selected an option from the autocomplete suggestions
                     inputAddress = values.address.description;
+                    _this.getPlaceDetails(values.address.mapsPlaceId);
                 }
-                else {
-                    //this is when the user just started writing but did not selected any suggested option
-                    inputAddress = values.address.trim();
-                    _this.model.address = inputAddress;
+                else if (values.description) {
+                    console.log(111);
+                    //this is when the user just started writing but did not selected any suggested option OR q are on edit mode retrieving an address from DB as a javascript object
+                    inputAddress = values.description;
+                    _this.model.description = inputAddress;
                     _this.model.longitude = null;
                     _this.model.latitude = null;
+                    _this.options = [];
                 }
-                _this.autocompleteService.getQueryPredictions({ input: inputAddress }, function (data, status) {
-                    if (status === google.maps.places.PlacesServiceStatus.OK) {
-                        _this.options = data;
-                    }
-                    else {
-                        _this.options = [];
-                    }
-                });
+                else if (typeof values.address == 'string') {
+                    inputAddress = values.address;
+                    _this.autocompleteService.getQueryPredictions({ input: inputAddress }, function (data, status) {
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                            _this.options = data;
+                        }
+                        else {
+                            _this.options = [];
+                        }
+                    });
+                }
+                console.log('inputAddress: ', inputAddress);
             }
             else {
                 _this.options = [];
@@ -4571,23 +4574,31 @@ var AddressAutocompleteComponent = /** @class */ (function () {
         return place ? place.description : '';
     };
     AddressAutocompleteComponent.prototype.onOptionSelected = function (matAutocompleteSelectedEvent) {
+        this.getPlaceDetails(matAutocompleteSelectedEvent.option.value.place_id);
+    };
+    AddressAutocompleteComponent.prototype.getPlaceDetails = function (mapsPlaceId) {
         var _this = this;
-        this.placesService.getDetails({ placeId: matAutocompleteSelectedEvent.option.value.place_id }, function (data, status) {
+        if (!mapsPlaceId) {
+            return false;
+        }
+        this.placesService.getDetails({ placeId: mapsPlaceId }, function (data, status) {
             if (status === google.maps.places.PlacesServiceStatus.OK) {
                 _this.model.latitude = data.geometry.location.lat();
                 _this.model.longitude = data.geometry.location.lng();
-                _this.model.address = matAutocompleteSelectedEvent.option.value.description;
+                _this.model.description = data.formatted_address;
+                _this.model.mapsPlaceId = mapsPlaceId;
             }
             else {
                 _this.model.latitude = null;
                 _this.model.longitude = null;
-                _this.model.address = null;
+                _this.model.description = null;
+                _this.model.place_id = null;
             }
             _this.emitValues();
         });
     };
     AddressAutocompleteComponent.prototype.emitValues = function () {
-        var newAddress = new address_1.Address(this.model.address, this.model.latitude, this.model.longitude);
+        var newAddress = new address_1.Address(this.model.description, this.model.latitude, this.model.longitude, this.model.mapsPlaceId);
         this.values.emit({
             value: {
                 address: newAddress,

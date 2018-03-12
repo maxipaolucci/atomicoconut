@@ -95,7 +95,7 @@ export class InvestmentsService {
         } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
           let property = null;
           const propertyData = investment.investmentData.property;
-          const address = new Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude);
+          const address = new Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude, propertyData.address.mapsPlaceId);
 
           if (propertyData.propertyType === propertyTypes.HOUSE) {
             //we share the createdBy of the investment because we know is the same
@@ -152,7 +152,7 @@ export class InvestmentsService {
           } else if (item.investmentType === INVESTMENTS_TYPES.PROPERTY) {
             let property = null;
             const propertyData = item.investmentData.property;
-            const address = new Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude);
+            const address = new Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude, propertyData.address.mapsPlaceId);
 
             if (propertyData.propertyType === propertyTypes.HOUSE) {
               //we share the createdBy of the investment because we know is the same
