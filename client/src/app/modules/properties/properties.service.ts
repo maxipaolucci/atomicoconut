@@ -65,7 +65,7 @@ export class PropertiesService {
       let result : Property = null;
       if (data && data._id) {
         const createdBy = new User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
-        let address = null;
+        let address = new Address();
         if (data.location) {
           address = new Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
         }
@@ -114,7 +114,7 @@ export class PropertiesService {
       if (responseData && responseData instanceof Array) {
         for (let data of responseData) {
           const createdBy = new User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
-          let address = null;
+          let address = new Address();
           if (data.location) {
             address = new Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
           }

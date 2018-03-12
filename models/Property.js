@@ -33,16 +33,14 @@ const propertySchema = new mongoose.Schema({
       default : 'Point'
     },
     coordinates : [{
-      type : Number,
-      required : 'You must supply coordinates!'
+      type : Number
     }],
     address : {
       type : String,
       required : 'You must supply an address!'
     },
     mapsPlaceId : {
-      type : String,
-      required : 'You must supply a maps place_id!'
+      type : String
     }
   },
   askingPrice : {

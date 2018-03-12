@@ -14,7 +14,7 @@
       <!-- Position Column -->
       <ng-container matColumnDef="address">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
-        <mat-cell *matCellDef="let element" (click)="selection.select(element); goToPropertyEdit(element);">{{element.address ? element.address.description : ''}}</mat-cell>
+        <mat-cell *matCellDef="let element" (click)="selection.select(element); goToPropertyEdit(element);">{{element.address.description}}</mat-cell>
       </ng-container>
   
       <ng-container matColumnDef="invest">
@@ -50,16 +50,16 @@
     </mat-table>
   </section>
   <mat-paginator [fxShow]="!getPropertiesServiceRunning && properties.length > 0" #propertiesPaginator 
-      [pageSize]="10" 
+      [pageSize]="25" 
       [showFirstLastButtons]="true"
-      [pageSizeOptions]="[10, 1, 20, 50, 100]">
+      [pageSizeOptions]="[25, 50, 100]">
   </mat-paginator>
   
   <section *ngIf="!getPropertiesServiceRunning && properties.length == 0" fxLayout="column" fxLayoutGap="10px">
     <mat-card fxFlex class="no-properties__card">
       <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
           fxLayoutAlign="space-around center">
-        <p> You do not have properties yet.</p>
+        <p>You do not have properties yet.</p>
       </mat-card-content>
     </mat-card>
     

@@ -4,7 +4,7 @@
         <img [src]="'/assets/images/house.png'" [alt]="investment.type" />
     </div>
     <mat-card-title>{{investmentTitle}}</mat-card-title>
-    <mat-card-subtitle>{{investment.property.address.address}}</mat-card-subtitle>
+    <mat-card-subtitle>{{investment.property.address.description}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="card__content">
     Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> 

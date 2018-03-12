@@ -59,26 +59,21 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
 
     //after any event in the form we send updated data
     const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
-      console.log('form values: ', values);
-      if (values.address) {
-        let inputAddress = '';
-        if (values.address.description) {
-          //when the user selected an option from the autocomplete suggestions
-          inputAddress = values.address.description;
-          this.getPlaceDetails(values.address.mapsPlaceId);
-        } else if (values.description) {
-          console.log(111);
-          //this is when the user just started writing but did not selected any suggested option OR q are on edit mode retrieving an address from DB as a javascript object
-          inputAddress = values.description;
-          this.model.description = inputAddress;
-          this.model.longitude = null;
-          this.model.latitude = null;
 
-          this.options = [];
+      if (values.address) {
+        if (values.address.description) {
+          if (values.address.mapsPlaceId) {
+            //when the user selected an option from the autocomplete suggestions
+            this.getPlaceDetails(values.address.mapsPlaceId);
+          } else {
+            //the user save a custom address. She did not picked it from the suggestion list.
+            this.emitValues(values.address.description);
+          }
         } else if (typeof values.address == 'string') {
-          inputAddress = values.address;
-          
-          this.autocompleteService.getQueryPredictions({input : inputAddress}, 
+          //This happens while the user is writing in the field before selecting an option from suggestion list
+
+          //retrieve matching places
+          this.autocompleteService.getQueryPredictions({input : values.address}, 
               (data : google.maps.places.QueryAutocompletePrediction[], status : google.maps.places.PlacesServiceStatus) => {
             
             if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -87,15 +82,16 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
               this.options = [];
             }
           });
+
+          this.emitValues(values.address);
+        } else {
+          this.options = [];
+          this.emitValues();
         }
-        console.log('inputAddress: ', inputAddress);
-        
-        
       } else {
         this.options = [];
+        this.emitValues();
       }
-
-      this.emitValues();
     });
     this.subscription.add(newSubscription);
   }
@@ -135,13 +131,26 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
     });
   }
 
-  emitValues() {
-    const newAddress = new Address(this.model.description, this.model.latitude, this.model.longitude, this.model.mapsPlaceId);
+  emitValues(description : string = null) {
+    let address = null;
+    let valid = this.form.valid;
+
+    if (this.model.mapsPlaceId) {
+      //the user picked from the suggestion list
+      address = new Address(this.model.description, this.model.latitude, this.model.longitude, this.model.mapsPlaceId); 
+    } else if (description){
+      //the user just type a custom address
+      address = new Address(description, null, null, null); 
+    } else {
+      //none of above, return invalid
+      valid = false;
+    }
+    
     
     this.values.emit({
       value : {
-        address : newAddress,
-        valid : this.form.valid
+        address,
+        valid
       } 
     });
   }

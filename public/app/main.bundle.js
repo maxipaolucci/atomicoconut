@@ -2436,7 +2436,7 @@ exports.PropertyInvestmentFormComponent = PropertyInvestmentFormComponent;
 /***/ "./src/app/modules/investments/components/property-investment/property-investment.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"investment__card\">\r\n  <mat-card-header routerLink=\"/properties/{{investment.property.type}}/edit/{{investment.property.id}}\">\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/house.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investmentTitle}}</mat-card-title>\r\n    <mat-card-subtitle>{{investment.property.address.address}}</mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}}\r\n    <br>\r\n    Sold at {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}\r\n    <br>\r\n    today market value at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>\r\n    <div [class.color__accent]=\"investmentReturn >= investmentValueWhenBought\" \r\n        [class.color__red]=\"investmentReturn < investmentValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought | percent : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let portion of investmentDistribution\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"portion.member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{portion.member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>{{ portion.percentage }}%</p>\r\n                <p>{{ portion.money | currency : 'USD' : 'code' : '1.2-2' }}</p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"card__actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/property/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
+module.exports = "<mat-card class=\"investment__card\">\r\n  <mat-card-header routerLink=\"/properties/{{investment.property.type}}/edit/{{investment.property.id}}\">\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/house.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investmentTitle}}</mat-card-title>\r\n    <mat-card-subtitle>{{investment.property.address.description}}</mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}}\r\n    <br>\r\n    Sold at {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}\r\n    <br>\r\n    today market value at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>\r\n    <div [class.color__accent]=\"investmentReturn >= investmentValueWhenBought\" \r\n        [class.color__red]=\"investmentReturn < investmentValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought | percent : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let portion of investmentDistribution\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"portion.member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{portion.member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>{{ portion.percentage }}%</p>\r\n                <p>{{ portion.money | currency : 'USD' : 'code' : '1.2-2' }}</p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"card__actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/property/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
 
 /***/ }),
 
@@ -2989,7 +2989,10 @@ var InvestmentsService = /** @class */ (function () {
                 else if (investment.investmentType === constants_1.INVESTMENTS_TYPES.PROPERTY) {
                     var property = null;
                     var propertyData = investment.investmentData.property;
-                    var address = new address_1.Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude, propertyData.address.mapsPlaceId);
+                    var address = new address_1.Address();
+                    if (propertyData.location) {
+                        address = new address_1.Address(propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
+                    }
                     if (propertyData.propertyType === constants_1.propertyTypes.HOUSE) {
                         //we share the createdBy of the investment because we know is the same
                         property = new house_1.House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
@@ -3031,7 +3034,10 @@ var InvestmentsService = /** @class */ (function () {
                     else if (item.investmentType === constants_1.INVESTMENTS_TYPES.PROPERTY) {
                         var property = null;
                         var propertyData = item.investmentData.property;
-                        var address = new address_1.Address(propertyData.address.address, propertyData.address.latitude, propertyData.address.longitude, propertyData.address.mapsPlaceId);
+                        var address = new address_1.Address();
+                        if (propertyData.location) {
+                            address = new address_1.Address(propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
+                        }
                         if (propertyData.propertyType === constants_1.propertyTypes.HOUSE) {
                             //we share the createdBy of the investment because we know is the same
                             property = new house_1.House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
@@ -3704,7 +3710,7 @@ exports.PropertiesEditComponent = PropertiesEditComponent;
 /***/ "./src/app/modules/properties/components/properties-table/properties-table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties-table\">\r\n  <section class=\"table__container\" [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n\r\n    <!-- Table fliter -->\r\n    <mat-form-field>\r\n      <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Filter\">\r\n    </mat-form-field>\r\n    \r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\" matSort>\r\n  \r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" (click)=\"selection.select(element); goToPropertyEdit(element);\">{{element.address ? element.address.description : ''}}</mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n          [ngClass]=\"{ 'selected': selection.isSelected(row)}\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"10\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[10, 1, 20, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties-table\">\r\n  <section class=\"table__container\" [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n\r\n    <!-- Table fliter -->\r\n    <mat-form-field>\r\n      <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Filter\">\r\n    </mat-form-field>\r\n    \r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\" matSort>\r\n  \r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" (click)=\"selection.select(element); goToPropertyEdit(element);\">{{element.address.description}}</mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n          [ngClass]=\"{ 'selected': selection.isSelected(row)}\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"25\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[25, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
 
 /***/ }),
 
@@ -4379,7 +4385,7 @@ var PropertiesService = /** @class */ (function () {
             var result = null;
             if (data && data._id) {
                 var createdBy = new user_1.User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
-                var address = null;
+                var address = new address_1.Address();
                 if (data.location) {
                     address = new address_1.Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
                 }
@@ -4418,7 +4424,7 @@ var PropertiesService = /** @class */ (function () {
                 for (var _i = 0, responseData_1 = responseData; _i < responseData_1.length; _i++) {
                     var data = responseData_1[_i];
                     var createdBy = new user_1.User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
-                    var address = null;
+                    var address = new address_1.Address();
                     if (data.location) {
                         address = new address_1.Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
                     }
@@ -4530,26 +4536,21 @@ var AddressAutocompleteComponent = /** @class */ (function () {
         this.emitValues();
         //after any event in the form we send updated data
         var newSubscription = this.form.valueChanges.debounceTime(500).subscribe(function (values) {
-            console.log('form values: ', values);
             if (values.address) {
-                var inputAddress = '';
                 if (values.address.description) {
-                    //when the user selected an option from the autocomplete suggestions
-                    inputAddress = values.address.description;
-                    _this.getPlaceDetails(values.address.mapsPlaceId);
-                }
-                else if (values.description) {
-                    console.log(111);
-                    //this is when the user just started writing but did not selected any suggested option OR q are on edit mode retrieving an address from DB as a javascript object
-                    inputAddress = values.description;
-                    _this.model.description = inputAddress;
-                    _this.model.longitude = null;
-                    _this.model.latitude = null;
-                    _this.options = [];
+                    if (values.address.mapsPlaceId) {
+                        //when the user selected an option from the autocomplete suggestions
+                        _this.getPlaceDetails(values.address.mapsPlaceId);
+                    }
+                    else {
+                        //the user save a custom address. She did not picked it from the suggestion list.
+                        _this.emitValues(values.address.description);
+                    }
                 }
                 else if (typeof values.address == 'string') {
-                    inputAddress = values.address;
-                    _this.autocompleteService.getQueryPredictions({ input: inputAddress }, function (data, status) {
+                    //This happens while the user is writing in the field before selecting an option from suggestion list
+                    //retrieve matching places
+                    _this.autocompleteService.getQueryPredictions({ input: values.address }, function (data, status) {
                         if (status === google.maps.places.PlacesServiceStatus.OK) {
                             _this.options = data;
                         }
@@ -4557,13 +4558,17 @@ var AddressAutocompleteComponent = /** @class */ (function () {
                             _this.options = [];
                         }
                     });
+                    _this.emitValues(values.address);
                 }
-                console.log('inputAddress: ', inputAddress);
+                else {
+                    _this.options = [];
+                    _this.emitValues();
+                }
             }
             else {
                 _this.options = [];
+                _this.emitValues();
             }
-            _this.emitValues();
         });
         this.subscription.add(newSubscription);
     };
@@ -4597,12 +4602,26 @@ var AddressAutocompleteComponent = /** @class */ (function () {
             _this.emitValues();
         });
     };
-    AddressAutocompleteComponent.prototype.emitValues = function () {
-        var newAddress = new address_1.Address(this.model.description, this.model.latitude, this.model.longitude, this.model.mapsPlaceId);
+    AddressAutocompleteComponent.prototype.emitValues = function (description) {
+        if (description === void 0) { description = null; }
+        var address = null;
+        var valid = this.form.valid;
+        if (this.model.mapsPlaceId) {
+            //the user picked from the suggestion list
+            address = new address_1.Address(this.model.description, this.model.latitude, this.model.longitude, this.model.mapsPlaceId);
+        }
+        else if (description) {
+            //the user just type a custom address
+            address = new address_1.Address(description, null, null, null);
+        }
+        else {
+            //none of above, return invalid
+            valid = false;
+        }
         this.values.emit({
             value: {
-                address: newAddress,
-                valid: this.form.valid
+                address: address,
+                valid: valid
             }
         });
     };
