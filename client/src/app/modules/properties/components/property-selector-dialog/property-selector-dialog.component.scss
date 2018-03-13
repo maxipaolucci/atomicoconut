@@ -1,13 +1,13 @@
 @import '../../../../../variables';
 
-.mat-dialog-content {
-  padding: 0;
+.mat-dialog-content properties-table {
+  margin: 0 -24px;
 }
 
 @media screen and (min-width: $screenGtXs) {
   
-  .mat-dialog-content {
-    padding: 0 24px;
+  .mat-dialog-content properties-table{
+    margin: 0;
   }
 }
 

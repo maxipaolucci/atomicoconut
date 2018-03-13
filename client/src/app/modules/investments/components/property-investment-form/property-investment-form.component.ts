@@ -101,6 +101,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
 
     const newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(
       (property : Property) => {
+        console.log(1, property);
         this.setProperty(property);
       },
       (error : any) => {
@@ -128,7 +129,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
       return this.router.navigate(['/properties']);
     } else {
       this.model.property = property;
-      this.model.address = property.address.description;
+      this.model.address = property.address;
       let buyingPrice = null;
       let buyingPriceUnit = null;
 

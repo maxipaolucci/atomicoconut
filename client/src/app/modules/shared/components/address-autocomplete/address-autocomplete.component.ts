@@ -2,7 +2,6 @@ import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef, 
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
-import {Observable} from 'rxjs/Observable';
 import { Subscription } from 'rxjs';
 import { Address } from '../../../properties/models/address';
 import { NgModel } from '@angular/forms';

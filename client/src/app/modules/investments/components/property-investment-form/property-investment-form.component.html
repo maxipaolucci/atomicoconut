@@ -13,10 +13,10 @@
         <!-- Address -->
         <mat-form-field fxFlex class="form__field">
           <input matInput type="text" id="property" name="property" placeholder="Property" 
-              [(ngModel)]="model.address" 
+              [(ngModel)]="model.address.description" 
               required
               readonly
-              [value]="model.address"
+              [value]="model.address.description"
               #property="ngModel"
               (click)="openPropertySelectionDialog()">
           

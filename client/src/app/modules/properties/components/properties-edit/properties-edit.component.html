@@ -291,7 +291,7 @@
           mat-raised-button 
           type="submit" 
           color="accent" 
-          [disabled]="!editPropertyForm.form.valid || !includedFormsValid()">Save</button>
+          [disabled]="!(editPropertyForm.form.valid && includedFormsValid())">Save</button>
       
       <mat-progress-bar *ngIf="editPropertyServiceRunning"
           class="progress-bar progress-bar--edit-property"
