@@ -65,6 +65,15 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
 
       return false;
     };
+
+    //this is needed because for fields where the header does not match the property of the data for sorting as address <> description
+    this.propertiesDataSource.sortingDataAccessor = (data : Property, sortHeaderId : string) => {
+      if (sortHeaderId === 'address') {
+        return data.address.description;
+      }
+
+      return 1;
+    };
   }
 
   ngAfterViewInit(): void {
@@ -128,6 +137,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
 
     //map the index in the table to the indes in the properties array
     let index = indexInPage + this.propertiesTablePaginator.pageIndex * this.propertiesTablePaginator.pageSize;
+    console.log(index);
     if (this.propertiesSort.direction === 'desc') {
       index = (-1) * (index + 1); //add one to index and invert sign
     }
@@ -162,7 +172,23 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     const newSuscription = this.propertiesService.delete(propertyToDelete.id, this.user.email).subscribe(
       (data : any) => {
         if (data && data.removed > 0) {
-          this.properties.splice(index, 1);
+          if (!this.propertiesDataSource.filter.length) {
+            //data is not filtered, proceed with the easy way
+            this.properties.splice(index, 1);
+          } else {
+            //filtered data, we need to search for the property in order to removeit from the view
+            let propertyIndex = 0;
+            for (let property of this.properties) {
+              if (property.id === propertyToDelete.id) {
+                break;
+              }
+
+              propertyIndex += 1;
+            }
+
+            this.properties.splice(propertyIndex, 1);
+          }
+          
           this.propertiesDataSource.data = this.properties;
           this.appService.showResults(`Property successfully removed!`, 'success');
         } else {

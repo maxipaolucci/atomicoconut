@@ -3787,6 +3787,13 @@ var PropertiesTableComponent = /** @class */ (function () {
             }
             return false;
         };
+        //this is needed because for fields where the header does not match the property of the data for sorting as address <> description
+        this.propertiesDataSource.sortingDataAccessor = function (data, sortHeaderId) {
+            if (sortHeaderId === 'address') {
+                return data.address.description;
+            }
+            return 1;
+        };
     };
     PropertiesTableComponent.prototype.ngAfterViewInit = function () {
         this.propertiesDataSource.sort = this.propertiesSort;
@@ -3838,6 +3845,7 @@ var PropertiesTableComponent = /** @class */ (function () {
         }
         //map the index in the table to the indes in the properties array
         var index = indexInPage + this.propertiesTablePaginator.pageIndex * this.propertiesTablePaginator.pageSize;
+        console.log(index);
         if (this.propertiesSort.direction === 'desc') {
             index = (-1) * (index + 1); //add one to index and invert sign
         }
@@ -3867,7 +3875,22 @@ var PropertiesTableComponent = /** @class */ (function () {
         this.propertyTableActionRunning = true;
         var newSuscription = this.propertiesService.delete(propertyToDelete.id, this.user.email).subscribe(function (data) {
             if (data && data.removed > 0) {
-                _this.properties.splice(index, 1);
+                if (!_this.propertiesDataSource.filter.length) {
+                    //data is not filtered, proceed with the easy way
+                    _this.properties.splice(index, 1);
+                }
+                else {
+                    //filtered data, we need to search for the property in order to removeit from the view
+                    var propertyIndex = 0;
+                    for (var _i = 0, _a = _this.properties; _i < _a.length; _i++) {
+                        var property = _a[_i];
+                        if (property.id === propertyToDelete.id) {
+                            break;
+                        }
+                        propertyIndex += 1;
+                    }
+                    _this.properties.splice(propertyIndex, 1);
+                }
                 _this.propertiesDataSource.data = _this.properties;
                 _this.appService.showResults("Property successfully removed!", 'success');
             }
