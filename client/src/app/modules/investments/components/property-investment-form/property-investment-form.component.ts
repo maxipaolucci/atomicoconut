@@ -44,10 +44,13 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     this.model.buyingDate = new Date(Date.now());
     this.model.buyingPriceUnit = this.user.currency;
     Object.assign(this.model, this.defaultValues);
-
+    console.log(this.model);
     if (this.model.propertyId) {
-      //when creating from the property "invest action" on some component that shows properties
+      //when creating from the property "invest action" or some component that shows properties an allow the creation of an investment of it
       this.getProperty(this.model.propertyId);
+    } else if (this.model.property) {
+      //when editing a property investment
+      this.model.address = this.model.property.address.description; 
     }
   }
 
@@ -129,7 +132,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
       return this.router.navigate(['/properties']);
     } else {
       this.model.property = property;
-      this.model.address = property.address;
+      this.model.address = property.address.description;
       let buyingPrice = null;
       let buyingPriceUnit = null;
 
