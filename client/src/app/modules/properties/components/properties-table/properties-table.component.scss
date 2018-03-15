@@ -2,6 +2,10 @@
 
 .table__container {
 
+  .table-filter__input {
+    margin: 0 24px;
+  }
+
   mat-table {
     
     mat-row  .mat-column-address {
@@ -28,12 +32,18 @@
 }
 
 .progress-bar--get-properties {
-  width: 100%;
+  width: 80%;
+  margin: 0 24px;
 }
 
 @media screen and (min-width: $screenGtXs) {
 
+  .table-filter__input {
+    margin: 0;
+  }
+
   .progress-bar--get-properties {
     width: 300px;
+    margin: 0;
   }
 }
