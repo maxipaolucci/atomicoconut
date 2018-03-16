@@ -200,7 +200,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
             agent : property.agent
           };
         }
-        console.log(this.model.address);
 
         this.getPropertyServiceRunning = false;
       },

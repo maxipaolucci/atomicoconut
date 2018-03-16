@@ -14,6 +14,8 @@
             <mat-option value="apartment">Apartment</mat-option>
             <mat-option value="unit">Unit</mat-option>
           </mat-select>
+
+          <mat-icon matPrefix>home</mat-icon>
         </mat-form-field>
         
         <!-- Title type -->
@@ -23,6 +25,8 @@
             <mat-option value="crossLease">Cross lease</mat-option>
             <mat-option value="leaseHold">Lease hold</mat-option>
           </mat-select>
+
+          <mat-icon matPrefix>description</mat-icon>
         </mat-form-field>
       </div>
 
@@ -63,6 +67,7 @@
               numberValidator
               #bedrooms="ngModel">
               
+          <mat-icon matPrefix>hotel</mat-icon>
           <mat-error *ngIf="bedrooms.invalid && (bedrooms.dirty || bedrooms.touched) && bedrooms.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
         </mat-form-field>
 
@@ -73,7 +78,8 @@
               [value]="model.bathrooms"
               numberValidator
               #bathrooms="ngModel">
-              
+
+          <mat-icon matPrefix>airline_seat_legroom_reduced</mat-icon>
           <mat-error *ngIf="bathrooms.invalid && (bathrooms.dirty || bathrooms.touched) && bathrooms.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
         </mat-form-field>
 
@@ -85,6 +91,7 @@
               numberValidator
               #parkingSpaces="ngModel">
               
+          <mat-icon matPrefix>directions_car</mat-icon>
           <mat-error *ngIf="parkingSpaces.invalid && (parkingSpaces.dirty || parkingSpaces.touched) && parkingSpaces.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
         </mat-form-field>
 
@@ -170,6 +177,8 @@
               [(ngModel)]="model.agent"
               [value]="model.agent"
               #agent="ngModel">
+
+          <mat-icon matPrefix>person</mat-icon>
         </mat-form-field>
       </div>
 
@@ -247,6 +256,7 @@
               numberValidator='{"min": 0, "max": 100}' 
               #capitalGrowth="ngModel">
           
+          <mat-icon matPrefix>trending_up</mat-icon>
           <span matSuffix>%</span>
           <mat-hint align="start">Annual capital growth percentage for owning the property.</mat-hint>
           <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>

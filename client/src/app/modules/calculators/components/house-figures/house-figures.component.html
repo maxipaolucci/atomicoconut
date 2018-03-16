@@ -16,6 +16,7 @@
                 [value]="model.purchasePrice"
                 #purchasePrice="ngModel">
             
+            <mat-icon matPrefix>attach_money</mat-icon>
             <mat-error *ngIf="purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
           
@@ -27,17 +28,21 @@
                 [value]="model.marketValue"
                 #marketValue="ngModel">
 
+            <mat-icon matPrefix>attach_money</mat-icon>
             <mat-error *ngIf="marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
   
           <!-- Capital growth -->
-          <mat-form-field fxFlex  class="form__field">
-            <input matInput type="number" id="capitalGrowth" name="capitalGrowth" placeholder="Capital growth %" 
+          <mat-form-field fxFlex fxFlex.sm="140px" fxFlex.gt-sm="200px" class="form__field">
+            <input matInput type="number" id="capitalGrowth" name="capitalGrowth" placeholder="Capital growth" 
                 [(ngModel)]="model.capitalGrowth" 
-                numberValidator='{"min": 0, "max": 100}' 
                 [value]="model.capitalGrowth"
+                numberValidator='{"min": 0, "max": 100}' 
                 #capitalGrowth="ngModel">
             
+            <mat-icon matPrefix>trending_up</mat-icon>
+            <span matSuffix>%</span>
+            <mat-hint align="start">Annual capital growth percentage for owning the property.</mat-hint>
             <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
             <mat-error *ngIf="capitalGrowth.invalid && (capitalGrowth.dirty || capitalGrowth.touched) && capitalGrowth.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
@@ -52,27 +57,34 @@
       
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Loan coverage -->
-          <mat-form-field fxFlex  class="form__field">
-            <input matInput type="number" id="loanCoverage" name="loanCoverage" placeholder="Loan coverage %" 
-                [(ngModel)]="model.loanCoverage" 
-                numberValidator='{"min": 0, "max": 100}' 
-                [value]="model.loanCoverage"
-                #loanCoverage="ngModel">
-            
-            <mat-hint align="start">Percentage of the purchase price covered by the loan.</mat-hint>
-            <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-            <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
-            <mat-error *ngIf="loanCoverage.invalid && (loanCoverage.dirty || loanCoverage.touched) && loanCoverage.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
-          </mat-form-field>
+          <div fxFlex="none" fxFlex.gt-xs fxLayout="column" class="form__field slider__field">
+            <label class="slider__label">Loan coverage</label>
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+              <mat-slider fxFlex id="loanCoverage" name="loanCoverage"
+                  color="accent"
+                  [max]="100"
+                  [min]="0"
+                  [step]="1"
+                  [thumb-label]="true"
+                  [tick-interval]="1"
+                  [(ngModel)]="model.loanCoverage"
+                  [value]="model.loanCoverage"> 
+              </mat-slider>
+              <span *ngIf="model.loanCoverage">{{model.loanCoverage}}%</span>
+            </div>
+            <label class="mat-hint slider__label__hint">Percentage of the purchase price covered by the loan.</label>
+          </div>
   
           <!-- Interest rates -->
           <mat-form-field fxFlex  class="form__field">
-            <input matInput type="number" id="interestRates" name="interestRates" placeholder="Interest rates %" 
+            <input matInput type="number" id="interestRates" name="interestRates" placeholder="Interest rates" 
                 [(ngModel)]="model.interestRates" 
                 numberValidator='{"min": 0, "max": 100}' 
                 [value]="model.interestRates"
                 #interestRates="ngModel">
 
+            <mat-icon matPrefix>timeline</mat-icon>
+            <span matSuffix>%</span>
             <mat-hint align="start">Average loan interest rates (as a percentage).</mat-hint>
             <mat-error *ngIf="interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             <mat-error *ngIf="interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
@@ -82,7 +94,7 @@
 
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Loan term -->
-          <div fxFlex="none" fxFlex.gt-xs fxLayout="column" class="form__field">
+          <div fxFlex="none" fxFlex.gt-xs fxLayout="column" class="form__field slider__field">
             <label class="slider__label">Term</label>
             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
               <mat-slider fxFlex id="loanTerm" name="loanTerm"
@@ -95,9 +107,8 @@
                   [(ngModel)]="model.loanTerm"
                   [value]="model.loanTerm"> 
               </mat-slider>
-              <span>{{model.loanTerm}}</span>
+              <span *ngIf="model.loanTerm">{{model.loanTerm}} years</span>
             </div>
-            
           </div>
 
           <!-- Payment frecuency -->
@@ -128,7 +139,7 @@
                 [value]="model.weeklyRent"
                 #weeklyRent="ngModel">
   
-            
+            <mat-icon matPrefix>attach_money</mat-icon>
             <mat-error *ngIf="weeklyRent.invalid && (weeklyRent.dirty || weeklyRent.touched) && weeklyRent.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
   
@@ -145,18 +156,23 @@
           </mat-form-field>
   
           <!-- Rental manager -->
-          <mat-form-field fxFlex  class="form__field">
-            <input matInput type="number" id="managed" name="managed" placeholder="Managed %" 
-                [(ngModel)]="model.managed" 
-                numberValidator='{"min": 0, "max": 100}' 
-                [value]="model.managed"
-                #managed="ngModel">
-  
-            <mat-hint align="start">Rental manager charges as a percentage of net annual rental income.</mat-hint>
-            <mat-error *ngIf="managed.invalid && (managed.dirty || managed.touched) && managed.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-            <mat-error *ngIf="managed.invalid && (managed.dirty || managed.touched) && managed.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
-            <mat-error *ngIf="managed.invalid && (managed.dirty || managed.touched) && managed.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
-          </mat-form-field>
+          <div fxFlex="none" fxFlex.gt-xs fxLayout="column" class="form__field slider__field">
+            <label class="slider__label">Manager rate</label>
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+              <mat-slider fxFlex id="managed" name="managed"
+                  color="accent"
+                  [max]="20"
+                  [min]="0"
+                  [step]="1"
+                  [thumb-label]="true"
+                  [tick-interval]="1"
+                  [(ngModel)]="model.managed"
+                  [value]="model.managed"> 
+              </mat-slider>
+              <span *ngIf="model.managed">{{model.managed}}%</span>
+            </div>
+            <label class="mat-hint slider__label__hint">Rental manager charge as a percentage of net annual rental income.</label>
+          </div>
         </div>
       </div>
         
@@ -174,6 +190,7 @@
                 numberValidator
                 #renovationCost="ngModel">
 
+                <mat-icon matPrefix>attach_money</mat-icon>
                 <mat-hint align="start">The cost to do all the renovations.</mat-hint>
                 <mat-error *ngIf="renovationCost.invalid && (renovationCost.dirty || renovationCost.touched) && renovationCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
@@ -186,6 +203,7 @@
                 numberValidator
                 #mantainanceCost="ngModel">
 
+                <mat-icon matPrefix>attach_money</mat-icon>
                 <mat-hint align="start">The annual cost to maintain the property.</mat-hint>
                 <mat-error *ngIf="mantainanceCost.invalid && (mantainanceCost.dirty || mantainanceCost.touched) && mantainanceCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
@@ -200,6 +218,7 @@
                 numberValidator
                 #bodyCorporate="ngModel">
   
+                <mat-icon matPrefix>attach_money</mat-icon>
                 <mat-error *ngIf="bodyCorporate.invalid && (bodyCorporate.dirty || bodyCorporate.touched) && bodyCorporate.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
   
@@ -211,6 +230,7 @@
                 numberValidator
                 #houseRates="ngModel">
   
+                <mat-icon matPrefix>attach_money</mat-icon>
                 <mat-error *ngIf="houseRates.invalid && (houseRates.dirty || houseRates.touched) && houseRates.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
         </div>
@@ -224,6 +244,7 @@
                 numberValidator
                 #utilities="ngModel">
   
+                <mat-icon matPrefix>attach_money</mat-icon>
                 <mat-hint align="start">Gas, water, electricity, internet, etc..</mat-hint>
                 <mat-error *ngIf="utilities.invalid && (utilities.dirty || utilities.touched) && utilities.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
@@ -235,7 +256,8 @@
                 [value]="model.insurance"
                 numberValidator
                 #insurance="ngModel">
-  
+
+                <mat-icon matPrefix>attach_money</mat-icon>
                 <mat-error *ngIf="insurance.invalid && (insurance.dirty || insurance.touched) && insurance.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
   
@@ -247,6 +269,7 @@
                 numberValidator
                 #otherCosts="ngModel">
 
+                <mat-icon matPrefix>attach_money</mat-icon>
                 <mat-hint align="start">Any other cost to have in mind not declared in the previous fields.</mat-hint>
                 <mat-error *ngIf="otherCosts.invalid && (otherCosts.dirty || otherCosts.touched) && otherCosts.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>

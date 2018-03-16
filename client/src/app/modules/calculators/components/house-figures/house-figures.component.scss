@@ -1,5 +1,12 @@
 .calculator__container {
   
+  .form__field.slider__field {
+
+    .slider__label__hint {
+      font-size: 75%;
+    }
+  }
+  
   .slider__label {
     display: block;
     font-size: 10px;

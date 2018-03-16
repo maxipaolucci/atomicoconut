@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   forgotModel : any = { email : '', forgot : false };
   loginServiceRunning : boolean = false;
   forgotServiceRunning : boolean = false;
+  showPassword : boolean = false;
 
   constructor(private usersService : UsersService, private appService : AppService,  
     private mainNavigatorService : MainNavigatorService, private router : Router, private route : ActivatedRoute) { }

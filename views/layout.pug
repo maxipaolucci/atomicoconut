@@ -17,7 +17,6 @@ head
     block content
   
     block scripts
-      script(src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAP_KEY}&libraries=places`)
       //- this are the server app js resources bundled by webpack in server
       script(src="/dist/App.bundle.js")
       //- these are all the client app resources

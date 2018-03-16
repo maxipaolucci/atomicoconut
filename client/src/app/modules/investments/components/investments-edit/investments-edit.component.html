@@ -38,6 +38,8 @@
                   {{team.name}}
                 </mat-option>
               </mat-select>
+
+              <mat-icon matPrefix>group</mat-icon>
               <mat-error *ngIf="team.invalid && (team.dirty || team.touched) && team.errors.required">Please choose a team</mat-error>
             </mat-form-field>
           </div>

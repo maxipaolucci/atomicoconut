@@ -20,7 +20,8 @@
           </address-autocomplete>
         </div>
 
-        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+        <div *ngIf="model.address && model.address.latitude && model.address.longitude" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Map -->
           <dynamic-map fxFlex [latitude]="model.address.latitude" [longitude]="model.address.longitude" [markers]="[model.address]" [mapContainerHeight]="300"></dynamic-map>
         </div>
 
@@ -33,6 +34,8 @@
                 value="model.description"
                 #description="ngModel">
             </textarea>
+
+            <mat-icon matPrefix>subject</mat-icon>
           </mat-form-field>
         </div>
       </div>
@@ -266,6 +269,8 @@
                 value="model.notes"
                 #notes="ngModel">
             </textarea>
+
+            <mat-icon matPrefix>subject</mat-icon>
           </mat-form-field>
         </div>
       </div>

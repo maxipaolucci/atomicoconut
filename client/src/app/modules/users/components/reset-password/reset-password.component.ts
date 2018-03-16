@@ -13,9 +13,10 @@ import { AppService } from '../../../../app.service';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  public model : any = { password : '', 'password-confirm' : ''};
+  model : any = { password : '', 'password-confirm' : ''};
   private token : string = '';
-  public resetPasswordServiceRunning : boolean = false;
+  resetPasswordServiceRunning : boolean = false;
+  showPassword : boolean = false;
 
   constructor(private appService : AppService, private usersService : UsersService, private router : Router, private route : ActivatedRoute,
       private mainNavigatorService : MainNavigatorService ) { }
