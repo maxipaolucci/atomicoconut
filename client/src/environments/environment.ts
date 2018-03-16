@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   apiHost : '',
-  showLogs : true
+  showLogs : true,
+  mapsApiKey : 'AIzaSyDKc7OEe0rN7hXZx8T-8ngEoK7dLGxyp18'
 };

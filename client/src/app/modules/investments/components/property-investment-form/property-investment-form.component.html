@@ -16,12 +16,13 @@
               [(ngModel)]="model.address" 
               required
               readonly
+              matTooltip="Select property..."
               [value]="model.address"
               #property="ngModel"
               (click)="openPropertySelectionDialog()">
           
-          <mat-icon matPrefix>home</mat-icon>
-          <button mat-button matSuffix mat-icon-button aria-label="Choose property..." (click)="openPropertySelectionDialog()">
+          <mat-icon matPrefix [matTooltip]="model.property ? 'Go to property' : ''" [routerLink]="model.property ? '/properties/' + model.property.type + '/edit/' + model.property.id : '.'">home</mat-icon>
+          <button mat-button matTooltip="Select property..." matSuffix mat-icon-button aria-label="Choose property..." (click)="openPropertySelectionDialog()">
             <mat-icon>view_list</mat-icon>
           </button>
               

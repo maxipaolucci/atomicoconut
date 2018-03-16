@@ -12,6 +12,9 @@ import { EqualValidatorDirective } from './directives/equal-validator.directive'
 import { NumberValidatorDirective } from './directives/number-validator.directive';
 import { InfoTooltipComponent } from './components/info-tooltip/info-tooltip.component';
 import { AddressAutocompleteComponent } from './components/address-autocomplete/address-autocomplete.component';
+import { DynamicMapComponent } from './components/dynamic-map/dynamic-map.component';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from '../../../environments/environment';
 
 @NgModule({
   imports: [
@@ -19,7 +22,11 @@ import { AddressAutocompleteComponent } from './components/address-autocomplete/
     RouterModule,
     FormsModule,
     FlexLayoutModule,
-    CustomMaterialDesignModule
+    CustomMaterialDesignModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.mapsApiKey,
+      libraries: ["places"]
+    }),
   ],
   declarations: [ 
     MainNavigatorComponent, 
@@ -29,7 +36,8 @@ import { AddressAutocompleteComponent } from './components/address-autocomplete/
     EqualValidatorDirective, 
     NumberValidatorDirective,
     InfoTooltipComponent,
-    AddressAutocompleteComponent
+    AddressAutocompleteComponent,
+    DynamicMapComponent
   ],
   exports: [ 
     MainNavigatorComponent, 
@@ -39,7 +47,8 @@ import { AddressAutocompleteComponent } from './components/address-autocomplete/
     EqualValidatorDirective,
     NumberValidatorDirective,
     InfoTooltipComponent,
-    AddressAutocompleteComponent
+    AddressAutocompleteComponent,
+    DynamicMapComponent
   ],
   entryComponents: [
     YesNoDialogComponent, //added as material doc suggest to allow AOT on this on the fly created class

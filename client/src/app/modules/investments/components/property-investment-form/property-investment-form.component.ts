@@ -44,7 +44,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     this.model.buyingDate = new Date(Date.now());
     this.model.buyingPriceUnit = this.user.currency;
     Object.assign(this.model, this.defaultValues);
-    console.log(this.model);
+    
     if (this.model.propertyId) {
       //when creating from the property "invest action" or some component that shows properties an allow the creation of an investment of it
       this.getProperty(this.model.propertyId);

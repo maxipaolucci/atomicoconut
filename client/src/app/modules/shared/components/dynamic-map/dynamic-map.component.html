@@ -1,0 +1,5 @@
+<!-- this creates a google map on the page with the given lat/lng from -->
+<!-- the component as the initial center of the map: -->
+<agm-map *ngIf="latitude && longitude" fxFlex [latitude]="latitude" [longitude]="longitude" [zoom]="17" [ngStyle]="{'height' : mapContainerHeight + 'px'}">
+  <agm-marker *ngFor="let marker of markers"  [latitude]="marker.latitude" [longitude]="marker.longitude"></agm-marker>
+</agm-map>

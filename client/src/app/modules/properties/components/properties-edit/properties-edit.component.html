@@ -18,16 +18,10 @@
               
               (values)="onAddressChange($event)">
           </address-autocomplete>
+        </div>
 
-          <!-- <mat-form-field fxHide fxFlex class="form__field">
-            <input matInput type="text" id="address" name="address" placeholder="Address" 
-                [(ngModel)]="model.address" 
-                required
-                [value]="model.address"
-                #address="ngModel">
-            
-            <mat-error *ngIf="address.invalid && (address.dirty || address.touched) && address.errors.required">This field is required.</mat-error>
-          </mat-form-field> -->
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <dynamic-map fxFlex [latitude]="model.address.latitude" [longitude]="model.address.longitude" [markers]="[model.address]" [mapContainerHeight]="300"></dynamic-map>
         </div>
 
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">

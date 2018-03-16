@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from "rxjs/Rx";
 import { AppService } from './app.service';
 import { UsersService } from './modules/users/users.service';
-import { configuration } from "../../configuration";
 import { User } from './modules/users/models/user';
 import { Router } from '@angular/router';
 import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
@@ -17,7 +16,6 @@ export class AppComponent implements OnInit {
   
   title : string = 'AtomiCoconut';
   user : User = null;
-  defaultGravatarUrl = configuration.defaultGravatarUrl;
 
   constructor(private router : Router, private appService: AppService, public usersService : UsersService, public currencyExchangeService : CurrencyExchangeService ) { }
 
