@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({
@@ -6,23 +6,7 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
   templateUrl: './house-figures.component.html',
   styleUrls: ['./house-figures.component.scss']
 })
-export class HouseFiguresComponent implements OnInit, AfterViewInit {
-
-  @ViewChild('houseFiguresForm') form;
-  grossAnnualRent : number = 0;
-  netAnnualRent : number = 0;
-  grossYield : number = 0;
-  netYield : number = 0;
-  expenses : number = 0;
-  loanInterest : number = 0;
-  loanRepayments : number = 0;
-  loanRepaymentsLabels : any = { '12': 'Monthly', '26' : 'Fortnightly', '52' : 'Weekly' };
-  preTaxCashflow : number = 0;
-  discount : number = 0;
-  capitalGrowths : number = 0;
-  totalFirstYearReturn : number = 0;
-  deposit : number = 0;
-  returnOnDeposit : number = 0;
+export class HouseFiguresComponent implements OnInit {
 
   model : any = { 
     purchasePrice : 0,
@@ -52,27 +36,5 @@ export class HouseFiguresComponent implements OnInit, AfterViewInit {
       { displayName: 'Calculators', url: '/calculators', selected: false },
       { displayName: 'Equity', url: '/calculators/equity', selected: false },
       { displayName: 'House figures', url: null, selected: true }]);
-  }
-
-  ngAfterViewInit() {
-    this.form.valueChanges.debounceTime(500).subscribe(values => {
-      this.grossAnnualRent = this.model.weeklyRent * 52;
-      this.netAnnualRent = this.grossAnnualRent - this.model.weeklyRent * this.model.vacancy;
-      this.grossYield = this.grossAnnualRent / this.model.purchasePrice;
-      this.expenses = this.model.renovationCost + this.model.mantainanceCost + this.model.bodyCorporate + this.model.houseRates + this.model.utilities + this.model.insurance
-          + this.model.otherCosts + this.netAnnualRent * (this.model.managed / 100);
-      this.netYield = (this.netAnnualRent - this.expenses) / this.model.purchasePrice;
-      this.loanInterest = this.model.purchasePrice * (this.model.interestRates / 100);
-      let numberOfPayments = this.model.loanTerm * parseInt(this.model.paymentFrecuency);
-      let periodicInterestRate = (this.model.interestRates / 100) / parseInt(this.model.paymentFrecuency);
-      let loanDiscountFactor = (Math.pow(1 + periodicInterestRate, numberOfPayments) - 1) / (periodicInterestRate * Math.pow(1 + periodicInterestRate, numberOfPayments));
-      this.loanRepayments = (this.model.purchasePrice * (this.model.loanCoverage / 100)) / loanDiscountFactor; 
-      this.preTaxCashflow = this.netAnnualRent - this.expenses - this.loanInterest;
-      this.discount = (this.model.marketValue - this.model.purchasePrice - this.model.renovationCost) / (this.model.marketValue || 1);
-      this.capitalGrowths = this.model.marketValue * (this.model.capitalGrowth / 100);
-      this.totalFirstYearReturn = this.capitalGrowths + this.model.marketValue - this.model.purchasePrice - this.model.renovationCost + this.preTaxCashflow;
-      this.deposit = this.model.purchasePrice * (1 - this.model.loanCoverage / 100);
-      this.returnOnDeposit = this.totalFirstYearReturn / this.deposit;
-    });
   }
 }

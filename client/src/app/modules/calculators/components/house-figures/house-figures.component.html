@@ -280,126 +280,25 @@
   
   <!-- Results -->
   <section fxLayout="column" fxLayoutGap="10px" fxFlex fxFlex.gt-sm="300px" class="calculator__results">
-    <mat-card>
-      <mat-card-title class="mat-card-title--ac">Results</mat-card-title>
+    <house-figures-results 
+        [purchasePrice]="model.purchasePrice"
+        [capitalGrowth]="model.capitalGrowth"
+        [marketValue]="model.marketValue"
+        [loanCoverage]="model.loanCoverage"
+        [interestRates]="model.interestRates"
+        [loanTerm]="model.loanTerm"
+        [paymentFrecuency]="model.paymentFrecuency"
+        [weeklyRent]="model.weeklyRent"
+        [vacancy]="model.vacancy"
+        [renovationCost]="model.renovationCost"
+        [mantainanceCost]="model.mantainanceCost"
+        [bodyCorporate]="model.bodyCorporate"
+        [houseRates]="model.houseRates"
+        [utilities]="model.utilities"
+        [insurance]="model.insurance"
+        [otherCosts]="model.otherCosts"
+        [managed]="model.managed">
 
-      <mat-card-content fxLayout="column" fxLayoutGap="10px">
-
-        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
-            fxLayoutGap.xs="10px"fxLayoutGap.gt-xs="50px" fxLayoutGap.gt-sm="10px"
-            fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
-
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip
-                title="Gross yield" 
-                text="Ratio between Gross annual rent / purchase price (as percentage)"
-                position="right"></info-tooltip>
-            <span>{{grossYield | percent : '1.1-2'}}</span>
-          </div>
-  
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip 
-                title="Net yield" 
-                text="Ratio between (Net annual rent - Expenses) / Purchase price * 100"
-                position="right"></info-tooltip>
-            <span>{{netYield | percent : '1.1-2'}}</span>
-          </div>
-
-        </div>
-        
-        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
-            fxLayoutGap.xs="10px"fxLayoutGap.gt-xs="50px" fxLayoutGap.gt-sm="10px"
-            fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
-
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Gross annual rent" text="Rent a week * 52"></info-tooltip>
-            <span>{{grossAnnualRent | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
-          </div>
-  
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Net annual rent" text="Gross annual rent - Vacancy"></info-tooltip>
-            <span>{{netAnnualRent | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
-          </div>
-
-        </div>
-        
-        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
-            fxLayoutGap.xs="10px"fxLayoutGap.gt-xs="50px" fxLayoutGap.gt-sm="10px"
-            fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
-
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Loan interest" 
-                text="The interest of the loan based in the specified interest rate."
-                position="right"></info-tooltip>
-            <span>{{loanInterest | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
-          </div>
-
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Loan repayments" text="{{loanRepaymentsLabels[model.paymentFrecuency]}}"></info-tooltip>
-            <span>{{loanRepayments | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
-          </div>
-        </div>
-
-        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
-            fxLayoutGap.xs="10px"fxLayoutGap.gt-xs="50px" fxLayoutGap.gt-sm="10px"
-            fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
-
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Pre tax cashflow" text="Net annual rent - Expenses - Loan interest"></info-tooltip>
-            <span>{{preTaxCashflow | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
-          </div>
-
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Discount"></info-tooltip>
-            <span>{{discount | percent : '1.1-2'}}</span>
-          </div>
-
-        </div>
-
-        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
-            fxLayoutGap.xs="10px"fxLayoutGap.gt-xs="50px" fxLayoutGap.gt-sm="10px"
-            fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
-
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Total 1 year return" text="Capital growth + Market value - Purchase price - Renovations + Pre tax cashflow"></info-tooltip>
-            <span>{{totalFirstYearReturn | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
-          </div>
-
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Deposit" text=""></info-tooltip>
-            <span>{{deposit | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
-          </div>
-
-        </div>
-
-        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
-            fxLayoutGap.xs="10px"fxLayoutGap.gt-xs="50px" fxLayoutGap.gt-sm="10px"
-            fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
-
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Return on deposit" text="Ratio between Total 1st year return / Deposit * 100"></info-tooltip>
-            <span>{{returnOnDeposit | percent : '1.1-2'}}</span>
-          </div>
-          
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Capital growth" text=""></info-tooltip>
-            <span>{{capitalGrowths | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
-          </div>
-
-        </div>
-
-        <div fxLayout.xs="column" fxLayout.gt-xs="row" fxLayout.gt-sm="column" 
-            fxLayoutGap.xs="10px"fxLayoutGap.gt-xs="50px" fxLayoutGap.gt-sm="10px"
-            fxLayoutAlign.xs="start none" fxLayoutAlign.gt-xs="space-between none" fxLayoutAlign.gt-sm="start none">
-
-          <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
-            <info-tooltip title="Expenses" text="Sums all the expenses in detailed before"></info-tooltip>
-            <span>{{expenses | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
-          </div>
-
-        </div>
-
-      </mat-card-content>
-    </mat-card>
+    </house-figures-results>
   </section>
 </div>

@@ -8,6 +8,7 @@ import { CalculatorsRoutingModule } from './calculators-routing.module';
 import { EquityComponent } from './components/equity/equity.component';
 import { CalculatorsDashboardComponent } from './components/calculators-dashboard/calculators-dashboard.component';
 import { HouseFiguresComponent } from './components/house-figures/house-figures.component';
+import { HouseFiguresResultsComponent } from './components/house-figures-results/house-figures-results.component';
 
 @NgModule({
   imports: [
@@ -18,10 +19,14 @@ import { HouseFiguresComponent } from './components/house-figures/house-figures.
     CustomMaterialDesignModule,
     SharedModule
   ],
+  exports: [
+    HouseFiguresResultsComponent
+  ],
   declarations: [
     EquityComponent, 
     CalculatorsDashboardComponent, 
-    HouseFiguresComponent
+    HouseFiguresComponent, 
+    HouseFiguresResultsComponent
   ]
 })
 export class CalculatorsModule { }
