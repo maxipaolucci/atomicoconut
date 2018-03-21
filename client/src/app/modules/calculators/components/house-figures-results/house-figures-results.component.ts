@@ -8,6 +8,7 @@ import { of } from 'rxjs/observable/of';
 })
 export class HouseFiguresResultsComponent implements OnInit, OnChanges {
 
+  @Input() title = 'Results';
   @Input() purchasePrice = 0;
   @Input() capitalGrowth = 0;
   @Input() marketValue = 0;

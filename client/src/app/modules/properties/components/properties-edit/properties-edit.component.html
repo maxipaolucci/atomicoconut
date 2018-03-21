@@ -1,4 +1,4 @@
-<div class="container__edit-property" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
+<div class="container__edit-property" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-sm="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
   <!-- Form  -->
   <form *ngIf="!getPropertyServiceRunning" class="form__container form__edit-property" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editPropertyForm="ngForm" 
       novalidate fxLayout="column" fxLayoutGap="10px">
@@ -15,7 +15,6 @@
               [id]="'address'" 
               [defaultValues]="model.address"
               [placeHolder]="'Address'"
-              
               (values)="onAddressChange($event)">
           </address-autocomplete>
         </div>
@@ -55,7 +54,7 @@
                 (newValue)="onCurrencyUnitChange($event)">
             </currency-unit>
             
-            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
               <input matInput type="number" id="askingPrice" name="askingPrice" placeholder="Asking price"
                   [(ngModel)]="model.askingPrice" 
                   [value]="model.askingPrice"
@@ -76,7 +75,7 @@
                 (newValue)="onCurrencyUnitChange($event)">
             </currency-unit>
             
-            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
               <input matInput type="number" id="offerPrice" name="offerPrice" placeholder="Offer price"
                   [(ngModel)]="model.offerPrice" 
                   [value]="model.offerPrice"
@@ -97,7 +96,7 @@
                 (newValue)="onCurrencyUnitChange($event)">
             </currency-unit>
             
-            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
               <input matInput type="number" id="walkAwayPrice" name="walkAwayPrice" placeholder="Walk away price"
                   [(ngModel)]="model.walkAwayPrice" 
                   [value]="model.walkAwayPrice"
@@ -121,7 +120,7 @@
                 (newValue)="onCurrencyUnitChange($event)">
             </currency-unit>
             
-            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
               <input matInput type="number" id="salePrice" name="salePrice" placeholder="Sale price"
                   [(ngModel)]="model.salePrice" 
                   [value]="model.salePrice"
@@ -142,7 +141,7 @@
                 (newValue)="onCurrencyUnitChange($event)">
             </currency-unit>
             
-            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
               <input matInput type="number" id="marketValue" name="marketValue" placeholder="Market value"
                   [(ngModel)]="model.marketValue" 
                   [value]="model.marketValue"
@@ -171,7 +170,7 @@
                 (newValue)="onCurrencyUnitChange($event)">
             </currency-unit>
             
-            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
               <input matInput type="number" id="renovationCost" name="renovationCost" placeholder="Renovation cost"
                   [(ngModel)]="model.renovationCost" 
                   [value]="model.renovationCost"
@@ -192,7 +191,7 @@
                 (newValue)="onCurrencyUnitChange($event)">
             </currency-unit>
             
-            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
               <input matInput type="number" id="maintenanceCost" name="maintenanceCost" placeholder="Maintenance cost"
                   [(ngModel)]="model.maintenanceCost" 
                   [value]="model.maintenanceCost"
@@ -213,7 +212,7 @@
                 (newValue)="onCurrencyUnitChange($event)">
             </currency-unit>
             
-            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
               <input matInput type="number" id="otherCost" name="otherCost" placeholder="Other cost"
                   [(ngModel)]="model.otherCost" 
                   [value]="model.otherCost"
@@ -299,29 +298,59 @@
       </mat-progress-bar>
     </section>
   </form>
-  <!-- Results -->
-  <!-- <section fxLayout="column" fxLayoutGap="10px" fxFlex fxFlex.gt-sm="300px" class="calculator__results">
-    <house-figures-results 
-        [purchasePrice]="model.salePrice"
-        [capitalGrowth]="model.capitalGrowth"
-        [marketValue]="model.marketValue"
-        [loanCoverage]="model.loanCoverage"
-        [interestRates]="model.interestRates"
-        [loanTerm]="model.loanTerm"
-        [paymentFrecuency]="model.paymentFrecuency"
-        [weeklyRent]="model.weeklyRent"
-        [vacancy]="model.vacancy"
-        [renovationCost]="model.renovationCost"
-        [mantainanceCost]="model.mantainanceCost"
-        [bodyCorporate]="model.bodyCorporate"
-        [houseRates]="model.houseRates"
-        [utilities]="model.utilities"
-        [insurance]="model.insurance"
-        [otherCosts]="model.otherCosts"
-        [managed]="model.managed">
 
+  <!-- Figures -->
+  <section *ngIf="!getPropertyServiceRunning" fxHide.lt-md="true" fxLayout="column" fxLayoutGap="10px" fxFlex fxFlex.gt-sm="300px" class="calculator__results">
+    <!-- Missing required data from -->
+    <form class="form__container form__house-figures-results" #houseFiguresResultsForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
+      <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
+        <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+    
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+            <!-- Loan coverage -->
+            <div fxFlex="none" fxFlex.gt-xs fxLayout="column" class="form__field slider__field">
+              <label class="slider__label">Loan coverage</label>
+              <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                <mat-slider fxFlex id="loanCoverage" name="loanCoverage"
+                    color="accent"
+                    [max]="100"
+                    [min]="0"
+                    [step]="1"
+                    [thumb-label]="true"
+                    [tick-interval]="1"
+                    [(ngModel)]="modelHouseFiguresResults.loanCoverage"
+                    [value]="modelHouseFiguresResults.loanCoverage"> 
+                </mat-slider>
+                <span *ngIf="modelHouseFiguresResults.loanCoverage">{{modelHouseFiguresResults.loanCoverage}}%</span>
+              </div>
+              <label class="mat-hint slider__label__hint">Percentage of the purchase price covered by the loan.</label>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
+
+    <house-figures-results 
+        title="Property figures"
+        [purchasePrice]="model.salePrice || model.offerPrice || model.askingPrice || model.walkAwayPrice || 0"
+        [capitalGrowth]="model.propertyTypeData.capitalGrowth || 0"
+        [marketValue]="model.marketValue"
+        [loanCoverage]="modelHouseFiguresResults.loanCoverage"
+        [interestRates]="7"
+        [loanTerm]="30"
+        [paymentFrecuency]="26"
+        [weeklyRent]="getRentPricePerWeek()"
+        [vacancy]="model.propertyTypeData.vacancy"
+        [renovationCost]="model.renovationCost"
+        [mantainanceCost]="model.maintenanceCost"
+        [bodyCorporate]="model.propertyTypeData.bodyCorporate"
+        [houseRates]="model.propertyTypeData.rates"
+        [utilities]="model.propertyTypeData.utilitiesCost"
+        [insurance]="model.propertyTypeData.insurance"
+        [otherCosts]="model.otherCost"
+        [managed]="model.propertyTypeData.managed ? model.propertyTypeData.managerRate : 0">
     </house-figures-results>
-  </section> -->
+  </section>
   <!-- <pre>{{model | json}}</pre> -->
 
   <mat-progress-bar *ngIf="getPropertyServiceRunning"

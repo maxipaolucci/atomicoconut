@@ -60,7 +60,7 @@
 
       <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
         <!-- Bedrooms -->
-        <mat-form-field fxFlex fxFlex.sm="140px" fxFlex.gt-sm="200px" class="form__field">
+        <mat-form-field fxFlex fxFlex.gt-xs="140px" fxFlex.gt-md="200px" class="form__field">
           <input matInput type="number" id="bedrooms" name="bedrooms" placeholder="Bedrooms" 
               [(ngModel)]="model.bedrooms" 
               [value]="model.bedrooms"
@@ -72,7 +72,7 @@
         </mat-form-field>
 
         <!-- Bathrooms -->
-        <mat-form-field fxFlex fxFlex.sm="140px" fxFlex.gt-sm="200px" class="form__field">
+        <mat-form-field fxFlex fxFlex.gt-xs="140px" fxFlex.gt-md="200px" class="form__field">
           <input matInput type="number" id="bathrooms" name="bathrooms" placeholder="Bathrooms" 
               [(ngModel)]="model.bathrooms" 
               [value]="model.bathrooms"
@@ -84,7 +84,7 @@
         </mat-form-field>
 
         <!-- Parking spaces -->
-        <mat-form-field fxFlex fxFlex.sm="140px" fxFlex.gt-sm="200px" class="form__field">
+        <mat-form-field fxFlex fxFlex.gt-xs="140px" fxFlex.gt-md="200px" class="form__field">
           <input matInput type="number" id="parkingSpaces" name="parkingSpaces" placeholder="Parking spaces" 
               [(ngModel)]="model.parkingSpaces" 
               [value]="model.parkingSpaces"
@@ -281,7 +281,7 @@
               (newValue)="onCurrencyUnitChange($event)">
           </currency-unit>
           
-          <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+          <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
             <input matInput type="number" id="bodyCorporate" name="bodyCorporate" placeholder="Body corporate"
                 [(ngModel)]="model.bodyCorporate" 
                 [value]="model.bodyCorporate"
@@ -302,7 +302,7 @@
               (newValue)="onCurrencyUnitChange($event)">
           </currency-unit>
           
-          <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+          <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
             <input matInput type="number" id="utilitiesCost" name="utilitiesCost" placeholder="Utilities"
                 [(ngModel)]="model.utilitiesCost" 
                 [value]="model.utilitiesCost"
@@ -323,7 +323,7 @@
               (newValue)="onCurrencyUnitChange($event)">
           </currency-unit>
           
-          <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+          <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
             <input matInput type="number" id="rates" name="rates" placeholder="Rates"
                 [(ngModel)]="model.rates" 
                 [value]="model.rates"
@@ -346,7 +346,7 @@
               (newValue)="onCurrencyUnitChange($event)">
           </currency-unit>
           
-          <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+          <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
             <input matInput type="number" id="insurance" name="insurance" placeholder="Insurance"
                 [(ngModel)]="model.insurance" 
                 [value]="model.insurance"

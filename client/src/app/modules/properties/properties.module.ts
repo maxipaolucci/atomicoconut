@@ -13,6 +13,7 @@ import { HousesEditComponent } from './components/houses-edit/houses-edit.compon
 import { PropertiesTableComponent } from './components/properties-table/properties-table.component';
 import { PropertySelectorDialogComponent } from './components/property-selector-dialog/property-selector-dialog.component';
 import { AgmCoreModule } from '@agm/core';
+import { CalculatorsModule } from '../calculators/calculators.module';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { AgmCoreModule } from '@agm/core';
     FormsModule,
     FlexLayoutModule,
     CustomMaterialDesignModule,
-    SharedModule
+    SharedModule,
+    CalculatorsModule
   ],
   declarations: [ 
     PropertiesDashboardComponent, 

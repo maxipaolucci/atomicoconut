@@ -22,6 +22,17 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   user : User = null;
   property : Property = null;
   propertyTypes : any = null;
+  id : string = null; //property id
+  type : string = null; //property type
+  subscription : Subscription = new Subscription();
+  propertyTypeDataValid : boolean = false; //this value is set when property type data form is updated
+  addressValid : boolean = false;
+
+  //services flags
+  editPropertyServiceRunning : boolean = false;
+  getPropertyServiceRunning : boolean = false;
+  
+  //models
   model : any = {
     id : null,
     email : null, //user email for api check
@@ -50,14 +61,9 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     notes : null
   };
   
-  id : string = null; //property id
-  type : string = null; //property type
-  //services flags
-  editPropertyServiceRunning : boolean = false;
-  getPropertyServiceRunning : boolean = false;
-  subscription : Subscription = new Subscription();
-  propertyTypeDataValid : boolean = false; //this value is set when property type data form is updated
-  addressValid : boolean = false;  
+  modelHouseFiguresResults : any = {
+    loanCoverage : 80
+  };
   
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private propertiesService : PropertiesService, 
       private appService : AppService, private router : Router, public utilService : UtilService, private dateAdapter: DateAdapter<NativeDateAdapter> ) {
@@ -219,6 +225,20 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     );
 
     this.subscription.add(newSubscription);
+  }
+
+  /**
+   * Calculates the price per week.
+   * //TODO should be moved to the house edit component????
+   */
+  getRentPricePerWeek() : number {
+    let price = 0;
+
+    if (this.model.propertyTypeData.rentPrice) {
+      price = this.model.propertyTypeData.rentPricePeriod === 'month' ? this.model.propertyTypeData.rentPrice * 12 / 52 : this.model.propertyTypeData.rentPrice;
+    }
+
+    return price;
   }
 
   onSubmit() {
