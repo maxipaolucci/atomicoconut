@@ -62,7 +62,10 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   };
   
   modelHouseFiguresResults : any = {
-    loanCoverage : 80
+    loanCoverage : 80,
+    interestRates : 7,
+    loanTerm : 30,
+    paymentFrecuency : "26",
   };
   
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private propertiesService : PropertiesService, 
