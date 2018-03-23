@@ -1,0 +1,115 @@
+<h2 mat-dialog-title></h2>
+
+<mat-dialog-content>
+  <section fxLayout="column" fxLayoutGap="10px" class="dialog__house-figures-results">
+    <mat-card>
+      <mat-card-content>
+        <!-- Missing required data from -->
+        <form class="form__container form__house-figures-results" #houseFiguresResultsDialogForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
+          <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
+            <div fxLayout="column" fxLayoutGap="10px" class="form__fields__row__container">
+              <h3 class="title">
+                <p class="header">Figures extra info</p>
+                <p class="mat-caption">This information it is not saved in the database, play with these values to evaluate a potencial investment</p>
+              </h3>
+
+              <div fxLayout="column" fxLayoutGap="10px" class="form__fields__row">
+                <!-- Loan coverage -->
+                <div fxFlex="none" fxLayout="column" class="form__field slider__field">
+                  <label class="slider__label">Loan coverage</label>
+                  <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                    <mat-slider fxFlex id="loanCoverage" name="loanCoverage"
+                        color="accent"
+                        [max]="100"
+                        [min]="0"
+                        [step]="1"
+                        [thumb-label]="true"
+                        [tick-interval]="1"
+                        [(ngModel)]="modelHouseFiguresResults.loanCoverage"
+                        [value]="modelHouseFiguresResults.loanCoverage"> 
+                    </mat-slider>
+                    <span *ngIf="modelHouseFiguresResults.loanCoverage">{{modelHouseFiguresResults.loanCoverage}}%</span>
+                  </div>
+                  <label class="mat-hint slider__label__hint">Percentage of the purchase price covered by the loan.</label>
+                </div>
+
+                <!-- Loan term -->
+                <div fxFlex="none" fxLayout="column" class="form__field slider__field">
+                  <label class="slider__label">Term</label>
+                  <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                    <mat-slider fxFlex id="loanTerm" name="loanTerm"
+                        color="accent"
+                        [max]="30"
+                        [min]="1"
+                        [step]="1"
+                        [thumb-label]="true"
+                        [tick-interval]="1"
+                        [(ngModel)]="modelHouseFiguresResults.loanTerm"
+                        [value]="modelHouseFiguresResults.loanTerm"> 
+                    </mat-slider>
+                    <span *ngIf="modelHouseFiguresResults.loanTerm">{{modelHouseFiguresResults.loanTerm}} years</span>
+                  </div>
+                </div>
+
+                <!-- Interest rates -->
+                <mat-form-field fxFlex class="form__field">
+                  <input matInput type="number" id="interestRates" name="interestRates" placeholder="Interest rates" 
+                      [(ngModel)]="modelHouseFiguresResults.interestRates" 
+                      numberValidator='{"min": 0, "max": 100}' 
+                      [value]="modelHouseFiguresResults.interestRates"
+                      #interestRates="ngModel">
+
+                  <mat-icon matPrefix>timeline</mat-icon>
+                  <span matSuffix>%</span>
+                  <mat-hint align="start">Average loan interest rates (as a percentage).</mat-hint>
+                  <mat-error *ngIf="interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+                  <mat-error *ngIf="interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
+                  <mat-error *ngIf="interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
+                </mat-form-field>
+
+                <!-- Payment frecuency -->
+                <mat-form-field fxFlex class="form__field">
+                  <mat-select id="paymentFrecuency" name="paymentFrecuency" placeholder="Frecuency" 
+                      [(ngModel)]="modelHouseFiguresResults.paymentFrecuency" [value]="modelHouseFiguresResults.paymentFrecuency">
+                    <mat-option value="12">Monthly</mat-option>
+                    <mat-option value="26">Fornightly</mat-option>
+                    <mat-option value="52">Weekly</mat-option>
+                  </mat-select>
+                  
+                  <mat-hint align="start">Payment frecuency</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
+          </section>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <house-figures-results 
+      title="Property figures"
+      [purchasePrice]="model.salePrice || model.offerPrice || model.askingPrice || model.walkAwayPrice || 0"
+      [capitalGrowth]="model.propertyTypeData.capitalGrowth || 0"
+      [marketValue]="model.marketValue"
+      [loanCoverage]="modelHouseFiguresResults.loanCoverage"
+      [interestRates]="modelHouseFiguresResults.interestRates"
+      [loanTerm]="modelHouseFiguresResults.loanTerm"
+      [paymentFrecuency]="modelHouseFiguresResults.paymentFrecuency"
+      [weeklyRent]="getRentPricePerWeek()"
+      [vacancy]="model.propertyTypeData.vacancy"
+      [renovationCost]="model.renovationCost"
+      [mantainanceCost]="model.maintenanceCost"
+      [bodyCorporate]="model.propertyTypeData.bodyCorporate"
+      [houseRates]="model.propertyTypeData.rates"
+      [utilities]="model.propertyTypeData.utilitiesCost"
+      [insurance]="model.propertyTypeData.insurance"
+      [otherCosts]="model.otherCost"
+      [managed]="model.propertyTypeData.managed ? model.propertyTypeData.managerRate : 0">
+    </house-figures-results>
+  </section>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-around center">
+  <button mat-mini-fab color="warn" [mat-dialog-close]="modelHouseFiguresResults">
+    <mat-icon aria-label="No">clear</mat-icon>
+  </button>
+</mat-dialog-actions>
