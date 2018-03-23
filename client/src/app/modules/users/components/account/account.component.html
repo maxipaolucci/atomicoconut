@@ -13,28 +13,28 @@
 
 <!-- XS view -->
 <mat-accordion *ngIf="utilService.isXs()">  
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        Account info
-      </mat-expansion-panel-header>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      Account info
+    </mat-expansion-panel-header>
 
-      <account-user-info [user]="user"></account-user-info>
-    </mat-expansion-panel>
-  
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        Personal info
-      </mat-expansion-panel-header>
+    <account-user-info [user]="user"></account-user-info>
+  </mat-expansion-panel>
 
-      <account-personal-info [user]="user"></account-personal-info>
-    </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      Personal info
+    </mat-expansion-panel-header>
 
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        Financial info
-      </mat-expansion-panel-header>
+    <account-personal-info [user]="user"></account-personal-info>
+  </mat-expansion-panel>
 
-      <account-finance-info [user]="user"></account-finance-info>
-    </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      Financial info
+    </mat-expansion-panel-header>
 
-  </mat-accordion>
+    <account-finance-info [user]="user"></account-finance-info>
+  </mat-expansion-panel>
+
+</mat-accordion>

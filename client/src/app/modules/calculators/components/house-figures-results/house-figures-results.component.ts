@@ -8,7 +8,8 @@ import { of } from 'rxjs/observable/of';
 })
 export class HouseFiguresResultsComponent implements OnInit, OnChanges {
 
-  @Input() title = 'Results';
+  @Input() title = null;
+  @Input() subtitle = null;
   @Input() purchasePrice = 0;
   @Input() capitalGrowth = 0;
   @Input() marketValue = 0;
@@ -16,7 +17,8 @@ export class HouseFiguresResultsComponent implements OnInit, OnChanges {
   @Input() interestRates = 0;
   @Input() loanTerm = 0;
   @Input() paymentFrecuency = "26";
-  @Input() weeklyRent = 0;
+  @Input() rentPrice = 0;
+  @Input() rentPaymentFrecuency = "weekly";
   @Input() vacancy = 0;
   @Input() renovationCost = 0;
   @Input() mantainanceCost = 0;
@@ -48,8 +50,9 @@ export class HouseFiguresResultsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     //any time something changes then refresh all values
-    this.grossAnnualRent = this.weeklyRent * 52;
-    this.netAnnualRent = this.grossAnnualRent - this.weeklyRent * this.vacancy;
+    let weeklyRent = this.getRentPricePerWeek();
+    this.grossAnnualRent = weeklyRent * 52;
+    this.netAnnualRent = this.grossAnnualRent - weeklyRent * this.vacancy;
     this.grossYield = this.grossAnnualRent / this.purchasePrice;
     this.expenses = this.renovationCost + this.mantainanceCost + this.bodyCorporate + this.houseRates + this.utilities + this.insurance
         + this.otherCosts + this.netAnnualRent * (this.managed / 100);
@@ -65,6 +68,19 @@ export class HouseFiguresResultsComponent implements OnInit, OnChanges {
     this.totalFirstYearReturn = this.capitalGrowths + this.marketValue - this.purchasePrice - this.renovationCost + this.preTaxCashflow;
     this.deposit = this.purchasePrice * (1 - this.loanCoverage / 100);
     this.returnOnDeposit = this.totalFirstYearReturn / this.deposit;
+  }
+
+  /**
+   * Calculates the price per week.
+   */
+  getRentPricePerWeek() : number {
+    let price = 0;
+
+    if (this.rentPrice) {
+      price = this.rentPaymentFrecuency === 'monthly' ? this.rentPrice * 12 / 52 : this.rentPrice;
+    }
+
+    return price;
   }
 
 }

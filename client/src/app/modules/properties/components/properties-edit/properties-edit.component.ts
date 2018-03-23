@@ -10,7 +10,7 @@ import { propertyTypes } from '../../../../constants';
 import { House } from '../../models/house';
 import { MatSelectChange, DateAdapter, NativeDateAdapter, MatAutocompleteSelectedEvent, MatDialog } from '@angular/material';
 import { UtilService } from '../../../../util.service';
-import { PropertySelectorDialogComponent } from '../property-selector-dialog/property-selector-dialog.component';
+import { HouseFiguresDialogComponent } from '../house-figures-dialog/house-figures-dialog.component';
 
 @Component({
   selector: 'properties-edit',
@@ -232,20 +232,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.subscription.add(newSubscription);
   }
 
-  /**
-   * Calculates the price per week.
-   * //TODO should be moved to the house edit component????
-   */
-  getRentPricePerWeek() : number {
-    let price = 0;
-
-    if (this.model.propertyTypeData.rentPrice) {
-      price = this.model.propertyTypeData.rentPricePeriod === 'month' ? this.model.propertyTypeData.rentPrice * 12 / 52 : this.model.propertyTypeData.rentPrice;
-    }
-
-    return price;
-  }
-
   onSubmit() {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
 
@@ -329,14 +315,14 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > openHouseResultsFiguresDialog() > `; //for debugging
       
     
-    let propertySelectorDialogRef = this.dialog.open(PropertySelectorDialogComponent, {
+    let houseFiguresDialogRef = this.dialog.open(HouseFiguresDialogComponent, {
       data: {
         model : this.model,
-        modelHouseFiguresResults : this.modelHouseFiguresResults;
+        modelHouseFiguresResults : this.modelHouseFiguresResults
       }
     });
 
-    const newSubscription = propertySelectorDialogRef.afterClosed().subscribe(modelHouseFiguresResults => {
+    const newSubscription = houseFiguresDialogRef.afterClosed().subscribe(modelHouseFiguresResults => {
       if (modelHouseFiguresResults) {
         this.modelHouseFiguresResults = modelHouseFiguresResults;
       }

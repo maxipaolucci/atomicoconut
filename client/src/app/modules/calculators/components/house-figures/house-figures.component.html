@@ -133,14 +133,14 @@
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Weekly rent -->
           <mat-form-field fxFlex  class="form__field">
-            <input matInput type="number" id="weeklyRent" name="weeklyRent" placeholder="Weekly rent" 
-                [(ngModel)]="model.weeklyRent" 
+            <input matInput type="number" id="rentPrice" name="rentPrice" placeholder="Weekly rent" 
+                [(ngModel)]="model.rentPrice" 
                 numberValidator
-                [value]="model.weeklyRent"
-                #weeklyRent="ngModel">
+                [value]="model.rentPrice"
+                #rentPrice="ngModel">
   
             <mat-icon matPrefix>attach_money</mat-icon>
-            <mat-error *ngIf="weeklyRent.invalid && (weeklyRent.dirty || weeklyRent.touched) && weeklyRent.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            <mat-error *ngIf="rentPrice.invalid && (rentPrice.dirty || rentPrice.touched) && rentPrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
   
           <!-- Vacancy -->
@@ -281,6 +281,7 @@
   <!-- Results -->
   <section fxLayout="column" fxLayoutGap="10px" fxFlex fxFlex.gt-sm="300px" class="calculator__results">
     <house-figures-results 
+        title="Results"
         [purchasePrice]="model.purchasePrice"
         [capitalGrowth]="model.capitalGrowth"
         [marketValue]="model.marketValue"
@@ -288,7 +289,8 @@
         [interestRates]="model.interestRates"
         [loanTerm]="model.loanTerm"
         [paymentFrecuency]="model.paymentFrecuency"
-        [weeklyRent]="model.weeklyRent"
+        [rentPrice]="model.rentPrice"
+        [rentPaymentFrecuency]="model.rentPaymentFrecuency"
         [vacancy]="model.vacancy"
         [renovationCost]="model.renovationCost"
         [mantainanceCost]="model.mantainanceCost"

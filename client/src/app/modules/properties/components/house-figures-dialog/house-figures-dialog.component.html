@@ -1,15 +1,18 @@
-<h2 mat-dialog-title></h2>
-
+<!-- <h2 mat-dialog-title></h2> -->
 <mat-dialog-content>
   <section fxLayout="column" fxLayoutGap="10px" class="dialog__house-figures-results">
-    <mat-card>
-      <mat-card-content>
+    <mat-accordion>  
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          Additional values
+        </mat-expansion-panel-header>
+    
         <!-- Missing required data from -->
         <form class="form__container form__house-figures-results" #houseFiguresResultsDialogForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
           <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
             <div fxLayout="column" fxLayoutGap="10px" class="form__fields__row__container">
               <h3 class="title">
-                <p class="header">Figures extra info</p>
+                <!-- <p class="header">Figures extra info</p> -->
                 <p class="mat-caption">This information it is not saved in the database, play with these values to evaluate a potencial investment</p>
               </h3>
 
@@ -82,28 +85,30 @@
             </div>
           </section>
         </form>
-      </mat-card-content>
-    </mat-card>
+      </mat-expansion-panel>
+    </mat-accordion>
 
-    <house-figures-results 
-      title="Property figures"
-      [purchasePrice]="model.salePrice || model.offerPrice || model.askingPrice || model.walkAwayPrice || 0"
-      [capitalGrowth]="model.propertyTypeData.capitalGrowth || 0"
-      [marketValue]="model.marketValue"
-      [loanCoverage]="modelHouseFiguresResults.loanCoverage"
-      [interestRates]="modelHouseFiguresResults.interestRates"
-      [loanTerm]="modelHouseFiguresResults.loanTerm"
-      [paymentFrecuency]="modelHouseFiguresResults.paymentFrecuency"
-      [weeklyRent]="getRentPricePerWeek()"
-      [vacancy]="model.propertyTypeData.vacancy"
-      [renovationCost]="model.renovationCost"
-      [mantainanceCost]="model.maintenanceCost"
-      [bodyCorporate]="model.propertyTypeData.bodyCorporate"
-      [houseRates]="model.propertyTypeData.rates"
-      [utilities]="model.propertyTypeData.utilitiesCost"
-      [insurance]="model.propertyTypeData.insurance"
-      [otherCosts]="model.otherCost"
-      [managed]="model.propertyTypeData.managed ? model.propertyTypeData.managerRate : 0">
+    <house-figures-results
+        title="Property figures"
+        subtitle="This figures asumes that all of the currency values in the form are in the same unit."
+        [purchasePrice]="model.salePrice || model.offerPrice || model.askingPrice || model.walkAwayPrice || 0"
+        [capitalGrowth]="model.propertyTypeData.capitalGrowth || 0"
+        [marketValue]="model.marketValue"
+        [loanCoverage]="modelHouseFiguresResults.loanCoverage"
+        [interestRates]="modelHouseFiguresResults.interestRates"
+        [loanTerm]="modelHouseFiguresResults.loanTerm"
+        [paymentFrecuency]="modelHouseFiguresResults.paymentFrecuency"
+        [rentPrice]="model.propertyTypeData.rentPrice"
+        [rentPaymentFrecuency]="model.propertyTypeData.rentPricePeriod"
+        [vacancy]="model.propertyTypeData.vacancy"
+        [renovationCost]="model.renovationCost"
+        [mantainanceCost]="model.maintenanceCost"
+        [bodyCorporate]="model.propertyTypeData.bodyCorporate"
+        [houseRates]="model.propertyTypeData.rates"
+        [utilities]="model.propertyTypeData.utilitiesCost"
+        [insurance]="model.propertyTypeData.insurance"
+        [otherCosts]="model.otherCost"
+        [managed]="model.propertyTypeData.managed ? model.propertyTypeData.managerRate : 0">
     </house-figures-results>
   </section>
 </mat-dialog-content>

@@ -19,7 +19,8 @@
           </address-autocomplete>
         </div>
 
-        <div *ngIf="model.address && model.address.latitude && model.address.longitude" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+        <div *ngIf="model.address && model.address.latitude && model.address.longitude" 
+            fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Map -->
           <dynamic-map fxFlex [latitude]="model.address.latitude" [longitude]="model.address.longitude" [markers]="[model.address]" [mapContainerHeight]="300"></dynamic-map>
         </div>
@@ -290,13 +291,6 @@
           type="submit" 
           color="accent" 
           [disabled]="!(editPropertyForm.form.valid && includedFormsValid())">Save</button>
-
-      <button *ngIf="!getPropertyServiceRunning" fxShow.lt-md="true"
-          class="form__action mat-raised-button" 
-          mat-raised-button 
-          type="button" 
-          color="primary"
-          (click)="openHouseResultsFiguresDialog()">Show figures</button>
       
       <mat-progress-bar *ngIf="editPropertyServiceRunning"
           class="progress-bar progress-bar--edit-property"
@@ -310,13 +304,12 @@
   <section *ngIf="!getPropertyServiceRunning" fxHide.lt-md="true" fxLayout="column" fxLayoutGap="10px" fxFlex="300px" class="house-figures-results">
     <mat-card>
       <mat-card-content>
-
         <!-- Missing required data from -->
         <form class="form__container form__house-figures-results" #houseFiguresResultsForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
           <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
             <div fxLayout="column" fxLayoutGap="10px" class="form__fields__row__container">
               <h3 class="title">
-                <p class="header">Figures extra info</p>
+                <p class="header">Additional values</p>
                 <p class="mat-caption">This information it is not saved in the database, play with these values to evaluate a potencial investment</p>
               </h3>
 
@@ -394,6 +387,7 @@
 
     <house-figures-results 
       title="Property figures"
+      subtitle="This figures asumes that all of the currency inputs in the form are in the same unit"
       [purchasePrice]="model.salePrice || model.offerPrice || model.askingPrice || model.walkAwayPrice || 0"
       [capitalGrowth]="model.propertyTypeData.capitalGrowth || 0"
       [marketValue]="model.marketValue"
@@ -401,7 +395,8 @@
       [interestRates]="modelHouseFiguresResults.interestRates"
       [loanTerm]="modelHouseFiguresResults.loanTerm"
       [paymentFrecuency]="modelHouseFiguresResults.paymentFrecuency"
-      [weeklyRent]="getRentPricePerWeek()"
+      [rentPrice]="model.propertyTypeData.rentPrice"
+      [rentPaymentFrecuency]="model.propertyTypeData.rentPricePeriod"
       [vacancy]="model.propertyTypeData.vacancy"
       [renovationCost]="model.renovationCost"
       [mantainanceCost]="model.maintenanceCost"
@@ -421,4 +416,12 @@
       color="primary"
       mode="indeterminate">
   </mat-progress-bar>
+
+  <section *ngIf="!getPropertyServiceRunning" fxLayout="column" fxLayoutAlign="start end" fxHide.gt-sm="true" class="actions">
+    <button mat-fab class="fab mat-elevation-z10" color="primary" 
+        matTooltip="Show figures" matTooltipPosition="left" 
+        (click)="openHouseResultsFiguresDialog()">
+      <mat-icon aria-label="Create new investemt">attach_money</mat-icon>
+    </button>
+  </section>
 </div>
