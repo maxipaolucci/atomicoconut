@@ -14,6 +14,7 @@ import { PropertiesTableComponent } from './components/properties-table/properti
 import { PropertySelectorDialogComponent } from './components/property-selector-dialog/property-selector-dialog.component';
 import { AgmCoreModule } from '@agm/core';
 import { CalculatorsModule } from '../calculators/calculators.module';
+import { HouseFiguresDialogComponent } from './components/house-figures-dialog/house-figures-dialog.component';
 
 @NgModule({
   imports: [
@@ -30,11 +31,13 @@ import { CalculatorsModule } from '../calculators/calculators.module';
     PropertiesEditComponent, 
     HousesEditComponent, 
     PropertiesTableComponent, 
-    PropertySelectorDialogComponent 
+    PropertySelectorDialogComponent, 
+    HouseFiguresDialogComponent 
   ],
   providers: [ PropertiesService ],
   entryComponents: [
-    PropertySelectorDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
+    PropertySelectorDialogComponent, //added as material doc suggest to allow AOT on this on the fly created class
+    HouseFiguresDialogComponent
   ]
 })
 export class PropertiesModule { }

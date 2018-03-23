@@ -8,8 +8,9 @@ import { PropertiesService } from '../../properties.service';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { propertyTypes } from '../../../../constants';
 import { House } from '../../models/house';
-import { MatSelectChange, DateAdapter, NativeDateAdapter, MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatSelectChange, DateAdapter, NativeDateAdapter, MatAutocompleteSelectedEvent, MatDialog } from '@angular/material';
 import { UtilService } from '../../../../util.service';
+import { PropertySelectorDialogComponent } from '../property-selector-dialog/property-selector-dialog.component';
 
 @Component({
   selector: 'properties-edit',
@@ -69,7 +70,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   };
   
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private propertiesService : PropertiesService, 
-      private appService : AppService, private router : Router, public utilService : UtilService, private dateAdapter: DateAdapter<NativeDateAdapter> ) {
+      private appService : AppService, private router : Router, public utilService : UtilService, private dateAdapter: DateAdapter<NativeDateAdapter>, 
+      public dialog: MatDialog) {
 
     this.dateAdapter.setLocale('en-GB');
     this.propertyTypes = propertyTypes;
@@ -321,5 +323,26 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
   includedFormsValid() : boolean {
     return this.propertyTypeDataValid && this.addressValid;
+  }
+
+  openHouseResultsFiguresDialog() {
+    const methodTrace = `${this.constructor.name} > openHouseResultsFiguresDialog() > `; //for debugging
+      
+    
+    let propertySelectorDialogRef = this.dialog.open(PropertySelectorDialogComponent, {
+      data: {
+        model : this.model,
+        modelHouseFiguresResults : this.modelHouseFiguresResults;
+      }
+    });
+
+    const newSubscription = propertySelectorDialogRef.afterClosed().subscribe(modelHouseFiguresResults => {
+      if (modelHouseFiguresResults) {
+        this.modelHouseFiguresResults = modelHouseFiguresResults;
+      }
+    });
+    this.subscription.add(newSubscription); 
+
+    return false;
   }
 }

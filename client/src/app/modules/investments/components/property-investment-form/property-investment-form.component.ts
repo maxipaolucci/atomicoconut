@@ -158,7 +158,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
   }
 
   openPropertySelectionDialog() {
-    const methodTrace = `${this.constructor.name} > openDeleteTeamDialog() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > openPropertySelectionDialog() > `; //for debugging
       
     
     let propertySelectorDialogRef = this.dialog.open(PropertySelectorDialogComponent, {
