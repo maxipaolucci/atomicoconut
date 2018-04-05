@@ -129,9 +129,7 @@ exports.create = async (req, res, next) => {
                 msg : getMessage('error', 459, null, false, property.propertyType),
                 data : null
             });
-        }
-
-        
+        }        
     } else {
         console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'Property')}`);
         res.status(401).json({ 

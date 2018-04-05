@@ -7,3 +7,5 @@ exports.INVESTMENTS_TYPES = {
 exports.PROPERTY_TYPES = {
   HOUSE : 'house'
 };
+
+exports.ANONYMOUS_USER = 'Anonymous User';

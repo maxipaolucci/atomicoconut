@@ -15,4 +15,6 @@ const currencyRateSchema = new mongoose.Schema({
   }
 });
 
+currencyRateSchema.index({ date : 1 }, { unique : true });
+
 module.exports = mongoose.model('CurrencyRate', currencyRateSchema);
