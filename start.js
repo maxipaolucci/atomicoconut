@@ -29,6 +29,7 @@ require('./models/CurrencyInvestment');
 require('./models/PropertyInvestment');
 require('./models/Property');
 require('./models/House');
+require('./models/CurrencyRate');
 
 // Start our app!
 const app = require('./app');

@@ -14,6 +14,7 @@ const usersRoutes = require('./routes/api/usersRoutes');
 const teamsRoutes = require('./routes/api/teamsRoutes');
 const investmentsRoutes = require('./routes/api/investmentsRoutes');
 const propertiesRoutes = require('./routes/api/propertiesRoutes');
+const currencyRatesRoutes = require('./routes/api/currencyRatesRoutes');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
 require('./handlers/passport'); //used by passport library
@@ -84,6 +85,7 @@ app.use('/api/users', usersRoutes);
 app.use('/api/teams', teamsRoutes);
 app.use('/api/investments', investmentsRoutes);
 app.use('/api/properties', propertiesRoutes);
+app.use('/api/currencyRates', currencyRatesRoutes);
 
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);
