@@ -30,59 +30,42 @@ exports.validateRegister = (req, res, next) => {
     next(); //call next middleware
 };
 
-exports.add = async (req, res, next) => {
+const add = async (ratesObject, userEmail) => {
     const methodTrace = `${errorTrace} add() >`;
-
-    const userEmail = req.user ? userEmail : ANONYMOUS_USER; //it is not required to be logged in to access this controller
-
-    //llamar al web service con un array de fechas obtenerlas y hacer un insert many
-    ///////////////////////////////////////////////////////////
 
     //save a new record in DB
     console.log(`${methodTrace} ${getMessage('message', 1031, userEmail, true, 'CurrencyRate')}`);
     let currencyRates = await (new CurrencyRate({
-        date : req.body.date,
-        rates: req.body.rates
+        date : ratesObject.date,
+        rates: ratesObject.rates
     })).save();
 
     if (currencyRates) {
         console.log(`${methodTrace} ${getMessage('message', 1026, userEmail, true, 'CurrencyRate')}`);
-        res.json({
-            status : 'success', 
-            codeno : 200,
-            msg : getMessage('message', 1026, null, false, 'CurrencyRate'),
-            data : { date : currencyRates.date, rates : currencyRates.rates }
-        });
-
-        return;
+        return true;
     }
 
     console.log(`${methodTrace} ${getMessage('error', 459, userEmail, true, 'CurrencyRate')}`);
-    res.status(401).json({ 
-        status : "error", 
-        codeno : 459,
-        msg : getMessage('error', 459, null, false, 'CurrencyRate'),
-        data : null
-    });
+    return false;
 };
 
 /**
- * Get by date
+ * Get by dates . 
  */
-exports.getByDate = async (req, res) => {
+exports.getByDates = async (req, res) => {
     const methodTrace = `${errorTrace} getByDate() >`;
 
     const userEmail = req.user ? userEmail : ANONYMOUS_USER; //it is not required to be logged in to access this controller
 
-    //1 - get record by Date
-    const result = await getByDateObject(req.params.date, userEmail);
+    //1 - get records by dates array
+    const results = await getByDatesObjects(req.params.dates, userEmail);
     
-    if (result) {
+    if (results) {
         res.json({
             status : 'success', 
             codeno : 200,
             msg : getMessage('message', 1036, null, false, 1, 'CurrencyRate'),
-            data : result
+            data : results
         });
 
         return;
@@ -98,14 +81,22 @@ exports.getByDate = async (req, res) => {
     });
 };
 
-const getByDateObject = async (date, userEmail, options = null) => {
+/**
+ * Get records that matches the provided dates in the dates array
+ * 
+ * @param {array} dates . The dates we are looking for rates 
+ * @param {*} userEmail . The current user email if logged in
+ * @param {*} options . Extra options for parsing results.
+ * @returns {array} . An array with the CurrencyRates for the provided dates
+ */
+const getByDatesObjects = async (dates, userEmail, options = null) => {
     const methodTrace = `${errorTrace} getByDateObject() >`;
 
-    //1- check for a record with the provided date
+    //1- check for records with the provided dates
     console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'CurrencyRate', 'date', date)}`); 
 
     const aggregationStagesArr = [
-        { $match : { date } },
+        { date : { $in : dates } },
         {
             $project : {
                 __v : false,
@@ -114,14 +105,42 @@ const getByDateObject = async (date, userEmail, options = null) => {
         }
     ];
     let results = await CurrencyRate.aggregate(aggregationStagesArr);
+    
 
-    //3 - Get the first result
-    result = results.length ? results[0] : null;
+    //2- iterate results, if date is not available then looks for it in fixer.io web API
+    if (dates.length > results.length) {
+        const indexedResults = {};
+        for (let rasult of results) {
+            indexedResults[result.date] = result;
+        }
+
+        //we need to get some rates from the webservice
+        for (let date of dates) {
+            if (!indexedResults[date]) {
+                //call webservice with date
+                const newRates = null;
+                axios.get(`http://data.fixer.io/api/${date}?access_key=d134c3298159bd8141d557e3ab9143b0`)
+                    .then(res => {
+                        console.log(res);
+                        // if (newRates) {
+                        //     indexedResults[date] = newRates;
+                        //     result.push({ date, rates : newRates});
+                        //     await add({ date, rates : newRates});
+                        // }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    });
+                
+            }
+        }
+    }
+     
     
     //4 - Return rates info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, result ? 1 : 0, 'CurrencyRate(s)')}`);
-    return result;
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, results.length, 'CurrencyRate(s)')}`);
+    return results;
 };
-exports.getByDateObject = getByDateObject;
+//exports.getByDatesObjects = getByDatesObjects;
 
 //si get by date no lo encuentra tengo q pedirselo al webservice, almacenarlo y devolverlo.
