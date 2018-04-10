@@ -4,7 +4,9 @@ const md5 = require('md5');
 const promisify = require('es6-promisify');
 const { getMessage } = require('../handlers/errorHandlers');
 const CurrencyRate = mongoose.model('CurrencyRate');
-const { ANONYMOUS_USER } = require('../constants/constants');
+const { ANONYMOUS_USER, FIXERIO_KEY } = require('../constants/constants');
+const axios = require('axios');
+const moment = require('moment');
 
 const errorTrace = 'currencyRatesController >';
 
@@ -117,9 +119,12 @@ const getByDatesObjects = async (dates, userEmail, options = null) => {
         //we need to get some rates from the webservice
         for (let date of dates) {
             if (!indexedResults[date]) {
+
+                //parse the date in the fixer api format
+                const formatedDate = moment(date).format('YYYY-MM-DD');
                 //call webservice with date
                 const newRates = null;
-                axios.get(`http://data.fixer.io/api/${date}?access_key=d134c3298159bd8141d557e3ab9143b0`)
+                axios.get(`http://data.fixer.io/api/${formatedDate}?access_key=${FIXERIO_KEY}&base=USD`)
                     .then(res => {
                         console.log(res);
                         // if (newRates) {

@@ -9,3 +9,5 @@ exports.PROPERTY_TYPES = {
 };
 
 exports.ANONYMOUS_USER = 'Anonymous User';
+
+exports.FIXERIO_KEY = 'd134c3298159bd8141d557e3ab9143b0';
