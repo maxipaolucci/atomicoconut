@@ -32,6 +32,11 @@ exports.validateRegister = (req, res, next) => {
     next(); //call next middleware
 };
 
+/**
+ * This method stores a rate into our currencyRate table in DB.
+ * @param {*} ratesObject . This contains a date and a rates object for store
+ * @param {*} userEmail . The current user email for debuging. If nobody is logged in then anonymous.
+ */
 const add = async (ratesObject, userEmail) => {
     const methodTrace = `${errorTrace} add() >`;
 
@@ -123,19 +128,22 @@ const getByDatesObjects = async (dates, userEmail, options = null) => {
                 //parse the date in the fixer api format
                 const formatedDate = moment(date).format('YYYY-MM-DD');
                 //call webservice with date
-                const newRates = null;
+                let newRates = null;
                 axios.get(`http://data.fixer.io/api/${formatedDate}?access_key=${FIXERIO_KEY}&base=USD`)
                     .then(res => {
                         console.log(res);
-                        // if (newRates) {
-                        //     indexedResults[date] = newRates;
-                        //     result.push({ date, rates : newRates});
-                        //     await add({ date, rates : newRates});
-                        // }
+                        
                     })
                     .catch(err => {
                         console.error(err);
                     });
+                
+                newRates = await axios(`http://data.fixer.io/api/${formatedDate}?access_key=${FIXERIO_KEY}&base=USD`);
+                if (newRates) {
+                    indexedResults[date] = newRates;
+                    result.push({ date, rates : newRates});
+                    await add({ date, rates : newRates});
+                }
                 
             }
         }
