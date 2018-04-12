@@ -1,10 +1,11 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { AppService } from '../../app.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { CurrencyExchangeResponse } from '../../models/currencyExchangeResponse';
 import { of } from 'rxjs/observable/of';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class CurrencyExchangeService {
@@ -14,6 +15,10 @@ export class CurrencyExchangeService {
 
   private currencyExchangeServiceUrl : string = 'https://api.fixer.io/latest';
   currencyRates : any = null;
+
+  private serverHost : string = environment.apiHost + '/api/currencyRates';
+  private headers = new HttpHeaders().set('Content-Type', 'application/json');
+
 
   constructor(private http : HttpClient, private appService : AppService) { }
 
@@ -28,6 +33,28 @@ export class CurrencyExchangeService {
       .map(this.extractCurrencyExchangeData)
       .catch(this.appService.handleError)
       .retry(3);
+  }
+
+  getCurrencyRates222(dates = [], base = 'USD') : Observable<any> {
+    let methodTrace = `${this.constructor.name} > getCurrencyRates222() > `; //for debugging
+    
+    // if (this.currencyRates) {
+    //   return Observable.of(this.currencyRates);
+    // }
+    
+
+    let params = new HttpParams().set('dates', `${dates}`);
+
+    return this.http.get(`${this.serverHost}/getByDates/${base}`, { params })
+      .map(this.extractCurrencyExchangeData222)
+      .catch(this.appService.handleError)
+      .retry(3);
+  }
+
+  
+  private extractCurrencyExchangeData222(res) : any {
+    console.log(res);
+    return res;
   }
 
   private extractCurrencyExchangeData(res: CurrencyExchangeResponse) : any {

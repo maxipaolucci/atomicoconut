@@ -64,8 +64,16 @@ exports.getByDates = async (req, res) => {
 
     const userEmail = req.user ? userEmail : ANONYMOUS_USER; //it is not required to be logged in to access this controller
 
-    //1 - get records by dates array
-    const results = await getByDatesObjects(req.params.dates, userEmail);
+    //1 - get rates for the provided dates
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1036, null, false, 1, 'CurrencyRate'),
+        data : {dates: req.query.dates, base: req.param.base}
+    });
+
+    return;
+    //const results = await getByDatesObjects(req.query.dates, req.param.base, userEmail);
     
     if (results) {
         res.json({
@@ -99,7 +107,7 @@ exports.getByDates = async (req, res) => {
 const getByDatesObjects = async (dates, userEmail, options = null) => {
     const methodTrace = `${errorTrace} getByDateObject() >`;
 
-    //1- check for records with the provided dates
+    //1- check for records in DB with the provided dates
     console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'CurrencyRate', 'date', date)}`); 
 
     const aggregationStagesArr = [
@@ -113,18 +121,17 @@ const getByDatesObjects = async (dates, userEmail, options = null) => {
     ];
     let results = await CurrencyRate.aggregate(aggregationStagesArr);
     
-
-    //2- iterate results, if date is not available then looks for it in fixer.io web API
+    //2- if dates retrieved from DB does not match the dates requested by user then we need to retrieve data from external web aPI
     if (dates.length > results.length) {
         const indexedResults = {};
+        //3- reorganize rates in a indexed structure by date to easily find/access information
         for (let rasult of results) {
             indexedResults[result.date] = result;
         }
 
-        //we need to get some rates from the webservice
+        //4- iterate results, if date is not available then looks for it in fixer.io web API
         for (let date of dates) {
             if (!indexedResults[date]) {
-
                 //parse the date in the fixer api format
                 const formatedDate = moment(date).format('YYYY-MM-DD');
                 //call webservice with date
@@ -144,7 +151,6 @@ const getByDatesObjects = async (dates, userEmail, options = null) => {
                     result.push({ date, rates : newRates});
                     await add({ date, rates : newRates});
                 }
-                
             }
         }
     }

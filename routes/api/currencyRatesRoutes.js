@@ -15,7 +15,7 @@ const { catchErrors, catchApiErrors } = require('../../handlers/errorHandlers');
 //   catchErrors(currencyRatesController.getByDate)
 // );
 
-router.route('/getByDates/:dates').get(
+router.route('/getByDates/:base').get(
   catchErrors(currencyRatesController.getByDates)
 );
 

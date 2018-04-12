@@ -57,6 +57,14 @@ export class WelcomeComponent implements OnInit, OnDestroy {
               this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
               this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
             });
+
+            this.currencyExchangeService.getCurrencyRates222([currencyInvestment.buyingDate]).take(1).subscribe((currencyRates) => {
+              console.log(currencyRates);
+            },
+            (error : any) => {
+              this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
+              this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
+            });
           } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
             this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
               let myReturnAmount = (currencyInvestment.amount * rates.price) * myPercentage / 100;
