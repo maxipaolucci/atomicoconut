@@ -13,7 +13,7 @@ const errorTrace = 'currencyRatesController >';
 exports.validateRegister = (req, res, next) => {
     const methodTrace = `${errorTrace} validateRegister() >`;
 
-    const userEmail = req.user ? userEmail : ANONYMOUS_USER; //it is not required to be logged in to access this controller
+    const userEmail = req.user ? req.user.email : ANONYMOUS_USER; //it is not required to be logged in to access this controller
 
     const errors = req.validationErrors();
     if (errors) {
@@ -62,14 +62,14 @@ const add = async (ratesObject, userEmail) => {
 exports.getByDates = async (req, res) => {
     const methodTrace = `${errorTrace} getByDate() >`;
 
-    const userEmail = req.user ? userEmail : ANONYMOUS_USER; //it is not required to be logged in to access this controller
+    const userEmail = req.user ? req.user.email : ANONYMOUS_USER; //it is not required to be logged in to access this controller
 
     //1 - get rates for the provided dates
     res.json({
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1036, null, false, 1, 'CurrencyRate'),
-        data : {dates: req.query.dates, base: req.param.base}
+        data : {dates: req.query.dates, base: req.params.base}
     });
 
     return;

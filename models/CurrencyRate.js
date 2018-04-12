@@ -6,11 +6,10 @@ mongoose.Promise = global.Promise;
 const currencyRateSchema = new mongoose.Schema({
   date: {
     type: Date,
-    required: 'A date is required!.',
-    validate : [validator.isDate, 'Invalid date value']
+    required: 'A date is required!.'
   },
   rates : {
-    type : Schema.Types.Mixed,
+    type : mongoose.Schema.Types.Mixed,
     required : 'A rates object is required!.'
   }
 });

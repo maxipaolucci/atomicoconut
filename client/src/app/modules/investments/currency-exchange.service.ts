@@ -53,7 +53,6 @@ export class CurrencyExchangeService {
 
   
   private extractCurrencyExchangeData222(res) : any {
-    console.log(res);
     return res;
   }
 
