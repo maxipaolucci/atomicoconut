@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;
 
 const currencyRateSchema = new mongoose.Schema({
   date: {
-    type: Date,
+    type: String,
     required: 'A date is required!.'
   },
   rates : {

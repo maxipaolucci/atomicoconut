@@ -30,7 +30,8 @@ const errorCodes = {
   473 : 'Error trying to remove member from each investment distribution array from team investments.',
   474 : 'The investment type provided "{{param}}" does not match any of the invesment types supported by the platform.',
   475 : 'Sorry, this {{param}} has {{param}} associated to it. We cannot delete it until all the related data is removed.',
-  476 : 'Sorry, you cannot create a {{param}} with a {{param}} not created by you.'
+  476 : 'Sorry, you cannot create a {{param}} with a {{param}} not created by you.',
+  477 : 'Error trying to retrieve data from {{param}} with {{param}} = {{param}}.'
 };
 
 const messageCodes = {
@@ -80,7 +81,9 @@ const messageCodes = {
   1043 : 'Updating team investments, adding new member to each investment distributtion array...',
   1044 : 'Successfully added new member to each investment distribution array',
   1045 : 'Updating team investments, removing the member from each investment distributtion array...',
-  1046 : 'Successfully removed member from each investment distribution array'
+  1046 : 'Successfully removed member from each investment distribution array',
+  1047 : 'Getting data from {{param}} with {{param}} = {{param}}...',
+  1048 : 'Data from {{param}} successfully retrieved.'
 };
 
 /**
