@@ -12,6 +12,7 @@ import { CurrencyInvestment } from '../../modules/investments/models/currencyInv
 import { Subscription } from 'rxjs/Subscription';
 import { of } from 'rxjs/observable/of';
 import { INVESTMENTS_TYPES } from '../../constants';
+import { UtilService } from '../../util.service';
 
 @Component({
   selector: 'welcome',
@@ -27,7 +28,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   subscription : Subscription = new Subscription();
 
   constructor(private mainNavigatorService : MainNavigatorService, private usersService : UsersService, private appService : AppService, 
-      private investmentsService : InvestmentsService, private currencyExchangeService : CurrencyExchangeService) { }
+      private investmentsService : InvestmentsService, private currencyExchangeService : CurrencyExchangeService, private utilService : UtilService) { }
 
   ngOnInit() {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
@@ -57,8 +58,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
               this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
               this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
             });
-
-            this.currencyExchangeService.getCurrencyRates222([currencyInvestment.buyingDate]).take(1).subscribe((currencyRates) => {
+            
+            this.currencyExchangeService.getCurrencyRates222([this.utilService.formatDate(currencyInvestment.buyingDate, 'YYYY-MM-DD'), this.utilService.formatDate(currencyInvestment.buyingDate, 'YYYY-MM-DD')]).take(1).subscribe((currencyRates) => {
               console.log(currencyRates);
             },
             (error : any) => {

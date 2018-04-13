@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
+import moment = require('moment'); //the import ES6 doesnot work from moment yet
+//import { moment } from 'moment';
 
 @Injectable()
 export class UtilService {
@@ -51,6 +53,18 @@ export class UtilService {
    * */
   capitalizeFirstLetter(word : string) : string {
     return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
+  /**
+   * Formast a date object into a string using the provided format
+   * 
+   * @param {Date} date . The date to format 
+   * @param {string} formatStr . The desired format string
+   * 
+   * @return {string} . The date provided in the desired format.
+   */
+  formatDate(date : Date, formatStr : string = 'DD/MM/YYYY') {
+    return moment(date).format(formatStr); 
   }
 
   /**

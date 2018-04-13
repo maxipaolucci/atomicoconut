@@ -6,7 +6,6 @@ const { getMessage } = require('../handlers/errorHandlers');
 const CurrencyRate = mongoose.model('CurrencyRate');
 const { ANONYMOUS_USER, FIXERIO_KEY } = require('../constants/constants');
 const axios = require('axios');
-const moment = require('moment');
 
 const errorTrace = 'currencyRatesController >';
 
@@ -65,15 +64,7 @@ exports.getByDates = async (req, res) => {
     const userEmail = req.user ? req.user.email : ANONYMOUS_USER; //it is not required to be logged in to access this controller
 
     //1 - get rates for the provided dates
-    res.json({
-        status : 'success', 
-        codeno : 200,
-        msg : getMessage('message', 1036, null, false, 1, 'CurrencyRate'),
-        data : {dates: req.query.dates, base: req.params.base}
-    });
-
-    return;
-    //const results = await getByDatesObjects(req.query.dates, req.param.base, userEmail);
+    const results = await getByDatesObjects(req.query.dates.split(','), req.params.base, userEmail);
     
     if (results) {
         res.json({
@@ -99,19 +90,21 @@ exports.getByDates = async (req, res) => {
 /**
  * Get records that matches the provided dates in the dates array
  * 
- * @param {array} dates . The dates we are looking for rates 
+ * @param {array} dates . The dates we are looking for rates
+ * @param {string} base . The base currency to get results from Fixer.IO API 
  * @param {*} userEmail . The current user email if logged in
  * @param {*} options . Extra options for parsing results.
  * @returns {array} . An array with the CurrencyRates for the provided dates
  */
-const getByDatesObjects = async (dates, userEmail, options = null) => {
+const getByDatesObjects = async (dates, base = 'USD', userEmail, options = null) => {
     const methodTrace = `${errorTrace} getByDateObject() >`;
+    console.log(dates, dates.length);
 
     //1- check for records in DB with the provided dates
-    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'CurrencyRate', 'date', date)}`); 
+    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'CurrencyRate', 'date', dates)}`); 
 
     const aggregationStagesArr = [
-        { date : { $in : dates } },
+        { $match : { date : { $in : dates } } },
         {
             $project : {
                 __v : false,
@@ -120,6 +113,8 @@ const getByDatesObjects = async (dates, userEmail, options = null) => {
         }
     ];
     let results = await CurrencyRate.aggregate(aggregationStagesArr);
+    // let results = await CurrencyRate.find({ date : { $in : dates } } )
+    console.log('results ', results);
     
     //2- if dates retrieved from DB does not match the dates requested by user then we need to retrieve data from external web aPI
     if (dates.length > results.length) {
@@ -132,24 +127,25 @@ const getByDatesObjects = async (dates, userEmail, options = null) => {
         //4- iterate results, if date is not available then looks for it in fixer.io web API
         for (let date of dates) {
             if (!indexedResults[date]) {
-                //parse the date in the fixer api format
-                const formatedDate = moment(date).format('YYYY-MM-DD');
                 //call webservice with date
                 let newRates = null;
-                axios.get(`http://data.fixer.io/api/${formatedDate}?access_key=${FIXERIO_KEY}&base=USD`)
-                    .then(res => {
-                        console.log(res);
+                // axios.get(`http://data.fixer.io/api/${formatedDate}?access_key=${FIXERIO_KEY}&base=${base}`)
+                //     .then(res => {
+                //         console.log(res);
                         
-                    })
-                    .catch(err => {
-                        console.error(err);
-                    });
+                //     })
+                //     .catch(err => {
+                //         console.error(err);
+                //     });
                 
-                newRates = await axios(`http://data.fixer.io/api/${formatedDate}?access_key=${FIXERIO_KEY}&base=USD`);
+                newRates = await axios(`http://data.fixer.io/api/${date}?access_key=${FIXERIO_KEY}&base=${base}`);
                 if (newRates) {
+                    console.log(newRates);
                     indexedResults[date] = newRates;
-                    result.push({ date, rates : newRates});
+                    results.push({ date, rates : newRates});
                     await add({ date, rates : newRates});
+                } else {
+                    console.log(`${methodTrace} > Failed to get data from Fixer.IO API for date ${date} and base ${base}`);
                 }
             }
         }
