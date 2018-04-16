@@ -820,6 +820,7 @@ var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription
 var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
 var constants_1 = __webpack_require__("./src/app/constants.ts");
 var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
 var WelcomeComponent = /** @class */ (function () {
     function WelcomeComponent(mainNavigatorService, usersService, appService, investmentsService, currencyExchangeService, utilService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -858,12 +859,6 @@ var WelcomeComponent = /** @class */ (function () {
                             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
                             _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
                         });
-                        _this.currencyExchangeService.getCurrencyRates222([_this.utilService.formatDate(currencyInvestment_2.buyingDate, 'YYYY-MM-DD'), _this.utilService.formatDate(currencyInvestment_2.buyingDate, 'YYYY-MM-DD')]).take(1).subscribe(function (currencyRates) {
-                            console.log(currencyRates);
-                        }, function (error) {
-                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
-                            _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
-                        });
                     }
                     else if (investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
                         _this.currencyExchangeService.getCryptoRates(currencyInvestment_2.unit).take(1).subscribe(function (rates) {
@@ -886,6 +881,51 @@ var WelcomeComponent = /** @class */ (function () {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
             _this.user = null;
         });
+        var investmentsDates = [];
+        var investments = [];
+        newSubscription = user$.switchMap(function (userInvestments) {
+            investments = userInvestments;
+            userInvestments.map(function (userInvestment) {
+                if (userInvestment instanceof currencyInvestment_1.CurrencyInvestment) {
+                    investmentsDates.push(_this.utilService.formatDate(userInvestment.buyingDate, 'YYYY-MM-DD'));
+                }
+                else if (userInvestment instanceof PropertyInvestment_1.PropertyInvestment) {
+                    investmentsDates.push(_this.utilService.formatDate(userInvestment.buyingDate, 'YYYY-MM-DD'));
+                }
+            });
+            return _this.currencyExchangeService.getCurrencyRates(investmentsDates);
+        }).subscribe(function (currencyRates) {
+            var _loop_2 = function (investment) {
+                if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
+                    var myPercentage_2 = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
+                    var currencyInvestment_3 = investment;
+                    if (investment.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
+                        var investmentDate = _this.utilService.formatDate(currencyInvestment_3.buyingDate, 'YYYY-MM-DD');
+                        var myReturnAmount = (currencyInvestment_3.amount * (currencyRates[investmentDate]["USD" + currencyInvestment_3.unit] || 1)) * myPercentage_2 / 100;
+                        _this.wealthAmount += myReturnAmount;
+                        _this.calculateProgressBarWealthValue();
+                    }
+                    else if (investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
+                        _this.currencyExchangeService.getCryptoRates(currencyInvestment_3.unit).take(1).subscribe(function (rates) {
+                            var myReturnAmount = (currencyInvestment_3.amount * rates.price) * myPercentage_2 / 100;
+                            _this.wealthAmount += myReturnAmount;
+                            _this.calculateProgressBarWealthValue();
+                        }, function (error) {
+                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_3.unit + " rates data > ", error);
+                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_3.unit + " rates data, please try again in a few minutes.", 'error');
+                        });
+                    }
+                }
+            };
+            //iterate investments and sum returns using dated rates.
+            for (var _i = 0, investments_2 = investments; _i < investments_2.length; _i++) {
+                var investment = investments_2[_i];
+                _loop_2(investment);
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.user = null;
+        });
         this.subscription.add(newSubscription);
     };
     WelcomeComponent.prototype.ngOnDestroy = function () {
@@ -894,7 +934,7 @@ var WelcomeComponent = /** @class */ (function () {
         this.subscription.unsubscribe();
     };
     /**
-     * Sets the user property with the current user or null of nobody logged in yet
+     * Sets the user property with the current user or null if nobody logged in yet
      */
     WelcomeComponent.prototype.setUser = function () {
         var _this = this;
@@ -3111,52 +3151,86 @@ var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var Observable_1 = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
 var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
 var CurrencyExchangeService = /** @class */ (function () {
-    function CurrencyExchangeService(http, appService) {
+    function CurrencyExchangeService(http, appService, utilService) {
         this.http = http;
         this.appService = appService;
+        this.utilService = utilService;
         this.cryptoExchangeServerUrl = 'https://coincap.io/page/';
         this.cryptoRates = {};
         this.currencyExchangeServiceUrl = 'https://api.fixer.io/latest';
-        this.currencyRates = null;
+        this.currencyRates = {};
         this.serverHost = environment_1.environment.apiHost + '/api/currencyRates';
         this.headers = new http_1.HttpHeaders().set('Content-Type', 'application/json');
     }
-    CurrencyExchangeService.prototype.getCurrencyRates = function (base) {
-        if (base === void 0) { base = 'USD'; }
-        var methodTrace = this.constructor.name + " > getCurrencyRates() > "; //for debugging
-        if (this.currencyRates) {
-            return Observable_1.Observable.of(this.currencyRates);
-        }
-        return this.http.get(this.currencyExchangeServiceUrl + "?base=" + base)
-            .map(this.extractCurrencyExchangeData)
-            .catch(this.appService.handleError)
-            .retry(3);
-    };
-    CurrencyExchangeService.prototype.getCurrencyRates222 = function (dates, base) {
+    CurrencyExchangeService.prototype.getCurrencyRates = function (dates, base) {
+        var _this = this;
         if (dates === void 0) { dates = []; }
         if (base === void 0) { base = 'USD'; }
-        var methodTrace = this.constructor.name + " > getCurrencyRates222() > "; //for debugging
-        // if (this.currencyRates) {
-        //   return Observable.of(this.currencyRates);
-        // }
+        var methodTrace = this.constructor.name + " > getCurrencyRates() > "; //for debugging
+        dates.concat(this.utilService.formatDate(new Date(), 'YYYY-MM-DD')); //adds today to the array
+        console.log(methodTrace, this.currencyRates, dates);
+        //check if all the required dates are already cached in this service
+        var found = true;
+        for (var _i = 0, dates_1 = dates; _i < dates_1.length; _i++) {
+            var date = dates_1[_i];
+            if (!this.currencyRates[date]) {
+                console.log('date not found: ', date);
+                found = false;
+                break;
+            }
+        }
+        if (found) {
+            //all dates cached then return this object
+            return Observable_1.Observable.of(this.currencyRates);
+        }
+        //if here then we need to retrieve some dates from the server
         var params = new http_1.HttpParams().set('dates', "" + dates);
         return this.http.get(this.serverHost + "/getByDates/" + base, { params: params })
-            .map(this.extractCurrencyExchangeData222)
+            .map(function (res) {
+            var data = _this.appService.extractData(res);
+            if (data) {
+                //merge results
+                Object.assign(_this.currencyRates, data);
+            }
+            console.log(_this.currencyRates);
+            return _this.currencyRates;
+        })
             .catch(this.appService.handleError)
             .retry(3);
     };
-    CurrencyExchangeService.prototype.extractCurrencyExchangeData222 = function (res) {
-        return res;
-    };
-    CurrencyExchangeService.prototype.extractCurrencyExchangeData = function (res) {
-        if (Object.keys(res.rates).length > 0) {
-            return res.rates;
-        }
-        else {
-            throw res;
-        }
-    };
+    // getCurrencyRates333(base = 'USD') : Observable<any> {
+    //   let methodTrace = `${this.constructor.name} > getCurrencyRates() > `; //for debugging
+    //   if (this.currencyRates) {
+    //     return Observable.of(this.currencyRates);
+    //   }
+    //   return this.http.get<Response>(`${this.currencyExchangeServiceUrl}?base=${base}`)
+    //     .map(this.extractCurrencyExchangeData)
+    //     .catch(this.appService.handleError)
+    //     .retry(3);
+    // }
+    // getCurrencyRates222(dates = [], base = 'USD') : Observable<any> {
+    //   let methodTrace = `${this.constructor.name} > getCurrencyRates222() > `; //for debugging
+    //   if (this.currencyRates) {
+    //     return Observable.of(this.currencyRates);
+    //   }
+    //   let params = new HttpParams().set('dates', `${dates}`);
+    //   return this.http.get(`${this.serverHost}/getByDates/${base}`, { params })
+    //     .map(this.extractCurrencyExchangeData222)
+    //     .catch(this.appService.handleError)
+    //     .retry(3);
+    // }
+    // private extractCurrencyExchangeData222(res) : any {
+    //   return res;
+    // }
+    // private extractCurrencyExchangeData(res: Response) : any {
+    //   if (Object.keys(res.rates).length > 0) {
+    //     return res.rates;
+    //   } else {
+    //     throw res;
+    //   }
+    // }
     CurrencyExchangeService.prototype.getCryptoRates = function (crypto) {
         var _this = this;
         if (crypto === void 0) { crypto = 'BTC'; }
@@ -3192,7 +3266,7 @@ var CurrencyExchangeService = /** @class */ (function () {
     };
     CurrencyExchangeService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.HttpClient, app_service_1.AppService])
+        __metadata("design:paramtypes", [http_1.HttpClient, app_service_1.AppService, util_service_1.UtilService])
     ], CurrencyExchangeService);
     return CurrencyExchangeService;
 }());

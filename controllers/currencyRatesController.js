@@ -6,7 +6,6 @@ const { getMessage } = require('../handlers/errorHandlers');
 const CurrencyRate = mongoose.model('CurrencyRate');
 const { ANONYMOUS_USER, FIXERIO_KEY, CURRENCYLAYER_KEY } = require('../constants/constants');
 const axios = require('axios');
-// const moment=require('moment');
 
 const errorTrace = 'currencyRatesController >';
 

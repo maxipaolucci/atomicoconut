@@ -52,7 +52,6 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     //get authUser from resolver
     const user$ : Observable<User> = this.route.data.map((data : { authUser: User }) =>  {
       this.user = data.authUser;
-      
       return data.authUser;
     });
 

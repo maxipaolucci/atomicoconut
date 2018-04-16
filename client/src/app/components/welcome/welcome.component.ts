@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { of } from 'rxjs/observable/of';
 import { INVESTMENTS_TYPES } from '../../constants';
 import { UtilService } from '../../util.service';
+import { PropertyInvestment } from '../../modules/investments/models/PropertyInvestment';
 
 @Component({
   selector: 'welcome',
@@ -41,7 +42,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     ]);
     
     const user$ = this.setUser();
-    const newSubscription = user$.subscribe((investments : Investment[]) => {
+    
+    let newSubscription = user$.subscribe((investments : Investment[]) => {
       //iterate investments and sum returns
       for (let investment of investments) {
         if (investment instanceof CurrencyInvestment) {
@@ -53,14 +55,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
               let myReturnAmount = (currencyInvestment.amount * (currencyRates[currencyInvestment.unit] || 1)) * myPercentage / 100;
               this.wealthAmount += myReturnAmount;
               this.calculateProgressBarWealthValue();
-            },
-            (error : any) => {
-              this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
-              this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
-            });
-            
-            this.currencyExchangeService.getCurrencyRates222([this.utilService.formatDate(currencyInvestment.buyingDate, 'YYYY-MM-DD'), this.utilService.formatDate(currencyInvestment.buyingDate, 'YYYY-MM-DD')]).take(1).subscribe((currencyRates) => {
-              console.log(currencyRates);
             },
             (error : any) => {
               this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
@@ -85,6 +79,50 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       this.user = null;
     });
 
+    let investmentsDates = [];
+    let investments : Investment[] = [];
+    newSubscription = user$.switchMap((userInvestments : Investment[]) => {
+      investments = userInvestments;
+      
+      userInvestments.map((userInvestment : Investment) => { 
+        if (userInvestment instanceof CurrencyInvestment) {
+          investmentsDates.push(this.utilService.formatDate((<CurrencyInvestment>userInvestment).buyingDate, 'YYYY-MM-DD'));
+        } else if (userInvestment instanceof PropertyInvestment) {
+          investmentsDates.push(this.utilService.formatDate((<PropertyInvestment>userInvestment).buyingDate, 'YYYY-MM-DD'));
+        }
+      });
+
+      return this.currencyExchangeService.getCurrencyRates(investmentsDates);
+    }).subscribe((currencyRates : any) => {
+      //iterate investments and sum returns using dated rates.
+      for (let investment of investments) {
+        if (investment instanceof CurrencyInvestment) {
+          let myPercentage = (investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
+          
+          let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
+          if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
+            const investmentDate = this.utilService.formatDate(new Date(), 'YYYY-MM-DD'); //today date
+            let myReturnAmount = (currencyInvestment.amount * (currencyRates[investmentDate][`USD${currencyInvestment.unit}`] || 1)) * myPercentage / 100;
+            this.wealthAmount += myReturnAmount;
+            this.calculateProgressBarWealthValue();
+          } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
+            this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
+              let myReturnAmount = (currencyInvestment.amount * rates.price) * myPercentage / 100;
+              this.wealthAmount += myReturnAmount;
+              this.calculateProgressBarWealthValue();
+            },
+            (error : any) => {
+              this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
+              this.appService.showResults(`There was an error trying to get ${currencyInvestment.unit} rates data, please try again in a few minutes.`, 'error');
+            });
+          }
+        }
+      }
+    }, (error : any) => {
+      this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
+      this.user = null;
+    });
+
     this.subscription.add(newSubscription);
   }
 
@@ -96,7 +134,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Sets the user property with the current user or null of nobody logged in yet
+   * Sets the user property with the current user or null if nobody logged in yet
    */
   setUser() {
     let methodTrace = `${this.constructor.name} > setUser() > `; //for debugging
