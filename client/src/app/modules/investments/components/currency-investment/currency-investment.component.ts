@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Team } from '../../../teams/models/team';
 import { INVESTMENTS_TYPES } from '../../../../constants';
+import { UtilService } from '../../../../util.service';
 
 @Component({
   selector: 'currency-investment',
@@ -45,18 +46,19 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
 
 
   constructor(private currencyExchangeService: CurrencyExchangeService, private appService : AppService, private usersService : UsersService, private investmentsService : InvestmentsService, 
-    public dialog: MatDialog, private router : Router) {}
+    public dialog: MatDialog, private router : Router, private utilService : UtilService) {}
 
   ngOnInit() : void {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
     
     //get the team of the investmetn if exists
     let newSubscription = null;
-    const currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
+    const currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
     const currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, 
       (user, currencyRates) => { 
         this.user = user;
-        
+        console.log(currencyRates);
+
         return { user, currencyRates} 
       }
     ); //(currency rates and user) source
@@ -93,7 +95,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       //currency exchange
       newSubscription = currencyRatesAndUser$.switchMap(
         (data) => {
-          this.currentPrice = data.currencyRates[this.investment.unit] || 1;
+          this.currentPrice = data.currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1;
           this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
           this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
           this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;

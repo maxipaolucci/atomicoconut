@@ -131,9 +131,9 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
           }
 
           if (item instanceof CurrencyInvestment) {
-            investmentsDates.push(this.utilService.formatDate((<CurrencyInvestment>item).buyingDate));  
+            investmentsDates.push(this.utilService.formatDate((<CurrencyInvestment>item).buyingDate, 'YYYY-MM-DD'));  
           } else if (item instanceof PropertyInvestment) {
-            investmentsDates.push(this.utilService.formatDate((<PropertyInvestment>item).buyingDate));  
+            investmentsDates.push(this.utilService.formatDate((<PropertyInvestment>item).buyingDate, 'YYYY-MM-DD'));  
           }
         }
 
@@ -203,7 +203,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
           let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
           if (currencyInvestment.type === INVESTMENTS_TYPES.CURRENCY) {
             this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
-              let investmentReturn = currencyInvestment.amount * (currencyRates[currencyInvestment.unit] || 1);
+              let investmentReturn = currencyInvestment.amount * (currencyRates[this.utilService.formatToday()][`USD${currencyInvestment.unit}`] || 1);
               let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
               this.totalReturn -= investmentReturn;
               this.totalInvestment -= investmentAmount;

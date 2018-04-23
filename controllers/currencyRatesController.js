@@ -162,11 +162,15 @@ const getRatesFromWebservice = async (date, source = 'USD', userEmail) => {
         } else if (data.success === false && data.error && data.error.code === 302) {
             //if the service failed because the format of the date, we are probably asking today date or a future date because of the client timezone => return latest rates available in the system
             console.log(`${methodTrace} ${getMessage('message', 1049, userEmail, true, 'CurrencyLayer Service API')}`); 
+            
             response = await axios.get(`http://apilayer.net/api/live?access_key=${CURRENCYLAYER_KEY}&source=${source}&format=1`);
-
-            if (data.success === true && data.quotes) {
-                console.log(`${methodTrace} ${getMessage('message', 1048, userEmail, true, 'CurrencyLayer Service API')}`);
-                return data.quotes;
+            if (response && response.status === 200 && response.data) {
+                const data = response.data;
+                
+                if (data.success === true && data.quotes) {
+                    console.log(`${methodTrace} ${getMessage('message', 1048, userEmail, true, 'CurrencyLayer Service API')}`);
+                    return data.quotes;
+                }
             }
         }
     } 

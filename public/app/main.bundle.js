@@ -1671,14 +1671,16 @@ var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/mo
 var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
 var BehaviorSubject_1 = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
 var constants_1 = __webpack_require__("./src/app/constants.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
 var CurrencyInvestmentComponent = /** @class */ (function () {
-    function CurrencyInvestmentComponent(currencyExchangeService, appService, usersService, investmentsService, dialog, router) {
+    function CurrencyInvestmentComponent(currencyExchangeService, appService, usersService, investmentsService, dialog, router, utilService) {
         this.currencyExchangeService = currencyExchangeService;
         this.appService = appService;
         this.usersService = usersService;
         this.investmentsService = investmentsService;
         this.dialog = dialog;
         this.router = router;
+        this.utilService = utilService;
         this.totalReturns = new core_1.EventEmitter();
         this.deletedId = new core_1.EventEmitter();
         this.teams$ = new BehaviorSubject_1.BehaviorSubject([]);
@@ -1708,9 +1710,10 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
         //get the team of the investmetn if exists
         var newSubscription = null;
-        var currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
+        var currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
         var currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, function (user, currencyRates) {
             _this.user = user;
+            console.log(currencyRates);
             return { user: user, currencyRates: currencyRates };
         }); //(currency rates and user) source
         if (this.investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
@@ -1739,7 +1742,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         else {
             //currency exchange
             newSubscription = currencyRatesAndUser$.switchMap(function (data) {
-                _this.currentPrice = data.currencyRates[_this.investment.unit] || 1;
+                _this.currentPrice = data.currencyRates[_this.utilService.formatToday()]["USD" + _this.investment.unit] || 1;
                 _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
                 _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
                 _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
@@ -1877,7 +1880,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
             styles: [__webpack_require__("./src/app/modules/investments/components/currency-investment/currency-investment.component.scss")]
         }),
         __metadata("design:paramtypes", [currency_exchange_service_1.CurrencyExchangeService, app_service_1.AppService, users_service_1.UsersService, investments_service_1.InvestmentsService,
-            material_1.MatDialog, router_1.Router])
+            material_1.MatDialog, router_1.Router, util_service_1.UtilService])
     ], CurrencyInvestmentComponent);
     return CurrencyInvestmentComponent;
 }());
@@ -2091,10 +2094,10 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                     investmentsRow = [item];
                 }
                 if (item instanceof currencyInvestment_1.CurrencyInvestment) {
-                    investmentsDates.push(_this.utilService.formatDate(item.buyingDate));
+                    investmentsDates.push(_this.utilService.formatDate(item.buyingDate, 'YYYY-MM-DD'));
                 }
                 else if (item instanceof PropertyInvestment_1.PropertyInvestment) {
-                    investmentsDates.push(_this.utilService.formatDate(item.buyingDate));
+                    investmentsDates.push(_this.utilService.formatDate(item.buyingDate, 'YYYY-MM-DD'));
                 }
             }
             _this.currencyExchangeService.getCurrencyRates(investmentsDates); //lets retrieve investment dates for future usage in each investment
@@ -2155,7 +2158,7 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                     var currencyInvestment_2 = investment;
                     if (currencyInvestment_2.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
                         this_1.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
-                            var investmentReturn = currencyInvestment_2.amount * (currencyRates[currencyInvestment_2.unit] || 1);
+                            var investmentReturn = currencyInvestment_2.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment_2.unit] || 1);
                             var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_2.investmentAmount, currencyInvestment_2.investmentAmountUnit);
                             _this.totalReturn -= investmentReturn;
                             _this.totalInvestment -= investmentAmount;
@@ -2944,9 +2947,10 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         }
         //get the team of the investmetn if exists
         var newSubscription = null;
-        var currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
+        var currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
         var currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, function (user, currencyRates) {
             _this.user = user;
+            console.log(currencyRates);
             return { user: user, currencyRates: currencyRates };
         }); //(currency rates and user) source
         newSubscription = currencyRatesAndUser$.switchMap(function (data) {
@@ -3134,7 +3138,7 @@ var CurrencyExchangeService = /** @class */ (function () {
         if (dates === void 0) { dates = []; }
         if (base === void 0) { base = 'USD'; }
         var methodTrace = this.constructor.name + " > getCurrencyRates() > "; //for debugging
-        dates.push(this.utilService.formatDate(new Date(), 'YYYY-MM-DD')); //adds today to the array
+        dates.push(this.utilService.formatToday('YYYY-MM-DD')); //adds today to the array
         //check if all the required dates are already cached in this service
         var found = true;
         for (var _i = 0, dates_1 = dates; _i < dates_1.length; _i++) {
@@ -3187,7 +3191,7 @@ var CurrencyExchangeService = /** @class */ (function () {
     };
     CurrencyExchangeService.prototype.getUsdValueOf = function (amount, unit) {
         if (unit !== 'USD') {
-            var today = this.utilService.formatDate(new Date(), 'YYYY-MM-DD');
+            var today = this.utilService.formatToday();
             if (this.currencyRates[today]) {
                 return amount / this.currencyRates[today]["USD" + unit];
             }
@@ -7968,8 +7972,19 @@ var UtilService = /** @class */ (function () {
      * @return {string} . The date provided in the desired format.
      */
     UtilService.prototype.formatDate = function (date, formatStr) {
-        if (formatStr === void 0) { formatStr = 'DD/MM/YYYY'; }
+        if (formatStr === void 0) { formatStr = 'YYYY-MM-DD'; }
         return moment(date).format(formatStr);
+    };
+    /**
+     * Format today date in the provided format
+     *
+     * @param {string} formatStr . The desired format string
+     *
+     * @return {string} . Today date in the desired format
+     */
+    UtilService.prototype.formatToday = function (formatStr) {
+        if (formatStr === void 0) { formatStr = 'YYYY-MM-DD'; }
+        return this.formatDate(new Date(), formatStr);
     };
     /**
      * Show logs in the console if enabled in the current environment

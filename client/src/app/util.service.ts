@@ -63,8 +63,19 @@ export class UtilService {
    * 
    * @return {string} . The date provided in the desired format.
    */
-  formatDate(date : Date, formatStr : string = 'DD/MM/YYYY') {
+  formatDate(date : Date, formatStr : string = 'YYYY-MM-DD') {
     return moment(date).format(formatStr); 
+  }
+
+  /**
+   * Format today date in the provided format
+   * 
+   * @param {string} formatStr . The desired format string
+   * 
+   * @return {string} . Today date in the desired format 
+   */
+  formatToday(formatStr : string = 'YYYY-MM-DD') {
+    return this.formatDate(new Date(), formatStr);
   }
 
   /**

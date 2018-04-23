@@ -26,7 +26,7 @@ export class CurrencyExchangeService {
   getCurrencyRates(dates : string[] = [], base : string = 'USD') : Observable<any> {
     let methodTrace = `${this.constructor.name} > getCurrencyRates() > `; //for debugging
     
-    dates.push(this.utilService.formatDate(new Date(), 'YYYY-MM-DD')); //adds today to the array
+    dates.push(this.utilService.formatToday('YYYY-MM-DD')); //adds today to the array
     
     //check if all the required dates are already cached in this service
     let found = true;
@@ -88,7 +88,7 @@ export class CurrencyExchangeService {
 
   getUsdValueOf(amount : number, unit : string) {
     if (unit !== 'USD') {
-      const today = this.utilService.formatDate(new Date(), 'YYYY-MM-DD');
+      const today = this.utilService.formatToday();
   
       if (this.currencyRates[today]) {
         return amount / this.currencyRates[today][`USD${unit}`];

@@ -56,10 +56,11 @@ export class PropertyInvestmentComponent implements OnInit {
 
     //get the team of the investmetn if exists
     let newSubscription = null;
-    const currencyRates$ = this.currencyExchangeService.getCurrencyRates(); //get currency rates observable source
+    const currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
     const currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, 
       (user, currencyRates) => { 
         this.user = user;
+        console.log(currencyRates);
         
         return { user, currencyRates} 
       }
