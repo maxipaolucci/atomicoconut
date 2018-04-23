@@ -83,7 +83,8 @@ const messageCodes = {
   1045 : 'Updating team investments, removing the member from each investment distributtion array...',
   1046 : 'Successfully removed member from each investment distribution array',
   1047 : 'Getting data from {{param}} with {{param}} = {{param}}...',
-  1048 : 'Data from {{param}} successfully retrieved.'
+  1048 : 'Data from {{param}} successfully retrieved.',
+  1049 : 'Getting latest data from {{param}}'
 };
 
 /**

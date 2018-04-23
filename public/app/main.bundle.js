@@ -353,14 +353,12 @@ var AppComponent = /** @class */ (function () {
         var _this = this;
         if (crypto === void 0) { crypto = 'BTC'; }
         var methodTrace = this.constructor.name + " > getCryptoRates() > "; //for debugging
-        if (!this.currencyExchangeService.cryptoRates[crypto]) {
-            this.currencyExchangeService.getCryptoRates(crypto).subscribe(function (data) {
-                _this.appService.consoleLog('info', methodTrace + " " + crypto + " exchange rate successfully loaded!");
-            }, function (error) {
-                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + crypto + " rates data > " + error);
-                _this.appService.showResults("There was an error trying to get " + crypto + " rates data, please try again in a few minutes.", 'warn');
-            });
-        }
+        this.currencyExchangeService.getCryptoRates(crypto).subscribe(function (data) {
+            _this.appService.consoleLog('info', methodTrace + " " + crypto + " exchange rate successfully loaded!");
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + crypto + " rates data > " + error);
+            _this.appService.showResults("There was an error trying to get " + crypto + " rates data, please try again in a few minutes.", 'warn');
+        });
     };
     AppComponent.prototype.setUser = function () {
         var _this = this;
@@ -820,7 +818,6 @@ var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription
 var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
 var constants_1 = __webpack_require__("./src/app/constants.ts");
 var util_service_1 = __webpack_require__("./src/app/util.service.ts");
-var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
 var WelcomeComponent = /** @class */ (function () {
     function WelcomeComponent(mainNavigatorService, usersService, appService, investmentsService, currencyExchangeService, utilService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -844,21 +841,21 @@ var WelcomeComponent = /** @class */ (function () {
             { displayName: 'Properties', url: '/properties', selected: false },
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
-        var user$ = this.setUser();
-        var newSubscription = user$.subscribe(function (investments) {
+        var userInvestments$ = this.setUserAndGetInvestments();
+        var todayCurrencyRates$ = this.currencyExchangeService.getCurrencyRates();
+        var newSubscription = userInvestments$.combineLatest(todayCurrencyRates$, function (userInvestments, todayCurrencyRates) {
+            return { userInvestments: userInvestments, todayCurrencyRates: todayCurrencyRates };
+        }).subscribe(function (data) {
+            console.log(data);
             var _loop_1 = function (investment) {
                 if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
                     var myPercentage_1 = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
                     var currencyInvestment_2 = investment;
                     if (investment.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
-                        _this.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
-                            var myReturnAmount = (currencyInvestment_2.amount * (currencyRates[currencyInvestment_2.unit] || 1)) * myPercentage_1 / 100;
-                            _this.wealthAmount += myReturnAmount;
-                            _this.calculateProgressBarWealthValue();
-                        }, function (error) {
-                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
-                            _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
-                        });
+                        var investmentDate = _this.utilService.formatDate(new Date(), 'YYYY-MM-DD'); //today date
+                        var myReturnAmount = (currencyInvestment_2.amount * (data.todayCurrencyRates[investmentDate]["USD" + currencyInvestment_2.unit] || 1)) * myPercentage_1 / 100;
+                        _this.wealthAmount += myReturnAmount;
+                        _this.calculateProgressBarWealthValue();
                     }
                     else if (investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
                         _this.currencyExchangeService.getCryptoRates(currencyInvestment_2.unit).take(1).subscribe(function (rates) {
@@ -872,58 +869,13 @@ var WelcomeComponent = /** @class */ (function () {
                     }
                 }
             };
-            //iterate investments and sum returns
-            for (var _i = 0, investments_1 = investments; _i < investments_1.length; _i++) {
-                var investment = investments_1[_i];
+            //iterate investments and sum returns using dated rates.
+            for (var _i = 0, _a = data.userInvestments; _i < _a.length; _i++) {
+                var investment = _a[_i];
                 _loop_1(investment);
             }
         }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
-            _this.user = null;
-        });
-        var investmentsDates = [];
-        var investments = [];
-        newSubscription = user$.switchMap(function (userInvestments) {
-            investments = userInvestments;
-            userInvestments.map(function (userInvestment) {
-                if (userInvestment instanceof currencyInvestment_1.CurrencyInvestment) {
-                    investmentsDates.push(_this.utilService.formatDate(userInvestment.buyingDate, 'YYYY-MM-DD'));
-                }
-                else if (userInvestment instanceof PropertyInvestment_1.PropertyInvestment) {
-                    investmentsDates.push(_this.utilService.formatDate(userInvestment.buyingDate, 'YYYY-MM-DD'));
-                }
-            });
-            return _this.currencyExchangeService.getCurrencyRates(investmentsDates);
-        }).subscribe(function (currencyRates) {
-            var _loop_2 = function (investment) {
-                if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
-                    var myPercentage_2 = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
-                    var currencyInvestment_3 = investment;
-                    if (investment.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
-                        var investmentDate = _this.utilService.formatDate(currencyInvestment_3.buyingDate, 'YYYY-MM-DD');
-                        var myReturnAmount = (currencyInvestment_3.amount * (currencyRates[investmentDate]["USD" + currencyInvestment_3.unit] || 1)) * myPercentage_2 / 100;
-                        _this.wealthAmount += myReturnAmount;
-                        _this.calculateProgressBarWealthValue();
-                    }
-                    else if (investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
-                        _this.currencyExchangeService.getCryptoRates(currencyInvestment_3.unit).take(1).subscribe(function (rates) {
-                            var myReturnAmount = (currencyInvestment_3.amount * rates.price) * myPercentage_2 / 100;
-                            _this.wealthAmount += myReturnAmount;
-                            _this.calculateProgressBarWealthValue();
-                        }, function (error) {
-                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_3.unit + " rates data > ", error);
-                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_3.unit + " rates data, please try again in a few minutes.", 'error');
-                        });
-                    }
-                }
-            };
-            //iterate investments and sum returns using dated rates.
-            for (var _i = 0, investments_2 = investments; _i < investments_2.length; _i++) {
-                var investment = investments_2[_i];
-                _loop_2(investment);
-            }
-        }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error when trying to combine today currency rates with user investments observables.", error);
             _this.user = null;
         });
         this.subscription.add(newSubscription);
@@ -934,9 +886,11 @@ var WelcomeComponent = /** @class */ (function () {
         this.subscription.unsubscribe();
     };
     /**
-     * Sets the user property with the current user or null if nobody logged in yet
+     * Sets the user property with the current user or null if nobody logged in yet.
+     *
+     * @return {Investment[]} . An array of the logged in user investments or [] if nobody is logged in yet
      */
-    WelcomeComponent.prototype.setUser = function () {
+    WelcomeComponent.prototype.setUserAndGetInvestments = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > setUser() > "; //for debugging
         var gotAuthenticatedUserFromServer = false;
@@ -3169,7 +3123,7 @@ var CurrencyExchangeService = /** @class */ (function () {
         if (dates === void 0) { dates = []; }
         if (base === void 0) { base = 'USD'; }
         var methodTrace = this.constructor.name + " > getCurrencyRates() > "; //for debugging
-        dates.concat(this.utilService.formatDate(new Date(), 'YYYY-MM-DD')); //adds today to the array
+        dates.push(this.utilService.formatDate(new Date(), 'YYYY-MM-DD')); //adds today to the array
         console.log(methodTrace, this.currencyRates, dates);
         //check if all the required dates are already cached in this service
         var found = true;
@@ -3255,8 +3209,9 @@ var CurrencyExchangeService = /** @class */ (function () {
     };
     CurrencyExchangeService.prototype.getUsdValueOf = function (amount, unit) {
         if (unit !== 'USD') {
-            if (this.currencyRates) {
-                return amount / this.currencyRates[unit];
+            var today = this.utilService.formatDate(new Date(), 'YYYY-MM-DD');
+            if (this.currencyRates[today]) {
+                return amount / this.currencyRates[today]["USD" + unit];
             }
             else {
                 this.appService.showResults('Currency rates data was not loaded yet. Figures are shown as USD', 'error');

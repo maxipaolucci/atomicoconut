@@ -46,18 +46,16 @@ export class AppComponent implements OnInit {
 
   getCryptoRates(crypto : string = 'BTC') {
     let methodTrace = `${this.constructor.name} > getCryptoRates() > `; //for debugging
-
-    if (!this.currencyExchangeService.cryptoRates[crypto]) {
-      this.currencyExchangeService.getCryptoRates(crypto).subscribe(
-        (data : any) => {
-          this.appService.consoleLog('info', `${methodTrace} ${crypto} exchange rate successfully loaded!`);
-        },
-        (error : any) => {
-          this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${crypto} rates data > ${error}`);
-          this.appService.showResults(`There was an error trying to get ${crypto} rates data, please try again in a few minutes.`, 'warn');
-        }
-      );
-    }
+    
+    this.currencyExchangeService.getCryptoRates(crypto).subscribe(
+      (data : any) => {
+        this.appService.consoleLog('info', `${methodTrace} ${crypto} exchange rate successfully loaded!`);
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${crypto} rates data > ${error}`);
+        this.appService.showResults(`There was an error trying to get ${crypto} rates data, please try again in a few minutes.`, 'warn');
+      }
+    );
   }
 
   setUser() {

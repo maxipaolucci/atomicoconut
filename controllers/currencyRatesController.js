@@ -119,6 +119,7 @@ const getByDatesObjects = async (dates, base = 'USD', userEmail, options = null)
     
     //3- if dates retrieved from DB does not match the dates requested by user then we need to retrieve data from external web aPI
     if (dates.length > results.length) {
+        console.log(123);
         //4- iterate results, if date is not available then looks for it in fixer.io web API
         for (let date of dates) {
             if (!indexedResults[date]) {
@@ -153,14 +154,26 @@ const getRatesFromWebservice = async (date, source = 'USD', userEmail) => {
     source = 'USD'; //the free plan we have only supports USD
     
     console.log(`${methodTrace} ${getMessage('message', 1047, userEmail, true, 'CurrencyLayer Service API', 'date', date)}`); 
-    const response = await axios.get(`http://apilayer.net/api/historical?date=${date}&access_key=${CURRENCYLAYER_KEY}&source=${source}&format=1`);
+    console.log(`http://apilayer.net/api/historical?date=${date}&access_key=${CURRENCYLAYER_KEY}&source=${source}&format=1`);
+    let response = await axios.get(`http://apilayer.net/api/historical?date=${date}&access_key=${CURRENCYLAYER_KEY}&source=${source}&format=1`);
     if (response && response.status === 200 && response.data) {
         const data = response.data;
         if (data.success === true && data.quotes) {
             console.log(`${methodTrace} ${getMessage('message', 1048, userEmail, true, 'CurrencyLayer Service API')}`);
             return data.quotes;
+        } else if (data.success === false && data.error && data.error.code === 302) {
+            //if the service failed because the format of the date, we are probably asking today date or a future date because of the client timezone => return latest rates available in the system
+            console.log(`${methodTrace} ${getMessage('message', 1049, userEmail, true, 'CurrencyLayer Service API')}`); 
+            response = await axios.get(`http://apilayer.net/api/live?access_key=${CURRENCYLAYER_KEY}&source=${source}&format=1`);
+
+            if (data.success === true && data.quotes) {
+                console.log(`${methodTrace} ${getMessage('message', 1048, userEmail, true, 'CurrencyLayer Service API')}`);
+                return data.quotes;
+            }
         }
-    }
+    } 
+    
+
 
     console.log(`${methodTrace} ${getMessage('error', 477, userEmail, true, 'CurrencyLayer Service API', 'date', date)}`);
     return null;
