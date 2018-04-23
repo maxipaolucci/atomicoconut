@@ -16,6 +16,8 @@ import { Observable } from 'rxjs/Observable';
 import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES } from '../../../../constants';
+import { UtilService } from '../../../../util.service';
+import { PropertyInvestment } from '../../models/PropertyInvestment';
 
 @Component({
   selector: 'investments-dashboard',
@@ -38,7 +40,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   INVESTMENTS_TYPES : any = INVESTMENTS_TYPES; //make it available in the view
 
   constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private usersService : UsersService, public dialog: MatDialog, 
-      private appService : AppService, private teamsService : TeamsService, private investmentsService : InvestmentsService, private currencyExchangeService : CurrencyExchangeService) { }
+      private appService : AppService, private teamsService : TeamsService, private investmentsService : InvestmentsService, private currencyExchangeService : CurrencyExchangeService,
+      private utilService : UtilService) { }
 
   ngOnInit() {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
@@ -115,10 +118,10 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
       return this.investmentsService.getInvestments(user.email);
     }).subscribe(
       (investments : Investment[]) => {
-        this.investments = investments;
-        
         //organize investments in rows of n-items to show in the view
         let investmentsRow : any[] = [];
+        let investmentsDates : string[] = [];
+
         for (let item of investments) {
           if (investmentsRow.length < 2) {
             investmentsRow.push(item);
@@ -126,12 +129,21 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
             this.investmentsUI.push(investmentsRow);
             investmentsRow = [item];
           }
+
+          if (item instanceof CurrencyInvestment) {
+            investmentsDates.push(this.utilService.formatDate((<CurrencyInvestment>item).buyingDate));  
+          } else if (item instanceof PropertyInvestment) {
+            investmentsDates.push(this.utilService.formatDate((<PropertyInvestment>item).buyingDate));  
+          }
         }
+
+        this.currencyExchangeService.getCurrencyRates(investmentsDates); //lets retrieve investment dates for future usage in each investment
 
         if (investmentsRow.length) {
           this.investmentsUI.push(investmentsRow);
         }
 
+        this.investments = investments;
         this.getInvestmentsServiceRunning = false;
       },
       (error : any) => {

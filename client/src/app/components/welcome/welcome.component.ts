@@ -47,13 +47,12 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     let newSubscription = userInvestments$.combineLatest(todayCurrencyRates$, (userInvestments : Investment[], todayCurrencyRates : any) => {
       return { userInvestments, todayCurrencyRates};
     }).subscribe((data : any) => {
-      console.log(data);
       //iterate investments and sum returns using dated rates.
       for (let investment of data.userInvestments) {
         if (investment instanceof CurrencyInvestment) {
           let myPercentage = (investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
-          
           let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
+
           if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
             const investmentDate = this.utilService.formatDate(new Date(), 'YYYY-MM-DD'); //today date
             let myReturnAmount = (currencyInvestment.amount * (data.todayCurrencyRates[investmentDate][`USD${currencyInvestment.unit}`] || 1)) * myPercentage / 100;

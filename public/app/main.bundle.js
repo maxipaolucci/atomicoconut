@@ -339,7 +339,6 @@ var AppComponent = /** @class */ (function () {
         //Get currency exchange rates
         if (!this.currencyExchangeService.currencyRates) {
             this.currencyExchangeService.getCurrencyRates().subscribe(function (data) {
-                _this.currencyExchangeService.currencyRates = data;
                 _this.appService.consoleLog('info', methodTrace + " Currency exchange rates successfully loaded!");
             }, function (error) {
                 _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > " + error);
@@ -846,7 +845,6 @@ var WelcomeComponent = /** @class */ (function () {
         var newSubscription = userInvestments$.combineLatest(todayCurrencyRates$, function (userInvestments, todayCurrencyRates) {
             return { userInvestments: userInvestments, todayCurrencyRates: todayCurrencyRates };
         }).subscribe(function (data) {
-            console.log(data);
             var _loop_1 = function (investment) {
                 if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
                     var myPercentage_1 = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
@@ -1992,9 +1990,12 @@ var investments_service_1 = __webpack_require__("./src/app/modules/investments/i
 var teams_service_1 = __webpack_require__("./src/app/modules/teams/teams.service.ts");
 var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
 var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
 var constants_1 = __webpack_require__("./src/app/constants.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
 var InvestmentsDashboardComponent = /** @class */ (function () {
-    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog, appService, teamsService, investmentsService, currencyExchangeService) {
+    function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog, appService, teamsService, investmentsService, currencyExchangeService, utilService) {
         this.route = route;
         this.mainNavigatorService = mainNavigatorService;
         this.usersService = usersService;
@@ -2003,6 +2004,7 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         this.teamsService = teamsService;
         this.investmentsService = investmentsService;
         this.currencyExchangeService = currencyExchangeService;
+        this.utilService = utilService;
         this.investments = [];
         this.teams = [];
         this.investmentsUI = []; //this is a structure to use in the view an make the rendering easier organizing the info in rows
@@ -2076,9 +2078,9 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         var newSubscription = user$.switchMap(function (user) {
             return _this.investmentsService.getInvestments(user.email);
         }).subscribe(function (investments) {
-            _this.investments = investments;
             //organize investments in rows of n-items to show in the view
             var investmentsRow = [];
+            var investmentsDates = [];
             for (var _i = 0, investments_1 = investments; _i < investments_1.length; _i++) {
                 var item = investments_1[_i];
                 if (investmentsRow.length < 2) {
@@ -2088,10 +2090,18 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                     _this.investmentsUI.push(investmentsRow);
                     investmentsRow = [item];
                 }
+                if (item instanceof currencyInvestment_1.CurrencyInvestment) {
+                    investmentsDates.push(_this.utilService.formatDate(item.buyingDate));
+                }
+                else if (item instanceof PropertyInvestment_1.PropertyInvestment) {
+                    investmentsDates.push(_this.utilService.formatDate(item.buyingDate));
+                }
             }
+            _this.currencyExchangeService.getCurrencyRates(investmentsDates); //lets retrieve investment dates for future usage in each investment
             if (investmentsRow.length) {
                 _this.investmentsUI.push(investmentsRow);
             }
+            _this.investments = investments;
             _this.getInvestmentsServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
@@ -2142,11 +2152,11 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                             break;
                         }
                     }
-                    var currencyInvestment_1 = investment;
-                    if (currencyInvestment_1.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
+                    var currencyInvestment_2 = investment;
+                    if (currencyInvestment_2.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
                         this_1.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
-                            var investmentReturn = currencyInvestment_1.amount * (currencyRates[currencyInvestment_1.unit] || 1);
-                            var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_1.investmentAmount, currencyInvestment_1.investmentAmountUnit);
+                            var investmentReturn = currencyInvestment_2.amount * (currencyRates[currencyInvestment_2.unit] || 1);
+                            var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_2.investmentAmount, currencyInvestment_2.investmentAmountUnit);
                             _this.totalReturn -= investmentReturn;
                             _this.totalInvestment -= investmentAmount;
                             _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
@@ -2157,16 +2167,16 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                         });
                     }
                     else if (investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
-                        this_1.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).take(1).subscribe(function (rates) {
-                            var investmentReturn = currencyInvestment_1.amount * rates.price;
-                            var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_1.investmentAmount, currencyInvestment_1.investmentAmountUnit);
+                        this_1.currencyExchangeService.getCryptoRates(currencyInvestment_2.unit).take(1).subscribe(function (rates) {
+                            var investmentReturn = currencyInvestment_2.amount * rates.price;
+                            var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_2.investmentAmount, currencyInvestment_2.investmentAmountUnit);
                             _this.totalReturn -= investmentReturn;
                             _this.totalInvestment -= investmentAmount;
                             _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
                             _this.myTotalInvestment -= investmentAmount * myPortion_1 / 100;
                         }, function (error) {
-                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_1.unit + " rates data > ", error);
-                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_1.unit + " rates data, please try again in a few minutes.", 'error');
+                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_2.unit + " rates data > ", error);
+                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_2.unit + " rates data, please try again in a few minutes.", 'error');
                         });
                     }
                     return "break";
@@ -2216,7 +2226,8 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
             styles: [__webpack_require__("./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, users_service_1.UsersService, material_1.MatDialog,
-            app_service_1.AppService, teams_service_1.TeamsService, investments_service_1.InvestmentsService, currency_exchange_service_1.CurrencyExchangeService])
+            app_service_1.AppService, teams_service_1.TeamsService, investments_service_1.InvestmentsService, currency_exchange_service_1.CurrencyExchangeService,
+            util_service_1.UtilService])
     ], InvestmentsDashboardComponent);
     return InvestmentsDashboardComponent;
 }());
@@ -3124,7 +3135,6 @@ var CurrencyExchangeService = /** @class */ (function () {
         if (base === void 0) { base = 'USD'; }
         var methodTrace = this.constructor.name + " > getCurrencyRates() > "; //for debugging
         dates.push(this.utilService.formatDate(new Date(), 'YYYY-MM-DD')); //adds today to the array
-        console.log(methodTrace, this.currencyRates, dates);
         //check if all the required dates are already cached in this service
         var found = true;
         for (var _i = 0, dates_1 = dates; _i < dates_1.length; _i++) {
@@ -3148,43 +3158,11 @@ var CurrencyExchangeService = /** @class */ (function () {
                 //merge results
                 Object.assign(_this.currencyRates, data);
             }
-            console.log(_this.currencyRates);
             return _this.currencyRates;
         })
             .catch(this.appService.handleError)
             .retry(3);
     };
-    // getCurrencyRates333(base = 'USD') : Observable<any> {
-    //   let methodTrace = `${this.constructor.name} > getCurrencyRates() > `; //for debugging
-    //   if (this.currencyRates) {
-    //     return Observable.of(this.currencyRates);
-    //   }
-    //   return this.http.get<Response>(`${this.currencyExchangeServiceUrl}?base=${base}`)
-    //     .map(this.extractCurrencyExchangeData)
-    //     .catch(this.appService.handleError)
-    //     .retry(3);
-    // }
-    // getCurrencyRates222(dates = [], base = 'USD') : Observable<any> {
-    //   let methodTrace = `${this.constructor.name} > getCurrencyRates222() > `; //for debugging
-    //   if (this.currencyRates) {
-    //     return Observable.of(this.currencyRates);
-    //   }
-    //   let params = new HttpParams().set('dates', `${dates}`);
-    //   return this.http.get(`${this.serverHost}/getByDates/${base}`, { params })
-    //     .map(this.extractCurrencyExchangeData222)
-    //     .catch(this.appService.handleError)
-    //     .retry(3);
-    // }
-    // private extractCurrencyExchangeData222(res) : any {
-    //   return res;
-    // }
-    // private extractCurrencyExchangeData(res: Response) : any {
-    //   if (Object.keys(res.rates).length > 0) {
-    //     return res.rates;
-    //   } else {
-    //     throw res;
-    //   }
-    // }
     CurrencyExchangeService.prototype.getCryptoRates = function (crypto) {
         var _this = this;
         if (crypto === void 0) { crypto = 'BTC'; }

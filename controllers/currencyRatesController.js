@@ -66,11 +66,11 @@ exports.getByDates = async (req, res) => {
     //1 - get rates for the provided dates
     const results = await getByDatesObjects(req.query.dates.split(','), req.params.base, userEmail);
     
-    if (results) {
+    if (results && Object.keys(results).length) {
         res.json({
             status : 'success', 
             codeno : 200,
-            msg : getMessage('message', 1036, null, false, 1, 'CurrencyRate'),
+            msg : getMessage('message', 1036, null, false, Object.keys(results).length, 'CurrencyRate(s)'),
             data : results
         });
 
@@ -92,9 +92,9 @@ exports.getByDates = async (req, res) => {
  * 
  * @param {array} dates . The dates we are looking for rates
  * @param {string} base . The base currency to get results from Fixer.IO API 
- * @param {*} userEmail . The current user email if logged in
+ * @param {string} userEmail . The current user email if logged in
  * @param {*} options . Extra options for parsing results.
- * @returns {array} . An array with the CurrencyRates for the provided dates
+ * @returns {object} . An object with the CurrencyRates for the provided dates as key
  */
 const getByDatesObjects = async (dates, base = 'USD', userEmail, options = null) => {
     const methodTrace = `${errorTrace} getByDatesObjects() >`;
@@ -119,7 +119,6 @@ const getByDatesObjects = async (dates, base = 'USD', userEmail, options = null)
     
     //3- if dates retrieved from DB does not match the dates requested by user then we need to retrieve data from external web aPI
     if (dates.length > results.length) {
-        console.log(123);
         //4- iterate results, if date is not available then looks for it in fixer.io web API
         for (let date of dates) {
             if (!indexedResults[date]) {
@@ -154,7 +153,6 @@ const getRatesFromWebservice = async (date, source = 'USD', userEmail) => {
     source = 'USD'; //the free plan we have only supports USD
     
     console.log(`${methodTrace} ${getMessage('message', 1047, userEmail, true, 'CurrencyLayer Service API', 'date', date)}`); 
-    console.log(`http://apilayer.net/api/historical?date=${date}&access_key=${CURRENCYLAYER_KEY}&source=${source}&format=1`);
     let response = await axios.get(`http://apilayer.net/api/historical?date=${date}&access_key=${CURRENCYLAYER_KEY}&source=${source}&format=1`);
     if (response && response.status === 200 && response.data) {
         const data = response.data;
@@ -172,8 +170,6 @@ const getRatesFromWebservice = async (date, source = 'USD', userEmail) => {
             }
         }
     } 
-    
-
 
     console.log(`${methodTrace} ${getMessage('error', 477, userEmail, true, 'CurrencyLayer Service API', 'date', date)}`);
     return null;

@@ -27,7 +27,6 @@ export class CurrencyExchangeService {
     let methodTrace = `${this.constructor.name} > getCurrencyRates() > `; //for debugging
     
     dates.push(this.utilService.formatDate(new Date(), 'YYYY-MM-DD')); //adds today to the array
-    console.log(methodTrace, this.currencyRates, dates);    
     
     //check if all the required dates are already cached in this service
     let found = true;
@@ -57,54 +56,12 @@ export class CurrencyExchangeService {
           Object.assign(this.currencyRates, data);
         }
 
-        console.log(this.currencyRates);
         return this.currencyRates;
       })
       .catch(this.appService.handleError)
       .retry(3);
   }
 
-  // getCurrencyRates333(base = 'USD') : Observable<any> {
-  //   let methodTrace = `${this.constructor.name} > getCurrencyRates() > `; //for debugging
-    
-  //   if (this.currencyRates) {
-  //     return Observable.of(this.currencyRates);
-  //   }
-
-  //   return this.http.get<Response>(`${this.currencyExchangeServiceUrl}?base=${base}`)
-  //     .map(this.extractCurrencyExchangeData)
-  //     .catch(this.appService.handleError)
-  //     .retry(3);
-  // }
-
-  // getCurrencyRates222(dates = [], base = 'USD') : Observable<any> {
-  //   let methodTrace = `${this.constructor.name} > getCurrencyRates222() > `; //for debugging
-    
-  //   if (this.currencyRates) {
-  //     return Observable.of(this.currencyRates);
-  //   }
-    
-
-  //   let params = new HttpParams().set('dates', `${dates}`);
-
-  //   return this.http.get(`${this.serverHost}/getByDates/${base}`, { params })
-  //     .map(this.extractCurrencyExchangeData222)
-  //     .catch(this.appService.handleError)
-  //     .retry(3);
-  // }
-
-  
-  // private extractCurrencyExchangeData222(res) : any {
-  //   return res;
-  // }
-
-  // private extractCurrencyExchangeData(res: Response) : any {
-  //   if (Object.keys(res.rates).length > 0) {
-  //     return res.rates;
-  //   } else {
-  //     throw res;
-  //   }
-  // }
 
   getCryptoRates(crypto : string = 'BTC') : Observable<any> {
     let methodTrace = `${this.constructor.name} > getCryptoRates() > `; //for debugging
