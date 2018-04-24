@@ -34,9 +34,9 @@
   </mat-toolbar>
   <div class="toolbar__primary__spacer"><!-- This is a spacer with main toolbar height to avoid any content going behind the toolbar --></div>
 
-  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="toolbar__secondary" *ngIf="user && user.currency !== 'USD' && currencyExchangeService.currencyRates">
-    <span>Preferred currency is <a class="color__almost-white" routerLink="/users/account" matTooltip="Change..."><strong>{{user.currency}}</strong></a></span>   
-    <span>1 USD = {{currencyExchangeService.currencyRates[user.currency]}} {{user.currency}}</span>
+  <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="toolbar__secondary" *ngIf="todayUserPrefRate !== null">
+    <span>Preferred currency is <a class="color__almost-white" routerLink="/users/account" matTooltip="Change..."><strong>{{user.currency}}</strong></a></span>
+    <span>1 USD = {{todayUserPrefRate | number : '1.0-3' }} {{user.currency}}</span>
   </mat-toolbar>
 
   <!-- Main navigator (chips) -->

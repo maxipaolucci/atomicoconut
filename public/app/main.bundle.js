@@ -289,7 +289,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"inner mat-typography\">  \r\n  <mat-toolbar fxLayout=\"row\" fxLayoutAlign=\"space-between center\" class=\"toolbar__primary mat-elevation-z1\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    \r\n    <span *ngIf=\"!user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"user.avatar\"/>\r\n      <mat-icon *ngIf=\"!user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n  </mat-toolbar>\r\n  <div class=\"toolbar__primary__spacer\"><!-- This is a spacer with main toolbar height to avoid any content going behind the toolbar --></div>\r\n\r\n  <mat-toolbar fxLayout=\"row\" fxLayoutAlign=\"space-between center\" class=\"toolbar__secondary\" *ngIf=\"user && user.currency !== 'USD' && currencyExchangeService.currencyRates\">\r\n    <span>Preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{user.currency}}</strong></a></span>   \r\n    <span>1 USD = {{currencyExchangeService.currencyRates[user.currency]}} {{user.currency}}</span>\r\n  </mat-toolbar>\r\n\r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
+module.exports = "<div class=\"inner mat-typography\">  \r\n  <mat-toolbar fxLayout=\"row\" fxLayoutAlign=\"space-between center\" class=\"toolbar__primary mat-elevation-z1\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    \r\n    <span *ngIf=\"!user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"user.avatar\"/>\r\n      <mat-icon *ngIf=\"!user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n  </mat-toolbar>\r\n  <div class=\"toolbar__primary__spacer\"><!-- This is a spacer with main toolbar height to avoid any content going behind the toolbar --></div>\r\n\r\n  <mat-toolbar fxLayout=\"row\" fxLayoutAlign=\"space-between center\" class=\"toolbar__secondary\" *ngIf=\"todayUserPrefRate !== null\">\r\n    <span>Preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{user.currency}}</strong></a></span>\r\n    <span>1 USD = {{todayUserPrefRate | number : '1.0-3' }} {{user.currency}}</span>\r\n  </mat-toolbar>\r\n\r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
 
 /***/ }),
 
@@ -322,29 +322,40 @@ var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
 var AppComponent = /** @class */ (function () {
-    function AppComponent(router, appService, usersService, currencyExchangeService) {
+    function AppComponent(router, appService, usersService, currencyExchangeService, utilService) {
         this.router = router;
         this.appService = appService;
         this.usersService = usersService;
         this.currencyExchangeService = currencyExchangeService;
+        this.utilService = utilService;
         this.title = 'AtomiCoconut';
         this.user = null;
+        this.todayUserPrefRate = null;
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
-        this.usersService.user$.subscribe(function (user) { return _this.user = user; }); //start listening the source of user
+        //On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
+        this.usersService.user$.switchMap(function (user) {
+            _this.user = user;
+            if (_this.user && _this.user.currency && _this.user.currency !== 'USD') {
+                return _this.currencyExchangeService.getCurrencyRates();
+            }
+            return of_1.of(null); //is the user had not configure a preferred currency then we don't need to show the currency toolbar
+        }).subscribe(function (currencyRates) {
+            if (currencyRates === null) {
+                return false;
+            }
+            _this.todayUserPrefRate = currencyRates[_this.utilService.formatToday()]["USD" + _this.user.currency];
+            _this.appService.consoleLog('info', methodTrace + " Currency exchange rates successfully loaded!");
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > " + error);
+            _this.appService.showResults("There was an error trying to get currency rates data.", 'error');
+        }); //start listening the source of user
         this.setUser();
-        //Get currency exchange rates
-        if (!this.currencyExchangeService.currencyRates) {
-            this.currencyExchangeService.getCurrencyRates().subscribe(function (data) {
-                _this.appService.consoleLog('info', methodTrace + " Currency exchange rates successfully loaded!");
-            }, function (error) {
-                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > " + error);
-                _this.appService.showResults("There was an error trying to get currency rates data.", 'error');
-            });
-        }
         this.getCryptoRates('BTC');
         this.getCryptoRates('XMR');
     };
@@ -396,7 +407,8 @@ var AppComponent = /** @class */ (function () {
             styles: [__webpack_require__("./src/app/app.component.scss")],
             providers: [main_navigator_service_1.MainNavigatorService]
         }),
-        __metadata("design:paramtypes", [router_1.Router, app_service_1.AppService, users_service_1.UsersService, currency_exchange_service_1.CurrencyExchangeService])
+        __metadata("design:paramtypes", [router_1.Router, app_service_1.AppService, users_service_1.UsersService, currency_exchange_service_1.CurrencyExchangeService,
+            util_service_1.UtilService])
     ], AppComponent);
     return AppComponent;
 }());

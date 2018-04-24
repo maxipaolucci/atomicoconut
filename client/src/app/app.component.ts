@@ -6,6 +6,8 @@ import { User } from './modules/users/models/user';
 import { Router } from '@angular/router';
 import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
 import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
+import { UtilService } from './util.service';
+import { of } from 'rxjs/observable/of';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,28 +18,39 @@ export class AppComponent implements OnInit {
   
   title : string = 'AtomiCoconut';
   user : User = null;
+  todayUserPrefRate : number = null;
 
-  constructor(private router : Router, private appService: AppService, public usersService : UsersService, public currencyExchangeService : CurrencyExchangeService ) { }
+  constructor(private router : Router, private appService: AppService, public usersService : UsersService, public currencyExchangeService : CurrencyExchangeService,
+      private utilService : UtilService) { }
 
   ngOnInit(): void {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
 
-    this.usersService.user$.subscribe((user : User) => this.user = user); //start listening the source of user
+    //On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
+    this.usersService.user$.switchMap((user : User) => {
+      this.user = user;
+
+      if (this.user && this.user.currency && this.user.currency !== 'USD') {
+        return this.currencyExchangeService.getCurrencyRates();
+      }
+      
+      return of(null); //is the user had not configure a preferred currency then we don't need to show the currency toolbar
+    }).subscribe(
+      (currencyRates : any) => {
+        if (currencyRates === null){
+          return false;
+        }
+
+        this.todayUserPrefRate = currencyRates[this.utilService.formatToday()][`USD${this.user.currency}`];
+        this.appService.consoleLog('info', `${methodTrace} Currency exchange rates successfully loaded!`);
+      },
+      (error : any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > ${error}`);
+        this.appService.showResults(`There was an error trying to get currency rates data.`, 'error');
+      }
+    ); //start listening the source of user
       
     this.setUser();
-
-    //Get currency exchange rates
-    if (!this.currencyExchangeService.currencyRates) {
-      this.currencyExchangeService.getCurrencyRates().subscribe(
-        (data : any) => {
-          this.appService.consoleLog('info', `${methodTrace} Currency exchange rates successfully loaded!`);
-        },
-        (error : any) => {
-          this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > ${error}`);
-          this.appService.showResults(`There was an error trying to get currency rates data.`, 'error');
-        }
-      );
-    }
 
     this.getCryptoRates('BTC');
     this.getCryptoRates('XMR');
