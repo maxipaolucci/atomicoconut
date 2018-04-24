@@ -6,7 +6,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AppService } from '../../../../app.service';
 import { PropertiesService } from '../../properties.service';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
-import { propertyTypes } from '../../../../constants';
+import { PROPERTY_TYPES } from '../../../../constants';
 import { House } from '../../models/house';
 import { MatSelectChange, DateAdapter, NativeDateAdapter, MatAutocompleteSelectedEvent, MatDialog } from '@angular/material';
 import { UtilService } from '../../../../util.service';
@@ -74,7 +74,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       public dialog: MatDialog) {
 
     this.dateAdapter.setLocale('en-GB');
-    this.propertyTypes = propertyTypes;
+    this.propertyTypes = PROPERTY_TYPES;
   }
 
   ngOnInit() {
@@ -122,7 +122,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
     //get TYPE parameter
     this.route.paramMap.map((params: ParamMap) => params.get('type')).subscribe(type => {
-      if (![propertyTypes.HOUSE].includes(type)) {
+      if (![PROPERTY_TYPES.HOUSE].includes(type)) {
         this.appService.showResults('You must provide a valid property type to continue.', 'error');
         this.router.navigate(['welcome']);
       } else {

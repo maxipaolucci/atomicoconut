@@ -32,7 +32,6 @@ export class CurrencyExchangeService {
     let found = true;
     for (let date of dates) {
       if (!this.currencyRates[date]) {
-        console.log('date not found: ', date);
         found = false;
         break;
       }

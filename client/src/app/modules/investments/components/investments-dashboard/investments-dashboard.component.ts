@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { INVESTMENTS_TYPES } from '../../../../constants';
+import { INVESTMENTS_TYPES, PROPERTY_TYPES } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
 import { PropertyInvestment } from '../../models/PropertyInvestment';
 
@@ -199,34 +199,53 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
               break;
             }
           }
+          console.log(methodTrace, investment);
 
-          let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
-          if (currencyInvestment.type === INVESTMENTS_TYPES.CURRENCY) {
-            this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
-              let investmentReturn = currencyInvestment.amount * (currencyRates[this.utilService.formatToday()][`USD${currencyInvestment.unit}`] || 1);
-              let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
-              this.totalReturn -= investmentReturn;
-              this.totalInvestment -= investmentAmount;
-              this.myTotalReturn -= investmentReturn * myPortion / 100;
-              this.myTotalInvestment -= investmentAmount * myPortion / 100;  
-            },
-            (error : any) => {
-              this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
-              this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
-            });
-          } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
-            this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
-              let investmentReturn = currencyInvestment.amount * rates.price;
-              let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
-              this.totalReturn -= investmentReturn
-              this.totalInvestment -= investmentAmount;
-              this.myTotalReturn -= investmentReturn * myPortion / 100;
-              this.myTotalInvestment -= investmentAmount * myPortion / 100;  
-            },
-            (error : any) => {
-              this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
-              this.appService.showResults(`There was an error trying to get ${currencyInvestment.unit} rates data, please try again in a few minutes.`, 'error');
-            });
+          if (investment instanceof CurrencyInvestment) {
+            let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
+            if (currencyInvestment.type === INVESTMENTS_TYPES.CURRENCY) {
+              this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
+                let investmentReturn = currencyInvestment.amount * (currencyRates[this.utilService.formatToday()][`USD${currencyInvestment.unit}`] || 1);
+                let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
+                this.totalReturn -= investmentReturn;
+                this.totalInvestment -= investmentAmount;
+                this.myTotalReturn -= investmentReturn * myPortion / 100;
+                this.myTotalInvestment -= investmentAmount * myPortion / 100;  
+              },
+              (error : any) => {
+                this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
+                this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
+              });
+            } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
+              this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
+                let investmentReturn = currencyInvestment.amount * rates.price;
+                let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
+                this.totalReturn -= investmentReturn
+                this.totalInvestment -= investmentAmount;
+                this.myTotalReturn -= investmentReturn * myPortion / 100;
+                this.myTotalInvestment -= investmentAmount * myPortion / 100;  
+              },
+              (error : any) => {
+                this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
+                this.appService.showResults(`There was an error trying to get ${currencyInvestment.unit} rates data, please try again in a few minutes.`, 'error');
+              });
+            }
+          } else if (investment instanceof PropertyInvestment) {
+            let propertyInvestment : PropertyInvestment = <PropertyInvestment>investment;
+            if (propertyInvestment.property.type === PROPERTY_TYPES.HOUSE) {
+              this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
+                let investmentReturn = this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit);;
+                let investmentAmount = this.currencyExchangeService.getUsdValueOf(propertyInvestment.investmentAmount, propertyInvestment.investmentAmountUnit);
+                this.totalReturn -= investmentReturn;
+                this.totalInvestment -= investmentAmount;
+                this.myTotalReturn -= investmentReturn * myPortion / 100;
+                this.myTotalInvestment -= investmentAmount * myPortion / 100;  
+              },
+              (error : any) => {
+                this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
+                this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
+              });
+            }
           }
           
           break;

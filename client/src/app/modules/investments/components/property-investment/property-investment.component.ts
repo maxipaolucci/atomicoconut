@@ -60,8 +60,6 @@ export class PropertyInvestmentComponent implements OnInit {
     const currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, 
       (user, currencyRates) => { 
         this.user = user;
-        console.log(currencyRates);
-        
         return { user, currencyRates} 
       }
     ); //(currency rates and user) source

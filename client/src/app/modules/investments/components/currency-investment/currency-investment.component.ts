@@ -57,8 +57,6 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     const currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, 
       (user, currencyRates) => { 
         this.user = user;
-        console.log(currencyRates);
-
         return { user, currencyRates} 
       }
     ); //(currency rates and user) source
@@ -95,7 +93,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       //currency exchange
       newSubscription = currencyRatesAndUser$.switchMap(
         (data) => {
-          this.currentPrice = data.currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1;
+          this.currentPrice = 1 / data.currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1;
           this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
           this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
           this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;

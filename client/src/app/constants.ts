@@ -1,14 +1,14 @@
-export const propertyTypes = {
+export const PROPERTY_TYPES = {
   HOUSE: 'house'
 };
 
-export const houseBuildingTypes = {
+export const HOUSE_BUILDING_TYPES = {
   HOUSE: 'house',
   APARTMENT : 'apartment',
   UNIT : 'unit'
 };
 
-export const nzHouseTitleTypes = {
+export const NZ_HOUSE_TITLE_TYPES = {
   FEE_SIMPLE : 'feeSimple',
   CROSS_LEASE : 'crossLease',
   LEASE_HOLD : 'leaseHold'

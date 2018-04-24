@@ -981,15 +981,15 @@ exports.WelcomeComponent = WelcomeComponent;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.propertyTypes = {
+exports.PROPERTY_TYPES = {
     HOUSE: 'house'
 };
-exports.houseBuildingTypes = {
+exports.HOUSE_BUILDING_TYPES = {
     HOUSE: 'house',
     APARTMENT: 'apartment',
     UNIT: 'unit'
 };
-exports.nzHouseTitleTypes = {
+exports.NZ_HOUSE_TITLE_TYPES = {
     FEE_SIMPLE: 'feeSimple',
     CROSS_LEASE: 'crossLease',
     LEASE_HOLD: 'leaseHold'
@@ -1725,7 +1725,6 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         var currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
         var currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, function (user, currencyRates) {
             _this.user = user;
-            console.log(currencyRates);
             return { user: user, currencyRates: currencyRates };
         }); //(currency rates and user) source
         if (this.investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
@@ -1754,7 +1753,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         else {
             //currency exchange
             newSubscription = currencyRatesAndUser$.switchMap(function (data) {
-                _this.currentPrice = data.currencyRates[_this.utilService.formatToday()]["USD" + _this.investment.unit] || 1;
+                _this.currentPrice = 1 / data.currencyRates[_this.utilService.formatToday()]["USD" + _this.investment.unit] || 1;
                 _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
                 _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
                 _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
@@ -2167,32 +2166,52 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                             break;
                         }
                     }
-                    var currencyInvestment_2 = investment;
-                    if (currencyInvestment_2.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
-                        this_1.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
-                            var investmentReturn = currencyInvestment_2.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment_2.unit] || 1);
-                            var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_2.investmentAmount, currencyInvestment_2.investmentAmountUnit);
-                            _this.totalReturn -= investmentReturn;
-                            _this.totalInvestment -= investmentAmount;
-                            _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
-                            _this.myTotalInvestment -= investmentAmount * myPortion_1 / 100;
-                        }, function (error) {
-                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
-                            _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
-                        });
+                    console.log(methodTrace, investment);
+                    if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
+                        var currencyInvestment_2 = investment;
+                        if (currencyInvestment_2.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
+                            this_1.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
+                                var investmentReturn = currencyInvestment_2.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment_2.unit] || 1);
+                                var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_2.investmentAmount, currencyInvestment_2.investmentAmountUnit);
+                                _this.totalReturn -= investmentReturn;
+                                _this.totalInvestment -= investmentAmount;
+                                _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
+                                _this.myTotalInvestment -= investmentAmount * myPortion_1 / 100;
+                            }, function (error) {
+                                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
+                                _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
+                            });
+                        }
+                        else if (investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
+                            this_1.currencyExchangeService.getCryptoRates(currencyInvestment_2.unit).take(1).subscribe(function (rates) {
+                                var investmentReturn = currencyInvestment_2.amount * rates.price;
+                                var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_2.investmentAmount, currencyInvestment_2.investmentAmountUnit);
+                                _this.totalReturn -= investmentReturn;
+                                _this.totalInvestment -= investmentAmount;
+                                _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
+                                _this.myTotalInvestment -= investmentAmount * myPortion_1 / 100;
+                            }, function (error) {
+                                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_2.unit + " rates data > ", error);
+                                _this.appService.showResults("There was an error trying to get " + currencyInvestment_2.unit + " rates data, please try again in a few minutes.", 'error');
+                            });
+                        }
                     }
-                    else if (investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
-                        this_1.currencyExchangeService.getCryptoRates(currencyInvestment_2.unit).take(1).subscribe(function (rates) {
-                            var investmentReturn = currencyInvestment_2.amount * rates.price;
-                            var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_2.investmentAmount, currencyInvestment_2.investmentAmountUnit);
-                            _this.totalReturn -= investmentReturn;
-                            _this.totalInvestment -= investmentAmount;
-                            _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
-                            _this.myTotalInvestment -= investmentAmount * myPortion_1 / 100;
-                        }, function (error) {
-                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_2.unit + " rates data > ", error);
-                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_2.unit + " rates data, please try again in a few minutes.", 'error');
-                        });
+                    else if (investment instanceof PropertyInvestment_1.PropertyInvestment) {
+                        var propertyInvestment_1 = investment;
+                        if (propertyInvestment_1.property.type === constants_1.PROPERTY_TYPES.HOUSE) {
+                            this_1.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
+                                var investmentReturn = _this.currencyExchangeService.getUsdValueOf(propertyInvestment_1.property.marketValue, propertyInvestment_1.property.marketValueUnit);
+                                ;
+                                var investmentAmount = _this.currencyExchangeService.getUsdValueOf(propertyInvestment_1.investmentAmount, propertyInvestment_1.investmentAmountUnit);
+                                _this.totalReturn -= investmentReturn;
+                                _this.totalInvestment -= investmentAmount;
+                                _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
+                                _this.myTotalInvestment -= investmentAmount * myPortion_1 / 100;
+                            }, function (error) {
+                                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
+                                _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
+                            });
+                        }
                     }
                     return "break";
                 }
@@ -2962,7 +2981,6 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         var currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
         var currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, function (user, currencyRates) {
             _this.user = user;
-            console.log(currencyRates);
             return { user: user, currencyRates: currencyRates };
         }); //(currency rates and user) source
         newSubscription = currencyRatesAndUser$.switchMap(function (data) {
@@ -3156,7 +3174,6 @@ var CurrencyExchangeService = /** @class */ (function () {
         for (var _i = 0, dates_1 = dates; _i < dates_1.length; _i++) {
             var date = dates_1[_i];
             if (!this.currencyRates[date]) {
-                console.log('date not found: ', date);
                 found = false;
                 break;
             }
@@ -3458,7 +3475,7 @@ var InvestmentsService = /** @class */ (function () {
                     if (propertyData.location) {
                         address = new address_1.Address(propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
                     }
-                    if (propertyData.propertyType === constants_1.propertyTypes.HOUSE) {
+                    if (propertyData.propertyType === constants_1.PROPERTY_TYPES.HOUSE) {
                         //we share the createdBy of the investment because we know is the same
                         property = new house_1.House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
                     }
@@ -3503,7 +3520,7 @@ var InvestmentsService = /** @class */ (function () {
                         if (propertyData.location) {
                             address = new address_1.Address(propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
                         }
-                        if (propertyData.propertyType === constants_1.propertyTypes.HOUSE) {
+                        if (propertyData.propertyType === constants_1.PROPERTY_TYPES.HOUSE) {
                             //we share the createdBy of the investment because we know is the same
                             property = new house_1.House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
                         }
@@ -3781,7 +3798,7 @@ var HousesEditComponent = /** @class */ (function () {
     HousesEditComponent.prototype.ngOnInit = function () {
         this.model.registeredValueUnit = this.model.ratesUnit = this.model.insuranceUnit = this.model.rentPriceUnit = this.model.bodyCorporateUnit =
             this.model.utilitiesCostUnit = this.defaultCurrencyUnit;
-        this.model.buildingType = constants_1.houseBuildingTypes.HOUSE;
+        this.model.buildingType = constants_1.HOUSE_BUILDING_TYPES.HOUSE;
         this.model.rentPricePeriod = 'weekly';
         Object.assign(this.model, this.defaultValues);
     };
@@ -4021,7 +4038,7 @@ var PropertiesEditComponent = /** @class */ (function () {
             paymentFrecuency: "26",
         };
         this.dateAdapter.setLocale('en-GB');
-        this.propertyTypes = constants_1.propertyTypes;
+        this.propertyTypes = constants_1.PROPERTY_TYPES;
     }
     PropertiesEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -4063,7 +4080,7 @@ var PropertiesEditComponent = /** @class */ (function () {
         this.subscription.add(newSubscription);
         //get TYPE parameter
         this.route.paramMap.map(function (params) { return params.get('type'); }).subscribe(function (type) {
-            if (![constants_1.propertyTypes.HOUSE].includes(type)) {
+            if (![constants_1.PROPERTY_TYPES.HOUSE].includes(type)) {
                 _this.appService.showResults('You must provide a valid property type to continue.', 'error');
                 _this.router.navigate(['welcome']);
             }
@@ -4976,7 +4993,7 @@ var PropertiesService = /** @class */ (function () {
                 if (data.location) {
                     address = new address_1.Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
                 }
-                if (data.propertyType === constants_1.propertyTypes.HOUSE) {
+                if (data.propertyType === constants_1.PROPERTY_TYPES.HOUSE) {
                     result = new house_1.House(data._id, data.propertyType, address, createdBy, data.propertyTypeData.landArea, data.propertyTypeData.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit, data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces, data.propertyTypeData.fenced, data.propertyTypeData.rented, data.propertyTypeData.rentPrice, data.propertyTypeData.rentPriceUnit, data.propertyTypeData.rentPricePeriod, data.propertyTypeData.rentAppraisalDone, data.propertyTypeData.vacancy, data.propertyTypeData.bodyCorporate, data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
                 }
             }
@@ -5015,7 +5032,7 @@ var PropertiesService = /** @class */ (function () {
                     if (data.location) {
                         address = new address_1.Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
                     }
-                    if (data.propertyType === constants_1.propertyTypes.HOUSE) {
+                    if (data.propertyType === constants_1.PROPERTY_TYPES.HOUSE) {
                         properties.push(new house_1.House(data._id, data.propertyType, address, createdBy, data.landArea, data.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.registeredValue, data.registeredValueUnit, data.rates, data.ratesUnit, data.insurance, data.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.capitalGrowth, data.bedrooms, data.bathrooms, data.parkingSpaces, data.fenced, data.rented, data.rentPrice, data.rentPriceUnit, data.rentPricePeriod, data.rentAppraisalDone, data.vacancy, data.bodyCorporate, data.bodyCorporateUnit, data.utilitiesCost, data.utilitiesCostUnit, data.agent, data.managed, data.managerRate, data.buildingType, data.titleType));
                     }
                 }

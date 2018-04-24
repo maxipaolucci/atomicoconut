@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { UtilService } from '../../../../util.service';
 import { AppService } from '../../../../app.service';
 import { MatSelectChange, MatSlideToggleChange } from '@angular/material';
-import { houseBuildingTypes } from '../../../../constants';
+import { HOUSE_BUILDING_TYPES } from '../../../../constants';
 
 @Component({
   selector: 'houses-edit',
@@ -53,7 +53,7 @@ export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.model.registeredValueUnit = this.model.ratesUnit = this.model.insuranceUnit = this.model.rentPriceUnit = this.model.bodyCorporateUnit = 
         this.model.utilitiesCostUnit = this.defaultCurrencyUnit;
-    this.model.buildingType = houseBuildingTypes.HOUSE;
+    this.model.buildingType = HOUSE_BUILDING_TYPES.HOUSE;
     this.model.rentPricePeriod = 'weekly';
     
     Object.assign(this.model, this.defaultValues);
