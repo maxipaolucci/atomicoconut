@@ -26,7 +26,6 @@ exports.validateRegister = (req, res, next) => {
         });
         return; //stop from running
     }
-
     
     console.log(`${methodTrace} ${getMessage('message', 1016, req.user.email, true)}`);
     next(); //call next middleware
@@ -83,7 +82,8 @@ exports.create = async (req, res, next) => {
         amount : req.body.investmentAmount,
         amountUnit : req.body.investmentAmountUnit,
         team : team ? team._id : null,
-        investmentDistribution : req.body.investmentDistribution
+        investmentDistribution : req.body.investmentDistribution,
+        loanCoverage : req.body.loanCoverage
     })).save();
 
     if (investment) {
@@ -214,7 +214,8 @@ exports.update = async (req, res, next) => {
         amount : req.body.investmentAmount,
         amountUnit : req.body.investmentAmountUnit,
         team : team ? team._id : null,
-        investmentDistribution : req.body.investmentDistribution
+        investmentDistribution : req.body.investmentDistribution,
+        loanCoverage : req.body.loanCoverage
     };
 
     //update investment

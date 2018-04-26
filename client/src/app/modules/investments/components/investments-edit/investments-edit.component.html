@@ -91,26 +91,46 @@
           </h3>
   
           <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+            <!-- Investment amount -->
             <div fxLayout="row" fxLayoutGap="10px">
-                <currency-unit fxFlex="50px"
-                    [id]="'investmentAmountUnit'" 
-                    [value]="model.investmentAmountUnit"
-                    [view]="'narrow'"
-                    (newValue)="onCurrencyUnitChange($event)">
-                </currency-unit>
-                
-                <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
-                  <input matInput type="number" id="investmentAmount" name="investmentAmount" placeholder="Investment amount"
-                      [(ngModel)]="model.investmentAmount" 
-                      [value]="model.investmentAmount"
-                      numberValidator 
-                      required
-                      #investmentAmount="ngModel">
-                  <mat-hint align="start">Set the amount of money to invest.</mat-hint>
-                  <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required">Investment amount is required.</mat-error>
-                  <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-                </mat-form-field>
+              <currency-unit fxFlex="50px"
+                  [id]="'investmentAmountUnit'" 
+                  [value]="model.investmentAmountUnit"
+                  [view]="'narrow'"
+                  (newValue)="onCurrencyUnitChange($event)">
+              </currency-unit>
+              
+              <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+                <input matInput type="number" id="investmentAmount" name="investmentAmount" placeholder="Investment amount"
+                    [(ngModel)]="model.investmentAmount" 
+                    [value]="model.investmentAmount"
+                    numberValidator 
+                    required
+                    #investmentAmount="ngModel">
+                <mat-hint align="start">Set the amount of money to invest.</mat-hint>
+                <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required">Investment amount is required.</mat-error>
+                <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- Loan coverage -->
+            <div fxFlex="none" fxFlex.gt-xs fxLayout="column" class="form__field slider__field">
+              <label class="slider__label">Loan coverage</label>
+              <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                <mat-slider fxFlex id="loanCoverage" name="loanCoverage"
+                    color="accent"
+                    [max]="100"
+                    [min]="0"
+                    [step]="1"
+                    [thumb-label]="true"
+                    [tick-interval]="1"
+                    [(ngModel)]="model.loanCoverage"
+                    [value]="model.loanCoverage"> 
+                </mat-slider>
+                <span *ngIf="model.loanCoverage">{{model.loanCoverage}}%</span>
               </div>
+              <label class="mat-hint slider__label__hint">Percentage of the investment amount covered by the lender.</label>
+            </div>
           </div>
         </div>
   

@@ -34,6 +34,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     team : null,
     teamSlug : null,
     membersPercentage : {},
+    loanCoverage : null,
     investmentAmount : null,
     investmentAmountUnit : null,
     type : null,
@@ -327,6 +328,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         for (let portion of investment.investmentDistribution) {
           this.model.membersPercentage[portion.email] = portion.percentage;
         }
+        this.model.loanCoverage = investment.loanCoverage;
         this.model.investmentAmount = investment.investmentAmount;
         this.model.investmentAmountUnit = investment.investmentAmountUnit;
         this.model.type = investment.type;

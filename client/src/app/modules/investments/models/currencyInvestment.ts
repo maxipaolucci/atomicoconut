@@ -10,9 +10,9 @@ export class CurrencyInvestment extends Investment {
   buyingPriceUnit : string;
 
   constructor (id : string, investmentAmount : number, investmentAmountUnit : string, createdBy : User, team : Team = null, investmentDistribution : any[] = [],
-      unit : string, amount : number, buyingPrice : number, buyingPriceUnit : string, buyingDate : Date, type : 'crypto' | 'currency' = 'currency') {
+      unit : string, amount : number, buyingPrice : number, buyingPriceUnit : string, buyingDate : Date, type : 'crypto' | 'currency' = 'currency', loanCoverage : number = 0) {
     
-    super(id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution);
+    super(id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, loanCoverage);
     this.unit = unit;
     this.amount = amount;
     this.buyingDate = buyingDate;
