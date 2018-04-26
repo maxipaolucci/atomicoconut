@@ -49,19 +49,17 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     }).subscribe((data : any) => {
       //iterate investments and sum returns using dated rates.
       for (let investment of data.userInvestments) {
-        if (investment instanceof CurrencyInvestment) {
-          let myPercentage = (investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
+        let myPercentage = (investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
+
+        if (investment instanceof CurrencyInvestment) {  
           let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
 
           if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
-            const investmentDate = this.utilService.formatDate(new Date(), 'YYYY-MM-DD'); //today date
-            let myReturnAmount = (currencyInvestment.amount * (data.todayCurrencyRates[investmentDate][`USD${currencyInvestment.unit}`] || 1)) * myPercentage / 100;
-            this.wealthAmount += myReturnAmount;
+            this.wealthAmount += (currencyInvestment.amount * (data.todayCurrencyRates[this.utilService.formatToday()][`USD${currencyInvestment.unit}`] || 1)) * myPercentage / 100;
             this.calculateProgressBarWealthValue();
           } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
             this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
-              let myReturnAmount = (currencyInvestment.amount * rates.price) * myPercentage / 100;
-              this.wealthAmount += myReturnAmount;
+              this.wealthAmount += (currencyInvestment.amount * rates.price) * myPercentage / 100;
               this.calculateProgressBarWealthValue();
             },
             (error : any) => {
@@ -69,6 +67,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
               this.appService.showResults(`There was an error trying to get ${currencyInvestment.unit} rates data, please try again in a few minutes.`, 'error');
             });
           }
+        } else if (investment instanceof PropertyInvestment) {
+          let propertyInvestment : PropertyInvestment = <PropertyInvestment>investment;
+          this.wealthAmount += (propertyInvestment.property.marketValue * (data.todayCurrencyRates[this.utilService.formatToday()][`USD${propertyInvestment.property.marketValueUnit}`] || 1)) * myPercentage / 100;
+          this.calculateProgressBarWealthValue();
         }
       }
     }, (error : any) => {

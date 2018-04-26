@@ -181,79 +181,39 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Removes the investment from the investments array and from the investmentUI array used in view
+   * Removes the investment from the investments array and from the investmentUI array used in view. Also reduces the totals in the inveestment amount
    */
-  removeInvestment(deletedId : string) : void {
+  removeInvestment(investmentData : any) : void {
     const methodTrace = `${this.constructor.name} > removeInvestment() > `; //for debugging
 
-    if (deletedId) {
-      let index = 0;
-      for (let investment of this.investments) {
-        //update totals and break loop
-        if (investment.id === deletedId) {
-          //get my portion in the investment
-          let myPortion = 0;
-          for (let portion of investment.investmentDistribution) {
-            if (this.user.email === portion.email) {
-              myPortion = portion.percentage;
-              break;
-            }
-          }
-          console.log(methodTrace, investment);
-
-          if (investment instanceof CurrencyInvestment) {
-            let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
-            if (currencyInvestment.type === INVESTMENTS_TYPES.CURRENCY) {
-              this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
-                let investmentReturn = currencyInvestment.amount * (currencyRates[this.utilService.formatToday()][`USD${currencyInvestment.unit}`] || 1);
-                let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
-                this.totalReturn -= investmentReturn;
-                this.totalInvestment -= investmentAmount;
-                this.myTotalReturn -= investmentReturn * myPortion / 100;
-                this.myTotalInvestment -= investmentAmount * myPortion / 100;  
-              },
-              (error : any) => {
-                this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
-                this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
-              });
-            } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
-              this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
-                let investmentReturn = currencyInvestment.amount * rates.price;
-                let investmentAmount = this.currencyExchangeService.getUsdValueOf(currencyInvestment.investmentAmount, currencyInvestment.investmentAmountUnit);
-                this.totalReturn -= investmentReturn
-                this.totalInvestment -= investmentAmount;
-                this.myTotalReturn -= investmentReturn * myPortion / 100;
-                this.myTotalInvestment -= investmentAmount * myPortion / 100;  
-              },
-              (error : any) => {
-                this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
-                this.appService.showResults(`There was an error trying to get ${currencyInvestment.unit} rates data, please try again in a few minutes.`, 'error');
-              });
-            }
-          } else if (investment instanceof PropertyInvestment) {
-            let propertyInvestment : PropertyInvestment = <PropertyInvestment>investment;
-            if (propertyInvestment.property.type === PROPERTY_TYPES.HOUSE) {
-              this.currencyExchangeService.getCurrencyRates().take(1).subscribe((currencyRates) => {
-                let investmentReturn = this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit);;
-                let investmentAmount = this.currencyExchangeService.getUsdValueOf(propertyInvestment.investmentAmount, propertyInvestment.investmentAmountUnit);
-                this.totalReturn -= investmentReturn;
-                this.totalInvestment -= investmentAmount;
-                this.myTotalReturn -= investmentReturn * myPortion / 100;
-                this.myTotalInvestment -= investmentAmount * myPortion / 100;  
-              },
-              (error : any) => {
-                this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > `, error);
-                this.appService.showResults(`There was an error trying to get currency rates data, please try again in a few minutes.`, 'error');
-              });
-            }
-          }
+    let investment = investmentData.investment;
+    if (investment) {
+      //get my portion in the investment
+      let myPortion = 0;
+      for (let portion of investment.investmentDistribution) {
+        if (this.user.email === portion.email) {
+          myPortion = portion.percentage;
+          break;
+        }
+      }
+      
+      //update totals row
+      let investmentReturn = investmentData.investmentReturn;
+      let investmentAmount = investmentData.investmentAmount;
+      this.totalReturn -= investmentReturn;
+      this.totalInvestment -= investmentAmount;
+      this.myTotalReturn -= investmentReturn * myPortion / 100;
+      this.myTotalInvestment -= investmentAmount * myPortion / 100;
           
+      //remove investment from array
+      let index = 0;
+      for (let investmentToDelete of this.investments) {
+        if (investment.id === investmentToDelete.id) {
           break;
         }
 
         index += 1;
       }
-      //remove investment from array
       this.investments.splice(index, 1);
 
       //update ui array
@@ -262,7 +222,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
       let found = false;
       for (let i = 0; i < this.investmentsUI.length; i++) {
         for (let j = 0; j < this.investmentsUI[i].length; j++) {
-          if (this.investmentsUI[i][j].id === deletedId) {
+          if (this.investmentsUI[i][j].id === investment.id) {
             row = i;
             offset = j;
             found = true;

@@ -7,14 +7,14 @@
           [investment]="investment"
           [teams]="teams"
           (totalReturns)="setTotals($event)"
-          (deletedId)="removeInvestment($event)">
+          (deletedInvestment)="removeInvestment($event)">
         </currency-investment>
 
         <property-investment *ngIf="investment.type === INVESTMENTS_TYPES.PROPERTY"
           [investment]="investment"
           [teams]="teams"
           (totalReturns)="setTotals($event)"
-          (deletedId)="removeInvestment($event)">
+          (deletedInvestment)="removeInvestment($event)">
         </property-investment>
       </div>
       

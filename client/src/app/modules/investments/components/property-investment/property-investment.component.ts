@@ -29,7 +29,7 @@ export class PropertyInvestmentComponent implements OnInit {
     return this.teams$.getValue();
   }
   @Output() totalReturns: EventEmitter<any> = new EventEmitter();
-  @Output() deletedId : EventEmitter<string> = new EventEmitter();
+  @Output() deletedInvestment : EventEmitter<any> = new EventEmitter();
   private teams$ = new BehaviorSubject<Team[]>([]);
   investmentAmount : number = 0;
   buyingPrice : number = 0;
@@ -166,7 +166,7 @@ export class PropertyInvestmentComponent implements OnInit {
         (data : any) => {
           if (data && data.removed > 0) {
             this.appService.showResults(`Investment successfully removed!`, 'success');
-            this.deletedId.emit(this.investment.id);
+            this.deletedInvestment.emit({ investment : this.investment, investmentReturn : this.investmentReturn, investmentAmount : this.investmentAmount });
           } else {
             this.appService.showResults(`Investment could not be removed, please try again.`, 'error');
             this.actionRunning = false;

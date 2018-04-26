@@ -829,6 +829,7 @@ var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription
 var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
 var constants_1 = __webpack_require__("./src/app/constants.ts");
 var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
 var WelcomeComponent = /** @class */ (function () {
     function WelcomeComponent(mainNavigatorService, usersService, appService, investmentsService, currencyExchangeService, utilService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -858,25 +859,27 @@ var WelcomeComponent = /** @class */ (function () {
             return { userInvestments: userInvestments, todayCurrencyRates: todayCurrencyRates };
         }).subscribe(function (data) {
             var _loop_1 = function (investment) {
+                var myPercentage = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
                 if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
-                    var myPercentage_1 = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
                     var currencyInvestment_2 = investment;
                     if (investment.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
-                        var investmentDate = _this.utilService.formatDate(new Date(), 'YYYY-MM-DD'); //today date
-                        var myReturnAmount = (currencyInvestment_2.amount * (data.todayCurrencyRates[investmentDate]["USD" + currencyInvestment_2.unit] || 1)) * myPercentage_1 / 100;
-                        _this.wealthAmount += myReturnAmount;
+                        _this.wealthAmount += (currencyInvestment_2.amount * (data.todayCurrencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment_2.unit] || 1)) * myPercentage / 100;
                         _this.calculateProgressBarWealthValue();
                     }
                     else if (investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
                         _this.currencyExchangeService.getCryptoRates(currencyInvestment_2.unit).take(1).subscribe(function (rates) {
-                            var myReturnAmount = (currencyInvestment_2.amount * rates.price) * myPercentage_1 / 100;
-                            _this.wealthAmount += myReturnAmount;
+                            _this.wealthAmount += (currencyInvestment_2.amount * rates.price) * myPercentage / 100;
                             _this.calculateProgressBarWealthValue();
                         }, function (error) {
                             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_2.unit + " rates data > ", error);
                             _this.appService.showResults("There was an error trying to get " + currencyInvestment_2.unit + " rates data, please try again in a few minutes.", 'error');
                         });
                     }
+                }
+                else if (investment instanceof PropertyInvestment_1.PropertyInvestment) {
+                    var propertyInvestment = investment;
+                    _this.wealthAmount += (propertyInvestment.property.marketValue * (data.todayCurrencyRates[_this.utilService.formatToday()]["USD" + propertyInvestment.property.marketValueUnit] || 1)) * myPercentage / 100;
+                    _this.calculateProgressBarWealthValue();
                 }
             };
             //iterate investments and sum returns using dated rates.
@@ -1694,7 +1697,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         this.router = router;
         this.utilService = utilService;
         this.totalReturns = new core_1.EventEmitter();
-        this.deletedId = new core_1.EventEmitter();
+        this.deletedInvestment = new core_1.EventEmitter();
         this.teams$ = new BehaviorSubject_1.BehaviorSubject([]);
         this.investmentAmount = 0;
         this.buyingPrice = 0;
@@ -1844,7 +1847,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
             var newSubscription = this.investmentsService.delete(this.investment.id, this.user.email).subscribe(function (data) {
                 if (data && data.removed > 0) {
                     _this.appService.showResults("Investment successfully removed!", 'success');
-                    _this.deletedId.emit(_this.investment.id);
+                    _this.deletedInvestment.emit({ investment: _this.investment, investmentReturn: _this.investmentReturn, investmentAmount: _this.investmentAmount });
                 }
                 else {
                     _this.appService.showResults("Investment could not be removed, please try again.", 'error');
@@ -1883,7 +1886,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
-    ], CurrencyInvestmentComponent.prototype, "deletedId", void 0);
+    ], CurrencyInvestmentComponent.prototype, "deletedInvestment", void 0);
     CurrencyInvestmentComponent = __decorate([
         core_1.Component({
             selector: 'currency-investment',
@@ -1967,7 +1970,7 @@ exports.InvestmentSelectorDialogComponent = InvestmentSelectorDialogComponent;
 /***/ "./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <div *ngFor=\"let row of investmentsUI\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <div *ngFor=\"let investment of row\" fxFlex fxFlex.gt-xs=\"50\">\r\n        <currency-investment *ngIf=\"investment.type === INVESTMENTS_TYPES.CURRENCY || investment.type === INVESTMENTS_TYPES.CRYPTO\"\r\n          [investment]=\"investment\"\r\n          [teams]=\"teams\"\r\n          (totalReturns)=\"setTotals($event)\"\r\n          (deletedId)=\"removeInvestment($event)\">\r\n        </currency-investment>\r\n\r\n        <property-investment *ngIf=\"investment.type === INVESTMENTS_TYPES.PROPERTY\"\r\n          [investment]=\"investment\"\r\n          [teams]=\"teams\"\r\n          (totalReturns)=\"setTotals($event)\"\r\n          (deletedId)=\"removeInvestment($event)\">\r\n        </property-investment>\r\n      </div>\r\n      \r\n    </div>\r\n\r\n    <mat-card fxFlex class=\"totals__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"20px\">\r\n        <!-- Totals -->\r\n        <div *ngIf=\"!myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>Total investments: <strong>{{totalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>\r\n          <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n              [class.color__red]=\"totalReturn < totalInvestment\">\r\n            Total ROI: <strong>{{ totalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- My totals -->\r\n        <div *ngIf=\"myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>My total investments: <strong>{{myTotalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>\r\n          <p [class.color__accent]=\"myTotalReturn >= myTotalInvestment\" \r\n              [class.color__red]=\"myTotalReturn < myTotalInvestment\">\r\n            My total ROI: <strong>{{ myTotalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{myTotalReturn / myTotalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- Totals switcher -->\r\n        <mat-slide-toggle fxFlexAlign.xs=\"center\" color=\"accent\" class=\"form__field form__field__toogle\" [checked]=\"false\" #myTotals>\r\n          My totals\r\n        </mat-slide-toggle>\r\n\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-investments__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have investments yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__investments\">\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <div *ngFor=\"let row of investmentsUI\" fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\">\r\n      <div *ngFor=\"let investment of row\" fxFlex fxFlex.gt-xs=\"50\">\r\n        <currency-investment *ngIf=\"investment.type === INVESTMENTS_TYPES.CURRENCY || investment.type === INVESTMENTS_TYPES.CRYPTO\"\r\n          [investment]=\"investment\"\r\n          [teams]=\"teams\"\r\n          (totalReturns)=\"setTotals($event)\"\r\n          (deletedInvestment)=\"removeInvestment($event)\">\r\n        </currency-investment>\r\n\r\n        <property-investment *ngIf=\"investment.type === INVESTMENTS_TYPES.PROPERTY\"\r\n          [investment]=\"investment\"\r\n          [teams]=\"teams\"\r\n          (totalReturns)=\"setTotals($event)\"\r\n          (deletedInvestment)=\"removeInvestment($event)\">\r\n        </property-investment>\r\n      </div>\r\n      \r\n    </div>\r\n\r\n    <mat-card fxFlex class=\"totals__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"20px\">\r\n        <!-- Totals -->\r\n        <div *ngIf=\"!myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>Total investments: <strong>{{totalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>\r\n          <p [class.color__accent]=\"totalReturn >= totalInvestment\" \r\n              [class.color__red]=\"totalReturn < totalInvestment\">\r\n            Total ROI: <strong>{{ totalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{totalReturn / totalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- My totals -->\r\n        <div *ngIf=\"myTotals.checked\" fxFlex fxFlex.xs=\"none\" fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n          <p>My total investments: <strong>{{myTotalInvestment | currency : 'USD' : 'code' : '1.2-2' }}</strong></p>\r\n          <p [class.color__accent]=\"myTotalReturn >= myTotalInvestment\" \r\n              [class.color__red]=\"myTotalReturn < myTotalInvestment\">\r\n            My total ROI: <strong>{{ myTotalReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{myTotalReturn / myTotalInvestment * 100 | number : '1.1-2'}}%)\r\n          </p>\r\n        </div>\r\n\r\n        <!-- Totals switcher -->\r\n        <mat-slide-toggle fxFlexAlign.xs=\"center\" color=\"accent\" class=\"form__field form__field__toogle\" [checked]=\"false\" #myTotals>\r\n          My totals\r\n        </mat-slide-toggle>\r\n\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"!getInvestmentsServiceRunning && investments.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-investments__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p> You do not have investments yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n\r\n  <mat-progress-bar *ngIf=\"getInvestmentsServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-investments\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n\r\n  <section fxLayout=\"column\" fxLayoutAlign=\"start end\" class=\"actions\">\r\n    <button mat-fab class=\"fab mat-elevation-z10\" color=\"accent\" matTooltip=\"Create new investment\" matTooltipPosition=\"left\" (click)=\"openNewInvestmentDialog()\">\r\n      <mat-icon aria-label=\"Create new investemt\">add</mat-icon>\r\n    </button>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -2147,84 +2150,37 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         }
     };
     /**
-     * Removes the investment from the investments array and from the investmentUI array used in view
+     * Removes the investment from the investments array and from the investmentUI array used in view. Also reduces the totals in the inveestment amount
      */
-    InvestmentsDashboardComponent.prototype.removeInvestment = function (deletedId) {
-        var _this = this;
+    InvestmentsDashboardComponent.prototype.removeInvestment = function (investmentData) {
         var methodTrace = this.constructor.name + " > removeInvestment() > "; //for debugging
-        if (deletedId) {
+        var investment = investmentData.investment;
+        if (investment) {
+            //get my portion in the investment
+            var myPortion = 0;
+            for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
+                var portion = _a[_i];
+                if (this.user.email === portion.email) {
+                    myPortion = portion.percentage;
+                    break;
+                }
+            }
+            //update totals row
+            var investmentReturn = investmentData.investmentReturn;
+            var investmentAmount = investmentData.investmentAmount;
+            this.totalReturn -= investmentReturn;
+            this.totalInvestment -= investmentAmount;
+            this.myTotalReturn -= investmentReturn * myPortion / 100;
+            this.myTotalInvestment -= investmentAmount * myPortion / 100;
+            //remove investment from array
             var index = 0;
-            var _loop_1 = function (investment) {
-                //update totals and break loop
-                if (investment.id === deletedId) {
-                    //get my portion in the investment
-                    var myPortion_1 = 0;
-                    for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
-                        var portion = _a[_i];
-                        if (this_1.user.email === portion.email) {
-                            myPortion_1 = portion.percentage;
-                            break;
-                        }
-                    }
-                    console.log(methodTrace, investment);
-                    if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
-                        var currencyInvestment_2 = investment;
-                        if (currencyInvestment_2.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
-                            this_1.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
-                                var investmentReturn = currencyInvestment_2.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment_2.unit] || 1);
-                                var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_2.investmentAmount, currencyInvestment_2.investmentAmountUnit);
-                                _this.totalReturn -= investmentReturn;
-                                _this.totalInvestment -= investmentAmount;
-                                _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
-                                _this.myTotalInvestment -= investmentAmount * myPortion_1 / 100;
-                            }, function (error) {
-                                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
-                                _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
-                            });
-                        }
-                        else if (investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
-                            this_1.currencyExchangeService.getCryptoRates(currencyInvestment_2.unit).take(1).subscribe(function (rates) {
-                                var investmentReturn = currencyInvestment_2.amount * rates.price;
-                                var investmentAmount = _this.currencyExchangeService.getUsdValueOf(currencyInvestment_2.investmentAmount, currencyInvestment_2.investmentAmountUnit);
-                                _this.totalReturn -= investmentReturn;
-                                _this.totalInvestment -= investmentAmount;
-                                _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
-                                _this.myTotalInvestment -= investmentAmount * myPortion_1 / 100;
-                            }, function (error) {
-                                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_2.unit + " rates data > ", error);
-                                _this.appService.showResults("There was an error trying to get " + currencyInvestment_2.unit + " rates data, please try again in a few minutes.", 'error');
-                            });
-                        }
-                    }
-                    else if (investment instanceof PropertyInvestment_1.PropertyInvestment) {
-                        var propertyInvestment_1 = investment;
-                        if (propertyInvestment_1.property.type === constants_1.PROPERTY_TYPES.HOUSE) {
-                            this_1.currencyExchangeService.getCurrencyRates().take(1).subscribe(function (currencyRates) {
-                                var investmentReturn = _this.currencyExchangeService.getUsdValueOf(propertyInvestment_1.property.marketValue, propertyInvestment_1.property.marketValueUnit);
-                                ;
-                                var investmentAmount = _this.currencyExchangeService.getUsdValueOf(propertyInvestment_1.investmentAmount, propertyInvestment_1.investmentAmountUnit);
-                                _this.totalReturn -= investmentReturn;
-                                _this.totalInvestment -= investmentAmount;
-                                _this.myTotalReturn -= investmentReturn * myPortion_1 / 100;
-                                _this.myTotalInvestment -= investmentAmount * myPortion_1 / 100;
-                            }, function (error) {
-                                _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > ", error);
-                                _this.appService.showResults("There was an error trying to get currency rates data, please try again in a few minutes.", 'error');
-                            });
-                        }
-                    }
-                    return "break";
+            for (var _b = 0, _c = this.investments; _b < _c.length; _b++) {
+                var investmentToDelete = _c[_b];
+                if (investment.id === investmentToDelete.id) {
+                    break;
                 }
                 index += 1;
-            };
-            var this_1 = this;
-            for (var _i = 0, _a = this.investments; _i < _a.length; _i++) {
-                var investment = _a[_i];
-                var state_1 = _loop_1(investment);
-                if (state_1 === "break")
-                    break;
             }
-            //remove investment from array
             this.investments.splice(index, 1);
             //update ui array
             var row = 0;
@@ -2232,7 +2188,7 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
             var found = false;
             for (var i = 0; i < this.investmentsUI.length; i++) {
                 for (var j = 0; j < this.investmentsUI[i].length; j++) {
-                    if (this.investmentsUI[i][j].id === deletedId) {
+                    if (this.investmentsUI[i][j].id === investment.id) {
                         row = i;
                         offset = j;
                         found = true;
@@ -2946,7 +2902,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         this.router = router;
         this.utilService = utilService;
         this.totalReturns = new core_1.EventEmitter();
-        this.deletedId = new core_1.EventEmitter();
+        this.deletedInvestment = new core_1.EventEmitter();
         this.teams$ = new rxjs_1.BehaviorSubject([]);
         this.investmentAmount = 0;
         this.buyingPrice = 0;
@@ -3074,7 +3030,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
             var newSubscription = this.investmentsService.delete(this.investment.id, this.user.email).subscribe(function (data) {
                 if (data && data.removed > 0) {
                     _this.appService.showResults("Investment successfully removed!", 'success');
-                    _this.deletedId.emit(_this.investment.id);
+                    _this.deletedInvestment.emit({ investment: _this.investment, investmentReturn: _this.investmentReturn, investmentAmount: _this.investmentAmount });
                 }
                 else {
                     _this.appService.showResults("Investment could not be removed, please try again.", 'error');
@@ -3113,7 +3069,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
-    ], PropertyInvestmentComponent.prototype, "deletedId", void 0);
+    ], PropertyInvestmentComponent.prototype, "deletedInvestment", void 0);
     PropertyInvestmentComponent = __decorate([
         core_1.Component({
             selector: 'property-investment',
