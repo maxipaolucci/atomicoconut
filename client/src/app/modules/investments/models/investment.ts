@@ -10,10 +10,11 @@ export class Investment {
   investmentDistribution : any[];
   investmentAmount : number;
   investmentAmountUnit : string;
-  loanCoverage : number;
+  loanAmount : number;
+  loanAmountUnit : string;
 
   constructor(id : string, type : 'crypto' | 'currency' | 'property',investmentAmount : number, investmentAmountUnit : string, createdBy : User, team : Team = null, investmentDistribution : any[] = [], 
-      loanCoverage : number = 0) {
+      loanAmount : number = 0, loanAmountUnit : string) {
     this.investmentAmount = investmentAmount;
     this.investmentAmountUnit = investmentAmountUnit;
     this.team = team;
@@ -21,6 +22,7 @@ export class Investment {
     this.createdBy = createdBy;
     this.id = id;
     this.type = type;
-    this.loanCoverage = loanCoverage;
+    this.loanAmount = loanAmount;
+    this.loanAmountUnit = loanAmountUnit;
   }
 }

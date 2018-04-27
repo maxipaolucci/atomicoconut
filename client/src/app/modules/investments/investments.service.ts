@@ -92,7 +92,7 @@ export class InvestmentsService {
           result = new CurrencyInvestment(investment._id, investment.amount, investment.amountUnit, createdBy, team, 
               investment.investmentDistribution, investment.investmentData.amountUnit, investment.investmentData.amount, 
               investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, 
-              investment.investmentData.buyingDate, investment.investmentType, investment.loanCoverage);
+              investment.investmentData.buyingDate, investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
         } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
           let property = null;
           const propertyData = investment.investmentData.property;
@@ -114,7 +114,7 @@ export class InvestmentsService {
 
           result = new PropertyInvestment(investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, 
             property, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, 
-            investment.investmentType, investment.loanCoverage);
+            investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
         }
       } else {
         this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
@@ -153,7 +153,7 @@ export class InvestmentsService {
           if (item.investmentType === INVESTMENTS_TYPES.CURRENCY || item.investmentType === INVESTMENTS_TYPES.CRYPTO) {
             investments.push(new CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.investmentData.amountUnit, 
                 item.investmentData.amount, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType,
-                item.loanCoverage));
+                item.loanAmount, item.loanAmountUnit));
           } else if (item.investmentType === INVESTMENTS_TYPES.PROPERTY) {
             let property = null;
             const propertyData = item.investmentData.property;
@@ -175,7 +175,7 @@ export class InvestmentsService {
 
             investments.push(new PropertyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, 
                 property, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, 
-                item.investmentType, item.loanCoverage));
+                item.investmentType, item.loanAmount, item.loanAmountUnit));
           }
         }
       } else {

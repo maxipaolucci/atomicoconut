@@ -53,10 +53,14 @@ const investmentSchema = new mongoose.Schema({
       default : 0
     }
   }],
-  loanCoverage : {
+  loanAmount : {
     type : Number,
     default : 0
-  }
+  },
+  loanAmountUnit : {
+    type : String,
+    default : 'USD'
+  },
 });
 
 module.exports = mongoose.model('Investment', investmentSchema);

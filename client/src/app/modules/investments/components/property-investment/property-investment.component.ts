@@ -36,6 +36,7 @@ export class PropertyInvestmentComponent implements OnInit {
   investmentReturn : number = 0;
   investmentValueWhenBought : number = 0;
   currentPrice : number = 0;
+  loanAmount : number = 0;
   investmentTitle : string = null;
   actionRunning : boolean = false;
   user : User = null;
@@ -68,9 +69,9 @@ export class PropertyInvestmentComponent implements OnInit {
       (data) => {
         this.currentPrice = this.currencyExchangeService.getUsdValueOf(this.investment.property.marketValue, this.investment.property.marketValueUnit);
         this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
+        this.loanAmount = this.currencyExchangeService.getUsdValueOf(this.investment.loanAmount, this.investment.loanAmountUnit);
         this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
-        this.investmentValueWhenBought = this.buyingPrice;
-        this.investmentReturn = this.currentPrice;
+        this.investmentReturn = this.currentPrice - this.loanAmount;
 
         return this.teams$;
       }

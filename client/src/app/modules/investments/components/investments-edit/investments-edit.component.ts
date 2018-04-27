@@ -34,7 +34,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     team : null,
     teamSlug : null,
     membersPercentage : {},
-    loanCoverage : null,
+    loanAmount : null,
+    loanAmountUnit : null,
     investmentAmount : null,
     investmentAmountUnit : null,
     type : null,
@@ -86,6 +87,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       this.user = data.user;
       this.model.email = data.user.email;
       this.model.investmentAmountUnit = this.user.currency;
+      this.model.loanAmountUnit = this.user.currency;
       this.model.id = data.investmentId || null;
       if (data.propertyId) {
         this.model.investmentData.propertyId = data.propertyId;
@@ -328,7 +330,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         for (let portion of investment.investmentDistribution) {
           this.model.membersPercentage[portion.email] = portion.percentage;
         }
-        this.model.loanCoverage = investment.loanCoverage;
+        this.model.loanAmount = investment.loanAmount;
+        this.model.loanAmountUnit = investment.loanAmountUnit;
         this.model.investmentAmount = investment.investmentAmount;
         this.model.investmentAmountUnit = investment.investmentAmountUnit;
         this.model.type = investment.type;
@@ -391,9 +394,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   onCurrencyUnitChange($event : MatSelectChange) {
-    if ($event.source.id === 'investmentAmountUnit') {
-      this.model.investmentAmountUnit = $event.value;
-    }
+    this.model[$event.source.id] = $event.value;
   }
 
   onInvestmentDataChange($event : any) {

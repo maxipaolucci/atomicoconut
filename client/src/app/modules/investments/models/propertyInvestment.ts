@@ -10,9 +10,10 @@ export class PropertyInvestment extends Investment {
   buyingPriceUnit : string;
 
   constructor (id : string, investmentAmount : number, investmentAmountUnit : string, createdBy : User, team : Team = null, investmentDistribution : any[] = [],
-      property : Property, buyingPrice : number, buyingPriceUnit : string, buyingDate : Date, type : 'property' = 'property', loanCoverage : number = 0) {
+      property : Property, buyingPrice : number, buyingPriceUnit : string, buyingDate : Date, type : 'property' = 'property', loanAmount : number = 0,
+      loanAmountUnit : string) {
     
-    super(id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, loanCoverage);
+    super(id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, loanAmount, loanAmountUnit);
     this.property = property;
     this.buyingDate = buyingDate;
     this.buyingPrice = buyingPrice;

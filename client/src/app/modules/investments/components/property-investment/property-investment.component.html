@@ -12,18 +12,18 @@
 
     on {{investment.buyingDate | date}}
     <br>
-    Sold at {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}
+    Buying price: {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}
     <br>
-    today market value at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>
+    Today market value at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>
     <br>
-    <span *ngIf="investment.loanCoverage">
-      Loan coverage: <strong>{{ investment.buyingPrice * investment.loanCoverage / 100 | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investment.loanCoverage}}%)
+    <span *ngIf="investment.loanAmount">
+      Loan amount: <strong>{{ loanAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{loanAmount / buyingPrice | percent}} of purchase price)
     </span>
     
-    <div [class.color__accent]="investmentReturn >= investmentValueWhenBought" 
-        [class.color__red]="investmentReturn < investmentValueWhenBought">
+    <div [class.color__accent]="investmentReturn >= investmentAmount" 
+        [class.color__red]="investmentReturn < investmentAmount">
       <br>
-      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought | percent : '1.1-2'}})
+      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentAmount | percent : '1.1-2'}})
     </div>
 
     <!-- Team -->
