@@ -8,9 +8,9 @@ export class Investment {
   createdBy : User;
   team : Team;
   investmentDistribution : any[];
-  investmentAmount : number;
-  investmentAmountUnit : string;
-  loanAmount : number;
+  investmentAmount : number; //the amount of money invested. Excluding the amount borrowed (loanAmount)
+  investmentAmountUnit : string; 
+  loanAmount : number; //the amount of money borrowed from the lender
   loanAmountUnit : string;
 
   constructor(id : string, type : 'crypto' | 'currency' | 'property',investmentAmount : number, investmentAmountUnit : string, createdBy : User, team : Team = null, investmentDistribution : any[] = [], 

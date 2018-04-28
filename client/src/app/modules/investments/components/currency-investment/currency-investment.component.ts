@@ -75,8 +75,8 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       }).switchMap(
         (data) => {
           this.currentPrice = data.cryptoRates.price;
-          this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
-          this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
+          this.investmentAmount = this.investment.investmentAmount * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1;
+          this.buyingPrice = this.investment.buyingPrice * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1;
           this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
           this.investmentReturn = this.currentPrice * this.investment.amount;
 
@@ -94,8 +94,8 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       newSubscription = currencyRatesAndUser$.switchMap(
         (data) => {
           this.currentPrice = 1 / data.currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1;
-          this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
-          this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
+          this.investmentAmount = this.investment.investmentAmount * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1;
+          this.buyingPrice = this.investment.buyingPrice * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1;
           this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
           this.investmentReturn = this.currentPrice * this.investment.amount;
 

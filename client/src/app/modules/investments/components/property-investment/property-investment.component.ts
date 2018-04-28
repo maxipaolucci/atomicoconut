@@ -67,11 +67,20 @@ export class PropertyInvestmentComponent implements OnInit {
     
     newSubscription = currencyRatesAndUser$.switchMap(
       (data) => {
-        this.currentPrice = this.currencyExchangeService.getUsdValueOf(this.investment.property.marketValue, this.investment.property.marketValueUnit);
+        this.currentPrice = this.investment.property.marketValue * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.property.marketValueUnit}`] || 1;
+        //this.currentPrice = this.currencyExchangeService.getUsdValueOf(this.investment.property.marketValue, this.investment.property.marketValueUnit);
         this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
         this.loanAmount = this.currencyExchangeService.getUsdValueOf(this.investment.loanAmount, this.investment.loanAmountUnit);
         this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
         this.investmentReturn = this.currentPrice - this.loanAmount;
+
+        //delete this group
+        this.currentPrice = this.investment.property.marketValue * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.property.marketValueUnit}`] || 1;
+        this.investmentAmount = this.investment.investmentAmount * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1;
+        this.buyingPrice = this.investment.buyingPrice * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1;
+        this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
+        this.investmentReturn = this.currentPrice * this.investment.amount;
+
 
         return this.teams$;
       }

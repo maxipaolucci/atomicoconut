@@ -85,7 +85,12 @@ export class CurrencyExchangeService {
     }
   }
 
-  getUsdValueOf(amount : number, unit : string) {
+  /**
+   * Get the value on USD at today's rate of the amount provided in a foreign unit
+   * @param amount 
+   * @param unit 
+   */
+  getUsdValueOf(amount : number, unit : string) : number {
     if (unit !== 'USD') {
       const today = this.utilService.formatToday();
   
