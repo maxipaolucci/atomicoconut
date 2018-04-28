@@ -41,25 +41,38 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       { displayName: 'Calculators', url: '/calculators', selected: false }
     ]);
     
-    const userInvestments$ = this.setUserAndGetInvestments();
-    const todayCurrencyRates$ = this.currencyExchangeService.getCurrencyRates();
+    let currentUserInvestments : Investment[] = [];
+    let newSubscription = this.setUserAndGetInvestments().switchMap((userInvestments : Investment[]) => {
+      currentUserInvestments = userInvestments;
+      let investmentsDates : string[] = userInvestments.map((investment : Investment) => {
+        if (investment instanceof CurrencyInvestment) {  
+          return this.utilService.formatDate((<CurrencyInvestment>investment).buyingDate);
+        } else if (investment instanceof PropertyInvestment) {
+          return this.utilService.formatDate((<PropertyInvestment>investment).buyingDate);
+        }
 
-    let newSubscription = userInvestments$.combineLatest(todayCurrencyRates$, (userInvestments : Investment[], todayCurrencyRates : any) => {
-      return { userInvestments, todayCurrencyRates};
-    }).subscribe((data : any) => {
+        return this.utilService.formatToday(); //this should never happen. BuyingDate is required in investments
+      });
+      
+      return this.currencyExchangeService.getCurrencyRates(investmentsDates);
+    }).subscribe(currencyRates => {
       //iterate investments and sum returns using dated rates.
-      for (let investment of data.userInvestments) {
+      for (let investment of currentUserInvestments) {
         let myPercentage = (investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
 
         if (investment instanceof CurrencyInvestment) {  
           let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
 
           if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
-            this.wealthAmount += (currencyInvestment.amount * (data.todayCurrencyRates[this.utilService.formatToday()][`USD${currencyInvestment.unit}`] || 1)) * myPercentage / 100;
+            this.wealthAmount += ((currencyInvestment.amount * (currencyRates[this.utilService.formatToday()][`USD${currencyInvestment.unit}`] || 1)) 
+                - (currencyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(currencyInvestment.buyingDate)][`USD${currencyInvestment.loanAmountUnit}`] || 1)))
+                * myPercentage / 100;
             this.calculateProgressBarWealthValue();
           } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
             this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
-              this.wealthAmount += (currencyInvestment.amount * rates.price) * myPercentage / 100;
+              this.wealthAmount += ((currencyInvestment.amount * rates.price) 
+                  - (currencyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(currencyInvestment.buyingDate)][`USD${currencyInvestment.loanAmountUnit}`] || 1)))
+                  * myPercentage / 100;
               this.calculateProgressBarWealthValue();
             },
             (error : any) => {
@@ -69,12 +82,14 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           }
         } else if (investment instanceof PropertyInvestment) {
           let propertyInvestment : PropertyInvestment = <PropertyInvestment>investment;
-          this.wealthAmount += (propertyInvestment.property.marketValue * (data.todayCurrencyRates[this.utilService.formatToday()][`USD${propertyInvestment.property.marketValueUnit}`] || 1)) * myPercentage / 100;
+          this.wealthAmount += (this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit)
+              - (propertyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(propertyInvestment.buyingDate)][`USD${propertyInvestment.loanAmountUnit}`] || 1)))
+              * myPercentage / 100;
           this.calculateProgressBarWealthValue();
         }
       }
     }, (error : any) => {
-      this.appService.consoleLog('error', `${methodTrace} There was an error when trying to combine today currency rates with user investments observables.`, error);
+      this.appService.consoleLog('error', `${methodTrace} There was an error when trying retrieve currency rates with user investments observables.`, error);
       this.user = null;
     });
 

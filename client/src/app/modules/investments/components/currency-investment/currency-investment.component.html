@@ -3,21 +3,33 @@
     <div mat-card-avatar class="header-image">
         <img [src]="'/assets/images/' + investment.type + '/' + investment.unit + '.png'" [alt]="investment.type" />
     </div>
-    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>
-    <mat-card-subtitle>
-      today at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>
-    </mat-card-subtitle>
+    <mat-card-title>{{investment.unit}}</mat-card-title>
+    <mat-card-subtitle>{{investment.amount}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="card__content">
     Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> 
     <br>
+    on {{investment.buyingDate | date}}
+    <br>
+    Buying price: {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}
+    <br>
+    Today currency value: 
+    <span [class.color__accent]="currentPrice >= buyingPrice" 
+      [class.color__red]="currentPrice < buyingPrice">
 
-    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}
+      <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>
+    </span>
+    <br>
+    <span *ngIf="investment.loanAmount">
+      Loan amount: <strong>{{ loanAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>
+    </span>
 
     <div [class.color__accent]="investmentReturn >= investmentValueWhenBought" 
         [class.color__red]="investmentReturn < investmentValueWhenBought">
       <br>
       ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)
+      <br>
+      Net ROI: <strong>{{ investmentReturn - investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>
     </div>
 
     <!-- Team -->

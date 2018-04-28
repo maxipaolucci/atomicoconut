@@ -14,7 +14,12 @@
     <br>
     Buying price: {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}
     <br>
-    Today market value at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>
+    Today market value: 
+    <span [class.color__accent]="currentPrice >= buyingPrice" 
+      [class.color__red]="currentPrice < buyingPrice">
+
+      <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>
+    </span>
     <br>
     <span *ngIf="investment.loanAmount">
       Loan amount: <strong>{{ loanAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{loanAmount / buyingPrice | percent}} of purchase price)
@@ -24,6 +29,8 @@
         [class.color__red]="investmentReturn < investmentAmount">
       <br>
       ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentAmount | percent : '1.1-2'}})
+      <br>
+      Net ROI: <strong>{{ investmentReturn - investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>
     </div>
 
     <!-- Team -->

@@ -38,6 +38,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   investmentReturn : number = 0;
   investmentValueWhenBought : number = 0;
   currentPrice : number = 0;
+  loanAmount : number = 0;
   actionRunning : boolean = false;
   user : User = null;
   team : Team = null; //if the investment has a tema this will be populated with the full info of the team
@@ -75,10 +76,14 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       }).switchMap(
         (data) => {
           this.currentPrice = data.cryptoRates.price;
-          this.investmentAmount = this.investment.investmentAmount * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1;
-          this.buyingPrice = this.investment.buyingPrice * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1;
+          //the investment amount was paid on the date of the investment so we need to convert using that day rates
+          this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
+          //the loan amount was requested on the date of the investment so we need to convert using that day rates
+          this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
+          //the buying price (of the crypto) was paid on the date of the investment so we need to convert using that day rates
+          this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
           this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
-          this.investmentReturn = this.currentPrice * this.investment.amount;
+          this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
 
           return this.teams$;
         }
@@ -93,11 +98,15 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       //currency exchange
       newSubscription = currencyRatesAndUser$.switchMap(
         (data) => {
-          this.currentPrice = 1 / data.currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1;
-          this.investmentAmount = this.investment.investmentAmount * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1;
-          this.buyingPrice = this.investment.buyingPrice * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1;
+          this.currentPrice = 1 / (data.currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1);
+          //the investment amount was paid on the date of the investment so we need to convert using that day rates
+          this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
+          //the loan amount was requested on the date of the investment so we need to convert using that day rates
+          this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
+          //the buying price (of the currency) was paid on the date of the investment so we need to convert using that day rates
+          this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
           this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
-          this.investmentReturn = this.currentPrice * this.investment.amount;
+          this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
 
           return this.teams$;
         }

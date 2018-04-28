@@ -67,20 +67,15 @@ export class PropertyInvestmentComponent implements OnInit {
     
     newSubscription = currencyRatesAndUser$.switchMap(
       (data) => {
-        this.currentPrice = this.investment.property.marketValue * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.property.marketValueUnit}`] || 1;
-        //this.currentPrice = this.currencyExchangeService.getUsdValueOf(this.investment.property.marketValue, this.investment.property.marketValueUnit);
-        this.investmentAmount = this.currencyExchangeService.getUsdValueOf(this.investment.investmentAmount, this.investment.investmentAmountUnit);
-        this.loanAmount = this.currencyExchangeService.getUsdValueOf(this.investment.loanAmount, this.investment.loanAmountUnit);
-        this.buyingPrice = this.currencyExchangeService.getUsdValueOf(this.investment.buyingPrice, this.investment.buyingPriceUnit);
+        //market value should be always up to date so no rate conversion is required
+        this.currentPrice = this.currencyExchangeService.getUsdValueOf(this.investment.property.marketValue, this.investment.property.marketValueUnit);
+        //the investment amount was paid on the date of the investment so we need to convert using that day rates
+        this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
+        //the loan amount was requested on the date of the investment so we need to convert using that day rates
+        this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
+        //the buying price (of the property) was requested on the date of the investment so we need to convert using that day rates
+        this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
         this.investmentReturn = this.currentPrice - this.loanAmount;
-
-        //delete this group
-        this.currentPrice = this.investment.property.marketValue * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.property.marketValueUnit}`] || 1;
-        this.investmentAmount = this.investment.investmentAmount * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1;
-        this.buyingPrice = this.investment.buyingPrice * data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1;
-        this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
-        this.investmentReturn = this.currentPrice * this.investment.amount;
-
 
         return this.teams$;
       }

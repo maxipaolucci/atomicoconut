@@ -853,22 +853,35 @@ var WelcomeComponent = /** @class */ (function () {
             { displayName: 'Properties', url: '/properties', selected: false },
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
-        var userInvestments$ = this.setUserAndGetInvestments();
-        var todayCurrencyRates$ = this.currencyExchangeService.getCurrencyRates();
-        var newSubscription = userInvestments$.combineLatest(todayCurrencyRates$, function (userInvestments, todayCurrencyRates) {
-            return { userInvestments: userInvestments, todayCurrencyRates: todayCurrencyRates };
-        }).subscribe(function (data) {
+        var currentUserInvestments = [];
+        var newSubscription = this.setUserAndGetInvestments().switchMap(function (userInvestments) {
+            currentUserInvestments = userInvestments;
+            var investmentsDates = userInvestments.map(function (investment) {
+                if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
+                    return _this.utilService.formatDate(investment.buyingDate);
+                }
+                else if (investment instanceof PropertyInvestment_1.PropertyInvestment) {
+                    return _this.utilService.formatDate(investment.buyingDate);
+                }
+                return _this.utilService.formatToday(); //this should never happen. BuyingDate is required in investments
+            });
+            return _this.currencyExchangeService.getCurrencyRates(investmentsDates);
+        }).subscribe(function (currencyRates) {
             var _loop_1 = function (investment) {
                 var myPercentage = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
                 if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
                     var currencyInvestment_2 = investment;
                     if (investment.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
-                        _this.wealthAmount += (currencyInvestment_2.amount * (data.todayCurrencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment_2.unit] || 1)) * myPercentage / 100;
+                        _this.wealthAmount += ((currencyInvestment_2.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment_2.unit] || 1))
+                            - (currencyInvestment_2.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment_2.buyingDate)]["USD" + currencyInvestment_2.loanAmountUnit] || 1)))
+                            * myPercentage / 100;
                         _this.calculateProgressBarWealthValue();
                     }
                     else if (investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
                         _this.currencyExchangeService.getCryptoRates(currencyInvestment_2.unit).take(1).subscribe(function (rates) {
-                            _this.wealthAmount += (currencyInvestment_2.amount * rates.price) * myPercentage / 100;
+                            _this.wealthAmount += ((currencyInvestment_2.amount * rates.price)
+                                - (currencyInvestment_2.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment_2.buyingDate)]["USD" + currencyInvestment_2.loanAmountUnit] || 1)))
+                                * myPercentage / 100;
                             _this.calculateProgressBarWealthValue();
                         }, function (error) {
                             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_2.unit + " rates data > ", error);
@@ -878,17 +891,19 @@ var WelcomeComponent = /** @class */ (function () {
                 }
                 else if (investment instanceof PropertyInvestment_1.PropertyInvestment) {
                     var propertyInvestment = investment;
-                    _this.wealthAmount += (propertyInvestment.property.marketValue * (data.todayCurrencyRates[_this.utilService.formatToday()]["USD" + propertyInvestment.property.marketValueUnit] || 1)) * myPercentage / 100;
+                    _this.wealthAmount += (_this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit)
+                        - (propertyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(propertyInvestment.buyingDate)]["USD" + propertyInvestment.loanAmountUnit] || 1)))
+                        * myPercentage / 100;
                     _this.calculateProgressBarWealthValue();
                 }
             };
             //iterate investments and sum returns using dated rates.
-            for (var _i = 0, _a = data.userInvestments; _i < _a.length; _i++) {
-                var investment = _a[_i];
+            for (var _i = 0, currentUserInvestments_1 = currentUserInvestments; _i < currentUserInvestments_1.length; _i++) {
+                var investment = currentUserInvestments_1[_i];
                 _loop_1(investment);
             }
         }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error when trying to combine today currency rates with user investments observables.", error);
+            _this.appService.consoleLog('error', methodTrace + " There was an error when trying retrieve currency rates with user investments observables.", error);
             _this.user = null;
         });
         this.subscription.add(newSubscription);
@@ -1648,7 +1663,7 @@ exports.CurrencyInvestmentFormComponent = CurrencyInvestmentFormComponent;
 /***/ "./src/app/modules/investments/components/currency-investment/currency-investment.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/' + investment.type + '/' + investment.unit + '.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investment.unit}} ({{investment.amount}})</mat-card-title>\r\n    <mat-card-subtitle>\r\n      today at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>\r\n    </mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}} at {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}\r\n\r\n    <div [class.color__accent]=\"investmentReturn >= investmentValueWhenBought\" \r\n        [class.color__red]=\"investmentReturn < investmentValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let portion of investmentDistribution\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"portion.member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{portion.member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>{{ portion.percentage }}%</p>\r\n                <p>{{ portion.money | currency : 'USD' : 'code' : '1.2-2' }}</p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"card__actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/crypto/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
+module.exports = "<mat-card class=\"currency-card\">\r\n  <mat-card-header>\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/' + investment.type + '/' + investment.unit + '.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investment.unit}}</mat-card-title>\r\n    <mat-card-subtitle>{{investment.amount}}</mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> \r\n    <br>\r\n    on {{investment.buyingDate | date}}\r\n    <br>\r\n    Buying price: {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}\r\n    <br>\r\n    Today currency value: \r\n    <span [class.color__accent]=\"currentPrice >= buyingPrice\" \r\n      [class.color__red]=\"currentPrice < buyingPrice\">\r\n\r\n      <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>\r\n    </span>\r\n    <br>\r\n    <span *ngIf=\"investment.loanAmount\">\r\n      Loan amount: <strong>{{ loanAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>\r\n    </span>\r\n\r\n    <div [class.color__accent]=\"investmentReturn >= investmentValueWhenBought\" \r\n        [class.color__red]=\"investmentReturn < investmentValueWhenBought\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)\r\n      <br>\r\n      Net ROI: <strong>{{ investmentReturn - investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let portion of investmentDistribution\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"portion.member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{portion.member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>{{ portion.percentage }}%</p>\r\n                <p>{{ portion.money | currency : 'USD' : 'code' : '1.2-2' }}</p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"card__actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/crypto/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
 
 /***/ }),
 
@@ -1704,6 +1719,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         this.investmentReturn = 0;
         this.investmentValueWhenBought = 0;
         this.currentPrice = 0;
+        this.loanAmount = 0;
         this.actionRunning = false;
         this.user = null;
         this.team = null; //if the investment has a tema this will be populated with the full info of the team
@@ -1741,10 +1757,14 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
                 };
             }).switchMap(function (data) {
                 _this.currentPrice = data.cryptoRates.price;
-                _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
-                _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
+                //the investment amount was paid on the date of the investment so we need to convert using that day rates
+                _this.investmentAmount = _this.investment.investmentAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.investmentAmountUnit] || 1);
+                //the loan amount was requested on the date of the investment so we need to convert using that day rates
+                _this.loanAmount = _this.investment.loanAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.loanAmountUnit] || 1);
+                //the buying price (of the crypto) was paid on the date of the investment so we need to convert using that day rates
+                _this.buyingPrice = _this.investment.buyingPrice / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.buyingPriceUnit] || 1);
                 _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
-                _this.investmentReturn = _this.currentPrice * _this.investment.amount;
+                _this.investmentReturn = _this.currentPrice * _this.investment.amount - _this.loanAmount;
                 return _this.teams$;
             }).subscribe(function (teams) {
                 _this.setInvestmentTeamData(teams);
@@ -1756,11 +1776,15 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         else {
             //currency exchange
             newSubscription = currencyRatesAndUser$.switchMap(function (data) {
-                _this.currentPrice = 1 / data.currencyRates[_this.utilService.formatToday()]["USD" + _this.investment.unit] || 1;
-                _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
-                _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
+                _this.currentPrice = 1 / (data.currencyRates[_this.utilService.formatToday()]["USD" + _this.investment.unit] || 1);
+                //the investment amount was paid on the date of the investment so we need to convert using that day rates
+                _this.investmentAmount = _this.investment.investmentAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.investmentAmountUnit] || 1);
+                //the loan amount was requested on the date of the investment so we need to convert using that day rates
+                _this.loanAmount = _this.investment.loanAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.loanAmountUnit] || 1);
+                //the buying price (of the currency) was paid on the date of the investment so we need to convert using that day rates
+                _this.buyingPrice = _this.investment.buyingPrice / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.buyingPriceUnit] || 1);
                 _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
-                _this.investmentReturn = _this.currentPrice * _this.investment.amount;
+                _this.investmentReturn = _this.currentPrice * _this.investment.amount - _this.loanAmount;
                 return _this.teams$;
             }).subscribe(function (teams) {
                 _this.setInvestmentTeamData(teams);
@@ -2857,7 +2881,7 @@ exports.PropertyInvestmentFormComponent = PropertyInvestmentFormComponent;
 /***/ "./src/app/modules/investments/components/property-investment/property-investment.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"investment__card\">\r\n  <mat-card-header routerLink=\"/properties/{{investment.property.type}}/edit/{{investment.property.id}}\">\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/house.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investmentTitle}}</mat-card-title>\r\n    <mat-card-subtitle>{{investment.property.address.description}}</mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}}\r\n    <br>\r\n    Buying price: {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}\r\n    <br>\r\n    Today market value at <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>\r\n    <br>\r\n    <span *ngIf=\"investment.loanAmount\">\r\n      Loan amount: <strong>{{ loanAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{loanAmount / buyingPrice | percent}} of purchase price)\r\n    </span>\r\n    \r\n    <div [class.color__accent]=\"investmentReturn >= investmentAmount\" \r\n        [class.color__red]=\"investmentReturn < investmentAmount\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentAmount | percent : '1.1-2'}})\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let portion of investmentDistribution\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"portion.member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{portion.member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>{{ portion.percentage }}%</p>\r\n                <p>{{ portion.money | currency : 'USD' : 'code' : '1.2-2' }}</p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"card__actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/property/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
+module.exports = "<mat-card class=\"investment__card\">\r\n  <mat-card-header routerLink=\"/properties/{{investment.property.type}}/edit/{{investment.property.id}}\">\r\n    <div mat-card-avatar class=\"header-image\">\r\n        <img [src]=\"'/assets/images/house.png'\" [alt]=\"investment.type\" />\r\n    </div>\r\n    <mat-card-title>{{investmentTitle}}</mat-card-title>\r\n    <mat-card-subtitle>{{investment.property.address.description}}</mat-card-subtitle>\r\n  </mat-card-header>\r\n  <mat-card-content class=\"card__content\">\r\n    Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> \r\n    <br>\r\n\r\n    on {{investment.buyingDate | date}}\r\n    <br>\r\n    Buying price: {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}\r\n    <br>\r\n    Today market value: \r\n    <span [class.color__accent]=\"currentPrice >= buyingPrice\" \r\n      [class.color__red]=\"currentPrice < buyingPrice\">\r\n\r\n      <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>\r\n    </span>\r\n    <br>\r\n    <span *ngIf=\"investment.loanAmount\">\r\n      Loan amount: <strong>{{ loanAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{loanAmount / buyingPrice | percent}} of purchase price)\r\n    </span>\r\n    \r\n    <div [class.color__accent]=\"investmentReturn >= investmentAmount\" \r\n        [class.color__red]=\"investmentReturn < investmentAmount\">\r\n      <br>\r\n      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentAmount | percent : '1.1-2'}})\r\n      <br>\r\n      Net ROI: <strong>{{ investmentReturn - investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>\r\n    </div>\r\n\r\n    <!-- Team -->\r\n    <mat-expansion-panel *ngIf=\"team\" class=\"team-panel\">\r\n      <mat-expansion-panel-header>\r\n        <mat-panel-title>\r\n          {{team.name}}\r\n        </mat-panel-title>\r\n        <mat-panel-description>\r\n          \r\n        </mat-panel-description>\r\n      </mat-expansion-panel-header>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"team-panel__content\">\r\n\r\n        <section class=\"members\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n          <div *ngFor=\"let portion of investmentDistribution\" fxLayout=\"row\" fxLayoutGap=\"10px\" class=\"member\">\r\n            <img class=\"member__avatar\" [src]=\"portion.member.avatar\"/>\r\n            <div fxFlex class=\"member__info\" fxLayout=\"column\">\r\n              <p class=\"member__name\">{{portion.member.name}}</p>\r\n              <!-- <p class=\"member__email\">{{member.email}}</p> -->\r\n              <div class=\"member__money\" fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-between end\">\r\n                <p>{{ portion.percentage }}%</p>\r\n                <p>{{ portion.money | currency : 'USD' : 'code' : '1.2-2' }}</p>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </section>\r\n      </div>\r\n      \r\n    </mat-expansion-panel>\r\n    <!-- EOF Team -->\r\n\r\n    <section class=\"card__actions\" fxLayout=\"row\" fxLayoutAlign=\"end none\" fxLayoutGap=\"10px\">\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab routerLink=\"/investments/property/edit/{{investment.id}}\" color=\"primary\" (click)=\"actionRunning = true\">\r\n        <mat-icon aria-label=\"Edit Investment\">edit</mat-icon>\r\n      </button>\r\n\r\n      <button *ngIf=\"!actionRunning\" mat-mini-fab color=\"warn\" (click)=\"openDeleteDialog()\">\r\n        <mat-icon aria-label=\"Delete investment\">delete</mat-icon>\r\n      </button>\r\n\r\n      <mat-progress-spinner *ngIf=\"actionRunning\"\r\n        class=\"progress-spinner progress-spinner--action\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </mat-card-content>\r\n</mat-card>"
 
 /***/ }),
 
@@ -2944,10 +2968,14 @@ var PropertyInvestmentComponent = /** @class */ (function () {
             return { user: user, currencyRates: currencyRates };
         }); //(currency rates and user) source
         newSubscription = currencyRatesAndUser$.switchMap(function (data) {
+            //market value should be always up to date so no rate conversion is required
             _this.currentPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.property.marketValue, _this.investment.property.marketValueUnit);
-            _this.investmentAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.investmentAmount, _this.investment.investmentAmountUnit);
-            _this.loanAmount = _this.currencyExchangeService.getUsdValueOf(_this.investment.loanAmount, _this.investment.loanAmountUnit);
-            _this.buyingPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.buyingPrice, _this.investment.buyingPriceUnit);
+            //the investment amount was paid on the date of the investment so we need to convert using that day rates
+            _this.investmentAmount = _this.investment.investmentAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.investmentAmountUnit] || 1);
+            //the loan amount was requested on the date of the investment so we need to convert using that day rates
+            _this.loanAmount = _this.investment.loanAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.loanAmountUnit] || 1);
+            //the buying price (of the property) was requested on the date of the investment so we need to convert using that day rates
+            _this.buyingPrice = _this.investment.buyingPrice / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.buyingPriceUnit] || 1);
             _this.investmentReturn = _this.currentPrice - _this.loanAmount;
             return _this.teams$;
         }).subscribe(function (teams) {
@@ -3178,6 +3206,11 @@ var CurrencyExchangeService = /** @class */ (function () {
             throw res;
         }
     };
+    /**
+     * Get the value on USD at today's rate of the amount provided in a foreign unit
+     * @param amount
+     * @param unit
+     */
     CurrencyExchangeService.prototype.getUsdValueOf = function (amount, unit) {
         if (unit !== 'USD') {
             var today = this.utilService.formatToday();

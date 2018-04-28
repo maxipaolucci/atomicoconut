@@ -62,7 +62,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Investments', url: '/investments', selected: false }
     ]);
-
+    
     //generates a user source object from authUser from resolver
     const user$ = this.route.data.map((data: { authUser: User }) => data.authUser);
 
