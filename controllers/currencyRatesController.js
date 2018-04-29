@@ -4,7 +4,7 @@ const md5 = require('md5');
 const promisify = require('es6-promisify');
 const { getMessage } = require('../handlers/errorHandlers');
 const CurrencyRate = mongoose.model('CurrencyRate');
-const { ANONYMOUS_USER, FIXERIO_KEY, CURRENCYLAYER_KEY } = require('../constants/constants');
+const { ANONYMOUS_USER } = require('../constants/constants');
 const axios = require('axios');
 
 const errorTrace = 'currencyRatesController >';
@@ -153,7 +153,7 @@ const getRatesFromWebservice = async (date, source = 'USD', userEmail) => {
     source = 'USD'; //the free plan we have only supports USD
     
     console.log(`${methodTrace} ${getMessage('message', 1047, userEmail, true, 'CurrencyLayer Service API', 'date', date)}`); 
-    let response = await axios.get(`http://apilayer.net/api/historical?date=${date}&access_key=${CURRENCYLAYER_KEY}&source=${source}&format=1`);
+    let response = await axios.get(`http://apilayer.net/api/historical?date=${date}&access_key=${process.env.CURRENCYLAYER_KEY}&source=${source}&format=1`);
     if (response && response.status === 200 && response.data) {
         const data = response.data;
         if (data.success === true && data.quotes) {
@@ -163,7 +163,7 @@ const getRatesFromWebservice = async (date, source = 'USD', userEmail) => {
             //if the service failed because the format of the date, we are probably asking today date or a future date because of the client timezone => return latest rates available in the system
             console.log(`${methodTrace} ${getMessage('message', 1049, userEmail, true, 'CurrencyLayer Service API')}`); 
             
-            response = await axios.get(`http://apilayer.net/api/live?access_key=${CURRENCYLAYER_KEY}&source=${source}&format=1`);
+            response = await axios.get(`http://apilayer.net/api/live?access_key=${process.env.CURRENCYLAYER_KEY}&source=${source}&format=1`);
             if (response && response.status === 200 && response.data) {
                 const data = response.data;
                 
