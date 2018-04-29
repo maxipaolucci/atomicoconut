@@ -38,7 +38,8 @@ export class AppComponent implements OnInit {
     }).subscribe(
       (currencyRates : any) => {
         if (currencyRates === null){
-          return false;
+          this.todayUserPrefRate = null;
+          return;
         }
 
         this.todayUserPrefRate = currencyRates[this.utilService.formatToday()][`USD${this.user.currency}`];

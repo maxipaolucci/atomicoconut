@@ -347,7 +347,8 @@ var AppComponent = /** @class */ (function () {
             return of_1.of(null); //is the user had not configure a preferred currency then we don't need to show the currency toolbar
         }).subscribe(function (currencyRates) {
             if (currencyRates === null) {
-                return false;
+                _this.todayUserPrefRate = null;
+                return;
             }
             _this.todayUserPrefRate = currencyRates[_this.utilService.formatToday()]["USD" + _this.user.currency];
             _this.appService.consoleLog('info', methodTrace + " Currency exchange rates successfully loaded!");
