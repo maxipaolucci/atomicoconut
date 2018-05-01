@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import moment = require('moment'); //the import ES6 doesnot work from moment yet
-//import { moment } from 'moment';
+import * as moment from 'moment';
 
 @Injectable()
 export class UtilService {
