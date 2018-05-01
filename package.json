@@ -10,9 +10,9 @@
     "watch": "nodemon ./start.js --ignore public/",
     "dev": "concurrently \"npm run watch\" \"npm run assets\" --names \"💻,📦\" --prefix name",
     "assets": "webpack -w --display-max-modules 0",
-    "dumpData": "node ./data/load-sample-data.js",
-    "deleteData": "node ./data/load-sample-data.js --delete",
-    "loadData": "node ./data/load-sample-data.js --load"
+    "dumpData": "node ./data/data-handler.js",
+    "deleteData": "node ./data/data-handler.js --delete",
+    "loadData": "node ./data/data-handler.js --load"
   },
   "browserslist": "last 2 versions",
   "dependencies": {

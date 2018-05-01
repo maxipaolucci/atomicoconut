@@ -59,6 +59,7 @@ variables.env
 
 # data
 data/**/*
+!data/data-handler.js
 
 # Public folder
 public/app/index.html
