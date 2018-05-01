@@ -27,6 +27,11 @@ const Team = require('../models/Team');
 const TeamUser = require('../models/Team_User');
 const Investment = require('../models/Investment');
 const CurrencyInvestment = require('../models/CurrencyInvestment');
+const PropertyInvestment = require('../models/PropertyInvestment');
+const Property = require('../models/Property');
+const House = require('../models/House');
+const CurrencyRate = require('../models/CurrencyRate');
+
 
 async function deleteData() {
   console.log(`Started deleting data from ${environment.toUpperCase()}...`);
@@ -46,6 +51,15 @@ async function deleteData() {
     console.log(`Investment table is empty.`);
     await CurrencyInvestment.remove();
     console.log(`CurrencyInvestment table is empty.`);
+    await PropertyInvestment.remove();
+    console.log(`PropertyInvestment table is empty.`);
+    await Property.remove();
+    console.log(`Property table is empty.`);
+    await House.remove();
+    console.log(`House table is empty.`);
+    await CurrencyRate.remove();
+    console.log(`CurrencyRate table is empty.`);
+
 
     console.log('\n\n👍👍👍👍👍👍👍👍 Done!. To load sample data, run\n\n\t npm run loadData [prod|test|dev]\n\n');
     process.exit();
@@ -68,6 +82,10 @@ async function loadData(source = 'dev') {
     const teamusers = jsonfile.readFileSync(`${__dirname}/${source}/teamusers.json`);
     const investments = jsonfile.readFileSync(`${__dirname}/${source}/investments.json`);
     const currencyinvestments = jsonfile.readFileSync(`${__dirname}/${source}/currencyinvestments.json`);
+    const propertyinvestments = jsonfile.readFileSync(`${__dirname}/${source}/propertyinvestments.json`);
+    const properties = jsonfile.readFileSync(`${__dirname}/${source}/properties.json`);
+    const houses = jsonfile.readFileSync(`${__dirname}/${source}/houses.json`);
+    const currencyrates = jsonfile.readFileSync(`${__dirname}/${source}/currencyrates.json`);
 
     if (users.length) {
       await User.insertMany(users);
@@ -102,6 +120,26 @@ async function loadData(source = 'dev') {
     if (currencyinvestments.length) {
       await CurrencyInvestment.insertMany(currencyinvestments);
       console.log(`${currencyinvestments.length} CurrencyInvestments loaded successfully.`);
+    }
+
+    if (propertyinvestments.length) {
+      await PropertyInvestment.insertMany(propertyinvestments);
+      console.log(`${propertyinvestments.length} PropertyInvestments loaded successfully.`);
+    }
+
+    if (properties.length) {
+      await Property.insertMany(properties);
+      console.log(`${properties.length} Properties loaded successfully.`);
+    }
+
+    if (houses.length) {
+      await House.insertMany(houses);
+      console.log(`${houses.length} Houses loaded successfully.`);
+    }
+
+    if (currencyrates.length) {
+      await CurrencyRate.insertMany(currencyrates);
+      console.log(`${currencyrates.length} Currencyrates loaded successfully.`);
     }
     
     console.log('\n\n👍👍👍👍👍👍👍👍 Done!');
@@ -144,6 +182,22 @@ async function dumpData() {
     const currencyinvestments = await CurrencyInvestment.find({}, { __v : false });
     jsonfile.writeFileSync(`${__dirname}/${environment}/currencyinvestments.json`, currencyinvestments);
     console.log(`${currencyinvestments.length} CurrencyInvestments exported to json successfully.`);
+
+    const propertyinvestments = await PropertyInvestment.find({}, { __v : false });
+    jsonfile.writeFileSync(`${__dirname}/${environment}/propertyinvestments.json`, propertyinvestments);
+    console.log(`${propertyinvestments.length} propertyinvestments exported to json successfully.`);
+
+    const properties = await Property.find({}, { __v : false });
+    jsonfile.writeFileSync(`${__dirname}/${environment}/properties.json`, properties);
+    console.log(`${properties.length} properties exported to json successfully.`);
+
+    const houses = await House.find({}, { __v : false });
+    jsonfile.writeFileSync(`${__dirname}/${environment}/houses.json`, houses);
+    console.log(`${houses.length} houses exported to json successfully.`);
+
+    const currencyrates = await CurrencyRate.find({}, { __v : false });
+    jsonfile.writeFileSync(`${__dirname}/${environment}/currencyrates.json`, currencyrates);
+    console.log(`${currencyrates.length} currencyrates exported to json successfully.`);
 
     console.log(`\n\n👍👍👍👍👍👍👍👍 Done!. To load the data, run\n\n\t npm run loadData [prod|test|dev]\n\n`);
     process.exit();
