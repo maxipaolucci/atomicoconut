@@ -3,9 +3,12 @@
 form {
 
   .form__actions {
-
-    .progress-bar {
-      width: 100%;
+    height: 70px;  
+  
+    .fab, .progress-spinner {
+      position: fixed;
+      left: 45%;
+      bottom: 20px;
     }
   }
 }

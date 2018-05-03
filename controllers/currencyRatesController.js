@@ -153,7 +153,11 @@ const getRatesFromWebservice = async (date, source = 'USD', userEmail) => {
     source = 'USD'; //the free plan we have only supports USD
     
     console.log(`${methodTrace} ${getMessage('message', 1047, userEmail, true, 'CurrencyLayer Service API', 'date', date)}`); 
-    let response = await axios.get(`http://apilayer.net/api/historical?date=${date}&access_key=${process.env.CURRENCYLAYER_KEY}&source=${source}&format=1`);
+    
+    const url = `http://apilayer.net/api/historical?date=${date}&access_key=${process.env.CURRENCYLAYER_KEY}&source=${source}&format=1`;
+    //console.log(url);
+    
+    let response = await axios.get(url);
     if (response && response.status === 200 && response.data) {
         const data = response.data;
         if (data.success === true && data.quotes) {

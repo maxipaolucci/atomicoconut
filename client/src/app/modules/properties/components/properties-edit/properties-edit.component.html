@@ -284,18 +284,36 @@
     </section>
 
     <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--edit-property">
-      <button *ngIf="!editPropertyServiceRunning" 
+      
+      <button mat-fab *ngIf="!editPropertyServiceRunning" 
+          class="fab mat-elevation-z10 form__action" 
+          color="accent" 
+          type="submit"
+          matTooltip="Save" matTooltipPosition="left" 
+          [disabled]="!(editPropertyForm.form.valid && includedFormsValid())">
+        <!-- <mat-icon aria-label="Save">attach_money</mat-icon> -->
+        Save
+      </button>
+      
+      <mat-progress-spinner *ngIf="editPropertyServiceRunning"
+          class="progress-spinner progress-spinner--edit-property"
+          color="accent"
+          [diameter]="40" [strokeWidth]="7"
+          mode="indeterminate">
+      </mat-progress-spinner>
+      
+      <!-- <button *ngIf="!editPropertyServiceRunning" 
           class="form__action mat-raised-button" 
           mat-raised-button 
           type="submit" 
           color="accent" 
-          [disabled]="!(editPropertyForm.form.valid && includedFormsValid())">Save</button>
+          [disabled]="!(editPropertyForm.form.valid && includedFormsValid())">Save</button> -->
       
-      <mat-progress-bar *ngIf="editPropertyServiceRunning"
+      <!-- <mat-progress-bar *ngIf="editPropertyServiceRunning"
           class="progress-bar progress-bar--edit-property"
           color="primary"
           mode="indeterminate">
-      </mat-progress-bar>
+      </mat-progress-bar> -->
     </section>
   </form>
 
