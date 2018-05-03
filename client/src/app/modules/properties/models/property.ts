@@ -13,8 +13,8 @@ export class Property {
   offerPriceUnit : string;
   walkAwayPrice : number;
   walkAwayPriceUnit : string;
-  salePrice : number;
-  salePriceUnit : string;
+  purchasePrice : number;
+  purchasePriceUnit : string;
   dateListed : Date;
   reasonForSelling : string;
   marketValue : number;
@@ -39,8 +39,8 @@ export class Property {
       offerPriceUnit : string = null,
       walkAwayPrice : number = null,
       walkAwayPriceUnit : string = null,
-      salePrice : number = null,
-      salePriceUnit : string = null,
+      purchasePrice : number = null,
+      purchasePriceUnit : string = null,
       dateListed : Date = null,
       reasonForSelling : string = null,
       marketValue : number = null,
@@ -64,8 +64,8 @@ export class Property {
     this.offerPriceUnit = offerPriceUnit;
     this.walkAwayPrice = walkAwayPrice;
     this.walkAwayPriceUnit = walkAwayPriceUnit;
-    this.salePrice = salePrice;
-    this.salePriceUnit = salePriceUnit;
+    this.purchasePrice = purchasePrice;
+    this.purchasePriceUnit = purchasePriceUnit;
     this.dateListed = dateListed;
     this.reasonForSelling = reasonForSelling;
     this.marketValue = marketValue;

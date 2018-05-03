@@ -47,8 +47,8 @@ export class House extends Property {
       offerPriceUnit : string = null,
       walkAwayPrice : number = null,
       walkAwayPriceUnit : string = null,
-      salePrice : number = null,
-      salePriceUnit : string = null,
+      purchasePrice : number = null,
+      purchasePriceUnit : string = null,
       dateListed : Date = null,
       reasonForSelling : string = null,
       marketValue : number = null,
@@ -89,7 +89,7 @@ export class House extends Property {
       titleType : string = null) {
     
     super(id, type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit,
-        walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue,
+        walkAwayPrice, walkAwayPriceUnit, purchasePrice, purchasePriceUnit, dateListed, reasonForSelling, marketValue,
         marketValueUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost,
         otherCostUnit, notes);
     

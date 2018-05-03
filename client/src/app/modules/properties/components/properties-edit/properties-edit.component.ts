@@ -46,8 +46,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     offerPriceUnit : null,
     walkAwayPrice : null,
     walkAwayPriceUnit : null,
-    salePrice : null,
-    salePriceUnit : null,
+    purchasePrice : null,
+    purchasePriceUnit : null,
     dateListed : null,
     reasonForSelling : null,
     marketValue : null,
@@ -97,7 +97,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       this.user = data.user;
       this.model.email = data.user.email;
       this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit = 
-          this.model.salePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit = 
+          this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit = 
           this.model.maintenanceCostUnit = this.model.otherCostUnit = this.user.currency;
       this.model.id = data.propertyId || null;
 
@@ -163,8 +163,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
         this.model.offerPriceUnit = property.offerPriceUnit;
         this.model.walkAwayPrice = property.walkAwayPrice;
         this.model.walkAwayPriceUnit = property.walkAwayPriceUnit;
-        this.model.salePrice = property.salePrice;
-        this.model.salePriceUnit = property.salePriceUnit;
+        this.model.purchasePrice = property.purchasePrice;
+        this.model.purchasePriceUnit = property.purchasePriceUnit;
         this.model.dateListed = property.dateListed;
         this.model.reasonForSelling = property.reasonForSelling;
         this.model.marketValue = property.marketValue;

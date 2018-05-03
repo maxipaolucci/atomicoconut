@@ -136,9 +136,9 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
       let buyingPrice = null;
       let buyingPriceUnit = null;
 
-      if (property.salePrice) {
-        buyingPrice = property.salePrice;
-        buyingPriceUnit = property.salePriceUnit;
+      if (property.purchasePrice) {
+        buyingPrice = property.purchasePrice;
+        buyingPriceUnit = property.purchasePriceUnit;
       } else if (property.offerPrice) {
         buyingPrice = property.offerPrice;
         buyingPriceUnit = property.offerPriceUnit;

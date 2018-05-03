@@ -72,7 +72,7 @@ export class PropertiesService {
         
         if (data.propertyType === PROPERTY_TYPES.HOUSE) {
           result = new House(data._id, data.propertyType, address, createdBy, data.propertyTypeData.landArea, data.propertyTypeData.floorArea, data.askingPrice, data.askingPriceUnit,
-              data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, 
+              data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.purchasePrice, data.purchasePriceUnit, data.dateListed, 
               data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit,
               data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, 
               data.description, data.otherCost, data.otherCostUnit, data.notes, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces,
@@ -121,7 +121,7 @@ export class PropertiesService {
 
           if (data.propertyType === PROPERTY_TYPES.HOUSE) {
             properties.push(new House(data._id, data.propertyType, address, createdBy, data.landArea, data.floorArea, data.askingPrice, data.askingPriceUnit,
-                data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, 
+                data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.purchasePrice, data.purchasePriceUnit, data.dateListed, 
                 data.reasonForSelling, data.marketValue, data.marketValueUnit, data.registeredValue, data.registeredValueUnit, data.rates, data.ratesUnit,
                 data.insurance, data.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, 
                 data.description, data.otherCost, data.otherCostUnit, data.notes, data.capitalGrowth, data.bedrooms, data.bathrooms, data.parkingSpaces,

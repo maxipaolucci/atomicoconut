@@ -91,7 +91,7 @@
     <house-figures-results
         title="Property figures"
         subtitle="This figures asumes that all of the currency values in the form are in the same unit."
-        [purchasePrice]="model.salePrice || model.offerPrice || model.askingPrice || model.walkAwayPrice || 0"
+        [purchasePrice]="model.purchasePrice || model.offerPrice || model.askingPrice || model.walkAwayPrice || 0"
         [capitalGrowth]="model.propertyTypeData.capitalGrowth || 0"
         [marketValue]="model.marketValue"
         [loanCoverage]="modelHouseFiguresResults.loanCoverage"

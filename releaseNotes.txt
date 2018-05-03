@@ -1,0 +1,10 @@
+[quickFixes]
+
+DB changes
+----------
+----------
+
+property table:
+---------------
+salePrice > purchasePrice (all the existent properties will show this new field empty)
+salePriceUnit > purchasePriceUnit (all the existent properties will show this new field empty)
