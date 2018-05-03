@@ -1,13 +1,18 @@
 <h2 mat-dialog-title>Select a property</h2>
 
 <mat-dialog-content>
-  <div fxLayout="column" class="container__yes-no-dialog">
+  <div fxLayout="column" fxLayoutAlign="none center" class="container__yes-no-dialog">
     <properties-table [user]="data.user" 
         [showActions]="false" 
         [allowEdition]="false"
         [loadJustUserProperties]="true" 
-        (selectedProperty)="onPropertySelected($event)"></properties-table>
-    {{data.message}}
+        (selectedProperty)="onPropertySelected($event)"
+        (onPropertiesLoad)="onPropertiesLoad($event)"></properties-table>
+      
+    <a *ngIf="showLinkToProperties" class="color__almost-white go-to-properties" (click)="dialogRef.close(null)" routerLink="/properties/house/create">
+      <mat-icon class="icon--arrow_forward">arrow_forward</mat-icon>
+      Go and add one...
+    </a>
   </div>
 </mat-dialog-content>
 

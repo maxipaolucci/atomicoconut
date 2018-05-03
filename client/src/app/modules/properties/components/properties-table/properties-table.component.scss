@@ -26,8 +26,11 @@
 .no-properties__card {
   text-align: center;
 
-  md-card-content p {
-    margin-bottom: 0;
+  mat-card-content {
+    
+    p {
+      margin-bottom: 0;
+    }
   }
 }
 

@@ -22,6 +22,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   @Input() loadJustUserProperties : boolean = false; //if false when it get properties loads current user properties plus properties of investments where the user has a portion of it.
 
   @Output() selectedProperty: EventEmitter<Property> = new EventEmitter();
+  @Output() onPropertiesLoad: EventEmitter<number> = new EventEmitter();
   
   @ViewChild('propertiesPaginator') propertiesTablePaginator : MatPaginator;
   @ViewChild(MatSort) propertiesSort : MatSort;
@@ -106,6 +107,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
         this.propertiesDataSource.paginator = this.propertiesTablePaginator;
 
         this.getPropertiesServiceRunning = false;
+        this.onPropertiesLoad.emit(properties.length);
       },
       (error : any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);

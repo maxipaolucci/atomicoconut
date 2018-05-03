@@ -301,19 +301,10 @@ module.exports = ".toolbar__primary {\n  position: fixed;\n  top: 0;\n  left: 0;
 /***/ }),
 
 /***/ "./src/app/app.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_users_models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_investments_currency_exchange_service__ = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__util_service__ = __webpack_require__("./src/app/util.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_observable_of__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -323,15 +314,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
 var AppComponent = /** @class */ (function () {
     function AppComponent(router, appService, usersService, currencyExchangeService, utilService) {
         this.router = router;
@@ -352,7 +344,7 @@ var AppComponent = /** @class */ (function () {
             if (_this.user && _this.user.currency && _this.user.currency !== 'USD') {
                 return _this.currencyExchangeService.getCurrencyRates();
             }
-            return Object(__WEBPACK_IMPORTED_MODULE_8_rxjs_observable_of__["a" /* of */])(null); //is the user had not configure a preferred currency then we don't need to show the currency toolbar
+            return of_1.of(null); //is the user had not configure a preferred currency then we don't need to show the currency toolbar
         }).subscribe(function (currencyRates) {
             if (currencyRates === null) {
                 _this.todayUserPrefRate = null;
@@ -384,7 +376,7 @@ var AppComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > setUser() > "; //for debugging
         this.usersService.getAuthenticatedUser().subscribe(function (data) {
             if (data && data.email) {
-                _this.user = new __WEBPACK_IMPORTED_MODULE_3__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, null, null, data.currency);
+                _this.user = new user_1.User(data.name, data.email, data.avatar, null, null, data.currency);
                 _this.usersService.setUser(_this.user);
             }
             else {
@@ -410,134 +402,111 @@ var AppComponent = /** @class */ (function () {
         });
     };
     AppComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-root',
             template: __webpack_require__("./src/app/app.component.html"),
             styles: [__webpack_require__("./src/app/app.component.scss")],
-            providers: [__WEBPACK_IMPORTED_MODULE_5__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]]
+            providers: [main_navigator_service_1.MainNavigatorService]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_6__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */],
-            __WEBPACK_IMPORTED_MODULE_7__util_service__["a" /* UtilService */]])
+        __metadata("design:paramtypes", [router_1.Router, app_service_1.AppService, users_service_1.UsersService, currency_exchange_service_1.CurrencyExchangeService,
+            util_service_1.UtilService])
     ], AppComponent);
     return AppComponent;
 }());
-
+exports.AppComponent = AppComponent;
 
 
 /***/ }),
 
 /***/ "./src/app/app.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_animations__ = __webpack_require__("./node_modules/@angular/platform-browser/esm5/animations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_hammerjs__ = __webpack_require__("./node_modules/hammerjs/hammer.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_hammerjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_hammerjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_routing_module__ = __webpack_require__("./src/app/app.routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__("./src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util_service__ = __webpack_require__("./src/app/util.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__auth_resolver_service__ = __webpack_require__("./src/app/auth-resolver.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__modules_investments_currency_exchange_service__ = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__auth_guard__ = __webpack_require__("./src/app/auth.guard.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__modules_shared_custom_material_design_module__ = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modules_users_users_module__ = __webpack_require__("./src/app/modules/users/users.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__modules_teams_teams_module__ = __webpack_require__("./src/app/modules/teams/teams.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__modules_investments_investments_module__ = __webpack_require__("./src/app/modules/investments/investments.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__modules_calculators_calculators_module__ = __webpack_require__("./src/app/modules/calculators/calculators.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_welcome_welcome_component__ = __webpack_require__("./src/app/components/welcome/welcome.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__modules_shared_shared_module__ = __webpack_require__("./src/app/modules/shared/shared.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__modules_properties_properties_module__ = __webpack_require__("./src/app/modules/properties/properties.module.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var platform_browser_1 = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
+var animations_1 = __webpack_require__("./node_modules/@angular/platform-browser/esm5/animations.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+__webpack_require__("./node_modules/hammerjs/hammer.js");
+var app_routing_module_1 = __webpack_require__("./src/app/app.routing.module.ts");
+var app_component_1 = __webpack_require__("./src/app/app.component.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var auth_resolver_service_1 = __webpack_require__("./src/app/auth-resolver.service.ts");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var auth_guard_1 = __webpack_require__("./src/app/auth.guard.ts");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var users_module_1 = __webpack_require__("./src/app/modules/users/users.module.ts");
+var teams_module_1 = __webpack_require__("./src/app/modules/teams/teams.module.ts");
+var investments_module_1 = __webpack_require__("./src/app/modules/investments/investments.module.ts");
+var calculators_module_1 = __webpack_require__("./src/app/modules/calculators/calculators.module.ts");
+var welcome_component_1 = __webpack_require__("./src/app/components/welcome/welcome.component.ts");
+var shared_module_1 = __webpack_require__("./src/app/modules/shared/shared.module.ts");
+var properties_module_1 = __webpack_require__("./src/app/modules/properties/properties.module.ts");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["K" /* NgModule */])({
+        core_1.NgModule({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-                __WEBPACK_IMPORTED_MODULE_6__app_routing_module__["a" /* AppRoutingModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["b" /* HttpClientModule */],
-                __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["a" /* FlexLayoutModule */],
-                __WEBPACK_IMPORTED_MODULE_13__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
-                __WEBPACK_IMPORTED_MODULE_14__modules_users_users_module__["a" /* UsersModule */],
-                __WEBPACK_IMPORTED_MODULE_15__modules_teams_teams_module__["a" /* TeamsModule */],
-                __WEBPACK_IMPORTED_MODULE_16__modules_investments_investments_module__["a" /* InvestmentsModule */],
-                __WEBPACK_IMPORTED_MODULE_17__modules_calculators_calculators_module__["a" /* CalculatorsModule */],
-                __WEBPACK_IMPORTED_MODULE_19__modules_shared_shared_module__["a" /* SharedModule */],
-                __WEBPACK_IMPORTED_MODULE_20__modules_properties_properties_module__["a" /* PropertiesModule */]
+                platform_browser_1.BrowserModule,
+                animations_1.BrowserAnimationsModule,
+                app_routing_module_1.AppRoutingModule,
+                http_1.HttpClientModule,
+                flex_layout_1.FlexLayoutModule,
+                custom_material_design_module_1.CustomMaterialDesignModule,
+                users_module_1.UsersModule,
+                teams_module_1.TeamsModule,
+                investments_module_1.InvestmentsModule,
+                calculators_module_1.CalculatorsModule,
+                shared_module_1.SharedModule,
+                properties_module_1.PropertiesModule
             ],
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */],
-                __WEBPACK_IMPORTED_MODULE_18__components_welcome_welcome_component__["a" /* WelcomeComponent */]
+                app_component_1.AppComponent,
+                welcome_component_1.WelcomeComponent
             ],
-            providers: [__WEBPACK_IMPORTED_MODULE_8__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_9__util_service__["a" /* UtilService */], __WEBPACK_IMPORTED_MODULE_11__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */], __WEBPACK_IMPORTED_MODULE_10__auth_resolver_service__["a" /* AuthResolver */], __WEBPACK_IMPORTED_MODULE_12__auth_guard__["a" /* AuthGuard */]],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* AppComponent */]]
+            providers: [app_service_1.AppService, util_service_1.UtilService, currency_exchange_service_1.CurrencyExchangeService, auth_resolver_service_1.AuthResolver, auth_guard_1.AuthGuard],
+            bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
     return AppModule;
 }());
-
+exports.AppModule = AppModule;
 
 
 /***/ }),
 
 /***/ "./src/app/app.routing.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppRoutingModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_welcome_welcome_component__ = __webpack_require__("./src/app/components/welcome/welcome.component.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Created by mpaoluc on 13/01/2017.
  */
-
-
-
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var welcome_component_1 = __webpack_require__("./src/app/components/welcome/welcome.component.ts");
 var appRoutes = [
     {
         path: 'welcome',
-        component: __WEBPACK_IMPORTED_MODULE_2__components_welcome_welcome_component__["a" /* WelcomeComponent */]
+        component: welcome_component_1.WelcomeComponent
     },
     {
         path: '',
@@ -557,32 +526,27 @@ var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
     }
     AppRoutingModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
+        core_1.NgModule({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forRoot(appRoutes)
+                router_1.RouterModule.forRoot(appRoutes)
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]
+                router_1.RouterModule
             ]
         })
     ], AppRoutingModule);
     return AppRoutingModule;
 }());
-
+exports.AppRoutingModule = AppRoutingModule;
 
 
 /***/ }),
 
 /***/ "./src/app/app.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_shared_components_snackbar_simple_snackbar_simple_component__ = __webpack_require__("./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_observable_ErrorObservable__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/ErrorObservable.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -592,11 +556,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var snackbar_simple_component_1 = __webpack_require__("./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
+var ErrorObservable_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/ErrorObservable.js");
 var AppService = /** @class */ (function () {
     function AppService(snackBar) {
         this.snackBar = snackBar;
@@ -620,7 +585,7 @@ var AppService = /** @class */ (function () {
      */
     AppService.prototype.handleError = function (result) {
         console.error(result);
-        return new __WEBPACK_IMPORTED_MODULE_4_rxjs_observable_ErrorObservable__["a" /* ErrorObservable */](result.error);
+        return new ErrorObservable_1.ErrorObservable(result.error);
     };
     /**
      * Shows messages in snackbar component
@@ -633,7 +598,7 @@ var AppService = /** @class */ (function () {
     AppService.prototype.showResults = function (message, type, duration) {
         if (type === void 0) { type = 'info'; }
         if (duration === void 0) { duration = 5000; }
-        var snackBarRef = this.snackBar.openFromComponent(__WEBPACK_IMPORTED_MODULE_3__modules_shared_components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */], {
+        var snackBarRef = this.snackBar.openFromComponent(snackbar_simple_component_1.SnackbarSimpleComponent, {
             data: {
                 type: type,
                 message: message
@@ -675,33 +640,26 @@ var AppService = /** @class */ (function () {
         for (var _i = 2; _i < arguments.length; _i++) {
             params[_i - 2] = arguments[_i];
         }
-        if (__WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].showLogs) {
+        if (environment_1.environment.showLogs) {
             console[type](message, params);
         }
     };
     AppService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["A" /* MatSnackBar */]])
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [material_1.MatSnackBar])
     ], AppService);
     return AppService;
 }());
-
+exports.AppService = AppService;
 
 
 /***/ }),
 
 /***/ "./src/app/auth-resolver.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthResolver; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_users_models_account_personal__ = __webpack_require__("./src/app/modules/users/models/account-personal.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_users_models_account_finance__ = __webpack_require__("./src/app/modules/users/models/account-finance.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_users_users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_service__ = __webpack_require__("./src/app/app.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -711,13 +669,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var account_personal_1 = __webpack_require__("./src/app/modules/users/models/account-personal.ts");
+var account_finance_1 = __webpack_require__("./src/app/modules/users/models/account-finance.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var AuthResolver = /** @class */ (function () {
     function AuthResolver(appService, usersService, router) {
         this.appService = appService;
@@ -737,13 +696,13 @@ var AuthResolver = /** @class */ (function () {
             if (data && data.email) {
                 var personalInfo = null;
                 if (data.personalInfo) {
-                    personalInfo = new __WEBPACK_IMPORTED_MODULE_3__modules_users_models_account_personal__["a" /* AccountPersonal */](data.personalInfo.birthday);
+                    personalInfo = new account_personal_1.AccountPersonal(data.personalInfo.birthday);
                 }
                 var financialInfo = null;
                 if (data.financialInfo) {
-                    financialInfo = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_account_finance__["a" /* AccountFinance */](data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
+                    financialInfo = new account_finance_1.AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
                 }
-                var user = new __WEBPACK_IMPORTED_MODULE_2__modules_users_models_user__["a" /* User */](data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
+                var user = new user_1.User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
                 _this.usersService.setUser(user);
                 _this.usersService.routerRedirectUrl = null;
                 return user;
@@ -762,25 +721,21 @@ var AuthResolver = /** @class */ (function () {
         });
     };
     AuthResolver = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_5__modules_users_users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]])
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [app_service_1.AppService, users_service_1.UsersService, router_1.Router])
     ], AuthResolver);
     return AuthResolver;
 }());
-
+exports.AuthResolver = AuthResolver;
 
 
 /***/ }),
 
 /***/ "./src/app/auth.guard.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthGuard; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -790,10 +745,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var AuthGuard = /** @class */ (function () {
     function AuthGuard(appService, usersService, router) {
         this.appService = appService;
@@ -821,12 +777,12 @@ var AuthGuard = /** @class */ (function () {
         });
     };
     AuthGuard = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]])
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [app_service_1.AppService, users_service_1.UsersService, router_1.Router])
     ], AuthGuard);
     return AuthGuard;
 }());
-
+exports.AuthGuard = AuthGuard;
 
 
 /***/ }),
@@ -846,25 +802,10 @@ module.exports = ".container__net-worth {\n  margin-bottom: 10px; }\n  .containe
 /***/ }),
 
 /***/ "./src/app/components/welcome/welcome.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WelcomeComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_users_models_account_personal__ = __webpack_require__("./src/app/modules/users/models/account-personal.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_users_models_account_finance__ = __webpack_require__("./src/app/modules/users/models/account-finance.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_investments_investments_service__ = __webpack_require__("./src/app/modules/investments/investments.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__modules_investments_currency_exchange_service__ = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__modules_investments_models_currencyInvestment__ = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs_Subscription__ = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rxjs_observable_of__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__constants__ = __webpack_require__("./src/app/constants.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__util_service__ = __webpack_require__("./src/app/util.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__modules_investments_models_PropertyInvestment__ = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -874,21 +815,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var account_personal_1 = __webpack_require__("./src/app/modules/users/models/account-personal.ts");
+var account_finance_1 = __webpack_require__("./src/app/modules/users/models/account-finance.ts");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
 var WelcomeComponent = /** @class */ (function () {
     function WelcomeComponent(mainNavigatorService, usersService, appService, investmentsService, currencyExchangeService, utilService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -901,7 +843,7 @@ var WelcomeComponent = /** @class */ (function () {
         this.wealthAmount = 0;
         this.expectedWealth = 0;
         this.progressBarWealthValue = 0;
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_10_rxjs_Subscription__["a" /* Subscription */]();
+        this.subscription = new Subscription_1.Subscription();
     }
     WelcomeComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -916,10 +858,10 @@ var WelcomeComponent = /** @class */ (function () {
         var newSubscription = this.setUserAndGetInvestments().switchMap(function (userInvestments) {
             currentUserInvestments = userInvestments;
             var investmentsDates = userInvestments.map(function (investment) {
-                if (investment instanceof __WEBPACK_IMPORTED_MODULE_9__modules_investments_models_currencyInvestment__["a" /* CurrencyInvestment */]) {
+                if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
                     return _this.utilService.formatDate(investment.buyingDate);
                 }
-                else if (investment instanceof __WEBPACK_IMPORTED_MODULE_14__modules_investments_models_PropertyInvestment__["a" /* PropertyInvestment */]) {
+                else if (investment instanceof PropertyInvestment_1.PropertyInvestment) {
                     return _this.utilService.formatDate(investment.buyingDate);
                 }
                 return _this.utilService.formatToday(); //this should never happen. BuyingDate is required in investments
@@ -928,27 +870,27 @@ var WelcomeComponent = /** @class */ (function () {
         }).subscribe(function (currencyRates) {
             var _loop_1 = function (investment) {
                 var myPercentage = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
-                if (investment instanceof __WEBPACK_IMPORTED_MODULE_9__modules_investments_models_currencyInvestment__["a" /* CurrencyInvestment */]) {
-                    var currencyInvestment_1 = investment;
-                    if (investment.type === __WEBPACK_IMPORTED_MODULE_12__constants__["b" /* INVESTMENTS_TYPES */].CURRENCY) {
-                        _this.wealthAmount += ((currencyInvestment_1.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment_1.unit] || 1))
-                            - (currencyInvestment_1.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment_1.buyingDate)]["USD" + currencyInvestment_1.loanAmountUnit] || 1)))
+                if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
+                    var currencyInvestment_2 = investment;
+                    if (investment.type === constants_1.INVESTMENTS_TYPES.CURRENCY) {
+                        _this.wealthAmount += ((currencyInvestment_2.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment_2.unit] || 1))
+                            - (currencyInvestment_2.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment_2.buyingDate)]["USD" + currencyInvestment_2.loanAmountUnit] || 1)))
                             * myPercentage / 100;
                         _this.calculateProgressBarWealthValue();
                     }
-                    else if (investment.type === __WEBPACK_IMPORTED_MODULE_12__constants__["b" /* INVESTMENTS_TYPES */].CRYPTO) {
-                        _this.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).take(1).subscribe(function (rates) {
-                            _this.wealthAmount += ((currencyInvestment_1.amount * rates.price)
-                                - (currencyInvestment_1.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment_1.buyingDate)]["USD" + currencyInvestment_1.loanAmountUnit] || 1)))
+                    else if (investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
+                        _this.currencyExchangeService.getCryptoRates(currencyInvestment_2.unit).take(1).subscribe(function (rates) {
+                            _this.wealthAmount += ((currencyInvestment_2.amount * rates.price)
+                                - (currencyInvestment_2.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment_2.buyingDate)]["USD" + currencyInvestment_2.loanAmountUnit] || 1)))
                                 * myPercentage / 100;
                             _this.calculateProgressBarWealthValue();
                         }, function (error) {
-                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_1.unit + " rates data > ", error);
-                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_1.unit + " rates data, please try again in a few minutes.", 'error');
+                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_2.unit + " rates data > ", error);
+                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_2.unit + " rates data, please try again in a few minutes.", 'error');
                         });
                     }
                 }
-                else if (investment instanceof __WEBPACK_IMPORTED_MODULE_14__modules_investments_models_PropertyInvestment__["a" /* PropertyInvestment */]) {
+                else if (investment instanceof PropertyInvestment_1.PropertyInvestment) {
                     var propertyInvestment = investment;
                     _this.wealthAmount += (_this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit)
                         - (propertyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(propertyInvestment.buyingDate)]["USD" + propertyInvestment.loanAmountUnit] || 1)))
@@ -983,25 +925,25 @@ var WelcomeComponent = /** @class */ (function () {
         var gotAuthenticatedUserFromServer = false;
         var user$ = this.usersService.user$.switchMap(function (user) {
             if (!user) {
-                return Object(__WEBPACK_IMPORTED_MODULE_11_rxjs_observable_of__["a" /* of */])(null);
+                return of_1.of(null);
             }
             else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
                 gotAuthenticatedUserFromServer = true;
                 return _this.usersService.getAuthenticatedUser({ personalInfo: true, financialInfo: true });
             }
             else {
-                return Object(__WEBPACK_IMPORTED_MODULE_11_rxjs_observable_of__["a" /* of */])(user);
+                return of_1.of(user);
             }
         });
         return user$.switchMap(function (user) {
             if (user && user.email) {
                 var personalInfo = null;
                 if (user.personalInfo) {
-                    personalInfo = new __WEBPACK_IMPORTED_MODULE_5__modules_users_models_account_personal__["a" /* AccountPersonal */](user.personalInfo.birthday);
+                    personalInfo = new account_personal_1.AccountPersonal(user.personalInfo.birthday);
                 }
                 var financialInfo = null;
                 if (user.financialInfo) {
-                    financialInfo = new __WEBPACK_IMPORTED_MODULE_6__modules_users_models_account_finance__["a" /* AccountFinance */](user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
+                    financialInfo = new account_finance_1.AccountFinance(user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
                     if (gotAuthenticatedUserFromServer !== null) {
                         _this.wealthAmount += _this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
                     }
@@ -1013,7 +955,7 @@ var WelcomeComponent = /** @class */ (function () {
                     }
                     _this.calculateProgressBarWealthValue();
                 }
-                user = new __WEBPACK_IMPORTED_MODULE_4__modules_users_models_user__["a" /* User */](user.name, user.email, user.avatar, financialInfo, personalInfo, user.currency);
+                user = new user_1.User(user.name, user.email, user.avatar, financialInfo, personalInfo, user.currency);
                 _this.user = user;
                 if (gotAuthenticatedUserFromServer) {
                     gotAuthenticatedUserFromServer = null; //shut down the flag
@@ -1024,7 +966,7 @@ var WelcomeComponent = /** @class */ (function () {
             }
             else {
                 _this.user = null;
-                return Object(__WEBPACK_IMPORTED_MODULE_11_rxjs_observable_of__["a" /* of */])([]);
+                return of_1.of([]);
             }
         });
     };
@@ -1037,43 +979,41 @@ var WelcomeComponent = /** @class */ (function () {
         this.progressBarWealthValue = value > 100 ? 100 : value;
     };
     WelcomeComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'welcome',
             template: __webpack_require__("./src/app/components/welcome/welcome.component.html"),
             styles: [__webpack_require__("./src/app/components/welcome/welcome.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__modules_shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */], __WEBPACK_IMPORTED_MODULE_2__modules_users_users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */],
-            __WEBPACK_IMPORTED_MODULE_7__modules_investments_investments_service__["a" /* InvestmentsService */], __WEBPACK_IMPORTED_MODULE_8__modules_investments_currency_exchange_service__["a" /* CurrencyExchangeService */], __WEBPACK_IMPORTED_MODULE_13__util_service__["a" /* UtilService */]])
+        __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService, users_service_1.UsersService, app_service_1.AppService,
+            investments_service_1.InvestmentsService, currency_exchange_service_1.CurrencyExchangeService, util_service_1.UtilService])
     ], WelcomeComponent);
     return WelcomeComponent;
 }());
-
+exports.WelcomeComponent = WelcomeComponent;
 
 
 /***/ }),
 
 /***/ "./src/app/constants.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return PROPERTY_TYPES; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HOUSE_BUILDING_TYPES; });
-/* unused harmony export NZ_HOUSE_TITLE_TYPES */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return INVESTMENTS_TYPES; });
-var PROPERTY_TYPES = {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PROPERTY_TYPES = {
     HOUSE: 'house'
 };
-var HOUSE_BUILDING_TYPES = {
+exports.HOUSE_BUILDING_TYPES = {
     HOUSE: 'house',
     APARTMENT: 'apartment',
     UNIT: 'unit'
 };
-var NZ_HOUSE_TITLE_TYPES = {
+exports.NZ_HOUSE_TITLE_TYPES = {
     FEE_SIMPLE: 'feeSimple',
     CROSS_LEASE: 'crossLease',
     LEASE_HOLD: 'leaseHold'
 };
-var INVESTMENTS_TYPES = {
+exports.INVESTMENTS_TYPES = {
     CURRENCY: 'currency',
     CRYPTO: 'crypto',
     PROPERTY: 'property'
@@ -1083,110 +1023,96 @@ var INVESTMENTS_TYPES = {
 /***/ }),
 
 /***/ "./src/app/modules/calculators/calculators-routing.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsRoutingModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_equity_equity_component__ = __webpack_require__("./src/app/modules/calculators/components/equity/equity.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_calculators_dashboard_calculators_dashboard_component__ = __webpack_require__("./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_house_figures_house_figures_component__ = __webpack_require__("./src/app/modules/calculators/components/house-figures/house-figures.component.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var equity_component_1 = __webpack_require__("./src/app/modules/calculators/components/equity/equity.component.ts");
+var calculators_dashboard_component_1 = __webpack_require__("./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var house_figures_component_1 = __webpack_require__("./src/app/modules/calculators/components/house-figures/house-figures.component.ts");
 var routes = [{
         path: 'calculators',
         children: [
-            { path: '', component: __WEBPACK_IMPORTED_MODULE_3__components_calculators_dashboard_calculators_dashboard_component__["a" /* CalculatorsDashboardComponent */] },
-            { path: 'equity', component: __WEBPACK_IMPORTED_MODULE_2__components_equity_equity_component__["a" /* EquityComponent */] },
-            { path: 'house-figures', component: __WEBPACK_IMPORTED_MODULE_4__components_house_figures_house_figures_component__["a" /* HouseFiguresComponent */] }
+            { path: '', component: calculators_dashboard_component_1.CalculatorsDashboardComponent },
+            { path: 'equity', component: equity_component_1.EquityComponent },
+            { path: 'house-figures', component: house_figures_component_1.HouseFiguresComponent }
         ]
     }];
 var CalculatorsRoutingModule = /** @class */ (function () {
     function CalculatorsRoutingModule() {
     }
     CalculatorsRoutingModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
-            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+        core_1.NgModule({
+            imports: [router_1.RouterModule.forChild(routes)],
+            exports: [router_1.RouterModule]
         })
     ], CalculatorsRoutingModule);
     return CalculatorsRoutingModule;
 }());
-
+exports.CalculatorsRoutingModule = CalculatorsRoutingModule;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/calculators/calculators.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_shared_custom_material_design_module__ = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_shared_module__ = __webpack_require__("./src/app/modules/shared/shared.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__calculators_routing_module__ = __webpack_require__("./src/app/modules/calculators/calculators-routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_equity_equity_component__ = __webpack_require__("./src/app/modules/calculators/components/equity/equity.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_calculators_dashboard_calculators_dashboard_component__ = __webpack_require__("./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_house_figures_house_figures_component__ = __webpack_require__("./src/app/modules/calculators/components/house-figures/house-figures.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_house_figures_results_house_figures_results_component__ = __webpack_require__("./src/app/modules/calculators/components/house-figures-results/house-figures-results.component.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var shared_module_1 = __webpack_require__("./src/app/modules/shared/shared.module.ts");
+var calculators_routing_module_1 = __webpack_require__("./src/app/modules/calculators/calculators-routing.module.ts");
+var equity_component_1 = __webpack_require__("./src/app/modules/calculators/components/equity/equity.component.ts");
+var calculators_dashboard_component_1 = __webpack_require__("./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts");
+var house_figures_component_1 = __webpack_require__("./src/app/modules/calculators/components/house-figures/house-figures.component.ts");
+var house_figures_results_component_1 = __webpack_require__("./src/app/modules/calculators/components/house-figures-results/house-figures-results.component.ts");
 var CalculatorsModule = /** @class */ (function () {
     function CalculatorsModule() {
     }
     CalculatorsModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
+        core_1.NgModule({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
-                __WEBPACK_IMPORTED_MODULE_6__calculators_routing_module__["a" /* CalculatorsRoutingModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__["a" /* FlexLayoutModule */],
-                __WEBPACK_IMPORTED_MODULE_4__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
-                __WEBPACK_IMPORTED_MODULE_5__modules_shared_shared_module__["a" /* SharedModule */]
+                common_1.CommonModule,
+                calculators_routing_module_1.CalculatorsRoutingModule,
+                forms_1.FormsModule,
+                flex_layout_1.FlexLayoutModule,
+                custom_material_design_module_1.CustomMaterialDesignModule,
+                shared_module_1.SharedModule
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_10__components_house_figures_results_house_figures_results_component__["a" /* HouseFiguresResultsComponent */]
+                house_figures_results_component_1.HouseFiguresResultsComponent
             ],
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_7__components_equity_equity_component__["a" /* EquityComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components_calculators_dashboard_calculators_dashboard_component__["a" /* CalculatorsDashboardComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__components_house_figures_house_figures_component__["a" /* HouseFiguresComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components_house_figures_results_house_figures_results_component__["a" /* HouseFiguresResultsComponent */]
+                equity_component_1.EquityComponent,
+                calculators_dashboard_component_1.CalculatorsDashboardComponent,
+                house_figures_component_1.HouseFiguresComponent,
+                house_figures_results_component_1.HouseFiguresResultsComponent
             ]
         })
     ], CalculatorsModule);
     return CalculatorsModule;
 }());
-
+exports.CalculatorsModule = CalculatorsModule;
 
 
 /***/ }),
@@ -1206,12 +1132,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalculatorsDashboardComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1221,8 +1145,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var CalculatorsDashboardComponent = /** @class */ (function () {
     function CalculatorsDashboardComponent(mainNavigatorService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -1236,16 +1161,16 @@ var CalculatorsDashboardComponent = /** @class */ (function () {
         ]);
     };
     CalculatorsDashboardComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-calculators-dashboard',
             template: __webpack_require__("./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.html"),
             styles: [__webpack_require__("./src/app/modules/calculators/components/calculators-dashboard/calculators-dashboard.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]])
+        __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService])
     ], CalculatorsDashboardComponent);
     return CalculatorsDashboardComponent;
 }());
-
+exports.CalculatorsDashboardComponent = CalculatorsDashboardComponent;
 
 
 /***/ }),
@@ -1265,12 +1190,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/calculators/components/equity/equity.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EquityComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1280,8 +1203,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var EquityComponent = /** @class */ (function () {
     function EquityComponent(mainNavigatorService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -1321,20 +1245,20 @@ var EquityComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])('equityForm'),
+        core_1.ViewChild('equityForm'),
         __metadata("design:type", Object)
     ], EquityComponent.prototype, "form", void 0);
     EquityComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-equity',
             template: __webpack_require__("./src/app/modules/calculators/components/equity/equity.component.html"),
             styles: [__webpack_require__("./src/app/modules/calculators/components/equity/equity.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]])
+        __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService])
     ], EquityComponent);
     return EquityComponent;
 }());
-
+exports.EquityComponent = EquityComponent;
 
 
 /***/ }),
@@ -1354,11 +1278,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/calculators/components/house-figures-results/house-figures-results.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HouseFiguresResultsComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1368,7 +1291,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var HouseFiguresResultsComponent = /** @class */ (function () {
     function HouseFiguresResultsComponent() {
         this.title = null;
@@ -1440,87 +1364,87 @@ var HouseFiguresResultsComponent = /** @class */ (function () {
         return price;
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "title", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "subtitle", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "purchasePrice", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "capitalGrowth", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "marketValue", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "loanCoverage", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "interestRates", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "loanTerm", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "paymentFrecuency", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "rentPrice", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "rentPaymentFrecuency", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "vacancy", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "renovationCost", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "mantainanceCost", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "bodyCorporate", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "houseRates", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "utilities", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "insurance", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "otherCosts", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HouseFiguresResultsComponent.prototype, "managed", void 0);
     HouseFiguresResultsComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'house-figures-results',
             template: __webpack_require__("./src/app/modules/calculators/components/house-figures-results/house-figures-results.component.html"),
             styles: [__webpack_require__("./src/app/modules/calculators/components/house-figures-results/house-figures-results.component.scss")]
@@ -1529,7 +1453,7 @@ var HouseFiguresResultsComponent = /** @class */ (function () {
     ], HouseFiguresResultsComponent);
     return HouseFiguresResultsComponent;
 }());
-
+exports.HouseFiguresResultsComponent = HouseFiguresResultsComponent;
 
 
 /***/ }),
@@ -1549,12 +1473,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/calculators/components/house-figures/house-figures.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HouseFiguresComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1564,8 +1486,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var HouseFiguresComponent = /** @class */ (function () {
     function HouseFiguresComponent(mainNavigatorService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -1599,16 +1522,16 @@ var HouseFiguresComponent = /** @class */ (function () {
         ]);
     };
     HouseFiguresComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-house-figures',
             template: __webpack_require__("./src/app/modules/calculators/components/house-figures/house-figures.component.html"),
             styles: [__webpack_require__("./src/app/modules/calculators/components/house-figures/house-figures.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]])
+        __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService])
     ], HouseFiguresComponent);
     return HouseFiguresComponent;
 }());
-
+exports.HouseFiguresComponent = HouseFiguresComponent;
 
 
 /***/ }),
@@ -1628,15 +1551,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyInvestmentFormComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__ = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_service__ = __webpack_require__("./src/app/util.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("./src/app/app.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1646,18 +1564,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var CurrencyInvestmentFormComponent = /** @class */ (function () {
     function CurrencyInvestmentFormComponent(dateAdapter, appService, utilService) {
         this.dateAdapter = dateAdapter;
         this.appService = appService;
         this.utilService = utilService;
         this.defaultValues = null; //the default values of the component model  
-        this.values = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.values = new core_1.EventEmitter();
         this.model = {
             type: null,
             unit: null,
@@ -1666,7 +1585,7 @@ var CurrencyInvestmentFormComponent = /** @class */ (function () {
             buyingPriceUnit: null,
             buyingDate: null
         };
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__["a" /* Subscription */]();
+        this.subscription = new Subscription_1.Subscription();
         this.dateAdapter.setLocale('en-GB');
     }
     CurrencyInvestmentFormComponent.prototype.ngOnInit = function () {
@@ -1715,29 +1634,29 @@ var CurrencyInvestmentFormComponent = /** @class */ (function () {
         this.subscription.add(newSubscription);
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])('editCurrencyInvestmentForm'),
+        core_1.ViewChild('editCurrencyInvestmentForm'),
         __metadata("design:type", Object)
     ], CurrencyInvestmentFormComponent.prototype, "form", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], CurrencyInvestmentFormComponent.prototype, "defaultValues", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */])
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], CurrencyInvestmentFormComponent.prototype, "values", void 0);
     CurrencyInvestmentFormComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'currency-investment-form',
             template: __webpack_require__("./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.html"),
             styles: [__webpack_require__("./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */], __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */],
-            __WEBPACK_IMPORTED_MODULE_3__util_service__["a" /* UtilService */]])
+        __metadata("design:paramtypes", [material_1.DateAdapter, app_service_1.AppService,
+            util_service_1.UtilService])
     ], CurrencyInvestmentFormComponent);
     return CurrencyInvestmentFormComponent;
 }());
-
+exports.CurrencyInvestmentFormComponent = CurrencyInvestmentFormComponent;
 
 
 /***/ }),
@@ -1757,23 +1676,10 @@ module.exports = ".currency-card {\n  text-align: left; }\n  .currency-card .hea
 /***/ }),
 
 /***/ "./src/app/modules/investments/components/currency-investment/currency-investment.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyInvestmentComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__investments_service__ = __webpack_require__("./src/app/modules/investments/investments.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__ = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__ = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__ = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs_BehaviorSubject__ = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__constants__ = __webpack_require__("./src/app/constants.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__util_service__ = __webpack_require__("./src/app/util.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1783,19 +1689,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var BehaviorSubject_1 = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
 var CurrencyInvestmentComponent = /** @class */ (function () {
     function CurrencyInvestmentComponent(currencyExchangeService, appService, usersService, investmentsService, dialog, router, utilService) {
         this.currencyExchangeService = currencyExchangeService;
@@ -1805,9 +1712,9 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         this.dialog = dialog;
         this.router = router;
         this.utilService = utilService;
-        this.totalReturns = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.deletedInvestment = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.teams$ = new __WEBPACK_IMPORTED_MODULE_10_rxjs_BehaviorSubject__["a" /* BehaviorSubject */]([]);
+        this.totalReturns = new core_1.EventEmitter();
+        this.deletedInvestment = new core_1.EventEmitter();
+        this.teams$ = new BehaviorSubject_1.BehaviorSubject([]);
         this.investmentAmount = 0;
         this.buyingPrice = 0;
         this.investmentReturn = 0;
@@ -1818,7 +1725,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         this.user = null;
         this.team = null; //if the investment has a tema this will be populated with the full info of the team
         this.investmentDistribution = [];
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__["a" /* Subscription */]();
+        this.subscription = new Subscription_1.Subscription();
     }
     Object.defineProperty(CurrencyInvestmentComponent.prototype, "teams", {
         get: function () {
@@ -1840,7 +1747,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
         }); //(currency rates and user) source
-        if (this.investment.type === __WEBPACK_IMPORTED_MODULE_11__constants__["b" /* INVESTMENTS_TYPES */].CRYPTO) {
+        if (this.investment.type === constants_1.INVESTMENTS_TYPES.CRYPTO) {
             //crypto investment
             var cryptoRates$ = this.currencyExchangeService.getCryptoRates(this.investment.unit); //get crypto rates observable source
             newSubscription = cryptoRates$.combineLatest(currencyRatesAndUser$, function (cryptoRates, currencyRatesAndUser) {
@@ -1940,7 +1847,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
             return false;
         }
         this.actionRunning = true;
-        var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_2__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
+        var yesNoDialogRef = this.dialog.open(yes_no_dialog_component_1.YesNoDialogComponent, {
             width: '250px',
             data: {
                 title: 'Delete investment',
@@ -1989,34 +1896,34 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         }
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__["a" /* CurrencyInvestment */])
+        core_1.Input(),
+        __metadata("design:type", currencyInvestment_1.CurrencyInvestment)
     ], CurrencyInvestmentComponent.prototype, "investment", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Array),
         __metadata("design:paramtypes", [Array])
     ], CurrencyInvestmentComponent.prototype, "teams", null);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */])
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], CurrencyInvestmentComponent.prototype, "totalReturns", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */])
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], CurrencyInvestmentComponent.prototype, "deletedInvestment", void 0);
     CurrencyInvestmentComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'currency-investment',
             template: __webpack_require__("./src/app/modules/investments/components/currency-investment/currency-investment.component.html"),
             styles: [__webpack_require__("./src/app/modules/investments/components/currency-investment/currency-investment.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_7__currency_exchange_service__["a" /* CurrencyExchangeService */], __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_5__users_users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_4__investments_service__["a" /* InvestmentsService */],
-            __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatDialog */], __WEBPACK_IMPORTED_MODULE_6__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_12__util_service__["a" /* UtilService */]])
+        __metadata("design:paramtypes", [currency_exchange_service_1.CurrencyExchangeService, app_service_1.AppService, users_service_1.UsersService, investments_service_1.InvestmentsService,
+            material_1.MatDialog, router_1.Router, util_service_1.UtilService])
     ], CurrencyInvestmentComponent);
     return CurrencyInvestmentComponent;
 }());
-
+exports.CurrencyInvestmentComponent = CurrencyInvestmentComponent;
 
 
 /***/ }),
@@ -2036,13 +1943,10 @@ module.exports = ":host {\n  text-align: center; }\n  :host .selector__investmen
 /***/ }),
 
 /***/ "./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentSelectorDialogComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_service__ = __webpack_require__("./src/app/util.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2055,9 +1959,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
 var InvestmentSelectorDialogComponent = /** @class */ (function () {
     function InvestmentSelectorDialogComponent(dialogRef, data, utilService) {
         this.dialogRef = dialogRef;
@@ -2072,17 +1977,17 @@ var InvestmentSelectorDialogComponent = /** @class */ (function () {
         this.dialogRef.close();
     };
     InvestmentSelectorDialogComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'investment-selector-dialog',
             template: __webpack_require__("./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.html"),
             styles: [__webpack_require__("./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.scss")]
         }),
-        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatDialogRef */], Object, __WEBPACK_IMPORTED_MODULE_2__util_service__["a" /* UtilService */]])
+        __param(1, core_1.Inject(material_1.MAT_DIALOG_DATA)),
+        __metadata("design:paramtypes", [material_1.MatDialogRef, Object, util_service_1.UtilService])
     ], InvestmentSelectorDialogComponent);
     return InvestmentSelectorDialogComponent;
 }());
-
+exports.InvestmentSelectorDialogComponent = InvestmentSelectorDialogComponent;
 
 
 /***/ }),
@@ -2102,25 +2007,10 @@ module.exports = ".totals__card, .no-investments__card {\n  text-align: center; 
 /***/ }),
 
 /***/ "./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsDashboardComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__users_users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__investments_service__ = __webpack_require__("./src/app/modules/investments/investments.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__ = __webpack_require__("./src/app/modules/teams/teams.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__ = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__currency_exchange_service__ = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__models_currencyInvestment__ = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__constants__ = __webpack_require__("./src/app/constants.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__util_service__ = __webpack_require__("./src/app/util.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__models_PropertyInvestment__ = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2130,21 +2020,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var investment_selector_dialog_component_1 = __webpack_require__("./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
+var teams_service_1 = __webpack_require__("./src/app/modules/teams/teams.service.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
 var InvestmentsDashboardComponent = /** @class */ (function () {
     function InvestmentsDashboardComponent(route, mainNavigatorService, usersService, dialog, appService, teamsService, investmentsService, currencyExchangeService, utilService) {
         this.route = route;
@@ -2165,10 +2056,10 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         this.myTotalReturn = 0;
         this.totals = {};
         this.user = null;
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__["a" /* Subscription */]();
+        this.subscription = new Subscription_1.Subscription();
         this.getInvestmentsServiceRunning = false;
         this.getTeamsServiceRunning = false;
-        this.INVESTMENTS_TYPES = __WEBPACK_IMPORTED_MODULE_12__constants__["b" /* INVESTMENTS_TYPES */]; //make it available in the view
+        this.INVESTMENTS_TYPES = constants_1.INVESTMENTS_TYPES; //make it available in the view
     }
     InvestmentsDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -2241,10 +2132,10 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                     _this.investmentsUI.push(investmentsRow);
                     investmentsRow = [item];
                 }
-                if (item instanceof __WEBPACK_IMPORTED_MODULE_11__models_currencyInvestment__["a" /* CurrencyInvestment */]) {
+                if (item instanceof currencyInvestment_1.CurrencyInvestment) {
                     investmentsDates.push(_this.utilService.formatDate(item.buyingDate, 'YYYY-MM-DD'));
                 }
-                else if (item instanceof __WEBPACK_IMPORTED_MODULE_14__models_PropertyInvestment__["a" /* PropertyInvestment */]) {
+                else if (item instanceof PropertyInvestment_1.PropertyInvestment) {
                     investmentsDates.push(_this.utilService.formatDate(item.buyingDate, 'YYYY-MM-DD'));
                 }
             }
@@ -2340,22 +2231,22 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         }
     };
     InvestmentsDashboardComponent.prototype.openNewInvestmentDialog = function () {
-        var addPersonDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_5__investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */], {});
+        var addPersonDialogRef = this.dialog.open(investment_selector_dialog_component_1.InvestmentSelectorDialogComponent, {});
         return false;
     };
     InvestmentsDashboardComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'investments-dashboard',
             template: __webpack_require__("./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.html"),
             styles: [__webpack_require__("./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */], __WEBPACK_IMPORTED_MODULE_4__users_users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatDialog */],
-            __WEBPACK_IMPORTED_MODULE_6__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_8__teams_teams_service__["a" /* TeamsService */], __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */], __WEBPACK_IMPORTED_MODULE_10__currency_exchange_service__["a" /* CurrencyExchangeService */],
-            __WEBPACK_IMPORTED_MODULE_13__util_service__["a" /* UtilService */]])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, users_service_1.UsersService, material_1.MatDialog,
+            app_service_1.AppService, teams_service_1.TeamsService, investments_service_1.InvestmentsService, currency_exchange_service_1.CurrencyExchangeService,
+            util_service_1.UtilService])
     ], InvestmentsDashboardComponent);
     return InvestmentsDashboardComponent;
 }());
-
+exports.InvestmentsDashboardComponent = InvestmentsDashboardComponent;
 
 
 /***/ }),
@@ -2375,21 +2266,10 @@ module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n.prog
 /***/ }),
 
 /***/ "./src/app/modules/investments/components/investments-edit/investments-edit.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsEditComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__ = __webpack_require__("./src/app/modules/teams/teams.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Subscription__ = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__investments_service__ = __webpack_require__("./src/app/modules/investments/investments.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__ = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__constants__ = __webpack_require__("./src/app/constants.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_PropertyInvestment__ = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2399,17 +2279,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var teams_service_1 = __webpack_require__("./src/app/modules/teams/teams.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
+var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
+var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
 var InvestmentsEditComponent = /** @class */ (function () {
     function InvestmentsEditComponent(route, mainNavigatorService, investmentsService, teamsService, appService, router) {
         this.route = route;
@@ -2443,10 +2324,10 @@ var InvestmentsEditComponent = /** @class */ (function () {
         this.editInvestmentServiceRunning = false;
         this.getInvestmentServiceRunning = false;
         this.getTeamsServiceRunning = false;
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_6_rxjs_Subscription__["a" /* Subscription */]();
+        this.subscription = new Subscription_1.Subscription();
         this.formChangesSubscription = null;
         this.investmentDataValid = false; //this value is set when investment data form is updated
-        this.INVESTMENT_TYPES = __WEBPACK_IMPORTED_MODULE_9__constants__["b" /* INVESTMENTS_TYPES */];
+        this.INVESTMENT_TYPES = constants_1.INVESTMENTS_TYPES;
     }
     InvestmentsEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -2463,7 +2344,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
             var urlObject = _this.route.url.getValue();
             var investmentId = null;
             var propertyId = null;
-            if (urlObject[0]['path'] === __WEBPACK_IMPORTED_MODULE_9__constants__["b" /* INVESTMENTS_TYPES */].PROPERTY && urlObject[1]['path'] === 'create') {
+            if (urlObject[0]['path'] === constants_1.INVESTMENTS_TYPES.PROPERTY && urlObject[1]['path'] === 'create') {
                 //we are creating a property investment coming from the property component
                 propertyId = id;
             }
@@ -2501,7 +2382,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
         });
         //get TYPE parameter
         this.route.paramMap.map(function (params) { return params.get('type'); }).subscribe(function (type) {
-            if (![__WEBPACK_IMPORTED_MODULE_9__constants__["b" /* INVESTMENTS_TYPES */].CURRENCY, __WEBPACK_IMPORTED_MODULE_9__constants__["b" /* INVESTMENTS_TYPES */].CRYPTO, __WEBPACK_IMPORTED_MODULE_9__constants__["b" /* INVESTMENTS_TYPES */].PROPERTY].includes(type)) {
+            if (![constants_1.INVESTMENTS_TYPES.CURRENCY, constants_1.INVESTMENTS_TYPES.CRYPTO, constants_1.INVESTMENTS_TYPES.PROPERTY].includes(type)) {
                 _this.appService.showResults('You must provide a valid investment type to continue.', 'error');
                 _this.router.navigate(['welcome']);
             }
@@ -2532,7 +2413,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
                 if (percentageAcum > 100) {
                     var lastMember = _this.model.team.members.slice(-1)[0];
                     var diff = percentageAcum - 100;
-                    var newValue = Number(__WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DecimalPipe */].prototype.transform(_this.model.membersPercentage[lastMember.email] - diff, '1.0-2', 'en'));
+                    var newValue = Number(common_1.DecimalPipe.prototype.transform(_this.model.membersPercentage[lastMember.email] - diff, '1.0-2', 'en'));
                     if (newValue < 0) {
                         _this.setDefaultInvestmentPercentages();
                         _this.appService.showResults("The sum of percentages must not exceed 100%, we reset the values to make it valid.", 'warn');
@@ -2691,7 +2572,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
             _this.model.investmentAmount = investment.investmentAmount;
             _this.model.investmentAmountUnit = investment.investmentAmountUnit;
             _this.model.type = investment.type;
-            if (investment instanceof __WEBPACK_IMPORTED_MODULE_8__models_currencyInvestment__["a" /* CurrencyInvestment */]) {
+            if (investment instanceof currencyInvestment_1.CurrencyInvestment) {
                 _this.model.investmentData = {
                     type: investment.type,
                     unit: investment.unit,
@@ -2701,7 +2582,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
                     buyingDate: investment.buyingDate
                 };
             }
-            else if (investment instanceof __WEBPACK_IMPORTED_MODULE_10__models_PropertyInvestment__["a" /* PropertyInvestment */]) {
+            else if (investment instanceof PropertyInvestment_1.PropertyInvestment) {
                 _this.model.investmentData = {
                     type: investment.type,
                     property: investment.property,
@@ -2755,28 +2636,28 @@ var InvestmentsEditComponent = /** @class */ (function () {
     InvestmentsEditComponent.prototype.setDefaultInvestmentPercentages = function () {
         this.model.membersPercentage = {};
         //set the default percentage of the investment to each member
-        var defaultPercentage = Number(__WEBPACK_IMPORTED_MODULE_1__angular_common__["d" /* DecimalPipe */].prototype.transform(100 / this.model.team.members.length, '1.0-2', 'en'));
+        var defaultPercentage = Number(common_1.DecimalPipe.prototype.transform(100 / this.model.team.members.length, '1.0-2', 'en'));
         for (var _i = 0, _a = this.model.team.members; _i < _a.length; _i++) {
             var member = _a[_i];
             this.model.membersPercentage[member.email] = defaultPercentage;
         }
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])('editInvestmentForm'),
+        core_1.ViewChild('editInvestmentForm'),
         __metadata("design:type", Object)
     ], InvestmentsEditComponent.prototype, "form", void 0);
     InvestmentsEditComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'investments-edit',
             template: __webpack_require__("./src/app/modules/investments/components/investments-edit/investments-edit.component.html"),
             styles: [__webpack_require__("./src/app/modules/investments/components/investments-edit/investments-edit.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */], __WEBPACK_IMPORTED_MODULE_7__investments_service__["a" /* InvestmentsService */],
-            __WEBPACK_IMPORTED_MODULE_4__teams_teams_service__["a" /* TeamsService */], __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, investments_service_1.InvestmentsService,
+            teams_service_1.TeamsService, app_service_1.AppService, router_1.Router])
     ], InvestmentsEditComponent);
     return InvestmentsEditComponent;
 }());
-
+exports.InvestmentsEditComponent = InvestmentsEditComponent;
 
 
 /***/ }),
@@ -2796,21 +2677,10 @@ module.exports = ".form__edit-property-investment .address__field {\n  cursor: p
 /***/ }),
 
 /***/ "./src/app/modules/investments/components/property-investment-form/property-investment-form.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropertyInvestmentFormComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__("./node_modules/rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_service__ = __webpack_require__("./src/app/util.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__constants__ = __webpack_require__("./src/app/constants.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__properties_properties_service__ = __webpack_require__("./src/app/modules/properties/properties.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__users_models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__properties_components_property_selector_dialog_property_selector_dialog_component__ = __webpack_require__("./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2820,16 +2690,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var rxjs_1 = __webpack_require__("./node_modules/rxjs/Rx.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
+var properties_service_1 = __webpack_require__("./src/app/modules/properties/properties.service.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var property_selector_dialog_component_1 = __webpack_require__("./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.ts");
 var PropertyInvestmentFormComponent = /** @class */ (function () {
     function PropertyInvestmentFormComponent(dateAdapter, appService, dialog, utilService, propertiesService, router) {
         this.dateAdapter = dateAdapter;
@@ -2840,7 +2711,7 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
         this.router = router;
         this.defaultValues = null; //the default values of the component model  
         this.user = null;
-        this.values = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.values = new core_1.EventEmitter();
         this.model = {
             type: null,
             property: null,
@@ -2850,12 +2721,12 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
             buyingPriceUnit: null,
             buyingDate: null
         };
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_1_rxjs__["Subscription"]();
+        this.subscription = new rxjs_1.Subscription();
         this.getPropertyServiceRunning = false;
         this.dateAdapter.setLocale('en-GB');
     }
     PropertyInvestmentFormComponent.prototype.ngOnInit = function () {
-        this.model.type = __WEBPACK_IMPORTED_MODULE_5__constants__["b" /* INVESTMENTS_TYPES */].PROPERTY;
+        this.model.type = constants_1.INVESTMENTS_TYPES.PROPERTY;
         this.model.buyingDate = new Date(Date.now());
         this.model.buyingPriceUnit = this.user.currency;
         Object.assign(this.model, this.defaultValues);
@@ -2962,7 +2833,7 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
     PropertyInvestmentFormComponent.prototype.openPropertySelectionDialog = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > openPropertySelectionDialog() > "; //for debugging
-        var propertySelectorDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_9__properties_components_property_selector_dialog_property_selector_dialog_component__["a" /* PropertySelectorDialogComponent */], {
+        var propertySelectorDialogRef = this.dialog.open(property_selector_dialog_component_1.PropertySelectorDialogComponent, {
             data: {
                 title: 'Select a property',
                 user: this.user
@@ -2977,33 +2848,33 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
         return false;
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])('editPropertyInvestmentForm'),
+        core_1.ViewChild('editPropertyInvestmentForm'),
         __metadata("design:type", Object)
     ], PropertyInvestmentFormComponent.prototype, "form", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], PropertyInvestmentFormComponent.prototype, "defaultValues", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_8__users_models_user__["a" /* User */])
+        core_1.Input(),
+        __metadata("design:type", user_1.User)
     ], PropertyInvestmentFormComponent.prototype, "user", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */])
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], PropertyInvestmentFormComponent.prototype, "values", void 0);
     PropertyInvestmentFormComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'property-investment-form',
             template: __webpack_require__("./src/app/modules/investments/components/property-investment-form/property-investment-form.component.html"),
             styles: [__webpack_require__("./src/app/modules/investments/components/property-investment-form/property-investment-form.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* DateAdapter */], __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatDialog */],
-            __WEBPACK_IMPORTED_MODULE_4__util_service__["a" /* UtilService */], __WEBPACK_IMPORTED_MODULE_6__properties_properties_service__["a" /* PropertiesService */], __WEBPACK_IMPORTED_MODULE_7__angular_router__["b" /* Router */]])
+        __metadata("design:paramtypes", [material_1.DateAdapter, app_service_1.AppService, material_1.MatDialog,
+            util_service_1.UtilService, properties_service_1.PropertiesService, router_1.Router])
     ], PropertyInvestmentFormComponent);
     return PropertyInvestmentFormComponent;
 }());
-
+exports.PropertyInvestmentFormComponent = PropertyInvestmentFormComponent;
 
 
 /***/ }),
@@ -3023,23 +2894,10 @@ module.exports = ".investment__card {\n  text-align: left; }\n  .investment__car
 /***/ }),
 
 /***/ "./src/app/modules/investments/components/property-investment/property-investment.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropertyInvestmentComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_PropertyInvestment__ = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__("./node_modules/rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__currency_exchange_service__ = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__investments_service__ = __webpack_require__("./src/app/modules/investments/investments.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__shared_components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__properties_models_house__ = __webpack_require__("./src/app/modules/properties/models/house.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__util_service__ = __webpack_require__("./src/app/util.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3049,18 +2907,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
+var rxjs_1 = __webpack_require__("./node_modules/rxjs/Rx.js");
+var currency_exchange_service_1 = __webpack_require__("./src/app/modules/investments/currency-exchange.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var house_1 = __webpack_require__("./src/app/modules/properties/models/house.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
 var PropertyInvestmentComponent = /** @class */ (function () {
     function PropertyInvestmentComponent(currencyExchangeService, appService, usersService, investmentsService, dialog, router, utilService) {
         this.currencyExchangeService = currencyExchangeService;
@@ -3070,9 +2929,9 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         this.dialog = dialog;
         this.router = router;
         this.utilService = utilService;
-        this.totalReturns = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.deletedInvestment = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.teams$ = new __WEBPACK_IMPORTED_MODULE_2_rxjs__["BehaviorSubject"]([]);
+        this.totalReturns = new core_1.EventEmitter();
+        this.deletedInvestment = new core_1.EventEmitter();
+        this.teams$ = new rxjs_1.BehaviorSubject([]);
         this.investmentAmount = 0;
         this.buyingPrice = 0;
         this.investmentReturn = 0;
@@ -3084,7 +2943,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         this.user = null;
         this.team = null; //if the investment has a tema this will be populated with the full info of the team
         this.investmentDistribution = [];
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_2_rxjs__["Subscription"]();
+        this.subscription = new rxjs_1.Subscription();
     }
     Object.defineProperty(PropertyInvestmentComponent.prototype, "teams", {
         get: function () {
@@ -3099,7 +2958,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
     PropertyInvestmentComponent.prototype.ngOnInit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
-        if (this.investment.property instanceof __WEBPACK_IMPORTED_MODULE_10__properties_models_house__["a" /* House */]) {
+        if (this.investment.property instanceof house_1.House) {
             this.investmentTitle = this.utilService.capitalizeFirstLetter(this.investment.property.buildingType);
         }
         //get the team of the investmetn if exists
@@ -3179,7 +3038,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
             return false;
         }
         this.actionRunning = true;
-        var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_9__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
+        var yesNoDialogRef = this.dialog.open(yes_no_dialog_component_1.YesNoDialogComponent, {
             width: '250px',
             data: {
                 title: 'Delete investment',
@@ -3228,49 +3087,43 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         }
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__models_PropertyInvestment__["a" /* PropertyInvestment */])
+        core_1.Input(),
+        __metadata("design:type", PropertyInvestment_1.PropertyInvestment)
     ], PropertyInvestmentComponent.prototype, "investment", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Array),
         __metadata("design:paramtypes", [Array])
     ], PropertyInvestmentComponent.prototype, "teams", null);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */])
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], PropertyInvestmentComponent.prototype, "totalReturns", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */])
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], PropertyInvestmentComponent.prototype, "deletedInvestment", void 0);
     PropertyInvestmentComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'property-investment',
             template: __webpack_require__("./src/app/modules/investments/components/property-investment/property-investment.component.html"),
             styles: [__webpack_require__("./src/app/modules/investments/components/property-investment/property-investment.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__currency_exchange_service__["a" /* CurrencyExchangeService */], __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_5__users_users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_6__investments_service__["a" /* InvestmentsService */],
-            __WEBPACK_IMPORTED_MODULE_7__angular_material__["k" /* MatDialog */], __WEBPACK_IMPORTED_MODULE_8__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_11__util_service__["a" /* UtilService */]])
+        __metadata("design:paramtypes", [currency_exchange_service_1.CurrencyExchangeService, app_service_1.AppService, users_service_1.UsersService, investments_service_1.InvestmentsService,
+            material_1.MatDialog, router_1.Router, util_service_1.UtilService])
     ], PropertyInvestmentComponent);
     return PropertyInvestmentComponent;
 }());
-
+exports.PropertyInvestmentComponent = PropertyInvestmentComponent;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/investments/currency-exchange.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyExchangeService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_service__ = __webpack_require__("./src/app/util.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3280,12 +3133,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var Observable_1 = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
 var CurrencyExchangeService = /** @class */ (function () {
     function CurrencyExchangeService(http, appService, utilService) {
         this.http = http;
@@ -3295,8 +3149,8 @@ var CurrencyExchangeService = /** @class */ (function () {
         this.cryptoRates = {};
         this.currencyExchangeServiceUrl = 'https://api.fixer.io/latest';
         this.currencyRates = {};
-        this.serverHost = __WEBPACK_IMPORTED_MODULE_4__environments_environment__["a" /* environment */].apiHost + '/api/currencyRates';
-        this.headers = new __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["c" /* HttpHeaders */]().set('Content-Type', 'application/json');
+        this.serverHost = environment_1.environment.apiHost + '/api/currencyRates';
+        this.headers = new http_1.HttpHeaders().set('Content-Type', 'application/json');
     }
     CurrencyExchangeService.prototype.getCurrencyRates = function (dates, base) {
         var _this = this;
@@ -3315,10 +3169,10 @@ var CurrencyExchangeService = /** @class */ (function () {
         }
         if (found) {
             //all dates cached then return this object
-            return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["a" /* Observable */].of(this.currencyRates);
+            return Observable_1.Observable.of(this.currencyRates);
         }
         //if here then we need to retrieve some dates from the server
-        var params = new __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["d" /* HttpParams */]().set('dates', "" + dates);
+        var params = new http_1.HttpParams().set('dates', "" + dates);
         return this.http.get(this.serverHost + "/getByDates/" + base, { params: params })
             .map(function (res) {
             var data = _this.appService.extractData(res);
@@ -3336,7 +3190,7 @@ var CurrencyExchangeService = /** @class */ (function () {
         if (crypto === void 0) { crypto = 'BTC'; }
         var methodTrace = this.constructor.name + " > getCryptoRates() > "; //for debugging
         if (this.cryptoRates[crypto.toUpperCase()]) {
-            return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["a" /* Observable */].of(this.cryptoRates[crypto.toUpperCase()]);
+            return Observable_1.Observable.of(this.cryptoRates[crypto.toUpperCase()]);
         }
         return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase())
             .map(function (res) {
@@ -3371,68 +3225,64 @@ var CurrencyExchangeService = /** @class */ (function () {
         return amount;
     };
     CurrencyExchangeService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["C" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_5__util_service__["a" /* UtilService */]])
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.HttpClient, app_service_1.AppService, util_service_1.UtilService])
     ], CurrencyExchangeService);
     return CurrencyExchangeService;
 }());
-
+exports.CurrencyExchangeService = CurrencyExchangeService;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/investments/investments-routing.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsRoutingModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__ = __webpack_require__("./src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__ = __webpack_require__("./src/app/auth-resolver.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var investments_dashboard_component_1 = __webpack_require__("./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
+var investments_edit_component_1 = __webpack_require__("./src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
+var auth_resolver_service_1 = __webpack_require__("./src/app/auth-resolver.service.ts");
 var routes = [
     {
         path: 'investments',
         children: [
             {
                 path: ':type/create',
-                component: __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
+                component: investments_edit_component_1.InvestmentsEditComponent,
                 resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                    authUser: auth_resolver_service_1.AuthResolver
                 }
             },
             {
                 path: ':type/create/:id',
-                component: __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
+                component: investments_edit_component_1.InvestmentsEditComponent,
                 resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                    authUser: auth_resolver_service_1.AuthResolver
                 }
             },
             {
                 path: ':type/edit/:id',
-                component: __WEBPACK_IMPORTED_MODULE_3__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
+                component: investments_edit_component_1.InvestmentsEditComponent,
                 resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                    authUser: auth_resolver_service_1.AuthResolver
                 }
             },
             {
                 path: '',
                 pathMatch: 'full',
-                component: __WEBPACK_IMPORTED_MODULE_2__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */],
+                component: investments_dashboard_component_1.InvestmentsDashboardComponent,
                 resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                    authUser: auth_resolver_service_1.AuthResolver
                 }
             }
         ]
@@ -3442,112 +3292,85 @@ var InvestmentsRoutingModule = /** @class */ (function () {
     function InvestmentsRoutingModule() {
     }
     InvestmentsRoutingModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
-            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+        core_1.NgModule({
+            imports: [router_1.RouterModule.forChild(routes)],
+            exports: [router_1.RouterModule]
         })
     ], InvestmentsRoutingModule);
     return InvestmentsRoutingModule;
 }());
-
+exports.InvestmentsRoutingModule = InvestmentsRoutingModule;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/investments/investments.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__investments_routing_module__ = __webpack_require__("./src/app/modules/investments/investments-routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__ = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__ = __webpack_require__("./src/app/modules/shared/shared.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__ = __webpack_require__("./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_currency_investment_currency_investment_component__ = __webpack_require__("./src/app/modules/investments/components/currency-investment/currency-investment.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_investment_selector_dialog_investment_selector_dialog_component__ = __webpack_require__("./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_investments_edit_investments_edit_component__ = __webpack_require__("./src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_currency_investment_form_currency_investment_form_component__ = __webpack_require__("./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__investments_service__ = __webpack_require__("./src/app/modules/investments/investments.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_property_investment_form_property_investment_form_component__ = __webpack_require__("./src/app/modules/investments/components/property-investment-form/property-investment-form.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_property_investment_property_investment_component__ = __webpack_require__("./src/app/modules/investments/components/property-investment/property-investment.component.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var investments_routing_module_1 = __webpack_require__("./src/app/modules/investments/investments-routing.module.ts");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var shared_module_1 = __webpack_require__("./src/app/modules/shared/shared.module.ts");
+var investments_dashboard_component_1 = __webpack_require__("./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.ts");
+var currency_investment_component_1 = __webpack_require__("./src/app/modules/investments/components/currency-investment/currency-investment.component.ts");
+var investment_selector_dialog_component_1 = __webpack_require__("./src/app/modules/investments/components/investment-selector-dialog/investment-selector-dialog.component.ts");
+var investments_edit_component_1 = __webpack_require__("./src/app/modules/investments/components/investments-edit/investments-edit.component.ts");
+var currency_investment_form_component_1 = __webpack_require__("./src/app/modules/investments/components/currency-investment-form/currency-investment-form.component.ts");
+var investments_service_1 = __webpack_require__("./src/app/modules/investments/investments.service.ts");
+var property_investment_form_component_1 = __webpack_require__("./src/app/modules/investments/components/property-investment-form/property-investment-form.component.ts");
+var property_investment_component_1 = __webpack_require__("./src/app/modules/investments/components/property-investment/property-investment.component.ts");
 var InvestmentsModule = /** @class */ (function () {
     function InvestmentsModule() {
     }
     InvestmentsModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
+        core_1.NgModule({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
-                __WEBPACK_IMPORTED_MODULE_2__investments_routing_module__["a" /* InvestmentsRoutingModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["a" /* FlexLayoutModule */],
-                __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
-                __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__["a" /* SharedModule */]
+                common_1.CommonModule,
+                investments_routing_module_1.InvestmentsRoutingModule,
+                forms_1.FormsModule,
+                flex_layout_1.FlexLayoutModule,
+                custom_material_design_module_1.CustomMaterialDesignModule,
+                shared_module_1.SharedModule
             ],
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_8__components_currency_investment_currency_investment_component__["a" /* CurrencyInvestmentComponent */],
-                __WEBPACK_IMPORTED_MODULE_7__components_investments_dashboard_investments_dashboard_component__["a" /* InvestmentsDashboardComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components_investments_edit_investments_edit_component__["a" /* InvestmentsEditComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__components_currency_investment_form_currency_investment_form_component__["a" /* CurrencyInvestmentFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__components_property_investment_form_property_investment_form_component__["a" /* PropertyInvestmentFormComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__components_property_investment_property_investment_component__["a" /* PropertyInvestmentComponent */]
+                currency_investment_component_1.CurrencyInvestmentComponent,
+                investments_dashboard_component_1.InvestmentsDashboardComponent,
+                investment_selector_dialog_component_1.InvestmentSelectorDialogComponent,
+                investments_edit_component_1.InvestmentsEditComponent,
+                currency_investment_form_component_1.CurrencyInvestmentFormComponent,
+                property_investment_form_component_1.PropertyInvestmentFormComponent,
+                property_investment_component_1.PropertyInvestmentComponent
             ],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_9__components_investment_selector_dialog_investment_selector_dialog_component__["a" /* InvestmentSelectorDialogComponent */] //added as material doc suggest to allow AOT on this on the fly created class
+                investment_selector_dialog_component_1.InvestmentSelectorDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
             ],
-            providers: [__WEBPACK_IMPORTED_MODULE_12__investments_service__["a" /* InvestmentsService */]]
+            providers: [investments_service_1.InvestmentsService]
         })
     ], InvestmentsModule);
     return InvestmentsModule;
 }());
-
+exports.InvestmentsModule = InvestmentsModule;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/investments/investments.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InvestmentsService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("./node_modules/rxjs/_esm5/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__models_currencyInvestment__ = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_PropertyInvestment__ = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__teams_models_team__ = __webpack_require__("./src/app/modules/teams/models/team.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_observable_of__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__constants__ = __webpack_require__("./src/app/constants.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__properties_models_house__ = __webpack_require__("./src/app/modules/properties/models/house.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__properties_models_address__ = __webpack_require__("./src/app/modules/properties/models/address.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3557,25 +3380,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var Rx_1 = __webpack_require__("./node_modules/rxjs/_esm5/Rx.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var currencyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/currencyInvestment.ts");
+var PropertyInvestment_1 = __webpack_require__("./src/app/modules/investments/models/PropertyInvestment.ts");
+var team_1 = __webpack_require__("./src/app/modules/teams/models/team.ts");
+var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
+var house_1 = __webpack_require__("./src/app/modules/properties/models/house.ts");
+var address_1 = __webpack_require__("./src/app/modules/properties/models/address.ts");
 var InvestmentsService = /** @class */ (function () {
     function InvestmentsService(http, appService) {
         this.http = http;
         this.appService = appService;
-        this.serverHost = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiHost + '/api/investments';
-        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpHeaders */]().set('Content-Type', 'application/json');
+        this.serverHost = environment_1.environment.apiHost + '/api/investments';
+        this.headers = new http_1.HttpHeaders().set('Content-Type', 'application/json');
     }
     /**
      * Server call to Create a new investment in the system
@@ -3608,9 +3432,9 @@ var InvestmentsService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getInvestmentById() > "; //for debugging
         if (!id || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return Object(__WEBPACK_IMPORTED_MODULE_9_rxjs_observable_of__["a" /* of */])(null);
+            return of_1.of(null);
         }
-        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpParams */]()
+        var params = new http_1.HttpParams()
             .set('id', id)
             .set('email', email);
         var investment$ = this.http.get(this.serverHost + "/getbyId", { params: params })
@@ -3619,7 +3443,7 @@ var InvestmentsService = /** @class */ (function () {
         return investment$.switchMap(function (investment) {
             var result = null;
             if (investment && investment._id) {
-                var createdBy = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](investment.createdBy.name, investment.createdBy.email, investment.createdBy.gravatar);
+                var createdBy = new user_1.User(investment.createdBy.name, investment.createdBy.email, investment.createdBy.gravatar);
                 var team = null;
                 if (investment.team) {
                     //fill team members
@@ -3627,35 +3451,35 @@ var InvestmentsService = /** @class */ (function () {
                     var members = [];
                     for (var _i = 0, _a = investment.team.members; _i < _a.length; _i++) {
                         var member = _a[_i];
-                        var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
+                        var newMember = new user_1.User(member.name, member.email, member.gravatar);
                         members.push(newMember);
                         if (member.isAdmin) {
                             admin = newMember;
                         }
                     }
-                    team = new __WEBPACK_IMPORTED_MODULE_8__teams_models_team__["a" /* Team */](investment.team.name, investment.team.description, investment.team.slug, admin, members);
+                    team = new team_1.Team(investment.team.name, investment.team.description, investment.team.slug, admin, members);
                 }
-                if (investment.investmentType === __WEBPACK_IMPORTED_MODULE_10__constants__["b" /* INVESTMENTS_TYPES */].CURRENCY || investment.investmentType === __WEBPACK_IMPORTED_MODULE_10__constants__["b" /* INVESTMENTS_TYPES */].CRYPTO) {
-                    result = new __WEBPACK_IMPORTED_MODULE_6__models_currencyInvestment__["a" /* CurrencyInvestment */](investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, investment.investmentData.amountUnit, investment.investmentData.amount, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
+                if (investment.investmentType === constants_1.INVESTMENTS_TYPES.CURRENCY || investment.investmentType === constants_1.INVESTMENTS_TYPES.CRYPTO) {
+                    result = new currencyInvestment_1.CurrencyInvestment(investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, investment.investmentData.amountUnit, investment.investmentData.amount, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
                 }
-                else if (investment.investmentType === __WEBPACK_IMPORTED_MODULE_10__constants__["b" /* INVESTMENTS_TYPES */].PROPERTY) {
+                else if (investment.investmentType === constants_1.INVESTMENTS_TYPES.PROPERTY) {
                     var property = null;
                     var propertyData = investment.investmentData.property;
-                    var address = new __WEBPACK_IMPORTED_MODULE_12__properties_models_address__["a" /* Address */]();
+                    var address = new address_1.Address();
                     if (propertyData.location) {
-                        address = new __WEBPACK_IMPORTED_MODULE_12__properties_models_address__["a" /* Address */](propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
+                        address = new address_1.Address(propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
                     }
-                    if (propertyData.propertyType === __WEBPACK_IMPORTED_MODULE_10__constants__["c" /* PROPERTY_TYPES */].HOUSE) {
+                    if (propertyData.propertyType === constants_1.PROPERTY_TYPES.HOUSE) {
                         //we share the createdBy of the investment because we know is the same
-                        property = new __WEBPACK_IMPORTED_MODULE_11__properties_models_house__["a" /* House */](propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
+                        property = new house_1.House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
                     }
-                    result = new __WEBPACK_IMPORTED_MODULE_7__models_PropertyInvestment__["a" /* PropertyInvestment */](investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, property, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
+                    result = new PropertyInvestment_1.PropertyInvestment(investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, property, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
                 }
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(result);
+            return Rx_1.Observable.of(result);
         });
     };
     /**
@@ -3667,9 +3491,9 @@ var InvestmentsService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getInvestments() > "; //for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].from([]);
+            return Rx_1.Observable.from([]);
         }
-        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpParams */]().set('email', email);
+        var params = new http_1.HttpParams().set('email', email);
         var investmentsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
@@ -3678,30 +3502,30 @@ var InvestmentsService = /** @class */ (function () {
             if (investmentsData && investmentsData instanceof Array) {
                 for (var _i = 0, investmentsData_1 = investmentsData; _i < investmentsData_1.length; _i++) {
                     var item = investmentsData_1[_i];
-                    var createdBy = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
-                    var team = item.team ? new __WEBPACK_IMPORTED_MODULE_8__teams_models_team__["a" /* Team */](item.team.name, item.team.description, item.team.slug) : null;
-                    if (item.investmentType === __WEBPACK_IMPORTED_MODULE_10__constants__["b" /* INVESTMENTS_TYPES */].CURRENCY || item.investmentType === __WEBPACK_IMPORTED_MODULE_10__constants__["b" /* INVESTMENTS_TYPES */].CRYPTO) {
-                        investments.push(new __WEBPACK_IMPORTED_MODULE_6__models_currencyInvestment__["a" /* CurrencyInvestment */](item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.investmentData.amountUnit, item.investmentData.amount, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType, item.loanAmount, item.loanAmountUnit));
+                    var createdBy = new user_1.User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
+                    var team = item.team ? new team_1.Team(item.team.name, item.team.description, item.team.slug) : null;
+                    if (item.investmentType === constants_1.INVESTMENTS_TYPES.CURRENCY || item.investmentType === constants_1.INVESTMENTS_TYPES.CRYPTO) {
+                        investments.push(new currencyInvestment_1.CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.investmentData.amountUnit, item.investmentData.amount, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType, item.loanAmount, item.loanAmountUnit));
                     }
-                    else if (item.investmentType === __WEBPACK_IMPORTED_MODULE_10__constants__["b" /* INVESTMENTS_TYPES */].PROPERTY) {
+                    else if (item.investmentType === constants_1.INVESTMENTS_TYPES.PROPERTY) {
                         var property = null;
                         var propertyData = item.investmentData.property;
-                        var address = new __WEBPACK_IMPORTED_MODULE_12__properties_models_address__["a" /* Address */]();
+                        var address = new address_1.Address();
                         if (propertyData.location) {
-                            address = new __WEBPACK_IMPORTED_MODULE_12__properties_models_address__["a" /* Address */](propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
+                            address = new address_1.Address(propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
                         }
-                        if (propertyData.propertyType === __WEBPACK_IMPORTED_MODULE_10__constants__["c" /* PROPERTY_TYPES */].HOUSE) {
+                        if (propertyData.propertyType === constants_1.PROPERTY_TYPES.HOUSE) {
                             //we share the createdBy of the investment because we know is the same
-                            property = new __WEBPACK_IMPORTED_MODULE_11__properties_models_house__["a" /* House */](propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
+                            property = new house_1.House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.salePrice, propertyData.salePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
                         }
-                        investments.push(new __WEBPACK_IMPORTED_MODULE_7__models_PropertyInvestment__["a" /* PropertyInvestment */](item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, property, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType, item.loanAmount, item.loanAmountUnit));
+                        investments.push(new PropertyInvestment_1.PropertyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, property, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType, item.loanAmount, item.loanAmountUnit));
                     }
                 }
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].of(investments);
+            return Rx_1.Observable.of(investments);
         });
     };
     /**
@@ -3713,30 +3537,29 @@ var InvestmentsService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > delete() > "; //for debugging
         if (!id || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["a" /* Observable */].throw(null);
+            return Rx_1.Observable.throw(null);
         }
-        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpParams */]().set('email', email);
+        var params = new http_1.HttpParams().set('email', email);
         return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, params: params })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
     };
     InvestmentsService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]])
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.HttpClient, app_service_1.AppService])
     ], InvestmentsService);
     return InvestmentsService;
 }());
-
+exports.InvestmentsService = InvestmentsService;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/investments/models/PropertyInvestment.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropertyInvestment; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__investment__ = __webpack_require__("./src/app/modules/investments/models/investment.ts");
+
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -3747,7 +3570,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var investment_1 = __webpack_require__("./src/app/modules/investments/models/investment.ts");
 var PropertyInvestment = /** @class */ (function (_super) {
     __extends(PropertyInvestment, _super);
     function PropertyInvestment(id, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, property, buyingPrice, buyingPriceUnit, buyingDate, type, loanAmount, loanAmountUnit) {
@@ -3763,18 +3587,17 @@ var PropertyInvestment = /** @class */ (function (_super) {
         return _this;
     }
     return PropertyInvestment;
-}(__WEBPACK_IMPORTED_MODULE_0__investment__["a" /* Investment */]));
-
+}(investment_1.Investment));
+exports.PropertyInvestment = PropertyInvestment;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/investments/models/currencyInvestment.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyInvestment; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__investment__ = __webpack_require__("./src/app/modules/investments/models/investment.ts");
+
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -3785,7 +3608,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var investment_1 = __webpack_require__("./src/app/modules/investments/models/investment.ts");
 var CurrencyInvestment = /** @class */ (function (_super) {
     __extends(CurrencyInvestment, _super);
     function CurrencyInvestment(id, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, unit, amount, buyingPrice, buyingPriceUnit, buyingDate, type, loanAmount, loanAmountUnit) {
@@ -3802,17 +3626,18 @@ var CurrencyInvestment = /** @class */ (function (_super) {
         return _this;
     }
     return CurrencyInvestment;
-}(__WEBPACK_IMPORTED_MODULE_0__investment__["a" /* Investment */]));
-
+}(investment_1.Investment));
+exports.CurrencyInvestment = CurrencyInvestment;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/investments/models/investment.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Investment; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var Investment = /** @class */ (function () {
     function Investment(id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, loanAmount, loanAmountUnit) {
         if (team === void 0) { team = null; }
@@ -3830,7 +3655,7 @@ var Investment = /** @class */ (function () {
     }
     return Investment;
 }());
-
+exports.Investment = Investment;
 
 
 /***/ }),
@@ -3850,12 +3675,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/properties/components/house-figures-dialog/house-figures-dialog.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HouseFiguresDialogComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3868,8 +3691,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 var HouseFiguresDialogComponent = /** @class */ (function () {
     function HouseFiguresDialogComponent(dialogRef, data) {
         this.dialogRef = dialogRef;
@@ -3882,17 +3706,17 @@ var HouseFiguresDialogComponent = /** @class */ (function () {
     HouseFiguresDialogComponent.prototype.ngOnInit = function () {
     };
     HouseFiguresDialogComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-house-figures-dialog',
             template: __webpack_require__("./src/app/modules/properties/components/house-figures-dialog/house-figures-dialog.component.html"),
             styles: [__webpack_require__("./src/app/modules/properties/components/house-figures-dialog/house-figures-dialog.component.scss")]
         }),
-        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatDialogRef */], Object])
+        __param(1, core_1.Inject(material_1.MAT_DIALOG_DATA)),
+        __metadata("design:paramtypes", [material_1.MatDialogRef, Object])
     ], HouseFiguresDialogComponent);
     return HouseFiguresDialogComponent;
 }());
-
+exports.HouseFiguresDialogComponent = HouseFiguresDialogComponent;
 
 
 /***/ }),
@@ -3912,15 +3736,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/properties/components/houses-edit/houses-edit.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HousesEditComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Subscription__ = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_service__ = __webpack_require__("./src/app/util.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__constants__ = __webpack_require__("./src/app/constants.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3930,18 +3749,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
 var HousesEditComponent = /** @class */ (function () {
     function HousesEditComponent(appService, utilService) {
         this.appService = appService;
         this.utilService = utilService;
         this.defaultValues = null; //the default values of the component model
         this.defaultCurrencyUnit = 'USD'; //the default currency unit
-        this.values = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.values = new core_1.EventEmitter();
         this.model = {
             buildingType: null,
             titleType: null,
@@ -3972,12 +3792,12 @@ var HousesEditComponent = /** @class */ (function () {
             managerRate: null,
             agent: null
         };
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_1_rxjs_Subscription__["a" /* Subscription */]();
+        this.subscription = new Subscription_1.Subscription();
     }
     HousesEditComponent.prototype.ngOnInit = function () {
         this.model.registeredValueUnit = this.model.ratesUnit = this.model.insuranceUnit = this.model.rentPriceUnit = this.model.bodyCorporateUnit =
             this.model.utilitiesCostUnit = this.defaultCurrencyUnit;
-        this.model.buildingType = __WEBPACK_IMPORTED_MODULE_4__constants__["a" /* HOUSE_BUILDING_TYPES */].HOUSE;
+        this.model.buildingType = constants_1.HOUSE_BUILDING_TYPES.HOUSE;
         this.model.rentPricePeriod = 'weekly';
         Object.assign(this.model, this.defaultValues);
     };
@@ -4013,32 +3833,32 @@ var HousesEditComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])('editHouseForm'),
+        core_1.ViewChild('editHouseForm'),
         __metadata("design:type", Object)
     ], HousesEditComponent.prototype, "form", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], HousesEditComponent.prototype, "defaultValues", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], HousesEditComponent.prototype, "defaultCurrencyUnit", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */])
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], HousesEditComponent.prototype, "values", void 0);
     HousesEditComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'houses-edit',
             template: __webpack_require__("./src/app/modules/properties/components/houses-edit/houses-edit.component.html"),
             styles: [__webpack_require__("./src/app/modules/properties/components/houses-edit/houses-edit.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_2__util_service__["a" /* UtilService */]])
+        __metadata("design:paramtypes", [app_service_1.AppService, util_service_1.UtilService])
     ], HousesEditComponent);
     return HousesEditComponent;
 }());
-
+exports.HousesEditComponent = HousesEditComponent;
 
 
 /***/ }),
@@ -4058,15 +3878,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropertiesDashboardComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subscription__ = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4076,18 +3891,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
 var PropertiesDashboardComponent = /** @class */ (function () {
     function PropertiesDashboardComponent(route, mainNavigatorService, appService) {
         this.route = route;
         this.mainNavigatorService = mainNavigatorService;
         this.appService = appService;
         this.user = null;
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_4_rxjs_Subscription__["a" /* Subscription */]();
+        this.subscription = new Subscription_1.Subscription();
     }
     PropertiesDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -4109,17 +3925,17 @@ var PropertiesDashboardComponent = /** @class */ (function () {
         this.subscription.unsubscribe();
     };
     PropertiesDashboardComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'properties-dashboard',
             template: __webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.html"),
             styles: [__webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */],
-            __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService,
+            app_service_1.AppService])
     ], PropertiesDashboardComponent);
     return PropertiesDashboardComponent;
 }());
-
+exports.PropertiesDashboardComponent = PropertiesDashboardComponent;
 
 
 /***/ }),
@@ -4139,22 +3955,10 @@ module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n.prog
 /***/ }),
 
 /***/ "./src/app/modules/properties/components/properties-edit/properties-edit.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropertiesEditComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs__ = __webpack_require__("./node_modules/rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__properties_service__ = __webpack_require__("./src/app/modules/properties/properties.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__constants__ = __webpack_require__("./src/app/constants.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_house__ = __webpack_require__("./src/app/modules/properties/models/house.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util_service__ = __webpack_require__("./src/app/util.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__house_figures_dialog_house_figures_dialog_component__ = __webpack_require__("./src/app/modules/properties/components/house-figures-dialog/house-figures-dialog.component.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4164,17 +3968,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var rxjs_1 = __webpack_require__("./node_modules/rxjs/Rx.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var properties_service_1 = __webpack_require__("./src/app/modules/properties/properties.service.ts");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
+var house_1 = __webpack_require__("./src/app/modules/properties/models/house.ts");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var house_figures_dialog_component_1 = __webpack_require__("./src/app/modules/properties/components/house-figures-dialog/house-figures-dialog.component.ts");
 var PropertiesEditComponent = /** @class */ (function () {
     function PropertiesEditComponent(route, mainNavigatorService, propertiesService, appService, router, utilService, dateAdapter, dialog) {
         this.route = route;
@@ -4191,7 +3996,7 @@ var PropertiesEditComponent = /** @class */ (function () {
         this.propertyTypes = null;
         this.id = null; //property id
         this.type = null; //property type
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_1_rxjs__["Subscription"]();
+        this.subscription = new rxjs_1.Subscription();
         this.propertyTypeDataValid = false; //this value is set when property type data form is updated
         this.addressValid = false;
         //services flags
@@ -4232,7 +4037,7 @@ var PropertiesEditComponent = /** @class */ (function () {
             paymentFrecuency: "26",
         };
         this.dateAdapter.setLocale('en-GB');
-        this.propertyTypes = __WEBPACK_IMPORTED_MODULE_6__constants__["c" /* PROPERTY_TYPES */];
+        this.propertyTypes = constants_1.PROPERTY_TYPES;
     }
     PropertiesEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -4274,7 +4079,7 @@ var PropertiesEditComponent = /** @class */ (function () {
         this.subscription.add(newSubscription);
         //get TYPE parameter
         this.route.paramMap.map(function (params) { return params.get('type'); }).subscribe(function (type) {
-            if (![__WEBPACK_IMPORTED_MODULE_6__constants__["c" /* PROPERTY_TYPES */].HOUSE].includes(type)) {
+            if (![constants_1.PROPERTY_TYPES.HOUSE].includes(type)) {
                 _this.appService.showResults('You must provide a valid property type to continue.', 'error');
                 _this.router.navigate(['welcome']);
             }
@@ -4326,7 +4131,7 @@ var PropertiesEditComponent = /** @class */ (function () {
             _this.model.otherCostUnit = property.otherCostUnit;
             _this.model.notes = property.notes;
             _this.model.type = property.type;
-            if (property instanceof __WEBPACK_IMPORTED_MODULE_7__models_house__["a" /* House */]) {
+            if (property instanceof house_1.House) {
                 _this.model.propertyTypeData = {
                     buildingType: property.buildingType,
                     titleType: property.titleType,
@@ -4440,7 +4245,7 @@ var PropertiesEditComponent = /** @class */ (function () {
     PropertiesEditComponent.prototype.openHouseResultsFiguresDialog = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > openHouseResultsFiguresDialog() > "; //for debugging
-        var houseFiguresDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_10__house_figures_dialog_house_figures_dialog_component__["a" /* HouseFiguresDialogComponent */], {
+        var houseFiguresDialogRef = this.dialog.open(house_figures_dialog_component_1.HouseFiguresDialogComponent, {
             data: {
                 model: this.model,
                 modelHouseFiguresResults: this.modelHouseFiguresResults
@@ -4455,18 +4260,18 @@ var PropertiesEditComponent = /** @class */ (function () {
         return false;
     };
     PropertiesEditComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'properties-edit',
             template: __webpack_require__("./src/app/modules/properties/components/properties-edit/properties-edit.component.html"),
             styles: [__webpack_require__("./src/app/modules/properties/components/properties-edit/properties-edit.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */], __WEBPACK_IMPORTED_MODULE_4__properties_service__["a" /* PropertiesService */],
-            __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_9__util_service__["a" /* UtilService */], __WEBPACK_IMPORTED_MODULE_8__angular_material__["a" /* DateAdapter */],
-            __WEBPACK_IMPORTED_MODULE_8__angular_material__["k" /* MatDialog */]])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, properties_service_1.PropertiesService,
+            app_service_1.AppService, router_1.Router, util_service_1.UtilService, material_1.DateAdapter,
+            material_1.MatDialog])
     ], PropertiesEditComponent);
     return PropertiesEditComponent;
 }());
-
+exports.PropertiesEditComponent = PropertiesEditComponent;
 
 
 /***/ }),
@@ -4474,32 +4279,22 @@ var PropertiesEditComponent = /** @class */ (function () {
 /***/ "./src/app/modules/properties/components/properties-table/properties-table.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties-table\">\r\n  <section class=\"table__container\" [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n\r\n    <!-- Table fliter -->\r\n    <mat-form-field class=\"table-filter__input\">\r\n      <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Filter\">\r\n    </mat-form-field>\r\n    \r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\" matSort>\r\n  \r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" (click)=\"selection.select(element); goToPropertyEdit(element);\">{{element.address.description}}</mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n          [ngClass]=\"{ 'selected': selection.isSelected(row)}\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"25\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[25, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"row\" fxLayout.xs=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>You do not have properties yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"container__properties-table\">\r\n  <section class=\"table__container\" [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <div class=\"table__overlay\" *ngIf=\"propertyTableActionRunning\">\r\n        <mat-spinner color=\"warn\"></mat-spinner>\r\n    </div>\r\n\r\n    <!-- Table fliter -->\r\n    <mat-form-field class=\"table-filter__input\">\r\n      <input matInput (keyup)=\"applyFilter($event.target.value)\" placeholder=\"Filter\">\r\n    </mat-form-field>\r\n    \r\n    <mat-table #propertiesTable [dataSource]=\"propertiesDataSource\" matSort>\r\n  \r\n      <!-- Position Column -->\r\n      <ng-container matColumnDef=\"address\">\r\n        <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\" (click)=\"selection.select(element); goToPropertyEdit(element);\">{{element.address.description}}</mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"invest\">\r\n        <mat-header-cell *matHeaderCellDef>Invest</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element\">\r\n          <button mat-mini-fab color=\"primary\" \r\n              routerLink=\"/investments/property/create/{{element.id}}\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"propertyTableActionRunning = true\">\r\n            <mat-icon aria-label=\"Create investment\">trending_up</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n  \r\n      <ng-container matColumnDef=\"delete\">\r\n        <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>\r\n        <mat-cell *matCellDef=\"let element; let propertyIndex = index;\">\r\n          <button mat-mini-fab color=\"warn\" \r\n              [disabled]=\"user.email !== element.createdBy.email\"\r\n              [matTooltip]=\"user.email !== element.createdBy.email ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''\"\r\n              matTooltipPosition=\"left\"\r\n              (click)=\"openDeleteTeamDialog(propertyIndex, element)\">\r\n            <mat-icon aria-label=\"Delete\">delete</mat-icon>\r\n          </button>\r\n        </mat-cell>\r\n      </ng-container>\r\n      \r\n      <mat-header-row *matHeaderRowDef=\"displayedColumns\"></mat-header-row>\r\n      <mat-row *matRowDef=\"let row; columns: displayedColumns;\"\r\n          [ngClass]=\"{ 'selected': selection.isSelected(row)}\"></mat-row>\r\n    </mat-table>\r\n  </section>\r\n  <mat-paginator [fxShow]=\"!getPropertiesServiceRunning && properties.length > 0\" #propertiesPaginator \r\n      [pageSize]=\"25\" \r\n      [showFirstLastButtons]=\"true\"\r\n      [pageSizeOptions]=\"[25, 50, 100]\">\r\n  </mat-paginator>\r\n  \r\n  <section *ngIf=\"!getPropertiesServiceRunning && properties.length == 0\" fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    <mat-card fxFlex class=\"no-properties__card\">\r\n      <mat-card-content fxLayout=\"column\" fxLayoutGap=\"10px\"\r\n          fxLayoutAlign=\"space-around center\">\r\n        <p>You do not have any property yet.</p>\r\n      </mat-card-content>\r\n    </mat-card>\r\n    \r\n  </section>\r\n  \r\n  <mat-progress-bar *ngIf=\"getPropertiesServiceRunning\"\r\n    fxFlexAlign=\"center\"\r\n    class=\"progress-bar progress-bar--get-properties\"\r\n    color=\"primary\"\r\n    mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n</div>"
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/components/properties-table/properties-table.component.scss":
 /***/ (function(module, exports) {
 
-module.exports = ".table__container .table-filter__input {\n  margin: 0 24px; }\n\n.table__container mat-table mat-row .mat-column-address {\n  cursor: pointer; }\n\n.table__container mat-table .mat-row.selected {\n  background: #69f0ae; }\n\n.table__container mat-table .mat-row.selected .mat-column-address {\n    color: rgba(0, 0, 0, 0.87); }\n\n.no-properties__card {\n  text-align: center; }\n\n.no-properties__card md-card-content p {\n    margin-bottom: 0; }\n\n.progress-bar--get-properties {\n  width: 80%;\n  margin: 0 24px; }\n\n@media screen and (min-width: 600px) {\n  .table-filter__input {\n    margin: 0; }\n  .progress-bar--get-properties {\n    width: 300px;\n    margin: 0; } }\n"
+module.exports = ".table__container .table-filter__input {\n  margin: 0 24px; }\n\n.table__container mat-table mat-row .mat-column-address {\n  cursor: pointer; }\n\n.table__container mat-table .mat-row.selected {\n  background: #69f0ae; }\n\n.table__container mat-table .mat-row.selected .mat-column-address {\n    color: rgba(0, 0, 0, 0.87); }\n\n.no-properties__card {\n  text-align: center; }\n\n.no-properties__card mat-card-content p {\n    margin-bottom: 0; }\n\n.progress-bar--get-properties {\n  width: 80%;\n  margin: 0 24px; }\n\n@media screen and (min-width: 600px) {\n  .table-filter__input {\n    margin: 0; }\n  .progress-bar--get-properties {\n    width: 300px;\n    margin: 0; } }\n"
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/components/properties-table/properties-table.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropertiesTableComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__users_models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__("./node_modules/rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__properties_service__ = __webpack_require__("./src/app/modules/properties/properties.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_cdk_collections__ = __webpack_require__("./node_modules/@angular/cdk/esm5/collections.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4509,15 +4304,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var rxjs_1 = __webpack_require__("./node_modules/rxjs/Rx.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var properties_service_1 = __webpack_require__("./src/app/modules/properties/properties.service.ts");
+var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var collections_1 = __webpack_require__("./node_modules/@angular/cdk/esm5/collections.es5.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var PropertiesTableComponent = /** @class */ (function () {
     function PropertiesTableComponent(appService, propertiesService, dialog, router) {
         this.appService = appService;
@@ -4528,11 +4324,12 @@ var PropertiesTableComponent = /** @class */ (function () {
         this.showActions = true; //if false we hide FAB buttons
         this.allowEdition = true; //if false we don't redirect to property edit component when click on adrdresss
         this.loadJustUserProperties = false; //if false when it get properties loads current user properties plus properties of investments where the user has a portion of it.
-        this.selectedProperty = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.selectedProperty = new core_1.EventEmitter();
+        this.onPropertiesLoad = new core_1.EventEmitter();
         this.properties = [];
-        this.propertiesDataSource = new __WEBPACK_IMPORTED_MODULE_2__angular_material__["F" /* MatTableDataSource */]([]);
-        this.selection = new __WEBPACK_IMPORTED_MODULE_7__angular_cdk_collections__["b" /* SelectionModel */](false, []);
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_3_rxjs__["Subscription"]();
+        this.propertiesDataSource = new material_1.MatTableDataSource([]);
+        this.selection = new collections_1.SelectionModel(false, []);
+        this.subscription = new rxjs_1.Subscription();
         this.getPropertiesServiceRunning = false;
         this.propertyTableActionRunning = false;
         this.displayedColumns = [];
@@ -4591,6 +4388,7 @@ var PropertiesTableComponent = /** @class */ (function () {
             _this.propertiesDataSource.data = properties;
             _this.propertiesDataSource.paginator = _this.propertiesTablePaginator;
             _this.getPropertiesServiceRunning = false;
+            _this.onPropertiesLoad.emit(properties.length);
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
@@ -4623,7 +4421,7 @@ var PropertiesTableComponent = /** @class */ (function () {
             index = (-1) * (index + 1); //add one to index and invert sign
         }
         this.propertyTableActionRunning = true;
-        var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_6__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
+        var yesNoDialogRef = this.dialog.open(yes_no_dialog_component_1.YesNoDialogComponent, {
             width: '250px',
             data: {
                 title: 'Delete property',
@@ -4696,44 +4494,48 @@ var PropertiesTableComponent = /** @class */ (function () {
         this.propertiesDataSource.filter = filterValue; //apply filter
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__users_models_user__["a" /* User */])
+        core_1.Input(),
+        __metadata("design:type", user_1.User)
     ], PropertiesTableComponent.prototype, "user", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Boolean)
     ], PropertiesTableComponent.prototype, "showActions", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Boolean)
     ], PropertiesTableComponent.prototype, "allowEdition", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Boolean)
     ], PropertiesTableComponent.prototype, "loadJustUserProperties", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */])
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], PropertiesTableComponent.prototype, "selectedProperty", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])('propertiesPaginator'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2__angular_material__["s" /* MatPaginator */])
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], PropertiesTableComponent.prototype, "onPropertiesLoad", void 0);
+    __decorate([
+        core_1.ViewChild('propertiesPaginator'),
+        __metadata("design:type", material_1.MatPaginator)
     ], PropertiesTableComponent.prototype, "propertiesTablePaginator", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_2__angular_material__["D" /* MatSort */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2__angular_material__["D" /* MatSort */])
+        core_1.ViewChild(material_1.MatSort),
+        __metadata("design:type", material_1.MatSort)
     ], PropertiesTableComponent.prototype, "propertiesSort", void 0);
     PropertiesTableComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'properties-table',
             template: __webpack_require__("./src/app/modules/properties/components/properties-table/properties-table.component.html"),
             styles: [__webpack_require__("./src/app/modules/properties/components/properties-table/properties-table.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_5__properties_service__["a" /* PropertiesService */], __WEBPACK_IMPORTED_MODULE_2__angular_material__["k" /* MatDialog */], __WEBPACK_IMPORTED_MODULE_8__angular_router__["b" /* Router */]])
+        __metadata("design:paramtypes", [app_service_1.AppService, properties_service_1.PropertiesService, material_1.MatDialog, router_1.Router])
     ], PropertiesTableComponent);
     return PropertiesTableComponent;
 }());
-
+exports.PropertiesTableComponent = PropertiesTableComponent;
 
 
 /***/ }),
@@ -4741,24 +4543,22 @@ var PropertiesTableComponent = /** @class */ (function () {
 /***/ "./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h2 mat-dialog-title>Select a property</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" class=\"container__yes-no-dialog\">\r\n    <properties-table [user]=\"data.user\" \r\n        [showActions]=\"false\" \r\n        [allowEdition]=\"false\"\r\n        [loadJustUserProperties]=\"true\" \r\n        (selectedProperty)=\"onPropertySelected($event)\"></properties-table>\r\n    {{data.message}}\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" [mat-dialog-close]=\"null\">\r\n    <mat-icon aria-label=\"No\">clear</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
+module.exports = "<h2 mat-dialog-title>Select a property</h2>\r\n\r\n<mat-dialog-content>\r\n  <div fxLayout=\"column\" fxLayoutAlign=\"none center\" class=\"container__yes-no-dialog\">\r\n    <properties-table [user]=\"data.user\" \r\n        [showActions]=\"false\" \r\n        [allowEdition]=\"false\"\r\n        [loadJustUserProperties]=\"true\" \r\n        (selectedProperty)=\"onPropertySelected($event)\"\r\n        (onPropertiesLoad)=\"onPropertiesLoad($event)\"></properties-table>\r\n      \r\n    <a *ngIf=\"showLinkToProperties\" class=\"color__almost-white go-to-properties\" (click)=\"dialogRef.close(null)\" routerLink=\"/properties/house/create\">\r\n      <mat-icon class=\"icon--arrow_forward\">arrow_forward</mat-icon>\r\n      Go and add one...\r\n    </a>\r\n  </div>\r\n</mat-dialog-content>\r\n\r\n<mat-dialog-actions fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"space-around center\">\r\n  <button mat-mini-fab color=\"warn\" [mat-dialog-close]=\"null\">\r\n    <mat-icon aria-label=\"No\">clear</mat-icon>\r\n  </button>\r\n</mat-dialog-actions>"
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.scss":
 /***/ (function(module, exports) {
 
-module.exports = ".mat-dialog-content properties-table {\n  margin: 0 -24px; }\n\n@media screen and (min-width: 600px) {\n  .mat-dialog-content properties-table {\n    margin: 0; } }\n"
+module.exports = ".mat-dialog-content properties-table {\n  margin: 0 -24px; }\n\n.mat-dialog-content .go-to-properties {\n  margin-top: 10px; }\n\n.mat-dialog-content .go-to-properties .icon--arrow_forward {\n    float: left; }\n\n@media screen and (min-width: 600px) {\n  .mat-dialog-content properties-table {\n    margin: 0; } }\n"
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropertySelectorDialogComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4771,38 +4571,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 var PropertySelectorDialogComponent = /** @class */ (function () {
     function PropertySelectorDialogComponent(dialogRef, data) {
         this.dialogRef = dialogRef;
         this.data = data;
+        this.showLinkToProperties = false;
     }
     PropertySelectorDialogComponent.prototype.ngOnInit = function () { };
     PropertySelectorDialogComponent.prototype.onPropertySelected = function ($event) {
         this.dialogRef.close($event);
     };
+    PropertySelectorDialogComponent.prototype.onPropertiesLoad = function ($event) {
+        this.showLinkToProperties = $event <= 0;
+    };
     PropertySelectorDialogComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-property-selector-dialog',
             template: __webpack_require__("./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.html"),
             styles: [__webpack_require__("./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.scss")]
         }),
-        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatDialogRef */], Object])
+        __param(1, core_1.Inject(material_1.MAT_DIALOG_DATA)),
+        __metadata("design:paramtypes", [material_1.MatDialogRef, Object])
     ], PropertySelectorDialogComponent);
     return PropertySelectorDialogComponent;
 }());
-
+exports.PropertySelectorDialogComponent = PropertySelectorDialogComponent;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/models/address.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Address; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var Address = /** @class */ (function () {
     function Address(description, latitude, longitude, mapsPlaceId) {
         if (description === void 0) { description = null; }
@@ -4816,17 +4622,16 @@ var Address = /** @class */ (function () {
     }
     return Address;
 }());
-
+exports.Address = Address;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/models/house.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return House; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__property__ = __webpack_require__("./src/app/modules/properties/models/property.ts");
+
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -4837,7 +4642,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var property_1 = __webpack_require__("./src/app/modules/properties/models/property.ts");
 var House = /** @class */ (function (_super) {
     __extends(House, _super);
     function House(id, type, address, createdBy, landArea, floorArea, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, registeredValue, registeredValueUnit, rates, ratesUnit, insurance, insuranceUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost, otherCostUnit, notes, capitalGrowth, bedrooms, bathrooms, parkingSpaces, fenced, rented, rentPrice, rentPriceUnit, rentPricePeriod, rentAppraisalDone, vacancy, bodyCorporate, bodyCorporateUnit, utilitiesCost, utilitiesCostUnit, agent, managed, managerRate, buildingType, titleType) {
@@ -4924,17 +4730,18 @@ var House = /** @class */ (function (_super) {
         return _this;
     }
     return House;
-}(__WEBPACK_IMPORTED_MODULE_0__property__["a" /* Property */]));
-
+}(property_1.Property));
+exports.House = House;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/models/property.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Property; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var Property = /** @class */ (function () {
     function Property(id, type, address, createdBy, askingPrice, askingPriceUnit, offerPrice, offerPriceUnit, walkAwayPrice, walkAwayPriceUnit, salePrice, salePriceUnit, dateListed, reasonForSelling, marketValue, marketValueUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost, otherCostUnit, notes) {
         if (id === void 0) { id = null; }
@@ -4988,56 +4795,52 @@ var Property = /** @class */ (function () {
     }
     return Property;
 }());
-
+exports.Property = Property;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/properties-routing.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropertiesRoutingModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_properties_edit_properties_edit_component__ = __webpack_require__("./src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__auth_resolver_service__ = __webpack_require__("./src/app/auth-resolver.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_properties_dashboard_properties_dashboard_component__ = __webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var properties_edit_component_1 = __webpack_require__("./src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
+var auth_resolver_service_1 = __webpack_require__("./src/app/auth-resolver.service.ts");
+var properties_dashboard_component_1 = __webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
 var routes = [
     {
         path: 'properties',
         children: [
             {
                 path: ':type/create',
-                component: __WEBPACK_IMPORTED_MODULE_2__components_properties_edit_properties_edit_component__["a" /* PropertiesEditComponent */],
+                component: properties_edit_component_1.PropertiesEditComponent,
                 resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_3__auth_resolver_service__["a" /* AuthResolver */]
+                    authUser: auth_resolver_service_1.AuthResolver
                 }
             },
             {
                 path: ':type/edit/:id',
-                component: __WEBPACK_IMPORTED_MODULE_2__components_properties_edit_properties_edit_component__["a" /* PropertiesEditComponent */],
+                component: properties_edit_component_1.PropertiesEditComponent,
                 resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_3__auth_resolver_service__["a" /* AuthResolver */]
+                    authUser: auth_resolver_service_1.AuthResolver
                 }
             },
             {
                 path: '',
                 pathMatch: 'full',
-                component: __WEBPACK_IMPORTED_MODULE_4__components_properties_dashboard_properties_dashboard_component__["a" /* PropertiesDashboardComponent */],
+                component: properties_dashboard_component_1.PropertiesDashboardComponent,
                 resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_3__auth_resolver_service__["a" /* AuthResolver */]
+                    authUser: auth_resolver_service_1.AuthResolver
                 }
             }
         ]
@@ -5047,110 +4850,86 @@ var PropertiesRoutingModule = /** @class */ (function () {
     function PropertiesRoutingModule() {
     }
     PropertiesRoutingModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
-            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+        core_1.NgModule({
+            imports: [router_1.RouterModule.forChild(routes)],
+            exports: [router_1.RouterModule]
         })
     ], PropertiesRoutingModule);
     return PropertiesRoutingModule;
 }());
-
+exports.PropertiesRoutingModule = PropertiesRoutingModule;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/properties.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropertiesModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__properties_routing_module__ = __webpack_require__("./src/app/modules/properties/properties-routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_properties_dashboard_properties_dashboard_component__ = __webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_shared_module__ = __webpack_require__("./src/app/modules/shared/shared.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__properties_service__ = __webpack_require__("./src/app/modules/properties/properties.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_custom_material_design_module__ = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_properties_edit_properties_edit_component__ = __webpack_require__("./src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_houses_edit_houses_edit_component__ = __webpack_require__("./src/app/modules/properties/components/houses-edit/houses-edit.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_properties_table_properties_table_component__ = __webpack_require__("./src/app/modules/properties/components/properties-table/properties-table.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_property_selector_dialog_property_selector_dialog_component__ = __webpack_require__("./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__calculators_calculators_module__ = __webpack_require__("./src/app/modules/calculators/calculators.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_house_figures_dialog_house_figures_dialog_component__ = __webpack_require__("./src/app/modules/properties/components/house-figures-dialog/house-figures-dialog.component.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var properties_routing_module_1 = __webpack_require__("./src/app/modules/properties/properties-routing.module.ts");
+var properties_dashboard_component_1 = __webpack_require__("./src/app/modules/properties/components/properties-dashboard/properties-dashboard.component.ts");
+var shared_module_1 = __webpack_require__("./src/app/modules/shared/shared.module.ts");
+var properties_service_1 = __webpack_require__("./src/app/modules/properties/properties.service.ts");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var properties_edit_component_1 = __webpack_require__("./src/app/modules/properties/components/properties-edit/properties-edit.component.ts");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var houses_edit_component_1 = __webpack_require__("./src/app/modules/properties/components/houses-edit/houses-edit.component.ts");
+var properties_table_component_1 = __webpack_require__("./src/app/modules/properties/components/properties-table/properties-table.component.ts");
+var property_selector_dialog_component_1 = __webpack_require__("./src/app/modules/properties/components/property-selector-dialog/property-selector-dialog.component.ts");
+var calculators_module_1 = __webpack_require__("./src/app/modules/calculators/calculators.module.ts");
+var house_figures_dialog_component_1 = __webpack_require__("./src/app/modules/properties/components/house-figures-dialog/house-figures-dialog.component.ts");
 var PropertiesModule = /** @class */ (function () {
     function PropertiesModule() {
     }
     PropertiesModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
+        core_1.NgModule({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
-                __WEBPACK_IMPORTED_MODULE_2__properties_routing_module__["a" /* PropertiesRoutingModule */],
-                __WEBPACK_IMPORTED_MODULE_9__angular_forms__["c" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_7__angular_flex_layout__["a" /* FlexLayoutModule */],
-                __WEBPACK_IMPORTED_MODULE_6__shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
-                __WEBPACK_IMPORTED_MODULE_4__shared_shared_module__["a" /* SharedModule */],
-                __WEBPACK_IMPORTED_MODULE_13__calculators_calculators_module__["a" /* CalculatorsModule */]
+                common_1.CommonModule,
+                properties_routing_module_1.PropertiesRoutingModule,
+                forms_1.FormsModule,
+                flex_layout_1.FlexLayoutModule,
+                custom_material_design_module_1.CustomMaterialDesignModule,
+                shared_module_1.SharedModule,
+                calculators_module_1.CalculatorsModule
             ],
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_3__components_properties_dashboard_properties_dashboard_component__["a" /* PropertiesDashboardComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components_properties_edit_properties_edit_component__["a" /* PropertiesEditComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components_houses_edit_houses_edit_component__["a" /* HousesEditComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__components_properties_table_properties_table_component__["a" /* PropertiesTableComponent */],
-                __WEBPACK_IMPORTED_MODULE_12__components_property_selector_dialog_property_selector_dialog_component__["a" /* PropertySelectorDialogComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__components_house_figures_dialog_house_figures_dialog_component__["a" /* HouseFiguresDialogComponent */]
+                properties_dashboard_component_1.PropertiesDashboardComponent,
+                properties_edit_component_1.PropertiesEditComponent,
+                houses_edit_component_1.HousesEditComponent,
+                properties_table_component_1.PropertiesTableComponent,
+                property_selector_dialog_component_1.PropertySelectorDialogComponent,
+                house_figures_dialog_component_1.HouseFiguresDialogComponent
             ],
-            providers: [__WEBPACK_IMPORTED_MODULE_5__properties_service__["a" /* PropertiesService */]],
+            providers: [properties_service_1.PropertiesService],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_12__components_property_selector_dialog_property_selector_dialog_component__["a" /* PropertySelectorDialogComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__components_house_figures_dialog_house_figures_dialog_component__["a" /* HouseFiguresDialogComponent */]
+                property_selector_dialog_component_1.PropertySelectorDialogComponent,
+                house_figures_dialog_component_1.HouseFiguresDialogComponent
             ]
         })
     ], PropertiesModule);
     return PropertiesModule;
 }());
-
+exports.PropertiesModule = PropertiesModule;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/properties/properties.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropertiesService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__constants__ = __webpack_require__("./src/app/constants.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_house__ = __webpack_require__("./src/app/modules/properties/models/house.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_observable_of__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__models_address__ = __webpack_require__("./src/app/modules/properties/models/address.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5160,22 +4939,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var Observable_1 = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var constants_1 = __webpack_require__("./src/app/constants.ts");
+var house_1 = __webpack_require__("./src/app/modules/properties/models/house.ts");
+var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
+var address_1 = __webpack_require__("./src/app/modules/properties/models/address.ts");
 var PropertiesService = /** @class */ (function () {
     function PropertiesService(http, appService) {
         this.http = http;
         this.appService = appService;
-        this.serverHost = __WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].apiHost + '/api/properties';
-        this.headers = new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["c" /* HttpHeaders */]().set('Content-Type', 'application/json');
+        this.serverHost = environment_1.environment.apiHost + '/api/properties';
+        this.headers = new http_1.HttpHeaders().set('Content-Type', 'application/json');
     }
     /**
      * Server call to Create a new property in the system
@@ -5208,28 +4988,28 @@ var PropertiesService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getPropertyById() > "; //for debugging
         if (!id || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return Object(__WEBPACK_IMPORTED_MODULE_8_rxjs_observable_of__["a" /* of */])(null);
+            return of_1.of(null);
         }
-        var params = new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["d" /* HttpParams */]().set('email', email);
+        var params = new http_1.HttpParams().set('email', email);
         var data$ = this.http.get(this.serverHost + "/" + id, { params: params })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
         return data$.switchMap(function (data) {
             var result = null;
             if (data && data._id) {
-                var createdBy = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
-                var address = new __WEBPACK_IMPORTED_MODULE_9__models_address__["a" /* Address */]();
+                var createdBy = new user_1.User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
+                var address = new address_1.Address();
                 if (data.location) {
-                    address = new __WEBPACK_IMPORTED_MODULE_9__models_address__["a" /* Address */](data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
+                    address = new address_1.Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
                 }
-                if (data.propertyType === __WEBPACK_IMPORTED_MODULE_6__constants__["c" /* PROPERTY_TYPES */].HOUSE) {
-                    result = new __WEBPACK_IMPORTED_MODULE_7__models_house__["a" /* House */](data._id, data.propertyType, address, createdBy, data.propertyTypeData.landArea, data.propertyTypeData.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit, data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces, data.propertyTypeData.fenced, data.propertyTypeData.rented, data.propertyTypeData.rentPrice, data.propertyTypeData.rentPriceUnit, data.propertyTypeData.rentPricePeriod, data.propertyTypeData.rentAppraisalDone, data.propertyTypeData.vacancy, data.propertyTypeData.bodyCorporate, data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
+                if (data.propertyType === constants_1.PROPERTY_TYPES.HOUSE) {
+                    result = new house_1.House(data._id, data.propertyType, address, createdBy, data.propertyTypeData.landArea, data.propertyTypeData.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit, data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces, data.propertyTypeData.fenced, data.propertyTypeData.rented, data.propertyTypeData.rentPrice, data.propertyTypeData.rentPriceUnit, data.propertyTypeData.rentPricePeriod, data.propertyTypeData.rentAppraisalDone, data.propertyTypeData.vacancy, data.propertyTypeData.bodyCorporate, data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
                 }
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return __WEBPACK_IMPORTED_MODULE_4_rxjs_Observable__["a" /* Observable */].of(result);
+            return Observable_1.Observable.of(result);
         });
     };
     /**
@@ -5245,9 +5025,9 @@ var PropertiesService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return __WEBPACK_IMPORTED_MODULE_4_rxjs_Observable__["a" /* Observable */].from([]);
+            return Observable_1.Observable.from([]);
         }
-        var params = new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["d" /* HttpParams */]().set('email', email).set('justUserProperties', justUserProperties + '');
+        var params = new http_1.HttpParams().set('email', email).set('justUserProperties', justUserProperties + '');
         var responseData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
@@ -5256,20 +5036,20 @@ var PropertiesService = /** @class */ (function () {
             if (responseData && responseData instanceof Array) {
                 for (var _i = 0, responseData_1 = responseData; _i < responseData_1.length; _i++) {
                     var data = responseData_1[_i];
-                    var createdBy = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
-                    var address = new __WEBPACK_IMPORTED_MODULE_9__models_address__["a" /* Address */]();
+                    var createdBy = new user_1.User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
+                    var address = new address_1.Address();
                     if (data.location) {
-                        address = new __WEBPACK_IMPORTED_MODULE_9__models_address__["a" /* Address */](data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
+                        address = new address_1.Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
                     }
-                    if (data.propertyType === __WEBPACK_IMPORTED_MODULE_6__constants__["c" /* PROPERTY_TYPES */].HOUSE) {
-                        properties.push(new __WEBPACK_IMPORTED_MODULE_7__models_house__["a" /* House */](data._id, data.propertyType, address, createdBy, data.landArea, data.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.registeredValue, data.registeredValueUnit, data.rates, data.ratesUnit, data.insurance, data.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.capitalGrowth, data.bedrooms, data.bathrooms, data.parkingSpaces, data.fenced, data.rented, data.rentPrice, data.rentPriceUnit, data.rentPricePeriod, data.rentAppraisalDone, data.vacancy, data.bodyCorporate, data.bodyCorporateUnit, data.utilitiesCost, data.utilitiesCostUnit, data.agent, data.managed, data.managerRate, data.buildingType, data.titleType));
+                    if (data.propertyType === constants_1.PROPERTY_TYPES.HOUSE) {
+                        properties.push(new house_1.House(data._id, data.propertyType, address, createdBy, data.landArea, data.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.salePrice, data.salePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.registeredValue, data.registeredValueUnit, data.rates, data.ratesUnit, data.insurance, data.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.capitalGrowth, data.bedrooms, data.bathrooms, data.parkingSpaces, data.fenced, data.rented, data.rentPrice, data.rentPriceUnit, data.rentPricePeriod, data.rentAppraisalDone, data.vacancy, data.bodyCorporate, data.bodyCorporateUnit, data.utilitiesCost, data.utilitiesCostUnit, data.agent, data.managed, data.managerRate, data.buildingType, data.titleType));
                     }
                 }
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return __WEBPACK_IMPORTED_MODULE_4_rxjs_Observable__["a" /* Observable */].of(properties);
+            return Observable_1.Observable.of(properties);
         });
     };
     /**
@@ -5281,20 +5061,20 @@ var PropertiesService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > delete() > "; //for debugging
         if (!id || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return __WEBPACK_IMPORTED_MODULE_4_rxjs_Observable__["a" /* Observable */].throw(null);
+            return Observable_1.Observable.throw(null);
         }
-        var params = new __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["d" /* HttpParams */]().set('email', email);
+        var params = new http_1.HttpParams().set('email', email);
         return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, params: params })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
     };
     PropertiesService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]])
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.HttpClient, app_service_1.AppService])
     ], PropertiesService);
     return PropertiesService;
 }());
-
+exports.PropertiesService = PropertiesService;
 
 
 /***/ }),
@@ -5314,16 +5094,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/shared/components/address-autocomplete/address-autocomplete.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddressAutocompleteComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__agm_core__ = __webpack_require__("./node_modules/@agm/core/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__("./node_modules/rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__properties_models_address__ = __webpack_require__("./src/app/modules/properties/models/address.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5333,17 +5107,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var core_2 = __webpack_require__("./node_modules/@agm/core/index.js");
+var rxjs_1 = __webpack_require__("./node_modules/rxjs/Rx.js");
+var address_1 = __webpack_require__("./src/app/modules/properties/models/address.ts");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var AddressAutocompleteComponent = /** @class */ (function () {
     function AddressAutocompleteComponent(mapsAPILoader) {
         this.mapsAPILoader = mapsAPILoader;
         this.defaultValues = null; //the default values of the component model
         //@Input() required : boolean = false;
-        this.values = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.values = new core_1.EventEmitter();
         this.model = {
             description: null,
             latitude: null,
@@ -5351,7 +5126,7 @@ var AddressAutocompleteComponent = /** @class */ (function () {
             mapsPlaceId: null
         };
         this.options = [];
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_2_rxjs__["Subscription"]();
+        this.subscription = new rxjs_1.Subscription();
         this.autocompleteService = null;
         this.placesService = null;
     }
@@ -5446,11 +5221,11 @@ var AddressAutocompleteComponent = /** @class */ (function () {
         var valid = this.form.valid;
         if (this.model.mapsPlaceId) {
             //the user picked from the suggestion list
-            address = new __WEBPACK_IMPORTED_MODULE_3__properties_models_address__["a" /* Address */](this.model.description, this.model.latitude, this.model.longitude, this.model.mapsPlaceId);
+            address = new address_1.Address(this.model.description, this.model.latitude, this.model.longitude, this.model.mapsPlaceId);
         }
         else if (description) {
             //the user just type a custom address
-            address = new __WEBPACK_IMPORTED_MODULE_3__properties_models_address__["a" /* Address */](description, null, null, null);
+            address = new address_1.Address(description, null, null, null);
         }
         else {
             //none of above, return invalid
@@ -5464,40 +5239,40 @@ var AddressAutocompleteComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])('addressAutocompleteForm'),
+        core_1.ViewChild('addressAutocompleteForm'),
         __metadata("design:type", Object)
     ], AddressAutocompleteComponent.prototype, "form", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])("addressInput"),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["h" /* NgModel */])
+        core_1.ViewChild("addressInput"),
+        __metadata("design:type", forms_1.NgModel)
     ], AddressAutocompleteComponent.prototype, "addressInput", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], AddressAutocompleteComponent.prototype, "id", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], AddressAutocompleteComponent.prototype, "placeHolder", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], AddressAutocompleteComponent.prototype, "defaultValues", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */])
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], AddressAutocompleteComponent.prototype, "values", void 0);
     AddressAutocompleteComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'address-autocomplete',
             template: __webpack_require__("./src/app/modules/shared/components/address-autocomplete/address-autocomplete.component.html"),
             styles: [__webpack_require__("./src/app/modules/shared/components/address-autocomplete/address-autocomplete.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__agm_core__["b" /* MapsAPILoader */]])
+        __metadata("design:paramtypes", [core_2.MapsAPILoader])
     ], AddressAutocompleteComponent);
     return AddressAutocompleteComponent;
 }());
-
+exports.AddressAutocompleteComponent = AddressAutocompleteComponent;
 
 
 /***/ }),
@@ -5517,11 +5292,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/shared/components/currency-unit/currency-unit.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrencyUnitComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5531,12 +5305,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var CurrencyUnitComponent = /** @class */ (function () {
     function CurrencyUnitComponent() {
         this.view = 'normal';
         this.type = 'currency';
-        this.newValue = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
+        this.newValue = new core_1.EventEmitter();
         this.model = {};
     }
     CurrencyUnitComponent.prototype.ngOnInit = function () { };
@@ -5544,35 +5319,35 @@ var CurrencyUnitComponent = /** @class */ (function () {
         this.newValue.emit(matSelectChange);
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], CurrencyUnitComponent.prototype, "id", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], CurrencyUnitComponent.prototype, "hint", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], CurrencyUnitComponent.prototype, "view", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], CurrencyUnitComponent.prototype, "type", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], CurrencyUnitComponent.prototype, "placeHolder", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], CurrencyUnitComponent.prototype, "value", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["R" /* Output */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */])
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
     ], CurrencyUnitComponent.prototype, "newValue", void 0);
     CurrencyUnitComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'currency-unit',
             template: __webpack_require__("./src/app/modules/shared/components/currency-unit/currency-unit.component.html"),
             styles: [__webpack_require__("./src/app/modules/shared/components/currency-unit/currency-unit.component.scss")]
@@ -5581,7 +5356,7 @@ var CurrencyUnitComponent = /** @class */ (function () {
     ], CurrencyUnitComponent);
     return CurrencyUnitComponent;
 }());
-
+exports.CurrencyUnitComponent = CurrencyUnitComponent;
 
 
 /***/ }),
@@ -5601,11 +5376,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/shared/components/dynamic-map/dynamic-map.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DynamicMapComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5615,7 +5389,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var DynamicMapComponent = /** @class */ (function () {
     function DynamicMapComponent() {
         this.latitude = null;
@@ -5626,23 +5401,23 @@ var DynamicMapComponent = /** @class */ (function () {
     DynamicMapComponent.prototype.ngOnInit = function () {
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], DynamicMapComponent.prototype, "latitude", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], DynamicMapComponent.prototype, "longitude", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], DynamicMapComponent.prototype, "markers", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", Object)
     ], DynamicMapComponent.prototype, "mapContainerHeight", void 0);
     DynamicMapComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'dynamic-map',
             template: __webpack_require__("./src/app/modules/shared/components/dynamic-map/dynamic-map.component.html"),
             styles: [__webpack_require__("./src/app/modules/shared/components/dynamic-map/dynamic-map.component.scss")]
@@ -5651,7 +5426,7 @@ var DynamicMapComponent = /** @class */ (function () {
     ], DynamicMapComponent);
     return DynamicMapComponent;
 }());
-
+exports.DynamicMapComponent = DynamicMapComponent;
 
 
 /***/ }),
@@ -5671,11 +5446,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/shared/components/info-tooltip/info-tooltip.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InfoTooltipComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5685,7 +5459,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var InfoTooltipComponent = /** @class */ (function () {
     function InfoTooltipComponent() {
         this.title = "";
@@ -5695,19 +5470,19 @@ var InfoTooltipComponent = /** @class */ (function () {
     InfoTooltipComponent.prototype.ngOnInit = function () {
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], InfoTooltipComponent.prototype, "title", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], InfoTooltipComponent.prototype, "text", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+        core_1.Input(),
         __metadata("design:type", String)
     ], InfoTooltipComponent.prototype, "position", void 0);
     InfoTooltipComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'info-tooltip',
             template: __webpack_require__("./src/app/modules/shared/components/info-tooltip/info-tooltip.component.html"),
             styles: [__webpack_require__("./src/app/modules/shared/components/info-tooltip/info-tooltip.component.scss")]
@@ -5716,7 +5491,7 @@ var InfoTooltipComponent = /** @class */ (function () {
     ], InfoTooltipComponent);
     return InfoTooltipComponent;
 }());
-
+exports.InfoTooltipComponent = InfoTooltipComponent;
 
 
 /***/ }),
@@ -5736,14 +5511,10 @@ module.exports = ".navigation--main mat-chip.nav--item {\n  margin: 0 8px 8px 0;
 /***/ }),
 
 /***/ "./src/app/modules/shared/components/main-navigator/main-navigator.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainNavigatorComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__ = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5753,15 +5524,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var MainNavigatorComponent = /** @class */ (function () {
     function MainNavigatorComponent(mainNavigatorService, appService) {
         this.mainNavigatorService = mainNavigatorService;
         this.appService = appService;
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subscription__["a" /* Subscription */]();
+        this.subscription = new Subscription_1.Subscription();
     }
     MainNavigatorComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -5773,27 +5545,25 @@ var MainNavigatorComponent = /** @class */ (function () {
         this.subscription.unsubscribe();
     };
     MainNavigatorComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'main-navigator',
             template: __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.component.html"),
             styles: [__webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__main_navigator_service__["a" /* MainNavigatorService */], __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]])
+        __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService, app_service_1.AppService])
     ], MainNavigatorComponent);
     return MainNavigatorComponent;
 }());
-
+exports.MainNavigatorComponent = MainNavigatorComponent;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainNavigatorService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_BehaviorSubject__ = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5803,11 +5573,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var BehaviorSubject_1 = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
 var MainNavigatorService = /** @class */ (function () {
     function MainNavigatorService() {
-        this.linksSource = new __WEBPACK_IMPORTED_MODULE_1_rxjs_BehaviorSubject__["a" /* BehaviorSubject */](null);
+        this.linksSource = new BehaviorSubject_1.BehaviorSubject(null);
         this.links$ = this.linksSource.asObservable();
     }
     //links source feeder
@@ -5821,12 +5592,12 @@ var MainNavigatorService = /** @class */ (function () {
         this.setLinks(currentLinks);
     };
     MainNavigatorService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+        core_1.Injectable(),
         __metadata("design:paramtypes", [])
     ], MainNavigatorService);
     return MainNavigatorService;
 }());
-
+exports.MainNavigatorService = MainNavigatorService;
 
 
 /***/ }),
@@ -5846,12 +5617,10 @@ module.exports = ".snackbar--simple {\n  font-size: 12px;\n  cursor: default; }\
 /***/ }),
 
 /***/ "./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SnackbarSimpleComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5864,8 +5633,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 var SnackbarSimpleComponent = /** @class */ (function () {
     function SnackbarSimpleComponent(snackBarRef, data) {
         this.snackBarRef = snackBarRef;
@@ -5876,17 +5646,17 @@ var SnackbarSimpleComponent = /** @class */ (function () {
         this.snackBarRef.dismiss();
     };
     SnackbarSimpleComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-snackbar-simple',
             template: __webpack_require__("./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html"),
             styles: [__webpack_require__("./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.scss")]
         }),
-        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MAT_SNACK_BAR_DATA */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["C" /* MatSnackBarRef */], Object])
+        __param(1, core_1.Inject(material_1.MAT_SNACK_BAR_DATA)),
+        __metadata("design:paramtypes", [material_1.MatSnackBarRef, Object])
     ], SnackbarSimpleComponent);
     return SnackbarSimpleComponent;
 }());
-
+exports.SnackbarSimpleComponent = SnackbarSimpleComponent;
 
 
 /***/ }),
@@ -5906,12 +5676,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YesNoDialogComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5924,8 +5692,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 var YesNoDialogComponent = /** @class */ (function () {
     function YesNoDialogComponent(dialogRef, data) {
         this.dialogRef = dialogRef;
@@ -5936,117 +5705,113 @@ var YesNoDialogComponent = /** @class */ (function () {
         this.dialogRef.close();
     };
     YesNoDialogComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-yes-no-dialog',
             template: __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.html"),
             styles: [__webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.scss")]
         }),
-        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatDialogRef */], Object])
+        __param(1, core_1.Inject(material_1.MAT_DIALOG_DATA)),
+        __metadata("design:paramtypes", [material_1.MatDialogRef, Object])
     ], YesNoDialogComponent);
     return YesNoDialogComponent;
 }());
-
+exports.YesNoDialogComponent = YesNoDialogComponent;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/shared/custom-material-design.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CustomMaterialDesignModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 var CustomMaterialDesignModule = /** @class */ (function () {
     function CustomMaterialDesignModule() {
     }
     CustomMaterialDesignModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
+        core_1.NgModule({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatButtonModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatCheckboxModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["B" /* MatSnackBarModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatChipsModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDatepickerModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["y" /* MatSlideToggleModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatMenuModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["I" /* MatToolbarModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatIconModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatInputModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatProgressBarModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatProgressSpinnerModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatCardModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatNativeDateModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["H" /* MatTabsModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatExpansionModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["J" /* MatTooltipModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatDialogModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatSelectModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatButtonToggleModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["w" /* MatRadioModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatSliderModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["G" /* MatTableModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatPaginatorModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["E" /* MatSortModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatAutocompleteModule */]
+                common_1.CommonModule,
+                material_1.MatButtonModule,
+                material_1.MatCheckboxModule,
+                material_1.MatSnackBarModule,
+                material_1.MatChipsModule,
+                material_1.MatDatepickerModule,
+                material_1.MatSlideToggleModule,
+                material_1.MatMenuModule,
+                material_1.MatToolbarModule,
+                material_1.MatIconModule,
+                material_1.MatInputModule,
+                material_1.MatProgressBarModule,
+                material_1.MatProgressSpinnerModule,
+                material_1.MatCardModule,
+                material_1.MatNativeDateModule,
+                material_1.MatTabsModule,
+                material_1.MatExpansionModule,
+                material_1.MatTooltipModule,
+                material_1.MatDialogModule,
+                material_1.MatSelectModule,
+                material_1.MatButtonToggleModule,
+                material_1.MatRadioModule,
+                material_1.MatSliderModule,
+                material_1.MatTableModule,
+                material_1.MatPaginatorModule,
+                material_1.MatSortModule,
+                material_1.MatAutocompleteModule
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatButtonModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatCheckboxModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["B" /* MatSnackBarModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatChipsModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["j" /* MatDatepickerModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["y" /* MatSlideToggleModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["q" /* MatMenuModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["I" /* MatToolbarModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["o" /* MatIconModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["p" /* MatInputModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["e" /* MatButtonModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["u" /* MatProgressBarModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["v" /* MatProgressSpinnerModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["g" /* MatCardModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["r" /* MatNativeDateModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["H" /* MatTabsModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["n" /* MatExpansionModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["J" /* MatTooltipModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["l" /* MatDialogModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["x" /* MatSelectModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["f" /* MatButtonToggleModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["w" /* MatRadioModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["z" /* MatSliderModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["G" /* MatTableModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["t" /* MatPaginatorModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["E" /* MatSortModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_material__["d" /* MatAutocompleteModule */]
+                material_1.MatButtonModule,
+                material_1.MatCheckboxModule,
+                material_1.MatSnackBarModule,
+                material_1.MatChipsModule,
+                material_1.MatDatepickerModule,
+                material_1.MatSlideToggleModule,
+                material_1.MatMenuModule,
+                material_1.MatToolbarModule,
+                material_1.MatIconModule,
+                material_1.MatInputModule,
+                material_1.MatButtonModule,
+                material_1.MatProgressBarModule,
+                material_1.MatProgressSpinnerModule,
+                material_1.MatCardModule,
+                material_1.MatNativeDateModule,
+                material_1.MatTabsModule,
+                material_1.MatExpansionModule,
+                material_1.MatTooltipModule,
+                material_1.MatDialogModule,
+                material_1.MatSelectModule,
+                material_1.MatButtonToggleModule,
+                material_1.MatRadioModule,
+                material_1.MatSliderModule,
+                material_1.MatTableModule,
+                material_1.MatPaginatorModule,
+                material_1.MatSortModule,
+                material_1.MatAutocompleteModule
             ]
         })
     ], CustomMaterialDesignModule);
     return CustomMaterialDesignModule;
 }());
-
+exports.CustomMaterialDesignModule = CustomMaterialDesignModule;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/shared/directives/equal-validator.directive.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EqualValidatorDirective; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6059,8 +5824,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var EqualValidatorDirective = /** @class */ (function () {
     function EqualValidatorDirective(equalFormControlName, reverse) {
         this.equalFormControlName = equalFormControlName;
@@ -6099,29 +5865,27 @@ var EqualValidatorDirective = /** @class */ (function () {
         return null;
     };
     EqualValidatorDirective = EqualValidatorDirective_1 = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* Directive */])({
+        core_1.Directive({
             selector: '[equalvalidator]',
-            providers: [{ provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALIDATORS */], useExisting: EqualValidatorDirective_1, multi: true }]
+            providers: [{ provide: forms_1.NG_VALIDATORS, useExisting: EqualValidatorDirective_1, multi: true }]
         }),
-        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('equalvalidator')),
-        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('reverse')),
+        __param(0, core_1.Attribute('equalvalidator')),
+        __param(1, core_1.Attribute('reverse')),
         __metadata("design:paramtypes", [String, String])
     ], EqualValidatorDirective);
     return EqualValidatorDirective;
     var EqualValidatorDirective_1;
 }());
-
+exports.EqualValidatorDirective = EqualValidatorDirective;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/shared/directives/number-validator.directive.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NumberValidatorDirective; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6134,8 +5898,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var NumberValidatorDirective = /** @class */ (function () {
     function NumberValidatorDirective(validationType) {
         this.validationType = validationType;
@@ -6171,113 +5936,97 @@ var NumberValidatorDirective = /** @class */ (function () {
         return Object.keys(result).length ? result : null;
     };
     NumberValidatorDirective = NumberValidatorDirective_1 = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* Directive */])({
+        core_1.Directive({
             selector: '[numberValidator]',
-            providers: [{ provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* NG_VALIDATORS */], useExisting: NumberValidatorDirective_1, multi: true }]
+            providers: [{ provide: forms_1.NG_VALIDATORS, useExisting: NumberValidatorDirective_1, multi: true }]
         }),
-        __param(0, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["h" /* Attribute */])('numberValidator')),
+        __param(0, core_1.Attribute('numberValidator')),
         __metadata("design:paramtypes", [String])
     ], NumberValidatorDirective);
     return NumberValidatorDirective;
     var NumberValidatorDirective_1;
 }());
-
+exports.NumberValidatorDirective = NumberValidatorDirective;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/shared/shared.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SharedModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__ = __webpack_require__("./src/app/modules/shared/components/currency-unit/currency-unit.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__modules_shared_custom_material_design_module__ = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__ = __webpack_require__("./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__directives_equal_validator_directive__ = __webpack_require__("./src/app/modules/shared/directives/equal-validator.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__directives_number_validator_directive__ = __webpack_require__("./src/app/modules/shared/directives/number-validator.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_info_tooltip_info_tooltip_component__ = __webpack_require__("./src/app/modules/shared/components/info-tooltip/info-tooltip.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_address_autocomplete_address_autocomplete_component__ = __webpack_require__("./src/app/modules/shared/components/address-autocomplete/address-autocomplete.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_dynamic_map_dynamic_map_component__ = __webpack_require__("./src/app/modules/shared/components/dynamic-map/dynamic-map.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__agm_core__ = __webpack_require__("./node_modules/@agm/core/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var main_navigator_component_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.component.ts");
+var currency_unit_component_1 = __webpack_require__("./src/app/modules/shared/components/currency-unit/currency-unit.component.ts");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var snackbar_simple_component_1 = __webpack_require__("./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.ts");
+var equal_validator_directive_1 = __webpack_require__("./src/app/modules/shared/directives/equal-validator.directive.ts");
+var number_validator_directive_1 = __webpack_require__("./src/app/modules/shared/directives/number-validator.directive.ts");
+var info_tooltip_component_1 = __webpack_require__("./src/app/modules/shared/components/info-tooltip/info-tooltip.component.ts");
+var address_autocomplete_component_1 = __webpack_require__("./src/app/modules/shared/components/address-autocomplete/address-autocomplete.component.ts");
+var dynamic_map_component_1 = __webpack_require__("./src/app/modules/shared/components/dynamic-map/dynamic-map.component.ts");
+var core_2 = __webpack_require__("./node_modules/@agm/core/index.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
 var SharedModule = /** @class */ (function () {
     function SharedModule() {
     }
     SharedModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
+        core_1.NgModule({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_router__["c" /* RouterModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["a" /* FlexLayoutModule */],
-                __WEBPACK_IMPORTED_MODULE_7__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
-                __WEBPACK_IMPORTED_MODULE_15__agm_core__["a" /* AgmCoreModule */].forRoot({
-                    apiKey: __WEBPACK_IMPORTED_MODULE_16__environments_environment__["a" /* environment */].mapsApiKey,
+                common_1.CommonModule,
+                router_1.RouterModule,
+                forms_1.FormsModule,
+                flex_layout_1.FlexLayoutModule,
+                custom_material_design_module_1.CustomMaterialDesignModule,
+                core_2.AgmCoreModule.forRoot({
+                    apiKey: environment_1.environment.mapsApiKey,
                     libraries: ["places"]
                 }),
             ],
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */],
-                __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__directives_equal_validator_directive__["a" /* EqualValidatorDirective */],
-                __WEBPACK_IMPORTED_MODULE_11__directives_number_validator_directive__["a" /* NumberValidatorDirective */],
-                __WEBPACK_IMPORTED_MODULE_12__components_info_tooltip_info_tooltip_component__["a" /* InfoTooltipComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__components_address_autocomplete_address_autocomplete_component__["a" /* AddressAutocompleteComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__components_dynamic_map_dynamic_map_component__["a" /* DynamicMapComponent */]
+                main_navigator_component_1.MainNavigatorComponent,
+                currency_unit_component_1.CurrencyUnitComponent,
+                yes_no_dialog_component_1.YesNoDialogComponent,
+                snackbar_simple_component_1.SnackbarSimpleComponent,
+                equal_validator_directive_1.EqualValidatorDirective,
+                number_validator_directive_1.NumberValidatorDirective,
+                info_tooltip_component_1.InfoTooltipComponent,
+                address_autocomplete_component_1.AddressAutocompleteComponent,
+                dynamic_map_component_1.DynamicMapComponent
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_5__components_main_navigator_main_navigator_component__["a" /* MainNavigatorComponent */],
-                __WEBPACK_IMPORTED_MODULE_6__components_currency_unit_currency_unit_component__["a" /* CurrencyUnitComponent */],
-                __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__directives_equal_validator_directive__["a" /* EqualValidatorDirective */],
-                __WEBPACK_IMPORTED_MODULE_11__directives_number_validator_directive__["a" /* NumberValidatorDirective */],
-                __WEBPACK_IMPORTED_MODULE_12__components_info_tooltip_info_tooltip_component__["a" /* InfoTooltipComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__components_address_autocomplete_address_autocomplete_component__["a" /* AddressAutocompleteComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__components_dynamic_map_dynamic_map_component__["a" /* DynamicMapComponent */]
+                main_navigator_component_1.MainNavigatorComponent,
+                currency_unit_component_1.CurrencyUnitComponent,
+                yes_no_dialog_component_1.YesNoDialogComponent,
+                snackbar_simple_component_1.SnackbarSimpleComponent,
+                equal_validator_directive_1.EqualValidatorDirective,
+                number_validator_directive_1.NumberValidatorDirective,
+                info_tooltip_component_1.InfoTooltipComponent,
+                address_autocomplete_component_1.AddressAutocompleteComponent,
+                dynamic_map_component_1.DynamicMapComponent
             ],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_8__components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__components_snackbar_simple_snackbar_simple_component__["a" /* SnackbarSimpleComponent */]
+                yes_no_dialog_component_1.YesNoDialogComponent,
+                snackbar_simple_component_1.SnackbarSimpleComponent
             ]
         })
     ], SharedModule);
     return SharedModule;
 }());
-
+exports.SharedModule = SharedModule;
 
 
 /***/ }),
@@ -6297,12 +6046,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddPersonToTeamDialogComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6315,8 +6062,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
 var AddPersonToTeamDialogComponent = /** @class */ (function () {
     function AddPersonToTeamDialogComponent(dialogRef, data) {
         this.dialogRef = dialogRef;
@@ -6328,17 +6076,17 @@ var AddPersonToTeamDialogComponent = /** @class */ (function () {
         this.dialogRef.close();
     };
     AddPersonToTeamDialogComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-add-person-to-team-dialog',
             template: __webpack_require__("./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.html"),
             styles: [__webpack_require__("./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.scss")]
         }),
-        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MAT_DIALOG_DATA */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatDialogRef */], Object])
+        __param(1, core_1.Inject(material_1.MAT_DIALOG_DATA)),
+        __metadata("design:paramtypes", [material_1.MatDialogRef, Object])
     ], AddPersonToTeamDialogComponent);
     return AddPersonToTeamDialogComponent;
 }());
-
+exports.AddPersonToTeamDialogComponent = AddPersonToTeamDialogComponent;
 
 
 /***/ }),
@@ -6358,18 +6106,10 @@ module.exports = ".container__teams .team-card {\n  cursor: default; }\n  .conta
 /***/ }),
 
 /***/ "./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsDashboardComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__teams_service__ = __webpack_require__("./src/app/modules/teams/teams.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_components_yes_no_dialog_yes_no_dialog_component__ = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_Subscription__ = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6379,14 +6119,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var teams_service_1 = __webpack_require__("./src/app/modules/teams/teams.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var yes_no_dialog_component_1 = __webpack_require__("./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
 var TeamsDashboardComponent = /** @class */ (function () {
     function TeamsDashboardComponent(route, mainNavigatorService, teamsService, appService, router, dialog) {
         this.route = route;
@@ -6399,7 +6140,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
         this.getTeamsServiceRunning = false;
         this.teamActionRunning = [];
         this.teams = [];
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_7_rxjs_Subscription__["a" /* Subscription */]();
+        this.subscription = new Subscription_1.Subscription();
     }
     TeamsDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -6459,7 +6200,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
             return false;
         }
         this.teamActionRunning[index] = true;
-        var yesNoDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_6__shared_components_yes_no_dialog_yes_no_dialog_component__["a" /* YesNoDialogComponent */], {
+        var yesNoDialogRef = this.dialog.open(yes_no_dialog_component_1.YesNoDialogComponent, {
             width: '250px',
             data: {
                 title: 'Delete team',
@@ -6508,17 +6249,17 @@ var TeamsDashboardComponent = /** @class */ (function () {
         this.subscription.add(newSubscription);
     };
     TeamsDashboardComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-teams-dashboard',
             template: __webpack_require__("./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.html"),
             styles: [__webpack_require__("./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */], __WEBPACK_IMPORTED_MODULE_4__teams_service__["a" /* TeamsService */],
-            __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatDialog */]])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, teams_service_1.TeamsService,
+            app_service_1.AppService, router_1.Router, material_1.MatDialog])
     ], TeamsDashboardComponent);
     return TeamsDashboardComponent;
 }());
-
+exports.TeamsDashboardComponent = TeamsDashboardComponent;
 
 
 /***/ }),
@@ -6538,20 +6279,10 @@ module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n.prog
 /***/ }),
 
 /***/ "./src/app/modules/teams/components/teams-edit/teams-edit.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsEditComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_add_person_to_team_dialog_add_person_to_team_dialog_component__ = __webpack_require__("./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__teams_service__ = __webpack_require__("./src/app/modules/teams/teams.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__models_team__ = __webpack_require__("./src/app/modules/teams/models/team.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__ = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6561,16 +6292,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var add_person_to_team_dialog_component_1 = __webpack_require__("./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var teams_service_1 = __webpack_require__("./src/app/modules/teams/teams.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var team_1 = __webpack_require__("./src/app/modules/teams/models/team.ts");
+var Subscription_1 = __webpack_require__("./node_modules/rxjs/_esm5/Subscription.js");
 var TeamsEditComponent = /** @class */ (function () {
     function TeamsEditComponent(route, mainNavigatorService, teamsService, appService, router, dialog) {
         this.route = route;
@@ -6591,7 +6323,7 @@ var TeamsEditComponent = /** @class */ (function () {
             members: []
         };
         this.slug = null;
-        this.subscription = new __WEBPACK_IMPORTED_MODULE_9_rxjs_Subscription__["a" /* Subscription */]();
+        this.subscription = new Subscription_1.Subscription();
     }
     TeamsEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -6766,29 +6498,29 @@ var TeamsEditComponent = /** @class */ (function () {
      */
     TeamsEditComponent.prototype.populateTeam = function (team) {
         //populate admin
-        var admin = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](team.admin.name, team.admin.email, team.admin.gravatar);
+        var admin = new user_1.User(team.admin.name, team.admin.email, team.admin.gravatar);
         //populate members
         var members = [];
         for (var _i = 0, _a = team.members; _i < _a.length; _i++) {
             var member = _a[_i];
-            var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
+            var newMember = new user_1.User(member.name, member.email, member.gravatar);
             members.push(newMember);
         }
         //create team
-        this.team = new __WEBPACK_IMPORTED_MODULE_8__models_team__["a" /* Team */](team.name, team.description || null, team.slug, admin, members);
+        this.team = new team_1.Team(team.name, team.description || null, team.slug, admin, members);
         //populate the model
         this.model.name = this.team.name;
         this.model.description = this.team.description;
     };
     TeamsEditComponent.prototype.openAddPersonDialog = function () {
         var _this = this;
-        var addPersonDialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_3__components_add_person_to_team_dialog_add_person_to_team_dialog_component__["a" /* AddPersonToTeamDialogComponent */], {
+        var addPersonDialogRef = this.dialog.open(add_person_to_team_dialog_component_1.AddPersonToTeamDialogComponent, {
             width: '250px',
             data: {}
         });
         var newSubscription = addPersonDialogRef.afterClosed().subscribe(function (result) {
             if (result) {
-                var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */]('', result);
+                var newMember = new user_1.User('', result);
                 _this.team.members.push(newMember);
             }
         });
@@ -6799,26 +6531,27 @@ var TeamsEditComponent = /** @class */ (function () {
         this.team.members.splice(index, 1);
     };
     TeamsEditComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-teams-edit',
             template: __webpack_require__("./src/app/modules/teams/components/teams-edit/teams-edit.component.html"),
             styles: [__webpack_require__("./src/app/modules/teams/components/teams-edit/teams-edit.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_2__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */], __WEBPACK_IMPORTED_MODULE_6__teams_service__["a" /* TeamsService */],
-            __WEBPACK_IMPORTED_MODULE_7__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_4__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatDialog */]])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute, main_navigator_service_1.MainNavigatorService, teams_service_1.TeamsService,
+            app_service_1.AppService, router_1.Router, material_1.MatDialog])
     ], TeamsEditComponent);
     return TeamsEditComponent;
 }());
-
+exports.TeamsEditComponent = TeamsEditComponent;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/teams/models/team.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Team; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var Team = /** @class */ (function () {
     function Team(name, description, slug, admin, members) {
         if (name === void 0) { name = null; }
@@ -6834,56 +6567,52 @@ var Team = /** @class */ (function () {
     }
     return Team;
 }());
-
+exports.Team = Team;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/teams/teams-routing.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsRoutingModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_teams_dashboard_teams_dashboard_component__ = __webpack_require__("./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_teams_edit_teams_edit_component__ = __webpack_require__("./src/app/modules/teams/components/teams-edit/teams-edit.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__ = __webpack_require__("./src/app/auth-resolver.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var teams_dashboard_component_1 = __webpack_require__("./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts");
+var teams_edit_component_1 = __webpack_require__("./src/app/modules/teams/components/teams-edit/teams-edit.component.ts");
+var auth_resolver_service_1 = __webpack_require__("./src/app/auth-resolver.service.ts");
 var routes = [
     {
         path: 'teams',
         children: [
             {
                 path: 'create',
-                component: __WEBPACK_IMPORTED_MODULE_3__components_teams_edit_teams_edit_component__["a" /* TeamsEditComponent */],
+                component: teams_edit_component_1.TeamsEditComponent,
                 resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                    authUser: auth_resolver_service_1.AuthResolver
                 }
             },
             {
                 path: 'edit/:slug',
-                component: __WEBPACK_IMPORTED_MODULE_3__components_teams_edit_teams_edit_component__["a" /* TeamsEditComponent */],
+                component: teams_edit_component_1.TeamsEditComponent,
                 resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                    authUser: auth_resolver_service_1.AuthResolver
                 }
             },
             {
                 path: '',
                 pathMatch: 'full',
-                component: __WEBPACK_IMPORTED_MODULE_2__components_teams_dashboard_teams_dashboard_component__["a" /* TeamsDashboardComponent */],
+                component: teams_dashboard_component_1.TeamsDashboardComponent,
                 resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_4__auth_resolver_service__["a" /* AuthResolver */]
+                    authUser: auth_resolver_service_1.AuthResolver
                 }
             }
         ]
@@ -6893,93 +6622,75 @@ var TeamsRoutingModule = /** @class */ (function () {
     function TeamsRoutingModule() {
     }
     TeamsRoutingModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
-            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+        core_1.NgModule({
+            imports: [router_1.RouterModule.forChild(routes)],
+            exports: [router_1.RouterModule]
         })
     ], TeamsRoutingModule);
     return TeamsRoutingModule;
 }());
-
+exports.TeamsRoutingModule = TeamsRoutingModule;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/teams/teams.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__teams_routing_module__ = __webpack_require__("./src/app/modules/teams/teams-routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_teams_dashboard_teams_dashboard_component__ = __webpack_require__("./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_custom_material_design_module__ = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_teams_edit_teams_edit_component__ = __webpack_require__("./src/app/modules/teams/components/teams-edit/teams-edit.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__teams_service__ = __webpack_require__("./src/app/modules/teams/teams.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_add_person_to_team_dialog_add_person_to_team_dialog_component__ = __webpack_require__("./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var teams_routing_module_1 = __webpack_require__("./src/app/modules/teams/teams-routing.module.ts");
+var teams_dashboard_component_1 = __webpack_require__("./src/app/modules/teams/components/teams-dashboard/teams-dashboard.component.ts");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var teams_edit_component_1 = __webpack_require__("./src/app/modules/teams/components/teams-edit/teams-edit.component.ts");
+var teams_service_1 = __webpack_require__("./src/app/modules/teams/teams.service.ts");
+var add_person_to_team_dialog_component_1 = __webpack_require__("./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts");
 var TeamsModule = /** @class */ (function () {
     function TeamsModule() {
     }
     TeamsModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
+        core_1.NgModule({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
-                __WEBPACK_IMPORTED_MODULE_4__teams_routing_module__["a" /* TeamsRoutingModule */],
-                __WEBPACK_IMPORTED_MODULE_6__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_forms__["c" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_flex_layout__["a" /* FlexLayoutModule */]
+                common_1.CommonModule,
+                teams_routing_module_1.TeamsRoutingModule,
+                custom_material_design_module_1.CustomMaterialDesignModule,
+                forms_1.FormsModule,
+                flex_layout_1.FlexLayoutModule
             ],
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_5__components_teams_dashboard_teams_dashboard_component__["a" /* TeamsDashboardComponent */],
-                __WEBPACK_IMPORTED_MODULE_7__components_teams_edit_teams_edit_component__["a" /* TeamsEditComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__components_add_person_to_team_dialog_add_person_to_team_dialog_component__["a" /* AddPersonToTeamDialogComponent */]
+                teams_dashboard_component_1.TeamsDashboardComponent,
+                teams_edit_component_1.TeamsEditComponent,
+                add_person_to_team_dialog_component_1.AddPersonToTeamDialogComponent
             ],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_9__components_add_person_to_team_dialog_add_person_to_team_dialog_component__["a" /* AddPersonToTeamDialogComponent */] //added as material doc suggest to allow AOT on this on the fly created class
+                add_person_to_team_dialog_component_1.AddPersonToTeamDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
             ],
-            providers: [__WEBPACK_IMPORTED_MODULE_8__teams_service__["a" /* TeamsService */]]
+            providers: [teams_service_1.TeamsService]
         })
     ], TeamsModule);
     return TeamsModule;
 }());
-
+exports.TeamsModule = TeamsModule;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/teams/teams.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_team__ = __webpack_require__("./src/app/modules/teams/models/team.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__users_models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__ = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_observable_of__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_observable_from__ = __webpack_require__("./node_modules/rxjs/_esm5/observable/from.js");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6989,21 +6700,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var team_1 = __webpack_require__("./src/app/modules/teams/models/team.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var Observable_1 = __webpack_require__("./node_modules/rxjs/_esm5/Observable.js");
+var of_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/of.js");
+var from_1 = __webpack_require__("./node_modules/rxjs/_esm5/observable/from.js");
 var TeamsService = /** @class */ (function () {
     function TeamsService(http, appService) {
         this.http = http;
         this.appService = appService;
-        this.serverHost = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].apiHost + '/api/teams';
-        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpHeaders */]().set('Content-Type', 'application/json');
+        this.serverHost = environment_1.environment.apiHost + '/api/teams';
+        this.headers = new http_1.HttpHeaders().set('Content-Type', 'application/json');
     }
     /**
      * Server call to Create a new team in the system
@@ -7035,9 +6747,9 @@ var TeamsService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getMyTeamBySlug() > "; //for debugging
         if (!email || !slug) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return Object(__WEBPACK_IMPORTED_MODULE_7_rxjs_observable_of__["a" /* of */])(null);
+            return of_1.of(null);
         }
-        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpParams */]()
+        var params = new http_1.HttpParams()
             .set('email', email)
             .set('slug', slug);
         return this.http.get(this.serverHost + "/getMyTeamBySlug", { params: params })
@@ -7053,9 +6765,9 @@ var TeamsService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return Object(__WEBPACK_IMPORTED_MODULE_8_rxjs_observable_from__["a" /* from */])([]);
+            return from_1.from([]);
         }
-        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpParams */]().set('email', email);
+        var params = new http_1.HttpParams().set('email', email);
         var teamsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
@@ -7068,19 +6780,19 @@ var TeamsService = /** @class */ (function () {
                     var members = [];
                     for (var _a = 0, _b = item.members; _a < _b.length; _a++) {
                         var member = _b[_a];
-                        var newMember = new __WEBPACK_IMPORTED_MODULE_5__users_models_user__["a" /* User */](member.name, member.email, member.gravatar);
+                        var newMember = new user_1.User(member.name, member.email, member.gravatar);
                         members.push(newMember);
                         if (member.isAdmin) {
                             admin = newMember;
                         }
                     }
-                    teams.push(new __WEBPACK_IMPORTED_MODULE_4__models_team__["a" /* Team */](item.name, item.description || null, item.slug, admin, members));
+                    teams.push(new team_1.Team(item.name, item.description || null, item.slug, admin, members));
                 }
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return Object(__WEBPACK_IMPORTED_MODULE_7_rxjs_observable_of__["a" /* of */])(teams);
+            return of_1.of(teams);
         });
     };
     /**
@@ -7092,20 +6804,20 @@ var TeamsService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > delete() > "; //for debugging
         if (!slug || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return __WEBPACK_IMPORTED_MODULE_6_rxjs_Observable__["a" /* Observable */].throw(null);
+            return Observable_1.Observable.throw(null);
         }
-        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpParams */]().set('email', email);
+        var params = new http_1.HttpParams().set('email', email);
         return this.http.delete(this.serverHost + "/delete/" + slug, { headers: this.headers, params: params })
             .map(this.appService.extractData)
             .catch(this.appService.handleError);
     };
     TeamsService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]])
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.HttpClient, app_service_1.AppService])
     ], TeamsService);
     return TeamsService;
 }());
-
+exports.TeamsService = TeamsService;
 
 
 /***/ }),
@@ -7125,15 +6837,10 @@ module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n@medi
 /***/ }),
 
 /***/ "./src/app/modules/users/components/account-finance-info/account-finance-info.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountFinanceInfoComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_account_finance__ = __webpack_require__("./src/app/modules/users/models/account-finance.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("./src/app/app.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7143,11 +6850,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var account_finance_1 = __webpack_require__("./src/app/modules/users/models/account-finance.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var AccountFinanceInfoComponent = /** @class */ (function () {
     function AccountFinanceInfoComponent(usersService, appService) {
         this.usersService = usersService;
@@ -7193,7 +6901,7 @@ var AccountFinanceInfoComponent = /** @class */ (function () {
         this.usersService.updateFinancialInfo(this.model).subscribe(function (data) {
             if (data === null) {
                 var user = _this.usersService.getUser();
-                user.financialInfo = new __WEBPACK_IMPORTED_MODULE_2__models_account_finance__["a" /* AccountFinance */](_this.model.annualIncome, _this.model.annualIncomeUnit, _this.model.savings, _this.model.savingsUnit, _this.model.incomeTaxRate);
+                user.financialInfo = new account_finance_1.AccountFinance(_this.model.annualIncome, _this.model.annualIncomeUnit, _this.model.savings, _this.model.savingsUnit, _this.model.incomeTaxRate);
                 _this.usersService.setUser(user);
                 _this.appService.showResults("Your personal information was successfully updated!.", 'success');
             }
@@ -7213,20 +6921,20 @@ var AccountFinanceInfoComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */])
+        core_1.Input(),
+        __metadata("design:type", user_1.User)
     ], AccountFinanceInfoComponent.prototype, "user", void 0);
     AccountFinanceInfoComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'account-finance-info',
             template: __webpack_require__("./src/app/modules/users/components/account-finance-info/account-finance-info.component.html"),
             styles: [__webpack_require__("./src/app/modules/users/components/account-finance-info/account-finance-info.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]])
+        __metadata("design:paramtypes", [users_service_1.UsersService, app_service_1.AppService])
     ], AccountFinanceInfoComponent);
     return AccountFinanceInfoComponent;
 }());
-
+exports.AccountFinanceInfoComponent = AccountFinanceInfoComponent;
 
 
 /***/ }),
@@ -7246,17 +6954,10 @@ module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n@medi
 /***/ }),
 
 /***/ "./src/app/modules/users/components/account-personal-info/account-personal-info.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountPersonalInfoComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_material__ = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_account_personal__ = __webpack_require__("./src/app/modules/users/models/account-personal.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__util_service__ = __webpack_require__("./src/app/util.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7266,13 +6967,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var material_1 = __webpack_require__("./node_modules/@angular/material/esm5/material.es5.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var account_personal_1 = __webpack_require__("./src/app/modules/users/models/account-personal.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
 var AccountPersonalInfoComponent = /** @class */ (function () {
     function AccountPersonalInfoComponent(dateAdapter, usersService, appService, utilService) {
         this.dateAdapter = dateAdapter;
@@ -7301,7 +7003,7 @@ var AccountPersonalInfoComponent = /** @class */ (function () {
         this.usersService.updatePersonalInfo(this.model).subscribe(function (data) {
             if (data === null) {
                 var user = _this.usersService.getUser();
-                user.personalInfo = new __WEBPACK_IMPORTED_MODULE_3__models_account_personal__["a" /* AccountPersonal */](_this.model.birthday);
+                user.personalInfo = new account_personal_1.AccountPersonal(_this.model.birthday);
                 _this.usersService.setUser(user);
                 _this.appService.showResults("Your personal information was successfully updated!.", 'success');
             }
@@ -7321,21 +7023,21 @@ var AccountPersonalInfoComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2__models_user__["a" /* User */])
+        core_1.Input(),
+        __metadata("design:type", user_1.User)
     ], AccountPersonalInfoComponent.prototype, "user", void 0);
     AccountPersonalInfoComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'account-personal-info',
             template: __webpack_require__("./src/app/modules/users/components/account-personal-info/account-personal-info.component.html"),
             styles: [__webpack_require__("./src/app/modules/users/components/account-personal-info/account-personal-info.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* DateAdapter */], __WEBPACK_IMPORTED_MODULE_4__users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */],
-            __WEBPACK_IMPORTED_MODULE_6__util_service__["a" /* UtilService */]])
+        __metadata("design:paramtypes", [material_1.DateAdapter, users_service_1.UsersService, app_service_1.AppService,
+            util_service_1.UtilService])
     ], AccountPersonalInfoComponent);
     return AccountPersonalInfoComponent;
 }());
-
+exports.AccountPersonalInfoComponent = AccountPersonalInfoComponent;
 
 
 /***/ }),
@@ -7355,14 +7057,10 @@ module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n@medi
 /***/ }),
 
 /***/ "./src/app/modules/users/components/account-user-info/account-user-info.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountUserInfoComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7372,10 +7070,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var AccountUserInfoComponent = /** @class */ (function () {
     function AccountUserInfoComponent(usersService, appService) {
         this.usersService = usersService;
@@ -7425,20 +7124,20 @@ var AccountUserInfoComponent = /** @class */ (function () {
         });
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__models_user__["a" /* User */])
+        core_1.Input(),
+        __metadata("design:type", user_1.User)
     ], AccountUserInfoComponent.prototype, "user", void 0);
     AccountUserInfoComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'account-user-info',
             template: __webpack_require__("./src/app/modules/users/components/account-user-info/account-user-info.component.html"),
             styles: [__webpack_require__("./src/app/modules/users/components/account-user-info/account-user-info.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */]])
+        __metadata("design:paramtypes", [users_service_1.UsersService, app_service_1.AppService])
     ], AccountUserInfoComponent);
     return AccountUserInfoComponent;
 }());
-
+exports.AccountUserInfoComponent = AccountUserInfoComponent;
 
 
 /***/ }),
@@ -7458,14 +7157,10 @@ module.exports = ""
 /***/ }),
 
 /***/ "./src/app/modules/users/components/account/account.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__util_service__ = __webpack_require__("./src/app/util.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7475,10 +7170,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var util_service_1 = __webpack_require__("./src/app/util.service.ts");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var AccountComponent = /** @class */ (function () {
     function AccountComponent(mainNavigatorService, route, utilService) {
         this.mainNavigatorService = mainNavigatorService;
@@ -7498,16 +7194,16 @@ var AccountComponent = /** @class */ (function () {
         });
     };
     AccountComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-account',
             template: __webpack_require__("./src/app/modules/users/components/account/account.component.html"),
             styles: [__webpack_require__("./src/app/modules/users/components/account/account.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */], __WEBPACK_IMPORTED_MODULE_2__util_service__["a" /* UtilService */]])
+        __metadata("design:paramtypes", [main_navigator_service_1.MainNavigatorService, router_1.ActivatedRoute, util_service_1.UtilService])
     ], AccountComponent);
     return AccountComponent;
 }());
-
+exports.AccountComponent = AccountComponent;
 
 
 /***/ }),
@@ -7527,16 +7223,10 @@ module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n.form
 /***/ }),
 
 /***/ "./src/app/modules/users/components/login/login.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7546,12 +7236,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var LoginComponent = /** @class */ (function () {
     function LoginComponent(usersService, appService, mainNavigatorService, router, route) {
         this.usersService = usersService;
@@ -7590,7 +7281,7 @@ var LoginComponent = /** @class */ (function () {
         //call the register service
         this.usersService.login(this.model).subscribe(function (data) {
             if (data && data.email) {
-                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, null, null, data.currency);
+                var user = new user_1.User(data.name, data.email, data.avatar, null, null, data.currency);
                 _this.usersService.setUser(user);
                 var redirectUrl = _this.usersService.routerRedirectUrl ? _this.usersService.routerRedirectUrl : '/';
                 _this.usersService.routerRedirectUrl = null;
@@ -7641,17 +7332,17 @@ var LoginComponent = /** @class */ (function () {
         });
     };
     LoginComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-login',
             template: __webpack_require__("./src/app/modules/users/components/login/login.component.html"),
             styles: [__webpack_require__("./src/app/modules/users/components/login/login.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */],
-            __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]])
+        __metadata("design:paramtypes", [users_service_1.UsersService, app_service_1.AppService,
+            main_navigator_service_1.MainNavigatorService, router_1.Router, router_1.ActivatedRoute])
     ], LoginComponent);
     return LoginComponent;
 }());
-
+exports.LoginComponent = LoginComponent;
 
 
 /***/ }),
@@ -7671,16 +7362,10 @@ module.exports = "form .form__actions .progress-bar {\n  width: 100%; }\n\n@medi
 /***/ }),
 
 /***/ "./src/app/modules/users/components/register/register.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_service__ = __webpack_require__("./src/app/app.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7690,12 +7375,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var RegisterComponent = /** @class */ (function () {
     function RegisterComponent(usersService, appService, router, mainNavigatorService) {
         this.usersService = usersService;
@@ -7730,7 +7416,7 @@ var RegisterComponent = /** @class */ (function () {
         //call the register service
         this.usersService.register(this.model).subscribe(function (data) {
             if (data && data.email) {
-                var user = new __WEBPACK_IMPORTED_MODULE_4__models_user__["a" /* User */](data.name, data.email, data.avatar, null, null, data.currency);
+                var user = new user_1.User(data.name, data.email, data.avatar, null, null, data.currency);
                 _this.usersService.setUser(user);
                 _this.router.navigate(['/']); //go home
                 _this.appService.showResults(user.name + " welcome to AtomiCoconut!", 'success');
@@ -7757,17 +7443,17 @@ var RegisterComponent = /** @class */ (function () {
         });
     };
     RegisterComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'users-register',
             template: __webpack_require__("./src/app/modules/users/components/register/register.component.html"),
             styles: [__webpack_require__("./src/app/modules/users/components/register/register.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_3__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */],
-            __WEBPACK_IMPORTED_MODULE_5__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]])
+        __metadata("design:paramtypes", [users_service_1.UsersService, app_service_1.AppService, router_1.Router,
+            main_navigator_service_1.MainNavigatorService])
     ], RegisterComponent);
     return RegisterComponent;
 }());
-
+exports.RegisterComponent = RegisterComponent;
 
 
 /***/ }),
@@ -7787,16 +7473,10 @@ module.exports = "form .field__password .icon__suffix, form .field__password-con
 /***/ }),
 
 /***/ "./src/app/modules/users/components/reset-password/reset-password.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ResetPasswordComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_user__ = __webpack_require__("./src/app/modules/users/models/user.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__ = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_service__ = __webpack_require__("./src/app/app.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7806,12 +7486,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var user_1 = __webpack_require__("./src/app/modules/users/models/user.ts");
+var main_navigator_service_1 = __webpack_require__("./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var ResetPasswordComponent = /** @class */ (function () {
     function ResetPasswordComponent(appService, usersService, router, route, mainNavigatorService) {
         this.appService = appService;
@@ -7857,7 +7538,7 @@ var ResetPasswordComponent = /** @class */ (function () {
         this.usersService.setUser(null); //reset authenticated user. Reset automatically authenticates the registered user.
         this.usersService.reset(this.token, this.model).subscribe(function (data) {
             if (data) {
-                var user = new __WEBPACK_IMPORTED_MODULE_3__models_user__["a" /* User */](data.name, data.email, data.avatar, null, null, data.currency);
+                var user = new user_1.User(data.name, data.email, data.avatar, null, null, data.currency);
                 _this.usersService.setUser(user);
                 _this.appService.showResults('Your password was successfully updated!', 'success');
                 _this.router.navigate(['/']); //go home
@@ -7878,26 +7559,27 @@ var ResetPasswordComponent = /** @class */ (function () {
         });
     };
     ResetPasswordComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        core_1.Component({
             selector: 'app-reset-password',
             template: __webpack_require__("./src/app/modules/users/components/reset-password/reset-password.component.html"),
             styles: [__webpack_require__("./src/app/modules/users/components/reset-password/reset-password.component.scss")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_2__users_service__["a" /* UsersService */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */], __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
-            __WEBPACK_IMPORTED_MODULE_4__shared_components_main_navigator_main_navigator_service__["a" /* MainNavigatorService */]])
+        __metadata("design:paramtypes", [app_service_1.AppService, users_service_1.UsersService, router_1.Router, router_1.ActivatedRoute,
+            main_navigator_service_1.MainNavigatorService])
     ], ResetPasswordComponent);
     return ResetPasswordComponent;
 }());
-
+exports.ResetPasswordComponent = ResetPasswordComponent;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/users/models/account-finance.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountFinance; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var AccountFinance = /** @class */ (function () {
     function AccountFinance(annualIncome, annualIncomeUnit, savings, savingsUnit, incomeTaxRate) {
         if (annualIncome === void 0) { annualIncome = null; }
@@ -7913,16 +7595,17 @@ var AccountFinance = /** @class */ (function () {
     }
     return AccountFinance;
 }());
-
+exports.AccountFinance = AccountFinance;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/users/models/account-personal.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountPersonal; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var AccountPersonal = /** @class */ (function () {
     function AccountPersonal(birthday) {
         if (birthday === void 0) { birthday = null; }
@@ -7943,16 +7626,17 @@ var AccountPersonal = /** @class */ (function () {
     });
     return AccountPersonal;
 }());
-
+exports.AccountPersonal = AccountPersonal;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/users/models/user.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var User = /** @class */ (function () {
     function User(name, email, avatar, financialInfo, personalInfo, currency) {
         if (name === void 0) { name = ''; }
@@ -7980,48 +7664,42 @@ var User = /** @class */ (function () {
     }
     return User;
 }());
-
+exports.User = User;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/users/users-routing.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersRoutingModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_register_register_component__ = __webpack_require__("./src/app/modules/users/components/register/register.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__ = __webpack_require__("./src/app/modules/users/components/login/login.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_reset_password_reset_password_component__ = __webpack_require__("./src/app/modules/users/components/reset-password/reset-password.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_account_account_component__ = __webpack_require__("./src/app/modules/users/components/account/account.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__auth_resolver_service__ = __webpack_require__("./src/app/auth-resolver.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var register_component_1 = __webpack_require__("./src/app/modules/users/components/register/register.component.ts");
+var login_component_1 = __webpack_require__("./src/app/modules/users/components/login/login.component.ts");
+var reset_password_component_1 = __webpack_require__("./src/app/modules/users/components/reset-password/reset-password.component.ts");
+var account_component_1 = __webpack_require__("./src/app/modules/users/components/account/account.component.ts");
+var auth_resolver_service_1 = __webpack_require__("./src/app/auth-resolver.service.ts");
 var routes = [
     {
         path: 'users',
         children: [
-            { path: 'register', component: __WEBPACK_IMPORTED_MODULE_2__components_register_register_component__["a" /* RegisterComponent */] },
-            { path: 'login/:state', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
-            { path: 'login', component: __WEBPACK_IMPORTED_MODULE_3__components_login_login_component__["a" /* LoginComponent */] },
+            { path: 'register', component: register_component_1.RegisterComponent },
+            { path: 'login/:state', component: login_component_1.LoginComponent },
+            { path: 'login', component: login_component_1.LoginComponent },
             {
                 path: 'account',
-                component: __WEBPACK_IMPORTED_MODULE_5__components_account_account_component__["a" /* AccountComponent */],
+                component: account_component_1.AccountComponent,
                 resolve: {
-                    authUser: __WEBPACK_IMPORTED_MODULE_6__auth_resolver_service__["a" /* AuthResolver */]
+                    authUser: auth_resolver_service_1.AuthResolver
                 }
             },
             {
@@ -8029,7 +7707,7 @@ var routes = [
                 redirectTo: 'login/reset-password-token-expired',
                 pathMatch: 'full'
             },
-            { path: 'account/reset/:token', component: __WEBPACK_IMPORTED_MODULE_4__components_reset_password_reset_password_component__["a" /* ResetPasswordComponent */] }
+            { path: 'account/reset/:token', component: reset_password_component_1.ResetPasswordComponent }
         ]
     }
 ];
@@ -8037,101 +7715,82 @@ var UsersRoutingModule = /** @class */ (function () {
     function UsersRoutingModule() {
     }
     UsersRoutingModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
-            imports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forChild(routes)],
-            exports: [__WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]]
+        core_1.NgModule({
+            imports: [router_1.RouterModule.forChild(routes)],
+            exports: [router_1.RouterModule]
         })
     ], UsersRoutingModule);
     return UsersRoutingModule;
 }());
-
+exports.UsersRoutingModule = UsersRoutingModule;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/users/users.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_routing_module__ = __webpack_require__("./src/app/modules/users/users-routing.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__ = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__ = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__ = __webpack_require__("./src/app/modules/shared/shared.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_register_register_component__ = __webpack_require__("./src/app/modules/users/components/register/register.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__users_service__ = __webpack_require__("./src/app/modules/users/users.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_login_login_component__ = __webpack_require__("./src/app/modules/users/components/login/login.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_reset_password_reset_password_component__ = __webpack_require__("./src/app/modules/users/components/reset-password/reset-password.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_account_account_component__ = __webpack_require__("./src/app/modules/users/components/account/account.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_account_finance_info_account_finance_info_component__ = __webpack_require__("./src/app/modules/users/components/account-finance-info/account-finance-info.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_account_personal_info_account_personal_info_component__ = __webpack_require__("./src/app/modules/users/components/account-personal-info/account-personal-info.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_account_user_info_account_user_info_component__ = __webpack_require__("./src/app/modules/users/components/account-user-info/account-user-info.component.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var users_routing_module_1 = __webpack_require__("./src/app/modules/users/users-routing.module.ts");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var flex_layout_1 = __webpack_require__("./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+var custom_material_design_module_1 = __webpack_require__("./src/app/modules/shared/custom-material-design.module.ts");
+var shared_module_1 = __webpack_require__("./src/app/modules/shared/shared.module.ts");
+var register_component_1 = __webpack_require__("./src/app/modules/users/components/register/register.component.ts");
+var users_service_1 = __webpack_require__("./src/app/modules/users/users.service.ts");
+var login_component_1 = __webpack_require__("./src/app/modules/users/components/login/login.component.ts");
+var reset_password_component_1 = __webpack_require__("./src/app/modules/users/components/reset-password/reset-password.component.ts");
+var account_component_1 = __webpack_require__("./src/app/modules/users/components/account/account.component.ts");
+var account_finance_info_component_1 = __webpack_require__("./src/app/modules/users/components/account-finance-info/account-finance-info.component.ts");
+var account_personal_info_component_1 = __webpack_require__("./src/app/modules/users/components/account-personal-info/account-personal-info.component.ts");
+var account_user_info_component_1 = __webpack_require__("./src/app/modules/users/components/account-user-info/account-user-info.component.ts");
 var UsersModule = /** @class */ (function () {
     function UsersModule() {
     }
     UsersModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
+        core_1.NgModule({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
-                __WEBPACK_IMPORTED_MODULE_2__users_routing_module__["a" /* UsersRoutingModule */],
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["c" /* FormsModule */],
-                __WEBPACK_IMPORTED_MODULE_4__angular_flex_layout__["a" /* FlexLayoutModule */],
-                __WEBPACK_IMPORTED_MODULE_5__modules_shared_custom_material_design_module__["a" /* CustomMaterialDesignModule */],
-                __WEBPACK_IMPORTED_MODULE_6__modules_shared_shared_module__["a" /* SharedModule */]
+                common_1.CommonModule,
+                users_routing_module_1.UsersRoutingModule,
+                forms_1.FormsModule,
+                flex_layout_1.FlexLayoutModule,
+                custom_material_design_module_1.CustomMaterialDesignModule,
+                shared_module_1.SharedModule
             ],
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_7__components_register_register_component__["a" /* RegisterComponent */],
-                __WEBPACK_IMPORTED_MODULE_9__components_login_login_component__["a" /* LoginComponent */],
-                __WEBPACK_IMPORTED_MODULE_10__components_reset_password_reset_password_component__["a" /* ResetPasswordComponent */],
-                __WEBPACK_IMPORTED_MODULE_11__components_account_account_component__["a" /* AccountComponent */],
-                __WEBPACK_IMPORTED_MODULE_12__components_account_finance_info_account_finance_info_component__["a" /* AccountFinanceInfoComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__components_account_personal_info_account_personal_info_component__["a" /* AccountPersonalInfoComponent */],
-                __WEBPACK_IMPORTED_MODULE_14__components_account_user_info_account_user_info_component__["a" /* AccountUserInfoComponent */]
+                register_component_1.RegisterComponent,
+                login_component_1.LoginComponent,
+                reset_password_component_1.ResetPasswordComponent,
+                account_component_1.AccountComponent,
+                account_finance_info_component_1.AccountFinanceInfoComponent,
+                account_personal_info_component_1.AccountPersonalInfoComponent,
+                account_user_info_component_1.AccountUserInfoComponent
             ],
-            providers: [__WEBPACK_IMPORTED_MODULE_8__users_service__["a" /* UsersService */]]
+            providers: [users_service_1.UsersService]
         })
     ], UsersModule);
     return UsersModule;
 }());
-
+exports.UsersModule = UsersModule;
 
 
 /***/ }),
 
 /***/ "./src/app/modules/users/users.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__ = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_service__ = __webpack_require__("./src/app/app.service.ts");
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8141,19 +7800,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var BehaviorSubject_1 = __webpack_require__("./node_modules/rxjs/_esm5/BehaviorSubject.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var app_service_1 = __webpack_require__("./src/app/app.service.ts");
 var UsersService = /** @class */ (function () {
     function UsersService(http, appService) {
         this.http = http;
         this.appService = appService;
-        this.serverHost = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].apiHost + '/api/users';
-        this.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["c" /* HttpHeaders */]().set('Content-Type', 'application/json');
+        this.serverHost = environment_1.environment.apiHost + '/api/users';
+        this.headers = new http_1.HttpHeaders().set('Content-Type', 'application/json');
         this.routerRedirectUrl = null; //a route to redirect the user to when login is successfull
-        this.userSource = new __WEBPACK_IMPORTED_MODULE_2_rxjs_BehaviorSubject__["a" /* BehaviorSubject */](null);
+        this.userSource = new BehaviorSubject_1.BehaviorSubject(null);
         this.user$ = this.userSource.asObservable();
     }
     /**
@@ -8220,7 +7880,7 @@ var UsersService = /** @class */ (function () {
     UsersService.prototype.getAuthenticatedUser = function (parameters) {
         if (parameters === void 0) { parameters = null; }
         var methodTrace = this.constructor.name + " > getAuthenticatedUser() > "; //for debugging
-        var params = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["d" /* HttpParams */]();
+        var params = new http_1.HttpParams();
         if (parameters && Object.keys(parameters).length) {
             for (var _i = 0, _a = Object.keys(parameters); _i < _a.length; _i++) {
                 var key = _a[_i];
@@ -8271,25 +7931,21 @@ var UsersService = /** @class */ (function () {
             .catch(this.appService.handleError);
     };
     UsersService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_4__app_service__["a" /* AppService */]])
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.HttpClient, app_service_1.AppService])
     ], UsersService);
     return UsersService;
 }());
-
+exports.UsersService = UsersService;
 
 
 /***/ }),
 
 /***/ "./src/app/util.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UtilService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__("./node_modules/moment/moment.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
+
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8299,9 +7955,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+var moment = __webpack_require__("./node_modules/moment/moment.js");
 var UtilService = /** @class */ (function () {
     function UtilService() {
         this.settings = {
@@ -8353,7 +8010,7 @@ var UtilService = /** @class */ (function () {
      */
     UtilService.prototype.formatDate = function (date, formatStr) {
         if (formatStr === void 0) { formatStr = 'YYYY-MM-DD'; }
-        return __WEBPACK_IMPORTED_MODULE_2_moment__(date).format(formatStr);
+        return moment(date).format(formatStr);
     };
     /**
      * Format today date in the provided format
@@ -8377,31 +8034,32 @@ var UtilService = /** @class */ (function () {
         for (var _i = 2; _i < arguments.length; _i++) {
             params[_i - 2] = arguments[_i];
         }
-        if (__WEBPACK_IMPORTED_MODULE_1__environments_environment__["a" /* environment */].showLogs) {
+        if (environment_1.environment.showLogs) {
             console[type](message, params);
         }
     };
     UtilService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+        core_1.Injectable(),
         __metadata("design:paramtypes", [])
     ], UtilService);
     return UtilService;
 }());
-
+exports.UtilService = UtilService;
 
 
 /***/ }),
 
 /***/ "./src/environments/environment.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
+
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
-var environment = {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.environment = {
     production: false,
     apiHost: '',
     showLogs: true,
@@ -8412,23 +8070,20 @@ var environment = {
 /***/ }),
 
 /***/ "./src/main.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__("./node_modules/@angular/platform-browser-dynamic/esm5/platform-browser-dynamic.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__("./src/app/app.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("./src/environments/environment.ts");
 
-
-
-
-if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_18" /* enableProdMode */])();
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var platform_browser_dynamic_1 = __webpack_require__("./node_modules/@angular/platform-browser-dynamic/esm5/platform-browser-dynamic.js");
+var app_module_1 = __webpack_require__("./src/app/app.module.ts");
+var environment_1 = __webpack_require__("./src/environments/environment.ts");
+if (environment_1.environment.production) {
+    core_1.enableProdMode();
     console.log('ENV: Production');
 }
-Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */]);
+platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(app_module_1.AppModule);
 
 
 /***/ }),

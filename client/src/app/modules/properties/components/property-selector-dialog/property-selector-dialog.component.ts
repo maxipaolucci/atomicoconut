@@ -8,12 +8,18 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class PropertySelectorDialogComponent implements OnInit {
 
+  showLinkToProperties : boolean = false;
+
   constructor(public dialogRef: MatDialogRef<PropertySelectorDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
   
   ngOnInit() { }
 
   onPropertySelected($event) {
     this.dialogRef.close($event);
+  }
+
+  onPropertiesLoad($event) {
+    this.showLinkToProperties = $event <= 0;
   }
 
 }

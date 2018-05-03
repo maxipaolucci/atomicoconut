@@ -1,7 +1,18 @@
 @import '../../../../../variables';
 
-.mat-dialog-content properties-table {
-  margin: 0 -24px;
+.mat-dialog-content {
+  
+  properties-table {
+    margin: 0 -24px;
+  }
+
+  .go-to-properties {
+    margin-top: 10px;
+
+    .icon--arrow_forward {
+      float: left;
+    }
+  }
 }
 
 @media screen and (min-width: $screenGtXs) {
