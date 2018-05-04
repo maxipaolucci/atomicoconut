@@ -289,10 +289,9 @@
           class="fab mat-elevation-z10 form__action" 
           color="accent" 
           type="submit"
-          matTooltip="Save" matTooltipPosition="left" 
+          matTooltip="Save changes" matTooltipPosition="left" 
           [disabled]="!(editPropertyForm.form.valid && includedFormsValid())">
-        <!-- <mat-icon aria-label="Save">attach_money</mat-icon> -->
-        Save
+        <mat-icon aria-label="Save changes">save</mat-icon>
       </button>
       
       <mat-progress-spinner *ngIf="editPropertyServiceRunning"
