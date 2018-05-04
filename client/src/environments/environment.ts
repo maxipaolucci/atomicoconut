@@ -7,5 +7,5 @@ export const environment = {
   production: false,
   apiHost : '',
   showLogs : true,
-  mapsApiKey : 'AIzaSyDKc7OEe0rN7hXZx8T-8ngEoK7dLGxyp18'
+  mapsApiKey : 'AIzaSyBVl8QaQnQGBw6IyvlQ5K3XepPj6Z9nHt0'
 };
