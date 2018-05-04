@@ -77,17 +77,22 @@
       }
     }
   }
+
+  .form__actions {
+    height: 70px;  
+  
+    .fab, .progress-spinner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+  }
 }
 
 @media screen and (min-width: $screenGtXs) {
   
   .form__container {
     
-    .form__actions {
-  
-      .form__action {
-        //max-width: 300px;
-      }
-    }
   }
 }

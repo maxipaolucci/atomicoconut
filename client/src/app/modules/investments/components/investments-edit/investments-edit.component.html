@@ -150,18 +150,21 @@
       
       
       <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--edit-investment">
-        <button *ngIf="!editInvestmentServiceRunning" 
-            class="form__action mat-raised-button" 
-            mat-raised-button 
-            type="submit" 
+        <button mat-fab *ngIf="!editInvestmentServiceRunning" 
+            class="fab mat-elevation-z10 form__action" 
             color="accent" 
-            [disabled]="!editInvestmentForm.form.valid || !investmentDataValid">Save</button>
+            type="submit"
+            matTooltip="Save changes" matTooltipPosition="left" 
+            [disabled]="!editInvestmentForm.form.valid || !investmentDataValid">
+          <mat-icon aria-label="Save changes">save</mat-icon>
+        </button>
         
-        <mat-progress-bar *ngIf="editInvestmentServiceRunning"
-            class="progress-bar progress-bar--edit-investment"
-            color="primary"
+        <mat-progress-spinner *ngIf="editInvestmentServiceRunning"
+            class="progress-spinner progress-spinner--edit-investment"
+            color="accent"
+            [diameter]="50" [strokeWidth]="7"
             mode="indeterminate">
-        </mat-progress-bar>
+        </mat-progress-spinner>
       </section>
     </div>
     

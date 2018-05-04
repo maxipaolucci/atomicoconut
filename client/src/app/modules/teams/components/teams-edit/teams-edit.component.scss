@@ -1,14 +1,5 @@
 @import '../../../../../variables';
 
-form {
-
-  .form__actions {
-
-    .progress-bar {
-      width: 100%;
-    }
-  }
-}
 
 .progress-bar--get-team {
   width: 100%;
@@ -64,16 +55,6 @@ form {
 }
 
 @media screen and (min-width: $screenGtXs) {
-  
-  form {
-    
-    .form__actions {
-  
-      .progress-bar {
-        width: 88px;
-      }
-    }
-  }
 
   .progress-bar--get-team {
     width: 300px;

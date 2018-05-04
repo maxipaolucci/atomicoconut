@@ -1,33 +1,11 @@
 @import '../../../../../variables';
 
-form {
-
-  .form__actions {
-    height: 70px;  
-  
-    .fab, .progress-spinner {
-      position: fixed;
-      left: 45%;
-      bottom: 20px;
-    }
-  }
-}
 
 .progress-bar--get-property {
   width: 100%;
 }
 
 @media screen and (min-width: $screenGtXs) {
-  
-  form {
-    
-    .form__actions {
-  
-      .progress-bar {
-        width: 88px;
-      }
-    }
-  }
 
   .progress-bar--get-property {
     width: 300px;

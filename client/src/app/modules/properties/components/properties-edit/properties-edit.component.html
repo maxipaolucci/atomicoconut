@@ -297,22 +297,9 @@
       <mat-progress-spinner *ngIf="editPropertyServiceRunning"
           class="progress-spinner progress-spinner--edit-property"
           color="accent"
-          [diameter]="40" [strokeWidth]="7"
+          [diameter]="50" [strokeWidth]="7"
           mode="indeterminate">
       </mat-progress-spinner>
-      
-      <!-- <button *ngIf="!editPropertyServiceRunning" 
-          class="form__action mat-raised-button" 
-          mat-raised-button 
-          type="submit" 
-          color="accent" 
-          [disabled]="!(editPropertyForm.form.valid && includedFormsValid())">Save</button> -->
-      
-      <!-- <mat-progress-bar *ngIf="editPropertyServiceRunning"
-          class="progress-bar progress-bar--edit-property"
-          color="primary"
-          mode="indeterminate">
-      </mat-progress-bar> -->
     </section>
   </form>
 
@@ -434,7 +421,7 @@
   </mat-progress-bar>
 
   <section *ngIf="!getPropertyServiceRunning" fxLayout="column" fxLayoutAlign="start end" fxHide.gt-sm="true" class="actions">
-    <button mat-fab class="fab mat-elevation-z10" color="primary" 
+    <button mat-mini-fab class="fab mat-elevation-z10" color="primary" 
         matTooltip="Show figures" matTooltipPosition="left" 
         (click)="openHouseResultsFiguresDialog()">
       <mat-icon aria-label="Create new investemt">attach_money</mat-icon>
