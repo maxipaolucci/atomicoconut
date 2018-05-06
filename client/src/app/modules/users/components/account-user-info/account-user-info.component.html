@@ -1,55 +1,65 @@
-<form class="form__container" (ngSubmit)="onSubmit()" #accountForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
-  
-  <div fxLayout="column" class="form__fields">
-    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row" >
-      <!-- Name -->
-      <mat-form-field fxFlex class="form__field">
-        <input matInput type="text" id="name" name="name" placeholder="Name" 
-            [(ngModel)]="model.name" 
-            required minlength="4"
-            value="model.name"
-            #name="ngModel">
+<div class="container__account-user" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
+  <form class="form__container form__account-user" #accountForm="ngForm" (ngSubmit)="onSubmit()" novalidate fxLayout="column" fxLayoutGap="10px" >
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields">      
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Name -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="text" id="name" name="name" placeholder="Name" 
+                [(ngModel)]="model.name" 
+                required minlength="4"
+                value="model.name"
+                #name="ngModel">
 
-        <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">Name is required</mat-error>
-        <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.minlength">Name must contains more than 4 characters</mat-error>
-      </mat-form-field>
+            <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">Name is required</mat-error>
+            <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.minlength">Name must contains more than 4 characters</mat-error>
+          </mat-form-field>
+          
+          <!-- Email -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="email" id="email" name="email" placeholder="Email address" 
+                [(ngModel)]="model.email" 
+                required email
+                value="model.email"
+                #email="ngModel">
+
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Preferred currency -->
+          <currency-unit fxFlex fxFlex.gt-xs="200px"
+              [id]="'preferredCurrency'"
+              [hint]="'Your preferred currency format to use across the platform'" 
+              [placeHolder]="'Preferred currency'" 
+              [value]="model.currency"
+              (newValue)="onCurrencyUnitChange($event)">
+          </currency-unit>
+        </div>
+      </div>
+    </section>
+    <section class="form__actions form__actions--account-user"
+        fxLayout="column" fxLayout.gt-sm="row" 
+        fxLayoutAlign="none start" fxLayoutAlign.gt-sm="center start" 
+        fxLayoutGap="10px">
+        
+      <button mat-fab *ngIf="!updateAccountServiceRunning" 
+          class="fab mat-elevation-z10 form__action" 
+          color="accent" 
+          type="submit"
+          matTooltip="Save changes" matTooltipPosition="left" 
+          [disabled]="!accountForm.form.valid">
+        <mat-icon aria-label="Save changes">save</mat-icon>
+      </button>
       
-      <!-- Email -->
-      <mat-form-field fxFlex class="form__field">
-        <input matInput type="email" id="email" name="email" placeholder="Email address" 
-            [(ngModel)]="model.email" 
-            required email
-            value="model.email"
-            #email="ngModel">
-
-        <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
-        <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
-      </mat-form-field>
-    </div>
-
-    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row" >
-      <!-- Preferred currency -->
-      <currency-unit fxFlex fxFlex.gt-xs="200px"
-          [id]="'preferredCurrency'"
-          [hint]="'Your preferred currency format to use across the platform'" 
-          [placeHolder]="'Preferred currency'" 
-          [value]="model.currency"
-          (newValue)="onCurrencyUnitChange($event)">
-      </currency-unit>
-    </div>
-
-    <div fxFlex class="form__spacer"></div>
-  </div>
-
-  <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center none" class="form__actions">
-    <button *ngIf="!updateAccountServiceRunning" class="form__action mat-raised-button" color="accent" mat-raised-button type="submit" 
-        [disabled]="!accountForm.form.valid">Save</button>
-
-    <mat-progress-bar *ngIf="updateAccountServiceRunning"
-        class="progress-bar progress-bar--update-account"
-        color="primary"
-        mode="indeterminate">
-    </mat-progress-bar>
-  </div>
-
-</form>
+      <mat-progress-spinner *ngIf="updateAccountServiceRunning"
+          class="progress-spinner progress-spinner--account-user"
+          color="accent"
+          [diameter]="55" [strokeWidth]="10"
+          mode="indeterminate">
+      </mat-progress-spinner>
+    </section>
+  </form>
+</div>

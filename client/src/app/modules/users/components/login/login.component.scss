@@ -3,9 +3,10 @@
 form {
 
   .form__actions {
-
-    .progress-bar {
-      width: 100%;
+    height: auto;
+  
+    .fab, .progress-spinner {
+      position: relative;
     }
   }
 }
@@ -15,16 +16,6 @@ form {
   .field__password .icon__suffix {
     cursor: pointer;
   }
-
-  .form__actions--login { }
-
-  .form__actions--create-account {
-    margin: 20px 0;
-  }
-}
-
-.form__forgot {
-  margin-top: 50px;
 }
 
 @media screen and (min-width: $screenGtXs) {
@@ -33,9 +24,6 @@ form {
     
     .form__actions {
   
-      .progress-bar {
-        width: 88px;
-      }
     }
   }
 }

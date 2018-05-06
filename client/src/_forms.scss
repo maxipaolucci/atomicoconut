@@ -84,15 +84,12 @@
     .fab, .progress-spinner {
       position: fixed;
       bottom: 20px;
-      left: 50%;
-      transform: translate(-50%, 0);
+      // left: 50%;
+      // transform: translate(-50%, 0);
     }
   }
 }
 
-@media screen and (min-width: $screenGtXs) {
+@media screen and (min-width: $screenGtSm) {
   
-  .form__container {
-    
-  }
 }

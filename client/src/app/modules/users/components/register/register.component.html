@@ -1,69 +1,80 @@
-<form class="form__container" (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
-  
-  <div fxLayout="column" class="form__fields">
-    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row" >
-      <!-- Name -->
-      <mat-form-field fxFlex class="form__field">
-        <input matInput type="text" id="name" name="name" placeholder="Name" 
-            [(ngModel)]="model.name" 
-            required minlength="4"
-            #name="ngModel">
+<div class="container__register" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
+  <form class="form__container form__register" #registerForm="ngForm" (ngSubmit)="onSubmit()" novalidate fxLayout="column" fxLayoutGap="10px" >
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields">      
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Name -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="text" id="name" name="name" placeholder="Name" 
+                [(ngModel)]="model.name" 
+                required minlength="4"
+                #name="ngModel">
 
-        <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">Name is required</mat-error>
-        <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.minlength">Name must contains more than 4 characters</mat-error>
-      </mat-form-field>
+            <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">Name is required</mat-error>
+            <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.minlength">Name must contains more than 4 characters</mat-error>
+          </mat-form-field>
+          
+          <!-- Email -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="email" id="email" name="email" placeholder="Email address" 
+                [(ngModel)]="model.email" 
+                required email
+                #email="ngModel">
+
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Password -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="password" id="password" name="password" placeholder="Password" 
+                [(ngModel)]="model.password" 
+                required minlength="3" maxlength="8" equalvalidator="passwordConfirm" reverse="true"
+                #password="ngModel">
+
+            <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.required">Password is required</mat-error>
+            <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.minlength">Password must be longer than 3 characters</mat-error>
+            <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.maxlength">Password must be shorter than 8 characters</mat-error>
+          </mat-form-field>
+
+          <!-- Password confirm -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm password" 
+                [(ngModel)]="model['password-confirm']" 
+                required minlength="3" maxlength="8" equalvalidator="password"
+                #passwordConfirm="ngModel">
+
+            <mat-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required">Confirm password is required</mat-error>
+            <mat-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength">Confirm password must be longer than 3 characters</mat-error>
+            <mat-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength">Confirm password must be shorter than 8 characters</mat-error>
+            <mat-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator">Confirm password must match password</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </section>
+
+    <section class="form__actions form__actions--register"
+        fxLayout="column" fxLayout.gt-sm="row" 
+        fxLayoutAlign="none start" fxLayoutAlign.gt-sm="center start" 
+        fxLayoutGap="10px">
+        
+      <button mat-fab *ngIf="!registerServiceRunning" 
+          class="fab mat-elevation-z10 form__action" 
+          color="accent" 
+          type="submit"
+          matTooltip="Save account" matTooltipPosition="left" 
+          [disabled]="!registerForm.form.valid">
+        <mat-icon aria-label="Save account">save</mat-icon>
+      </button>
       
-      <!-- Email -->
-      <mat-form-field fxFlex class="form__field">
-        <input matInput type="email" id="email" name="email" placeholder="Email address" 
-            [(ngModel)]="model.email" 
-            required email
-            #email="ngModel">
-
-        <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
-        <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
-      </mat-form-field>
-    </div>
-
-    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row" >
-      <!-- Password -->
-      <mat-form-field fxFlex class="form__field">
-        <input matInput type="password" id="password" name="password" placeholder="Password" 
-            [(ngModel)]="model.password" 
-            required minlength="3" maxlength="8" equalvalidator="passwordConfirm" reverse="true"
-            #password="ngModel">
-
-        <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.required">Password is required</mat-error>
-        <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.minlength">Password must be longer than 3 characters</mat-error>
-        <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.maxlength">Password must be shorter than 8 characters</mat-error>
-      </mat-form-field>
-
-      <!-- Password confirm -->
-      <mat-form-field fxFlex class="form__field">
-        <input matInput type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm password" 
-            [(ngModel)]="model['password-confirm']" 
-            required minlength="3" maxlength="8" equalvalidator="password"
-            #passwordConfirm="ngModel">
-
-        <mat-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.required">Confirm password is required</mat-error>
-        <mat-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.minlength">Confirm password must be longer than 3 characters</mat-error>
-        <mat-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.maxlength">Confirm password must be shorter than 8 characters</mat-error>
-        <mat-error *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched) && passwordConfirm.errors.equalvalidator">Confirm password must match password</mat-error>
-      </mat-form-field>
-      <!-- <pre>{{passwordConfirm.errors | json}}</pre> -->
-    </div>
-    
-  </div>
-  
-  <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center none" class="form__actions">
-    <button *ngIf="!registerServiceRunning" class="form__action mat-raised-button" color="accent" mat-raised-button type="submit" 
-        [disabled]="!registerForm.form.valid">Create account</button>
-
-    <mat-progress-bar *ngIf="registerServiceRunning"
-        class="progress-bar progress-bar--register"
-        color="primary"
-        mode="indeterminate">
-  </mat-progress-bar>
-  </div>
-
-</form>
+      <mat-progress-spinner *ngIf="registerServiceRunning"
+          class="progress-spinner progress-spinner--register"
+          color="accent"
+          [diameter]="55" [strokeWidth]="10"
+          mode="indeterminate">
+      </mat-progress-spinner>
+    </section>
+  </form>
+</div>

@@ -1,84 +1,112 @@
-<form class="form__container form__login" (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
-  
-  <section fxLayout="column" class="form__fields">
-    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
-      <!-- Email -->
-      <mat-form-field fxFlex class="form__field">
-        <input matInput type="email" id="email" name="email" placeholder="Email address" 
-            [(ngModel)]="model.email" 
-            required email
-            #email="ngModel">
+<div class="container__login" fxLayout="column" fxLayoutAlign="none none" fxLayoutAlign.gt-xs="none center" fxLayoutGap="30px">
+  <form class="form__container form__login" #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate fxLayout="column" fxLayoutGap="10px" >
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields">      
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Email -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="email" id="email" name="email" placeholder="Email address" 
+                [(ngModel)]="model.email" 
+                required email
+                #email="ngModel">
 
-        <mat-icon matPrefix>email</mat-icon>
-        <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
-        <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
-      </mat-form-field>
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
+          </mat-form-field>
+          
+          <!-- Password -->
+          <mat-form-field fxFlex class="form__field field__password">
+            <input matInput [type]="showPassword ? 'text' : 'password'" id="password" name="password" placeholder="Password" 
+                [(ngModel)]="model.password" 
+                required minlength="3" maxlength="8"
+                #password="ngModel">
+            
+            <mat-icon matPrefix>vpn_key</mat-icon>
+            <mat-icon class="icon__suffix" matSuffix matTooltip="Show password" *ngIf="!showPassword" (click)="showPassword = true">visibility</mat-icon>
+            <mat-icon class="icon__suffix" matSuffix matTooltip="Hide password" *ngIf="showPassword" (click)="showPassword = false">visibility_off</mat-icon>
+            <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.required">Password is required</mat-error>
+            <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.minlength">Password must be longer than 3 characters</mat-error>
+            <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.maxlength">Password must be shorter than 8 characters</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </section>
+
+    <section class="form__actions form__actions--login"
+        fxLayout="column" fxLayout.gt-sm="row" 
+        fxLayoutAlign="none center" fxLayoutAlign.gt-sm="center start" 
+        fxLayoutGap="10px">
+        
+      <button mat-fab *ngIf="!loginServiceRunning" 
+          class="fab mat-elevation-z10 form__action" 
+          color="accent" 
+          type="submit"
+          matTooltip="Login" matTooltipPosition="left" 
+          [disabled]="!loginForm.form.valid">
+        <mat-icon aria-label="Login">arrow_forward</mat-icon>
+      </button>
       
-      <!-- Password -->
-      <mat-form-field fxFlex class="form__field field__password">
-        <input matInput [type]="showPassword ? 'text' : 'password'" id="password" name="password" placeholder="Password" 
-            [(ngModel)]="model.password" 
-            required minlength="3" maxlength="8"
-            #password="ngModel">
-        
-        <mat-icon matPrefix>vpn_key</mat-icon>
-        <mat-icon class="icon__suffix" matSuffix matTooltip="Show password" *ngIf="!showPassword" (click)="showPassword = true">visibility</mat-icon>
-        <mat-icon class="icon__suffix" matSuffix matTooltip="Hide password" *ngIf="showPassword" (click)="showPassword = false">visibility_off</mat-icon>
-        <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.required">Password is required</mat-error>
-        <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.minlength">Password must be longer than 3 characters</mat-error>
-        <mat-error *ngIf="password.invalid && (password.dirty || password.touched) && password.errors.maxlength">Password must be shorter than 8 characters</mat-error>
-      </mat-form-field>
-    </div>
-  </section>
+      <mat-progress-spinner *ngIf="loginServiceRunning"
+          class="progress-spinner progress-spinner--login"
+          color="accent"
+          [diameter]="55" [strokeWidth]="10"
+          mode="indeterminate">
+      </mat-progress-spinner>
+    </section>
 
-  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--login">
-    <button *ngIf="!loginServiceRunning" class="form__action mat-raised-button" mat-raised-button type="submit" 
-        color="accent" [disabled]="!loginForm.form.valid">Login</button>
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields">      
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign="none center" fxLayoutAlign.gt-xs="center none" class="form__fields__row">
+          <!-- Forgot my password checkbox  -->
+          <mat-checkbox [(ngModel)]="forgotModel.forgot" name="forgot" id="forgot">Forgot my password</mat-checkbox>
+        </div>
+      </div>
+    </section>
+  </form>
+
+  <!-- Forgot password form -->
+  <form class="form__container form__forgot" #forgotForm="ngForm" (ngSubmit)="onForgotSubmit()" novalidate fxLayout="column" fxLayoutGap="10px" *ngIf="forgotModel.forgot">
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields">      
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <div fxLayout="row" fxLayoutAlign="none none" fxLayoutGap="10px" class="form__fields__row">
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="email" id="emailForgot" name="emailForgot" placeholder="Email address" 
+                [(ngModel)]="forgotModel.email" 
+                required email
+                #emailForgot="ngModel">
     
-    <mat-progress-bar *ngIf="loginServiceRunning"
-        class="progress-bar progress-bar--login"
-        color="primary"
-        mode="indeterminate">
-    </mat-progress-bar>
-    
-    <mat-checkbox fxLayoutAlign.xs="center center" class="form__action" [(ngModel)]="forgotModel.forgot" name="forgot" id="forgot">Forgot my password</mat-checkbox>
-  </section>
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-hint align="start">Type your email and we will send you an email to reset your password.</mat-hint>
+            <mat-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.required">Email is required</mat-error>
+            <mat-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.email">Email must be a valid email address</mat-error>
+          </mat-form-field>
 
-  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign="center center" class="form__actions form__actions--create-account">
-    <a mat-button color="accent" class="color__almost-white ac__link" routerLink="/users/register">Create an account</a>
-  </section>
+          <button mat-mini-fab *ngIf="!forgotServiceRunning" 
+              class="fab mat-elevation-z10 form__action" 
+              color="primary" 
+              type="submit"
+              matTooltip="Send" matTooltipPosition="left" 
+              [disabled]="!forgotForm.form.valid">
+            <mat-icon aria-label="Send">arrow_forward</mat-icon>
+          </button>
 
-</form>
+          <mat-progress-spinner *ngIf="forgotServiceRunning"
+              class="progress-spinner progress-spinner--forgot"
+              color="accent"
+              [diameter]="40" [strokeWidth]="7"
+              mode="indeterminate">
+          </mat-progress-spinner>
+        </div>
+      </div>
+    </section>
+  </form>
 
-<form class="form__container form__forgot" (ngSubmit)="onForgotSubmit()" #forgotForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" *ngIf="forgotModel.forgot">
+  <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center none">
+    <p>I don't have an account yet</p>
+    <button mat-raised-button type="button" color="primary" class="color__almost-white" routerLink="/users/register">Create new account</button>
+  </div>
+</div>
+
+
   
-  <section fxLayout="column" class="form__fields">
-    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
-      <!-- Email -->
-      <mat-form-field fxFlex class="form__field">
-        
-        <input matInput type="email" id="emailForgot" name="emailForgot" placeholder="Email address" 
-            [(ngModel)]="forgotModel.email" 
-            required email
-            #emailForgot="ngModel">
-
-        <mat-icon matPrefix>email</mat-icon>
-        <mat-hint align="start">Type your email and we will send you an email to reset your password.</mat-hint>
-        <mat-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.required">Email is required</mat-error>
-        <mat-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.email">Email must be a valid email address</mat-error>
-      </mat-form-field>
-    </div>
-  </section>
-
-  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center none" class="form__actions">
-    <button *ngIf="!forgotServiceRunning" class="form__action mat-raised-button" 
-        color="accent" mat-raised-button type="submit" [disabled]="!forgotForm.form.valid">Send</button>
-
-    <mat-progress-bar *ngIf="forgotServiceRunning"
-        class="progress-bar progress-bar--forgot"
-        color="primary"
-        mode="indeterminate">
-    </mat-progress-bar>
-  </section>
-
-</form>

@@ -1,81 +1,94 @@
-<form class="form__container form__account-finance" (ngSubmit)="onSubmit()" #financeForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px" >
 
-  <section fxLayout="column" fxLayoutAlign.gt-xs="center center" class="form__fields">
-    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
-      <!-- Active income -->
-      <div fxLayout="row" fxLayoutGap="10px">
-        <currency-unit fxFlex="50px"
-            [id]="'annualIncomeUnit'" 
-            [value]="model.annualIncomeUnit"
-            [view]="'narrow'"
-            (newValue)="onCurrencyUnitChange($event)">
-        </currency-unit>
-        
-        <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
-          <input matInput type="number" id="annualIncome" name="annualIncome" placeholder="Annual Income"
-              [(ngModel)]="model.annualIncome" 
-              value="model.annualIncome"
-              numberValidator 
-              #annualIncome="ngModel">
-          <mat-hint align="start">Annual income amount pre-tax.</mat-hint>
-          <mat-error *ngIf="annualIncome.invalid && (annualIncome.dirty || annualIncome.touched) && annualIncome.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-        </mat-form-field>
-        <!-- <pre>{{annualIncome.errors | json}}</pre> -->
+<div class="container__account-finance" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
+  <form class="form__container form__account-finance" #financeForm="ngForm" (ngSubmit)="onSubmit()" novalidate fxLayout="column" fxLayoutGap="10px" >
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields">      
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+
+          <!-- Active income -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'annualIncomeUnit'" 
+                [value]="model.annualIncomeUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
+              <input matInput type="number" id="annualIncome" name="annualIncome" placeholder="Annual Income"
+                  [(ngModel)]="model.annualIncome" 
+                  value="model.annualIncome"
+                  numberValidator 
+                  #annualIncome="ngModel">
+              <mat-hint align="start">Annual income amount pre-tax.</mat-hint>
+              <mat-error *ngIf="annualIncome.invalid && (annualIncome.dirty || annualIncome.touched) && annualIncome.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Tax rate -->
+          <div fxFlex="none" fxFlex.gt-xs fxLayout="column" class="form__field slider__field">
+            <label class="slider__label">Income tax rate</label>
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+              <mat-slider fxFlex id="incomeTaxRate" name="incomeTaxRate"
+                  color="accent"
+                  [max]="50"
+                  [min]="0"
+                  [step]="1"
+                  [thumb-label]="true"
+                  [tick-interval]="1"
+                  [(ngModel)]="model.incomeTaxRate"
+                  [value]="model.incomeTaxRate"> 
+              </mat-slider>
+              <span *ngIf="model.incomeTaxRate">{{model.incomeTaxRate}}%</span>
+            </div>
+            <label class="mat-hint slider__label__hint">Percentage of your income being taxed.</label>
+          </div>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Savings -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'savingsUnit'" 
+                [value]="model.savingsUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
+              <input matInput type="number" id="savings" name="savings" placeholder="Current savings" 
+                  [(ngModel)]="model.savings" 
+                  value="model.savings"
+                  numberValidator
+                  #savings="ngModel">
+
+              <mat-error *ngIf="savings.invalid && (savings.dirty || savings.touched) && savings.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <!-- Tax rate -->
-      <mat-form-field fxFlex fxFlex.gt-xs="150px" class="form__field">
-        <input matInput type="number" id="incomeTaxRate" name="incomeTaxRate" placeholder="Income tax rate (%)" 
-            [(ngModel)]="model.incomeTaxRate" 
-            value="model.incomeTaxRate"
-            numberValidator='{"min": 0, "max": 100}' 
-            #incomeTaxRate="ngModel">
-
-        <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-        <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
-        <mat-error *ngIf="incomeTaxRate.invalid && (incomeTaxRate.dirty || incomeTaxRate.touched) && incomeTaxRate.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
-      </mat-form-field>
-      <!-- <pre>{{incomeTaxRate.errors | json}}</pre> -->
-    </div>
-
-    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap.gt-xs="10px" class="form__fields__row">
-      <!-- Savings -->
-      <div fxLayout="row" fxLayoutGap="10px">
-        <currency-unit fxFlex="50px"
-            [id]="'savingsUnit'" 
-            [value]="model.savingsUnit"
-            [view]="'narrow'"
-            (newValue)="onCurrencyUnitChange($event)">
-        </currency-unit>
+    <section class="form__actions form__actions--account-finance"
+        fxLayout="column" fxLayout.gt-sm="row" 
+        fxLayoutAlign="none start" fxLayoutAlign.gt-sm="center start" 
+        fxLayoutGap="10px">
         
-        <mat-form-field fxFlex fxFlex.gt-xs="300px" class="form__field">
-          <input matInput type="number" id="savings" name="savings" placeholder="Current savings" 
-              [(ngModel)]="model.savings" 
-              value="model.savings"
-              numberValidator
-              #savings="ngModel">
-
-          <mat-error *ngIf="savings.invalid && (savings.dirty || savings.touched) && savings.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-        </mat-form-field>
-      </div>
-
-      <div fxFlex fxFlex.gt-xs="150px" class="form__spacer"></div>
-    </div>
-  </section>
-
-  <section fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="center center" class="form__actions form__actions--account-finance">
-    <button *ngIf="!accountFinanceServiceRunning" 
-        class="form__action mat-raised-button" 
-        mat-raised-button 
-        type="submit" 
-        color="accent" 
-        [disabled]="!financeForm.form.valid">Save</button>
-    
-    <mat-progress-bar *ngIf="accountFinanceServiceRunning"
-        class="progress-bar progress-bar--account-finance"
-        color="primary"
-        mode="indeterminate">
-    </mat-progress-bar>
-  </section>
-
-</form>
+      <button mat-fab *ngIf="!accountFinanceServiceRunning" 
+          class="fab mat-elevation-z10 form__action" 
+          color="accent" 
+          type="submit"
+          matTooltip="Save changes" matTooltipPosition="left" 
+          [disabled]="!financeForm.form.valid">
+        <mat-icon aria-label="Save changes">save</mat-icon>
+      </button>
+      
+      <mat-progress-spinner *ngIf="accountFinanceServiceRunning"
+          class="progress-spinner progress-spinner--account-finance"
+          color="accent"
+          [diameter]="55" [strokeWidth]="10"
+          mode="indeterminate">
+      </mat-progress-spinner>
+    </section>
+  </form>
+</div>
