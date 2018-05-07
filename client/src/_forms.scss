@@ -83,13 +83,19 @@
   
     .fab, .progress-spinner {
       position: fixed;
-      bottom: 20px;
-      // left: 50%;
-      // transform: translate(-50%, 0);
+      bottom: 10px;
+      right: 10px;
     }
   }
 }
 
 @media screen and (min-width: $screenGtSm) {
+  .form__actions {
   
+    .fab, .progress-spinner {
+      right: auto;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+  }
 }

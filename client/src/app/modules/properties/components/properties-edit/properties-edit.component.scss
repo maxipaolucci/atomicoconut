@@ -5,6 +5,13 @@
   width: 100%;
 }
 
+.actions {
+
+  .mini-fab {
+    bottom: 75px;
+  }
+}
+
 @media screen and (min-width: $screenGtXs) {
 
   .progress-bar--get-property {

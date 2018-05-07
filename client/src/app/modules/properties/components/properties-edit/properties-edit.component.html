@@ -284,8 +284,7 @@
     </section>
 
     <section class="form__actions form__actions--edit-property"
-        fxLayout="column" fxLayout.gt-sm="row" 
-        fxLayoutAlign="none start" fxLayoutAlign.gt-sm="center start" 
+        fxLayout="column" fxLayout.gt-sm="row"  
         fxLayoutGap="10px">
       
       <button mat-fab *ngIf="!editPropertyServiceRunning" 
@@ -423,8 +422,11 @@
       mode="indeterminate">
   </mat-progress-bar>
 
-  <section *ngIf="!getPropertyServiceRunning" fxLayout="column" fxLayoutAlign="start end" fxHide.gt-sm="true" class="actions">
-    <button mat-mini-fab class="fab mat-elevation-z10" color="primary" 
+  <section *ngIf="!getPropertyServiceRunning" 
+      fxLayout="column" 
+      fxHide.gt-sm="true" 
+      class="actions">
+    <button mat-mini-fab class="mini-fab mat-elevation-z10" color="primary" 
         matTooltip="Show figures" matTooltipPosition="left" 
         (click)="openHouseResultsFiguresDialog()">
       <mat-icon aria-label="Create new investemt">attach_money</mat-icon>
