@@ -7,7 +7,7 @@ import { User } from '../../../users/models/user';
 import { TeamsService } from '../../teams.service';
 import { AppService } from "../../../../app.service";
 import { Team } from '../../models/team';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-teams-edit',

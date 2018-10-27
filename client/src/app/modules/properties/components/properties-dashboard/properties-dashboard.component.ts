@@ -3,8 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { AppService } from '../../../../app.service';
 import { User } from '../../../users/models/user';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'properties-dashboard',

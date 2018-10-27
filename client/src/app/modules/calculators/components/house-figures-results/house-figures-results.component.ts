@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'house-figures-results',

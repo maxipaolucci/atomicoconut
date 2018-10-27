@@ -6,7 +6,7 @@ import { User } from '../../../users/models/user';
 import { TeamsService } from '../../../teams/teams.service';
 import { AppService } from "../../../../app.service";
 import { Team } from '../../../teams/models/team';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { MatSelectChange, MatRadioChange } from '@angular/material';
 import { InvestmentsService } from '../../investments.service';
 import { Investment } from '../../models/investment';

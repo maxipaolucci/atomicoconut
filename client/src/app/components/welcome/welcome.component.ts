@@ -9,8 +9,8 @@ import { InvestmentsService } from '../../modules/investments/investments.servic
 import { CurrencyExchangeService } from '../../modules/investments/currency-exchange.service';
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
-import { Subscription } from 'rxjs/Subscription';
-import { of } from 'rxjs/observable/of';
+import { Subscription } from 'rxjs';
+import { of } from 'rxjs';
 import { INVESTMENTS_TYPES } from '../../constants';
 import { UtilService } from '../../util.service';
 import { PropertyInvestment } from '../../modules/investments/models/PropertyInvestment';

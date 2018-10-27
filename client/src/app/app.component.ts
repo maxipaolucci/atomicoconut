@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from "rxjs/Rx";
 import { AppService } from './app.service';
 import { UsersService } from './modules/users/users.service';
 import { User } from './modules/users/models/user';
@@ -7,7 +6,7 @@ import { Router } from '@angular/router';
 import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
 import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
 import { UtilService } from './util.service';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

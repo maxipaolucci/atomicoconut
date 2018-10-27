@@ -2,9 +2,8 @@ import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/comm
 
 import { AppService } from '../../app.service';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Response } from '../../models/Response';
-import { of } from 'rxjs/observable/of';
 import { environment } from '../../../environments/environment';
 import { UtilService } from '../../util.service';
 

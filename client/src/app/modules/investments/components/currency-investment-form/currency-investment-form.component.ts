@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, OnDestroy, AfterViewInit, ViewChild, EventEmitter } from '@angular/core';
 import { DateAdapter, NativeDateAdapter } from '@angular/material';
 import { MatSelectChange } from '@angular/material';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { UtilService } from '../../../../util.service';
 import { AppService } from '../../../../app.service';
 

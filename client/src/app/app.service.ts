@@ -3,9 +3,8 @@ import { MatSnackBar } from '@angular/material';
 import { environment } from '../environments/environment';
 import { SnackbarSimpleComponent } from './modules/shared/components/snackbar-simple/snackbar-simple.component';
 import { Response } from './models/response';
-import { Observable } from 'rxjs/Observable';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class AppService {
@@ -31,7 +30,7 @@ export class AppService {
    */
   public handleError(result: HttpErrorResponse) {
     console.error(result);
-    return new ErrorObservable(result.error);
+    return throwError(result.error);
   }
 
   /**

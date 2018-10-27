@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AppService } from '../../app.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Property } from './models/property';
 import { Response } from '../../models/response';
 import { User } from '../users/models/user';
 import { PROPERTY_TYPES } from '../../constants';
 import { House } from './models/house';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { Address } from './models/address';
 
 @Injectable()

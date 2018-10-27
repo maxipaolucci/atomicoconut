@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { UtilService } from '../../../../util.service';
 import { AppService } from '../../../../app.service';
 import { MatSelectChange, MatSlideToggleChange } from '@angular/material';

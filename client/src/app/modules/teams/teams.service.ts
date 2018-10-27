@@ -4,10 +4,10 @@ import { environment } from "../../../environments/environment";
 import { AppService } from "../../app.service";
 import { Team } from './models/team';
 import { User } from '../users/models/user';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Response } from '../../models/response';
-import { of } from 'rxjs/observable/of';
-import { from } from 'rxjs/observable/from';
+import { of } from 'rxjs';
+import { from } from 'rxjs';
 
 
 @Injectable()
