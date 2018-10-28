@@ -8,6 +8,7 @@ import { TeamsService } from '../../teams.service';
 import { AppService } from "../../../../app.service";
 import { Team } from '../../models/team';
 import { Subscription } from 'rxjs';
+import { map, combineLatest } from 'rxjs/operators';
 
 @Component({
   selector: 'app-teams-edit',
@@ -42,15 +43,15 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     ]);
 
     //generates a user source object from authUser from resolver
-    const user$ = this.route.data.map((data: { authUser: User }) => data.authUser);
+    const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
     
     //generates an investment id source from id parameter in url
-    const slug$ = this.route.paramMap.map((params: ParamMap) => params.get('slug'));
+    const slug$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('slug')));
 
     //combine user$ and id$ sources into one object and start listen to it for changes
-    this.subscription = user$.combineLatest(slug$, (user, slug) => { 
+    this.subscription = user$.pipe(combineLatest(slug$, (user, slug) => { 
       return { user, teamSlug : slug } 
-    }).subscribe(data => {
+    })).subscribe(data => {
       this.user = data.user;
       this.model.email = data.user.email;
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-
+import { map } from 'rxjs/operators';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import {User} from '../../models/user';
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Login', url: null, selected: true }]);
 
-    this.route.paramMap.map((params: ParamMap) => params.get('state'))
+    this.route.paramMap.pipe(map((params: ParamMap) => params.get('state')))
         .subscribe(state => {
           if (state === 'reset-password-token-expired') {
             this.appService.showResults('Reset password token has expired or is invalid. Click on "Forgot my password" again to create a new one.', 'error', 10000);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { environment } from "../../../environments/environment";
 import { AppService } from "../../app.service";
 import { User } from "./models/user";
@@ -44,8 +45,10 @@ export class UsersService {
     let methodTrace = `${this.constructor.name} > register() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/register`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 
   /**
@@ -56,8 +59,10 @@ export class UsersService {
     let methodTrace = `${this.constructor.name} > updateAccount() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/account`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 
   /**
@@ -68,8 +73,10 @@ export class UsersService {
     let methodTrace = `${this.constructor.name} > updatePersonalInfo() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/accountPersonalInfo`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 
   /**
@@ -80,8 +87,10 @@ export class UsersService {
     let methodTrace = `${this.constructor.name} > updateFinancialInfo() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/accountFinancialInfo`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 
   /**
@@ -99,8 +108,10 @@ export class UsersService {
     }
     
     return this.http.get<Response>(`${this.serverHost}/getUser`, { params })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 
   /**
@@ -110,8 +121,10 @@ export class UsersService {
     let methodTrace = `${this.constructor.name} > login() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/login`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 
   /**
@@ -121,8 +134,10 @@ export class UsersService {
     let methodTrace = `${this.constructor.name} > forgot() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/account/forgot`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 
   /**
@@ -132,8 +147,10 @@ export class UsersService {
     let methodTrace = `${this.constructor.name} > reset() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/account/reset/${token}`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 
   /**
@@ -143,7 +160,9 @@ export class UsersService {
     let methodTrace = `${this.constructor.name} > logout() > `; //for debugging
 
     return this.http.get<Response>(`${this.serverHost}/logout`)
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 }

@@ -9,7 +9,8 @@ import { CurrencyInvestment } from './models/currencyInvestment';
 import { PropertyInvestment } from './models/PropertyInvestment';
 import { Team } from '../teams/models/team';
 import { Response } from '../../models/response';
-import { of } from 'rxjs';
+import { of, from } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { INVESTMENTS_TYPES, PROPERTY_TYPES } from '../../constants';
 import { House } from '../properties/models/house';
 import { Address } from '../properties/models/address';
@@ -31,8 +32,10 @@ export class InvestmentsService {
     let methodTrace = `${this.constructor.name} > create() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   } 
   
   /**
@@ -43,8 +46,10 @@ export class InvestmentsService {
     let methodTrace = `${this.constructor.name} > update() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   } 
 
   /**
@@ -64,10 +69,12 @@ export class InvestmentsService {
         .set('email', email);
 
     const investment$ = this.http.get<Response>(`${this.serverHost}/getbyId`, { params })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
 
-    return investment$.switchMap((investment) => {
+    return investment$.pipe(switchMap((investment) => {
       let result : Investment = null;
       if (investment && investment._id) {
         const createdBy = new User(investment.createdBy.name, investment.createdBy.email, investment.createdBy.gravatar);
@@ -120,8 +127,8 @@ export class InvestmentsService {
         this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
       }
 
-      return Observable.of(result);
-    });
+      return of(result);
+    }));
   }
 
   /**
@@ -133,16 +140,18 @@ export class InvestmentsService {
 
     if (!email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
-      return Observable.from([]);
+      return from([]);
     }
 
     let params = new HttpParams().set('email', email);
 
     const investmentsData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
     
-    return investmentsData$.switchMap((investmentsData) => {
+    return investmentsData$.pipe(switchMap((investmentsData) => {
       let investments : Investment[] = [];
 
       if (investmentsData && investmentsData instanceof Array) {
@@ -182,8 +191,8 @@ export class InvestmentsService {
         this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
       }
 
-      return Observable.of(investments);
-    });
+      return of(investments);
+    }));
   }
 
   /**
@@ -202,7 +211,9 @@ export class InvestmentsService {
     let params = new HttpParams().set('email', email);
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } )
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 }

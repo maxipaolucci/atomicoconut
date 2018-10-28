@@ -7,6 +7,7 @@ import { TeamsService } from '../../../teams/teams.service';
 import { AppService } from "../../../../app.service";
 import { Team } from '../../../teams/models/team';
 import { Subscription } from 'rxjs';
+import { map, combineLatest } from 'rxjs/operators';
 import { MatSelectChange, MatRadioChange } from '@angular/material';
 import { InvestmentsService } from '../../investments.service';
 import { Investment } from '../../models/investment';
@@ -64,13 +65,13 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     ]);
     
     //generates a user source object from authUser from resolver
-    const user$ = this.route.data.map((data: { authUser: User }) => data.authUser);
+    const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
 
     //generates an investment id source from id parameter in url
-    const id$ = this.route.paramMap.map((params: ParamMap) => params.get('id'));
+    const id$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('id')));
     
     //combine user$ and id$ sources into one object and start listen to it for changes
-    this.subscription = user$.combineLatest(id$, (user, id) => {
+    this.subscription = user$.pipe(combineLatest(id$, (user, id) => {
       const urlObject = (<BehaviorSubject<any>>this.route.url).getValue(); 
       let investmentId = null;
       let propertyId = null;
@@ -83,7 +84,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       }
       
       return { user, investmentId, propertyId }; 
-    }).subscribe(data => {
+    })).subscribe(data => {
       this.user = data.user;
       this.model.email = data.user.email;
       this.model.investmentAmountUnit = this.user.currency;
@@ -117,7 +118,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     });
 
     //get TYPE parameter
-    this.route.paramMap.map((params: ParamMap) => params.get('type')).subscribe(type => {
+    this.route.paramMap.pipe(map((params: ParamMap) => params.get('type'))).subscribe(type => {
       if (![INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO, INVESTMENTS_TYPES.PROPERTY].includes(type)) {
         this.appService.showResults('You must provide a valid investment type to continue.', 'error');
         this.router.navigate(['welcome']);

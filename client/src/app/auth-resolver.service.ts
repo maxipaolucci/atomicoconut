@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { User } from './modules/users/models/user';
 import { AccountPersonal } from './modules/users/models/account-personal';
@@ -21,7 +22,7 @@ export class AuthResolver implements Resolve<User> {
       params = { personalInfo : true, financialInfo : true };
     }
 
-    return this.usersService.getAuthenticatedUser(params).map(
+    return this.usersService.getAuthenticatedUser(params).pipe(map(
       (data : any) => {
         if (data && data.email) {
           let personalInfo = null;
@@ -52,7 +53,7 @@ export class AuthResolver implements Resolve<User> {
         this.router.navigate(['/users/login']);
         return null;
       }
-    );
+    ));
   }
   
 }

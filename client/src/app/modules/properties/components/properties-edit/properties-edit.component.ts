@@ -11,6 +11,7 @@ import { House } from '../../models/house';
 import { MatSelectChange, DateAdapter, NativeDateAdapter, MatAutocompleteSelectedEvent, MatDialog } from '@angular/material';
 import { UtilService } from '../../../../util.service';
 import { HouseFiguresDialogComponent } from '../house-figures-dialog/house-figures-dialog.component';
+import { map, combineLatest } from 'rxjs/operators';
 
 @Component({
   selector: 'properties-edit',
@@ -85,15 +86,15 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     ]);
 
     //generates a user source object from authUser from resolver
-    const user$ = this.route.data.map((data: { authUser: User }) => data.authUser);
+    const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
 
     //generates an property id source from id parameter in url
-    const id$ = this.route.paramMap.map((params: ParamMap) => params.get('id'));
+    const id$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('id')));
     
     //combine user$ and id$ sources into one object and start listen to it for changes
-    const newSubscription = user$.combineLatest(id$, (user, id) => { 
+    const newSubscription = user$.pipe(combineLatest(id$, (user, id) => { 
       return { user, propertyId : id } 
-    }).subscribe(data => {
+    })).subscribe(data => {
       this.user = data.user;
       this.model.email = data.user.email;
       this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit = 
@@ -121,7 +122,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.subscription.add(newSubscription);
 
     //get TYPE parameter
-    this.route.paramMap.map((params: ParamMap) => params.get('type')).subscribe(type => {
+    this.route.paramMap.pipe(map((params: ParamMap) => params.get('type'))).subscribe(type => {
       if (![PROPERTY_TYPES.HOUSE].includes(type)) {
         this.appService.showResults('You must provide a valid property type to continue.', 'error');
         this.router.navigate(['welcome']);

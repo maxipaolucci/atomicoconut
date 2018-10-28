@@ -343,6 +343,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_investments_currency_exchange_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/investments/currency-exchange.service */ "./src/app/modules/investments/currency-exchange.service.ts");
 /* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./util.service */ "./src/app/util.service.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -352,6 +353,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -376,13 +378,13 @@ var AppComponent = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
         //On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
-        this.usersService.user$.switchMap(function (user) {
+        this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["switchMap"])(function (user) {
             _this.user = user;
             if (_this.user && _this.user.currency && _this.user.currency !== 'USD') {
                 return _this.currencyExchangeService.getCurrencyRates();
             }
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_8__["of"])(null); //is the user had not configure a preferred currency then we don't need to show the currency toolbar
-        }).subscribe(function (currencyRates) {
+        })).subscribe(function (currencyRates) {
             if (currencyRates === null) {
                 _this.todayUserPrefRate = null;
                 return;
@@ -745,12 +747,13 @@ var AppService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthResolver", function() { return AuthResolver; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _modules_users_models_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/users/models/user */ "./src/app/modules/users/models/user.ts");
-/* harmony import */ var _modules_users_models_account_personal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/users/models/account-personal */ "./src/app/modules/users/models/account-personal.ts");
-/* harmony import */ var _modules_users_models_account_finance__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/users/models/account-finance */ "./src/app/modules/users/models/account-finance.ts");
-/* harmony import */ var _modules_users_users_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/users/users.service */ "./src/app/modules/users/users.service.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.service */ "./src/app/app.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _modules_users_models_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/users/models/user */ "./src/app/modules/users/models/user.ts");
+/* harmony import */ var _modules_users_models_account_personal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/users/models/account-personal */ "./src/app/modules/users/models/account-personal.ts");
+/* harmony import */ var _modules_users_models_account_finance__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/users/models/account-finance */ "./src/app/modules/users/models/account-finance.ts");
+/* harmony import */ var _modules_users_users_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/users/users.service */ "./src/app/modules/users/users.service.ts");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.service */ "./src/app/app.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -760,6 +763,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -782,17 +786,17 @@ var AuthResolver = /** @class */ (function () {
         if (urlsForCompleteUserData.includes(state.url)) {
             params = { personalInfo: true, financialInfo: true };
         }
-        return this.usersService.getAuthenticatedUser(params).map(function (data) {
+        return this.usersService.getAuthenticatedUser(params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) {
             if (data && data.email) {
                 var personalInfo = null;
                 if (data.personalInfo) {
-                    personalInfo = new _modules_users_models_account_personal__WEBPACK_IMPORTED_MODULE_3__["AccountPersonal"](data.personalInfo.birthday);
+                    personalInfo = new _modules_users_models_account_personal__WEBPACK_IMPORTED_MODULE_4__["AccountPersonal"](data.personalInfo.birthday);
                 }
                 var financialInfo = null;
                 if (data.financialInfo) {
-                    financialInfo = new _modules_users_models_account_finance__WEBPACK_IMPORTED_MODULE_4__["AccountFinance"](data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
+                    financialInfo = new _modules_users_models_account_finance__WEBPACK_IMPORTED_MODULE_5__["AccountFinance"](data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
                 }
-                var user = new _modules_users_models_user__WEBPACK_IMPORTED_MODULE_2__["User"](data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
+                var user = new _modules_users_models_user__WEBPACK_IMPORTED_MODULE_3__["User"](data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
                 _this.usersService.setUser(user);
                 _this.usersService.routerRedirectUrl = null;
                 return user;
@@ -808,11 +812,11 @@ var AuthResolver = /** @class */ (function () {
             _this.usersService.setUser(null);
             _this.router.navigate(['/users/login']);
             return null;
-        });
+        }));
     };
     AuthResolver = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_app_service__WEBPACK_IMPORTED_MODULE_6__["AppService"], _modules_users_users_service__WEBPACK_IMPORTED_MODULE_5__["UsersService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_app_service__WEBPACK_IMPORTED_MODULE_7__["AppService"], _modules_users_users_service__WEBPACK_IMPORTED_MODULE_6__["UsersService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
     ], AuthResolver);
     return AuthResolver;
 }());
@@ -833,8 +837,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _modules_users_users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/users/users.service */ "./src/app/modules/users/users.service.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.service */ "./src/app/app.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _modules_users_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/users/users.service */ "./src/app/modules/users/users.service.ts");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.service */ "./src/app/app.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -844,6 +849,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -858,7 +864,7 @@ var AuthGuard = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > canActivate() > "; //for debugging
         this.usersService.routerRedirectUrl = state.url;
-        return this.usersService.getAuthenticatedUser().map(function (data) {
+        return this.usersService.getAuthenticatedUser().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
             if (data && data.email) {
                 _this.usersService.routerRedirectUrl = null; //we don't need this
                 return true;
@@ -872,11 +878,11 @@ var AuthGuard = /** @class */ (function () {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
             _this.router.navigate(['/users/login']);
             return false;
-        });
+        }));
     };
     AuthGuard = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_app_service__WEBPACK_IMPORTED_MODULE_3__["AppService"], _modules_users_users_service__WEBPACK_IMPORTED_MODULE_2__["UsersService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"], _modules_users_users_service__WEBPACK_IMPORTED_MODULE_3__["UsersService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], AuthGuard);
     return AuthGuard;
 }());
@@ -928,9 +934,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_investments_currency_exchange_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../modules/investments/currency-exchange.service */ "./src/app/modules/investments/currency-exchange.service.ts");
 /* harmony import */ var _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../modules/investments/models/currencyInvestment */ "./src/app/modules/investments/models/currencyInvestment.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../constants */ "./src/app/constants.ts");
-/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../util.service */ "./src/app/util.service.ts");
-/* harmony import */ var _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../modules/investments/models/PropertyInvestment */ "./src/app/modules/investments/models/PropertyInvestment.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../constants */ "./src/app/constants.ts");
+/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../util.service */ "./src/app/util.service.ts");
+/* harmony import */ var _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../modules/investments/models/PropertyInvestment */ "./src/app/modules/investments/models/PropertyInvestment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -979,31 +986,31 @@ var WelcomeComponent = /** @class */ (function () {
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
         var currentUserInvestments = [];
-        var newSubscription = this.setUserAndGetInvestments().switchMap(function (userInvestments) {
+        var newSubscription = this.setUserAndGetInvestments().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["switchMap"])(function (userInvestments) {
             currentUserInvestments = userInvestments;
             var investmentsDates = userInvestments.map(function (investment) {
                 if (investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__["CurrencyInvestment"]) {
                     return _this.utilService.formatDate(investment.buyingDate);
                 }
-                else if (investment instanceof _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_13__["PropertyInvestment"]) {
+                else if (investment instanceof _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_14__["PropertyInvestment"]) {
                     return _this.utilService.formatDate(investment.buyingDate);
                 }
                 return _this.utilService.formatToday(); //this should never happen. BuyingDate is required in investments
             });
             return _this.currencyExchangeService.getCurrencyRates(investmentsDates);
-        }).subscribe(function (currencyRates) {
+        })).subscribe(function (currencyRates) {
             var _loop_1 = function (investment) {
                 var myPercentage = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
                 if (investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__["CurrencyInvestment"]) {
                     var currencyInvestment_1 = investment;
-                    if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_11__["INVESTMENTS_TYPES"].CURRENCY) {
+                    if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_12__["INVESTMENTS_TYPES"].CURRENCY) {
                         _this.wealthAmount += ((currencyInvestment_1.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment_1.unit] || 1))
                             - (currencyInvestment_1.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment_1.buyingDate)]["USD" + currencyInvestment_1.loanAmountUnit] || 1)))
                             * myPercentage / 100;
                         _this.calculateProgressBarWealthValue();
                     }
-                    else if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_11__["INVESTMENTS_TYPES"].CRYPTO) {
-                        _this.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).take(1).subscribe(function (rates) {
+                    else if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_12__["INVESTMENTS_TYPES"].CRYPTO) {
+                        _this.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["take"])(1)).subscribe(function (rates) {
                             _this.wealthAmount += ((currencyInvestment_1.amount * rates.price)
                                 - (currencyInvestment_1.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment_1.buyingDate)]["USD" + currencyInvestment_1.loanAmountUnit] || 1)))
                                 * myPercentage / 100;
@@ -1014,7 +1021,7 @@ var WelcomeComponent = /** @class */ (function () {
                         });
                     }
                 }
-                else if (investment instanceof _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_13__["PropertyInvestment"]) {
+                else if (investment instanceof _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_14__["PropertyInvestment"]) {
                     var propertyInvestment = investment;
                     _this.wealthAmount += (_this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit)
                         - (propertyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(propertyInvestment.buyingDate)]["USD" + propertyInvestment.loanAmountUnit] || 1)))
@@ -1047,7 +1054,7 @@ var WelcomeComponent = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > setUser() > "; //for debugging
         var gotAuthenticatedUserFromServer = false;
-        var user$ = this.usersService.user$.switchMap(function (user) {
+        var user$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["switchMap"])(function (user) {
             if (!user) {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["of"])(null);
             }
@@ -1058,8 +1065,8 @@ var WelcomeComponent = /** @class */ (function () {
             else {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["of"])(user);
             }
-        });
-        return user$.switchMap(function (user) {
+        }));
+        return user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["switchMap"])(function (user) {
             if (user && user.email) {
                 var personalInfo = null;
                 if (user.personalInfo) {
@@ -1092,7 +1099,7 @@ var WelcomeComponent = /** @class */ (function () {
                 _this.user = null;
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["of"])([]);
             }
-        });
+        }));
     };
     WelcomeComponent.prototype.calculateProgressBarWealthValue = function () {
         if (!this.expectedWealth) {
@@ -1109,7 +1116,7 @@ var WelcomeComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./welcome.component.scss */ "./src/app/components/welcome/welcome.component.scss")]
         }),
         __metadata("design:paramtypes", [_modules_shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_1__["MainNavigatorService"], _modules_users_users_service__WEBPACK_IMPORTED_MODULE_2__["UsersService"], _app_service__WEBPACK_IMPORTED_MODULE_3__["AppService"],
-            _modules_investments_investments_service__WEBPACK_IMPORTED_MODULE_7__["InvestmentsService"], _modules_investments_currency_exchange_service__WEBPACK_IMPORTED_MODULE_8__["CurrencyExchangeService"], _util_service__WEBPACK_IMPORTED_MODULE_12__["UtilService"]])
+            _modules_investments_investments_service__WEBPACK_IMPORTED_MODULE_7__["InvestmentsService"], _modules_investments_currency_exchange_service__WEBPACK_IMPORTED_MODULE_8__["CurrencyExchangeService"], _util_service__WEBPACK_IMPORTED_MODULE_13__["UtilService"]])
     ], WelcomeComponent);
     return WelcomeComponent;
 }());
@@ -1930,8 +1937,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _currency_exchange_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../currency-exchange.service */ "./src/app/modules/investments/currency-exchange.service.ts");
 /* harmony import */ var _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../models/currencyInvestment */ "./src/app/modules/investments/models/currencyInvestment.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../constants */ "./src/app/constants.ts");
-/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../util.service */ "./src/app/util.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../constants */ "./src/app/constants.ts");
+/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../../util.service */ "./src/app/util.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1994,20 +2002,20 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         //get the team of the investmetn if exists
         var newSubscription = null;
         var currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
-        var currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, function (user, currencyRates) {
+        var currencyRatesAndUser$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(currencyRates$, function (user, currencyRates) {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
-        }); //(currency rates and user) source
-        if (this.investment.type === _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CRYPTO) {
+        })); //(currency rates and user) source
+        if (this.investment.type === _constants__WEBPACK_IMPORTED_MODULE_11__["INVESTMENTS_TYPES"].CRYPTO) {
             //crypto investment
             var cryptoRates$ = this.currencyExchangeService.getCryptoRates(this.investment.unit); //get crypto rates observable source
-            newSubscription = cryptoRates$.combineLatest(currencyRatesAndUser$, function (cryptoRates, currencyRatesAndUser) {
+            newSubscription = cryptoRates$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(currencyRatesAndUser$, function (cryptoRates, currencyRatesAndUser) {
                 return {
                     currencyRates: currencyRatesAndUser.currencyRates,
                     user: currencyRatesAndUser.user,
                     cryptoRates: cryptoRates
                 };
-            }).switchMap(function (data) {
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (data) {
                 _this.currentPrice = data.cryptoRates.price;
                 //the investment amount was paid on the date of the investment so we need to convert using that day rates
                 _this.investmentAmount = _this.investment.investmentAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.investmentAmountUnit] || 1);
@@ -2018,7 +2026,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
                 _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
                 _this.investmentReturn = _this.currentPrice * _this.investment.amount - _this.loanAmount;
                 return _this.teams$;
-            }).subscribe(function (teams) {
+            })).subscribe(function (teams) {
                 _this.setInvestmentTeamData(teams);
             }, function (error) {
                 _this.appService.consoleLog('error', methodTrace + " There was an error trying to generate investment data > ", error);
@@ -2027,7 +2035,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         }
         else {
             //currency exchange
-            newSubscription = currencyRatesAndUser$.switchMap(function (data) {
+            newSubscription = currencyRatesAndUser$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (data) {
                 _this.currentPrice = 1 / (data.currencyRates[_this.utilService.formatToday()]["USD" + _this.investment.unit] || 1);
                 //the investment amount was paid on the date of the investment so we need to convert using that day rates
                 _this.investmentAmount = _this.investment.investmentAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.investmentAmountUnit] || 1);
@@ -2038,7 +2046,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
                 _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
                 _this.investmentReturn = _this.currentPrice * _this.investment.amount - _this.loanAmount;
                 return _this.teams$;
-            }).subscribe(function (teams) {
+            })).subscribe(function (teams) {
                 _this.setInvestmentTeamData(teams);
             }, function (error) {
                 _this.appService.consoleLog('error', methodTrace + " There was an error trying to generate investment data > ", error);
@@ -2170,7 +2178,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./currency-investment.component.scss */ "./src/app/modules/investments/components/currency-investment/currency-investment.component.scss")]
         }),
         __metadata("design:paramtypes", [_currency_exchange_service__WEBPACK_IMPORTED_MODULE_7__["CurrencyExchangeService"], _app_service__WEBPACK_IMPORTED_MODULE_3__["AppService"], _users_users_service__WEBPACK_IMPORTED_MODULE_5__["UsersService"], _investments_service__WEBPACK_IMPORTED_MODULE_4__["InvestmentsService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialog"], _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"], _util_service__WEBPACK_IMPORTED_MODULE_11__["UtilService"]])
+            _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialog"], _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"], _util_service__WEBPACK_IMPORTED_MODULE_12__["UtilService"]])
     ], CurrencyInvestmentComponent);
     return CurrencyInvestmentComponent;
 }());
@@ -2300,11 +2308,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _investments_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../investments.service */ "./src/app/modules/investments/investments.service.ts");
 /* harmony import */ var _teams_teams_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../teams/teams.service */ "./src/app/modules/teams/teams.service.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _currency_exchange_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../currency-exchange.service */ "./src/app/modules/investments/currency-exchange.service.ts");
-/* harmony import */ var _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../models/currencyInvestment */ "./src/app/modules/investments/models/currencyInvestment.ts");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../../constants */ "./src/app/constants.ts");
-/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../../util.service */ "./src/app/util.service.ts");
-/* harmony import */ var _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../models/PropertyInvestment */ "./src/app/modules/investments/models/PropertyInvestment.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _currency_exchange_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../currency-exchange.service */ "./src/app/modules/investments/currency-exchange.service.ts");
+/* harmony import */ var _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../models/currencyInvestment */ "./src/app/modules/investments/models/currencyInvestment.ts");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../../constants */ "./src/app/constants.ts");
+/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../../util.service */ "./src/app/util.service.ts");
+/* harmony import */ var _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../models/PropertyInvestment */ "./src/app/modules/investments/models/PropertyInvestment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2314,6 +2323,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -2352,7 +2362,7 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_9__["Subscription"]();
         this.getInvestmentsServiceRunning = false;
         this.getTeamsServiceRunning = false;
-        this.INVESTMENTS_TYPES = _constants__WEBPACK_IMPORTED_MODULE_12__["INVESTMENTS_TYPES"]; //make it available in the view
+        this.INVESTMENTS_TYPES = _constants__WEBPACK_IMPORTED_MODULE_13__["INVESTMENTS_TYPES"]; //make it available in the view
     }
     InvestmentsDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -2363,10 +2373,10 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
             { displayName: 'Properties', url: '/properties', selected: false }
         ]);
         //get authUser from resolver
-        var user$ = this.route.data.map(function (data) {
+        var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (data) {
             _this.user = data.authUser;
             return data.authUser;
-        });
+        }));
         if (!this.investments.length) {
             this.getInvestments(user$);
         }
@@ -2385,9 +2395,9 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
         this.teams = [];
         this.getTeamsServiceRunning = true;
-        var newSubscription = user$.switchMap(function (user) {
+        var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (user) {
             return _this.teamsService.getTeams(user.email);
-        }).subscribe(function (teams) {
+        })).subscribe(function (teams) {
             _this.teams = teams;
             _this.getTeamsServiceRunning = false;
         }, function (error) {
@@ -2410,9 +2420,9 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getInvestments() > "; //for debugging
         this.investments = [];
         this.getInvestmentsServiceRunning = true;
-        var newSubscription = user$.switchMap(function (user) {
+        var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (user) {
             return _this.investmentsService.getInvestments(user.email);
-        }).subscribe(function (investments) {
+        })).subscribe(function (investments) {
             //organize investments in rows of n-items to show in the view
             var investmentsRow = [];
             var investmentsDates = [];
@@ -2425,10 +2435,10 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                     _this.investmentsUI.push(investmentsRow);
                     investmentsRow = [item];
                 }
-                if (item instanceof _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_11__["CurrencyInvestment"]) {
+                if (item instanceof _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_12__["CurrencyInvestment"]) {
                     investmentsDates.push(_this.utilService.formatDate(item.buyingDate, 'YYYY-MM-DD'));
                 }
-                else if (item instanceof _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_14__["PropertyInvestment"]) {
+                else if (item instanceof _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_15__["PropertyInvestment"]) {
                     investmentsDates.push(_this.utilService.formatDate(item.buyingDate, 'YYYY-MM-DD'));
                 }
             }
@@ -2534,8 +2544,8 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./investments-dashboard.component.scss */ "./src/app/modules/investments/components/investments-dashboard/investments-dashboard.component.scss")]
         }),
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_3__["MainNavigatorService"], _users_users_service__WEBPACK_IMPORTED_MODULE_4__["UsersService"], _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatDialog"],
-            _app_service__WEBPACK_IMPORTED_MODULE_6__["AppService"], _teams_teams_service__WEBPACK_IMPORTED_MODULE_8__["TeamsService"], _investments_service__WEBPACK_IMPORTED_MODULE_7__["InvestmentsService"], _currency_exchange_service__WEBPACK_IMPORTED_MODULE_10__["CurrencyExchangeService"],
-            _util_service__WEBPACK_IMPORTED_MODULE_13__["UtilService"]])
+            _app_service__WEBPACK_IMPORTED_MODULE_6__["AppService"], _teams_teams_service__WEBPACK_IMPORTED_MODULE_8__["TeamsService"], _investments_service__WEBPACK_IMPORTED_MODULE_7__["InvestmentsService"], _currency_exchange_service__WEBPACK_IMPORTED_MODULE_11__["CurrencyExchangeService"],
+            _util_service__WEBPACK_IMPORTED_MODULE_14__["UtilService"]])
     ], InvestmentsDashboardComponent);
     return InvestmentsDashboardComponent;
 }());
@@ -2583,10 +2593,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _teams_teams_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../teams/teams.service */ "./src/app/modules/teams/teams.service.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _investments_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../investments.service */ "./src/app/modules/investments/investments.service.ts");
-/* harmony import */ var _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../models/currencyInvestment */ "./src/app/modules/investments/models/currencyInvestment.ts");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../constants */ "./src/app/constants.ts");
-/* harmony import */ var _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../models/PropertyInvestment */ "./src/app/modules/investments/models/PropertyInvestment.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _investments_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../investments.service */ "./src/app/modules/investments/investments.service.ts");
+/* harmony import */ var _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../models/currencyInvestment */ "./src/app/modules/investments/models/currencyInvestment.ts");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../constants */ "./src/app/constants.ts");
+/* harmony import */ var _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../models/PropertyInvestment */ "./src/app/modules/investments/models/PropertyInvestment.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2596,6 +2607,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -2643,7 +2655,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
         this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subscription"]();
         this.formChangesSubscription = null;
         this.investmentDataValid = false; //this value is set when investment data form is updated
-        this.INVESTMENT_TYPES = _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"];
+        this.INVESTMENT_TYPES = _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"];
     }
     InvestmentsEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -2652,15 +2664,15 @@ var InvestmentsEditComponent = /** @class */ (function () {
             { displayName: 'Investments', url: '/investments', selected: false }
         ]);
         //generates a user source object from authUser from resolver
-        var user$ = this.route.data.map(function (data) { return data.authUser; });
+        var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (data) { return data.authUser; }));
         //generates an investment id source from id parameter in url
-        var id$ = this.route.paramMap.map(function (params) { return params.get('id'); });
+        var id$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (params) { return params.get('id'); }));
         //combine user$ and id$ sources into one object and start listen to it for changes
-        this.subscription = user$.combineLatest(id$, function (user, id) {
+        this.subscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["combineLatest"])(id$, function (user, id) {
             var urlObject = _this.route.url.getValue();
             var investmentId = null;
             var propertyId = null;
-            if (urlObject[0]['path'] === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].PROPERTY && urlObject[1]['path'] === 'create') {
+            if (urlObject[0]['path'] === _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].PROPERTY && urlObject[1]['path'] === 'create') {
                 //we are creating a property investment coming from the property component
                 propertyId = id;
             }
@@ -2669,7 +2681,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
                 investmentId = id;
             }
             return { user: user, investmentId: investmentId, propertyId: propertyId };
-        }).subscribe(function (data) {
+        })).subscribe(function (data) {
             _this.user = data.user;
             _this.model.email = data.user.email;
             _this.model.investmentAmountUnit = _this.user.currency;
@@ -2697,8 +2709,8 @@ var InvestmentsEditComponent = /** @class */ (function () {
             }
         });
         //get TYPE parameter
-        this.route.paramMap.map(function (params) { return params.get('type'); }).subscribe(function (type) {
-            if (![_constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CURRENCY, _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CRYPTO, _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].PROPERTY].includes(type)) {
+        this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (params) { return params.get('type'); })).subscribe(function (type) {
+            if (![_constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CURRENCY, _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CRYPTO, _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].PROPERTY].includes(type)) {
                 _this.appService.showResults('You must provide a valid investment type to continue.', 'error');
                 _this.router.navigate(['welcome']);
             }
@@ -2888,7 +2900,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
             _this.model.investmentAmount = investment.investmentAmount;
             _this.model.investmentAmountUnit = investment.investmentAmountUnit;
             _this.model.type = investment.type;
-            if (investment instanceof _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_8__["CurrencyInvestment"]) {
+            if (investment instanceof _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__["CurrencyInvestment"]) {
                 _this.model.investmentData = {
                     type: investment.type,
                     unit: investment.unit,
@@ -2898,7 +2910,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
                     buyingDate: investment.buyingDate
                 };
             }
-            else if (investment instanceof _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_10__["PropertyInvestment"]) {
+            else if (investment instanceof _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
                 _this.model.investmentData = {
                     type: investment.type,
                     property: investment.property,
@@ -2968,7 +2980,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./investments-edit.component.html */ "./src/app/modules/investments/components/investments-edit/investments-edit.component.html"),
             styles: [__webpack_require__(/*! ./investments-edit.component.scss */ "./src/app/modules/investments/components/investments-edit/investments-edit.component.scss")]
         }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_2__["MainNavigatorService"], _investments_service__WEBPACK_IMPORTED_MODULE_7__["InvestmentsService"],
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_2__["MainNavigatorService"], _investments_service__WEBPACK_IMPORTED_MODULE_8__["InvestmentsService"],
             _teams_teams_service__WEBPACK_IMPORTED_MODULE_4__["TeamsService"], _app_service__WEBPACK_IMPORTED_MODULE_5__["AppService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], InvestmentsEditComponent);
     return InvestmentsEditComponent;
@@ -3252,15 +3264,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/PropertyInvestment */ "./src/app/modules/investments/models/PropertyInvestment.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _currency_exchange_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../currency-exchange.service */ "./src/app/modules/investments/currency-exchange.service.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
-/* harmony import */ var _users_users_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../users/users.service */ "./src/app/modules/users/users.service.ts");
-/* harmony import */ var _investments_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../investments.service */ "./src/app/modules/investments/investments.service.ts");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _shared_components_yes_no_dialog_yes_no_dialog_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../shared/components/yes-no-dialog/yes-no-dialog.component */ "./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
-/* harmony import */ var _properties_models_house__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../properties/models/house */ "./src/app/modules/properties/models/house.ts");
-/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../util.service */ "./src/app/util.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _currency_exchange_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../currency-exchange.service */ "./src/app/modules/investments/currency-exchange.service.ts");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var _users_users_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../users/users.service */ "./src/app/modules/users/users.service.ts");
+/* harmony import */ var _investments_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../investments.service */ "./src/app/modules/investments/investments.service.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _shared_components_yes_no_dialog_yes_no_dialog_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../shared/components/yes-no-dialog/yes-no-dialog.component */ "./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
+/* harmony import */ var _properties_models_house__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../properties/models/house */ "./src/app/modules/properties/models/house.ts");
+/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../../util.service */ "./src/app/util.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3270,6 +3283,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -3320,17 +3334,17 @@ var PropertyInvestmentComponent = /** @class */ (function () {
     PropertyInvestmentComponent.prototype.ngOnInit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
-        if (this.investment.property instanceof _properties_models_house__WEBPACK_IMPORTED_MODULE_10__["House"]) {
+        if (this.investment.property instanceof _properties_models_house__WEBPACK_IMPORTED_MODULE_11__["House"]) {
             this.investmentTitle = this.utilService.capitalizeFirstLetter(this.investment.property.buildingType);
         }
         //get the team of the investmetn if exists
         var newSubscription = null;
         var currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
-        var currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, function (user, currencyRates) {
+        var currencyRatesAndUser$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["combineLatest"])(currencyRates$, function (user, currencyRates) {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
-        }); //(currency rates and user) source
-        newSubscription = currencyRatesAndUser$.switchMap(function (data) {
+        })); //(currency rates and user) source
+        newSubscription = currencyRatesAndUser$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (data) {
             //market value should be always up to date so no rate conversion is required
             _this.currentPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.property.marketValue, _this.investment.property.marketValueUnit);
             //the investment amount was paid on the date of the investment so we need to convert using that day rates
@@ -3341,7 +3355,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
             _this.buyingPrice = _this.investment.buyingPrice / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.buyingPriceUnit] || 1);
             _this.investmentReturn = _this.currentPrice - _this.loanAmount;
             return _this.teams$;
-        }).subscribe(function (teams) {
+        })).subscribe(function (teams) {
             _this.setInvestmentTeamData(teams);
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error trying to generate investment data > ", error);
@@ -3400,7 +3414,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
             return false;
         }
         this.actionRunning = true;
-        var yesNoDialogRef = this.dialog.open(_shared_components_yes_no_dialog_yes_no_dialog_component__WEBPACK_IMPORTED_MODULE_9__["YesNoDialogComponent"], {
+        var yesNoDialogRef = this.dialog.open(_shared_components_yes_no_dialog_yes_no_dialog_component__WEBPACK_IMPORTED_MODULE_10__["YesNoDialogComponent"], {
             width: '250px',
             data: {
                 title: 'Delete investment',
@@ -3471,8 +3485,8 @@ var PropertyInvestmentComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./property-investment.component.html */ "./src/app/modules/investments/components/property-investment/property-investment.component.html"),
             styles: [__webpack_require__(/*! ./property-investment.component.scss */ "./src/app/modules/investments/components/property-investment/property-investment.component.scss")]
         }),
-        __metadata("design:paramtypes", [_currency_exchange_service__WEBPACK_IMPORTED_MODULE_3__["CurrencyExchangeService"], _app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"], _users_users_service__WEBPACK_IMPORTED_MODULE_5__["UsersService"], _investments_service__WEBPACK_IMPORTED_MODULE_6__["InvestmentsService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatDialog"], _angular_router__WEBPACK_IMPORTED_MODULE_8__["Router"], _util_service__WEBPACK_IMPORTED_MODULE_11__["UtilService"]])
+        __metadata("design:paramtypes", [_currency_exchange_service__WEBPACK_IMPORTED_MODULE_4__["CurrencyExchangeService"], _app_service__WEBPACK_IMPORTED_MODULE_5__["AppService"], _users_users_service__WEBPACK_IMPORTED_MODULE_6__["UsersService"], _investments_service__WEBPACK_IMPORTED_MODULE_7__["InvestmentsService"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_8__["MatDialog"], _angular_router__WEBPACK_IMPORTED_MODULE_9__["Router"], _util_service__WEBPACK_IMPORTED_MODULE_12__["UtilService"]])
     ], PropertyInvestmentComponent);
     return PropertyInvestmentComponent;
 }());
@@ -3492,11 +3506,12 @@ var PropertyInvestmentComponent = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CurrencyExchangeService", function() { return CurrencyExchangeService; });
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../app.service */ "./src/app/app.service.ts");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../util.service */ "./src/app/util.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../util.service */ "./src/app/util.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3512,6 +3527,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var CurrencyExchangeService = /** @class */ (function () {
     function CurrencyExchangeService(http, appService, utilService) {
         this.http = http;
@@ -3521,7 +3537,7 @@ var CurrencyExchangeService = /** @class */ (function () {
         this.cryptoRates = {};
         this.currencyExchangeServiceUrl = 'https://api.fixer.io/latest';
         this.currencyRates = {};
-        this.serverHost = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiHost + '/api/currencyRates';
+        this.serverHost = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].apiHost + '/api/currencyRates';
         this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpHeaders"]().set('Content-Type', 'application/json');
     }
     CurrencyExchangeService.prototype.getCurrencyRates = function (dates, base) {
@@ -3541,35 +3557,32 @@ var CurrencyExchangeService = /** @class */ (function () {
         }
         if (found) {
             //all dates cached then return this object
-            return rxjs__WEBPACK_IMPORTED_MODULE_3__["Observable"].of(this.currencyRates);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.currencyRates);
         }
         //if here then we need to retrieve some dates from the server
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpParams"]().set('dates', "" + dates);
         return this.http.get(this.serverHost + "/getByDates/" + base, { params: params })
-            .map(function (res) {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (res) {
             var data = _this.appService.extractData(res);
             if (data) {
                 //merge results
                 Object.assign(_this.currencyRates, data);
             }
             return _this.currencyRates;
-        })
-            .catch(this.appService.handleError)
-            .retry(3);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.appService.handleError), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["retry"])(3));
     };
     CurrencyExchangeService.prototype.getCryptoRates = function (crypto) {
         var _this = this;
         if (crypto === void 0) { crypto = 'BTC'; }
         var methodTrace = this.constructor.name + " > getCryptoRates() > "; //for debugging
         if (this.cryptoRates[crypto.toUpperCase()]) {
-            return rxjs__WEBPACK_IMPORTED_MODULE_3__["Observable"].of(this.cryptoRates[crypto.toUpperCase()]);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.cryptoRates[crypto.toUpperCase()]);
         }
-        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase())
-            .map(function (res) {
+        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase());
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["pipe"])(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (res) {
             _this.cryptoRates[crypto.toUpperCase()] = _this.extractCryptoExchangeData(crypto, res);
             return _this.cryptoRates[crypto.toUpperCase()];
-        })
-            .catch(this.appService.handleError);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.appService.handleError));
     };
     CurrencyExchangeService.prototype.extractCryptoExchangeData = function (crypto, res) {
         if (res['id'] === crypto.toUpperCase()) {
@@ -3597,8 +3610,8 @@ var CurrencyExchangeService = /** @class */ (function () {
         return amount;
     };
     CurrencyExchangeService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"], _app_service__WEBPACK_IMPORTED_MODULE_1__["AppService"], _util_service__WEBPACK_IMPORTED_MODULE_5__["UtilService"]])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"], _app_service__WEBPACK_IMPORTED_MODULE_2__["AppService"], _util_service__WEBPACK_IMPORTED_MODULE_6__["UtilService"]])
     ], CurrencyExchangeService);
     return CurrencyExchangeService;
 }());
@@ -3785,9 +3798,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./models/currencyInvestment */ "./src/app/modules/investments/models/currencyInvestment.ts");
 /* harmony import */ var _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./models/PropertyInvestment */ "./src/app/modules/investments/models/PropertyInvestment.ts");
 /* harmony import */ var _teams_models_team__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../teams/models/team */ "./src/app/modules/teams/models/team.ts");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../constants */ "./src/app/constants.ts");
-/* harmony import */ var _properties_models_house__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../properties/models/house */ "./src/app/modules/properties/models/house.ts");
-/* harmony import */ var _properties_models_address__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../properties/models/address */ "./src/app/modules/properties/models/address.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../constants */ "./src/app/constants.ts");
+/* harmony import */ var _properties_models_house__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../properties/models/house */ "./src/app/modules/properties/models/house.ts");
+/* harmony import */ var _properties_models_address__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../properties/models/address */ "./src/app/modules/properties/models/address.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3797,6 +3811,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -3825,8 +3840,7 @@ var InvestmentsService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > create() > "; //for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Update an investment in the system
@@ -3836,8 +3850,7 @@ var InvestmentsService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > update() > "; //for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Get an investment from the server based on its ID
@@ -3854,9 +3867,8 @@ var InvestmentsService = /** @class */ (function () {
             .set('id', id)
             .set('email', email);
         var investment$ = this.http.get(this.serverHost + "/getbyId", { params: params })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
-        return investment$.switchMap(function (investment) {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
+        return investment$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["switchMap"])(function (investment) {
             var result = null;
             if (investment && investment._id) {
                 var createdBy = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](investment.createdBy.name, investment.createdBy.email, investment.createdBy.gravatar);
@@ -3875,19 +3887,19 @@ var InvestmentsService = /** @class */ (function () {
                     }
                     team = new _teams_models_team__WEBPACK_IMPORTED_MODULE_8__["Team"](investment.team.name, investment.team.description, investment.team.slug, admin, members);
                 }
-                if (investment.investmentType === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CURRENCY || investment.investmentType === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CRYPTO) {
+                if (investment.investmentType === _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CURRENCY || investment.investmentType === _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CRYPTO) {
                     result = new _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"](investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, investment.investmentData.amountUnit, investment.investmentData.amount, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
                 }
-                else if (investment.investmentType === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].PROPERTY) {
+                else if (investment.investmentType === _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].PROPERTY) {
                     var property = null;
                     var propertyData = investment.investmentData.property;
-                    var address = new _properties_models_address__WEBPACK_IMPORTED_MODULE_11__["Address"]();
+                    var address = new _properties_models_address__WEBPACK_IMPORTED_MODULE_12__["Address"]();
                     if (propertyData.location) {
-                        address = new _properties_models_address__WEBPACK_IMPORTED_MODULE_11__["Address"](propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
+                        address = new _properties_models_address__WEBPACK_IMPORTED_MODULE_12__["Address"](propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
                     }
-                    if (propertyData.propertyType === _constants__WEBPACK_IMPORTED_MODULE_9__["PROPERTY_TYPES"].HOUSE) {
+                    if (propertyData.propertyType === _constants__WEBPACK_IMPORTED_MODULE_10__["PROPERTY_TYPES"].HOUSE) {
                         //we share the createdBy of the investment because we know is the same
-                        property = new _properties_models_house__WEBPACK_IMPORTED_MODULE_10__["House"](propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
+                        property = new _properties_models_house__WEBPACK_IMPORTED_MODULE_11__["House"](propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
                     }
                     result = new _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_7__["PropertyInvestment"](investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, property, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
                 }
@@ -3895,8 +3907,8 @@ var InvestmentsService = /** @class */ (function () {
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"].of(result);
-        });
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(result);
+        }));
     };
     /**
      * Server call to Get all the Investments for the current user from the server
@@ -3907,32 +3919,31 @@ var InvestmentsService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getInvestments() > "; //for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"].from([]);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["from"])([]);
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('email', email);
         var investmentsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
-        return investmentsData$.switchMap(function (investmentsData) {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
+        return investmentsData$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["switchMap"])(function (investmentsData) {
             var investments = [];
             if (investmentsData && investmentsData instanceof Array) {
                 for (var _i = 0, investmentsData_1 = investmentsData; _i < investmentsData_1.length; _i++) {
                     var item = investmentsData_1[_i];
                     var createdBy = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
                     var team = item.team ? new _teams_models_team__WEBPACK_IMPORTED_MODULE_8__["Team"](item.team.name, item.team.description, item.team.slug) : null;
-                    if (item.investmentType === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CURRENCY || item.investmentType === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CRYPTO) {
+                    if (item.investmentType === _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CURRENCY || item.investmentType === _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CRYPTO) {
                         investments.push(new _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"](item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.investmentData.amountUnit, item.investmentData.amount, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType, item.loanAmount, item.loanAmountUnit));
                     }
-                    else if (item.investmentType === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].PROPERTY) {
+                    else if (item.investmentType === _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].PROPERTY) {
                         var property = null;
                         var propertyData = item.investmentData.property;
-                        var address = new _properties_models_address__WEBPACK_IMPORTED_MODULE_11__["Address"]();
+                        var address = new _properties_models_address__WEBPACK_IMPORTED_MODULE_12__["Address"]();
                         if (propertyData.location) {
-                            address = new _properties_models_address__WEBPACK_IMPORTED_MODULE_11__["Address"](propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
+                            address = new _properties_models_address__WEBPACK_IMPORTED_MODULE_12__["Address"](propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
                         }
-                        if (propertyData.propertyType === _constants__WEBPACK_IMPORTED_MODULE_9__["PROPERTY_TYPES"].HOUSE) {
+                        if (propertyData.propertyType === _constants__WEBPACK_IMPORTED_MODULE_10__["PROPERTY_TYPES"].HOUSE) {
                             //we share the createdBy of the investment because we know is the same
-                            property = new _properties_models_house__WEBPACK_IMPORTED_MODULE_10__["House"](propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
+                            property = new _properties_models_house__WEBPACK_IMPORTED_MODULE_11__["House"](propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
                         }
                         investments.push(new _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_7__["PropertyInvestment"](item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, property, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType, item.loanAmount, item.loanAmountUnit));
                     }
@@ -3941,8 +3952,8 @@ var InvestmentsService = /** @class */ (function () {
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"].of(investments);
-        });
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(investments);
+        }));
     };
     /**
      * Server call to delete an investment from the server
@@ -3957,8 +3968,7 @@ var InvestmentsService = /** @class */ (function () {
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('email', email);
         return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, params: params })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     InvestmentsService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -4461,6 +4471,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../util.service */ "./src/app/util.service.ts");
 /* harmony import */ var _house_figures_dialog_house_figures_dialog_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../house-figures-dialog/house-figures-dialog.component */ "./src/app/modules/properties/components/house-figures-dialog/house-figures-dialog.component.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4470,6 +4481,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -4548,13 +4560,13 @@ var PropertiesEditComponent = /** @class */ (function () {
             { displayName: 'Properties', url: '/properties', selected: false }
         ]);
         //generates a user source object from authUser from resolver
-        var user$ = this.route.data.map(function (data) { return data.authUser; });
+        var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["map"])(function (data) { return data.authUser; }));
         //generates an property id source from id parameter in url
-        var id$ = this.route.paramMap.map(function (params) { return params.get('id'); });
+        var id$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["map"])(function (params) { return params.get('id'); }));
         //combine user$ and id$ sources into one object and start listen to it for changes
-        var newSubscription = user$.combineLatest(id$, function (user, id) {
+        var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["combineLatest"])(id$, function (user, id) {
             return { user: user, propertyId: id };
-        }).subscribe(function (data) {
+        })).subscribe(function (data) {
             _this.user = data.user;
             _this.model.email = data.user.email;
             _this.model.askingPriceUnit = _this.model.offerPriceUnit = _this.model.walkAwayPriceUnit =
@@ -4579,7 +4591,7 @@ var PropertiesEditComponent = /** @class */ (function () {
         });
         this.subscription.add(newSubscription);
         //get TYPE parameter
-        this.route.paramMap.map(function (params) { return params.get('type'); }).subscribe(function (type) {
+        this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["map"])(function (params) { return params.get('type'); })).subscribe(function (type) {
             if (![_constants__WEBPACK_IMPORTED_MODULE_6__["PROPERTY_TYPES"].HOUSE].includes(type)) {
                 _this.appService.showResults('You must provide a valid property type to continue.', 'error');
                 _this.router.navigate(['welcome']);
@@ -5521,6 +5533,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../constants */ "./src/app/constants.ts");
 /* harmony import */ var _models_house__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./models/house */ "./src/app/modules/properties/models/house.ts");
 /* harmony import */ var _models_address__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./models/address */ "./src/app/modules/properties/models/address.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5530,6 +5543,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -5555,8 +5569,7 @@ var PropertiesService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > create() > "; //for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Update an investment in the system
@@ -5566,8 +5579,7 @@ var PropertiesService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > update() > "; //for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Get a property from the server based on its ID
@@ -5582,9 +5594,8 @@ var PropertiesService = /** @class */ (function () {
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('email', email);
         var data$ = this.http.get(this.serverHost + "/" + id, { params: params })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
-        return data$.switchMap(function (data) {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
+        return data$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["switchMap"])(function (data) {
             var result = null;
             if (data && data._id) {
                 var createdBy = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
@@ -5599,8 +5610,8 @@ var PropertiesService = /** @class */ (function () {
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return rxjs__WEBPACK_IMPORTED_MODULE_4__["Observable"].of(result);
-        });
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(result);
+        }));
     };
     /**
      * Server call to Get all the properties for the current user from the server.
@@ -5615,13 +5626,12 @@ var PropertiesService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return rxjs__WEBPACK_IMPORTED_MODULE_4__["Observable"].from([]);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["from"])([]);
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('email', email).set('justUserProperties', justUserProperties + '');
         var responseData$ = this.http.get(this.serverHost + "/getAll", { params: params })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
-        return responseData$.switchMap(function (responseData) {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
+        return responseData$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["switchMap"])(function (responseData) {
             var properties = [];
             if (responseData && responseData instanceof Array) {
                 for (var _i = 0, responseData_1 = responseData; _i < responseData_1.length; _i++) {
@@ -5639,8 +5649,8 @@ var PropertiesService = /** @class */ (function () {
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return rxjs__WEBPACK_IMPORTED_MODULE_4__["Observable"].of(properties);
-        });
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(properties);
+        }));
     };
     /**
      * Server call to delete a property from the system
@@ -5655,8 +5665,7 @@ var PropertiesService = /** @class */ (function () {
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('email', email);
         return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, params: params })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     PropertiesService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -7076,6 +7085,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
 /* harmony import */ var _models_team__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../models/team */ "./src/app/modules/teams/models/team.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7085,6 +7095,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -7125,13 +7136,13 @@ var TeamsEditComponent = /** @class */ (function () {
             { displayName: 'Teams', url: '/teams', selected: false }
         ]);
         //generates a user source object from authUser from resolver
-        var user$ = this.route.data.map(function (data) { return data.authUser; });
+        var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (data) { return data.authUser; }));
         //generates an investment id source from id parameter in url
-        var slug$ = this.route.paramMap.map(function (params) { return params.get('slug'); });
+        var slug$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (params) { return params.get('slug'); }));
         //combine user$ and id$ sources into one object and start listen to it for changes
-        this.subscription = user$.combineLatest(slug$, function (user, slug) {
+        this.subscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(slug$, function (user, slug) {
             return { user: user, teamSlug: slug };
-        }).subscribe(function (data) {
+        })).subscribe(function (data) {
             _this.user = data.user;
             _this.model.email = data.user.email;
             _this.editTeamServiceRunning = false;
@@ -7522,6 +7533,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_team__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./models/team */ "./src/app/modules/teams/models/team.ts");
 /* harmony import */ var _users_models_user__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../users/models/user */ "./src/app/modules/users/models/user.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7531,6 +7543,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -7555,8 +7568,7 @@ var TeamsService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > register() > "; //for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Update a team in the system
@@ -7566,8 +7578,7 @@ var TeamsService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > register() > "; //for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Get a team from the server based on its slug
@@ -7583,8 +7594,7 @@ var TeamsService = /** @class */ (function () {
             .set('email', email)
             .set('slug', slug);
         return this.http.get(this.serverHost + "/getMyTeamBySlug", { params: params })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Get all the teams for the current user from the server
@@ -7599,9 +7609,8 @@ var TeamsService = /** @class */ (function () {
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('email', email);
         var teamsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
-        return teamsData$.switchMap(function (teamsData) {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
+        return teamsData$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (teamsData) {
             var teams = [];
             if (teamsData && teamsData instanceof Array) {
                 for (var _i = 0, teamsData_1 = teamsData; _i < teamsData_1.length; _i++) {
@@ -7623,7 +7632,7 @@ var TeamsService = /** @class */ (function () {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(teams);
-        });
+        }));
     };
     /**
      * Server call to Get all the teams for the current user from the server
@@ -7638,8 +7647,7 @@ var TeamsService = /** @class */ (function () {
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('email', email);
         return this.http.delete(this.serverHost + "/delete/" + slug, { headers: this.headers, params: params })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
     };
     TeamsService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -8140,10 +8148,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginComponent", function() { return LoginComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
-/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/user */ "./src/app/modules/users/models/user.ts");
-/* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/user */ "./src/app/modules/users/models/user.ts");
+/* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8153,6 +8162,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -8179,7 +8189,7 @@ var LoginComponent = /** @class */ (function () {
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Login', url: null, selected: true }
         ]);
-        this.route.paramMap.map(function (params) { return params.get('state'); })
+        this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (params) { return params.get('state'); }))
             .subscribe(function (state) {
             if (state === 'reset-password-token-expired') {
                 _this.appService.showResults('Reset password token has expired or is invalid. Click on "Forgot my password" again to create a new one.', 'error', 10000);
@@ -8197,7 +8207,7 @@ var LoginComponent = /** @class */ (function () {
         //call the register service
         this.usersService.login(this.model).subscribe(function (data) {
             if (data && data.email) {
-                var user = new _models_user__WEBPACK_IMPORTED_MODULE_4__["User"](data.name, data.email, data.avatar, null, null, data.currency);
+                var user = new _models_user__WEBPACK_IMPORTED_MODULE_5__["User"](data.name, data.email, data.avatar, null, null, data.currency);
                 _this.usersService.setUser(user);
                 var redirectUrl = _this.usersService.routerRedirectUrl ? _this.usersService.routerRedirectUrl : '/';
                 _this.usersService.routerRedirectUrl = null;
@@ -8253,8 +8263,8 @@ var LoginComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./login.component.html */ "./src/app/modules/users/components/login/login.component.html"),
             styles: [__webpack_require__(/*! ./login.component.scss */ "./src/app/modules/users/components/login/login.component.scss")]
         }),
-        __metadata("design:paramtypes", [_users_service__WEBPACK_IMPORTED_MODULE_2__["UsersService"], _app_service__WEBPACK_IMPORTED_MODULE_3__["AppService"],
-            _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_5__["MainNavigatorService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]])
+        __metadata("design:paramtypes", [_users_service__WEBPACK_IMPORTED_MODULE_3__["UsersService"], _app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"],
+            _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_6__["MainNavigatorService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]])
     ], LoginComponent);
     return LoginComponent;
 }());
@@ -8426,10 +8436,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResetPasswordComponent", function() { return ResetPasswordComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
-/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/user */ "./src/app/modules/users/models/user.ts");
-/* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
+/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/user */ "./src/app/modules/users/models/user.ts");
+/* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8439,6 +8450,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -8465,7 +8477,7 @@ var ResetPasswordComponent = /** @class */ (function () {
             { displayName: 'Login', url: '/users/login', selected: false },
             { displayName: 'Reset password', url: null, selected: true }
         ]);
-        this.route.paramMap.map(function (params) { return params.get('token'); })
+        this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (params) { return params.get('token'); }))
             .subscribe(function (token) {
             if (token) {
                 _this.token = token;
@@ -8490,7 +8502,7 @@ var ResetPasswordComponent = /** @class */ (function () {
         this.usersService.setUser(null); //reset authenticated user. Reset automatically authenticates the registered user.
         this.usersService.reset(this.token, this.model).subscribe(function (data) {
             if (data) {
-                var user = new _models_user__WEBPACK_IMPORTED_MODULE_3__["User"](data.name, data.email, data.avatar, null, null, data.currency);
+                var user = new _models_user__WEBPACK_IMPORTED_MODULE_4__["User"](data.name, data.email, data.avatar, null, null, data.currency);
                 _this.usersService.setUser(user);
                 _this.appService.showResults('Your password was successfully updated!', 'success');
                 _this.router.navigate(['/']); //go home
@@ -8516,8 +8528,8 @@ var ResetPasswordComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./reset-password.component.html */ "./src/app/modules/users/components/reset-password/reset-password.component.html"),
             styles: [__webpack_require__(/*! ./reset-password.component.scss */ "./src/app/modules/users/components/reset-password/reset-password.component.scss")]
         }),
-        __metadata("design:paramtypes", [_app_service__WEBPACK_IMPORTED_MODULE_5__["AppService"], _users_service__WEBPACK_IMPORTED_MODULE_2__["UsersService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
-            _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_4__["MainNavigatorService"]])
+        __metadata("design:paramtypes", [_app_service__WEBPACK_IMPORTED_MODULE_6__["AppService"], _users_service__WEBPACK_IMPORTED_MODULE_3__["UsersService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
+            _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_5__["MainNavigatorService"]])
     ], ResetPasswordComponent);
     return ResetPasswordComponent;
 }());
@@ -8793,8 +8805,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../app.service */ "./src/app/app.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8809,11 +8822,12 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var UsersService = /** @class */ (function () {
     function UsersService(http, appService) {
         this.http = http;
         this.appService = appService;
-        this.serverHost = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].apiHost + '/api/users';
+        this.serverHost = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiHost + '/api/users';
         this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]().set('Content-Type', 'application/json');
         this.routerRedirectUrl = null; //a route to redirect the user to when login is successfull
         this.userSource = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
@@ -8840,8 +8854,7 @@ var UsersService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > register() > "; //for debugging
         return this.http.post(this.serverHost + "/register", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to update account user details
@@ -8851,8 +8864,7 @@ var UsersService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > updateAccount() > "; //for debugging
         return this.http.post(this.serverHost + "/account", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to update account personal details
@@ -8862,8 +8874,7 @@ var UsersService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > updatePersonalInfo() > "; //for debugging
         return this.http.post(this.serverHost + "/accountPersonalInfo", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to update account financial details
@@ -8873,8 +8884,7 @@ var UsersService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > updateFinancialInfo() > "; //for debugging
         return this.http.post(this.serverHost + "/accountFinancialInfo", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to retrieve the currently authenticated user, or null if nobody .
@@ -8891,8 +8901,7 @@ var UsersService = /** @class */ (function () {
             }
         }
         return this.http.get(this.serverHost + "/getUser", { params: params })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to login the provided user email and pass.
@@ -8901,8 +8910,7 @@ var UsersService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > login() > "; //for debugging
         return this.http.post(this.serverHost + "/login", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to forgot with the provided user email.
@@ -8911,8 +8919,7 @@ var UsersService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > forgot() > "; //for debugging
         return this.http.post(this.serverHost + "/account/forgot", postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to reset password api with the provided new password.
@@ -8921,8 +8928,7 @@ var UsersService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > reset() > "; //for debugging
         return this.http.post(this.serverHost + "/account/reset/" + token, postData, { headers: this.headers })
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to login the provided user email and pass.
@@ -8930,12 +8936,11 @@ var UsersService = /** @class */ (function () {
     UsersService.prototype.logout = function () {
         var methodTrace = this.constructor.name + " > logout() > "; //for debugging
         return this.http.get(this.serverHost + "/logout")
-            .map(this.appService.extractData)
-            .catch(this.appService.handleError);
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     UsersService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _app_service__WEBPACK_IMPORTED_MODULE_5__["AppService"]])
     ], UsersService);
     return UsersService;
 }());

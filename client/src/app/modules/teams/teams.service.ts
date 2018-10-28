@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { Response } from '../../models/response';
 import { of } from 'rxjs';
 import { from } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
 
 
 @Injectable()
@@ -26,8 +27,10 @@ export class TeamsService {
     let methodTrace = `${this.constructor.name} > register() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   } 
   
   /**
@@ -38,8 +41,10 @@ export class TeamsService {
     let methodTrace = `${this.constructor.name} > register() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   } 
 
   /**
@@ -59,8 +64,10 @@ export class TeamsService {
         .set('slug', slug);
 
     return this.http.get<Response>(`${this.serverHost}/getMyTeamBySlug`, { params })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 
   /**
@@ -78,10 +85,12 @@ export class TeamsService {
     let params = new HttpParams().set('email', email);
 
     const teamsData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
     
-    return teamsData$.switchMap((teamsData) => {
+    return teamsData$.pipe(switchMap((teamsData) => {
       let teams : Team[] = [];
 
       if (teamsData && teamsData instanceof Array) {
@@ -102,7 +111,7 @@ export class TeamsService {
       }
 
       return of(teams);
-    });
+    }));
   }
 
   /**
@@ -121,7 +130,9 @@ export class TeamsService {
     let params = new HttpParams().set('email', email);
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${slug}`, {headers : this.headers, params } )
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 }

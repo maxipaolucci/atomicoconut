@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap  } from '@angular/router';
-
+import { map } from 'rxjs/operators';
 import { UsersService } from '../../users.service';
 import {User} from '../../models/user';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
@@ -29,7 +29,7 @@ export class ResetPasswordComponent implements OnInit {
       { displayName: 'Login', url: '/users/login', selected: false },
       { displayName: 'Reset password', url: null, selected: true }]);
 
-    this.route.paramMap.map((params: ParamMap) => params.get('token'))
+    this.route.paramMap.pipe(map((params: ParamMap) => params.get('token')))
         .subscribe(token => { 
           if (token) {
             this.token = token;

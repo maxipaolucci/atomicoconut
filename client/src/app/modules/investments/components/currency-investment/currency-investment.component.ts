@@ -9,8 +9,8 @@ import { UsersService } from '../../../users/users.service';
 import { Router } from '@angular/router';
 import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { Subscription } from 'rxjs';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { combineLatest, switchMap } from 'rxjs/operators';
 import { Team } from '../../../teams/models/team';
 import { INVESTMENTS_TYPES } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
@@ -55,38 +55,41 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     //get the team of the investmetn if exists
     let newSubscription = null;
     const currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
-    const currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, 
+    const currencyRatesAndUser$ = this.usersService.user$.pipe(combineLatest(currencyRates$, 
       (user, currencyRates) => { 
         this.user = user;
         return { user, currencyRates} 
       }
-    ); //(currency rates and user) source
+    )); //(currency rates and user) source
     
     
     if (this.investment.type === INVESTMENTS_TYPES.CRYPTO) {
       //crypto investment
       const cryptoRates$ = this.currencyExchangeService.getCryptoRates(this.investment.unit); //get crypto rates observable source
       
-      newSubscription = cryptoRates$.combineLatest(currencyRatesAndUser$, (cryptoRates, currencyRatesAndUser) => { 
-        return  {
-          currencyRates : currencyRatesAndUser.currencyRates,
-          user : currencyRatesAndUser.user, 
-          cryptoRates 
-        }; 
-      }).switchMap(
-        (data) => {
-          this.currentPrice = data.cryptoRates.price;
-          //the investment amount was paid on the date of the investment so we need to convert using that day rates
-          this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
-          //the loan amount was requested on the date of the investment so we need to convert using that day rates
-          this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
-          //the buying price (of the crypto) was paid on the date of the investment so we need to convert using that day rates
-          this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
-          this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
-          this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
+      newSubscription = cryptoRates$.pipe(
+        combineLatest(currencyRatesAndUser$, (cryptoRates, currencyRatesAndUser) => { 
+          return  {
+            currencyRates : currencyRatesAndUser.currencyRates,
+            user : currencyRatesAndUser.user, 
+            cryptoRates 
+          }; 
+        }),
+        switchMap(
+          (data) => {
+            this.currentPrice = data.cryptoRates.price;
+            //the investment amount was paid on the date of the investment so we need to convert using that day rates
+            this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
+            //the loan amount was requested on the date of the investment so we need to convert using that day rates
+            this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
+            //the buying price (of the crypto) was paid on the date of the investment so we need to convert using that day rates
+            this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
+            this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
+            this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
 
-          return this.teams$;
-        }
+            return this.teams$;
+          }
+        )
       ).subscribe((teams : Team[]) => {
         this.setInvestmentTeamData(teams);
       },
@@ -96,7 +99,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       });
     } else {
       //currency exchange
-      newSubscription = currencyRatesAndUser$.switchMap(
+      newSubscription = currencyRatesAndUser$.pipe(switchMap(
         (data) => {
           this.currentPrice = 1 / (data.currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1);
           //the investment amount was paid on the date of the investment so we need to convert using that day rates
@@ -110,7 +113,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
 
           return this.teams$;
         }
-      ).subscribe((teams : Team[]) => {
+      )).subscribe((teams : Team[]) => {
         this.setInvestmentTeamData(teams);
       },
       (error : any) => {

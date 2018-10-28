@@ -11,8 +11,8 @@ import { AppService } from '../../../../app.service';
 import { InvestmentsService } from '../../investments.service';
 import { Team } from '../../../teams/models/team';
 import { TeamsService } from '../../../teams/teams.service';
-import { Observable } from 'rxjs';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES, PROPERTY_TYPES } from '../../../../constants';
@@ -53,10 +53,10 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     ]);
 
     //get authUser from resolver
-    const user$ : Observable<User> = this.route.data.map((data : { authUser: User }) =>  {
+    const user$ : Observable<User> = this.route.data.pipe(map((data : { authUser: User }) =>  {
       this.user = data.authUser;
       return data.authUser;
-    });
+    }));
 
     if (!this.investments.length) {
       this.getInvestments(user$);
@@ -81,9 +81,9 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     this.teams = [];
     this.getTeamsServiceRunning = true;
 
-    const newSubscription = user$.switchMap((user) => {
+    const newSubscription = user$.pipe(switchMap((user) => {
       return this.teamsService.getTeams(user.email);
-    }).subscribe(
+    })).subscribe(
       (teams : Team[]) => {
         this.teams = teams;
         
@@ -114,9 +114,9 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     this.getInvestmentsServiceRunning = true;
 
     
-    const newSubscription = user$.switchMap((user) => {
+    const newSubscription = user$.pipe(switchMap((user) => {
       return this.investmentsService.getInvestments(user.email);
-    }).subscribe(
+    })).subscribe(
       (investments : Investment[]) => {
         //organize investments in rows of n-items to show in the view
         let investmentsRow : any[] = [];

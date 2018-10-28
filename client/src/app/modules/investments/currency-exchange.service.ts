@@ -1,8 +1,8 @@
 import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-
+import { map, catchError, retry } from 'rxjs/operators';
 import { AppService } from '../../app.service';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, pipe, of } from 'rxjs';
 import { Response } from '../../models/Response';
 import { environment } from '../../../environments/environment';
 import { UtilService } from '../../util.service';
@@ -38,7 +38,7 @@ export class CurrencyExchangeService {
 
     if (found) {
       //all dates cached then return this object
-      return Observable.of(this.currencyRates);
+      return of(this.currencyRates);
     }
     
 
@@ -46,18 +46,20 @@ export class CurrencyExchangeService {
     let params = new HttpParams().set('dates', `${dates}`);
 
     return this.http.get<Response>(`${this.serverHost}/getByDates/${base}`, { params })
-      .map((res: Response) => {
-        let data = this.appService.extractData(res);
+        .pipe(
+          map((res: Response) => {
+            let data = this.appService.extractData(res);
 
-        if (data) {
-          //merge results
-          Object.assign(this.currencyRates, data);
-        }
+            if (data) {
+              //merge results
+              Object.assign(this.currencyRates, data);
+            }
 
-        return this.currencyRates;
-      })
-      .catch(this.appService.handleError)
-      .retry(3);
+            return this.currencyRates;
+          }),
+          catchError(this.appService.handleError),
+          retry(3)
+        );
   }
 
 
@@ -65,15 +67,17 @@ export class CurrencyExchangeService {
     let methodTrace = `${this.constructor.name} > getCryptoRates() > `; //for debugging
 
     if (this.cryptoRates[crypto.toUpperCase()]) {
-      return Observable.of(this.cryptoRates[crypto.toUpperCase()]);
+      return of(this.cryptoRates[crypto.toUpperCase()]);
     }
     
     return this.http.get(`${this.cryptoExchangeServerUrl}${crypto.toUpperCase()}`)
-        .map((res: Object) => {
-          this.cryptoRates[crypto.toUpperCase()] = this.extractCryptoExchangeData(crypto, res);
-          return this.cryptoRates[crypto.toUpperCase()];
-        })
-        .catch(this.appService.handleError);
+        pipe(
+          map((res: Object) => {
+            this.cryptoRates[crypto.toUpperCase()] = this.extractCryptoExchangeData(crypto, res);
+            return this.cryptoRates[crypto.toUpperCase()];
+          }),
+          catchError(this.appService.handleError)
+        );
   }
 
   private extractCryptoExchangeData(crypto: string, res: Object) : any {

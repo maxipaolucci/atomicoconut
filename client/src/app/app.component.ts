@@ -7,6 +7,7 @@ import { MainNavigatorService } from './modules/shared/components/main-navigator
 import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
 import { UtilService } from './util.service';
 import { of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -26,7 +27,7 @@ export class AppComponent implements OnInit {
     let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
 
     //On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
-    this.usersService.user$.switchMap((user : User) => {
+    this.usersService.user$.pipe(switchMap((user : User) => {
       this.user = user;
 
       if (this.user && this.user.currency && this.user.currency !== 'USD') {
@@ -34,7 +35,7 @@ export class AppComponent implements OnInit {
       }
       
       return of(null); //is the user had not configure a preferred currency then we don't need to show the currency toolbar
-    }).subscribe(
+    })).subscribe(
       (currencyRates : any) => {
         if (currencyRates === null){
           this.todayUserPrefRate = null;

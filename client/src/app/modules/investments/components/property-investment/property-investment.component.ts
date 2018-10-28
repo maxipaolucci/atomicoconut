@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PropertyInvestment } from '../../models/PropertyInvestment';
 import { Team } from '../../../teams/models/team';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { combineLatest, switchMap } from 'rxjs/operators';
 import { User } from '../../../users/models/user';
 import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { AppService } from '../../../../app.service';
@@ -58,14 +59,14 @@ export class PropertyInvestmentComponent implements OnInit {
     //get the team of the investmetn if exists
     let newSubscription = null;
     const currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
-    const currencyRatesAndUser$ = this.usersService.user$.combineLatest(currencyRates$, 
+    const currencyRatesAndUser$ = this.usersService.user$.pipe(combineLatest(currencyRates$, 
       (user, currencyRates) => { 
         this.user = user;
         return { user, currencyRates} 
       }
-    ); //(currency rates and user) source
+    )); //(currency rates and user) source
     
-    newSubscription = currencyRatesAndUser$.switchMap(
+    newSubscription = currencyRatesAndUser$.pipe(switchMap(
       (data) => {
         //market value should be always up to date so no rate conversion is required
         this.currentPrice = this.currencyExchangeService.getUsdValueOf(this.investment.property.marketValue, this.investment.property.marketValueUnit);
@@ -79,7 +80,7 @@ export class PropertyInvestmentComponent implements OnInit {
 
         return this.teams$;
       }
-    ).subscribe((teams : Team[]) => {
+    )).subscribe((teams : Team[]) => {
       this.setInvestmentTeamData(teams);
     },
     (error : any) => {

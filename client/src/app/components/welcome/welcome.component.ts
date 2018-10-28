@@ -9,8 +9,8 @@ import { InvestmentsService } from '../../modules/investments/investments.servic
 import { CurrencyExchangeService } from '../../modules/investments/currency-exchange.service';
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
-import { Subscription } from 'rxjs';
-import { of } from 'rxjs';
+import { Subscription, of } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { INVESTMENTS_TYPES } from '../../constants';
 import { UtilService } from '../../util.service';
 import { PropertyInvestment } from '../../modules/investments/models/PropertyInvestment';
@@ -42,7 +42,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     ]);
     
     let currentUserInvestments : Investment[] = [];
-    let newSubscription = this.setUserAndGetInvestments().switchMap((userInvestments : Investment[]) => {
+    let newSubscription = this.setUserAndGetInvestments().pipe(switchMap((userInvestments : Investment[]) => {
       currentUserInvestments = userInvestments;
       let investmentsDates : string[] = userInvestments.map((investment : Investment) => {
         if (investment instanceof CurrencyInvestment) {  
@@ -55,7 +55,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       });
       
       return this.currencyExchangeService.getCurrencyRates(investmentsDates);
-    }).subscribe(currencyRates => {
+    })).subscribe(currencyRates => {
       //iterate investments and sum returns using dated rates.
       for (let investment of currentUserInvestments) {
         let myPercentage = (investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
@@ -69,7 +69,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
                 * myPercentage / 100;
             this.calculateProgressBarWealthValue();
           } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
-            this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).take(1).subscribe((rates) => {
+            this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).pipe(take(1)).subscribe((rates) => {
               this.wealthAmount += ((currencyInvestment.amount * rates.price) 
                   - (currencyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(currencyInvestment.buyingDate)][`USD${currencyInvestment.loanAmountUnit}`] || 1)))
                   * myPercentage / 100;
@@ -112,7 +112,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     let methodTrace = `${this.constructor.name} > setUser() > `; //for debugging
 
     let gotAuthenticatedUserFromServer = false;
-    const user$ = this.usersService.user$.switchMap((user : User) => {
+    const user$ = this.usersService.user$.pipe(switchMap((user : User) => {
       if (!user) {
         return of(null);
       } else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
@@ -121,9 +121,9 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       } else {
         return of(user);
       }
-    });
+    }));
 
-    return user$.switchMap(user => {
+    return user$.pipe(switchMap(user => {
       if (user && user.email) {
         let personalInfo = null;
         if (user.personalInfo) {
@@ -160,7 +160,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         this.user = null;
         return of([]);
       }
-    });
+    }));
     
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { UsersService } from './modules/users/users.service';
 import { User } from './modules/users/models/user';
 import { AppService } from './app.service';
@@ -15,7 +16,7 @@ export class AuthGuard implements CanActivate {
     
     this.usersService.routerRedirectUrl = state.url;
 
-    return this.usersService.getAuthenticatedUser().map(
+    return this.usersService.getAuthenticatedUser().pipe(map(
       (data : any) => {
         if (data && data.email) {
           this.usersService.routerRedirectUrl = null; //we don't need this
@@ -31,6 +32,6 @@ export class AuthGuard implements CanActivate {
         this.router.navigate(['/users/login']);
         return false;
       }
-    );
+    ));
   }
 }

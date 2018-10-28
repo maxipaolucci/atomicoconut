@@ -8,8 +8,10 @@ import { Response } from '../../models/response';
 import { User } from '../users/models/user';
 import { PROPERTY_TYPES } from '../../constants';
 import { House } from './models/house';
-import { of } from 'rxjs';
+import { of, from } from 'rxjs';
 import { Address } from './models/address';
+import { map, catchError, switchMap } from 'rxjs/operators';
+import { pipe } from '@angular/core/src/render3/pipe';
 
 @Injectable()
 export class PropertiesService {
@@ -27,8 +29,10 @@ export class PropertiesService {
     let methodTrace = `${this.constructor.name} > create() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   } 
   
   /**
@@ -39,8 +43,10 @@ export class PropertiesService {
     let methodTrace = `${this.constructor.name} > update() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 
   /**
@@ -58,10 +64,12 @@ export class PropertiesService {
     let params = new HttpParams().set('email', email);
 
     const data$ = this.http.get<Response>(`${this.serverHost}/${id}`, { params })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
 
-    return data$.switchMap((data) => {
+    return data$.pipe(switchMap((data) => {
       let result : Property = null;
       if (data && data._id) {
         const createdBy = new User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
@@ -83,8 +91,8 @@ export class PropertiesService {
         this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
       }
 
-      return Observable.of(result);
-    });
+      return of(result);
+    }));
   }
 
   /**
@@ -99,16 +107,18 @@ export class PropertiesService {
 
     if (!email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
-      return Observable.from([]);
+      return from([]);
     }
 
     let params = new HttpParams().set('email', email).set('justUserProperties', justUserProperties + '');
 
     const responseData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
     
-    return responseData$.switchMap((responseData) => {
+    return responseData$.pipe(switchMap((responseData) => {
       let properties : Property[] = [];
 
       if (responseData && responseData instanceof Array) {
@@ -133,8 +143,8 @@ export class PropertiesService {
         this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
       }
 
-      return Observable.of(properties);
-    });
+      return of(properties);
+    }));
   }
 
   /**
@@ -153,7 +163,9 @@ export class PropertiesService {
     let params = new HttpParams().set('email', email);
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } )
-        .map(this.appService.extractData)
-        .catch(this.appService.handleError);
+        .pipe(
+          map(this.appService.extractData),
+          catchError(this.appService.handleError)
+        );
   }
 }
