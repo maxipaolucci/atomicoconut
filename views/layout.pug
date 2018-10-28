@@ -20,9 +20,9 @@ head
       //- this are the server app js resources bundled by webpack in server
       script(src="/dist/App.bundle.js")
       //- these are all the client app resources
-      script(type="text/javascript" src="/app/inline.bundle.js")
-      script(type="text/javascript" src="/app/polyfills.bundle.js")
+      script(type="text/javascript" src="/app/runtime.js")
+      script(type="text/javascript" src="/app/polyfills.js")
       if locals.environment == 'development'
-        script(type="text/javascript" src="/app/styles.bundle.js")
-        script(type="text/javascript" src="/app/vendor.bundle.js")
-      script(type="text/javascript" src="/app/main.bundle.js")
+        script(type="text/javascript" src="/app/styles.js")
+        script(type="text/javascript" src="/app/vendor.js")
+      script(type="text/javascript" src="/app/main.js")

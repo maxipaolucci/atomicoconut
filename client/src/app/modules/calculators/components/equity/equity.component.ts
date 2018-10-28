@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-equity',
@@ -37,7 +38,7 @@ export class EquityComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.form.valueChanges.debounceTime(500).subscribe(values => {
+    this.form.valueChanges.pipe(debounceTime(500)).subscribe(values => {
       this.loanAmount = values.purchasePrice * (values.loanCoverage / 100);
       this.discount = values.marketValue - values.purchasePrice - values.renovationCost;
       this.depositAmount = values.purchasePrice - this.loanAmount;

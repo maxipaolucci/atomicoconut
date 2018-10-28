@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { DateAdapter, NativeDateAdapter, MatSelectChange, MatDialog } from '@angular/material';
 import { AppService } from '../../../../app.service';
 import { UtilService } from '../../../../util.service';
@@ -72,7 +73,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     this.emitValues();
 
     //after any event in the form we send updated data
-    const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
+    const newSubscription = this.form.valueChanges.pipe(debounceTime(500)).subscribe(values => {
       this.emitValues();
     });
     this.subscription.add(newSubscription);

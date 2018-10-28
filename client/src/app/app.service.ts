@@ -48,7 +48,7 @@ export class AppService {
         message
       },
       duration,
-      extraClasses : ['snackbar--simple', `snackbar--${type}`]
+      panelClass : ['snackbar--simple', `snackbar--${type}`]
     });
 
     return snackBarRef;

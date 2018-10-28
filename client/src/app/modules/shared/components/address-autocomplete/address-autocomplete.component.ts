@@ -1,8 +1,9 @@
+/// <reference types="@types/googlemaps" />
 import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { MapsAPILoader } from '@agm/core';
-import { } from 'googlemaps';
 import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { Address } from '../../../properties/models/address';
 import { NgModel } from '@angular/forms';
 
@@ -14,24 +15,24 @@ import { NgModel } from '@angular/forms';
 export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('addressAutocompleteForm') form;
-  @ViewChild("addressInput") addressInput: NgModel;
+  @ViewChild('addressInput') addressInput: NgModel;
   @Input() id : string;
-  @Input() placeHolder : string;
-  @Input() defaultValues : any = null; //the default values of the component model
+  @Input() placeHolder: string;
+  @Input() defaultValues: any = null; // the default values of the component model
   //@Input() required : boolean = false;
   @Output() values: EventEmitter<any> = new EventEmitter();
 
-  model : any = {
+  model: any = {
     description : null,
     latitude : null,
     longitude : null,
     mapsPlaceId : null
   };
-  options : any[] = [];
-  subscription : Subscription = new Subscription();
+  options: any[] = [];
+  subscription: Subscription = new Subscription();
 
-  private autocompleteService : google.maps.places.AutocompleteService = null;
-  private placesService : google.maps.places.PlacesService = null;
+  private autocompleteService: google.maps.places.AutocompleteService = null;
+  private placesService: google.maps.places.PlacesService = null;
 
   constructor(private mapsAPILoader: MapsAPILoader) { }
 
@@ -46,34 +47,34 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
   }
 
   ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
     
-    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
   ngAfterViewInit(): void {
-    //send data before touching any value
+    // send data before touching any value
     this.emitValues();
 
-    //after any event in the form we send updated data
-    const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
+    // after any event in the form we send updated data
+    const newSubscription = this.form.valueChanges.pipe(debounceTime(500)).subscribe(values => {
 
       if (values.address) {
         if (values.address.description) {
           if (values.address.mapsPlaceId) {
-            //when the user selected an option from the autocomplete suggestions
+            // when the user selected an option from the autocomplete suggestions
             this.getPlaceDetails(values.address.mapsPlaceId);
           } else {
-            //the user save a custom address. She did not picked it from the suggestion list.
+            // the user save a custom address. She did not picked it from the suggestion list.
             this.emitValues(values.address.description);
           }
-        } else if (typeof values.address == 'string') {
-          //This happens while the user is writing in the field before selecting an option from suggestion list
+        } else if (typeof values.address === 'string') {
+          // This happens while the user is writing in the field before selecting an option from suggestion list
 
-          //retrieve matching places
-          this.autocompleteService.getQueryPredictions({input : values.address}, 
-              (data : google.maps.places.QueryAutocompletePrediction[], status : google.maps.places.PlacesServiceStatus) => {
+          // retrieve matching places
+          this.autocompleteService.getQueryPredictions({input : values.address},
+              (data: google.maps.places.QueryAutocompletePrediction[], status: google.maps.places.PlacesServiceStatus) => {
             
             if (status === google.maps.places.PlacesServiceStatus.OK) {
               this.options = data;
@@ -98,22 +99,22 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
   /**
    * Using this function we can map our selection to the item description intead the whole object
    */
-  autocompleteDisplayFn(place? : google.maps.places.QueryAutocompletePrediction) : string | undefined {
+  autocompleteDisplayFn(place? : google.maps.places.QueryAutocompletePrediction): string | undefined {
     return place ? place.description : '';
   }
 
-  onOptionSelected(matAutocompleteSelectedEvent : MatAutocompleteSelectedEvent) {
+  onOptionSelected(matAutocompleteSelectedEvent: MatAutocompleteSelectedEvent) {
     this.getPlaceDetails(matAutocompleteSelectedEvent.option.value.place_id);
   }
 
-  getPlaceDetails(mapsPlaceId : string) {
+  getPlaceDetails(mapsPlaceId: string) {
     if (!mapsPlaceId) {
       return false;
     }
 
-    this.placesService.getDetails({ placeId : mapsPlaceId }, 
-        (data : google.maps.places.PlaceResult, status : google.maps.places.PlacesServiceStatus) => {
-      
+    this.placesService.getDetails({ placeId : mapsPlaceId },
+        (data: google.maps.places.PlaceResult, status: google.maps.places.PlacesServiceStatus) => {
+
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         this.model.latitude = data.geometry.location.lat();
         this.model.longitude = data.geometry.location.lng();
@@ -130,27 +131,27 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
     });
   }
 
-  emitValues(description : string = null) {
+  emitValues(description: string = null) {
     let address = null;
     let valid = this.form.valid;
 
     if (this.model.mapsPlaceId) {
-      //the user picked from the suggestion list
-      address = new Address(this.model.description, this.model.latitude, this.model.longitude, this.model.mapsPlaceId); 
+      // the user picked from the suggestion list
+      address = new Address(this.model.description, this.model.latitude, this.model.longitude, this.model.mapsPlaceId);
     } else if (description){
-      //the user just type a custom address
-      address = new Address(description, null, null, null); 
+      // the user just type a custom address
+      address = new Address(description, null, null, null);
     } else {
-      //none of above, return invalid
+      // none of above, return invalid
       valid = false;
     }
-    
-    
+
+
     this.values.emit({
       value : {
         address,
         valid
-      } 
+      }
     });
   }
 }

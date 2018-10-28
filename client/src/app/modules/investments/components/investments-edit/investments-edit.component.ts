@@ -7,7 +7,7 @@ import { TeamsService } from '../../../teams/teams.service';
 import { AppService } from "../../../../app.service";
 import { Team } from '../../../teams/models/team';
 import { Subscription } from 'rxjs';
-import { map, combineLatest } from 'rxjs/operators';
+import { map, combineLatest, debounceTime } from 'rxjs/operators';
 import { MatSelectChange, MatRadioChange } from '@angular/material';
 import { InvestmentsService } from '../../investments.service';
 import { Investment } from '../../models/investment';
@@ -141,7 +141,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    * view until an investment is retrived from the server. We save an instance of the subscription to avoid subscriwe twice or more times.
    */
   subscribeFormValueChanges() {
-    this.formChangesSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
+    this.formChangesSubscription = this.form.valueChanges.pipe(debounceTime(500)).subscribe(values => {
       if (values.owner === 'team' && values.team && this.model.team) {
         //calculates the percentage acum from all the members
         const percentageAcum = this.model.team.members.reduce((total, member) => {

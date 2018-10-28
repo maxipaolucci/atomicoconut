@@ -4,6 +4,7 @@ import { MatSelectChange } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { UtilService } from '../../../../util.service';
 import { AppService } from '../../../../app.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'currency-investment-form',
@@ -70,7 +71,7 @@ export class CurrencyInvestmentFormComponent implements OnInit, OnDestroy, After
     });
 
     //after any event in the form we send updated data
-    const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
+    const newSubscription = this.form.valueChanges.pipe(debounceTime(500)).subscribe(values => {
       this.values.emit({ 
         value : {
           model : this.model,

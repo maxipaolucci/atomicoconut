@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { UtilService } from '../../../../util.service';
+import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { AppService } from '../../../../app.service';
 import { MatSelectChange, MatSlideToggleChange } from '@angular/material';
 import { HOUSE_BUILDING_TYPES } from '../../../../constants';
@@ -13,7 +14,7 @@ import { HOUSE_BUILDING_TYPES } from '../../../../constants';
 export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('editHouseForm') form;
-  @Input() defaultValues : any = null; //the default values of the component model
+  @Input() defaultValues : any = null; // the default values of the component model
   @Input() defaultCurrencyUnit : string = 'USD'; //the default currency unit
   @Output() values: EventEmitter<any> = new EventEmitter();
   model : any = {
@@ -60,9 +61,9 @@ export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
     
-    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
@@ -79,11 +80,11 @@ export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    //send data before touching any value
+    // send data before touching any value
     this.emitValues();
 
-    //after any event in the form we send updated data
-    const newSubscription = this.form.valueChanges.debounceTime(500).subscribe(values => {
+    // after any event in the form we send updated data
+    const newSubscription = this.form.valueChanges.pipe(debounceTime(500)).subscribe(values => {
       this.emitValues();
     });
     this.subscription.add(newSubscription);
