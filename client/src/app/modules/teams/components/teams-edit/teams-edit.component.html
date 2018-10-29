@@ -38,26 +38,24 @@
           <p class="mat-caption">Add or remove members. If a member(email) is not active on the platform we are going to send him/her an invitation to join AtomiCoconut</p>
         </h3>
         
-        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
-          <div class="members" fxLayout="row wrap" fxLayoutGap="10px">
-            <mat-card  *ngFor="let member of team.members; index as memberIndex" class="member" [class.not-saved-yet]="!member.name && !member.avatar">
-              <mat-card-content fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="none center">
-                
-                <img *ngIf="member.avatar" class="member__avatar" [src]="member.avatar"/>
-                <mat-icon *ngIf="!member.avatar" class="member__avatar member__avatar--default">account_circle</mat-icon>
-                
-                <div class="member__info" fxLayout="column" [matTooltip]="member.email === team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
-                  <p *ngIf="member.name" class="member__name">
-                    {{member.name}}
-                    <mat-icon *ngIf="member.email === team.admin.email" class="icon__admin" aria-label="Admin" >lock</mat-icon>
-                  </p>
-                  <p class="member__email">{{member.email}}</p>
-                </div>
-      
-                <mat-icon *ngIf="member.email !== team.admin.email" matTooltip="Remove" class="icon__remove-member" (click)="removeMember(memberIndex)">clear</mat-icon>
-              </mat-card-content>
-            </mat-card>
-          </div>
+        <div class="members" fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutAlign.gt-xs="start center" fxLayoutGap="10px">
+          <mat-card fxFlex fxFlex.gt-xs="none"  *ngFor="let member of team.members; index as memberIndex" class="member" [class.not-saved-yet]="!member.name && !member.avatar">
+            <mat-card-content fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="none center">
+              
+              <img *ngIf="member.avatar" class="member__avatar" [src]="member.avatar"/>
+              <mat-icon *ngIf="!member.avatar" class="member__avatar member__avatar--default">account_circle</mat-icon>
+              
+              <div fxFlex class="member__info" fxLayout="column" [matTooltip]="member.email === team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
+                <p *ngIf="member.name" class="member__name">
+                  {{member.name}}
+                  <mat-icon *ngIf="member.email === team.admin.email" class="icon__admin" aria-label="Admin" >lock</mat-icon>
+                </p>
+                <p class="member__email">{{member.email}}</p>
+              </div>
+    
+              <mat-icon  *ngIf="member.email !== team.admin.email" matTooltip="Remove" class="icon__remove-member" (click)="removeMember(memberIndex)">clear</mat-icon>
+            </mat-card-content>
+          </mat-card>
         </div>
       </div>
     </section>
