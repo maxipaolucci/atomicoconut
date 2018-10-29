@@ -52,7 +52,7 @@
           </h3>
   
           <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
-            <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="20px" class="team-members" fxLayoutWrap>
+            <div fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutGap="20px" class="team-members">
               <div *ngFor="let member of model.team.members; index as memberIndex" fxFlex="none" fxFlex.gt-xs="250px" fxLayout="column" fxLayoutGap="10px" class="member">
                 <div class="member-details" fxLayout="row" fxLayoutGap="10px">
                   <img class="member__avatar" [src]="member.avatar"/>

@@ -1,13 +1,13 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__teams">
-  <section fxLayoutWrap 
-      fxLayout="row" fxLayout.xs="column" 
-      fxLayoutGap.xs="10px" 
-      fxLayoutAlign="space-around center" fxLayoutAlign.xs="none none" >
+  <section  
+      fxLayout="column" fxLayout.gt-xs="row wrap" 
+      fxLayoutGap="10px" fxLayoutGap.gt-xs="none" 
+      fxLayoutAlign="none none" fxLayoutAlign.gt-xs="space-around center">
     
     <div *ngIf="!teams.length && !getTeamsServiceRunning" fxFlexAlign="center">You are not member of any team yet.</div>
     <!-- Team Cards -->
     <mat-expansion-panel *ngFor="let team of teams; index as teamIndex"
-        fxFlex.sm="45" fxFlex.gt-sm="30" 
+        fxFlex="none" fxFlex.sm="45" fxFlex.gt-sm="30" 
         class="team-card">
       <mat-expansion-panel-header>
         <mat-panel-title>

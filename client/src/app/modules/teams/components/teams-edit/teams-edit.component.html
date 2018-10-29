@@ -39,8 +39,8 @@
         </h3>
         
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
-          <div class="members" fxLayout="row" fxLayoutGap="10px" fxLayoutWrap>
-            <mat-card *ngFor="let member of team.members; index as memberIndex" class="member" [class.not-saved-yet]="!member.name && !member.avatar">
+          <div class="members" fxLayout="row wrap" fxLayoutGap="10px">
+            <mat-card  *ngFor="let member of team.members; index as memberIndex" class="member" [class.not-saved-yet]="!member.name && !member.avatar">
               <mat-card-content fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="none center">
                 
                 <img *ngIf="member.avatar" class="member__avatar" [src]="member.avatar"/>
