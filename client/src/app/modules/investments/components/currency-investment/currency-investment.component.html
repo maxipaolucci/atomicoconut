@@ -28,8 +28,10 @@
         [class.color__red]="investmentReturn < investmentValueWhenBought">
       <br>
       ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)
+      <info-tooltip text="Return on investment" position="right"></info-tooltip>
       <br>
       Net ROI: <strong>{{ investmentReturn - investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>
+      <info-tooltip text="Return on investment - amount invested" position="right"></info-tooltip>
     </div>
 
     <!-- Team -->
