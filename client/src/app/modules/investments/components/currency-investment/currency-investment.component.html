@@ -7,31 +7,41 @@
     <mat-card-subtitle>{{investment.amount}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="card__content">
-    Investment: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> 
-    <br>
-    on {{investment.buyingDate | date}}
-    <br>
-    Buying price: {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}
-    <br>
-    Today currency value: 
-    <span [class.color__accent]="currentPrice >= buyingPrice" 
-      [class.color__red]="currentPrice < buyingPrice">
+    <!-- Card Data -->
+    <div fxLayout="column" fxLayoutAlign="space-evenly center" class="card__data">
+      <span>Amount invested: <strong>{{investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> </span>
+      
+      <span>on {{investment.buyingDate | date}}</span>
+    
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <span>Buying price: {{ buyingPrice | currency : 'USD' : 'code' : '1.2-2' }}</span>
+        <info-tooltip text="Price on investment date" position="right"></info-tooltip>
+      </div>
+      
+      <div>
+        Today price: 
+        <span [class.color__accent]="currentPrice >= buyingPrice" 
+          [class.color__red]="currentPrice < buyingPrice">
 
-      <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>
-    </span>
-    <br>
-    <span *ngIf="investment.loanAmount">
-      Loan amount: <strong>{{ loanAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>
-    </span>
+          <strong>{{currentPrice | currency : 'USD' : 'code' : '1.2-2'}}</strong>
+        </span>
+      </div>
 
-    <div [class.color__accent]="investmentReturn >= investmentValueWhenBought" 
-        [class.color__red]="investmentReturn < investmentValueWhenBought">
-      <br>
-      ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)
-      <info-tooltip text="Return on investment" position="right"></info-tooltip>
-      <br>
-      Net ROI: <strong>{{ investmentReturn - investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>
-      <info-tooltip text="Return on investment - amount invested" position="right"></info-tooltip>
+      <span *ngIf="investment.loanAmount">Loan amount: <strong>{{ loanAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong></span>
+
+      <div fxLayout="column" [class.color__accent]="investmentReturn >= investmentValueWhenBought" 
+          [class.color__red]="investmentReturn < investmentValueWhenBought">
+        
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+          <span>ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{investmentReturn / investmentValueWhenBought * 100 | number : '1.1-2'}}%)</span>
+          <info-tooltip text="Return on investment" position="right"></info-tooltip>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+          <span>Net ROI: <strong>{{ investmentReturn - investmentAmount - loanAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong></span>
+          <info-tooltip text="Return on investment - Amount invested - Loan amount" position="right"></info-tooltip>
+        </div>
+      </div>
     </div>
 
     <!-- Team -->

@@ -2,8 +2,8 @@
   <!-- Form  -->
   <form *ngIf="!getPropertyServiceRunning" class="form__container form__edit-property" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editPropertyForm="ngForm" 
       novalidate fxLayout="column" fxLayoutGap="10px">
+    
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
-
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <h3 class="title">
           <p class="header">Basic info</p>

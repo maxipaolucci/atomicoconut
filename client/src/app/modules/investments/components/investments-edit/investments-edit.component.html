@@ -72,7 +72,7 @@
                         #memberPercentage="ngModel">
 
                     <span matSuffix>%</span>
-                    <mat-hint align="start">Investment portion for {{member.name}}.</mat-hint>
+                    <mat-hint>Investment portion for {{member.name}}.</mat-hint>
                     <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.required">Percentage of investment is required.</mat-error>
                     <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
                     <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
@@ -107,7 +107,7 @@
                     numberValidator 
                     required
                     #investmentAmount="ngModel">
-                <mat-hint align="start">Set the amount of money to invest.</mat-hint>
+                <mat-hint>Set the amount of money invested (excluding loan amount)</mat-hint>
                 <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required">Investment amount is required.</mat-error>
                 <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
               </mat-form-field>
@@ -128,7 +128,7 @@
                     [value]="model.loanAmount"
                     numberValidator 
                     #loanAmount="ngModel">
-                <mat-hint align="start">Set the amount of money borrowed from a lender.</mat-hint>
+                <mat-hint>Set the amount of money borrowed</mat-hint>
                 <mat-error *ngIf="loanAmount.invalid && (loanAmount.dirty || loanAmount.touched) && loanAmount.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
               </mat-form-field>
             </div>

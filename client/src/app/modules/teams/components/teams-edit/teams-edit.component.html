@@ -1,5 +1,6 @@
 <div class="container__edit-team" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
-  <form *ngIf="!getTeamServiceRunning" class="form__container form__edit-team" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editTeamForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
+  <form *ngIf="!getTeamServiceRunning" class="form__container form__edit-team" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editTeamForm="ngForm" 
+      novalidate fxLayout="column" fxLayoutGap="10px">
     
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">

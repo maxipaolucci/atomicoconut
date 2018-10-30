@@ -76,7 +76,7 @@ export class PropertyInvestmentComponent implements OnInit {
         this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
         //the buying price (of the property) was requested on the date of the investment so we need to convert using that day rates
         this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
-        this.investmentReturn = this.currentPrice - this.loanAmount;
+        this.investmentReturn = this.currentPrice;
 
         return this.teams$;
       }
