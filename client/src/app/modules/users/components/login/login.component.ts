@@ -7,7 +7,7 @@ import {User} from '../../models/user';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'users-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

@@ -1,22 +1,32 @@
 @import '../../../../../variables';
 
-form {
+.container__login {
 
-  .form__actions {
-    height: auto;
-  
-    .fab, .progress-spinner {
-      position: relative;
+  form {
+
+    .form__actions {
+      
+    
+      .fab, .progress-spinner {
+        position: relative;
+      }
     }
   }
-}
+  
+  .form__login {
+  
+    .field__password .icon__suffix {
+      cursor: pointer;
+    }
+  }
 
-.form__login {
-
-  .field__password .icon__suffix {
-    cursor: pointer;
+  .container__new-account {
+    margin-top: 60px;
   }
 }
+
+
+
 
 @media screen and (min-width: $screenGtXs) {
   

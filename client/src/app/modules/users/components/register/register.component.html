@@ -13,7 +13,9 @@
             <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.required">Name is required</mat-error>
             <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.minlength">Name must contains more than 4 characters</mat-error>
           </mat-form-field>
-          
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Email -->
           <mat-form-field fxFlex class="form__field">
             <input matInput type="email" id="email" name="email" placeholder="Email address" 

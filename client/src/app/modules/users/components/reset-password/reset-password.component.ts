@@ -7,7 +7,7 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 import { AppService } from '../../../../app.service';
 
 @Component({
-  selector: 'app-reset-password',
+  selector: 'users-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
