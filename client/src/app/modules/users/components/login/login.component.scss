@@ -9,6 +9,16 @@
       .fab, .progress-spinner {
         position: relative;
       }
+
+      .fab {
+        transform: translate(-50%, 0);
+        right: auto;
+        left: 50%;
+      }
+
+      .progress-spinner {
+        left: -28%;
+      }
     }
   }
   
@@ -28,5 +38,5 @@
 
 
 @media screen and (min-width: $screenGtXs) {
-  
+
 }

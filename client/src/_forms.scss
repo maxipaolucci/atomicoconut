@@ -90,12 +90,22 @@
 }
 
 @media screen and (min-width: $screenGtSm) {
-  .form__actions {
-  
-    .fab, .progress-spinner {
-      right: auto;
-      left: 50%;
-      transform: translate(-50%, 0);
+  .form__container {
+    .form__actions {
+    
+      .fab, .progress-spinner {
+        right: auto;
+        left: 50%;
+      }
+
+      .fab {
+        transform: translate(-50%, 0);
+      }
+
+      .progress-spinner {
+        left: 48%;
+        
+      }
     }
   }
 }
