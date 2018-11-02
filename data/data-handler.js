@@ -13,9 +13,9 @@ if (!environment) {
 
 const mongoose = require('mongoose');
 if (environment === 'dev'){
-  mongoose.connect(process.env.DATABASE);
+  mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
 } else {
-  mongoose.connect(process.env[`DATABASE_${environment.toUpperCase()}`]);  
+  mongoose.connect(process.env[`DATABASE_${environment.toUpperCase()}`, { useNewUrlParser: true }]);  
 }
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 

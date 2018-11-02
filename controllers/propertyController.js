@@ -360,19 +360,19 @@ exports.delete = async (req, res) => {
                 writeResult = await deletePropertyTypeData(propertyTypeDataModel, propertyTypeDataId, user.email);
             }
             
-            if (writeResult && writeResult.result.n > 0) {
+            if (writeResult && writeResult.n > 0) {
                 writeResult = null;
                 console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Property', '_id', property._id)}`);
 
                 writeResult = await Property.remove({ _id : property._id });
-                if (writeResult && writeResult.result.n > 0) {
+                if (writeResult && writeResult.n > 0) {
                     //Success deleting property
                     console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Property')}`);
                     res.json({
                         status : 'success', 
                         codeno : 200,
                         msg : getMessage('message', 1039, null, false, 'Property'),
-                        data : { removed : writeResult.result.n }
+                        data : { removed : writeResult.n }
                     });
     
                     return;
@@ -439,8 +439,8 @@ const deletePropertyTypeData = async (model, id, userEmail) => {
     if (model.toLowerCase() === PROPERTY_TYPES.HOUSE) {
         writeResult = await House.remove({ _id : id });
     }
-    
-    if (writeResult && writeResult.result.n > 0) {
+
+    if (writeResult && writeResult.n > 0) {
         console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, model)}`);
     } else {
         console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, model, '_id', id)}`);

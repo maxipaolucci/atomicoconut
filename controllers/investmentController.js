@@ -579,18 +579,18 @@ exports.delete = async (req, res) => {
                 writeResult = await deletePropertyInvestment(investmentDataId, user.email);
             }
             
-            if (writeResult && writeResult.result.n > 0) {
+            if (writeResult && writeResult.n > 0) {
                 writeResult = null;
                 console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Investment', '_id', investment._id)}`);
                 writeResult = await Investment.remove({ _id : investment._id });
-                if (writeResult && writeResult.result.n > 0) {
+                if (writeResult && writeResult.n > 0) {
                     //Success deleting investment
                     console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Investment')}`);
                     res.json({
                         status : 'success', 
                         codeno : 200,
                         msg : getMessage('message', 1039, null, false, 'Investment'),
-                        data : { removed : writeResult.result.n }
+                        data : { removed : writeResult.n }
                     });
     
                     return;
@@ -652,7 +652,7 @@ const deleteCurrencyInvestment = async (id, userEmail) => {
     
     console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'CurrencyInvestment', '_id', id)}`);
     const writeResult = await CurrencyInvestment.remove({ _id : id });
-    if (writeResult && writeResult.result.n > 0) {
+    if (writeResult && writeResult.n > 0) {
         console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'CurrencyInvestment')}`);
     } else {
         console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, 'CurrencyInvestment', '_id', id)}`);
@@ -671,7 +671,7 @@ const deletePropertyInvestment = async (id, userEmail) => {
     
     console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'PropertyInvestment', '_id', id)}`);
     const writeResult = await PropertyInvestment.remove({ _id : id });
-    if (writeResult && writeResult.result.n > 0) {
+    if (writeResult && writeResult.n > 0) {
         console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'PropertyInvestment')}`);
     } else {
         console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, 'PropertyInvestment', '_id', id)}`);
