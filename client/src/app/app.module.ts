@@ -20,25 +20,27 @@ import { CalculatorsModule } from './modules/calculators/calculators.module';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { PropertiesModule } from './modules/properties/properties.module';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
     HttpClientModule,
     FlexLayoutModule,
     CustomMaterialDesignModule,
+    SharedModule,
     UsersModule,
     TeamsModule,
     InvestmentsModule,
     CalculatorsModule,
-    SharedModule,
-    PropertiesModule
+    PropertiesModule,
+    AppRoutingModule
   ],
   declarations: [
     AppComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    PageNotFoundComponent
   ],
   providers: [AppService, UtilService, CurrencyExchangeService, AuthResolver, AuthGuard],
   bootstrap: [AppComponent]
