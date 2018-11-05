@@ -422,8 +422,7 @@
       mode="indeterminate">
   </mat-progress-bar> -->
 
-  <progress-bar *ngIf="true || getPropertyServiceRunning"
-      extraClasses="progress-bar--get-property"
+  <progress-bar class="progress-bar--get-property" *ngIf="getPropertyServiceRunning"
       color="primary"
       message="Loading property info...">
   </progress-bar>
