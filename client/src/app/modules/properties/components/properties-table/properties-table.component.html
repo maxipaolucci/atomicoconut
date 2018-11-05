@@ -65,10 +65,9 @@
     
   </section>
   
-  <mat-progress-bar *ngIf="getPropertiesServiceRunning"
-    fxFlexAlign="center"
-    class="progress-bar progress-bar--get-properties"
-    color="primary"
-    mode="indeterminate">
-  </mat-progress-bar>
+  <progress-bar class="progress-bar--get-properties" *ngIf="getPropertiesServiceRunning"
+      color="primary"
+      message="Loading properties...">
+  </progress-bar>
+  
 </div>

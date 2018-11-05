@@ -55,12 +55,10 @@
     <!-- EOF Team Cards -->
   </section>
 
-  <mat-progress-bar *ngIf="getTeamsServiceRunning"
-      fxFlexAlign="center"
-      class="progress-bar progress-bar--get-teams"
+  <progress-bar class="progress-bar--get-teams" *ngIf="getTeamsServiceRunning"
       color="primary"
-      mode="indeterminate">
-  </mat-progress-bar>
+      message="Loading your teams...">
+  </progress-bar>
 
   <section fxLayout="column" fxLayoutAlign="start end" class="actions">
     <button mat-fab routerLink="create" color="primary" class="fab mat-elevation-z10" matTooltip="Create team" matTooltipPosition="left">

@@ -60,12 +60,10 @@
     
   </section>
 
-  <mat-progress-bar *ngIf="getInvestmentsServiceRunning"
-    fxFlexAlign="center"
-    class="progress-bar progress-bar--get-investments"
-    color="primary"
-    mode="indeterminate">
-  </mat-progress-bar>
+  <progress-bar class="progress-bar--get-investments" *ngIf="getInvestmentsServiceRunning"
+      color="primary"
+      message="Loading your investments...">
+  </progress-bar>
 
   <section fxLayout="column" fxLayoutAlign="start end" class="actions">
     <button mat-fab class="fab mat-elevation-z10" color="primary" matTooltip="Create new investment" matTooltipPosition="left" (click)="openNewInvestmentDialog()">

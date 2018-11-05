@@ -91,10 +91,9 @@
     
   </form>
 
-  <mat-progress-bar *ngIf="getTeamServiceRunning"
-      fxFlexAlign="center"
-      class="progress-bar progress-bar--get-team"
+  <progress-bar class="progress-bar--get-team" *ngIf="getTeamServiceRunning"
       color="primary"
-      mode="indeterminate">
-  </mat-progress-bar>
+      message="Loading team info...">
+  </progress-bar>
+  
 </div>

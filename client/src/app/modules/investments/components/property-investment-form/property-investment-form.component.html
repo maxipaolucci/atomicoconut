@@ -1,10 +1,9 @@
 <form class="form__container form__edit-property-investment" #editPropertyInvestmentForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
   
-  <mat-progress-bar *ngIf="getPropertyServiceRunning"
-    class="progress-bar progress-bar--get-property"
-    color="primary"
-    mode="indeterminate">
-  </mat-progress-bar>
+  <progress-bar class="progress-bar--get-property" *ngIf="getPropertyServiceRunning"
+      color="primary"
+      message="Loading property info...">
+  </progress-bar>
   
   <section *ngIf="!getPropertyServiceRunning" fxLayout="column" fxLayoutGap="10px" class="form__fields">
     

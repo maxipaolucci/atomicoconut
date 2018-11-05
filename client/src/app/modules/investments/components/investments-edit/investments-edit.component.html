@@ -2,12 +2,11 @@
   <form class="form__container form__edit-investment" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editInvestmentForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
     <div *ngIf="!getInvestmentServiceRunning">
       <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
-        
-        <mat-progress-bar *ngIf="getTeamsServiceRunning"
-          class="progress-bar progress-bar--get-teams"
+
+        <progress-bar class="progress-bar--get-teams" *ngIf="getTeamsServiceRunning"
           color="primary"
-          mode="indeterminate">
-        </mat-progress-bar>
+          message="Loading your teams...">
+        </progress-bar>
 
         <div *ngIf="teams.length && !getTeamsServiceRunning" fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
           <h3 class="title">
@@ -174,10 +173,8 @@
     <!-- <pre>{{model | json}}</pre> -->
   </form>
 
-  <mat-progress-bar *ngIf="getInvestmentServiceRunning"
-      fxFlexAlign="center"
-      class="progress-bar progress-bar--get-investment"
+  <progress-bar class="progress-bar--get-investment" *ngIf="getInvestmentServiceRunning"
       color="primary"
-      mode="indeterminate">
-  </mat-progress-bar>
+      message="Loading investment info...">
+  </progress-bar>
 </div>
