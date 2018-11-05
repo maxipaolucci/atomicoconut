@@ -15,6 +15,7 @@ import { AddressAutocompleteComponent } from './components/address-autocomplete/
 import { DynamicMapComponent } from './components/dynamic-map/dynamic-map.component';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from '../../../environments/environment';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { environment } from '../../../environments/environment';
     NumberValidatorDirective,
     InfoTooltipComponent,
     AddressAutocompleteComponent,
-    DynamicMapComponent
+    DynamicMapComponent,
+    ProgressBarComponent
   ],
   exports: [ 
     MainNavigatorComponent, 
@@ -48,7 +50,8 @@ import { environment } from '../../../environments/environment';
     NumberValidatorDirective,
     InfoTooltipComponent,
     AddressAutocompleteComponent,
-    DynamicMapComponent
+    DynamicMapComponent,
+    ProgressBarComponent
   ],
   entryComponents: [
     YesNoDialogComponent, //added as material doc suggest to allow AOT on this on the fly created class

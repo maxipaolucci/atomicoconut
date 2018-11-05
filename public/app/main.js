@@ -6369,6 +6369,74 @@ var MainNavigatorService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/modules/shared/components/progress-bar/progress-bar.component.html":
+/*!************************************************************************************!*\
+  !*** ./src/app/modules/shared/components/progress-bar/progress-bar.component.html ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\">\n  <mat-progress-bar \n      fxFlexAlign=\"center\"\n      class=\"progress-bar\"\n      color=\"primary\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n  <p *ngIf=\"message\">{{ message }}</p>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/modules/shared/components/progress-bar/progress-bar.component.scss":
+/*!************************************************************************************!*\
+  !*** ./src/app/modules/shared/components/progress-bar/progress-bar.component.scss ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvc2hhcmVkL2NvbXBvbmVudHMvcHJvZ3Jlc3MtYmFyL3Byb2dyZXNzLWJhci5jb21wb25lbnQuc2NzcyJ9 */"
+
+/***/ }),
+
+/***/ "./src/app/modules/shared/components/progress-bar/progress-bar.component.ts":
+/*!**********************************************************************************!*\
+  !*** ./src/app/modules/shared/components/progress-bar/progress-bar.component.ts ***!
+  \**********************************************************************************/
+/*! exports provided: ProgressBarComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProgressBarComponent", function() { return ProgressBarComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ProgressBarComponent = /** @class */ (function () {
+    function ProgressBarComponent() {
+        this.message = "";
+    }
+    ProgressBarComponent.prototype.ngOnInit = function () {
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], ProgressBarComponent.prototype, "message", void 0);
+    ProgressBarComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-progress-bar',
+            template: __webpack_require__(/*! ./progress-bar.component.html */ "./src/app/modules/shared/components/progress-bar/progress-bar.component.html"),
+            styles: [__webpack_require__(/*! ./progress-bar.component.scss */ "./src/app/modules/shared/components/progress-bar/progress-bar.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ProgressBarComponent);
+    return ProgressBarComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html":
 /*!******************************************************************************************!*\
   !*** ./src/app/modules/shared/components/snackbar-simple/snackbar-simple.component.html ***!
@@ -6792,12 +6860,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_dynamic_map_dynamic_map_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/dynamic-map/dynamic-map.component */ "./src/app/modules/shared/components/dynamic-map/dynamic-map.component.ts");
 /* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _components_progress_bar_progress_bar_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/progress-bar/progress-bar.component */ "./src/app/modules/shared/components/progress-bar/progress-bar.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -6840,7 +6910,8 @@ var SharedModule = /** @class */ (function () {
                 _directives_number_validator_directive__WEBPACK_IMPORTED_MODULE_11__["NumberValidatorDirective"],
                 _components_info_tooltip_info_tooltip_component__WEBPACK_IMPORTED_MODULE_12__["InfoTooltipComponent"],
                 _components_address_autocomplete_address_autocomplete_component__WEBPACK_IMPORTED_MODULE_13__["AddressAutocompleteComponent"],
-                _components_dynamic_map_dynamic_map_component__WEBPACK_IMPORTED_MODULE_14__["DynamicMapComponent"]
+                _components_dynamic_map_dynamic_map_component__WEBPACK_IMPORTED_MODULE_14__["DynamicMapComponent"],
+                _components_progress_bar_progress_bar_component__WEBPACK_IMPORTED_MODULE_17__["ProgressBarComponent"]
             ],
             exports: [
                 _components_main_navigator_main_navigator_component__WEBPACK_IMPORTED_MODULE_5__["MainNavigatorComponent"],
@@ -6851,7 +6922,8 @@ var SharedModule = /** @class */ (function () {
                 _directives_number_validator_directive__WEBPACK_IMPORTED_MODULE_11__["NumberValidatorDirective"],
                 _components_info_tooltip_info_tooltip_component__WEBPACK_IMPORTED_MODULE_12__["InfoTooltipComponent"],
                 _components_address_autocomplete_address_autocomplete_component__WEBPACK_IMPORTED_MODULE_13__["AddressAutocompleteComponent"],
-                _components_dynamic_map_dynamic_map_component__WEBPACK_IMPORTED_MODULE_14__["DynamicMapComponent"]
+                _components_dynamic_map_dynamic_map_component__WEBPACK_IMPORTED_MODULE_14__["DynamicMapComponent"],
+                _components_progress_bar_progress_bar_component__WEBPACK_IMPORTED_MODULE_17__["ProgressBarComponent"]
             ],
             entryComponents: [
                 _components_yes_no_dialog_yes_no_dialog_component__WEBPACK_IMPORTED_MODULE_8__["YesNoDialogComponent"],
