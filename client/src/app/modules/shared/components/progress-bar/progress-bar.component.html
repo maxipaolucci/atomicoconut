@@ -1,0 +1,9 @@
+<div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start center">
+  <mat-progress-bar 
+      class="progress-bar"
+      [ngClass]="extraClasses"
+      [color]="color"
+      mode="indeterminate">
+  </mat-progress-bar>
+  <p *ngIf="message">{{ message }}</p>
+</div>

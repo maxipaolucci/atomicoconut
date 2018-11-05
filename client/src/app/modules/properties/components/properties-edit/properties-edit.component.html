@@ -415,12 +415,18 @@
   </section>
   <!-- <pre>{{model | json}}</pre> -->
 
-  <mat-progress-bar *ngIf="getPropertyServiceRunning"
+  <!-- <mat-progress-bar *ngIf="getPropertyServiceRunning"
       fxFlexAlign="center"
       class="progress-bar progress-bar--get-property"
       color="primary"
       mode="indeterminate">
-  </mat-progress-bar>
+  </mat-progress-bar> -->
+
+  <progress-bar *ngIf="getPropertyServiceRunning"
+      [extraClasses]="progress-bar--get-property"
+      [color]="primary"
+      [message]="Loading property info...">
+  </progress-bar>
 
   <section *ngIf="!getPropertyServiceRunning" 
       fxLayout="column" 
