@@ -6434,7 +6434,7 @@ var ProgressBarComponent = /** @class */ (function () {
     ], ProgressBarComponent.prototype, "extraClasses", void 0);
     ProgressBarComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-progress-bar',
+            selector: 'progress-bar',
             template: __webpack_require__(/*! ./progress-bar.component.html */ "./src/app/modules/shared/components/progress-bar/progress-bar.component.html"),
             styles: [__webpack_require__(/*! ./progress-bar.component.scss */ "./src/app/modules/shared/components/progress-bar/progress-bar.component.scss")]
         }),
