@@ -7642,12 +7642,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_teams_edit_teams_edit_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/teams-edit/teams-edit.component */ "./src/app/modules/teams/components/teams-edit/teams-edit.component.ts");
 /* harmony import */ var _teams_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./teams.service */ "./src/app/modules/teams/teams.service.ts");
 /* harmony import */ var _components_add_person_to_team_dialog_add_person_to_team_dialog_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/add-person-to-team-dialog/add-person-to-team-dialog.component */ "./src/app/modules/teams/components/add-person-to-team-dialog/add-person-to-team-dialog.component.ts");
+/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/modules/shared/shared.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -7668,7 +7670,8 @@ var TeamsModule = /** @class */ (function () {
                 _teams_routing_module__WEBPACK_IMPORTED_MODULE_4__["TeamsRoutingModule"],
                 _modules_shared_custom_material_design_module__WEBPACK_IMPORTED_MODULE_6__["CustomMaterialDesignModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
-                _angular_flex_layout__WEBPACK_IMPORTED_MODULE_3__["FlexLayoutModule"]
+                _angular_flex_layout__WEBPACK_IMPORTED_MODULE_3__["FlexLayoutModule"],
+                _shared_shared_module__WEBPACK_IMPORTED_MODULE_10__["SharedModule"]
             ],
             declarations: [
                 _components_teams_dashboard_teams_dashboard_component__WEBPACK_IMPORTED_MODULE_5__["TeamsDashboardComponent"],

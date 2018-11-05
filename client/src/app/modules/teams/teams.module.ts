@@ -8,6 +8,7 @@ import { CustomMaterialDesignModule } from '../../modules/shared/custom-material
 import { TeamsEditComponent } from './components/teams-edit/teams-edit.component';
 import { TeamsService } from './teams.service';
 import { AddPersonToTeamDialogComponent } from './components/add-person-to-team-dialog/add-person-to-team-dialog.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { AddPersonToTeamDialogComponent } from './components/add-person-to-team-
     TeamsRoutingModule,
     CustomMaterialDesignModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    SharedModule
   ],
   declarations: [
     TeamsDashboardComponent, 
