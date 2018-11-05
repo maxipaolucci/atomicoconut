@@ -33,7 +33,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   //services flags
   editPropertyServiceRunning : boolean = false;
   getPropertyServiceRunning : boolean = false;
-  
+  showPropertyFiguresDialogSpinner : boolean = false;
+
   //models
   model : any = {
     id : null,
@@ -315,7 +316,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   openHouseResultsFiguresDialog() {
     const methodTrace = `${this.constructor.name} > openHouseResultsFiguresDialog() > `; //for debugging
       
-    
+    this.showPropertyFiguresDialogSpinner = true;
     let houseFiguresDialogRef = this.dialog.open(HouseFiguresDialogComponent, {
       data: {
         model : this.model,
@@ -326,6 +327,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     const newSubscription = houseFiguresDialogRef.afterClosed().subscribe(modelHouseFiguresResults => {
       if (modelHouseFiguresResults) {
         this.modelHouseFiguresResults = modelHouseFiguresResults;
+        this.showPropertyFiguresDialogSpinner = false;
       }
     });
     this.subscription.add(newSubscription); 

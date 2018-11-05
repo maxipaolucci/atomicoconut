@@ -139,7 +139,6 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
 
     //map the index in the table to the indes in the properties array
     let index = indexInPage + this.propertiesTablePaginator.pageIndex * this.propertiesTablePaginator.pageSize;
-    console.log(index);
     if (this.propertiesSort.direction === 'desc') {
       index = (-1) * (index + 1); //add one to index and invert sign
     }

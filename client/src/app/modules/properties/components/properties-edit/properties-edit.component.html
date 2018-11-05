@@ -426,10 +426,18 @@
       fxLayout="column" 
       fxHide.gt-sm="true" 
       class="actions">
-    <button mat-mini-fab class="mini-fab mat-elevation-z10" color="primary" 
+    
+    <button mat-mini-fab class="mini-fab mat-elevation-z10" color="primary" *ngIf="!showPropertyFiguresDialogSpinner"
         matTooltip="Show figures" matTooltipPosition="left" 
         (click)="openHouseResultsFiguresDialog()">
-      <mat-icon aria-label="Create new investemt">attach_money</mat-icon>
+      <mat-icon aria-label="Show property figures">attach_money</mat-icon>
     </button>
+
+    <mat-progress-spinner *ngIf="showPropertyFiguresDialogSpinner"
+        class="progress-spinner progress-spinner--open-dialog"
+        color="warn"
+        [diameter]="40" [strokeWidth]="7"
+        mode="indeterminate">
+    </mat-progress-spinner>
   </section>
 </div>
