@@ -423,9 +423,9 @@
   </mat-progress-bar> -->
 
   <progress-bar *ngIf="getPropertyServiceRunning"
-      [extraClasses]="progress-bar--get-property"
-      [color]="primary"
-      [message]="Loading property info...">
+      [extraClasses]="'progress-bar--get-property'"
+      [color]="'primary'"
+      [message]="'Loading property info...'">
   </progress-bar>
 
   <section *ngIf="!getPropertyServiceRunning" 
