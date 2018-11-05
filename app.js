@@ -80,12 +80,12 @@ app.use((req, res, next) => {
 // });
 
 // After allllll that above middleware, we finally handle our own routes!
-app.use('/', routes);
 app.use('/api/users', usersRoutes);
 app.use('/api/teams', teamsRoutes);
 app.use('/api/investments', investmentsRoutes);
 app.use('/api/properties', propertiesRoutes);
 app.use('/api/currencyRates', currencyRatesRoutes);
+app.use('/', routes); //this one at the end cause it contains the wildcard if the requested route does not match any route declared before
 
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);
