@@ -137,7 +137,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
           }
         }
 
-        this.currencyExchangeService.getCurrencyRates(investmentsDates); //lets retrieve investment dates for future usage in each investment
+        this.currencyExchangeService.getCurrencyRates$(investmentsDates); //lets retrieve investment dates for future usage in each investment
 
         if (investmentsRow.length) {
           this.investmentsUI.push(investmentsRow);

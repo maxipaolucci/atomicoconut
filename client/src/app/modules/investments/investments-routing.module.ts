@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { InvestmentsDashboardComponent } from './components/investments-dashboard/investments-dashboard.component';
 import { InvestmentsEditComponent } from './components/investments-edit/investments-edit.component';
-import { AuthGuard } from '../../auth.guard';
 import { AuthResolver } from '../../auth-resolver.service';
 
 const routes: Routes = [

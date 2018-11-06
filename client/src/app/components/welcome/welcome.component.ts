@@ -54,7 +54,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         return this.utilService.formatToday(); //this should never happen. BuyingDate is required in investments
       });
       
-      return this.currencyExchangeService.getCurrencyRates(investmentsDates);
+      return this.currencyExchangeService.getCurrencyRates$(investmentsDates);
     })).subscribe(currencyRates => {
       //iterate investments and sum returns using dated rates.
       for (let investment of currentUserInvestments) {
@@ -69,7 +69,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
                 * myPercentage / 100;
             this.calculateProgressBarWealthValue();
           } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
-            this.currencyExchangeService.getCryptoRates(currencyInvestment.unit).pipe(take(1)).subscribe((rates) => {
+            this.currencyExchangeService.getCryptoRates$(currencyInvestment.unit).pipe(take(1)).subscribe((rates) => {
               this.wealthAmount += ((currencyInvestment.amount * rates.price) 
                   - (currencyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(currencyInvestment.buyingDate)][`USD${currencyInvestment.loanAmountUnit}`] || 1)))
                   * myPercentage / 100;

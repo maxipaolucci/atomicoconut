@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
       this.user = user;
 
       if (this.user && this.user.currency && this.user.currency !== 'USD') {
-        return this.currencyExchangeService.getCurrencyRates();
+        return this.currencyExchangeService.getCurrencyRates$();
       }
 
       return of(null); // is the user had not configure a preferred currency then we don't need to show the currency toolbar
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
   getCryptoRates(crypto: string = 'BTC') {
     const methodTrace = `${this.constructor.name} > getCryptoRates() > `; // for debugging
 
-    this.currencyExchangeService.getCryptoRates(crypto).subscribe(
+    this.currencyExchangeService.getCryptoRates$(crypto).subscribe(
       (data: any) => {
         this.appService.consoleLog('info', `${methodTrace} ${crypto} exchange rate successfully loaded!`);
       },

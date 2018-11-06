@@ -381,7 +381,7 @@ var AppComponent = /** @class */ (function () {
         this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["switchMap"])(function (user) {
             _this.user = user;
             if (_this.user && _this.user.currency && _this.user.currency !== 'USD') {
-                return _this.currencyExchangeService.getCurrencyRates();
+                return _this.currencyExchangeService.getCurrencyRates$();
             }
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_8__["of"])(null); // is the user had not configure a preferred currency then we don't need to show the currency toolbar
         })).subscribe(function (currencyRates) {
@@ -403,7 +403,7 @@ var AppComponent = /** @class */ (function () {
         var _this = this;
         if (crypto === void 0) { crypto = 'BTC'; }
         var methodTrace = this.constructor.name + " > getCryptoRates() > "; // for debugging
-        this.currencyExchangeService.getCryptoRates(crypto).subscribe(function (data) {
+        this.currencyExchangeService.getCryptoRates$(crypto).subscribe(function (data) {
             _this.appService.consoleLog('info', methodTrace + " " + crypto + " exchange rate successfully loaded!");
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + crypto + " rates data > " + error);
@@ -1065,7 +1065,7 @@ var WelcomeComponent = /** @class */ (function () {
                 }
                 return _this.utilService.formatToday(); //this should never happen. BuyingDate is required in investments
             });
-            return _this.currencyExchangeService.getCurrencyRates(investmentsDates);
+            return _this.currencyExchangeService.getCurrencyRates$(investmentsDates);
         })).subscribe(function (currencyRates) {
             var _loop_1 = function (investment) {
                 var myPercentage = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
@@ -1078,7 +1078,7 @@ var WelcomeComponent = /** @class */ (function () {
                         _this.calculateProgressBarWealthValue();
                     }
                     else if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_12__["INVESTMENTS_TYPES"].CRYPTO) {
-                        _this.currencyExchangeService.getCryptoRates(currencyInvestment_1.unit).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["take"])(1)).subscribe(function (rates) {
+                        _this.currencyExchangeService.getCryptoRates$(currencyInvestment_1.unit).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["take"])(1)).subscribe(function (rates) {
                             _this.wealthAmount += ((currencyInvestment_1.amount * rates.price)
                                 - (currencyInvestment_1.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment_1.buyingDate)]["USD" + currencyInvestment_1.loanAmountUnit] || 1)))
                                 * myPercentage / 100;
@@ -2073,14 +2073,14 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
         //get the team of the investmetn if exists
         var newSubscription = null;
-        var currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
+        var currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
         var currencyRatesAndUser$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(currencyRates$, function (user, currencyRates) {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
         })); //(currency rates and user) source
         if (this.investment.type === _constants__WEBPACK_IMPORTED_MODULE_11__["INVESTMENTS_TYPES"].CRYPTO) {
             //crypto investment
-            var cryptoRates$ = this.currencyExchangeService.getCryptoRates(this.investment.unit); //get crypto rates observable source
+            var cryptoRates$ = this.currencyExchangeService.getCryptoRates$(this.investment.unit); //get crypto rates observable source
             newSubscription = cryptoRates$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(currencyRatesAndUser$, function (cryptoRates, currencyRatesAndUser) {
                 return {
                     currencyRates: currencyRatesAndUser.currencyRates,
@@ -2514,7 +2514,7 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                     investmentsDates.push(_this.utilService.formatDate(item.buyingDate, 'YYYY-MM-DD'));
                 }
             }
-            _this.currencyExchangeService.getCurrencyRates(investmentsDates); //lets retrieve investment dates for future usage in each investment
+            _this.currencyExchangeService.getCurrencyRates$(investmentsDates); //lets retrieve investment dates for future usage in each investment
             if (investmentsRow.length) {
                 _this.investmentsUI.push(investmentsRow);
             }
@@ -3413,7 +3413,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         }
         //get the team of the investmetn if exists
         var newSubscription = null;
-        var currencyRates$ = this.currencyExchangeService.getCurrencyRates([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
+        var currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
         var currencyRatesAndUser$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["combineLatest"])(currencyRates$, function (user, currencyRates) {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
@@ -3609,16 +3609,13 @@ var CurrencyExchangeService = /** @class */ (function () {
         this.utilService = utilService;
         this.cryptoExchangeServerUrl = 'https://coincap.io/page/';
         this.cryptoRates = {};
-        this.currencyExchangeServiceUrl = 'https://api.fixer.io/latest';
         this.currencyRates = {};
         this.serverHost = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].apiHost + '/api/currencyRates';
-        this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpHeaders"]().set('Content-Type', 'application/json');
     }
-    CurrencyExchangeService.prototype.getCurrencyRates = function (dates, base) {
+    CurrencyExchangeService.prototype.getCurrencyRates$ = function (dates, base) {
         var _this = this;
         if (dates === void 0) { dates = []; }
         if (base === void 0) { base = 'USD'; }
-        var methodTrace = this.constructor.name + " > getCurrencyRates() > "; //for debugging
         dates.push(this.utilService.formatToday('YYYY-MM-DD')); //adds today to the array
         //check if all the required dates are already cached in this service
         var found = true;
@@ -3645,17 +3642,16 @@ var CurrencyExchangeService = /** @class */ (function () {
             return _this.currencyRates;
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.appService.handleError), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["retry"])(3));
     };
-    CurrencyExchangeService.prototype.getCryptoRates = function (crypto) {
+    CurrencyExchangeService.prototype.getCryptoRates$ = function (crypto) {
         var _this = this;
         if (crypto === void 0) { crypto = 'BTC'; }
-        var methodTrace = this.constructor.name + " > getCryptoRates() > "; //for debugging
         if (this.cryptoRates[crypto.toUpperCase()]) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.cryptoRates[crypto.toUpperCase()]);
         }
-        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase());
-        Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["pipe"])(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (res) {
+        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase())
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (res) {
             _this.cryptoRates[crypto.toUpperCase()] = _this.extractCryptoExchangeData(crypto, res);
-            return _this.cryptoRates[crypto.toUpperCase()];
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(_this.cryptoRates[crypto.toUpperCase()]);
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.appService.handleError));
     };
     CurrencyExchangeService.prototype.extractCryptoExchangeData = function (crypto, res) {
@@ -7062,6 +7058,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
 /* harmony import */ var _shared_components_yes_no_dialog_yes_no_dialog_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../shared/components/yes-no-dialog/yes-no-dialog.component */ "./src/app/modules/shared/components/yes-no-dialog/yes-no-dialog.component.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7071,6 +7068,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -7104,24 +7102,17 @@ var TeamsDashboardComponent = /** @class */ (function () {
         this.route.data.subscribe(function (data) {
             _this.user = data.authUser;
         });
-        if (!this.teams.length) {
-            this.getTeams();
-        }
-    };
-    TeamsDashboardComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
-        this.subscription.unsubscribe();
-    };
-    /**
-     * Get my teams from server
-     */
-    TeamsDashboardComponent.prototype.getTeams = function () {
-        var _this = this;
-        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
-        this.teams = [];
-        this.getTeamsServiceRunning = true;
-        var newSubscription = this.teamsService.getTeams(this.user.email).subscribe(function (teams) {
+        //generates a user source object from authUser from resolver
+        var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (data) { return data.authUser; }));
+        var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["switchMap"])(function (user) {
+            _this.user = user;
+            if (!_this.teams.length) {
+                return _this.getTeams$();
+            }
+            else {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["from"])(_this.teams);
+            }
+        })).subscribe(function (teams) {
             _this.teams = teams;
             _this.teamActionRunning = new Array(teams.length).fill(false);
             _this.getTeamsServiceRunning = false;
@@ -7136,6 +7127,22 @@ var TeamsDashboardComponent = /** @class */ (function () {
             _this.getTeamsServiceRunning = false;
         });
         this.subscription.add(newSubscription);
+    };
+    TeamsDashboardComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
+        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    /**
+     * Get a teams observable from server
+     *
+     * @return { Observable<Team[]> }
+     */
+    TeamsDashboardComponent.prototype.getTeams$ = function () {
+        var methodTrace = this.constructor.name + " > getTeams$() > "; //for debugging
+        this.teams = [];
+        this.getTeamsServiceRunning = true;
+        return this.teamsService.getTeams(this.user.email);
     };
     TeamsDashboardComponent.prototype.openDeleteTeamDialog = function (index, team) {
         var _this = this;

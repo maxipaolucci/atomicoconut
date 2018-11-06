@@ -7,8 +7,9 @@ import { AppService } from "../../../../app.service";
 import { Team } from '../../models/team';
 import { User } from '../../../users/models/user';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, from } from 'rxjs';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-teams-dashboard',
@@ -38,29 +39,21 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     this.route.data.subscribe((data: { authUser: User }) => {
       this.user = data.authUser;
     });
+    //generates a user source object from authUser from resolver
+    const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
     
-    if (!this.teams.length) {
-      this.getTeams();
-    }
-  }
+    
+    const newSubscription = user$.pipe(
+      switchMap((user : User) : Observable<any> => {
+        this.user = user;
 
-  ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
-
-    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
-    this.subscription.unsubscribe();
-  }
-
-  /**
-   * Get my teams from server
-   */
-  getTeams() {
-    const methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
-
-    this.teams = [];
-    this.getTeamsServiceRunning = true;
-
-    const newSubscription = this.teamsService.getTeams(this.user.email).subscribe(
+        if (!this.teams.length) {
+          return this.getTeams$();
+        } else {
+          return from(this.teams);
+        }
+      })
+    ).subscribe(
       (teams : Team[]) => {
         this.teams = teams;
         this.teamActionRunning = new Array(teams.length).fill(false);
@@ -77,8 +70,29 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
         this.getTeamsServiceRunning = false;
       }
     );
-
+    
     this.subscription.add(newSubscription);
+  }
+
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+
+    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
+  }
+
+  /**
+   * Get a teams observable from server
+   * 
+   * @return { Observable<Team[]> }
+   */
+  getTeams$() : Observable<Team[]> {
+    const methodTrace = `${this.constructor.name} > getTeams$() > `; //for debugging
+
+    this.teams = [];
+    this.getTeamsServiceRunning = true;
+
+    return  this.teamsService.getTeams(this.user.email);
   }
 
   openDeleteTeamDialog(index : number, team : Team = null) {

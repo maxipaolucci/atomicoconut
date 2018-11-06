@@ -53,7 +53,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
       combineLatest(slug$, (user, slug) => { 
         return { user, teamSlug : slug } 
       }), 
-      switchMap((data) => {
+      switchMap((data : any) => {
         this.user = data.user;
         this.model.email = data.user.email;
 
