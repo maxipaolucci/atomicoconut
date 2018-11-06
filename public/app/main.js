@@ -7122,13 +7122,8 @@ var TeamsDashboardComponent = /** @class */ (function () {
         this.teams = [];
         this.getTeamsServiceRunning = true;
         var newSubscription = this.teamsService.getTeams(this.user.email).subscribe(function (teams) {
-            //let index = 0;
             _this.teams = teams;
             _this.teamActionRunning = new Array(teams.length).fill(false);
-            // for (let item of teams) {
-            //   this.teamActionRunning[index] = false;
-            //   index += 1;
-            // }
             _this.getTeamsServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
@@ -7314,7 +7309,7 @@ var TeamsEditComponent = /** @class */ (function () {
         //combine user$ and id$ sources into one object and start listen to it for changes
         this.subscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(slug$, function (user, slug) {
             return { user: user, teamSlug: slug };
-        })).subscribe(function (data) {
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (data) {
             _this.user = data.user;
             _this.model.email = data.user.email;
             _this.editTeamServiceRunning = false;
@@ -7324,6 +7319,7 @@ var TeamsEditComponent = /** @class */ (function () {
                 _this.slug = null;
                 _this.editMode = false;
                 _this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected: true });
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["of"])(null);
             }
             else {
                 if (_this.slug) {
@@ -7336,9 +7332,46 @@ var TeamsEditComponent = /** @class */ (function () {
                 //we are editing an existing investment
                 _this.slug = data.teamSlug; //the new slug
                 _this.editMode = true;
-                _this.getTeam(data.teamSlug); //get data
+                return _this.getTeam$(data.teamSlug); //get data
             }
+        })).subscribe(function (data) {
+            if (data && data.slug) {
+                _this.populateTeam(data);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            _this.getTeamServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 461 || error.codeno === 462) {
+                _this.appService.showResults(error.msg, 'error');
+                _this.router.navigate(['/welcome']);
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getTeamServiceRunning = false;
         });
+    };
+    /**
+     * Get a team observable from server based on the slug provided
+     * @param {string} slug
+     *
+     * @return {Observable<any>} teams source
+     */
+    TeamsEditComponent.prototype.getTeam$ = function (slug) {
+        var methodTrace = this.constructor.name + " > getTeam$() > "; //for debugging
+        if (!slug) {
+            this.appService.showResults("Invalid team ID", 'error');
+            this.appService.consoleLog('error', methodTrace + " Slug parameter must be provided, but was: ", slug);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["of"])(false);
+        }
+        this.getTeamServiceRunning = true;
+        return this.teamsService.getMyTeamBySlug(this.user.email, slug);
     };
     TeamsEditComponent.prototype.ngOnDestroy = function () {
         var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
@@ -7427,43 +7460,6 @@ var TeamsEditComponent = /** @class */ (function () {
                 _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
             _this.editTeamServiceRunning = false;
-        });
-        this.subscription.add(newSubscription);
-    };
-    /**
-     * Get a team from server based on the slug provided
-     * @param {string} slug
-     */
-    TeamsEditComponent.prototype.getTeam = function (slug) {
-        var _this = this;
-        var methodTrace = this.constructor.name + " > getTeam() > "; //for debugging
-        if (!slug) {
-            this.appService.showResults("Invalid team ID", 'error');
-            this.appService.consoleLog('error', methodTrace + " Slug parameter must be provided, but was: ", slug);
-            return false;
-        }
-        this.getTeamServiceRunning = true;
-        var newSubscription = this.teamsService.getMyTeamBySlug(this.user.email, slug).subscribe(function (data) {
-            if (data && data.slug) {
-                _this.populateTeam(data);
-            }
-            else {
-                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
-            }
-            _this.getTeamServiceRunning = false;
-        }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
-            if (error.codeno === 400) {
-                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
-            }
-            else if (error.codeno === 461 || error.codeno === 462) {
-                _this.appService.showResults(error.msg, 'error');
-                _this.router.navigate(['/welcome']);
-            }
-            else {
-                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
-            }
-            _this.getTeamServiceRunning = false;
         });
         this.subscription.add(newSubscription);
     };

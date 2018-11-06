@@ -7,8 +7,8 @@ import { User } from '../../../users/models/user';
 import { TeamsService } from '../../teams.service';
 import { AppService } from "../../../../app.service";
 import { Team } from '../../models/team';
-import { Subscription } from 'rxjs';
-import { map, combineLatest } from 'rxjs/operators';
+import { Subscription, of, Observable } from 'rxjs';
+import { map, combineLatest, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-teams-edit',
@@ -49,34 +49,79 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     const slug$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('slug')));
 
     //combine user$ and id$ sources into one object and start listen to it for changes
-    this.subscription = user$.pipe(combineLatest(slug$, (user, slug) => { 
-      return { user, teamSlug : slug } 
-    })).subscribe(data => {
-      this.user = data.user;
-      this.model.email = data.user.email;
+    this.subscription = user$.pipe(
+      combineLatest(slug$, (user, slug) => { 
+        return { user, teamSlug : slug } 
+      }), 
+      switchMap((data) => {
+        this.user = data.user;
+        this.model.email = data.user.email;
 
-      this.editTeamServiceRunning = false;
-      this.getTeamServiceRunning = false;
-      
-      if (!data.teamSlug) {
-        //we are creating a new team
-        this.slug = null;
-        this.editMode = false;
-        this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
-      } else {
-        if (this.slug) {
-          //if this is true means the user updated the name and we refresh the page to update the slug in the url
-          //in this case we don't want to append the edit team link to the navigation component because it is already there.
-        } else {
-          this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
-        }
-        //we are editing an existing investment
-        this.slug = data.teamSlug; //the new slug
-        this.editMode = true;
+        this.editTeamServiceRunning = false;
+        this.getTeamServiceRunning = false;
         
-        this.getTeam(data.teamSlug); //get data
+        if (!data.teamSlug) {
+          //we are creating a new team
+          this.slug = null;
+          this.editMode = false;
+          this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
+          return of(null);
+        } else {
+          if (this.slug) {
+            //if this is true means the user updated the name and we refresh the page to update the slug in the url
+            //in this case we don't want to append the edit team link to the navigation component because it is already there.
+          } else {
+            this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
+          }
+          //we are editing an existing investment
+          this.slug = data.teamSlug; //the new slug
+          this.editMode = true;
+          
+          return this.getTeam$(data.teamSlug); //get data
+        }
+      })
+    ).subscribe((data : any) => {
+      if (data && data.slug) {
+        this.populateTeam(data);
+      } else {
+        this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
       }
+
+      this.getTeamServiceRunning = false;
+    },
+    (error : any) => {
+      this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+      if (error.codeno === 400) {
+        this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+      } else if (error.codeno === 461 || error.codeno === 462) {
+        this.appService.showResults(error.msg, 'error');
+        this.router.navigate(['/welcome']);
+      } else {
+        this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+      }
+
+      this.getTeamServiceRunning = false;
     });
+  }
+
+  /**
+   * Get a team observable from server based on the slug provided
+   * @param {string} slug 
+   * 
+   * @return {Observable<any>} teams source
+   */
+  getTeam$(slug : string) : Observable<any> {
+    const methodTrace = `${this.constructor.name} > getTeam$() > `; //for debugging
+
+    if (!slug) {
+      this.appService.showResults(`Invalid team ID`, 'error');
+      this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
+      return of(false);
+    }
+
+    this.getTeamServiceRunning = true;
+
+    return this.teamsService.getMyTeamBySlug(this.user.email, slug);
   }
 
   ngOnDestroy() {
@@ -179,49 +224,6 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
         }
 
         this.editTeamServiceRunning = false;
-      }
-    );
-
-    this.subscription.add(newSubscription);
-  }
-
-  /**
-   * Get a team from server based on the slug provided
-   * @param {string} slug 
-   */
-  getTeam(slug : string) {
-    const methodTrace = `${this.constructor.name} > getTeam() > `; //for debugging
-
-    if (!slug) {
-      this.appService.showResults(`Invalid team ID`, 'error');
-      this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
-      return false;
-    }
-
-    this.getTeamServiceRunning = true;
-
-    const newSubscription = this.teamsService.getMyTeamBySlug(this.user.email, slug).subscribe(
-      (data : any) => {
-        if (data && data.slug) {
-          this.populateTeam(data);
-        } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-        }
-
-        this.getTeamServiceRunning = false;
-      },
-      (error : any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-        } else if (error.codeno === 461 || error.codeno === 462) {
-          this.appService.showResults(error.msg, 'error');
-          this.router.navigate(['/welcome']);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-        }
-
-        this.getTeamServiceRunning = false;
       }
     );
 

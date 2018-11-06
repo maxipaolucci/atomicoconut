@@ -62,15 +62,8 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
     const newSubscription = this.teamsService.getTeams(this.user.email).subscribe(
       (teams : Team[]) => {
-        //let index = 0;
         this.teams = teams;
         this.teamActionRunning = new Array(teams.length).fill(false);
-        
-        // for (let item of teams) {
-        //   this.teamActionRunning[index] = false;
-        //   index += 1;
-        // }
-
         this.getTeamsServiceRunning = false;
       },
       (error : any) => {
