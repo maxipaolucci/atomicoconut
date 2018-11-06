@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
 
   public model : any = {name : '', email : '', password : '', 'password-confirm' : ''};
   public registerServiceRunning : boolean = false;
+  showPassword : boolean = false;
   
   constructor(private usersService : UsersService, private appService : AppService, private router : Router,
       private mainNavigatorService : MainNavigatorService) {}

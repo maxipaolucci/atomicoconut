@@ -15,6 +15,8 @@
                 required 
                 email
                 #email="ngModel">
+
+            <mat-icon matPrefix>email</mat-icon>
             <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
             <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
           </mat-form-field>

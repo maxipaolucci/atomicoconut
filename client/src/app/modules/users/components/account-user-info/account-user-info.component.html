@@ -15,20 +15,6 @@
             <mat-error *ngIf="name.invalid && (name.dirty || name.touched) && name.errors.minlength">Name must contains more than 4 characters</mat-error>
           </mat-form-field>
           
-          <!-- Email -->
-          <mat-form-field fxFlex class="form__field">
-            <input matInput type="email" id="email" name="email" placeholder="Email address" 
-                [(ngModel)]="model.email" 
-                required email
-                value="model.email"
-                #email="ngModel">
-
-            <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
-            <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
-          </mat-form-field>
-        </div>
-
-        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Preferred currency -->
           <currency-unit fxFlex fxFlex.gt-xs="200px"
               [id]="'preferredCurrency'"
@@ -37,6 +23,21 @@
               [value]="model.currency"
               (newValue)="onCurrencyUnitChange($event)">
           </currency-unit>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Email -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="email" id="email" name="email" placeholder="Email address" 
+                [(ngModel)]="model.email" 
+                required email
+                value="model.email"
+                #email="ngModel">
+                
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.required">Email is required</mat-error>
+            <mat-error *ngIf="email.invalid && (email.dirty || email.touched) && email.errors.email">Email must be a valid email address</mat-error>
+          </mat-form-field>
         </div>
       </div>
     </section>
