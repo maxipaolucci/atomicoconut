@@ -11,8 +11,8 @@ import { AppService } from '../../../../app.service';
 import { InvestmentsService } from '../../investments.service';
 import { Team } from '../../../teams/models/team';
 import { TeamsService } from '../../../teams/teams.service';
-import { Observable, Subscription } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, Subscription, of } from 'rxjs';
+import { map, switchMap, flatMap } from 'rxjs/operators';
 import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES } from '../../../../constants';
@@ -53,68 +53,16 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     ]);
 
     // get authUser from resolver
-    const user$: Observable<User> = this.route.data.pipe(map((data: { authUser: User }) =>  {
-      this.user = data.authUser;
-      return data.authUser;
-    }));
-
-    if (!this.investments.length) {
-      this.getInvestments(user$);
-    }
-
-    this.getTeams(user$);
-  }
-
-  ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
-
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
-    this.subscription.unsubscribe();
-  }
-
-  /**
-   * Get my teams from server
-   */
-  getTeams(user$: Observable<User>) {
-    const methodTrace = `${this.constructor.name} > getTeams() > `; // for debugging
-
-    this.teams = [];
-    this.getTeamsServiceRunning = true;
-
-    const newSubscription = user$.pipe(switchMap((user) => {
-      return this.teamsService.getTeams$(user.email);
-    })).subscribe(
-      (teams: Team[]) => {
-        this.teams = teams;
-        this.getTeamsServiceRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-        }
-
-        this.getTeamsServiceRunning = false;
-      }
-    );
-
-    this.subscription.add(newSubscription);
-  }
-
-  /**
-   * Get my investments from server
-   */
-  getInvestments(user$: Observable<User>) {
-    const methodTrace = `${this.constructor.name} > getInvestments() > `; // for debugging
-
-    this.investments = [];
-    this.getInvestmentsServiceRunning = true;
-
-    const newSubscription = user$.pipe(switchMap((user) => {
-      return this.investmentsService.getInvestments$(user.email);
-    })).subscribe(
+    const newSubscription = this.route.data.pipe(
+      map((data: { authUser: User }): User =>  {
+        this.user = data.authUser;
+        return data.authUser;
+      }), 
+      flatMap((user: User): Observable<Investment[]> => {
+        this.getTeams(user); // I don't care when this come back
+        return this.getInvestments$(user);
+      })
+    ).subscribe(
       (investments: Investment[]) => {
         // organize investments in rows of n-items to show in the view
         let investmentsRow: any[] = [];
@@ -159,6 +107,54 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     this.subscription.add(newSubscription);
   }
 
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
+
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
+  }
+
+  /**
+   * Get my investments source from server
+   */
+  getInvestments$(user: User): Observable<Investment[]>  {
+    const methodTrace = `${this.constructor.name} > getInvestments$() > `; // for debugging
+
+    this.investments = [];
+    this.getInvestmentsServiceRunning = true;
+
+    return this.investmentsService.getInvestments$(user.email);
+  }
+
+  /**
+   * Get my teams from server
+   */
+  getTeams(user: User) {
+    const methodTrace = `${this.constructor.name} > getTeams() > `; // for debugging
+
+    this.teams = [];
+    this.getTeamsServiceRunning = true;
+
+    const newSubscription = this.teamsService.getTeams$(user.email).subscribe(
+      (teams: Team[]) => {
+        this.teams = teams;
+        this.getTeamsServiceRunning = false;
+      },
+      (error: any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+        }
+
+        this.getTeamsServiceRunning = false;
+      }
+    );
+
+    this.subscription.add(newSubscription);
+  }
+
   setTotals(totalReturns: any): void {
     // update the total that matches the id
     this.totals[totalReturns.investmentId] = totalReturns;
@@ -184,7 +180,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   removeInvestment(investmentData: any): void {
     const methodTrace = `${this.constructor.name} > removeInvestment() > `; // for debugging
 
-    let investment = investmentData.investment;
+    const investment = investmentData.investment;
     if (investment) {
       // get my portion in the investment
       let myPortion = 0;
@@ -196,8 +192,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
       }
 
       // update totals row
-      let investmentReturn = investmentData.investmentReturn;
-      let investmentAmount = investmentData.investmentAmount;
+      const investmentReturn = investmentData.investmentReturn;
+      const investmentAmount = investmentData.investmentAmount;
       this.totalReturn -= investmentReturn;
       this.totalInvestment -= investmentAmount;
       this.myTotalReturn -= investmentReturn * myPortion / 100;

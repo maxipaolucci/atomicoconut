@@ -4,10 +4,10 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { User } from '../../../users/models/user';
 import { TeamsService } from '../../../teams/teams.service';
-import { AppService } from "../../../../app.service";
+import { AppService } from '../../../../app.service';
 import { Team } from '../../../teams/models/team';
-import { Subscription } from 'rxjs';
-import { map, combineLatest, debounceTime } from 'rxjs/operators';
+import { Subscription, Observable, of } from 'rxjs';
+import { map, combineLatest, debounceTime, flatMap } from 'rxjs/operators';
 import { MatSelectChange, MatRadioChange } from '@angular/material';
 import { InvestmentsService } from '../../investments.service';
 import { Investment } from '../../models/investment';
@@ -59,63 +59,122 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       private teamsService: TeamsService, private appService: AppService, private router: Router) { }
 
   ngOnInit() {
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
+
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Investments', url: '/investments', selected: false }
     ]);
     
     // generates a user source object from authUser from resolver
-    const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
+    const user$ = this.route.data.pipe(map((data: { authUser: User }): User => data.authUser));
 
     // generates an investment id source from id parameter in url
-    const id$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('id')));
+    const id$ = this.route.paramMap.pipe(map((params: ParamMap): string => params.get('id')));
     
     // combine user$ and id$ sources into one object and start listen to it for changes
-    this.subscription = user$.pipe(combineLatest(id$, (user, id) => {
-      const urlObject = (<BehaviorSubject<any>>this.route.url).getValue(); 
-      let investmentId = null;
-      let propertyId = null;
-      if (urlObject[0]['path'] === INVESTMENTS_TYPES.PROPERTY && urlObject[1]['path'] === 'create') {
-        // we are creating a property investment coming from the property component
-        propertyId = id;
-      } else {
-        // we are editing an investment or creating a new one coming from the investment dashboard
-        investmentId = id;
-      }
-      
-      return { user, investmentId, propertyId }; 
-    })).subscribe(data => {
-      this.user = data.user;
-      this.model.email = data.user.email;
-      this.model.investmentAmountUnit = this.user.currency;
-      this.model.loanAmountUnit = this.user.currency;
-      this.model.id = data.investmentId || null;
-      if (data.propertyId) {
-        this.model.investmentData.propertyId = data.propertyId;
-      }
-
-      this.editInvestmentServiceRunning = false;
-      this.getInvestmentServiceRunning = false;
-      
-      // get user teams
-      this.getTeams();
-
-      if (!data.investmentId) {
-        // we are creating a new investment
-        this.id = null;
-        this.editMode = false;
-        this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected : true });
-      } else {
-        this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected : true });
-        // we are editing an existing investment
-        this.id = data.investmentId; // the new slug
-        this.editMode = true;
+    const newSubscription = user$.pipe(
+      combineLatest(id$, (user: User, id: string): string => {
+        this.user = user;
+        const urlObject = (<BehaviorSubject<any>>this.route.url).getValue(); 
+        let investmentId: string = null;
+        let propertyId: string = null;
+        if (urlObject[0]['path'] === INVESTMENTS_TYPES.PROPERTY && urlObject[1]['path'] === 'create') {
+          // we are creating a property investment coming from the property component
+          propertyId = id;
+        } else {
+          // we are editing an investment or creating a new one coming from the investment dashboard
+          investmentId = id;
+        }
         
-        this.getInvestment(data.investmentId); // get data
-      }
+        this.model.email = user.email;
+        this.model.investmentAmountUnit = user.currency;
+        this.model.loanAmountUnit = user.currency;
+        this.model.id = investmentId;
+        if (propertyId) {
+          this.model.investmentData.propertyId = propertyId;
+        }
 
-      
-    });
+        if (!investmentId) {
+          // we are creating a new investment
+          this.id = null;
+          this.editMode = false;
+          this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected : true });
+        } else {
+          this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected : true });
+          // we are editing an existing investment
+          this.id = investmentId; // the new slug
+          this.editMode = true;
+        }
+
+        return investmentId; 
+      }),
+      flatMap((investmentId: string): Observable<Investment> => {
+        if (investmentId) {
+          this.getTeams(); // don't need to wait for this
+          return this.getInvestment$(investmentId);
+        }
+        
+        return of(null);
+      })
+    ).subscribe(
+      (investment: Investment) => {
+        this.investment = investment;
+        // populate the model
+        this.model.owner = investment.team ? 'team' : 'me';
+        this.model.team = investment.team;
+        this.getSelectedTeam(); // this is necesary to make the selectbox in ui set a team
+        this.model.teamSlug = investment.team ? investment.team.slug : null;
+        this.model.investmentDistribution = investment.investmentDistribution;
+        for (const portion of investment.investmentDistribution) {
+          this.model.membersPercentage[portion.email] = portion.percentage;
+        }
+        this.model.loanAmount = investment.loanAmount;
+        this.model.loanAmountUnit = investment.loanAmountUnit;
+        this.model.investmentAmount = investment.investmentAmount;
+        this.model.investmentAmountUnit = investment.investmentAmountUnit;
+        this.model.type = investment.type;
+        if (investment instanceof CurrencyInvestment) {
+          this.model.investmentData = {
+            type : investment.type,
+            unit : investment.unit,
+            amount : investment.amount,
+            buyingPrice : investment.buyingPrice,
+            buyingPriceUnit : investment.buyingPriceUnit,
+            buyingDate : investment.buyingDate
+          };
+        } else if (investment instanceof PropertyInvestment) {
+          this.model.investmentData = {
+            type : investment.type,
+            property : investment.property,
+            address : investment.property.address,
+            buyingPrice : investment.buyingPrice,
+            buyingPriceUnit : investment.buyingPriceUnit,
+            buyingDate : investment.buyingDate
+          };
+        }
+
+        this.getInvestmentServiceRunning = false;
+        if (this.form && !this.formChangesSubscription) {
+          this.subscribeFormValueChanges();
+        }
+      },
+      (error: any) => {
+        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        if (error.codeno === 400) {
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        } else if (error.codeno === 461 || error.codeno === 462) {
+          this.appService.showResults(error.msg, 'error');
+          this.router.navigate(['/welcome']);
+        } else {
+          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+        }
+
+        this.getInvestmentServiceRunning = false;
+      }
+    );
+
+    this.subscription.add(newSubscription);
 
     // get TYPE parameter
     this.route.paramMap.pipe(map((params: ParamMap) => params.get('type'))).subscribe(type => {
@@ -277,7 +336,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    */
   getSelectedTeam() {
     if (this.teams && this.teams.length && this.investment && this.investment.team) {
-      for (let team of this.teams) {
+      for (const team of this.teams) {
         if (this.investment.team.slug === team.slug) {
           this.model.team = team;
         }
@@ -291,7 +350,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    * @return {array} The distribution of the investment
    */
   populateInvestmentDistributionArray(): any[] {
-    let result = [];
+    const result = [];
 
     if (!this.model.team) {
       result.push({ email : this.user.email, percentage : 100 });
@@ -305,78 +364,23 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   /**
-   * Get an investment from server based on the id provided
+   * Get an investment source from server based on the id provided
    * @param {string} id 
+   * 
+   * @return { Observable<Investment> }
    */
-  getInvestment(id: string) {
-    const methodTrace = `${this.constructor.name} > getInvestment() > `; // for debugging
+  getInvestment$(id: string): Observable<Investment> {
+    const methodTrace = `${this.constructor.name} > getInvestment$() > `; // for debugging
     
     if (!id) {
       this.appService.showResults(`Invalid investment ID`, 'error');
       this.appService.consoleLog('error', `${methodTrace} ID parameter must be provided, but was: `, id);
-      return false;
+      return of(null);
     }
 
     this.getInvestmentServiceRunning = true;
 
-    const newSubscription = this.investmentsService.getInvestmentById$(this.user.email, id).subscribe(
-      (investment: Investment) => {
-        this.investment = investment;
-        // populate the model
-        this.model.owner = investment.team ? 'team' : 'me';
-        this.model.team = investment.team;
-        this.getSelectedTeam(); // this is necesary to make the selectbox in ui set a team
-        this.model.teamSlug = investment.team ? investment.team.slug : null;
-        this.model.investmentDistribution = investment.investmentDistribution;
-        for (let portion of investment.investmentDistribution) {
-          this.model.membersPercentage[portion.email] = portion.percentage;
-        }
-        this.model.loanAmount = investment.loanAmount;
-        this.model.loanAmountUnit = investment.loanAmountUnit;
-        this.model.investmentAmount = investment.investmentAmount;
-        this.model.investmentAmountUnit = investment.investmentAmountUnit;
-        this.model.type = investment.type;
-        if (investment instanceof CurrencyInvestment) {
-          this.model.investmentData = {
-            type : investment.type,
-            unit : investment.unit,
-            amount : investment.amount,
-            buyingPrice : investment.buyingPrice,
-            buyingPriceUnit : investment.buyingPriceUnit,
-            buyingDate : investment.buyingDate
-          };
-        } else if (investment instanceof PropertyInvestment) {
-          this.model.investmentData = {
-            type : investment.type,
-            property : investment.property,
-            address : investment.property.address,
-            buyingPrice : investment.buyingPrice,
-            buyingPriceUnit : investment.buyingPriceUnit,
-            buyingDate : investment.buyingDate
-          };
-        }
-
-        this.getInvestmentServiceRunning = false;
-        if (this.form && !this.formChangesSubscription) {
-          this.subscribeFormValueChanges();
-        }
-      },
-      (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-        } else if (error.codeno === 461 || error.codeno === 462) {
-          this.appService.showResults(error.msg, 'error');
-          this.router.navigate(['/welcome']);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-        }
-
-        this.getInvestmentServiceRunning = false;
-      }
-    );
-
-    this.subscription.add(newSubscription);
+    return this.investmentsService.getInvestmentById$(this.user.email, id);
   }
 
   onSelectChange(matSelectChange: MatSelectChange) {
@@ -410,7 +414,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.model.membersPercentage = {};
     // set the default percentage of the investment to each member
     const defaultPercentage = Number(DecimalPipe.prototype.transform(100 / this.model.team.members.length, '1.0-2', 'en'));
-    for (let member of this.model.team.members) {
+    for (const member of this.model.team.members) {
       this.model.membersPercentage[member.email] = defaultPercentage;
     }
   }

@@ -19,10 +19,10 @@ import { Address } from '../properties/models/address';
 @Injectable()
 export class InvestmentsService {
 
-  private serverHost : string = environment.apiHost + '/api/investments';
+  private serverHost: string = environment.apiHost + '/api/investments';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http : HttpClient, private appService : AppService) {}
+  constructor(private http: HttpClient, private appService: AppService) {}
 
   /**
    * Server call to Create a new investment in the system 
@@ -30,7 +30,7 @@ export class InvestmentsService {
    * 
    * @return { Observable<any> } 
    */
-  create$(postData : any = {}) : Observable<any> {
+  create$(postData: any = {}): Observable<any> {
     let methodTrace = `${this.constructor.name} > create$() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
@@ -46,8 +46,8 @@ export class InvestmentsService {
    * 
    * @return { Observable<any> }
    */
-  update$(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > update$() > `; //for debugging
+  update$(postData: any = {}): Observable<any> {
+    const methodTrace = `${this.constructor.name} > update$() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .pipe(
@@ -60,10 +60,10 @@ export class InvestmentsService {
    * Server call to Get an investment from the server based on its ID
    * @param {string} id . The investment id
    * 
-   * @return { Observable<any> }
+   * @return { Observable<Investment> }
    */
-  getInvestmentById$(email : string, id : string) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > getInvestmentById$() > `; //for debugging
+  getInvestmentById$(email: string, id: string): Observable<Investment> {
+    const methodTrace = `${this.constructor.name} > getInvestmentById$() > `; // for debugging
 
     if (!id || !email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
@@ -81,15 +81,15 @@ export class InvestmentsService {
         );
 
     return investment$.pipe(switchMap((investment) => {
-      let result : Investment = null;
+      let result: Investment = null;
       if (investment && investment._id) {
         const createdBy = new User(investment.createdBy.name, investment.createdBy.email, investment.createdBy.gravatar);
         
-        let team : Team = null;
+        let team: Team = null;
         if (investment.team) {
           //fill team members
-          let admin : User = null;
-          let members : User[] = [];
+          let admin: User = null;
+          let members: User[] = [];
           for (let member of investment.team.members) {
             const newMember = new User(member.name, member.email, member.gravatar);
             members.push(newMember);
@@ -143,7 +143,7 @@ export class InvestmentsService {
    * 
    * @return { Observable<Investment[]> } 
    */
-  getInvestments$(email : string) : Observable<Investment[]> {
+  getInvestments$(email: string): Observable<Investment[]> {
     let methodTrace = `${this.constructor.name} > getInvestments$() > `; //for debugging
 
     if (!email) {
@@ -160,7 +160,7 @@ export class InvestmentsService {
         );
     
     return investmentsData$.pipe(switchMap((investmentsData) => {
-      let investments : Investment[] = [];
+      let investments: Investment[] = [];
 
       if (investmentsData && investmentsData instanceof Array) {
         for (let item of investmentsData) {
@@ -210,7 +210,7 @@ export class InvestmentsService {
    * 
    * @return { Observable<any> }
    */
-  delete$(id : string, email : string) : Observable<any> {
+  delete$(id: string, email: string): Observable<any> {
     let methodTrace = `${this.constructor.name} > delete$() > `; //for debugging
 
     if (!id || !email) {

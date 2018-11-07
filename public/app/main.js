@@ -2445,55 +2445,12 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
             { displayName: 'Properties', url: '/properties', selected: false }
         ]);
         // get authUser from resolver
-        var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (data) {
+        var newSubscription = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (data) {
             _this.user = data.authUser;
             return data.authUser;
-        }));
-        if (!this.investments.length) {
-            this.getInvestments(user$);
-        }
-        this.getTeams(user$);
-    };
-    InvestmentsDashboardComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
-        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
-        this.subscription.unsubscribe();
-    };
-    /**
-     * Get my teams from server
-     */
-    InvestmentsDashboardComponent.prototype.getTeams = function (user$) {
-        var _this = this;
-        var methodTrace = this.constructor.name + " > getTeams() > "; // for debugging
-        this.teams = [];
-        this.getTeamsServiceRunning = true;
-        var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (user) {
-            return _this.teamsService.getTeams$(user.email);
-        })).subscribe(function (teams) {
-            _this.teams = teams;
-            _this.getTeamsServiceRunning = false;
-        }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
-            if (error.codeno === 400) {
-                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
-            }
-            else {
-                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
-            }
-            _this.getTeamsServiceRunning = false;
-        });
-        this.subscription.add(newSubscription);
-    };
-    /**
-     * Get my investments from server
-     */
-    InvestmentsDashboardComponent.prototype.getInvestments = function (user$) {
-        var _this = this;
-        var methodTrace = this.constructor.name + " > getInvestments() > "; // for debugging
-        this.investments = [];
-        this.getInvestmentsServiceRunning = true;
-        var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (user) {
-            return _this.investmentsService.getInvestments$(user.email);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["flatMap"])(function (user) {
+            _this.getTeams(user); // I don't care when this come back
+            return _this.getInvestments$(user);
         })).subscribe(function (investments) {
             // organize investments in rows of n-items to show in the view
             var investmentsRow = [];
@@ -2529,6 +2486,43 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                 _this.appService.showResults("There was an error with this service and the information provided.", 'error');
             }
             _this.getInvestmentsServiceRunning = false;
+        });
+        this.subscription.add(newSubscription);
+    };
+    InvestmentsDashboardComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
+    /**
+     * Get my investments source from server
+     */
+    InvestmentsDashboardComponent.prototype.getInvestments$ = function (user) {
+        var methodTrace = this.constructor.name + " > getInvestments$() > "; // for debugging
+        this.investments = [];
+        this.getInvestmentsServiceRunning = true;
+        return this.investmentsService.getInvestments$(user.email);
+    };
+    /**
+     * Get my teams from server
+     */
+    InvestmentsDashboardComponent.prototype.getTeams = function (user) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > getTeams() > "; // for debugging
+        this.teams = [];
+        this.getTeamsServiceRunning = true;
+        var newSubscription = this.teamsService.getTeams$(user.email).subscribe(function (teams) {
+            _this.teams = teams;
+            _this.getTeamsServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getTeamsServiceRunning = false;
         });
         this.subscription.add(newSubscription);
     };
@@ -2731,6 +2725,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
     }
     InvestmentsEditComponent.prototype.ngOnInit = function () {
         var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Investments', url: '/investments', selected: false }
@@ -2740,7 +2735,8 @@ var InvestmentsEditComponent = /** @class */ (function () {
         // generates an investment id source from id parameter in url
         var id$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (params) { return params.get('id'); }));
         // combine user$ and id$ sources into one object and start listen to it for changes
-        this.subscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["combineLatest"])(id$, function (user, id) {
+        var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["combineLatest"])(id$, function (user, id) {
+            _this.user = user;
             var urlObject = _this.route.url.getValue();
             var investmentId = null;
             var propertyId = null;
@@ -2752,21 +2748,14 @@ var InvestmentsEditComponent = /** @class */ (function () {
                 // we are editing an investment or creating a new one coming from the investment dashboard
                 investmentId = id;
             }
-            return { user: user, investmentId: investmentId, propertyId: propertyId };
-        })).subscribe(function (data) {
-            _this.user = data.user;
-            _this.model.email = data.user.email;
-            _this.model.investmentAmountUnit = _this.user.currency;
-            _this.model.loanAmountUnit = _this.user.currency;
-            _this.model.id = data.investmentId || null;
-            if (data.propertyId) {
-                _this.model.investmentData.propertyId = data.propertyId;
+            _this.model.email = user.email;
+            _this.model.investmentAmountUnit = user.currency;
+            _this.model.loanAmountUnit = user.currency;
+            _this.model.id = investmentId;
+            if (propertyId) {
+                _this.model.investmentData.propertyId = propertyId;
             }
-            _this.editInvestmentServiceRunning = false;
-            _this.getInvestmentServiceRunning = false;
-            // get user teams
-            _this.getTeams();
-            if (!data.investmentId) {
+            if (!investmentId) {
                 // we are creating a new investment
                 _this.id = null;
                 _this.editMode = false;
@@ -2775,11 +2764,72 @@ var InvestmentsEditComponent = /** @class */ (function () {
             else {
                 _this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected: true });
                 // we are editing an existing investment
-                _this.id = data.investmentId; // the new slug
+                _this.id = investmentId; // the new slug
                 _this.editMode = true;
-                _this.getInvestment(data.investmentId); // get data
             }
+            return investmentId;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["flatMap"])(function (investmentId) {
+            if (investmentId) {
+                _this.getTeams(); // don't need to wait for this
+                return _this.getInvestment$(investmentId);
+            }
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(null);
+        })).subscribe(function (investment) {
+            _this.investment = investment;
+            // populate the model
+            _this.model.owner = investment.team ? 'team' : 'me';
+            _this.model.team = investment.team;
+            _this.getSelectedTeam(); // this is necesary to make the selectbox in ui set a team
+            _this.model.teamSlug = investment.team ? investment.team.slug : null;
+            _this.model.investmentDistribution = investment.investmentDistribution;
+            for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
+                var portion = _a[_i];
+                _this.model.membersPercentage[portion.email] = portion.percentage;
+            }
+            _this.model.loanAmount = investment.loanAmount;
+            _this.model.loanAmountUnit = investment.loanAmountUnit;
+            _this.model.investmentAmount = investment.investmentAmount;
+            _this.model.investmentAmountUnit = investment.investmentAmountUnit;
+            _this.model.type = investment.type;
+            if (investment instanceof _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__["CurrencyInvestment"]) {
+                _this.model.investmentData = {
+                    type: investment.type,
+                    unit: investment.unit,
+                    amount: investment.amount,
+                    buyingPrice: investment.buyingPrice,
+                    buyingPriceUnit: investment.buyingPriceUnit,
+                    buyingDate: investment.buyingDate
+                };
+            }
+            else if (investment instanceof _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
+                _this.model.investmentData = {
+                    type: investment.type,
+                    property: investment.property,
+                    address: investment.property.address,
+                    buyingPrice: investment.buyingPrice,
+                    buyingPriceUnit: investment.buyingPriceUnit,
+                    buyingDate: investment.buyingDate
+                };
+            }
+            _this.getInvestmentServiceRunning = false;
+            if (_this.form && !_this.formChangesSubscription) {
+                _this.subscribeFormValueChanges();
+            }
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 461 || error.codeno === 462) {
+                _this.appService.showResults(error.msg, 'error');
+                _this.router.navigate(['/welcome']);
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getInvestmentServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
         // get TYPE parameter
         this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (params) { return params.get('type'); })).subscribe(function (type) {
             if (![_constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CURRENCY, _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CRYPTO, _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].PROPERTY].includes(type)) {
@@ -2943,74 +2993,20 @@ var InvestmentsEditComponent = /** @class */ (function () {
         return result;
     };
     /**
-     * Get an investment from server based on the id provided
+     * Get an investment source from server based on the id provided
      * @param {string} id
+     *
+     * @return { Observable<Investment> }
      */
-    InvestmentsEditComponent.prototype.getInvestment = function (id) {
-        var _this = this;
-        var methodTrace = this.constructor.name + " > getInvestment() > "; // for debugging
+    InvestmentsEditComponent.prototype.getInvestment$ = function (id) {
+        var methodTrace = this.constructor.name + " > getInvestment$() > "; // for debugging
         if (!id) {
             this.appService.showResults("Invalid investment ID", 'error');
             this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
-            return false;
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(null);
         }
         this.getInvestmentServiceRunning = true;
-        var newSubscription = this.investmentsService.getInvestmentById$(this.user.email, id).subscribe(function (investment) {
-            _this.investment = investment;
-            // populate the model
-            _this.model.owner = investment.team ? 'team' : 'me';
-            _this.model.team = investment.team;
-            _this.getSelectedTeam(); // this is necesary to make the selectbox in ui set a team
-            _this.model.teamSlug = investment.team ? investment.team.slug : null;
-            _this.model.investmentDistribution = investment.investmentDistribution;
-            for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
-                var portion = _a[_i];
-                _this.model.membersPercentage[portion.email] = portion.percentage;
-            }
-            _this.model.loanAmount = investment.loanAmount;
-            _this.model.loanAmountUnit = investment.loanAmountUnit;
-            _this.model.investmentAmount = investment.investmentAmount;
-            _this.model.investmentAmountUnit = investment.investmentAmountUnit;
-            _this.model.type = investment.type;
-            if (investment instanceof _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__["CurrencyInvestment"]) {
-                _this.model.investmentData = {
-                    type: investment.type,
-                    unit: investment.unit,
-                    amount: investment.amount,
-                    buyingPrice: investment.buyingPrice,
-                    buyingPriceUnit: investment.buyingPriceUnit,
-                    buyingDate: investment.buyingDate
-                };
-            }
-            else if (investment instanceof _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
-                _this.model.investmentData = {
-                    type: investment.type,
-                    property: investment.property,
-                    address: investment.property.address,
-                    buyingPrice: investment.buyingPrice,
-                    buyingPriceUnit: investment.buyingPriceUnit,
-                    buyingDate: investment.buyingDate
-                };
-            }
-            _this.getInvestmentServiceRunning = false;
-            if (_this.form && !_this.formChangesSubscription) {
-                _this.subscribeFormValueChanges();
-            }
-        }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
-            if (error.codeno === 400) {
-                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
-            }
-            else if (error.codeno === 461 || error.codeno === 462) {
-                _this.appService.showResults(error.msg, 'error');
-                _this.router.navigate(['/welcome']);
-            }
-            else {
-                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
-            }
-            _this.getInvestmentServiceRunning = false;
-        });
-        this.subscription.add(newSubscription);
+        return this.investmentsService.getInvestmentById$(this.user.email, id);
     };
     InvestmentsEditComponent.prototype.onSelectChange = function (matSelectChange) {
         this.model.teamSlug = matSelectChange.value.slug;
@@ -3922,7 +3918,7 @@ var InvestmentsService = /** @class */ (function () {
      */
     InvestmentsService.prototype.update$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > update$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > update$() > "; // for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
@@ -3930,11 +3926,11 @@ var InvestmentsService = /** @class */ (function () {
      * Server call to Get an investment from the server based on its ID
      * @param {string} id . The investment id
      *
-     * @return { Observable<any> }
+     * @return { Observable<Investment> }
      */
     InvestmentsService.prototype.getInvestmentById$ = function (email, id) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getInvestmentById$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getInvestmentById$() > "; // for debugging
         if (!id || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
