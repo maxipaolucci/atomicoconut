@@ -24,13 +24,13 @@ import { PropertyInvestment } from '../../models/PropertyInvestment';
 export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('editInvestmentForm') form;
-  editMode : boolean = false;
-  user : User = null;
-  teams : Team[] = [];
-  investment : Investment = null;
-  model : any = {
+  editMode = false;
+  user: User = null;
+  teams: Team[] = [];
+  investment: Investment = null;
+  model: any = {
     id : null,
-    email : null, //user email for api check
+    email : null, // user email for api check
     owner : 'me',
     team : null,
     teamSlug : null,
@@ -40,23 +40,23 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     investmentAmount : null,
     investmentAmountUnit : null,
     type : null,
-    investmentData : {}, //specific data related to the investment type
-    investmentDistribution : [] //how the investment would be distributed into its owners
+    investmentData : {}, // specific data related to the investment type
+    investmentDistribution : [] // how the investment would be distributed into its owners
   };
-  id : string = null; //investment id
-  type : string = null; //investment type
-  //services flags
-  editInvestmentServiceRunning : boolean = false;
-  getInvestmentServiceRunning : boolean = false;
-  getTeamsServiceRunning : boolean = false;
-  subscription : Subscription = new Subscription();
-  formChangesSubscription : any = null;
-  investmentDataValid : boolean = false; //this value is set when investment data form is updated
-  INVESTMENT_TYPES : any = INVESTMENTS_TYPES;
+  id: string = null; // investment id
+  type: string = null; // investment type
+  // services flags
+  editInvestmentServiceRunning = false;
+  getInvestmentServiceRunning = false;
+  getTeamsServiceRunning = false;
+  subscription: Subscription = new Subscription();
+  formChangesSubscription: any = null;
+  investmentDataValid = false; // this value is set when investment data form is updated
+  INVESTMENT_TYPES: any = INVESTMENTS_TYPES;
 
   
-  constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private investmentsService : InvestmentsService,
-      private teamsService : TeamsService, private appService : AppService, private router : Router) { }
+  constructor(private route: ActivatedRoute, private mainNavigatorService: MainNavigatorService, private investmentsService: InvestmentsService,
+      private teamsService: TeamsService, private appService: AppService, private router: Router) { }
 
   ngOnInit() {
     this.mainNavigatorService.setLinks([
@@ -64,22 +64,22 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       { displayName: 'Investments', url: '/investments', selected: false }
     ]);
     
-    //generates a user source object from authUser from resolver
+    // generates a user source object from authUser from resolver
     const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
 
-    //generates an investment id source from id parameter in url
+    // generates an investment id source from id parameter in url
     const id$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('id')));
     
-    //combine user$ and id$ sources into one object and start listen to it for changes
+    // combine user$ and id$ sources into one object and start listen to it for changes
     this.subscription = user$.pipe(combineLatest(id$, (user, id) => {
       const urlObject = (<BehaviorSubject<any>>this.route.url).getValue(); 
       let investmentId = null;
       let propertyId = null;
       if (urlObject[0]['path'] === INVESTMENTS_TYPES.PROPERTY && urlObject[1]['path'] === 'create') {
-        //we are creating a property investment coming from the property component
+        // we are creating a property investment coming from the property component
         propertyId = id;
       } else {
-        //we are editing an investment or creating a new one coming from the investment dashboard
+        // we are editing an investment or creating a new one coming from the investment dashboard
         investmentId = id;
       }
       
@@ -97,27 +97,27 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       this.editInvestmentServiceRunning = false;
       this.getInvestmentServiceRunning = false;
       
-      //get user teams
+      // get user teams
       this.getTeams();
 
       if (!data.investmentId) {
-        //we are creating a new investment
+        // we are creating a new investment
         this.id = null;
         this.editMode = false;
         this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected : true });
       } else {
         this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected : true });
-        //we are editing an existing investment
-        this.id = data.investmentId; //the new slug
+        // we are editing an existing investment
+        this.id = data.investmentId; // the new slug
         this.editMode = true;
         
-        this.getInvestment(data.investmentId); //get data
+        this.getInvestment(data.investmentId); // get data
       }
 
       
     });
 
-    //get TYPE parameter
+    // get TYPE parameter
     this.route.paramMap.pipe(map((params: ParamMap) => params.get('type'))).subscribe(type => {
       if (![INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO, INVESTMENTS_TYPES.PROPERTY].includes(type)) {
         this.appService.showResults('You must provide a valid investment type to continue.', 'error');
@@ -143,7 +143,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   subscribeFormValueChanges() {
     this.formChangesSubscription = this.form.valueChanges.pipe(debounceTime(500)).subscribe(values => {
       if (values.owner === 'team' && values.team && this.model.team) {
-        //calculates the percentage acum from all the members
+        // calculates the percentage acum from all the members
         const percentageAcum = this.model.team.members.reduce((total, member) => {
           return total + (this.model.membersPercentage[member.email] || 0);
         }, 0);
@@ -167,14 +167,14 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
     
-    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
   onSubmit() {
-    const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
     this.editInvestmentServiceRunning = true;
 
@@ -182,9 +182,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.model.createdOn = new Date(Date.now());
     this.model.updatedOn = new Date(Date.now());
 
-    //call the investment create service
+    // call the investment create service
     const newSubscription = this.investmentsService.create$(this.model).subscribe(
-      (data : any) => {
+      (data: any) => {
         if (data && data.id && data.type) {
           this.appService.showResults(`Investment successfully created!`, 'success');
           this.router.navigate(['/investments/', data.type, 'edit', data.id]);
@@ -193,7 +193,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
           this.editInvestmentServiceRunning = false;
         }
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit investment service.`, error);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, 'error');
@@ -207,15 +207,15 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   onUpdate() {
-    const methodTrace = `${this.constructor.name} > onUpdate() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > onUpdate() > `; // for debugging
 
     this.editInvestmentServiceRunning = true;
 
     this.model.investmentDistribution = this.populateInvestmentDistributionArray();
     this.model.updatedOn = new Date(Date.now());
-    //call the investment create service
+    // call the investment create service
     const newSubscription = this.investmentsService.update$(this.model).subscribe(
-      (data : any) => {
+      (data: any) => {
         if (data && data.id && data.type) {
           this.appService.showResults(`Investment successfully updated!`, 'success');
         } else {
@@ -224,7 +224,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
 
         this.editInvestmentServiceRunning = false;
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit investment service.`, error);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, 'error');
@@ -241,13 +241,13 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    * Get my teams from server
    */
   getTeams() {
-    const methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > getTeams() > `; // for debugging
 
     this.teams = [];
     this.getTeamsServiceRunning = true;
 
     const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe(
-      (teams : Team[]) => {
+      (teams: Team[]) => {
         this.teams = teams;
         this.getTeamsServiceRunning = false;
         
@@ -257,7 +257,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
           this.appService.showResults(`You are not member of any team yet!. Create a team if you want to split your investment with other people.`, 'info');
         }
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
@@ -290,7 +290,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    * 
    * @return {array} The distribution of the investment
    */
-  populateInvestmentDistributionArray() : any[] {
+  populateInvestmentDistributionArray(): any[] {
     let result = [];
 
     if (!this.model.team) {
@@ -308,8 +308,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    * Get an investment from server based on the id provided
    * @param {string} id 
    */
-  getInvestment(id : string) {
-    const methodTrace = `${this.constructor.name} > getInvestment() > `; //for debugging
+  getInvestment(id: string) {
+    const methodTrace = `${this.constructor.name} > getInvestment() > `; // for debugging
     
     if (!id) {
       this.appService.showResults(`Invalid investment ID`, 'error');
@@ -320,12 +320,12 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.getInvestmentServiceRunning = true;
 
     const newSubscription = this.investmentsService.getInvestmentById$(this.user.email, id).subscribe(
-      (investment : Investment) => {
+      (investment: Investment) => {
         this.investment = investment;
-        //populate the model
+        // populate the model
         this.model.owner = investment.team ? 'team' : 'me';
         this.model.team = investment.team;
-        this.getSelectedTeam(); //this is necesary to make the selectbox in ui set a team
+        this.getSelectedTeam(); // this is necesary to make the selectbox in ui set a team
         this.model.teamSlug = investment.team ? investment.team.slug : null;
         this.model.investmentDistribution = investment.investmentDistribution;
         for (let portion of investment.investmentDistribution) {
@@ -361,7 +361,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
           this.subscribeFormValueChanges();
         }
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
@@ -379,26 +379,26 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.subscription.add(newSubscription);
   }
 
-  onSelectChange(matSelectChange : MatSelectChange) {
+  onSelectChange(matSelectChange: MatSelectChange) {
     this.model.teamSlug = matSelectChange.value.slug;
 
     this.setDefaultInvestmentPercentages();
   }
 
-  onRadioChange(matRadioChange : MatRadioChange) {
+  onRadioChange(matRadioChange: MatRadioChange) {
     if (matRadioChange.value === 'me') {
-      //reset team values from model
+      // reset team values from model
       this.model.team = this.model.teamSlug = null;
     }
 
     this.model.membersPercentage = {};
   }
 
-  onCurrencyUnitChange($event : MatSelectChange) {
+  onCurrencyUnitChange($event: MatSelectChange) {
     this.model[$event.source.id] = $event.value;
   }
 
-  onInvestmentDataChange($event : any) {
+  onInvestmentDataChange($event: any) {
     this.model.investmentData = $event.value.model;
     this.investmentDataValid = $event.value.valid;
   }
@@ -408,7 +408,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    */
   setDefaultInvestmentPercentages() {
     this.model.membersPercentage = {};
-    //set the default percentage of the investment to each member
+    // set the default percentage of the investment to each member
     const defaultPercentage = Number(DecimalPipe.prototype.transform(100 / this.model.team.members.length, '1.0-2', 'en'));
     for (let member of this.model.team.members) {
       this.model.membersPercentage[member.email] = defaultPercentage;

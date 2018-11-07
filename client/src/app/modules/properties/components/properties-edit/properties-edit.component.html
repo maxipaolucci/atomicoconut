@@ -427,7 +427,7 @@
     
     <button mat-mini-fab class="mini-fab mat-elevation-z10" color="primary" *ngIf="!showPropertyFiguresDialogSpinner"
         matTooltip="Show figures" matTooltipPosition="left" 
-        (click)="openHouseResultsFiguresDialog()">
+        (click)="showPropertyFiguresDialogSpinner = true; openHouseResultsFiguresDialog()">
       <mat-icon aria-label="Show property figures">attach_money</mat-icon>
     </button>
 

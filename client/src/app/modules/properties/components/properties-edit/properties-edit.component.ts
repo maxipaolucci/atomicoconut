@@ -20,27 +20,27 @@ import { map, combineLatest } from 'rxjs/operators';
 })
 export class PropertiesEditComponent implements OnInit, OnDestroy {
 
-  editMode : boolean = false;
-  user : User = null;
-  property : Property = null;
-  propertyTypes : any = null;
-  id : string = null; //property id
-  type : string = null; //property type
-  subscription : Subscription = new Subscription();
-  propertyTypeDataValid : boolean = false; //this value is set when property type data form is updated
-  addressValid : boolean = false;
+  editMode = false;
+  user: User = null;
+  property: Property = null;
+  propertyTypes: any = null;
+  id: string = null; // property id
+  type: string = null; // property type
+  subscription: Subscription = new Subscription();
+  propertyTypeDataValid = false; // this value is set when property type data form is updated
+  addressValid = false;
 
-  //services flags
-  editPropertyServiceRunning : boolean = false;
-  getPropertyServiceRunning : boolean = false;
-  showPropertyFiguresDialogSpinner : boolean = false;
+  // services flags
+  editPropertyServiceRunning = false;
+  getPropertyServiceRunning = false;
+  showPropertyFiguresDialogSpinner = false;
 
-  //models
-  model : any = {
+  // models
+  model: any = {
     id : null,
-    email : null, //user email for api check
+    email : null, // user email for api check
     type : null,
-    propertyTypeData : {}, //specific data related to the property type
+    propertyTypeData : {}, // specific data related to the property type
     address : {},
     askingPrice : null,
     askingPriceUnit : null,
@@ -63,16 +63,16 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     otherCostUnit : null,
     notes : null
   };
-  
-  modelHouseFiguresResults : any = {
+
+  modelHouseFiguresResults: any = {
     loanCoverage : 80,
     interestRates : 7,
     loanTerm : 30,
-    paymentFrecuency : "26",
+    paymentFrecuency : '26',
   };
-  
-  constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private propertiesService : PropertiesService, 
-      private appService : AppService, private router : Router, public utilService : UtilService, private dateAdapter: DateAdapter<NativeDateAdapter>, 
+
+  constructor(private route: ActivatedRoute, private mainNavigatorService: MainNavigatorService, private propertiesService: PropertiesService,
+      private appService: AppService, private router: Router, public utilService: UtilService, private dateAdapter: DateAdapter<NativeDateAdapter>,
       public dialog: MatDialog) {
 
     this.dateAdapter.setLocale('en-GB');
@@ -86,43 +86,43 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       { displayName: 'Properties', url: '/properties', selected: false }
     ]);
 
-    //generates a user source object from authUser from resolver
+    // generates a user source object from authUser from resolver
     const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
 
-    //generates an property id source from id parameter in url
+    // generates an property id source from id parameter in url
     const id$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('id')));
-    
-    //combine user$ and id$ sources into one object and start listen to it for changes
-    const newSubscription = user$.pipe(combineLatest(id$, (user, id) => { 
-      return { user, propertyId : id } 
+
+    // combine user$ and id$ sources into one object and start listen to it for changes
+    const newSubscription = user$.pipe(combineLatest(id$, (user, id) => {
+      return { user, propertyId : id }
     })).subscribe(data => {
       this.user = data.user;
       this.model.email = data.user.email;
-      this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit = 
-          this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit = 
+      this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit =
+          this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit =
           this.model.maintenanceCostUnit = this.model.otherCostUnit = this.user.currency;
       this.model.id = data.propertyId || null;
 
       this.editPropertyServiceRunning = false;
       this.getPropertyServiceRunning = false;
-      
+
       if (!data.propertyId) {
-        //we are creating a new property
+        // we are creating a new property
         this.id = null;
         this.editMode = false;
         this.mainNavigatorService.appendLink({ displayName: 'Create Property', url: '', selected : true });
       } else {
         this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected : true });
-        //we are editing an existing property
+        // we are editing an existing property
         this.id = data.propertyId;
         this.editMode = true;
-        
-        this.getProperty(data.propertyId); //get data
+
+        this.getProperty(data.propertyId); // get data
       }
     });
     this.subscription.add(newSubscription);
 
-    //get TYPE parameter
+    // get TYPE parameter
     this.route.paramMap.pipe(map((params: ParamMap) => params.get('type'))).subscribe(type => {
       if (![PROPERTY_TYPES.HOUSE].includes(type)) {
         this.appService.showResults('You must provide a valid property type to continue.', 'error');
@@ -141,11 +141,11 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
   /**
    * Get a property from server based on the id provided
-   * @param {string} id 
+   * @param {string} id
    */
-  getProperty(id : string) {
-    const methodTrace = `${this.constructor.name} > getProperty() > `; //for debugging
-    
+  getProperty(id: string) {
+    const methodTrace = `${this.constructor.name} > getProperty() > `; // for debugging
+
     if (!id) {
       this.appService.showResults(`Invalid property ID`, 'error');
       this.appService.consoleLog('error', `${methodTrace} ID parameter must be provided, but was: `, id);
@@ -155,9 +155,9 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.getPropertyServiceRunning = true;
 
     const newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(
-      (property : Property) => {
+      (property: Property) => {
         this.property = property;
-        //populate the model
+        // populate the model
         this.model.address = property.address;
         this.model.askingPrice = property.askingPrice;
         this.model.askingPriceUnit = property.askingPriceUnit;
@@ -180,7 +180,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
         this.model.otherCostUnit = property.otherCostUnit;
         this.model.notes = property.notes;
         this.model.type = property.type;
-        
+
         if (property instanceof House) {
           this.model.propertyTypeData = {
             buildingType : property.buildingType,
@@ -216,7 +216,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
         this.getPropertyServiceRunning = false;
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > `, error);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
@@ -235,15 +235,15 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
     this.editPropertyServiceRunning = true;
 
     this.model.createdOn = new Date(Date.now());
     this.model.updatedOn = new Date(Date.now());
-    //call the investment create service
+    // call the investment create service
     const newSubscription = this.propertiesService.create(this.model).subscribe(
-      (data : any) => {
+      (data: any) => {
         if (data && data.id && data.type) {
           this.appService.showResults(`Property successfully created!`, 'success');
           this.router.navigate(['/properties/', data.type, 'edit', data.id]);
@@ -252,7 +252,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
           this.editPropertyServiceRunning = false;
         }
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit property service.`, error);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, 'error');
@@ -266,14 +266,14 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   }
 
   onUpdate() {
-    const methodTrace = `${this.constructor.name} > onUpdate() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > onUpdate() > `; // for debugging
 
     this.editPropertyServiceRunning = true;
 
     this.model.updatedOn = new Date(Date.now());
-    //call the investment create service
+    // call the investment create service
     const newSubscription = this.propertiesService.update(this.model).subscribe(
-      (data : any) => {
+      (data: any) => {
         if (data && data.id && data.type) {
           this.appService.showResults(`Property successfully updated!`, 'success');
         } else {
@@ -282,7 +282,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
         this.editPropertyServiceRunning = false;
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit property service.`, error);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, 'error');
@@ -295,29 +295,28 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.subscription.add(newSubscription);
   }
 
-  onCurrencyUnitChange($event : MatSelectChange) {
+  onCurrencyUnitChange($event: MatSelectChange) {
     this.model[$event.source.id] = $event.value;
   }
 
-  onPropertyTypeDataChange($event : any) {
+  onPropertyTypeDataChange($event: any) {
     this.model.propertyTypeData = $event.value.model;
     this.propertyTypeDataValid = $event.value.valid;
   }
 
-  onAddressChange($event : any) {
+  onAddressChange($event: any) {
     this.model.address = $event.value.address;
     this.addressValid = $event.value.valid;
   }
 
-  includedFormsValid() : boolean {
+  includedFormsValid(): boolean {
     return this.propertyTypeDataValid && this.addressValid;
   }
 
   openHouseResultsFiguresDialog() {
-    const methodTrace = `${this.constructor.name} > openHouseResultsFiguresDialog() > `; //for debugging
-      
-    this.showPropertyFiguresDialogSpinner = true;
-    let houseFiguresDialogRef = this.dialog.open(HouseFiguresDialogComponent, {
+    const methodTrace = `${this.constructor.name} > openHouseResultsFiguresDialog() > `; // for debugging
+
+    const houseFiguresDialogRef = this.dialog.open(HouseFiguresDialogComponent, {
       data: {
         model : this.model,
         modelHouseFiguresResults : this.modelHouseFiguresResults
@@ -330,7 +329,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
         this.showPropertyFiguresDialogSpinner = false;
       }
     });
-    this.subscription.add(newSubscription); 
+    this.subscription.add(newSubscription);
 
     return false;
   }

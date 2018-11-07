@@ -903,7 +903,7 @@ var AuthGuard = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  404 Page not found\n</p>\n"
+module.exports = "<p>\r\n  404 Page not found\r\n</p>\r\n"
 
 /***/ }),
 
@@ -2054,7 +2054,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         this.loanAmount = 0;
         this.actionRunning = false;
         this.user = null;
-        this.team = null; //if the investment has a tema this will be populated with the full info of the team
+        this.team = null; // if the investment has a tema this will be populated with the full info of the team
         this.investmentDistribution = [];
         this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_9__["Subscription"]();
     }
@@ -2070,17 +2070,17 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
     });
     CurrencyInvestmentComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
-        //get the team of the investmetn if exists
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
+        // get the team of the investmetn if exists
         var newSubscription = null;
-        var currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
+        var currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
         var currencyRatesAndUser$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(currencyRates$, function (user, currencyRates) {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
-        })); //(currency rates and user) source
+        })); // (currency rates and user) source
         if (this.investment.type === _constants__WEBPACK_IMPORTED_MODULE_11__["INVESTMENTS_TYPES"].CRYPTO) {
-            //crypto investment
-            var cryptoRates$ = this.currencyExchangeService.getCryptoRates$(this.investment.unit); //get crypto rates observable source
+            // crypto investment
+            var cryptoRates$ = this.currencyExchangeService.getCryptoRates$(this.investment.unit); // get crypto rates observable source
             newSubscription = cryptoRates$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(currencyRatesAndUser$, function (cryptoRates, currencyRatesAndUser) {
                 return {
                     currencyRates: currencyRatesAndUser.currencyRates,
@@ -2089,11 +2089,11 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
                 };
             }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (data) {
                 _this.currentPrice = data.cryptoRates.price;
-                //the investment amount was paid on the date of the investment so we need to convert using that day rates
+                // the investment amount was paid on the date of the investment so we need to convert using that day rates
                 _this.investmentAmount = _this.investment.investmentAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.investmentAmountUnit] || 1);
-                //the loan amount was requested on the date of the investment so we need to convert using that day rates
+                // the loan amount was requested on the date of the investment so we need to convert using that day rates
                 _this.loanAmount = _this.investment.loanAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.loanAmountUnit] || 1);
-                //the buying price (of the crypto) was paid on the date of the investment so we need to convert using that day rates
+                // the buying price (of the crypto) was paid on the date of the investment so we need to convert using that day rates
                 _this.buyingPrice = _this.investment.buyingPrice / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.buyingPriceUnit] || 1);
                 _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
                 _this.investmentReturn = _this.currentPrice * _this.investment.amount - _this.loanAmount;
@@ -2106,14 +2106,14 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
             });
         }
         else {
-            //currency exchange
+            // currency exchange
             newSubscription = currencyRatesAndUser$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (data) {
                 _this.currentPrice = 1 / (data.currencyRates[_this.utilService.formatToday()]["USD" + _this.investment.unit] || 1);
-                //the investment amount was paid on the date of the investment so we need to convert using that day rates
+                // the investment amount was paid on the date of the investment so we need to convert using that day rates
                 _this.investmentAmount = _this.investment.investmentAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.investmentAmountUnit] || 1);
-                //the loan amount was requested on the date of the investment so we need to convert using that day rates
+                // the loan amount was requested on the date of the investment so we need to convert using that day rates
                 _this.loanAmount = _this.investment.loanAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.loanAmountUnit] || 1);
-                //the buying price (of the currency) was paid on the date of the investment so we need to convert using that day rates
+                // the buying price (of the currency) was paid on the date of the investment so we need to convert using that day rates
                 _this.buyingPrice = _this.investment.buyingPrice / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.buyingPriceUnit] || 1);
                 _this.investmentValueWhenBought = _this.buyingPrice * _this.investment.amount;
                 _this.investmentReturn = _this.currentPrice * _this.investment.amount - _this.loanAmount;
@@ -2128,8 +2128,8 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         this.subscription.add(newSubscription);
     };
     CurrencyInvestmentComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
     /**
@@ -2139,8 +2139,8 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
      */
     CurrencyInvestmentComponent.prototype.setInvestmentTeamData = function (teams) {
         var _this = this;
-        this.team = this.investment.team ? teams.filter(function (team) { return team.slug === _this.investment.team.slug; })[0] : null; //look for the team of the investment
-        //set totals to emit to parent component. If no team assigned then the total of the investment is the same as my portion
+        this.team = this.investment.team ? teams.filter(function (team) { return team.slug === _this.investment.team.slug; })[0] : null; // look for the team of the investment
+        // set totals to emit to parent component. If no team assigned then the total of the investment is the same as my portion
         var totals = {
             investmentId: this.investment.id,
             investmentAmount: this.investmentAmount,
@@ -2162,7 +2162,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
                 }
             };
             var this_1 = this;
-            //if team is present then get my portion of the investment
+            // if team is present then get my portion of the investment
             for (var _i = 0, _a = this.team.members; _i < _a.length; _i++) {
                 var member = _a[_i];
                 _loop_1(member);
@@ -2172,7 +2172,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
     };
     CurrencyInvestmentComponent.prototype.openDeleteDialog = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > openDeleteDialog() > "; //for debugging
+        var methodTrace = this.constructor.name + " > openDeleteDialog() > "; // for debugging
         if (!this.investment.id) {
             this.appService.consoleLog('error', methodTrace + " Investment ID is required to delete.");
             return false;
@@ -2197,7 +2197,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
     };
     CurrencyInvestmentComponent.prototype.delete = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        var methodTrace = this.constructor.name + " > delete() > "; // for debugging
         if (this.user) {
             this.actionRunning = true;
             var newSubscription = this.investmentsService.delete$(this.investment.id, this.user.email).subscribe(function (data) {
@@ -2424,7 +2424,7 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         this.utilService = utilService;
         this.investments = [];
         this.teams = [];
-        this.investmentsUI = []; //this is a structure to use in the view an make the rendering easier organizing the info in rows
+        this.investmentsUI = []; // this is a structure to use in the view an make the rendering easier organizing the info in rows
         this.totalInvestment = 0;
         this.totalReturn = 0;
         this.myTotalInvestment = 0;
@@ -2434,17 +2434,17 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_9__["Subscription"]();
         this.getInvestmentsServiceRunning = false;
         this.getTeamsServiceRunning = false;
-        this.INVESTMENTS_TYPES = _constants__WEBPACK_IMPORTED_MODULE_13__["INVESTMENTS_TYPES"]; //make it available in the view
+        this.INVESTMENTS_TYPES = _constants__WEBPACK_IMPORTED_MODULE_13__["INVESTMENTS_TYPES"]; // make it available in the view
     }
     InvestmentsDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Investments', url: null, selected: true },
             { displayName: 'Properties', url: '/properties', selected: false }
         ]);
-        //get authUser from resolver
+        // get authUser from resolver
         var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (data) {
             _this.user = data.authUser;
             return data.authUser;
@@ -2455,8 +2455,8 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         this.getTeams(user$);
     };
     InvestmentsDashboardComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
     /**
@@ -2464,7 +2464,7 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
      */
     InvestmentsDashboardComponent.prototype.getTeams = function (user$) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getTeams() > "; // for debugging
         this.teams = [];
         this.getTeamsServiceRunning = true;
         var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (user) {
@@ -2489,13 +2489,13 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
      */
     InvestmentsDashboardComponent.prototype.getInvestments = function (user$) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getInvestments() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getInvestments() > "; // for debugging
         this.investments = [];
         this.getInvestmentsServiceRunning = true;
         var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (user) {
             return _this.investmentsService.getInvestments$(user.email);
         })).subscribe(function (investments) {
-            //organize investments in rows of n-items to show in the view
+            // organize investments in rows of n-items to show in the view
             var investmentsRow = [];
             var investmentsDates = [];
             for (var _i = 0, investments_1 = investments; _i < investments_1.length; _i++) {
@@ -2514,7 +2514,7 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                     investmentsDates.push(_this.utilService.formatDate(item.buyingDate, 'YYYY-MM-DD'));
                 }
             }
-            _this.currencyExchangeService.getCurrencyRates$(investmentsDates); //lets retrieve investment dates for future usage in each investment
+            _this.currencyExchangeService.getCurrencyRates$(investmentsDates); // lets retrieve investment dates for future usage in each investment
             if (investmentsRow.length) {
                 _this.investmentsUI.push(investmentsRow);
             }
@@ -2533,14 +2533,14 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         this.subscription.add(newSubscription);
     };
     InvestmentsDashboardComponent.prototype.setTotals = function (totalReturns) {
-        //update the total that matches the id
+        // update the total that matches the id
         this.totals[totalReturns.investmentId] = totalReturns;
-        //reset totals
+        // reset totals
         this.totalReturn = 0;
         this.totalInvestment = 0;
         this.myTotalInvestment = 0;
         this.myTotalReturn = 0;
-        //re calculate totals
+        // re calculate totals
         for (var _i = 0, _a = Object.keys(this.totals); _i < _a.length; _i++) {
             var investmentId = _a[_i];
             this.totalReturn += this.totals[investmentId].investmentReturn;
@@ -2553,10 +2553,10 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
      * Removes the investment from the investments array and from the investmentUI array used in view. Also reduces the totals in the inveestment amount
      */
     InvestmentsDashboardComponent.prototype.removeInvestment = function (investmentData) {
-        var methodTrace = this.constructor.name + " > removeInvestment() > "; //for debugging
+        var methodTrace = this.constructor.name + " > removeInvestment() > "; // for debugging
         var investment = investmentData.investment;
         if (investment) {
-            //get my portion in the investment
+            // get my portion in the investment
             var myPortion = 0;
             for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
                 var portion = _a[_i];
@@ -2565,14 +2565,14 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                     break;
                 }
             }
-            //update totals row
+            // update totals row
             var investmentReturn = investmentData.investmentReturn;
             var investmentAmount = investmentData.investmentAmount;
             this.totalReturn -= investmentReturn;
             this.totalInvestment -= investmentAmount;
             this.myTotalReturn -= investmentReturn * myPortion / 100;
             this.myTotalInvestment -= investmentAmount * myPortion / 100;
-            //remove investment from array
+            // remove investment from array
             var index = 0;
             for (var _b = 0, _c = this.investments; _b < _c.length; _b++) {
                 var investmentToDelete = _c[_b];
@@ -2582,7 +2582,7 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
                 index += 1;
             }
             this.investments.splice(index, 1);
-            //update ui array
+            // update ui array
             var row = 0;
             var offset = 0;
             var found = false;
@@ -2716,17 +2716,17 @@ var InvestmentsEditComponent = /** @class */ (function () {
             investmentAmountUnit: null,
             type: null,
             investmentData: {},
-            investmentDistribution: [] //how the investment would be distributed into its owners
+            investmentDistribution: [] // how the investment would be distributed into its owners
         };
-        this.id = null; //investment id
-        this.type = null; //investment type
-        //services flags
+        this.id = null; // investment id
+        this.type = null; // investment type
+        // services flags
         this.editInvestmentServiceRunning = false;
         this.getInvestmentServiceRunning = false;
         this.getTeamsServiceRunning = false;
         this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subscription"]();
         this.formChangesSubscription = null;
-        this.investmentDataValid = false; //this value is set when investment data form is updated
+        this.investmentDataValid = false; // this value is set when investment data form is updated
         this.INVESTMENT_TYPES = _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"];
     }
     InvestmentsEditComponent.prototype.ngOnInit = function () {
@@ -2735,21 +2735,21 @@ var InvestmentsEditComponent = /** @class */ (function () {
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Investments', url: '/investments', selected: false }
         ]);
-        //generates a user source object from authUser from resolver
+        // generates a user source object from authUser from resolver
         var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (data) { return data.authUser; }));
-        //generates an investment id source from id parameter in url
+        // generates an investment id source from id parameter in url
         var id$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (params) { return params.get('id'); }));
-        //combine user$ and id$ sources into one object and start listen to it for changes
+        // combine user$ and id$ sources into one object and start listen to it for changes
         this.subscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["combineLatest"])(id$, function (user, id) {
             var urlObject = _this.route.url.getValue();
             var investmentId = null;
             var propertyId = null;
             if (urlObject[0]['path'] === _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].PROPERTY && urlObject[1]['path'] === 'create') {
-                //we are creating a property investment coming from the property component
+                // we are creating a property investment coming from the property component
                 propertyId = id;
             }
             else {
-                //we are editing an investment or creating a new one coming from the investment dashboard
+                // we are editing an investment or creating a new one coming from the investment dashboard
                 investmentId = id;
             }
             return { user: user, investmentId: investmentId, propertyId: propertyId };
@@ -2764,23 +2764,23 @@ var InvestmentsEditComponent = /** @class */ (function () {
             }
             _this.editInvestmentServiceRunning = false;
             _this.getInvestmentServiceRunning = false;
-            //get user teams
+            // get user teams
             _this.getTeams();
             if (!data.investmentId) {
-                //we are creating a new investment
+                // we are creating a new investment
                 _this.id = null;
                 _this.editMode = false;
                 _this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected: true });
             }
             else {
                 _this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected: true });
-                //we are editing an existing investment
-                _this.id = data.investmentId; //the new slug
+                // we are editing an existing investment
+                _this.id = data.investmentId; // the new slug
                 _this.editMode = true;
-                _this.getInvestment(data.investmentId); //get data
+                _this.getInvestment(data.investmentId); // get data
             }
         });
-        //get TYPE parameter
+        // get TYPE parameter
         this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (params) { return params.get('type'); })).subscribe(function (type) {
             if (![_constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CURRENCY, _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CRYPTO, _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].PROPERTY].includes(type)) {
                 _this.appService.showResults('You must provide a valid investment type to continue.', 'error');
@@ -2806,7 +2806,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
         var _this = this;
         this.formChangesSubscription = this.form.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["debounceTime"])(500)).subscribe(function (values) {
             if (values.owner === 'team' && values.team && _this.model.team) {
-                //calculates the percentage acum from all the members
+                // calculates the percentage acum from all the members
                 var percentageAcum = _this.model.team.members.reduce(function (total, member) {
                     return total + (_this.model.membersPercentage[member.email] || 0);
                 }, 0);
@@ -2828,18 +2828,18 @@ var InvestmentsEditComponent = /** @class */ (function () {
         this.subscription.add(this.formChangesSubscription);
     };
     InvestmentsEditComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
     InvestmentsEditComponent.prototype.onSubmit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.editInvestmentServiceRunning = true;
         this.model.investmentDistribution = this.populateInvestmentDistributionArray();
         this.model.createdOn = new Date(Date.now());
         this.model.updatedOn = new Date(Date.now());
-        //call the investment create service
+        // call the investment create service
         var newSubscription = this.investmentsService.create$(this.model).subscribe(function (data) {
             if (data && data.id && data.type) {
                 _this.appService.showResults("Investment successfully created!", 'success');
@@ -2860,11 +2860,11 @@ var InvestmentsEditComponent = /** @class */ (function () {
     };
     InvestmentsEditComponent.prototype.onUpdate = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onUpdate() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onUpdate() > "; // for debugging
         this.editInvestmentServiceRunning = true;
         this.model.investmentDistribution = this.populateInvestmentDistributionArray();
         this.model.updatedOn = new Date(Date.now());
-        //call the investment create service
+        // call the investment create service
         var newSubscription = this.investmentsService.update$(this.model).subscribe(function (data) {
             if (data && data.id && data.type) {
                 _this.appService.showResults("Investment successfully updated!", 'success');
@@ -2887,7 +2887,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
      */
     InvestmentsEditComponent.prototype.getTeams = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getTeams() > "; // for debugging
         this.teams = [];
         this.getTeamsServiceRunning = true;
         var newSubscription = this.teamsService.getTeams$(this.user.email).subscribe(function (teams) {
@@ -2948,7 +2948,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
      */
     InvestmentsEditComponent.prototype.getInvestment = function (id) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getInvestment() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getInvestment() > "; // for debugging
         if (!id) {
             this.appService.showResults("Invalid investment ID", 'error');
             this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
@@ -2957,10 +2957,10 @@ var InvestmentsEditComponent = /** @class */ (function () {
         this.getInvestmentServiceRunning = true;
         var newSubscription = this.investmentsService.getInvestmentById$(this.user.email, id).subscribe(function (investment) {
             _this.investment = investment;
-            //populate the model
+            // populate the model
             _this.model.owner = investment.team ? 'team' : 'me';
             _this.model.team = investment.team;
-            _this.getSelectedTeam(); //this is necesary to make the selectbox in ui set a team
+            _this.getSelectedTeam(); // this is necesary to make the selectbox in ui set a team
             _this.model.teamSlug = investment.team ? investment.team.slug : null;
             _this.model.investmentDistribution = investment.investmentDistribution;
             for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
@@ -3018,7 +3018,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
     };
     InvestmentsEditComponent.prototype.onRadioChange = function (matRadioChange) {
         if (matRadioChange.value === 'me') {
-            //reset team values from model
+            // reset team values from model
             this.model.team = this.model.teamSlug = null;
         }
         this.model.membersPercentage = {};
@@ -3035,7 +3035,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
      */
     InvestmentsEditComponent.prototype.setDefaultInvestmentPercentages = function () {
         this.model.membersPercentage = {};
-        //set the default percentage of the investment to each member
+        // set the default percentage of the investment to each member
         var defaultPercentage = Number(_angular_common__WEBPACK_IMPORTED_MODULE_1__["DecimalPipe"].prototype.transform(100 / this.model.team.members.length, '1.0-2', 'en'));
         for (var _i = 0, _a = this.model.team.members; _i < _a.length; _i++) {
             var member = _a[_i];
@@ -4523,7 +4523,7 @@ var PropertiesDashboardComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container__edit-property\" fxLayout=\"column\" fxLayoutAlign=\"none none\" fxLayout.gt-sm=\"row\" fxLayoutAlign.gt-xs=\"center none\" fxLayoutGap=\"10px\">\r\n  <!-- Form  -->\r\n  <form *ngIf=\"!getPropertyServiceRunning\" class=\"form__container form__edit-property\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editPropertyForm=\"ngForm\" \r\n      novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Basic info</p>\r\n        </h3>\r\n  \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Address -->\r\n          <address-autocomplete fxFlex\r\n              [id]=\"'address'\" \r\n              [defaultValues]=\"model.address\"\r\n              [placeHolder]=\"'Address'\"\r\n              (values)=\"onAddressChange($event)\">\r\n          </address-autocomplete>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Map -->\r\n          <dynamic-map *ngIf=\"model.address && model.address.latitude && model.address.longitude\"\r\n              fxFlex [latitude]=\"model.address.latitude\" [longitude]=\"model.address.longitude\" [markers]=\"[model.address]\" [mapContainerHeight]=\"300\"></dynamic-map>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Description -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\r\n                matTextareaAutosize matAutosizeMinRows=\"2\" matAutosizeMaxRows=\"5\"\r\n                [(ngModel)]=\"model.description\" \r\n                value=\"model.description\"\r\n                #description=\"ngModel\">\r\n            </textarea>\r\n\r\n            <mat-icon matPrefix>subject</mat-icon>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n  \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Pricing information</p>\r\n        </h3>\r\n      \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Asking price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'askingPriceUnit'\" \r\n                [value]=\"model.askingPriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"askingPrice\" name=\"askingPrice\" placeholder=\"Asking price\"\r\n                  [(ngModel)]=\"model.askingPrice\" \r\n                  [value]=\"model.askingPrice\"\r\n                  numberValidator\r\n                  #askingPrice=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\r\n              <mat-error *ngIf=\"askingPrice.invalid && (askingPrice.dirty || askingPrice.touched) && askingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n          \r\n          <!-- Offer price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'offerPriceUnit'\" \r\n                [value]=\"model.offerPriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"offerPrice\" name=\"offerPrice\" placeholder=\"Offer price\"\r\n                  [(ngModel)]=\"model.offerPrice\" \r\n                  [value]=\"model.offerPrice\"\r\n                  numberValidator\r\n                  #offerPrice=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\r\n              <mat-error *ngIf=\"offerPrice.invalid && (offerPrice.dirty || offerPrice.touched) && offerPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Walk away price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'walkAwayPriceUnit'\" \r\n                [value]=\"model.walkAwayPriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"walkAwayPrice\" name=\"walkAwayPrice\" placeholder=\"Walk away price\"\r\n                  [(ngModel)]=\"model.walkAwayPrice\" \r\n                  [value]=\"model.walkAwayPrice\"\r\n                  numberValidator\r\n                  #walkAwayPrice=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\r\n              <mat-error *ngIf=\"walkAwayPrice.invalid && (walkAwayPrice.dirty || walkAwayPrice.touched) && walkAwayPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Purchase price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'purchasePriceUnit'\" \r\n                [value]=\"model.purchasePriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\"\r\n                  [(ngModel)]=\"model.purchasePrice\" \r\n                  [value]=\"model.purchasePrice\"\r\n                  numberValidator\r\n                  #purchasePrice=\"ngModel\">\r\n              \r\n              <mat-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Market value -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'marketValueUnit'\" \r\n                [value]=\"model.marketValueUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\"\r\n                  [(ngModel)]=\"model.marketValue\" \r\n                  [value]=\"model.marketValue\"\r\n                  numberValidator\r\n                  #marketValue=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Costs</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Reno cost -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'renovationCostUnit'\" \r\n                [value]=\"model.renovationCostUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\"\r\n                  [(ngModel)]=\"model.renovationCost\" \r\n                  [value]=\"model.renovationCost\"\r\n                  numberValidator\r\n                  #renovationCost=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"renovationCost.invalid && (renovationCost.dirty || renovationCost.touched) && renovationCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Maintenance cost -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'maintenanceCostUnit'\" \r\n                [value]=\"model.maintenanceCostUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"maintenanceCost\" name=\"maintenanceCost\" placeholder=\"Maintenance cost\"\r\n                  [(ngModel)]=\"model.maintenanceCost\" \r\n                  [value]=\"model.maintenanceCost\"\r\n                  numberValidator\r\n                  #maintenanceCost=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"maintenanceCost.invalid && (maintenanceCost.dirty || maintenanceCost.touched) && maintenanceCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n          \r\n          <!-- Other cost -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'otherCostUnit'\" \r\n                [value]=\"model.otherCostUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"otherCost\" name=\"otherCost\" placeholder=\"Other cost\"\r\n                  [(ngModel)]=\"model.otherCost\" \r\n                  [value]=\"model.otherCost\"\r\n                  numberValidator\r\n                  #otherCost=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"otherCost.invalid && (otherCost.dirty || otherCost.touched) && otherCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Other information</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Date listed -->\r\n          <mat-form-field fxFlex fxFlex.gt-xs=\"100px\" class=\"form__field\">\r\n            <input placeholder=\"Listing date\"\r\n                id=\"dateListed\"\r\n                name=\"dateListed\"\r\n                readonly\r\n                #dateListed=\"ngModel\"\r\n                matInput \r\n                [(ngModel)]=\"model.dateListed\" \r\n                [matDatepicker]=\"pickerDateListed\"\r\n                (click)=\"pickerDateListed.open()\">\r\n            <mat-datepicker-toggle matSuffix [for]=\"pickerDateListed\"></mat-datepicker-toggle>\r\n            <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerDateListed></mat-datepicker>\r\n            <mat-error *ngIf=\"dateListed.invalid && (dateListed.dirty || dateListed.touched) && dateListed.errors.matDatepickerParse\">Buying date is invalid or not follows the pattern \"mm/dd/yyyy\"</mat-error>\r\n          </mat-form-field>\r\n  \r\n          <!-- Reason for selling -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <textarea matInput id=\"reasonForSelling\" name=\"reasonForSelling\" placeholder=\"Reason for selling\"\r\n                matTextareaAutosize matAutosizeMinRows=\"2\" matAutosizeMaxRows=\"5\"\r\n                [(ngModel)]=\"model.reasonForSelling\" \r\n                value=\"model.reasonForSelling\"\r\n                #reasonForSelling=\"ngModel\">\r\n            </textarea>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Notes -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <textarea matInput id=\"notes\" name=\"notes\" placeholder=\"Other notes\"\r\n                matTextareaAutosize matAutosizeMinRows=\"2\" matAutosizeMaxRows=\"5\"\r\n                [(ngModel)]=\"model.notes\" \r\n                value=\"model.notes\"\r\n                #notes=\"ngModel\">\r\n            </textarea>\r\n\r\n            <mat-icon matPrefix>subject</mat-icon>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <houses-edit *ngIf=\"type === propertyTypes.HOUSE\" \r\n            [defaultValues]=\"model.propertyTypeData\"\r\n            [defaultCurrencyUnit]=\"user.currency\"\r\n            (values)=\"onPropertyTypeDataChange($event)\">\r\n        </houses-edit>\r\n      </div>\r\n    </section>\r\n\r\n    <section class=\"form__actions form__actions--edit-property\"\r\n        fxLayout=\"column\" fxLayout.gt-sm=\"row\"  \r\n        fxLayoutGap=\"10px\">\r\n      \r\n      <button mat-fab *ngIf=\"!editPropertyServiceRunning\" \r\n          class=\"fab mat-elevation-z10 form__action\" \r\n          color=\"accent\" \r\n          type=\"submit\"\r\n          matTooltip=\"Save changes\" matTooltipPosition=\"left\" \r\n          [disabled]=\"!(editPropertyForm.form.valid && includedFormsValid())\">\r\n        <mat-icon aria-label=\"Save changes\">save</mat-icon>\r\n      </button>\r\n      \r\n      <mat-progress-spinner *ngIf=\"editPropertyServiceRunning\"\r\n          class=\"progress-spinner progress-spinner--edit-property\"\r\n          color=\"accent\"\r\n          [diameter]=\"55\" [strokeWidth]=\"10\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </form>\r\n\r\n  <!-- Figures -->\r\n  <section *ngIf=\"!getPropertyServiceRunning\" fxHide.lt-md=\"true\" fxLayout=\"column\" fxLayoutGap=\"10px\" fxFlex=\"300px\" class=\"house-figures-results\">\r\n    <mat-card>\r\n      <mat-card-content>\r\n        <!-- Missing required data from -->\r\n        <form class=\"form__container form__house-figures-results\" #houseFiguresResultsForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n          <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n            <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields__row__container\">\r\n              <h3 class=\"title\">\r\n                <p class=\"header\">Additional values</p>\r\n                <p class=\"mat-caption\">This information it is not saved in the database, play with these values to evaluate a potencial investment</p>\r\n              </h3>\r\n\r\n              <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n                <!-- Loan coverage -->\r\n                <div fxFlex=\"none\" fxLayout=\"column\" class=\"form__field slider__field\">\r\n                  <label class=\"slider__label\">Loan coverage</label>\r\n                  <div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n                    <mat-slider fxFlex id=\"loanCoverage\" name=\"loanCoverage\"\r\n                        color=\"accent\"\r\n                        [max]=\"100\"\r\n                        [min]=\"0\"\r\n                        [step]=\"1\"\r\n                        thumbLabel=\"true\"\r\n                        tickInterval=\"1\"\r\n                        [(ngModel)]=\"modelHouseFiguresResults.loanCoverage\"\r\n                        [value]=\"modelHouseFiguresResults.loanCoverage\"> \r\n                    </mat-slider>\r\n                    <span *ngIf=\"modelHouseFiguresResults.loanCoverage\">{{modelHouseFiguresResults.loanCoverage}}%</span>\r\n                  </div>\r\n                  <label class=\"mat-hint slider__label__hint\">Percentage of the purchase price covered by the loan.</label>\r\n                </div>\r\n\r\n                <!-- Loan term -->\r\n                <div fxFlex=\"none\" fxLayout=\"column\" class=\"form__field slider__field\">\r\n                  <label class=\"slider__label\">Term</label>\r\n                  <div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n                    <mat-slider fxFlex id=\"loanTerm\" name=\"loanTerm\"\r\n                        color=\"accent\"\r\n                        [max]=\"30\"\r\n                        [min]=\"1\"\r\n                        [step]=\"1\"\r\n                        thumbLabel=\"true\"\r\n                        tickInterval=\"1\"\r\n                        [(ngModel)]=\"modelHouseFiguresResults.loanTerm\"\r\n                        [value]=\"modelHouseFiguresResults.loanTerm\"> \r\n                    </mat-slider>\r\n                    <span *ngIf=\"modelHouseFiguresResults.loanTerm\">{{modelHouseFiguresResults.loanTerm}} years</span>\r\n                  </div>\r\n                </div>\r\n\r\n                <!-- Interest rates -->\r\n                <mat-form-field fxFlex class=\"form__field\">\r\n                  <input matInput type=\"number\" id=\"interestRates\" name=\"interestRates\" placeholder=\"Interest rates\" \r\n                      [(ngModel)]=\"modelHouseFiguresResults.interestRates\" \r\n                      numberValidator='{\"min\": 0, \"max\": 100}' \r\n                      [value]=\"modelHouseFiguresResults.interestRates\"\r\n                      #interestRates=\"ngModel\">\r\n\r\n                  <mat-icon matPrefix>timeline</mat-icon>\r\n                  <span matSuffix>%</span>\r\n                  <mat-hint align=\"start\">Average loan interest rates (as a percentage).</mat-hint>\r\n                  <mat-error *ngIf=\"interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                  <mat-error *ngIf=\"interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n                  <mat-error *ngIf=\"interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n                </mat-form-field>\r\n\r\n                <!-- Payment frecuency -->\r\n                <mat-form-field fxFlex class=\"form__field\">\r\n                  <mat-select id=\"paymentFrecuency\" name=\"paymentFrecuency\" placeholder=\"Frecuency\" \r\n                      [(ngModel)]=\"modelHouseFiguresResults.paymentFrecuency\" [value]=\"modelHouseFiguresResults.paymentFrecuency\">\r\n                    <mat-option value=\"12\">Monthly</mat-option>\r\n                    <mat-option value=\"26\">Fornightly</mat-option>\r\n                    <mat-option value=\"52\">Weekly</mat-option>\r\n                  </mat-select>\r\n                  \r\n                  <mat-hint align=\"start\">Payment frecuency</mat-hint>\r\n                </mat-form-field>\r\n              </div>\r\n            </div>\r\n          </section>\r\n        </form>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n    <house-figures-results \r\n      title=\"Property figures\"\r\n      subtitle=\"This figures asumes that all of the currency inputs in the form are in the same unit\"\r\n      [purchasePrice]=\"model.purchasePrice || model.offerPrice || model.askingPrice || model.walkAwayPrice || 0\"\r\n      [capitalGrowth]=\"model.propertyTypeData.capitalGrowth || 0\"\r\n      [marketValue]=\"model.marketValue\"\r\n      [loanCoverage]=\"modelHouseFiguresResults.loanCoverage\"\r\n      [interestRates]=\"modelHouseFiguresResults.interestRates\"\r\n      [loanTerm]=\"modelHouseFiguresResults.loanTerm\"\r\n      [paymentFrecuency]=\"modelHouseFiguresResults.paymentFrecuency\"\r\n      [rentPrice]=\"model.propertyTypeData.rentPrice\"\r\n      [rentPaymentFrecuency]=\"model.propertyTypeData.rentPricePeriod\"\r\n      [vacancy]=\"model.propertyTypeData.vacancy\"\r\n      [renovationCost]=\"model.renovationCost\"\r\n      [mantainanceCost]=\"model.maintenanceCost\"\r\n      [bodyCorporate]=\"model.propertyTypeData.bodyCorporate\"\r\n      [houseRates]=\"model.propertyTypeData.rates\"\r\n      [utilities]=\"model.propertyTypeData.utilitiesCost\"\r\n      [insurance]=\"model.propertyTypeData.insurance\"\r\n      [otherCosts]=\"model.otherCost\"\r\n      [managed]=\"model.propertyTypeData.managed ? model.propertyTypeData.managerRate : 0\">\r\n    </house-figures-results>\r\n  </section>\r\n  <!-- <pre>{{model | json}}</pre> -->\r\n\r\n  <progress-bar class=\"progress-bar--get-property\" *ngIf=\"getPropertyServiceRunning\"\r\n      color=\"primary\"\r\n      message=\"Loading property info...\">\r\n  </progress-bar>\r\n\r\n  <section *ngIf=\"!getPropertyServiceRunning\" \r\n      fxLayout=\"column\" \r\n      fxHide.gt-sm=\"true\" \r\n      class=\"actions\">\r\n    \r\n    <button mat-mini-fab class=\"mini-fab mat-elevation-z10\" color=\"primary\" *ngIf=\"!showPropertyFiguresDialogSpinner\"\r\n        matTooltip=\"Show figures\" matTooltipPosition=\"left\" \r\n        (click)=\"openHouseResultsFiguresDialog()\">\r\n      <mat-icon aria-label=\"Show property figures\">attach_money</mat-icon>\r\n    </button>\r\n\r\n    <mat-progress-spinner *ngIf=\"showPropertyFiguresDialogSpinner\"\r\n        class=\"progress-spinner progress-spinner--open-dialog\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-spinner>\r\n  </section>\r\n</div>"
+module.exports = "<div class=\"container__edit-property\" fxLayout=\"column\" fxLayoutAlign=\"none none\" fxLayout.gt-sm=\"row\" fxLayoutAlign.gt-xs=\"center none\" fxLayoutGap=\"10px\">\r\n  <!-- Form  -->\r\n  <form *ngIf=\"!getPropertyServiceRunning\" class=\"form__container form__edit-property\" (ngSubmit)=\"editMode ? onUpdate() : onSubmit()\" #editPropertyForm=\"ngForm\" \r\n      novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">\r\n    \r\n    <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Basic info</p>\r\n        </h3>\r\n  \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Address -->\r\n          <address-autocomplete fxFlex\r\n              [id]=\"'address'\" \r\n              [defaultValues]=\"model.address\"\r\n              [placeHolder]=\"'Address'\"\r\n              (values)=\"onAddressChange($event)\">\r\n          </address-autocomplete>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Map -->\r\n          <dynamic-map *ngIf=\"model.address && model.address.latitude && model.address.longitude\"\r\n              fxFlex [latitude]=\"model.address.latitude\" [longitude]=\"model.address.longitude\" [markers]=\"[model.address]\" [mapContainerHeight]=\"300\"></dynamic-map>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Description -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <textarea matInput id=\"description\" name=\"description\" placeholder=\"Description\"\r\n                matTextareaAutosize matAutosizeMinRows=\"2\" matAutosizeMaxRows=\"5\"\r\n                [(ngModel)]=\"model.description\" \r\n                value=\"model.description\"\r\n                #description=\"ngModel\">\r\n            </textarea>\r\n\r\n            <mat-icon matPrefix>subject</mat-icon>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n  \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Pricing information</p>\r\n        </h3>\r\n      \r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Asking price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'askingPriceUnit'\" \r\n                [value]=\"model.askingPriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"askingPrice\" name=\"askingPrice\" placeholder=\"Asking price\"\r\n                  [(ngModel)]=\"model.askingPrice\" \r\n                  [value]=\"model.askingPrice\"\r\n                  numberValidator\r\n                  #askingPrice=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\r\n              <mat-error *ngIf=\"askingPrice.invalid && (askingPrice.dirty || askingPrice.touched) && askingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n          \r\n          <!-- Offer price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'offerPriceUnit'\" \r\n                [value]=\"model.offerPriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"offerPrice\" name=\"offerPrice\" placeholder=\"Offer price\"\r\n                  [(ngModel)]=\"model.offerPrice\" \r\n                  [value]=\"model.offerPrice\"\r\n                  numberValidator\r\n                  #offerPrice=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\r\n              <mat-error *ngIf=\"offerPrice.invalid && (offerPrice.dirty || offerPrice.touched) && offerPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Walk away price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'walkAwayPriceUnit'\" \r\n                [value]=\"model.walkAwayPriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"walkAwayPrice\" name=\"walkAwayPrice\" placeholder=\"Walk away price\"\r\n                  [(ngModel)]=\"model.walkAwayPrice\" \r\n                  [value]=\"model.walkAwayPrice\"\r\n                  numberValidator\r\n                  #walkAwayPrice=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">The price the owner ask for sell the house.</mat-hint>\r\n              <mat-error *ngIf=\"walkAwayPrice.invalid && (walkAwayPrice.dirty || walkAwayPrice.touched) && walkAwayPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Purchase price -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'purchasePriceUnit'\" \r\n                [value]=\"model.purchasePriceUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"purchasePrice\" name=\"purchasePrice\" placeholder=\"Purchase price\"\r\n                  [(ngModel)]=\"model.purchasePrice\" \r\n                  [value]=\"model.purchasePrice\"\r\n                  numberValidator\r\n                  #purchasePrice=\"ngModel\">\r\n              \r\n              <mat-error *ngIf=\"purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Market value -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'marketValueUnit'\" \r\n                [value]=\"model.marketValueUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"marketValue\" name=\"marketValue\" placeholder=\"Market value\"\r\n                  [(ngModel)]=\"model.marketValue\" \r\n                  [value]=\"model.marketValue\"\r\n                  numberValidator\r\n                  #marketValue=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Costs</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Reno cost -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'renovationCostUnit'\" \r\n                [value]=\"model.renovationCostUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"renovationCost\" name=\"renovationCost\" placeholder=\"Renovation cost\"\r\n                  [(ngModel)]=\"model.renovationCost\" \r\n                  [value]=\"model.renovationCost\"\r\n                  numberValidator\r\n                  #renovationCost=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"renovationCost.invalid && (renovationCost.dirty || renovationCost.touched) && renovationCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- Maintenance cost -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'maintenanceCostUnit'\" \r\n                [value]=\"model.maintenanceCostUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"maintenanceCost\" name=\"maintenanceCost\" placeholder=\"Maintenance cost\"\r\n                  [(ngModel)]=\"model.maintenanceCost\" \r\n                  [value]=\"model.maintenanceCost\"\r\n                  numberValidator\r\n                  #maintenanceCost=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"maintenanceCost.invalid && (maintenanceCost.dirty || maintenanceCost.touched) && maintenanceCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n          \r\n          <!-- Other cost -->\r\n          <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n            <currency-unit fxFlex=\"50px\"\r\n                [id]=\"'otherCostUnit'\" \r\n                [value]=\"model.otherCostUnit\"\r\n                [view]=\"'narrow'\"\r\n                (newValue)=\"onCurrencyUnitChange($event)\">\r\n            </currency-unit>\r\n            \r\n            <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.md=\"140px\" fxFlex.gt-md=\"200px\" class=\"form__field\">\r\n              <input matInput type=\"number\" id=\"otherCost\" name=\"otherCost\" placeholder=\"Other cost\"\r\n                  [(ngModel)]=\"model.otherCost\" \r\n                  [value]=\"model.otherCost\"\r\n                  numberValidator\r\n                  #otherCost=\"ngModel\">\r\n              \r\n              <mat-hint align=\"start\">Last sale price.</mat-hint>\r\n              <mat-error *ngIf=\"otherCost.invalid && (otherCost.dirty || otherCost.touched) && otherCost.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      \r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <h3 class=\"title\">\r\n          <p class=\"header\">Other information</p>\r\n        </h3>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Date listed -->\r\n          <mat-form-field fxFlex fxFlex.gt-xs=\"100px\" class=\"form__field\">\r\n            <input placeholder=\"Listing date\"\r\n                id=\"dateListed\"\r\n                name=\"dateListed\"\r\n                readonly\r\n                #dateListed=\"ngModel\"\r\n                matInput \r\n                [(ngModel)]=\"model.dateListed\" \r\n                [matDatepicker]=\"pickerDateListed\"\r\n                (click)=\"pickerDateListed.open()\">\r\n            <mat-datepicker-toggle matSuffix [for]=\"pickerDateListed\"></mat-datepicker-toggle>\r\n            <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerDateListed></mat-datepicker>\r\n            <mat-error *ngIf=\"dateListed.invalid && (dateListed.dirty || dateListed.touched) && dateListed.errors.matDatepickerParse\">Buying date is invalid or not follows the pattern \"mm/dd/yyyy\"</mat-error>\r\n          </mat-form-field>\r\n  \r\n          <!-- Reason for selling -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <textarea matInput id=\"reasonForSelling\" name=\"reasonForSelling\" placeholder=\"Reason for selling\"\r\n                matTextareaAutosize matAutosizeMinRows=\"2\" matAutosizeMaxRows=\"5\"\r\n                [(ngModel)]=\"model.reasonForSelling\" \r\n                value=\"model.reasonForSelling\"\r\n                #reasonForSelling=\"ngModel\">\r\n            </textarea>\r\n          </mat-form-field>\r\n        </div>\r\n\r\n        <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n          <!-- Notes -->\r\n          <mat-form-field fxFlex class=\"form__field\">\r\n            <textarea matInput id=\"notes\" name=\"notes\" placeholder=\"Other notes\"\r\n                matTextareaAutosize matAutosizeMinRows=\"2\" matAutosizeMaxRows=\"5\"\r\n                [(ngModel)]=\"model.notes\" \r\n                value=\"model.notes\"\r\n                #notes=\"ngModel\">\r\n            </textarea>\r\n\r\n            <mat-icon matPrefix>subject</mat-icon>\r\n          </mat-form-field>\r\n        </div>\r\n      </div>\r\n\r\n      <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n        <houses-edit *ngIf=\"type === propertyTypes.HOUSE\" \r\n            [defaultValues]=\"model.propertyTypeData\"\r\n            [defaultCurrencyUnit]=\"user.currency\"\r\n            (values)=\"onPropertyTypeDataChange($event)\">\r\n        </houses-edit>\r\n      </div>\r\n    </section>\r\n\r\n    <section class=\"form__actions form__actions--edit-property\"\r\n        fxLayout=\"column\" fxLayout.gt-sm=\"row\"  \r\n        fxLayoutGap=\"10px\">\r\n      \r\n      <button mat-fab *ngIf=\"!editPropertyServiceRunning\" \r\n          class=\"fab mat-elevation-z10 form__action\" \r\n          color=\"accent\" \r\n          type=\"submit\"\r\n          matTooltip=\"Save changes\" matTooltipPosition=\"left\" \r\n          [disabled]=\"!(editPropertyForm.form.valid && includedFormsValid())\">\r\n        <mat-icon aria-label=\"Save changes\">save</mat-icon>\r\n      </button>\r\n      \r\n      <mat-progress-spinner *ngIf=\"editPropertyServiceRunning\"\r\n          class=\"progress-spinner progress-spinner--edit-property\"\r\n          color=\"accent\"\r\n          [diameter]=\"55\" [strokeWidth]=\"10\"\r\n          mode=\"indeterminate\">\r\n      </mat-progress-spinner>\r\n    </section>\r\n  </form>\r\n\r\n  <!-- Figures -->\r\n  <section *ngIf=\"!getPropertyServiceRunning\" fxHide.lt-md=\"true\" fxLayout=\"column\" fxLayoutGap=\"10px\" fxFlex=\"300px\" class=\"house-figures-results\">\r\n    <mat-card>\r\n      <mat-card-content>\r\n        <!-- Missing required data from -->\r\n        <form class=\"form__container form__house-figures-results\" #houseFiguresResultsForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\" >\r\n          <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n            <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields__row__container\">\r\n              <h3 class=\"title\">\r\n                <p class=\"header\">Additional values</p>\r\n                <p class=\"mat-caption\">This information it is not saved in the database, play with these values to evaluate a potencial investment</p>\r\n              </h3>\r\n\r\n              <div fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields__row\">\r\n                <!-- Loan coverage -->\r\n                <div fxFlex=\"none\" fxLayout=\"column\" class=\"form__field slider__field\">\r\n                  <label class=\"slider__label\">Loan coverage</label>\r\n                  <div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n                    <mat-slider fxFlex id=\"loanCoverage\" name=\"loanCoverage\"\r\n                        color=\"accent\"\r\n                        [max]=\"100\"\r\n                        [min]=\"0\"\r\n                        [step]=\"1\"\r\n                        thumbLabel=\"true\"\r\n                        tickInterval=\"1\"\r\n                        [(ngModel)]=\"modelHouseFiguresResults.loanCoverage\"\r\n                        [value]=\"modelHouseFiguresResults.loanCoverage\"> \r\n                    </mat-slider>\r\n                    <span *ngIf=\"modelHouseFiguresResults.loanCoverage\">{{modelHouseFiguresResults.loanCoverage}}%</span>\r\n                  </div>\r\n                  <label class=\"mat-hint slider__label__hint\">Percentage of the purchase price covered by the loan.</label>\r\n                </div>\r\n\r\n                <!-- Loan term -->\r\n                <div fxFlex=\"none\" fxLayout=\"column\" class=\"form__field slider__field\">\r\n                  <label class=\"slider__label\">Term</label>\r\n                  <div fxLayout=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n                    <mat-slider fxFlex id=\"loanTerm\" name=\"loanTerm\"\r\n                        color=\"accent\"\r\n                        [max]=\"30\"\r\n                        [min]=\"1\"\r\n                        [step]=\"1\"\r\n                        thumbLabel=\"true\"\r\n                        tickInterval=\"1\"\r\n                        [(ngModel)]=\"modelHouseFiguresResults.loanTerm\"\r\n                        [value]=\"modelHouseFiguresResults.loanTerm\"> \r\n                    </mat-slider>\r\n                    <span *ngIf=\"modelHouseFiguresResults.loanTerm\">{{modelHouseFiguresResults.loanTerm}} years</span>\r\n                  </div>\r\n                </div>\r\n\r\n                <!-- Interest rates -->\r\n                <mat-form-field fxFlex class=\"form__field\">\r\n                  <input matInput type=\"number\" id=\"interestRates\" name=\"interestRates\" placeholder=\"Interest rates\" \r\n                      [(ngModel)]=\"modelHouseFiguresResults.interestRates\" \r\n                      numberValidator='{\"min\": 0, \"max\": 100}' \r\n                      [value]=\"modelHouseFiguresResults.interestRates\"\r\n                      #interestRates=\"ngModel\">\r\n\r\n                  <mat-icon matPrefix>timeline</mat-icon>\r\n                  <span matSuffix>%</span>\r\n                  <mat-hint align=\"start\">Average loan interest rates (as a percentage).</mat-hint>\r\n                  <mat-error *ngIf=\"interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n                  <mat-error *ngIf=\"interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMin\">Min value must be greater or equal than 0</mat-error>\r\n                  <mat-error *ngIf=\"interestRates.invalid && (interestRates.dirty || interestRates.touched) && interestRates.errors.numberValidatorMax\">Max value must be less or equal than 100</mat-error>\r\n                </mat-form-field>\r\n\r\n                <!-- Payment frecuency -->\r\n                <mat-form-field fxFlex class=\"form__field\">\r\n                  <mat-select id=\"paymentFrecuency\" name=\"paymentFrecuency\" placeholder=\"Frecuency\" \r\n                      [(ngModel)]=\"modelHouseFiguresResults.paymentFrecuency\" [value]=\"modelHouseFiguresResults.paymentFrecuency\">\r\n                    <mat-option value=\"12\">Monthly</mat-option>\r\n                    <mat-option value=\"26\">Fornightly</mat-option>\r\n                    <mat-option value=\"52\">Weekly</mat-option>\r\n                  </mat-select>\r\n                  \r\n                  <mat-hint align=\"start\">Payment frecuency</mat-hint>\r\n                </mat-form-field>\r\n              </div>\r\n            </div>\r\n          </section>\r\n        </form>\r\n      </mat-card-content>\r\n    </mat-card>\r\n\r\n    <house-figures-results \r\n      title=\"Property figures\"\r\n      subtitle=\"This figures asumes that all of the currency inputs in the form are in the same unit\"\r\n      [purchasePrice]=\"model.purchasePrice || model.offerPrice || model.askingPrice || model.walkAwayPrice || 0\"\r\n      [capitalGrowth]=\"model.propertyTypeData.capitalGrowth || 0\"\r\n      [marketValue]=\"model.marketValue\"\r\n      [loanCoverage]=\"modelHouseFiguresResults.loanCoverage\"\r\n      [interestRates]=\"modelHouseFiguresResults.interestRates\"\r\n      [loanTerm]=\"modelHouseFiguresResults.loanTerm\"\r\n      [paymentFrecuency]=\"modelHouseFiguresResults.paymentFrecuency\"\r\n      [rentPrice]=\"model.propertyTypeData.rentPrice\"\r\n      [rentPaymentFrecuency]=\"model.propertyTypeData.rentPricePeriod\"\r\n      [vacancy]=\"model.propertyTypeData.vacancy\"\r\n      [renovationCost]=\"model.renovationCost\"\r\n      [mantainanceCost]=\"model.maintenanceCost\"\r\n      [bodyCorporate]=\"model.propertyTypeData.bodyCorporate\"\r\n      [houseRates]=\"model.propertyTypeData.rates\"\r\n      [utilities]=\"model.propertyTypeData.utilitiesCost\"\r\n      [insurance]=\"model.propertyTypeData.insurance\"\r\n      [otherCosts]=\"model.otherCost\"\r\n      [managed]=\"model.propertyTypeData.managed ? model.propertyTypeData.managerRate : 0\">\r\n    </house-figures-results>\r\n  </section>\r\n  <!-- <pre>{{model | json}}</pre> -->\r\n\r\n  <progress-bar class=\"progress-bar--get-property\" *ngIf=\"getPropertyServiceRunning\"\r\n      color=\"primary\"\r\n      message=\"Loading property info...\">\r\n  </progress-bar>\r\n\r\n  <section *ngIf=\"!getPropertyServiceRunning\" \r\n      fxLayout=\"column\" \r\n      fxHide.gt-sm=\"true\" \r\n      class=\"actions\">\r\n    \r\n    <button mat-mini-fab class=\"mini-fab mat-elevation-z10\" color=\"primary\" *ngIf=\"!showPropertyFiguresDialogSpinner\"\r\n        matTooltip=\"Show figures\" matTooltipPosition=\"left\" \r\n        (click)=\"showPropertyFiguresDialogSpinner = true; openHouseResultsFiguresDialog()\">\r\n      <mat-icon aria-label=\"Show property figures\">attach_money</mat-icon>\r\n    </button>\r\n\r\n    <mat-progress-spinner *ngIf=\"showPropertyFiguresDialogSpinner\"\r\n        class=\"progress-spinner progress-spinner--open-dialog\"\r\n        color=\"warn\"\r\n        [diameter]=\"40\" [strokeWidth]=\"7\"\r\n        mode=\"indeterminate\">\r\n    </mat-progress-spinner>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -4595,16 +4595,16 @@ var PropertiesEditComponent = /** @class */ (function () {
         this.user = null;
         this.property = null;
         this.propertyTypes = null;
-        this.id = null; //property id
-        this.type = null; //property type
+        this.id = null; // property id
+        this.type = null; // property type
         this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subscription"]();
-        this.propertyTypeDataValid = false; //this value is set when property type data form is updated
+        this.propertyTypeDataValid = false; // this value is set when property type data form is updated
         this.addressValid = false;
-        //services flags
+        // services flags
         this.editPropertyServiceRunning = false;
         this.getPropertyServiceRunning = false;
         this.showPropertyFiguresDialogSpinner = false;
-        //models
+        // models
         this.model = {
             id: null,
             email: null,
@@ -4636,7 +4636,7 @@ var PropertiesEditComponent = /** @class */ (function () {
             loanCoverage: 80,
             interestRates: 7,
             loanTerm: 30,
-            paymentFrecuency: "26",
+            paymentFrecuency: '26',
         };
         this.dateAdapter.setLocale('en-GB');
         this.propertyTypes = _constants__WEBPACK_IMPORTED_MODULE_6__["PROPERTY_TYPES"];
@@ -4648,11 +4648,11 @@ var PropertiesEditComponent = /** @class */ (function () {
             { displayName: 'Investments', url: '/investments', selected: false },
             { displayName: 'Properties', url: '/properties', selected: false }
         ]);
-        //generates a user source object from authUser from resolver
+        // generates a user source object from authUser from resolver
         var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["map"])(function (data) { return data.authUser; }));
-        //generates an property id source from id parameter in url
+        // generates an property id source from id parameter in url
         var id$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["map"])(function (params) { return params.get('id'); }));
-        //combine user$ and id$ sources into one object and start listen to it for changes
+        // combine user$ and id$ sources into one object and start listen to it for changes
         var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["combineLatest"])(id$, function (user, id) {
             return { user: user, propertyId: id };
         })).subscribe(function (data) {
@@ -4665,21 +4665,21 @@ var PropertiesEditComponent = /** @class */ (function () {
             _this.editPropertyServiceRunning = false;
             _this.getPropertyServiceRunning = false;
             if (!data.propertyId) {
-                //we are creating a new property
+                // we are creating a new property
                 _this.id = null;
                 _this.editMode = false;
                 _this.mainNavigatorService.appendLink({ displayName: 'Create Property', url: '', selected: true });
             }
             else {
                 _this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected: true });
-                //we are editing an existing property
+                // we are editing an existing property
                 _this.id = data.propertyId;
                 _this.editMode = true;
-                _this.getProperty(data.propertyId); //get data
+                _this.getProperty(data.propertyId); // get data
             }
         });
         this.subscription.add(newSubscription);
-        //get TYPE parameter
+        // get TYPE parameter
         this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["map"])(function (params) { return params.get('type'); })).subscribe(function (type) {
             if (![_constants__WEBPACK_IMPORTED_MODULE_6__["PROPERTY_TYPES"].HOUSE].includes(type)) {
                 _this.appService.showResults('You must provide a valid property type to continue.', 'error');
@@ -4701,7 +4701,7 @@ var PropertiesEditComponent = /** @class */ (function () {
      */
     PropertiesEditComponent.prototype.getProperty = function (id) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getProperty() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getProperty() > "; // for debugging
         if (!id) {
             this.appService.showResults("Invalid property ID", 'error');
             this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
@@ -4710,7 +4710,7 @@ var PropertiesEditComponent = /** @class */ (function () {
         this.getPropertyServiceRunning = true;
         var newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(function (property) {
             _this.property = property;
-            //populate the model
+            // populate the model
             _this.model.address = property.address;
             _this.model.askingPrice = property.askingPrice;
             _this.model.askingPriceUnit = property.askingPriceUnit;
@@ -4784,11 +4784,11 @@ var PropertiesEditComponent = /** @class */ (function () {
     };
     PropertiesEditComponent.prototype.onSubmit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.editPropertyServiceRunning = true;
         this.model.createdOn = new Date(Date.now());
         this.model.updatedOn = new Date(Date.now());
-        //call the investment create service
+        // call the investment create service
         var newSubscription = this.propertiesService.create(this.model).subscribe(function (data) {
             if (data && data.id && data.type) {
                 _this.appService.showResults("Property successfully created!", 'success');
@@ -4809,10 +4809,10 @@ var PropertiesEditComponent = /** @class */ (function () {
     };
     PropertiesEditComponent.prototype.onUpdate = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onUpdate() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onUpdate() > "; // for debugging
         this.editPropertyServiceRunning = true;
         this.model.updatedOn = new Date(Date.now());
-        //call the investment create service
+        // call the investment create service
         var newSubscription = this.propertiesService.update(this.model).subscribe(function (data) {
             if (data && data.id && data.type) {
                 _this.appService.showResults("Property successfully updated!", 'success');
@@ -4846,8 +4846,7 @@ var PropertiesEditComponent = /** @class */ (function () {
     };
     PropertiesEditComponent.prototype.openHouseResultsFiguresDialog = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > openHouseResultsFiguresDialog() > "; //for debugging
-        this.showPropertyFiguresDialogSpinner = true;
+        var methodTrace = this.constructor.name + " > openHouseResultsFiguresDialog() > "; // for debugging
         var houseFiguresDialogRef = this.dialog.open(_house_figures_dialog_house_figures_dialog_component__WEBPACK_IMPORTED_MODULE_10__["HouseFiguresDialogComponent"], {
             data: {
                 model: this.model,
@@ -6382,7 +6381,7 @@ var MainNavigatorService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\n  <mat-progress-bar \n      class=\"progress-bar\"\n      [ngClass]=\"extraClasses\"\n      [color]=\"color\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n  <p *ngIf=\"message\">{{ message }}</p>\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n  <mat-progress-bar \r\n      class=\"progress-bar\"\r\n      [ngClass]=\"extraClasses\"\r\n      [color]=\"color\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  <p *ngIf=\"message\">{{ message }}</p>\r\n</div>"
 
 /***/ }),
 
@@ -7314,16 +7313,16 @@ var TeamsEditComponent = /** @class */ (function () {
     }
     TeamsEditComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Teams', url: '/teams', selected: false }
         ]);
-        //generates a user source object from authUser from resolver
+        // generates a user source object from authUser from resolver
         var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (data) { return data.authUser; }));
-        //generates an investment id source from id parameter in url
+        // generates an investment id source from id parameter in url
         var slug$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (params) { return params.get('slug'); }));
-        //combine user$ and id$ sources into one object and start listen to it for changes
+        // combine user$ and id$ sources into one object and start listen to it for changes
         this.subscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(slug$, function (user, slug) {
             return { user: user, teamSlug: slug };
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (data) {
@@ -7332,7 +7331,7 @@ var TeamsEditComponent = /** @class */ (function () {
             _this.editTeamServiceRunning = false;
             _this.getTeamServiceRunning = false;
             if (!data.teamSlug) {
-                //we are creating a new team
+                // we are creating a new team
                 _this.slug = null;
                 _this.editMode = false;
                 _this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected: true });
@@ -7340,16 +7339,16 @@ var TeamsEditComponent = /** @class */ (function () {
             }
             else {
                 if (_this.slug) {
-                    //if this is true means the user updated the name and we refresh the page to update the slug in the url
-                    //in this case we don't want to append the edit team link to the navigation component because it is already there.
+                    // if this is true means the user updated the name and we refresh the page to update the slug in the url
+                    // in this case we don't want to append the edit team link to the navigation component because it is already there.
                 }
                 else {
                     _this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected: true });
                 }
-                //we are editing an existing investment
-                _this.slug = data.teamSlug; //the new slug
+                // we are editing an existing investment
+                _this.slug = data.teamSlug; // the new slug
                 _this.editMode = true;
-                return _this.getTeam$(data.teamSlug); //get data
+                return _this.getTeam$(data.teamSlug); // get data
             }
         })).subscribe(function (data) {
             if (data && data.slug) {
@@ -7381,7 +7380,7 @@ var TeamsEditComponent = /** @class */ (function () {
      * @return {Observable<any>} teams source
      */
     TeamsEditComponent.prototype.getTeam$ = function (slug) {
-        var methodTrace = this.constructor.name + " > getTeam$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getTeam$() > "; // for debugging
         if (!slug) {
             this.appService.showResults("Invalid team ID", 'error');
             this.appService.consoleLog('error', methodTrace + " Slug parameter must be provided, but was: ", slug);
@@ -7391,15 +7390,15 @@ var TeamsEditComponent = /** @class */ (function () {
         return this.teamsService.getMyTeamBySlug$(this.user.email, slug);
     };
     TeamsEditComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
     TeamsEditComponent.prototype.onSubmit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.editTeamServiceRunning = true;
-        //call the team create service
+        // call the team create service
         var newSubscription = this.teamsService.create$(this.model).subscribe(function (data) {
             if (data && data.slug) {
                 _this.appService.showResults("Team " + data.name + " successfully created!", 'success');
@@ -7420,17 +7419,17 @@ var TeamsEditComponent = /** @class */ (function () {
     };
     TeamsEditComponent.prototype.onUpdate = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onUpdate() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onUpdate() > "; // for debugging
         this.editTeamServiceRunning = true;
-        //add slug and members to service payload
+        // add slug and members to service payload
         this.model.slug = this.slug;
-        this.model.members = []; //reset the members array
+        this.model.members = []; // reset the members array
         for (var _i = 0, _a = this.team.members; _i < _a.length; _i++) {
             var member = _a[_i];
             this.model.members.push(member.email);
         }
-        //TODO check the new members are not duplicated, especially the admin
-        //call the team update service
+        // TODO check the new members are not duplicated, especially the admin
+        // call the team update service
         var newSubscription = this.teamsService.update$(this.model).subscribe(function (data) {
             if (data && data.team && data.team.slug) {
                 var messages = [
@@ -7440,7 +7439,7 @@ var TeamsEditComponent = /** @class */ (function () {
                     }
                 ];
                 if (data.usersNotRegistered.length) {
-                    //handle not registered users
+                    // handle not registered users
                     var message = {
                         message: "The following emails added to the team are not registered users in AtomiCoconut: ",
                         duration: 8000
@@ -7449,15 +7448,15 @@ var TeamsEditComponent = /** @class */ (function () {
                         var email = _a[_i];
                         message.message += "\"" + email + "\", ";
                     }
-                    message.message = message.message.slice(0, -2); //remove last comma char
+                    message.message = message.message.slice(0, -2); // remove last comma char
                     message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
                     messages.push(message);
                 }
                 _this.appService.showManyResults(messages);
-                //TODO redirect to the new team slug name if changed
+                // TODO redirect to the new team slug name if changed
                 if (_this.slug !== data.team.slug) {
-                    //this means that the team name was update and therefore the slug too
-                    _this.router.navigate(['/teams/edit', data.team.slug]); //go home 
+                    // this means that the team name was update and therefore the slug too
+                    _this.router.navigate(['/teams/edit', data.team.slug]); // go home 
                 }
                 else {
                     _this.populateTeam(data.team);
@@ -7485,18 +7484,18 @@ var TeamsEditComponent = /** @class */ (function () {
      * @param {*} team . Team object retrieved from a service
      */
     TeamsEditComponent.prototype.populateTeam = function (team) {
-        //populate admin
+        // populate admin
         var admin = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](team.admin.name, team.admin.email, team.admin.gravatar);
-        //populate members
+        // populate members
         var members = [];
         for (var _i = 0, _a = team.members; _i < _a.length; _i++) {
             var member = _a[_i];
             var newMember = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](member.name, member.email, member.gravatar);
             members.push(newMember);
         }
-        //create team
+        // create team
         this.team = new _models_team__WEBPACK_IMPORTED_MODULE_8__["Team"](team.name, team.description || null, team.slug, admin, members);
-        //populate the model
+        // populate the model
         this.model.name = this.team.name;
         this.model.description = this.team.description;
     };

@@ -22,50 +22,47 @@ import { UtilService } from '../../../../util.service';
 })
 export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
 
-  @Input() investment : CurrencyInvestment;
+  @Input() investment: CurrencyInvestment;
   @Input()
-  set teams(teams : Team[]) {
+  set teams(teams: Team[]) {
     this.teams$.next(teams);
   }
-  get teams() : Team[] {
+  get teams(): Team[] {
     return this.teams$.getValue();
   }
   @Output() totalReturns: EventEmitter<any> = new EventEmitter();
-  @Output() deletedInvestment : EventEmitter<any> = new EventEmitter();
+  @Output() deletedInvestment: EventEmitter<any> = new EventEmitter();
   private teams$ = new BehaviorSubject<Team[]>([]);
-  investmentAmount : number = 0;
-  buyingPrice : number = 0;
-  investmentReturn : number = 0;
-  investmentValueWhenBought : number = 0;
-  currentPrice : number = 0;
-  loanAmount : number = 0;
-  actionRunning : boolean = false;
-  user : User = null;
-  team : Team = null; //if the investment has a tema this will be populated with the full info of the team
-  investmentDistribution : any[] = [];
-  subscription : Subscription = new Subscription();
+  investmentAmount = 0;
+  buyingPrice = 0;
+  investmentReturn = 0;
+  investmentValueWhenBought = 0;
+  currentPrice = 0;
+  loanAmount = 0;
+  actionRunning = false;
+  user: User = null;
+  team: Team = null; // if the investment has a tema this will be populated with the full info of the team
+  investmentDistribution: any[] = [];
+  subscription: Subscription = new Subscription();
 
 
-  constructor(private currencyExchangeService: CurrencyExchangeService, private appService : AppService, private usersService : UsersService, private investmentsService : InvestmentsService, 
-    public dialog: MatDialog, private router : Router, private utilService : UtilService) {}
+  constructor(private currencyExchangeService: CurrencyExchangeService, private appService: AppService, private usersService: UsersService, private investmentsService: InvestmentsService, 
+    public dialog: MatDialog, private router: Router, private utilService: UtilService) {}
 
-  ngOnInit() : void {
-    let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
-    
-    //get the team of the investmetn if exists
+  ngOnInit(): void {
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
+
+    // get the team of the investmetn if exists
     let newSubscription = null;
-    const currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
-    const currencyRatesAndUser$ = this.usersService.user$.pipe(combineLatest(currencyRates$, 
-      (user, currencyRates) => { 
-        this.user = user;
-        return { user, currencyRates} 
-      }
-    )); //(currency rates and user) source
-    
+    const currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
+    const currencyRatesAndUser$ = this.usersService.user$.pipe(combineLatest(currencyRates$, (user, currencyRates) => {
+      this.user = user;
+      return { user, currencyRates}
+    })); // (currency rates and user) source
     
     if (this.investment.type === INVESTMENTS_TYPES.CRYPTO) {
-      //crypto investment
-      const cryptoRates$ = this.currencyExchangeService.getCryptoRates$(this.investment.unit); //get crypto rates observable source
+      // crypto investment
+      const cryptoRates$ = this.currencyExchangeService.getCryptoRates$(this.investment.unit); // get crypto rates observable source
       
       newSubscription = cryptoRates$.pipe(
         combineLatest(currencyRatesAndUser$, (cryptoRates, currencyRatesAndUser) => { 
@@ -77,44 +74,44 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
         }),
         switchMap((data) => {
           this.currentPrice = data.cryptoRates.price;
-          //the investment amount was paid on the date of the investment so we need to convert using that day rates
+          // the investment amount was paid on the date of the investment so we need to convert using that day rates
           this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
-          //the loan amount was requested on the date of the investment so we need to convert using that day rates
+          // the loan amount was requested on the date of the investment so we need to convert using that day rates
           this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
-          //the buying price (of the crypto) was paid on the date of the investment so we need to convert using that day rates
+          // the buying price (of the crypto) was paid on the date of the investment so we need to convert using that day rates
           this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
           this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
           this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
 
           return this.teams$;
         })
-      ).subscribe((teams : Team[]) => {
+      ).subscribe((teams: Team[]) => {
         this.setInvestmentTeamData(teams);
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error trying to generate investment data > `, error);
         this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, 'error');
       });
     } else {
-      //currency exchange
+      // currency exchange
       newSubscription = currencyRatesAndUser$.pipe(switchMap(
         (data) => {
           this.currentPrice = 1 / (data.currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1);
-          //the investment amount was paid on the date of the investment so we need to convert using that day rates
+          // the investment amount was paid on the date of the investment so we need to convert using that day rates
           this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
-          //the loan amount was requested on the date of the investment so we need to convert using that day rates
+          // the loan amount was requested on the date of the investment so we need to convert using that day rates
           this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
-          //the buying price (of the currency) was paid on the date of the investment so we need to convert using that day rates
+          // the buying price (of the currency) was paid on the date of the investment so we need to convert using that day rates
           this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
           this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
           this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
 
           return this.teams$;
         }
-      )).subscribe((teams : Team[]) => {
+      )).subscribe((teams: Team[]) => {
         this.setInvestmentTeamData(teams);
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error trying to generate investment data > `, error);
         this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, 'error');
       });
@@ -123,9 +120,9 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
@@ -134,11 +131,11 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
    * 
    * @param {Team[]} teams . The teams of the current user
    */
-  setInvestmentTeamData(teams : Team[]) {
-    this.team = this.investment.team ? teams.filter(team => team.slug === this.investment.team.slug)[0] : null; //look for the team of the investment
+  setInvestmentTeamData(teams: Team[]) {
+    this.team = this.investment.team ? teams.filter(team => team.slug === this.investment.team.slug)[0] : null; // look for the team of the investment
     
-    //set totals to emit to parent component. If no team assigned then the total of the investment is the same as my portion
-    let totals = {
+    // set totals to emit to parent component. If no team assigned then the total of the investment is the same as my portion
+    const totals = {
       investmentId : this.investment.id,
       investmentAmount : this.investmentAmount,
       investmentReturn : this.investmentReturn,
@@ -147,9 +144,9 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     };
 
     if (this.team) {
-      //if team is present then get my portion of the investment
-      for (let member of this.team.members) {
-        let percentage = (this.investment.investmentDistribution.filter(portion => portion.email === member.email)[0]).percentage;
+      // if team is present then get my portion of the investment
+      for (const member of this.team.members) {
+        const percentage = (this.investment.investmentDistribution.filter(portion => portion.email === member.email)[0]).percentage;
         this.investmentDistribution.push({
           member,
           percentage,
@@ -167,7 +164,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   }
 
   openDeleteDialog() {
-    const methodTrace = `${this.constructor.name} > openDeleteDialog() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > openDeleteDialog() > `; // for debugging
     
     if (!this.investment.id) {
       this.appService.consoleLog('error', `${methodTrace} Investment ID is required to delete.`);
@@ -195,12 +192,12 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   }
 
   delete() {
-    const methodTrace = `${this.constructor.name} > delete() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
     if (this.user) {
       this.actionRunning = true;
       
       const newSubscription = this.investmentsService.delete$(this.investment.id, this.user.email).subscribe(
-        (data : any) => {
+        (data: any) => {
           if (data && data.removed > 0) {
             this.appService.showResults(`Investment successfully removed!`, 'success');
             this.deletedInvestment.emit({ investment : this.investment, investmentReturn : this.investmentReturn, investmentAmount : this.investmentAmount });
@@ -209,7 +206,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
             this.actionRunning = false;
           }
         },
-        (error : any) => {
+        (error: any) => {
           this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
           if (error.codeno === 400) {
             this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');

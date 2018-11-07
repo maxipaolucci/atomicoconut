@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
@@ -15,7 +15,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { INVESTMENTS_TYPES, PROPERTY_TYPES } from '../../../../constants';
+import { INVESTMENTS_TYPES } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
 import { PropertyInvestment } from '../../models/PropertyInvestment';
 
@@ -25,26 +25,26 @@ import { PropertyInvestment } from '../../models/PropertyInvestment';
   styleUrls: ['./investments-dashboard.component.scss']
 })
 export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
-  investments : Investment[] = [];
-  teams : Team[] = [];
-  investmentsUI : any[] = []; //this is a structure to use in the view an make the rendering easier organizing the info in rows
+  investments: Investment[] = [];
+  teams: Team[] = [];
+  investmentsUI: any[] = []; // this is a structure to use in the view an make the rendering easier organizing the info in rows
   totalInvestment = 0;
   totalReturn = 0;
   myTotalInvestment = 0;
   myTotalReturn = 0;
-  totals : any = {};
-  user : User = null;
-  subscription : Subscription = new Subscription();
-  getInvestmentsServiceRunning : boolean = false;
-  getTeamsServiceRunning : boolean = false;
-  INVESTMENTS_TYPES : any = INVESTMENTS_TYPES; //make it available in the view
+  totals: any = {};
+  user: User = null;
+  subscription: Subscription = new Subscription();
+  getInvestmentsServiceRunning = false;
+  getTeamsServiceRunning = false;
+  INVESTMENTS_TYPES: any = INVESTMENTS_TYPES; // make it available in the view
 
-  constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, private usersService : UsersService, public dialog: MatDialog, 
-      private appService : AppService, private teamsService : TeamsService, private investmentsService : InvestmentsService, private currencyExchangeService : CurrencyExchangeService,
-      private utilService : UtilService) { }
+  constructor(private route: ActivatedRoute, private mainNavigatorService: MainNavigatorService, private usersService: UsersService, public dialog: MatDialog,
+      private appService: AppService, private teamsService: TeamsService, private investmentsService: InvestmentsService, private currencyExchangeService: CurrencyExchangeService,
+      private utilService: UtilService) { }
 
   ngOnInit() {
-    let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
@@ -52,8 +52,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
       { displayName: 'Properties', url: '/properties', selected: false }
     ]);
 
-    //get authUser from resolver
-    const user$ : Observable<User> = this.route.data.pipe(map((data : { authUser: User }) =>  {
+    // get authUser from resolver
+    const user$: Observable<User> = this.route.data.pipe(map((data: { authUser: User }) =>  {
       this.user = data.authUser;
       return data.authUser;
     }));
@@ -66,17 +66,17 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
   /**
    * Get my teams from server
    */
-  getTeams(user$ : Observable<User>) {
-    const methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+  getTeams(user$: Observable<User>) {
+    const methodTrace = `${this.constructor.name} > getTeams() > `; // for debugging
 
     this.teams = [];
     this.getTeamsServiceRunning = true;
@@ -84,11 +84,11 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     const newSubscription = user$.pipe(switchMap((user) => {
       return this.teamsService.getTeams$(user.email);
     })).subscribe(
-      (teams : Team[]) => {
+      (teams: Team[]) => {
         this.teams = teams;
         this.getTeamsServiceRunning = false;
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
@@ -106,22 +106,21 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   /**
    * Get my investments from server
    */
-  getInvestments(user$ : Observable<User>) {
-    const methodTrace = `${this.constructor.name} > getInvestments() > `; //for debugging
+  getInvestments(user$: Observable<User>) {
+    const methodTrace = `${this.constructor.name} > getInvestments() > `; // for debugging
 
     this.investments = [];
     this.getInvestmentsServiceRunning = true;
 
-    
     const newSubscription = user$.pipe(switchMap((user) => {
       return this.investmentsService.getInvestments$(user.email);
     })).subscribe(
-      (investments : Investment[]) => {
-        //organize investments in rows of n-items to show in the view
-        let investmentsRow : any[] = [];
-        let investmentsDates : string[] = [];
+      (investments: Investment[]) => {
+        // organize investments in rows of n-items to show in the view
+        let investmentsRow: any[] = [];
+        const investmentsDates: string[] = [];
 
-        for (let item of investments) {
+        for (const item of investments) {
           if (investmentsRow.length < 2) {
             investmentsRow.push(item);
           } else {
@@ -130,13 +129,13 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
           }
 
           if (item instanceof CurrencyInvestment) {
-            investmentsDates.push(this.utilService.formatDate((<CurrencyInvestment>item).buyingDate, 'YYYY-MM-DD'));  
+            investmentsDates.push(this.utilService.formatDate((<CurrencyInvestment>item).buyingDate, 'YYYY-MM-DD'));
           } else if (item instanceof PropertyInvestment) {
-            investmentsDates.push(this.utilService.formatDate((<PropertyInvestment>item).buyingDate, 'YYYY-MM-DD'));  
+            investmentsDates.push(this.utilService.formatDate((<PropertyInvestment>item).buyingDate, 'YYYY-MM-DD'));
           }
         }
 
-        this.currencyExchangeService.getCurrencyRates$(investmentsDates); //lets retrieve investment dates for future usage in each investment
+        this.currencyExchangeService.getCurrencyRates$(investmentsDates); // lets retrieve investment dates for future usage in each investment
 
         if (investmentsRow.length) {
           this.investmentsUI.push(investmentsRow);
@@ -145,7 +144,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         this.investments = investments;
         this.getInvestmentsServiceRunning = false;
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
@@ -160,53 +159,53 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     this.subscription.add(newSubscription);
   }
 
-  setTotals(totalReturns : any) : void {
-    //update the total that matches the id
+  setTotals(totalReturns: any): void {
+    // update the total that matches the id
     this.totals[totalReturns.investmentId] = totalReturns;
-    //reset totals
+    // reset totals
     this.totalReturn = 0;
     this.totalInvestment = 0;
     this.myTotalInvestment = 0;
     this.myTotalReturn = 0;
 
-    //re calculate totals
-    for (let investmentId of Object.keys(this.totals)) {
+    // re calculate totals
+    for (const investmentId of Object.keys(this.totals)) {
       this.totalReturn += this.totals[investmentId].investmentReturn;
       this.totalInvestment += this.totals[investmentId].investmentAmount;
       this.myTotalInvestment += this.totals[investmentId].myInvestmentAmount;
       this.myTotalReturn += this.totals[investmentId].myInvestmentReturn;
     }
-    
+
   }
 
   /**
    * Removes the investment from the investments array and from the investmentUI array used in view. Also reduces the totals in the inveestment amount
    */
-  removeInvestment(investmentData : any) : void {
-    const methodTrace = `${this.constructor.name} > removeInvestment() > `; //for debugging
+  removeInvestment(investmentData: any): void {
+    const methodTrace = `${this.constructor.name} > removeInvestment() > `; // for debugging
 
     let investment = investmentData.investment;
     if (investment) {
-      //get my portion in the investment
+      // get my portion in the investment
       let myPortion = 0;
-      for (let portion of investment.investmentDistribution) {
+      for (const portion of investment.investmentDistribution) {
         if (this.user.email === portion.email) {
           myPortion = portion.percentage;
           break;
         }
       }
-      
-      //update totals row
+
+      // update totals row
       let investmentReturn = investmentData.investmentReturn;
       let investmentAmount = investmentData.investmentAmount;
       this.totalReturn -= investmentReturn;
       this.totalInvestment -= investmentAmount;
       this.myTotalReturn -= investmentReturn * myPortion / 100;
       this.myTotalInvestment -= investmentAmount * myPortion / 100;
-          
-      //remove investment from array
+
+      // remove investment from array
       let index = 0;
-      for (let investmentToDelete of this.investments) {
+      for (const investmentToDelete of this.investments) {
         if (investment.id === investmentToDelete.id) {
           break;
         }
@@ -215,7 +214,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
       }
       this.investments.splice(index, 1);
 
-      //update ui array
+      // update ui array
       let row = 0;
       let offset = 0;
       let found = false;
@@ -242,7 +241,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   }
 
   openNewInvestmentDialog() {
-    let addPersonDialogRef = this.dialog.open(InvestmentSelectorDialogComponent, {});
+    const addPersonDialogRef = this.dialog.open(InvestmentSelectorDialogComponent, {});
     return false;
   }
 }
