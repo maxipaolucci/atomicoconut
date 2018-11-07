@@ -40,7 +40,7 @@ export class AccountPersonalInfoComponent implements OnInit {
 
     this.accountPersonalServiceRunning = true;
     //call the account service
-    this.usersService.updatePersonalInfo(this.model).subscribe(
+    this.usersService.updatePersonalInfo$(this.model).subscribe(
       (data : any) => {
         if (data === null) {
           let user = this.usersService.getUser();

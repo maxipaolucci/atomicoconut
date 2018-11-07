@@ -9,7 +9,7 @@ import { InvestmentsService } from '../../modules/investments/investments.servic
 import { CurrencyExchangeService } from '../../modules/investments/currency-exchange.service';
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
-import { Subscription, of } from 'rxjs';
+import { Subscription, of, from, Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { INVESTMENTS_TYPES } from '../../constants';
 import { UtilService } from '../../util.service';
@@ -42,7 +42,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     ]);
     
     let currentUserInvestments : Investment[] = [];
-    let newSubscription = this.setUserAndGetInvestments().pipe(switchMap((userInvestments : Investment[]) => {
+    let newSubscription = this.setUserAndGetInvestments$().pipe(switchMap((userInvestments : Investment[]) => {
       currentUserInvestments = userInvestments;
       let investmentsDates : string[] = userInvestments.map((investment : Investment) => {
         if (investment instanceof CurrencyInvestment) {  
@@ -106,10 +106,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   /**
    * Sets the user property with the current user or null if nobody logged in yet.
    * 
-   * @return {Investment[]} . An array of the logged in user investments or [] if nobody is logged in yet
+   * @return { Observable<Investment[]> } . An observable with array of the logged in user investments or [] if nobody is logged in yet
    */
-  setUserAndGetInvestments() {
-    let methodTrace = `${this.constructor.name} > setUser() > `; //for debugging
+  setUserAndGetInvestments$() : Observable<Investment[]> {
+    let methodTrace = `${this.constructor.name} > setUserAndGetInvestments$() > `; //for debugging
 
     let gotAuthenticatedUserFromServer = false;
     const user$ = this.usersService.user$.pipe(switchMap((user : User) => {
@@ -117,7 +117,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         return of(null);
       } else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
         gotAuthenticatedUserFromServer = true;
-        return this.usersService.getAuthenticatedUser({ personalInfo : true, financialInfo : true });
+        return this.usersService.getAuthenticatedUser$({ personalInfo : true, financialInfo : true });
       } else {
         return of(user);
       }
@@ -155,7 +155,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           this.usersService.setUser(user);
         }
 
-        return this.investmentsService.getInvestments(user.email);
+        return this.investmentsService.getInvestments$(user.email);
       } else {
         this.user = null;
         return of([]);

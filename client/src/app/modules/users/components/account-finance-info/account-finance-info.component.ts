@@ -58,7 +58,7 @@ export class AccountFinanceInfoComponent implements OnInit {
     this.accountFinanceServiceRunning = true;
 
     //call the account service
-    this.usersService.updateFinancialInfo(this.model).subscribe(
+    this.usersService.updateFinancialInfo$(this.model).subscribe(
       (data : any) => {
         if (data === null) {
           let user = this.usersService.getUser();

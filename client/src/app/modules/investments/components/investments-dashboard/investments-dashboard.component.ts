@@ -82,11 +82,10 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     this.getTeamsServiceRunning = true;
 
     const newSubscription = user$.pipe(switchMap((user) => {
-      return this.teamsService.getTeams(user.email);
+      return this.teamsService.getTeams$(user.email);
     })).subscribe(
       (teams : Team[]) => {
         this.teams = teams;
-        
         this.getTeamsServiceRunning = false;
       },
       (error : any) => {
@@ -115,7 +114,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
 
     
     const newSubscription = user$.pipe(switchMap((user) => {
-      return this.investmentsService.getInvestments(user.email);
+      return this.investmentsService.getInvestments$(user.email);
     })).subscribe(
       (investments : Investment[]) => {
         //organize investments in rows of n-items to show in the view

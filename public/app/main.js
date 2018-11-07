@@ -413,7 +413,7 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.setUser = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > setUser() > "; // for debugging
-        this.usersService.getAuthenticatedUser().subscribe(function (data) {
+        this.usersService.getAuthenticatedUser$().subscribe(function (data) {
             if (data && data.email) {
                 _this.user = new _modules_users_models_user__WEBPACK_IMPORTED_MODULE_3__["User"](data.name, data.email, data.avatar, null, null, data.currency);
                 _this.usersService.setUser(_this.user);
@@ -432,7 +432,7 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.logout = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > logout() > "; // for debugging
-        this.usersService.logout().subscribe(function (data) {
+        this.usersService.logout$().subscribe(function (data) {
             _this.usersService.setUser(null);
             _this.user = null;
             _this.router.navigate(['/']);
@@ -791,7 +791,7 @@ var AuthResolver = /** @class */ (function () {
         if (urlsForCompleteUserData.includes(state.url)) {
             params = { personalInfo: true, financialInfo: true };
         }
-        return this.usersService.getAuthenticatedUser(params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) {
+        return this.usersService.getAuthenticatedUser$(params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (data) {
             if (data && data.email) {
                 var personalInfo = null;
                 if (data.personalInfo) {
@@ -869,7 +869,7 @@ var AuthGuard = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > canActivate() > "; //for debugging
         this.usersService.routerRedirectUrl = state.url;
-        return this.usersService.getAuthenticatedUser().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
+        return this.usersService.getAuthenticatedUser$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
             if (data && data.email) {
                 _this.usersService.routerRedirectUrl = null; //we don't need this
                 return true;
@@ -1054,7 +1054,7 @@ var WelcomeComponent = /** @class */ (function () {
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
         var currentUserInvestments = [];
-        var newSubscription = this.setUserAndGetInvestments().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["switchMap"])(function (userInvestments) {
+        var newSubscription = this.setUserAndGetInvestments$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["switchMap"])(function (userInvestments) {
             currentUserInvestments = userInvestments;
             var investmentsDates = userInvestments.map(function (investment) {
                 if (investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__["CurrencyInvestment"]) {
@@ -1116,11 +1116,11 @@ var WelcomeComponent = /** @class */ (function () {
     /**
      * Sets the user property with the current user or null if nobody logged in yet.
      *
-     * @return {Investment[]} . An array of the logged in user investments or [] if nobody is logged in yet
+     * @return { Observable<Investment[]> } . An observable with array of the logged in user investments or [] if nobody is logged in yet
      */
-    WelcomeComponent.prototype.setUserAndGetInvestments = function () {
+    WelcomeComponent.prototype.setUserAndGetInvestments$ = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > setUser() > "; //for debugging
+        var methodTrace = this.constructor.name + " > setUserAndGetInvestments$() > "; //for debugging
         var gotAuthenticatedUserFromServer = false;
         var user$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["switchMap"])(function (user) {
             if (!user) {
@@ -1128,7 +1128,7 @@ var WelcomeComponent = /** @class */ (function () {
             }
             else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
                 gotAuthenticatedUserFromServer = true;
-                return _this.usersService.getAuthenticatedUser({ personalInfo: true, financialInfo: true });
+                return _this.usersService.getAuthenticatedUser$({ personalInfo: true, financialInfo: true });
             }
             else {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["of"])(user);
@@ -1161,7 +1161,7 @@ var WelcomeComponent = /** @class */ (function () {
                     //we just got updated information from server, let's update the current user source
                     _this.usersService.setUser(user);
                 }
-                return _this.investmentsService.getInvestments(user.email);
+                return _this.investmentsService.getInvestments$(user.email);
             }
             else {
                 _this.user = null;
@@ -2200,7 +2200,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > delete() > "; //for debugging
         if (this.user) {
             this.actionRunning = true;
-            var newSubscription = this.investmentsService.delete(this.investment.id, this.user.email).subscribe(function (data) {
+            var newSubscription = this.investmentsService.delete$(this.investment.id, this.user.email).subscribe(function (data) {
                 if (data && data.removed > 0) {
                     _this.appService.showResults("Investment successfully removed!", 'success');
                     _this.deletedInvestment.emit({ investment: _this.investment, investmentReturn: _this.investmentReturn, investmentAmount: _this.investmentAmount });
@@ -2468,7 +2468,7 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         this.teams = [];
         this.getTeamsServiceRunning = true;
         var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (user) {
-            return _this.teamsService.getTeams(user.email);
+            return _this.teamsService.getTeams$(user.email);
         })).subscribe(function (teams) {
             _this.teams = teams;
             _this.getTeamsServiceRunning = false;
@@ -2493,7 +2493,7 @@ var InvestmentsDashboardComponent = /** @class */ (function () {
         this.investments = [];
         this.getInvestmentsServiceRunning = true;
         var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (user) {
-            return _this.investmentsService.getInvestments(user.email);
+            return _this.investmentsService.getInvestments$(user.email);
         })).subscribe(function (investments) {
             //organize investments in rows of n-items to show in the view
             var investmentsRow = [];
@@ -2840,7 +2840,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
         this.model.createdOn = new Date(Date.now());
         this.model.updatedOn = new Date(Date.now());
         //call the investment create service
-        var newSubscription = this.investmentsService.create(this.model).subscribe(function (data) {
+        var newSubscription = this.investmentsService.create$(this.model).subscribe(function (data) {
             if (data && data.id && data.type) {
                 _this.appService.showResults("Investment successfully created!", 'success');
                 _this.router.navigate(['/investments/', data.type, 'edit', data.id]);
@@ -2865,7 +2865,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
         this.model.investmentDistribution = this.populateInvestmentDistributionArray();
         this.model.updatedOn = new Date(Date.now());
         //call the investment create service
-        var newSubscription = this.investmentsService.update(this.model).subscribe(function (data) {
+        var newSubscription = this.investmentsService.update$(this.model).subscribe(function (data) {
             if (data && data.id && data.type) {
                 _this.appService.showResults("Investment successfully updated!", 'success');
             }
@@ -2890,7 +2890,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
         this.teams = [];
         this.getTeamsServiceRunning = true;
-        var newSubscription = this.teamsService.getTeams(this.user.email).subscribe(function (teams) {
+        var newSubscription = this.teamsService.getTeams$(this.user.email).subscribe(function (teams) {
             _this.teams = teams;
             _this.getTeamsServiceRunning = false;
             if (teams.length) {
@@ -2955,7 +2955,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
             return false;
         }
         this.getInvestmentServiceRunning = true;
-        var newSubscription = this.investmentsService.getInvestmentById(this.user.email, id).subscribe(function (investment) {
+        var newSubscription = this.investmentsService.getInvestmentById$(this.user.email, id).subscribe(function (investment) {
             _this.investment = investment;
             //populate the model
             _this.model.owner = investment.team ? 'team' : 'me';
@@ -3510,7 +3510,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > delete() > "; //for debugging
         if (this.user) {
             this.actionRunning = true;
-            var newSubscription = this.investmentsService.delete(this.investment.id, this.user.email).subscribe(function (data) {
+            var newSubscription = this.investmentsService.delete$(this.investment.id, this.user.email).subscribe(function (data) {
                 if (data && data.removed > 0) {
                     _this.appService.showResults("Investment successfully removed!", 'success');
                     _this.deletedInvestment.emit({ investment: _this.investment, investmentReturn: _this.investmentReturn, investmentAmount: _this.investmentAmount });
@@ -3905,30 +3905,36 @@ var InvestmentsService = /** @class */ (function () {
     /**
      * Server call to Create a new investment in the system
      * @param postData
+     *
+     * @return { Observable<any> }
      */
-    InvestmentsService.prototype.create = function (postData) {
+    InvestmentsService.prototype.create$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > create() > "; //for debugging
+        var methodTrace = this.constructor.name + " > create$() > "; //for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Update an investment in the system
      * @param postData
+     *
+     * @return { Observable<any> }
      */
-    InvestmentsService.prototype.update = function (postData) {
+    InvestmentsService.prototype.update$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > update() > "; //for debugging
+        var methodTrace = this.constructor.name + " > update$() > "; //for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Get an investment from the server based on its ID
      * @param {string} id . The investment id
+     *
+     * @return { Observable<any> }
      */
-    InvestmentsService.prototype.getInvestmentById = function (email, id) {
+    InvestmentsService.prototype.getInvestmentById$ = function (email, id) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getInvestmentById() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getInvestmentById$() > "; //for debugging
         if (!id || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
@@ -3983,13 +3989,15 @@ var InvestmentsService = /** @class */ (function () {
     /**
      * Server call to Get all the Investments for the current user from the server
      * @param {string} email . The user email
+     *
+     * @return { Observable<Investment[]> }
      */
-    InvestmentsService.prototype.getInvestments = function (email) {
+    InvestmentsService.prototype.getInvestments$ = function (email) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getInvestments() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getInvestments$() > "; //for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["from"])([]);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])([]);
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('email', email);
         var investmentsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
@@ -4029,9 +4037,11 @@ var InvestmentsService = /** @class */ (function () {
      * Server call to delete an investment from the server
      * @param {string} id . The investment id
      * @param {string} email . The current user email.
+     *
+     * @return { Observable<any> }
      */
-    InvestmentsService.prototype.delete = function (id, email) {
-        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+    InvestmentsService.prototype.delete$ = function (id, email) {
+        var methodTrace = this.constructor.name + " > delete$() > "; //for debugging
         if (!id || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"].throw(null);
@@ -5709,7 +5719,7 @@ var PropertiesService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["from"])([]);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])([]);
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('email', email).set('justUserProperties', justUserProperties + '');
         var responseData$ = this.http.get(this.serverHost + "/getAll", { params: params })
@@ -7110,7 +7120,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
                 return _this.getTeams$();
             }
             else {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["from"])(_this.teams);
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(_this.teams);
             }
         })).subscribe(function (teams) {
             _this.teams = teams;
@@ -7142,7 +7152,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > getTeams$() > "; //for debugging
         this.teams = [];
         this.getTeamsServiceRunning = true;
-        return this.teamsService.getTeams(this.user.email);
+        return this.teamsService.getTeams$(this.user.email);
     };
     TeamsDashboardComponent.prototype.openDeleteTeamDialog = function (index, team) {
         var _this = this;
@@ -7176,7 +7186,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
         if (team === void 0) { team = null; }
         var methodTrace = this.constructor.name + " > delete() > "; //for debugging
         this.teamActionRunning[index] = true;
-        var newSubscription = this.teamsService.delete(team.slug, this.user.email).subscribe(function (data) {
+        var newSubscription = this.teamsService.delete$(team.slug, this.user.email).subscribe(function (data) {
             if (data && data.removed > 0) {
                 _this.teams.splice(index, 1);
                 _this.teamActionRunning.splice(index, 1);
@@ -7378,7 +7388,7 @@ var TeamsEditComponent = /** @class */ (function () {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["of"])(false);
         }
         this.getTeamServiceRunning = true;
-        return this.teamsService.getMyTeamBySlug(this.user.email, slug);
+        return this.teamsService.getMyTeamBySlug$(this.user.email, slug);
     };
     TeamsEditComponent.prototype.ngOnDestroy = function () {
         var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
@@ -7390,7 +7400,7 @@ var TeamsEditComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
         this.editTeamServiceRunning = true;
         //call the team create service
-        var newSubscription = this.teamsService.create(this.model).subscribe(function (data) {
+        var newSubscription = this.teamsService.create$(this.model).subscribe(function (data) {
             if (data && data.slug) {
                 _this.appService.showResults("Team " + data.name + " successfully created!", 'success');
                 _this.router.navigate(['/teams/edit', data.slug]);
@@ -7421,7 +7431,7 @@ var TeamsEditComponent = /** @class */ (function () {
         }
         //TODO check the new members are not duplicated, especially the admin
         //call the team update service
-        var newSubscription = this.teamsService.update(this.model).subscribe(function (data) {
+        var newSubscription = this.teamsService.update$(this.model).subscribe(function (data) {
             if (data && data.team && data.team.slug) {
                 var messages = [
                     {
@@ -7730,7 +7740,6 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var TeamsService = /** @class */ (function () {
     function TeamsService(http, appService) {
         this.http = http;
@@ -7741,29 +7750,35 @@ var TeamsService = /** @class */ (function () {
     /**
      * Server call to Create a new team in the system
      * @param postData
+     *
+     * @return { Observable<any> }
      */
-    TeamsService.prototype.create = function (postData) {
+    TeamsService.prototype.create$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > register() > "; //for debugging
+        var methodTrace = this.constructor.name + " > create$() > "; //for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Update a team in the system
      * @param postData
+     *
+     * @return { Observable<any> }
      */
-    TeamsService.prototype.update = function (postData) {
+    TeamsService.prototype.update$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > register() > "; //for debugging
+        var methodTrace = this.constructor.name + " > update$() > "; //for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Get a team from the server based on its slug
      * @param {string} slug . The team slug
+     *
+     * @return { Observable<any> }
      */
-    TeamsService.prototype.getMyTeamBySlug = function (email, slug) {
-        var methodTrace = this.constructor.name + " > getMyTeamBySlug() > "; //for debugging
+    TeamsService.prototype.getMyTeamBySlug$ = function (email, slug) {
+        var methodTrace = this.constructor.name + " > getMyTeamBySlug$() > "; //for debugging
         if (!email || !slug) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(null);
@@ -7777,13 +7792,15 @@ var TeamsService = /** @class */ (function () {
     /**
      * Server call to Get all the teams for the current user from the server
      * @param {string} slug . The team slug
+     *
+     * @return { Observable<any> }
      */
-    TeamsService.prototype.getTeams = function (email) {
+    TeamsService.prototype.getTeams$ = function (email) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getTeams() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getTeams$() > "; //for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["from"])([]);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])([]);
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('email', email);
         var teamsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
@@ -7816,9 +7833,11 @@ var TeamsService = /** @class */ (function () {
      * Server call to Get all the teams for the current user from the server
      * @param {string} slug . The team slug
      * @param {string} email . The current user email.
+     *
+     * @return { Observable<any> }
      */
-    TeamsService.prototype.delete = function (slug, email) {
-        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+    TeamsService.prototype.delete$ = function (slug, email) {
+        var methodTrace = this.constructor.name + " > delete$() > "; //for debugging
         if (!slug || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return rxjs__WEBPACK_IMPORTED_MODULE_6__["Observable"].throw(null);
@@ -7931,7 +7950,7 @@ var AccountFinanceInfoComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
         this.accountFinanceServiceRunning = true;
         //call the account service
-        this.usersService.updateFinancialInfo(this.model).subscribe(function (data) {
+        this.usersService.updateFinancialInfo$(this.model).subscribe(function (data) {
             if (data === null) {
                 var user = _this.usersService.getUser();
                 user.financialInfo = new _models_account_finance__WEBPACK_IMPORTED_MODULE_2__["AccountFinance"](_this.model.annualIncome, _this.model.annualIncomeUnit, _this.model.savings, _this.model.savingsUnit, _this.model.incomeTaxRate);
@@ -8052,7 +8071,7 @@ var AccountPersonalInfoComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
         this.accountPersonalServiceRunning = true;
         //call the account service
-        this.usersService.updatePersonalInfo(this.model).subscribe(function (data) {
+        this.usersService.updatePersonalInfo$(this.model).subscribe(function (data) {
             if (data === null) {
                 var user = _this.usersService.getUser();
                 user.personalInfo = new _models_account_personal__WEBPACK_IMPORTED_MODULE_3__["AccountPersonal"](_this.model.birthday);
@@ -8383,7 +8402,7 @@ var LoginComponent = /** @class */ (function () {
         this.loginServiceRunning = true;
         this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
         //call the register service
-        this.usersService.login(this.model).subscribe(function (data) {
+        this.usersService.login$(this.model).subscribe(function (data) {
             if (data && data.email) {
                 var user = new _models_user__WEBPACK_IMPORTED_MODULE_5__["User"](data.name, data.email, data.avatar, null, null, data.currency);
                 _this.usersService.setUser(user);
@@ -8417,7 +8436,7 @@ var LoginComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > onForgotSubmit() > "; //for debugging
         this.forgotServiceRunning = true;
         //call the register service
-        this.usersService.forgot(this.forgotModel).subscribe(function (data) {
+        this.usersService.forgot$(this.forgotModel).subscribe(function (data) {
             _this.forgotServiceRunning = false;
             _this.appService.showResults("You have been emailed a password reset link.", 'info');
         }, function (error) {
@@ -8537,7 +8556,7 @@ var RegisterComponent = /** @class */ (function () {
         }
         this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
         //call the register service
-        this.usersService.register(this.model).subscribe(function (data) {
+        this.usersService.register$(this.model).subscribe(function (data) {
             if (data && data.email) {
                 var user = new _models_user__WEBPACK_IMPORTED_MODULE_4__["User"](data.name, data.email, data.avatar, null, null, data.currency);
                 _this.usersService.setUser(user);
@@ -8679,7 +8698,7 @@ var ResetPasswordComponent = /** @class */ (function () {
         }
         //call the reset password service.
         this.usersService.setUser(null); //reset authenticated user. Reset automatically authenticates the registered user.
-        this.usersService.reset(this.token, this.model).subscribe(function (data) {
+        this.usersService.reset$(this.token, this.model).subscribe(function (data) {
             if (data) {
                 var user = new _models_user__WEBPACK_IMPORTED_MODULE_4__["User"](data.name, data.email, data.avatar, null, null, data.currency);
                 _this.usersService.setUser(user);
@@ -9028,10 +9047,12 @@ var UsersService = /** @class */ (function () {
     /**
      * Server call to Register a new user in the system
      * @param postData
+     *
+     * @return { Observable<any>}
      */
-    UsersService.prototype.register = function (postData) {
+    UsersService.prototype.register$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > register() > "; //for debugging
+        var methodTrace = this.constructor.name + " > register$() > "; //for debugging
         return this.http.post(this.serverHost + "/register", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
@@ -9048,30 +9069,36 @@ var UsersService = /** @class */ (function () {
     /**
      * Server call to update account personal details
      * @param postData
+     *
+     * @return {Observable<any>}
      */
-    UsersService.prototype.updatePersonalInfo = function (postData) {
+    UsersService.prototype.updatePersonalInfo$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > updatePersonalInfo() > "; //for debugging
+        var methodTrace = this.constructor.name + " > updatePersonalInfo$() > "; //for debugging
         return this.http.post(this.serverHost + "/accountPersonalInfo", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to update account financial details
      * @param postData
+     *
+     * @return {Observable<any>}
      */
-    UsersService.prototype.updateFinancialInfo = function (postData) {
+    UsersService.prototype.updateFinancialInfo$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > updateFinancialInfo() > "; //for debugging
+        var methodTrace = this.constructor.name + " > updateFinancialInfo$() > "; //for debugging
         return this.http.post(this.serverHost + "/accountFinancialInfo", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to retrieve the currently authenticated user, or null if nobody .
      * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financeInfo (boolean)
+     *
+     * @return { Observable<any>}
      */
-    UsersService.prototype.getAuthenticatedUser = function (parameters) {
+    UsersService.prototype.getAuthenticatedUser$ = function (parameters) {
         if (parameters === void 0) { parameters = null; }
-        var methodTrace = this.constructor.name + " > getAuthenticatedUser() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getAuthenticatedUser$() > "; //for debugging
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]();
         if (parameters && Object.keys(parameters).length) {
             for (var _i = 0, _a = Object.keys(parameters); _i < _a.length; _i++) {
@@ -9084,36 +9111,44 @@ var UsersService = /** @class */ (function () {
     };
     /**
      * Server call to login the provided user email and pass.
+     *
+     * @return { Observable<any>}
      */
-    UsersService.prototype.login = function (postData) {
+    UsersService.prototype.login$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > login() > "; //for debugging
+        var methodTrace = this.constructor.name + " > login$() > "; //for debugging
         return this.http.post(this.serverHost + "/login", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to forgot with the provided user email.
+     *
+     * @return { Observable<any>}
      */
-    UsersService.prototype.forgot = function (postData) {
+    UsersService.prototype.forgot$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > forgot() > "; //for debugging
+        var methodTrace = this.constructor.name + " > forgot$() > "; //for debugging
         return this.http.post(this.serverHost + "/account/forgot", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to reset password api with the provided new password.
+     *
+     * @return { Observable<any>}
      */
-    UsersService.prototype.reset = function (token, postData) {
+    UsersService.prototype.reset$ = function (token, postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > reset() > "; //for debugging
+        var methodTrace = this.constructor.name + " > reset$() > "; //for debugging
         return this.http.post(this.serverHost + "/account/reset/" + token, postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to login the provided user email and pass.
+     *
+     * @return { Observable<any>}
      */
-    UsersService.prototype.logout = function () {
-        var methodTrace = this.constructor.name + " > logout() > "; //for debugging
+    UsersService.prototype.logout$ = function () {
+        var methodTrace = this.constructor.name + " > logout$() > "; //for debugging
         return this.http.get(this.serverHost + "/logout")
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };

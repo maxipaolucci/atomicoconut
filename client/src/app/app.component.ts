@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
   setUser() {
     const methodTrace = `${this.constructor.name} > setUser() > `; // for debugging
 
-    this.usersService.getAuthenticatedUser().subscribe(
+    this.usersService.getAuthenticatedUser$().subscribe(
       (data: any) => {
         if (data && data.email) {
           this.user = new User(data.name, data.email, data.avatar, null, null, data.currency);
@@ -96,7 +96,7 @@ export class AppComponent implements OnInit {
   logout(): void {
     const methodTrace = `${this.constructor.name} > logout() > `; // for debugging
 
-    this.usersService.logout().subscribe(
+    this.usersService.logout$().subscribe(
       (data: any) => {
         this.usersService.setUser(null);
         this.user = null;

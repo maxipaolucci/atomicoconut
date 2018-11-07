@@ -39,10 +39,12 @@ export class UsersService {
 
   /**
    * Server call to Register a new user in the system 
-   * @param postData 
+   * @param postData
+   * 
+   * @return { Observable<any>} 
    */
-  register(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > register() > `; //for debugging
+  register$(postData : any = {}) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > register$() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/register`, postData, { headers : this.headers })
         .pipe(
@@ -68,9 +70,11 @@ export class UsersService {
   /**
    * Server call to update account personal details 
    * @param postData 
+   * 
+   * @return {Observable<any>}
    */
-  updatePersonalInfo(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > updatePersonalInfo() > `; //for debugging
+  updatePersonalInfo$(postData : any = {}) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > updatePersonalInfo$() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/accountPersonalInfo`, postData, { headers : this.headers })
         .pipe(
@@ -82,9 +86,11 @@ export class UsersService {
   /**
    * Server call to update account financial details 
    * @param postData 
+   * 
+   * @return {Observable<any>}
    */
-  updateFinancialInfo(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > updateFinancialInfo() > `; //for debugging
+  updateFinancialInfo$(postData : any = {}) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > updateFinancialInfo$() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/accountFinancialInfo`, postData, { headers : this.headers })
         .pipe(
@@ -96,9 +102,11 @@ export class UsersService {
   /**
    * Server call to retrieve the currently authenticated user, or null if nobody .
    * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financeInfo (boolean)
+   * 
+   * @return { Observable<any>}
    */
-  getAuthenticatedUser(parameters : any = null) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > getAuthenticatedUser() > `; //for debugging
+  getAuthenticatedUser$(parameters : any = null) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > getAuthenticatedUser$() > `; //for debugging
 
     let params = new HttpParams();
     if (parameters && Object.keys(parameters).length) {
@@ -116,9 +124,11 @@ export class UsersService {
 
   /**
    * Server call to login the provided user email and pass.
+   * 
+   * @return { Observable<any>}
    */
-  login(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > login() > `; //for debugging
+  login$(postData : any = {}) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > login$() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/login`, postData, { headers : this.headers })
         .pipe(
@@ -129,9 +139,11 @@ export class UsersService {
 
   /**
    * Server call to forgot with the provided user email.
+   * 
+   * @return { Observable<any>}
    */
-  forgot(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > forgot() > `; //for debugging
+  forgot$(postData : any = {}) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > forgot$() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/account/forgot`, postData, { headers : this.headers })
         .pipe(
@@ -142,9 +154,11 @@ export class UsersService {
 
   /**
    * Server call to reset password api with the provided new password.
+   * 
+   * @return { Observable<any>}
    */
-  reset(token : string, postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > reset() > `; //for debugging
+  reset$(token : string, postData : any = {}) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > reset$() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/account/reset/${token}`, postData, { headers : this.headers })
         .pipe(
@@ -155,9 +169,11 @@ export class UsersService {
 
   /**
    * Server call to login the provided user email and pass.
+   * 
+   * @return { Observable<any>}
    */
-  logout() : Observable<any> {
-    let methodTrace = `${this.constructor.name} > logout() > `; //for debugging
+  logout$() : Observable<any> {
+    let methodTrace = `${this.constructor.name} > logout$() > `; //for debugging
 
     return this.http.get<Response>(`${this.serverHost}/logout`)
         .pipe(

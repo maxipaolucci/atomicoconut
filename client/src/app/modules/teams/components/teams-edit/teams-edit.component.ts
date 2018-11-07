@@ -121,7 +121,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
 
     this.getTeamServiceRunning = true;
 
-    return this.teamsService.getMyTeamBySlug(this.user.email, slug);
+    return this.teamsService.getMyTeamBySlug$(this.user.email, slug);
   }
 
   ngOnDestroy() {
@@ -136,7 +136,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
 
     this.editTeamServiceRunning = true;
     //call the team create service
-    const newSubscription = this.teamsService.create(this.model).subscribe(
+    const newSubscription = this.teamsService.create$(this.model).subscribe(
       (data : any) => {
         if (data && data.slug) {
           this.appService.showResults(`Team ${data.name} successfully created!`, 'success');
@@ -174,7 +174,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     //TODO check the new members are not duplicated, especially the admin
 
     //call the team update service
-    const newSubscription = this.teamsService.update(this.model).subscribe(
+    const newSubscription = this.teamsService.update$(this.model).subscribe(
       (data : any) => {
         if (data && data.team && data.team.slug) {
           let messages : any[] = [

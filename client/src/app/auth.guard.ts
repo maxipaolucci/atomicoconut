@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     
     this.usersService.routerRedirectUrl = state.url;
 
-    return this.usersService.getAuthenticatedUser().pipe(map(
+    return this.usersService.getAuthenticatedUser$().pipe(map(
       (data : any) => {
         if (data && data.email) {
           this.usersService.routerRedirectUrl = null; //we don't need this

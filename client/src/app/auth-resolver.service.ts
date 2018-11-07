@@ -22,7 +22,7 @@ export class AuthResolver implements Resolve<User> {
       params = { personalInfo : true, financialInfo : true };
     }
 
-    return this.usersService.getAuthenticatedUser(params).pipe(map(
+    return this.usersService.getAuthenticatedUser$(params).pipe(map(
       (data : any) => {
         if (data && data.email) {
           let personalInfo = null;

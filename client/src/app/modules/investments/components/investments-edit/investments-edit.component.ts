@@ -183,7 +183,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.model.updatedOn = new Date(Date.now());
 
     //call the investment create service
-    const newSubscription = this.investmentsService.create(this.model).subscribe(
+    const newSubscription = this.investmentsService.create$(this.model).subscribe(
       (data : any) => {
         if (data && data.id && data.type) {
           this.appService.showResults(`Investment successfully created!`, 'success');
@@ -214,7 +214,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.model.investmentDistribution = this.populateInvestmentDistributionArray();
     this.model.updatedOn = new Date(Date.now());
     //call the investment create service
-    const newSubscription = this.investmentsService.update(this.model).subscribe(
+    const newSubscription = this.investmentsService.update$(this.model).subscribe(
       (data : any) => {
         if (data && data.id && data.type) {
           this.appService.showResults(`Investment successfully updated!`, 'success');
@@ -246,7 +246,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.teams = [];
     this.getTeamsServiceRunning = true;
 
-    const newSubscription = this.teamsService.getTeams(this.user.email).subscribe(
+    const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe(
       (teams : Team[]) => {
         this.teams = teams;
         this.getTeamsServiceRunning = false;
@@ -319,7 +319,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
 
     this.getInvestmentServiceRunning = true;
 
-    const newSubscription = this.investmentsService.getInvestmentById(this.user.email, id).subscribe(
+    const newSubscription = this.investmentsService.getInvestmentById$(this.user.email, id).subscribe(
       (investment : Investment) => {
         this.investment = investment;
         //populate the model

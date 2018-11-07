@@ -7,7 +7,7 @@ import { AppService } from "../../../../app.service";
 import { Team } from '../../models/team';
 import { User } from '../../../users/models/user';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
-import { Subscription, Observable, from } from 'rxjs';
+import { Subscription, Observable, from, of } from 'rxjs';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { map, switchMap } from 'rxjs/operators';
 
@@ -50,7 +50,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
         if (!this.teams.length) {
           return this.getTeams$();
         } else {
-          return from(this.teams);
+          return of(this.teams);
         }
       })
     ).subscribe(
@@ -92,7 +92,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     this.teams = [];
     this.getTeamsServiceRunning = true;
 
-    return  this.teamsService.getTeams(this.user.email);
+    return  this.teamsService.getTeams$(this.user.email);
   }
 
   openDeleteTeamDialog(index : number, team : Team = null) {
@@ -129,7 +129,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
     this.teamActionRunning[index] = true;
 
-    const newSubscription = this.teamsService.delete(team.slug, this.user.email).subscribe(
+    const newSubscription = this.teamsService.delete$(team.slug, this.user.email).subscribe(
       (data : any) => {
         if (data && data.removed > 0) {
           this.teams.splice(index, 1);

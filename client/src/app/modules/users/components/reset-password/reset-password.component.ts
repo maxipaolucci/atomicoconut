@@ -54,7 +54,7 @@ export class ResetPasswordComponent implements OnInit {
 
     //call the reset password service.
     this.usersService.setUser(null); //reset authenticated user. Reset automatically authenticates the registered user.
-    this.usersService.reset(this.token, this.model).subscribe(
+    this.usersService.reset$(this.token, this.model).subscribe(
       (data : any) => {
         if (data) {
           const user = new User(data.name, data.email, data.avatar, null, null, data.currency);

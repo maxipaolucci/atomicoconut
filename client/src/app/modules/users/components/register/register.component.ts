@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
 
     this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
     //call the register service
-    this.usersService.register(this.model).subscribe(
+    this.usersService.register$(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
           const user = new User(data.name, data.email, data.avatar, null, null, data.currency)

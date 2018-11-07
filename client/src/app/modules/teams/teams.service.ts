@@ -22,9 +22,11 @@ export class TeamsService {
   /**
    * Server call to Create a new team in the system 
    * @param postData 
+   * 
+   * @return { Observable<any> }
    */
-  create(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > register() > `; //for debugging
+  create$(postData : any = {}) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > create$() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .pipe(
@@ -35,10 +37,12 @@ export class TeamsService {
   
   /**
    * Server call to Update a team in the system 
-   * @param postData 
+   * @param postData
+   * 
+   * @return { Observable<any> } 
    */
-  update(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > register() > `; //for debugging
+  update$(postData : any = {}) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > update$() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .pipe(
@@ -50,9 +54,11 @@ export class TeamsService {
   /**
    * Server call to Get a team from the server based on its slug
    * @param {string} slug . The team slug
+   * 
+   * @return { Observable<any> }
    */
-  getMyTeamBySlug(email : string, slug : string) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > getMyTeamBySlug() > `; //for debugging
+  getMyTeamBySlug$(email : string, slug : string) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > getMyTeamBySlug$() > `; //for debugging
 
     if (!email || !slug) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
@@ -73,13 +79,15 @@ export class TeamsService {
   /**
    * Server call to Get all the teams for the current user from the server
    * @param {string} slug . The team slug
+   * 
+   * @return { Observable<any> }
    */
-  getTeams(email : string) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > getTeams() > `; //for debugging
+  getTeams$(email : string) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > getTeams$() > `; //for debugging
 
     if (!email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
-      return from([]);
+      return of([]);
     }
 
     let params = new HttpParams().set('email', email);
@@ -118,9 +126,11 @@ export class TeamsService {
    * Server call to Get all the teams for the current user from the server
    * @param {string} slug . The team slug
    * @param {string} email . The current user email.
+   * 
+   * @return { Observable<any> }
    */
-  delete(slug : string, email : string) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > delete() > `; //for debugging
+  delete$(slug : string, email : string) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > delete$() > `; //for debugging
 
     if (!slug || !email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);

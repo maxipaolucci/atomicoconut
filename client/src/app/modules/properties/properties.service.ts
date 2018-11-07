@@ -107,7 +107,7 @@ export class PropertiesService {
 
     if (!email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
-      return from([]);
+      return of([]);
     }
 
     let params = new HttpParams().set('email', email).set('justUserProperties', justUserProperties + '');

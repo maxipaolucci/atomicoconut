@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
     this.loginServiceRunning = true;
     this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
     //call the register service
-    this.usersService.login(this.model).subscribe(
+    this.usersService.login$(this.model).subscribe(
       (data : any) => {
         if (data && data.email) {
           const user = new User(data.name, data.email, data.avatar, null, null, data.currency);
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
 
     this.forgotServiceRunning = true;
     //call the register service
-    this.usersService.forgot(this.forgotModel).subscribe(
+    this.usersService.forgot$(this.forgotModel).subscribe(
       (data : any) => {
         this.forgotServiceRunning = false;
         this.appService.showResults(`You have been emailed a password reset link.`, 'info');

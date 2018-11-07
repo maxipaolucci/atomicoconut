@@ -26,10 +26,12 @@ export class InvestmentsService {
 
   /**
    * Server call to Create a new investment in the system 
-   * @param postData 
+   * @param postData
+   * 
+   * @return { Observable<any> } 
    */
-  create(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > create() > `; //for debugging
+  create$(postData : any = {}) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > create$() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .pipe(
@@ -41,9 +43,11 @@ export class InvestmentsService {
   /**
    * Server call to Update an investment in the system 
    * @param postData 
+   * 
+   * @return { Observable<any> }
    */
-  update(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > update() > `; //for debugging
+  update$(postData : any = {}) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > update$() > `; //for debugging
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .pipe(
@@ -55,9 +59,11 @@ export class InvestmentsService {
   /**
    * Server call to Get an investment from the server based on its ID
    * @param {string} id . The investment id
+   * 
+   * @return { Observable<any> }
    */
-  getInvestmentById(email : string, id : string) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > getInvestmentById() > `; //for debugging
+  getInvestmentById$(email : string, id : string) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > getInvestmentById$() > `; //for debugging
 
     if (!id || !email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
@@ -134,13 +140,15 @@ export class InvestmentsService {
   /**
    * Server call to Get all the Investments for the current user from the server
    * @param {string} email . The user email
+   * 
+   * @return { Observable<Investment[]> } 
    */
-  getInvestments(email : string) : Observable<Investment[]> {
-    let methodTrace = `${this.constructor.name} > getInvestments() > `; //for debugging
+  getInvestments$(email : string) : Observable<Investment[]> {
+    let methodTrace = `${this.constructor.name} > getInvestments$() > `; //for debugging
 
     if (!email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
-      return from([]);
+      return of([]);
     }
 
     let params = new HttpParams().set('email', email);
@@ -199,9 +207,11 @@ export class InvestmentsService {
    * Server call to delete an investment from the server
    * @param {string} id . The investment id
    * @param {string} email . The current user email.
+   * 
+   * @return { Observable<any> }
    */
-  delete(id : string, email : string) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > delete() > `; //for debugging
+  delete$(id : string, email : string) : Observable<any> {
+    let methodTrace = `${this.constructor.name} > delete$() > `; //for debugging
 
     if (!id || !email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
