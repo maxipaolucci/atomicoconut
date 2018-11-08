@@ -14,39 +14,39 @@ import { debounceTime } from 'rxjs/operators';
 export class CurrencyInvestmentFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('editCurrencyInvestmentForm') form;
-  @Input() defaultValues : any = null; //the default values of the component model  
+  @Input() defaultValues: any = null; // the default values of the component model  
   @Output() values: EventEmitter<any> = new EventEmitter();
-  model : any = {
+  model: any = {
     type : null, // currency type. e.g: currency | crypto
-    unit : null, //e.g. : US Dollar, Australian Dollar, Monero, Bitcoin , depends on the type
-    amount : null, //the amount bought,
+    unit : null, // e.g. : US Dollar, Australian Dollar, Monero, Bitcoin , depends on the type
+    amount : null, // the amount bought,
     buyingPrice : null,
     buyingPriceUnit : null,
     buyingDate : null
   }
-  subscription : Subscription = new Subscription();
+  subscription: Subscription = new Subscription();
 
-  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private appService : AppService, 
-      public utilService : UtilService) {
+  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private appService: AppService, 
+      public utilService: UtilService) {
     
     this.dateAdapter.setLocale('en-GB');
   }
 
   ngOnInit() {
-    this.model.unit = this.model.type === 'currency' ? 'USD' : 'BTC';
+    this.model.unit = this.defaultValues.type === 'currency' ? 'USD' : 'BTC';
     this.model.buyingDate = new Date(Date.now());
     this.model.buyingPriceUnit = 'USD';
     Object.assign(this.model, this.defaultValues);
   }
 
   ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
     
-    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
-  onCurrencyUnitChange($event : MatSelectChange) {
+  onCurrencyUnitChange($event: MatSelectChange) {
     if ($event.source.id === 'currencyInvestmentUnit') {
       this.model.unit = $event.value;
     } else if ($event.source.id === 'buyingPriceUnit') {
@@ -62,7 +62,7 @@ export class CurrencyInvestmentFormComponent implements OnInit, OnDestroy, After
   }
 
   ngAfterViewInit(): void {
-    //send data before touching any value
+    // send data before touching any value
     this.values.emit({ 
       value : {
         model : this.model,
@@ -70,7 +70,7 @@ export class CurrencyInvestmentFormComponent implements OnInit, OnDestroy, After
       } 
     });
 
-    //after any event in the form we send updated data
+    // after any event in the form we send updated data
     const newSubscription = this.form.valueChanges.pipe(debounceTime(500)).subscribe(values => {
       this.values.emit({ 
         value : {

@@ -71,7 +71,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
 
     // creates a params source from parameters in url useful for the rest of the code
     const params$ = this.route.paramMap.pipe(map((params: ParamMap): any => { 
-      const type : string = params.get('type');
+      const type: string = params.get('type');
 
       if (![INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO, INVESTMENTS_TYPES.PROPERTY].includes(type)) {
         this.appService.showResults('You must provide a valid investment type to continue.', 'error');
@@ -88,8 +88,6 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     // combine user$ and id$ sources into one object and start listen to it for changes
     const newSubscription = user$.pipe(
       combineLatest(params$, (user: User, urlParams: any): string => {
-        this.user = user;
-        this.getTeams(); // don't need to wait for this
         const urlObject = (<BehaviorSubject<any>>this.route.url).getValue(); 
         let investmentId: string = null;
         let propertyId: string = null;
@@ -100,26 +98,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
           // we are editing an investment or creating a new one coming from the investment dashboard
           investmentId = urlParams.id;
         }
-        
-        this.model.email = user.email;
-        this.model.investmentAmountUnit = user.currency;
-        this.model.loanAmountUnit = user.currency;
-        this.model.id = investmentId;
-        if (propertyId) {
-          this.model.investmentData.propertyId = propertyId;
-        }
 
-        if (!investmentId) {
-          // we are creating a new investment
-          this.id = null;
-          this.editMode = false;
-          this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected : true });
-        } else {
-          this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected : true });
-          // we are editing an existing investment
-          this.id = investmentId; // the new slug
-          this.editMode = true;
-        }
+        this.populateRequiredData(user, investmentId, propertyId);
 
         return investmentId; 
       }),
@@ -133,43 +113,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     ).subscribe(
       (investment: Investment) => {
         if (investment) {
-          this.investment = investment;
-          
-          // populate the model
-          this.model.owner = investment.team ? 'team' : 'me';
-          this.model.team = investment.team;
-          this.setSelectedTeam(); // this is necesary to make the selectbox in ui set a team
-          this.model.teamSlug = investment.team ? investment.team.slug : null;
-          this.model.investmentDistribution = investment.investmentDistribution;
-          for (const portion of investment.investmentDistribution) {
-            this.model.membersPercentage[portion.email] = portion.percentage;
-          }
-          this.model.loanAmount = investment.loanAmount;
-          this.model.loanAmountUnit = investment.loanAmountUnit;
-          this.model.investmentAmount = investment.investmentAmount;
-          this.model.investmentAmountUnit = investment.investmentAmountUnit;
-          this.model.type = investment.type;
-          if (investment instanceof CurrencyInvestment) {
-            this.model.investmentData = {
-              type : investment.type,
-              unit : investment.unit,
-              amount : investment.amount,
-              buyingPrice : investment.buyingPrice,
-              buyingPriceUnit : investment.buyingPriceUnit,
-              buyingDate : investment.buyingDate
-            };
-          } else if (investment instanceof PropertyInvestment) {
-            this.model.investmentData = {
-              type : investment.type,
-              property : investment.property,
-              address : investment.property.address,
-              buyingPrice : investment.buyingPrice,
-              buyingPriceUnit : investment.buyingPriceUnit,
-              buyingDate : investment.buyingDate
-            };
-          }
-
+          this.populateInvestmentData(investment);
           this.getInvestmentServiceRunning = false;
+
           if (this.form && !this.formChangesSubscription) {
             this.subscribeFormValueChanges();
           }
@@ -191,6 +137,76 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     );
 
     this.subscription.add(newSubscription);
+  }
+
+  /**
+   * Populates the data required to work with this component
+   */
+  populateRequiredData(user: User, investmentId: string = null, propertyId: string = null) {
+    this.user = user;
+    this.getTeams(); // don't need to wait for this
+    
+    this.model.email = user.email;
+    this.model.investmentAmountUnit = user.currency;
+    this.model.loanAmountUnit = user.currency;
+    this.model.id = investmentId;
+    if (propertyId) {
+      this.model.investmentData.propertyId = propertyId;
+    }
+
+    if (!investmentId) {
+      // we are creating a new investment
+      this.id = null;
+      this.editMode = false;
+      this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected : true });
+    } else {
+      this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected : true });
+      // we are editing an existing investment
+      this.id = investmentId; // the new slug
+      this.editMode = true;
+    }
+  }
+
+  /**
+   * Populates all the investment data in the view model
+   * @param { Investment } investment 
+   */
+  populateInvestmentData(investment: Investment) {
+    this.investment = investment;
+          
+    // populate the model
+    this.model.owner = investment.team ? 'team' : 'me';
+    this.model.team = investment.team;
+    this.setSelectedTeam(); // this is necesary to make the selectbox in ui set a team
+    this.model.teamSlug = investment.team ? investment.team.slug : null;
+    this.model.investmentDistribution = investment.investmentDistribution;
+    for (const portion of investment.investmentDistribution) {
+      this.model.membersPercentage[portion.email] = portion.percentage;
+    }
+    this.model.loanAmount = investment.loanAmount;
+    this.model.loanAmountUnit = investment.loanAmountUnit;
+    this.model.investmentAmount = investment.investmentAmount;
+    this.model.investmentAmountUnit = investment.investmentAmountUnit;
+    this.model.type = investment.type;
+    if (investment instanceof CurrencyInvestment) {
+      this.model.investmentData = {
+        type : investment.type,
+        unit : investment.unit,
+        amount : investment.amount,
+        buyingPrice : investment.buyingPrice,
+        buyingPriceUnit : investment.buyingPriceUnit,
+        buyingDate : investment.buyingDate
+      };
+    } else if (investment instanceof PropertyInvestment) {
+      this.model.investmentData = {
+        type : investment.type,
+        property : investment.property,
+        address : investment.property.address,
+        buyingPrice : investment.buyingPrice,
+        buyingPriceUnit : investment.buyingPriceUnit,
+        buyingDate : investment.buyingDate
+      };
+    }
   }
 
   ngAfterViewInit(): void {

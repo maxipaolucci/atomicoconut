@@ -18,7 +18,7 @@
               numberValidator='{"maxFractionDigits": 8}' 
               required
               #amount="ngModel">
-          <mat-hint align="start">Set the buying amount.</mat-hint>
+          <mat-hint>Set the buying amount.</mat-hint>
           <mat-error *ngIf="amount.invalid && (amount.dirty || amount.touched) && amount.errors.required">Amount is required.</mat-error>
           <mat-error *ngIf="amount.invalid && (amount.dirty || amount.touched) && amount.errors.numberValidator">Value must be numeric, with no more than 8 decimal digits</mat-error>
         </mat-form-field>
@@ -62,7 +62,7 @@
                 numberValidator 
                 required
                 #buyingPrice="ngModel">
-            <mat-hint align="start">Price on buying date.</mat-hint>
+            <mat-hint>Price on buying date.</mat-hint>
             <mat-error *ngIf="buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.required">Buying price is required.</mat-error>
             <mat-error *ngIf="buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>

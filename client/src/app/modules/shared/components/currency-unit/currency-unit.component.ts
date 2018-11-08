@@ -8,21 +8,21 @@ import { MatSelectChange } from '@angular/material';
 })
 export class CurrencyUnitComponent implements OnInit {
 
-  @Input() id : string;
-  @Input() hint : string;
-  @Input() view : string = 'normal';
-  @Input() type : string = 'currency';
-  @Input() placeHolder : string;
-  @Input() value : string;
+  @Input() id: string;
+  @Input() hint: string;
+  @Input() view = 'normal';
+  @Input() type = 'currency';
+  @Input() placeHolder: string;
+  @Input() value: string;
   @Output() newValue: EventEmitter<MatSelectChange> = new EventEmitter();
 
-  model : any = {};
+  model: any = {};
 
   constructor() { }
 
   ngOnInit() { }
 
-  onSelectionChange(matSelectChange : MatSelectChange) {
+  onSelectionChange(matSelectChange: MatSelectChange) {
     this.newValue.emit(matSelectChange);
   }
 }

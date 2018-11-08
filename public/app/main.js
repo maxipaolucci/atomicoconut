@@ -1830,7 +1830,7 @@ var HouseFiguresComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"form__container form__edit-currency-investment\" #editCurrencyInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">  \r\n  <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n        <currency-unit fxFlex fxFlex.gt-xs=\"200px\"\r\n            [id]=\"'currencyInvestmentUnit'\" \r\n            [value]=\"model.unit\"\r\n            [type]=\"model.type\"\r\n            [hint]=\"'Choose the desired currency to invest on...'\"\r\n            [placeHolder]=\"'Desired currency'\"\r\n            (newValue)=\"onCurrencyUnitChange($event)\">\r\n        </currency-unit>\r\n\r\n        <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n          <input matInput type=\"number\" id=\"amount\" name=\"amount\" placeholder=\"Amount\"\r\n              [(ngModel)]=\"model.amount\" \r\n              [value]=\"model.amount\"\r\n              numberValidator='{\"maxFractionDigits\": 8}' \r\n              required\r\n              #amount=\"ngModel\">\r\n          <mat-hint align=\"start\">Set the buying amount.</mat-hint>\r\n          <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.required\">Amount is required.</mat-error>\r\n          <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.numberValidator\">Value must be numeric, with no more than 8 decimal digits</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n        <!-- Buying date -->\r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"100px\" class=\"form__field\">\r\n          <input placeholder=\"Buying date\"\r\n              id=\"buyingDate\"\r\n              name=\"buyingDate\"\r\n              readonly\r\n              required\r\n              #buyingDate=\"ngModel\"\r\n              matInput \r\n              [(ngModel)]=\"model.buyingDate\" \r\n              [matDatepicker]=\"pickerBuyingDate\"\r\n              (click)=\"pickerBuyingDate.open()\">\r\n          <mat-datepicker-toggle matSuffix [for]=\"pickerBuyingDate\"></mat-datepicker-toggle>\r\n          <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBuyingDate></mat-datepicker>\r\n          <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.required\">Buying date is required.</mat-error>\r\n          <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.matDatepickerParse\">Buying date is invalid or not follows the pattern \"mm/dd/yyyy\"</mat-error>\r\n        </mat-form-field>\r\n\r\n        <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n          <!-- Buying price unit -->\r\n          <currency-unit fxFlex=\"50px\"\r\n              [id]=\"'buyingPriceUnit'\" \r\n              [view]=\"'narrow'\"\r\n              [value]=\"model.buyingPriceUnit\"\r\n              (newValue)=\"onCurrencyUnitChange($event)\">\r\n          </currency-unit>\r\n\r\n          <!-- Buying price -->\r\n          <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"buyingPrice\" name=\"buyingPrice\" placeholder=\"Price\"\r\n                [(ngModel)]=\"model.buyingPrice\" \r\n                [value]=\"model.buyingPrice\"\r\n                numberValidator \r\n                required\r\n                #buyingPrice=\"ngModel\">\r\n            <mat-hint align=\"start\">Price on buying date.</mat-hint>\r\n            <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.required\">Buying price is required.</mat-error>\r\n            <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n        \r\n      </div>\r\n    </div>\r\n  </section>\r\n</form>"
+module.exports = "<form class=\"form__container form__edit-currency-investment\" #editCurrencyInvestmentForm=\"ngForm\" novalidate fxLayout=\"column\" fxLayoutGap=\"10px\">  \r\n  <section fxLayout=\"column\" fxLayoutGap=\"10px\" class=\"form__fields\">\r\n    <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n        <currency-unit fxFlex fxFlex.gt-xs=\"200px\"\r\n            [id]=\"'currencyInvestmentUnit'\" \r\n            [value]=\"model.unit\"\r\n            [type]=\"model.type\"\r\n            [hint]=\"'Choose the desired currency to invest on...'\"\r\n            [placeHolder]=\"'Desired currency'\"\r\n            (newValue)=\"onCurrencyUnitChange($event)\">\r\n        </currency-unit>\r\n\r\n        <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n          <input matInput type=\"number\" id=\"amount\" name=\"amount\" placeholder=\"Amount\"\r\n              [(ngModel)]=\"model.amount\" \r\n              [value]=\"model.amount\"\r\n              numberValidator='{\"maxFractionDigits\": 8}' \r\n              required\r\n              #amount=\"ngModel\">\r\n          <mat-hint>Set the buying amount.</mat-hint>\r\n          <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.required\">Amount is required.</mat-error>\r\n          <mat-error *ngIf=\"amount.invalid && (amount.dirty || amount.touched) && amount.errors.numberValidator\">Value must be numeric, with no more than 8 decimal digits</mat-error>\r\n        </mat-form-field>\r\n      </div>\r\n    </div>\r\n\r\n    <div fxLayout=\"column\" fxLayoutGap=\"20px\" class=\"form__fields__row__container\">\r\n      <div fxLayout=\"column\" fxLayout.gt-xs=\"row\" fxLayoutGap=\"10px\" fxLayoutAlign.gt-xs=\"start center\" class=\"form__fields__row\">\r\n        <!-- Buying date -->\r\n        <mat-form-field fxFlex fxFlex.gt-xs=\"100px\" class=\"form__field\">\r\n          <input placeholder=\"Buying date\"\r\n              id=\"buyingDate\"\r\n              name=\"buyingDate\"\r\n              readonly\r\n              required\r\n              #buyingDate=\"ngModel\"\r\n              matInput \r\n              [(ngModel)]=\"model.buyingDate\" \r\n              [matDatepicker]=\"pickerBuyingDate\"\r\n              (click)=\"pickerBuyingDate.open()\">\r\n          <mat-datepicker-toggle matSuffix [for]=\"pickerBuyingDate\"></mat-datepicker-toggle>\r\n          <mat-datepicker [touchUi]=\"utilService.isGtSm() ? false : true\" #pickerBuyingDate></mat-datepicker>\r\n          <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.required\">Buying date is required.</mat-error>\r\n          <mat-error *ngIf=\"buyingDate.invalid && (buyingDate.dirty || buyingDate.touched) && buyingDate.errors.matDatepickerParse\">Buying date is invalid or not follows the pattern \"mm/dd/yyyy\"</mat-error>\r\n        </mat-form-field>\r\n\r\n        <div fxLayout=\"row\" fxLayoutGap=\"10px\">\r\n          <!-- Buying price unit -->\r\n          <currency-unit fxFlex=\"50px\"\r\n              [id]=\"'buyingPriceUnit'\" \r\n              [view]=\"'narrow'\"\r\n              [value]=\"model.buyingPriceUnit\"\r\n              (newValue)=\"onCurrencyUnitChange($event)\">\r\n          </currency-unit>\r\n\r\n          <!-- Buying price -->\r\n          <mat-form-field fxFlex fxFlex.sm=\"120px\" fxFlex.gt-sm=\"200px\" class=\"form__field\">\r\n            <input matInput type=\"number\" id=\"buyingPrice\" name=\"buyingPrice\" placeholder=\"Price\"\r\n                [(ngModel)]=\"model.buyingPrice\" \r\n                [value]=\"model.buyingPrice\"\r\n                numberValidator \r\n                required\r\n                #buyingPrice=\"ngModel\">\r\n            <mat-hint>Price on buying date.</mat-hint>\r\n            <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.required\">Buying price is required.</mat-error>\r\n            <mat-error *ngIf=\"buyingPrice.invalid && (buyingPrice.dirty || buyingPrice.touched) && buyingPrice.errors.numberValidator\">Value must be numeric, with no more than two decimal digits</mat-error>\r\n          </mat-form-field>\r\n        </div>\r\n        \r\n      </div>\r\n    </div>\r\n  </section>\r\n</form>"
 
 /***/ }),
 
@@ -1881,7 +1881,7 @@ var CurrencyInvestmentFormComponent = /** @class */ (function () {
         this.dateAdapter = dateAdapter;
         this.appService = appService;
         this.utilService = utilService;
-        this.defaultValues = null; //the default values of the component model  
+        this.defaultValues = null; // the default values of the component model  
         this.values = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.model = {
             type: null,
@@ -1895,14 +1895,14 @@ var CurrencyInvestmentFormComponent = /** @class */ (function () {
         this.dateAdapter.setLocale('en-GB');
     }
     CurrencyInvestmentFormComponent.prototype.ngOnInit = function () {
-        this.model.unit = this.model.type === 'currency' ? 'USD' : 'BTC';
+        this.model.unit = this.defaultValues.type === 'currency' ? 'USD' : 'BTC';
         this.model.buyingDate = new Date(Date.now());
         this.model.buyingPriceUnit = 'USD';
         Object.assign(this.model, this.defaultValues);
     };
     CurrencyInvestmentFormComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
     CurrencyInvestmentFormComponent.prototype.onCurrencyUnitChange = function ($event) {
@@ -1921,14 +1921,14 @@ var CurrencyInvestmentFormComponent = /** @class */ (function () {
     };
     CurrencyInvestmentFormComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
-        //send data before touching any value
+        // send data before touching any value
         this.values.emit({
             value: {
                 model: this.model,
                 valid: this.form.valid
             }
         });
-        //after any event in the form we send updated data
+        // after any event in the form we send updated data
         var newSubscription = this.form.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["debounceTime"])(500)).subscribe(function (values) {
             _this.values.emit({
                 value: {
@@ -2748,8 +2748,6 @@ var InvestmentsEditComponent = /** @class */ (function () {
         }));
         // combine user$ and id$ sources into one object and start listen to it for changes
         var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["combineLatest"])(params$, function (user, urlParams) {
-            _this.user = user;
-            _this.getTeams(); // don't need to wait for this
             var urlObject = _this.route.url.getValue();
             var investmentId = null;
             var propertyId = null;
@@ -2761,25 +2759,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
                 // we are editing an investment or creating a new one coming from the investment dashboard
                 investmentId = urlParams.id;
             }
-            _this.model.email = user.email;
-            _this.model.investmentAmountUnit = user.currency;
-            _this.model.loanAmountUnit = user.currency;
-            _this.model.id = investmentId;
-            if (propertyId) {
-                _this.model.investmentData.propertyId = propertyId;
-            }
-            if (!investmentId) {
-                // we are creating a new investment
-                _this.id = null;
-                _this.editMode = false;
-                _this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected: true });
-            }
-            else {
-                _this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected: true });
-                // we are editing an existing investment
-                _this.id = investmentId; // the new slug
-                _this.editMode = true;
-            }
+            _this.populateRequiredData(user, investmentId, propertyId);
             return investmentId;
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["flatMap"])(function (investmentId) {
             if (investmentId) {
@@ -2788,42 +2768,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(null);
         })).subscribe(function (investment) {
             if (investment) {
-                _this.investment = investment;
-                // populate the model
-                _this.model.owner = investment.team ? 'team' : 'me';
-                _this.model.team = investment.team;
-                _this.setSelectedTeam(); // this is necesary to make the selectbox in ui set a team
-                _this.model.teamSlug = investment.team ? investment.team.slug : null;
-                _this.model.investmentDistribution = investment.investmentDistribution;
-                for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
-                    var portion = _a[_i];
-                    _this.model.membersPercentage[portion.email] = portion.percentage;
-                }
-                _this.model.loanAmount = investment.loanAmount;
-                _this.model.loanAmountUnit = investment.loanAmountUnit;
-                _this.model.investmentAmount = investment.investmentAmount;
-                _this.model.investmentAmountUnit = investment.investmentAmountUnit;
-                _this.model.type = investment.type;
-                if (investment instanceof _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__["CurrencyInvestment"]) {
-                    _this.model.investmentData = {
-                        type: investment.type,
-                        unit: investment.unit,
-                        amount: investment.amount,
-                        buyingPrice: investment.buyingPrice,
-                        buyingPriceUnit: investment.buyingPriceUnit,
-                        buyingDate: investment.buyingDate
-                    };
-                }
-                else if (investment instanceof _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
-                    _this.model.investmentData = {
-                        type: investment.type,
-                        property: investment.property,
-                        address: investment.property.address,
-                        buyingPrice: investment.buyingPrice,
-                        buyingPriceUnit: investment.buyingPriceUnit,
-                        buyingDate: investment.buyingDate
-                    };
-                }
+                _this.populateInvestmentData(investment);
                 _this.getInvestmentServiceRunning = false;
                 if (_this.form && !_this.formChangesSubscription) {
                     _this.subscribeFormValueChanges();
@@ -2844,6 +2789,76 @@ var InvestmentsEditComponent = /** @class */ (function () {
             _this.getInvestmentServiceRunning = false;
         });
         this.subscription.add(newSubscription);
+    };
+    /**
+     * Populates the data required to work with this component
+     */
+    InvestmentsEditComponent.prototype.populateRequiredData = function (user, investmentId, propertyId) {
+        if (investmentId === void 0) { investmentId = null; }
+        if (propertyId === void 0) { propertyId = null; }
+        this.user = user;
+        this.getTeams(); // don't need to wait for this
+        this.model.email = user.email;
+        this.model.investmentAmountUnit = user.currency;
+        this.model.loanAmountUnit = user.currency;
+        this.model.id = investmentId;
+        if (propertyId) {
+            this.model.investmentData.propertyId = propertyId;
+        }
+        if (!investmentId) {
+            // we are creating a new investment
+            this.id = null;
+            this.editMode = false;
+            this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected: true });
+        }
+        else {
+            this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected: true });
+            // we are editing an existing investment
+            this.id = investmentId; // the new slug
+            this.editMode = true;
+        }
+    };
+    /**
+     * Populates all the investment data in the view model
+     * @param { Investment } investment
+     */
+    InvestmentsEditComponent.prototype.populateInvestmentData = function (investment) {
+        this.investment = investment;
+        // populate the model
+        this.model.owner = investment.team ? 'team' : 'me';
+        this.model.team = investment.team;
+        this.setSelectedTeam(); // this is necesary to make the selectbox in ui set a team
+        this.model.teamSlug = investment.team ? investment.team.slug : null;
+        this.model.investmentDistribution = investment.investmentDistribution;
+        for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
+            var portion = _a[_i];
+            this.model.membersPercentage[portion.email] = portion.percentage;
+        }
+        this.model.loanAmount = investment.loanAmount;
+        this.model.loanAmountUnit = investment.loanAmountUnit;
+        this.model.investmentAmount = investment.investmentAmount;
+        this.model.investmentAmountUnit = investment.investmentAmountUnit;
+        this.model.type = investment.type;
+        if (investment instanceof _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__["CurrencyInvestment"]) {
+            this.model.investmentData = {
+                type: investment.type,
+                unit: investment.unit,
+                amount: investment.amount,
+                buyingPrice: investment.buyingPrice,
+                buyingPriceUnit: investment.buyingPriceUnit,
+                buyingDate: investment.buyingDate
+            };
+        }
+        else if (investment instanceof _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
+            this.model.investmentData = {
+                type: investment.type,
+                property: investment.property,
+                address: investment.property.address,
+                buyingPrice: investment.buyingPrice,
+                buyingPriceUnit: investment.buyingPriceUnit,
+                buyingDate: investment.buyingDate
+            };
+        }
     };
     InvestmentsEditComponent.prototype.ngAfterViewInit = function () {
         if (this.form && !this.formChangesSubscription) {
@@ -3385,7 +3400,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         this.investmentTitle = null;
         this.actionRunning = false;
         this.user = null;
-        this.team = null; //if the investment has a tema this will be populated with the full info of the team
+        this.team = null; // if the investment has a tema this will be populated with the full info of the team
         this.investmentDistribution = [];
         this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subscription"]();
     }
@@ -3401,25 +3416,25 @@ var PropertyInvestmentComponent = /** @class */ (function () {
     });
     PropertyInvestmentComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         if (this.investment.property instanceof _properties_models_house__WEBPACK_IMPORTED_MODULE_11__["House"]) {
             this.investmentTitle = this.utilService.capitalizeFirstLetter(this.investment.property.buildingType);
         }
-        //get the team of the investmetn if exists
+        // get the team of the investmetn if exists
         var newSubscription = null;
         var currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
         var currencyRatesAndUser$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["combineLatest"])(currencyRates$, function (user, currencyRates) {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
-        })); //(currency rates and user) source
+        })); // (currency rates and user) source
         newSubscription = currencyRatesAndUser$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function (data) {
-            //market value should be always up to date so no rate conversion is required
+            // market value should be always up to date so no rate conversion is required
             _this.currentPrice = _this.currencyExchangeService.getUsdValueOf(_this.investment.property.marketValue, _this.investment.property.marketValueUnit);
-            //the investment amount was paid on the date of the investment so we need to convert using that day rates
+            // the investment amount was paid on the date of the investment so we need to convert using that day rates
             _this.investmentAmount = _this.investment.investmentAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.investmentAmountUnit] || 1);
-            //the loan amount was requested on the date of the investment so we need to convert using that day rates
+            // the loan amount was requested on the date of the investment so we need to convert using that day rates
             _this.loanAmount = _this.investment.loanAmount / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.loanAmountUnit] || 1);
-            //the buying price (of the property) was requested on the date of the investment so we need to convert using that day rates
+            // the buying price (of the property) was requested on the date of the investment so we need to convert using that day rates
             _this.buyingPrice = _this.investment.buyingPrice / (data.currencyRates[_this.utilService.formatDate(_this.investment.buyingDate)]["USD" + _this.investment.buyingPriceUnit] || 1);
             _this.investmentReturn = _this.currentPrice;
             return _this.teams$;
@@ -3432,8 +3447,8 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         this.subscription.add(newSubscription);
     };
     PropertyInvestmentComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
     /**
@@ -3443,8 +3458,8 @@ var PropertyInvestmentComponent = /** @class */ (function () {
      */
     PropertyInvestmentComponent.prototype.setInvestmentTeamData = function (teams) {
         var _this = this;
-        this.team = this.investment.team ? teams.filter(function (team) { return team.slug === _this.investment.team.slug; })[0] : null; //look for the team of the investment
-        //set totals to emit to parent component. If no team assigned then the total of the investment is the same as my portion
+        this.team = this.investment.team ? teams.filter(function (team) { return team.slug === _this.investment.team.slug; })[0] : null; // look for the team of the investment
+        // set totals to emit to parent component. If no team assigned then the total of the investment is the same as my portion
         var totals = {
             investmentId: this.investment.id,
             investmentAmount: this.investmentAmount,
@@ -3466,7 +3481,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
                 }
             };
             var this_1 = this;
-            //if team is present then get my portion of the investment
+            // if team is present then get my portion of the investment
             for (var _i = 0, _a = this.team.members; _i < _a.length; _i++) {
                 var member = _a[_i];
                 _loop_1(member);
@@ -3476,7 +3491,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
     };
     PropertyInvestmentComponent.prototype.openDeleteDialog = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > openDeleteDialog() > "; //for debugging
+        var methodTrace = this.constructor.name + " > openDeleteDialog() > "; // for debugging
         if (!this.investment.id) {
             this.appService.consoleLog('error', methodTrace + " Investment ID is required to delete.");
             return false;
@@ -3501,7 +3516,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
     };
     PropertyInvestmentComponent.prototype.delete = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        var methodTrace = this.constructor.name + " > delete() > "; // for debugging
         if (this.user) {
             this.actionRunning = true;
             var newSubscription = this.investmentsService.delete$(this.investment.id, this.user.email).subscribe(function (data) {
@@ -6046,11 +6061,11 @@ var CurrencyUnitComponent = /** @class */ (function () {
     ], CurrencyUnitComponent.prototype, "hint", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
+        __metadata("design:type", Object)
     ], CurrencyUnitComponent.prototype, "view", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
+        __metadata("design:type", Object)
     ], CurrencyUnitComponent.prototype, "type", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
