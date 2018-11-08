@@ -10,23 +10,23 @@ import { UtilService } from '../../util.service';
 @Injectable()
 export class CurrencyExchangeService {
 
-  private cryptoExchangeServerUrl : string = 'https://coincap.io/page/';
-  cryptoRates : any = {};
+  private cryptoExchangeServerUrl = 'https://coincap.io/page/';
+  cryptoRates: any = {};
 
-  currencyRates : any = {};
+  currencyRates: any = {};
 
-  private serverHost : string = environment.apiHost + '/api/currencyRates';
+  private serverHost: string = environment.apiHost + '/api/currencyRates';
 
 
-  constructor(private http : HttpClient, private appService : AppService, private utilService : UtilService) { }
+  constructor(private http: HttpClient, private appService: AppService, private utilService: UtilService) { }
 
-  getCurrencyRates$(dates : string[] = [], base : string = 'USD') : Observable<any> {
+  getCurrencyRates$(dates: string[] = [], base: string = 'USD'): Observable<any> {
     
-    dates.push(this.utilService.formatToday('YYYY-MM-DD')); //adds today to the array
+    dates.push(this.utilService.formatToday('YYYY-MM-DD')); // adds today to the array
     
-    //check if all the required dates are already cached in this service
+    // check if all the required dates are already cached in this service
     let found = true;
-    for (let date of dates) {
+    for (const date of dates) {
       if (!this.currencyRates[date]) {
         found = false;
         break;
@@ -34,21 +34,21 @@ export class CurrencyExchangeService {
     }
 
     if (found) {
-      //all dates cached then return this object
+      // all dates cached then return this object
       return of(this.currencyRates);
     }
     
 
-    //if here then we need to retrieve some dates from the server
-    let params = new HttpParams().set('dates', `${dates}`);
+    // if here then we need to retrieve some dates from the server
+    const params = new HttpParams().set('dates', `${dates}`);
 
     return this.http.get<Response>(`${this.serverHost}/getByDates/${base}`, { params })
         .pipe(
           map((res: Response) => {
-            let data = this.appService.extractData(res);
+            const data = this.appService.extractData(res);
 
             if (data) {
-              //merge results
+              // merge results
               Object.assign(this.currencyRates, data);
             }
 
@@ -60,7 +60,7 @@ export class CurrencyExchangeService {
   }
 
 
-  getCryptoRates$(crypto : string = 'BTC') : Observable<any> {
+  getCryptoRates$(crypto: string = 'BTC'): Observable<any> {
 
     if (this.cryptoRates[crypto.toUpperCase()]) {
       return of(this.cryptoRates[crypto.toUpperCase()]);
@@ -76,7 +76,7 @@ export class CurrencyExchangeService {
         );
   }
 
-  private extractCryptoExchangeData(crypto: string, res: Object) : any {
+  private extractCryptoExchangeData(crypto: string, res: Object): any {
     if (res['id'] === crypto.toUpperCase()) {
       return res;
     } else {
@@ -89,7 +89,7 @@ export class CurrencyExchangeService {
    * @param amount 
    * @param unit 
    */
-  getUsdValueOf(amount : number, unit : string) : number {
+  getUsdValueOf(amount: number, unit: string): number {
     if (unit !== 'USD') {
       const today = this.utilService.formatToday();
   

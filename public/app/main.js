@@ -3142,7 +3142,7 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
         this.utilService = utilService;
         this.propertiesService = propertiesService;
         this.router = router;
-        this.defaultValues = null; //the default values of the component model  
+        this.defaultValues = null; // the default values of the component model  
         this.user = null;
         this.values = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.model = {
@@ -3164,17 +3164,17 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
         this.model.buyingPriceUnit = this.user.currency;
         Object.assign(this.model, this.defaultValues);
         if (this.model.propertyId) {
-            //when creating from the property "invest action" or some component that shows properties an allow the creation of an investment of it
+            // when creating from the property "invest action" or some component that shows properties an allow the creation of an investment of it
             this.getProperty(this.model.propertyId);
         }
         else if (this.model.property) {
-            //when editing a property investment
+            // when editing a property investment
             this.model.address = this.model.property.address.description;
         }
     };
     PropertyInvestmentFormComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
     PropertyInvestmentFormComponent.prototype.onCurrencyUnitChange = function ($event) {
@@ -3183,9 +3183,9 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
     };
     PropertyInvestmentFormComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
-        //send data before touching any value
+        // send data before touching any value
         this.emitValues();
-        //after any event in the form we send updated data
+        // after any event in the form we send updated data
         var newSubscription = this.form.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(500)).subscribe(function (values) {
             _this.emitValues();
         });
@@ -3205,7 +3205,7 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
      */
     PropertyInvestmentFormComponent.prototype.getProperty = function (id) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getProperty() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getProperty() > "; // for debugging
         if (!id) {
             this.appService.showResults("Invalid property ID", 'error');
             this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
@@ -3233,7 +3233,7 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
     };
     PropertyInvestmentFormComponent.prototype.setProperty = function (property) {
         if (property.createdBy.email !== this.user.email) {
-            //we cannot create an investment of a property not created by me
+            // we cannot create an investment of a property not created by me
             this.appService.showResults("Only the property creator (" + property.createdBy.name + ") is allowed to create an investment with this property.", 'error');
             return this.router.navigate(['/properties']);
         }
@@ -3265,7 +3265,7 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
     };
     PropertyInvestmentFormComponent.prototype.openPropertySelectionDialog = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > openPropertySelectionDialog() > "; //for debugging
+        var methodTrace = this.constructor.name + " > openPropertySelectionDialog() > "; // for debugging
         var propertySelectorDialogRef = this.dialog.open(_properties_components_property_selector_dialog_property_selector_dialog_component__WEBPACK_IMPORTED_MODULE_10__["PropertySelectorDialogComponent"], {
             data: {
                 title: 'Select a property',
@@ -3625,8 +3625,8 @@ var CurrencyExchangeService = /** @class */ (function () {
         var _this = this;
         if (dates === void 0) { dates = []; }
         if (base === void 0) { base = 'USD'; }
-        dates.push(this.utilService.formatToday('YYYY-MM-DD')); //adds today to the array
-        //check if all the required dates are already cached in this service
+        dates.push(this.utilService.formatToday('YYYY-MM-DD')); // adds today to the array
+        // check if all the required dates are already cached in this service
         var found = true;
         for (var _i = 0, dates_1 = dates; _i < dates_1.length; _i++) {
             var date = dates_1[_i];
@@ -3636,16 +3636,16 @@ var CurrencyExchangeService = /** @class */ (function () {
             }
         }
         if (found) {
-            //all dates cached then return this object
+            // all dates cached then return this object
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.currencyRates);
         }
-        //if here then we need to retrieve some dates from the server
+        // if here then we need to retrieve some dates from the server
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpParams"]().set('dates', "" + dates);
         return this.http.get(this.serverHost + "/getByDates/" + base, { params: params })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (res) {
             var data = _this.appService.extractData(res);
             if (data) {
-                //merge results
+                // merge results
                 Object.assign(_this.currencyRates, data);
             }
             return _this.currencyRates;
@@ -3846,7 +3846,7 @@ var InvestmentsModule = /** @class */ (function () {
                 _components_property_investment_property_investment_component__WEBPACK_IMPORTED_MODULE_14__["PropertyInvestmentComponent"]
             ],
             entryComponents: [
-                _components_investment_selector_dialog_investment_selector_dialog_component__WEBPACK_IMPORTED_MODULE_9__["InvestmentSelectorDialogComponent"] //added as material doc suggest to allow AOT on this on the fly created class
+                _components_investment_selector_dialog_investment_selector_dialog_component__WEBPACK_IMPORTED_MODULE_9__["InvestmentSelectorDialogComponent"] // added as material doc suggest to allow AOT on this on the fly created class
             ],
             providers: [_investments_service__WEBPACK_IMPORTED_MODULE_12__["InvestmentsService"]]
         })
@@ -3919,7 +3919,7 @@ var InvestmentsService = /** @class */ (function () {
      */
     InvestmentsService.prototype.create$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > create$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > create$() > "; // for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
@@ -3959,7 +3959,7 @@ var InvestmentsService = /** @class */ (function () {
                 var createdBy = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](investment.createdBy.name, investment.createdBy.email, investment.createdBy.gravatar);
                 var team = null;
                 if (investment.team) {
-                    //fill team members
+                    // fill team members
                     var admin = null;
                     var members = [];
                     for (var _i = 0, _a = investment.team.members; _i < _a.length; _i++) {
@@ -3983,7 +3983,7 @@ var InvestmentsService = /** @class */ (function () {
                         address = new _properties_models_address__WEBPACK_IMPORTED_MODULE_12__["Address"](propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
                     }
                     if (propertyData.propertyType === _constants__WEBPACK_IMPORTED_MODULE_10__["PROPERTY_TYPES"].HOUSE) {
-                        //we share the createdBy of the investment because we know is the same
+                        // we share the createdBy of the investment because we know is the same
                         property = new _properties_models_house__WEBPACK_IMPORTED_MODULE_11__["House"](propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
                     }
                     result = new _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_7__["PropertyInvestment"](investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, property, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
@@ -4003,7 +4003,7 @@ var InvestmentsService = /** @class */ (function () {
      */
     InvestmentsService.prototype.getInvestments$ = function (email) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getInvestments$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getInvestments$() > "; // for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])([]);
@@ -4029,7 +4029,7 @@ var InvestmentsService = /** @class */ (function () {
                             address = new _properties_models_address__WEBPACK_IMPORTED_MODULE_12__["Address"](propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
                         }
                         if (propertyData.propertyType === _constants__WEBPACK_IMPORTED_MODULE_10__["PROPERTY_TYPES"].HOUSE) {
-                            //we share the createdBy of the investment because we know is the same
+                            // we share the createdBy of the investment because we know is the same
                             property = new _properties_models_house__WEBPACK_IMPORTED_MODULE_11__["House"](propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit, propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit, propertyData.dateListed, propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit, propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces, propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate, propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
                         }
                         investments.push(new _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_7__["PropertyInvestment"](item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, property, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType, item.loanAmount, item.loanAmountUnit));
@@ -4050,7 +4050,7 @@ var InvestmentsService = /** @class */ (function () {
      * @return { Observable<any> }
      */
     InvestmentsService.prototype.delete$ = function (id, email) {
-        var methodTrace = this.constructor.name + " > delete$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > delete$() > "; // for debugging
         if (!id || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"].throw(null);
@@ -4492,21 +4492,21 @@ var PropertiesDashboardComponent = /** @class */ (function () {
     }
     PropertiesDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Investments', url: '/investments', selected: false },
             { displayName: 'Properties', url: null, selected: true },
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
-        //get authUser from resolver
+        // get authUser from resolver
         this.route.data.subscribe(function (data) {
             _this.user = data.authUser;
         });
     };
     PropertiesDashboardComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
     PropertiesDashboardComponent = __decorate([
@@ -4954,9 +4954,9 @@ var PropertiesTableComponent = /** @class */ (function () {
         this.dialog = dialog;
         this.router = router;
         this.user = null;
-        this.showActions = true; //if false we hide FAB buttons
-        this.allowEdition = true; //if false we don't redirect to property edit component when click on adrdresss
-        this.loadJustUserProperties = false; //if false when it get properties loads current user properties plus properties of investments where the user has a portion of it.
+        this.showActions = true; // if false we hide FAB buttons
+        this.allowEdition = true; // if false we don't redirect to property edit component when click on adrdresss
+        this.loadJustUserProperties = false; // if false when it get properties loads current user properties plus properties of investments where the user has a portion of it.
         this.selectedProperty = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.onPropertiesLoad = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.properties = [];
@@ -4969,7 +4969,7 @@ var PropertiesTableComponent = /** @class */ (function () {
     }
     PropertiesTableComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         this.displayedColumns = ['address'];
         if (this.showActions) {
             this.displayedColumns = this.displayedColumns.concat(['invest', 'delete']);
@@ -4981,7 +4981,7 @@ var PropertiesTableComponent = /** @class */ (function () {
         this.selection.onChange.subscribe(function (selectionChange) {
             _this.selectedProperty.emit(_this.selection.selected[0]);
         });
-        //set filter predicate function to look just in the address field
+        // set filter predicate function to look just in the address field
         this.propertiesDataSource.filterPredicate = function (data, filter) {
             var address = data.address.description.toLowerCase().trim();
             var filterStr = filter.toLowerCase().trim();
@@ -4990,7 +4990,7 @@ var PropertiesTableComponent = /** @class */ (function () {
             }
             return false;
         };
-        //this is needed because for fields where the header does not match the property of the data for sorting as address <> description
+        // this is needed because for fields where the header does not match the property of the data for sorting as address <> description
         this.propertiesDataSource.sortingDataAccessor = function (data, sortHeaderId) {
             if (sortHeaderId === 'address') {
                 return data.address.description;
@@ -5002,8 +5002,8 @@ var PropertiesTableComponent = /** @class */ (function () {
         this.propertiesDataSource.sort = this.propertiesSort;
     };
     PropertiesTableComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
     /**
@@ -5011,7 +5011,7 @@ var PropertiesTableComponent = /** @class */ (function () {
      */
     PropertiesTableComponent.prototype.getProperties = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getProperties() > "; // for debugging
         this.properties = [];
         this.propertiesDataSource.data = [];
         this.propertiesDataSource.paginator = this.propertiesTablePaginator;
@@ -5042,15 +5042,15 @@ var PropertiesTableComponent = /** @class */ (function () {
     PropertiesTableComponent.prototype.openDeleteTeamDialog = function (indexInPage, property) {
         var _this = this;
         if (property === void 0) { property = null; }
-        var methodTrace = this.constructor.name + " > openDeleteTeamDialog() > "; //for debugging
+        var methodTrace = this.constructor.name + " > openDeleteTeamDialog() > "; // for debugging
         if (!property) {
             this.appService.consoleLog('error', methodTrace + " Property is required to delete.");
             return false;
         }
-        //map the index in the table to the indes in the properties array
+        // map the index in the table to the indes in the properties array
         var index = indexInPage + this.propertiesTablePaginator.pageIndex * this.propertiesTablePaginator.pageSize;
         if (this.propertiesSort.direction === 'desc') {
-            index = (-1) * (index + 1); //add one to index and invert sign
+            index = (-1) * (index + 1); // add one to index and invert sign
         }
         this.propertyTableActionRunning = true;
         var yesNoDialogRef = this.dialog.open(_shared_components_yes_no_dialog_yes_no_dialog_component__WEBPACK_IMPORTED_MODULE_6__["YesNoDialogComponent"], {
@@ -5074,16 +5074,16 @@ var PropertiesTableComponent = /** @class */ (function () {
     PropertiesTableComponent.prototype.delete = function (index, propertyToDelete) {
         var _this = this;
         if (propertyToDelete === void 0) { propertyToDelete = null; }
-        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        var methodTrace = this.constructor.name + " > delete() > "; // for debugging
         this.propertyTableActionRunning = true;
         var newSuscription = this.propertiesService.delete(propertyToDelete.id, this.user.email).subscribe(function (data) {
             if (data && data.removed > 0) {
                 if (!_this.propertiesDataSource.filter.length) {
-                    //data is not filtered, proceed with the easy way
+                    // data is not filtered, proceed with the easy way
                     _this.properties.splice(index, 1);
                 }
                 else {
-                    //filtered data, we need to search for the property in order to removeit from the view
+                    // filtered data, we need to search for the property in order to removeit from the view
                     var propertyIndex = 0;
                     for (var _i = 0, _a = _this.properties; _i < _a.length; _i++) {
                         var property = _a[_i];
@@ -5107,7 +5107,7 @@ var PropertiesTableComponent = /** @class */ (function () {
                 _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
             }
             else if (error.codeno === 475) {
-                //property associated to an investment
+                // property associated to an investment
                 _this.appService.showResults(error.msg, 'error', 7000);
             }
             else if (error.codeno === 462) {
@@ -5123,7 +5123,7 @@ var PropertiesTableComponent = /** @class */ (function () {
     PropertiesTableComponent.prototype.applyFilter = function (filterValue) {
         filterValue = filterValue.trim(); // Remove whitespace
         filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-        this.propertiesDataSource.filter = filterValue; //apply filter
+        this.propertiesDataSource.filter = filterValue; // apply filter
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -5131,15 +5131,15 @@ var PropertiesTableComponent = /** @class */ (function () {
     ], PropertiesTableComponent.prototype, "user", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Boolean)
+        __metadata("design:type", Object)
     ], PropertiesTableComponent.prototype, "showActions", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Boolean)
+        __metadata("design:type", Object)
     ], PropertiesTableComponent.prototype, "allowEdition", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Boolean)
+        __metadata("design:type", Object)
     ], PropertiesTableComponent.prototype, "loadJustUserProperties", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
@@ -7111,16 +7111,16 @@ var TeamsDashboardComponent = /** @class */ (function () {
     }
     TeamsDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Teams', url: null, selected: true }
         ]);
-        //get authUser from resolver
+        // get authUser from resolver
         this.route.data.subscribe(function (data) {
             _this.user = data.authUser;
         });
-        //generates a user source object from authUser from resolver
+        // generates a user source object from authUser from resolver
         var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (data) { return data.authUser; }));
         var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["switchMap"])(function (user) {
             _this.user = user;
@@ -7147,8 +7147,8 @@ var TeamsDashboardComponent = /** @class */ (function () {
         this.subscription.add(newSubscription);
     };
     TeamsDashboardComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
     /**
@@ -7157,7 +7157,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
      * @return { Observable<Team[]> }
      */
     TeamsDashboardComponent.prototype.getTeams$ = function () {
-        var methodTrace = this.constructor.name + " > getTeams$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getTeams$() > "; // for debugging
         this.teams = [];
         this.getTeamsServiceRunning = true;
         return this.teamsService.getTeams$(this.user.email);
@@ -7165,7 +7165,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
     TeamsDashboardComponent.prototype.openDeleteTeamDialog = function (index, team) {
         var _this = this;
         if (team === void 0) { team = null; }
-        var methodTrace = this.constructor.name + " > openDeleteTeamDialog() > "; //for debugging
+        var methodTrace = this.constructor.name + " > openDeleteTeamDialog() > "; // for debugging
         if (!team) {
             this.appService.consoleLog('error', methodTrace + " Team is required to delete.");
             return false;
@@ -7192,7 +7192,7 @@ var TeamsDashboardComponent = /** @class */ (function () {
     TeamsDashboardComponent.prototype.delete = function (index, team) {
         var _this = this;
         if (team === void 0) { team = null; }
-        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        var methodTrace = this.constructor.name + " > delete() > "; // for debugging
         this.teamActionRunning[index] = true;
         var newSubscription = this.teamsService.delete$(team.slug, this.user.email).subscribe(function (data) {
             if (data && data.removed > 0) {

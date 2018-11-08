@@ -31,7 +31,7 @@ export class InvestmentsService {
    * @return { Observable<any> } 
    */
   create$(postData: any = {}): Observable<any> {
-    let methodTrace = `${this.constructor.name} > create$() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > create$() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .pipe(
@@ -70,7 +70,7 @@ export class InvestmentsService {
       return of(null);
     }
 
-    let params = new HttpParams()
+    const params = new HttpParams()
         .set('id', id)
         .set('email', email);
 
@@ -87,10 +87,10 @@ export class InvestmentsService {
         
         let team: Team = null;
         if (investment.team) {
-          //fill team members
+          // fill team members
           let admin: User = null;
-          let members: User[] = [];
-          for (let member of investment.team.members) {
+          const members: User[] = [];
+          for (const member of investment.team.members) {
             const newMember = new User(member.name, member.email, member.gravatar);
             members.push(newMember);
             if (member.isAdmin) {
@@ -115,14 +115,14 @@ export class InvestmentsService {
           }
 
           if (propertyData.propertyType === PROPERTY_TYPES.HOUSE) {
-            //we share the createdBy of the investment because we know is the same
+            // we share the createdBy of the investment because we know is the same
             property = new House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
                 propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit, propertyData.dateListed, 
                 propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit,
                 propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, 
                 propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces,
                 propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate,
-                propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType)
+                propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
           }  
 
           result = new PropertyInvestment(investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, 
@@ -144,14 +144,14 @@ export class InvestmentsService {
    * @return { Observable<Investment[]> } 
    */
   getInvestments$(email: string): Observable<Investment[]> {
-    let methodTrace = `${this.constructor.name} > getInvestments$() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > getInvestments$() > `; // for debugging
 
     if (!email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
       return of([]);
     }
 
-    let params = new HttpParams().set('email', email);
+    const params = new HttpParams().set('email', email);
 
     const investmentsData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
         .pipe(
@@ -160,10 +160,10 @@ export class InvestmentsService {
         );
     
     return investmentsData$.pipe(switchMap((investmentsData) => {
-      let investments: Investment[] = [];
+      const investments: Investment[] = [];
 
       if (investmentsData && investmentsData instanceof Array) {
-        for (let item of investmentsData) {
+        for (const item of investmentsData) {
           const createdBy = new User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
           const team = item.team ? new Team(item.team.name, item.team.description, item.team.slug) : null;
 
@@ -180,14 +180,14 @@ export class InvestmentsService {
             }
             
             if (propertyData.propertyType === PROPERTY_TYPES.HOUSE) {
-              //we share the createdBy of the investment because we know is the same
+              // we share the createdBy of the investment because we know is the same
               property = new House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
                   propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit, propertyData.dateListed, 
                   propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit,
                   propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, 
                   propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces,
                   propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate,
-                  propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType)
+                  propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
             }  
 
             investments.push(new PropertyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, 
@@ -211,14 +211,14 @@ export class InvestmentsService {
    * @return { Observable<any> }
    */
   delete$(id: string, email: string): Observable<any> {
-    let methodTrace = `${this.constructor.name} > delete$() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > delete$() > `; // for debugging
 
     if (!id || !email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
       return Observable.throw(null);
     }
 
-    let params = new HttpParams().set('email', email);
+    const params = new HttpParams().set('email', email);
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } )
         .pipe(

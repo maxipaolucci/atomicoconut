@@ -17,7 +17,7 @@ const routes: Routes = [
         } 
       },
       { 
-        path : ':type/create/:id', //this happens just with properties
+        path : ':type/create/:id', // this happens just with properties
         component : InvestmentsEditComponent,
         resolve : {
           authUser : AuthResolver

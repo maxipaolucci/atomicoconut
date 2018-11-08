@@ -35,7 +35,7 @@ import { PropertyInvestmentComponent } from './components/property-investment/pr
     PropertyInvestmentComponent
   ],
   entryComponents: [
-    InvestmentSelectorDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
+    InvestmentSelectorDialogComponent // added as material doc suggest to allow AOT on this on the fly created class
   ],
   providers: [ InvestmentsService ]
 })

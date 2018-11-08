@@ -94,7 +94,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
     // combine user$ and id$ sources into one object and start listen to it for changes
     const newSubscription = user$.pipe(combineLatest(id$, (user, id) => {
-      return { user, propertyId : id }
+      return { user, propertyId : id };
     })).subscribe(data => {
       this.user = data.user;
       this.model.email = data.user.email;

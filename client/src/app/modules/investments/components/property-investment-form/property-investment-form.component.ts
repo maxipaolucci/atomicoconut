@@ -19,23 +19,23 @@ import { PropertySelectorDialogComponent } from '../../../properties/components/
 export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('editPropertyInvestmentForm') form;
-  @Input() defaultValues : any = null; //the default values of the component model  
-  @Input() user : User = null;
+  @Input() defaultValues: any = null; // the default values of the component model  
+  @Input() user: User = null;
   @Output() values: EventEmitter<any> = new EventEmitter();
-  model : any = {
+  model: any = {
     type : null,
     property : null,
-    propertyId : null, //just used here to retireve a property when the parent component set it. Don't use this value in the server, use the one in the property object instead
-    address : null, //just used for the ngmodel in the view. Don't use this value in the server, use the address in the property object instead
+    propertyId : null, // just used here to retireve a property when the parent component set it. Don't use this value in the server, use the one in the property object instead
+    address : null, // just used for the ngmodel in the view. Don't use this value in the server, use the address in the property object instead
     buyingPrice : null,
     buyingPriceUnit : null,
     buyingDate : null
-  }
-  subscription : Subscription = new Subscription();
-  getPropertyServiceRunning : boolean = false;
+  };
+  subscription: Subscription = new Subscription();
+  getPropertyServiceRunning = false;
 
-  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private appService : AppService, public dialog: MatDialog,
-      public utilService : UtilService, private propertiesService : PropertiesService, private router : Router) {
+  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private appService: AppService, public dialog: MatDialog,
+      public utilService: UtilService, private propertiesService: PropertiesService, private router: Router) {
     
     this.dateAdapter.setLocale('en-GB');
   }
@@ -47,32 +47,32 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     Object.assign(this.model, this.defaultValues);
     
     if (this.model.propertyId) {
-      //when creating from the property "invest action" or some component that shows properties an allow the creation of an investment of it
+      // when creating from the property "invest action" or some component that shows properties an allow the creation of an investment of it
       this.getProperty(this.model.propertyId);
     } else if (this.model.property) {
-      //when editing a property investment
+      // when editing a property investment
       this.model.address = this.model.property.address.description; 
     }
   }
 
   ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
     
-    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
-  onCurrencyUnitChange($event : MatSelectChange) {
+  onCurrencyUnitChange($event: MatSelectChange) {
     this.model[$event.source.id] = $event.value;
 
     this.emitValues();
   }
 
   ngAfterViewInit(): void {
-    //send data before touching any value
+    // send data before touching any value
     this.emitValues();
 
-    //after any event in the form we send updated data
+    // after any event in the form we send updated data
     const newSubscription = this.form.valueChanges.pipe(debounceTime(500)).subscribe(values => {
       this.emitValues();
     });
@@ -92,8 +92,8 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
    * Get a property from server based on the id provided
    * @param {string} id 
    */
-  getProperty(id : string) {
-    const methodTrace = `${this.constructor.name} > getProperty() > `; //for debugging
+  getProperty(id: string) {
+    const methodTrace = `${this.constructor.name} > getProperty() > `; // for debugging
     
     if (!id) {
       this.appService.showResults(`Invalid property ID`, 'error');
@@ -104,11 +104,11 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     this.getPropertyServiceRunning = true;
 
     const newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(
-      (property : Property) => {
+      (property: Property) => {
         console.log(1, property);
         this.setProperty(property);
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > `, error);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
@@ -126,9 +126,9 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     this.subscription.add(newSubscription);
   }
 
-  setProperty(property : Property){
+  setProperty(property: Property) {
     if (property.createdBy.email !== this.user.email) {
-      //we cannot create an investment of a property not created by me
+      // we cannot create an investment of a property not created by me
       this.appService.showResults(`Only the property creator (${property.createdBy.name}) is allowed to create an investment with this property.`, 'error');
       return this.router.navigate(['/properties']);
     } else {
@@ -159,10 +159,9 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
   }
 
   openPropertySelectionDialog() {
-    const methodTrace = `${this.constructor.name} > openPropertySelectionDialog() > `; //for debugging
-      
+    const methodTrace = `${this.constructor.name} > openPropertySelectionDialog() > `; // for debugging
     
-    let propertySelectorDialogRef = this.dialog.open(PropertySelectorDialogComponent, {
+    const propertySelectorDialogRef = this.dialog.open(PropertySelectorDialogComponent, {
       data: {
         title : 'Select a property',
         user : this.user

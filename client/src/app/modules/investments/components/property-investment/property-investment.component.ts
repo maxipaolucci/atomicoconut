@@ -62,7 +62,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
     const currencyRatesAndUser$ = this.usersService.user$.pipe(combineLatest(currencyRates$, 
       (user, currencyRates) => { 
         this.user = user;
-        return { user, currencyRates} 
+        return { user, currencyRates }; 
       }
     )); // (currency rates and user) source
     
@@ -190,7 +190,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
         }
       );
 
-      this.subscription.add(newSubscription)
+      this.subscription.add(newSubscription);
     } else {
       this.appService.showResults(`You are not logged into AtomiCoconut, you must login first.`, 'error');
       this.router.navigate(['/users/login']);

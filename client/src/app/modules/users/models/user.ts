@@ -3,15 +3,15 @@ import { AccountPersonal } from './account-personal';
 
 export class User {
 
-  name : string;
-  email : string;
-  avatar : string;
-  financialInfo : AccountFinance;
-  personalInfo : AccountPersonal;
-  currency : string;
+  name: string;
+  email: string;
+  avatar: string;
+  financialInfo: AccountFinance;
+  personalInfo: AccountPersonal;
+  currency: string;
 
-  constructor(name : string = '', email : string = '', avatar : string = '', financialInfo : AccountFinance = null, 
-      personalInfo : AccountPersonal = null, currency : string = 'USD') {
+  constructor(name: string = '', email: string = '', avatar: string = '', financialInfo: AccountFinance = null, 
+      personalInfo: AccountPersonal = null, currency: string = 'USD') {
     this.name = name;
     this.email = email;
     this.avatar = avatar;

@@ -110,7 +110,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
    * 
    * @return {Observable<any>} teams source
    */
-  getTeam$(slug : string): Observable<any> {
+  getTeam$(slug: string): Observable<any> {
     const methodTrace = `${this.constructor.name} > getTeam$() > `; // for debugging
 
     if (!slug) {
@@ -167,7 +167,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     // add slug and members to service payload
     this.model.slug = this.slug;
     this.model.members = []; // reset the members array
-    for (let member of this.team.members) {
+    for (const member of this.team.members) {
       this.model.members.push(member.email);
     }
 

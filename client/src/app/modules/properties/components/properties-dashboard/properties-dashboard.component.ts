@@ -12,15 +12,15 @@ import { Subscription } from 'rxjs';
 })
 export class PropertiesDashboardComponent implements OnInit, OnDestroy {
   
-  user : User = null;
-  subscription : Subscription = new Subscription();
+  user: User = null;
+  subscription: Subscription = new Subscription();
   
-  constructor(private route : ActivatedRoute, private mainNavigatorService : MainNavigatorService, 
-      private appService : AppService ) { }
+  constructor(private route: ActivatedRoute, private mainNavigatorService: MainNavigatorService, 
+      private appService: AppService ) { }
 
 
   ngOnInit() {
-    let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
@@ -29,16 +29,16 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
       { displayName: 'Calculators', url: '/calculators', selected: false }
     ]);
 
-    //get authUser from resolver
+    // get authUser from resolver
     this.route.data.subscribe((data: { authUser: User }) => {
       this.user = data.authUser;
     });
   }
 
   ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
