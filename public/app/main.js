@@ -2732,21 +2732,34 @@ var InvestmentsEditComponent = /** @class */ (function () {
         ]);
         // generates a user source object from authUser from resolver
         var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (data) { return data.authUser; }));
-        // generates an investment id source from id parameter in url
-        var id$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (params) { return params.get('id'); }));
+        // creates a params source from parameters in url useful for the rest of the code
+        var params$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (params) {
+            var type = params.get('type');
+            if (![_constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CURRENCY, _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CRYPTO, _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].PROPERTY].includes(type)) {
+                _this.appService.showResults('You must provide a valid investment type to continue.', 'error');
+                _this.router.navigate(['welcome']);
+            }
+            else {
+                _this.type = type;
+                _this.model.type = type;
+                _this.model.investmentData.type = type;
+            }
+            return { id: params.get('id') };
+        }));
         // combine user$ and id$ sources into one object and start listen to it for changes
-        var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["combineLatest"])(id$, function (user, id) {
+        var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["combineLatest"])(params$, function (user, urlParams) {
             _this.user = user;
+            _this.getTeams(); // don't need to wait for this
             var urlObject = _this.route.url.getValue();
             var investmentId = null;
             var propertyId = null;
             if (urlObject[0]['path'] === _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].PROPERTY && urlObject[1]['path'] === 'create') {
                 // we are creating a property investment coming from the property component
-                propertyId = id;
+                propertyId = urlParams.id;
             }
             else {
                 // we are editing an investment or creating a new one coming from the investment dashboard
-                investmentId = id;
+                investmentId = urlParams.id;
             }
             _this.model.email = user.email;
             _this.model.investmentAmountUnit = user.currency;
@@ -2770,50 +2783,51 @@ var InvestmentsEditComponent = /** @class */ (function () {
             return investmentId;
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["flatMap"])(function (investmentId) {
             if (investmentId) {
-                _this.getTeams(); // don't need to wait for this
                 return _this.getInvestment$(investmentId);
             }
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(null);
         })).subscribe(function (investment) {
-            _this.investment = investment;
-            // populate the model
-            _this.model.owner = investment.team ? 'team' : 'me';
-            _this.model.team = investment.team;
-            _this.getSelectedTeam(); // this is necesary to make the selectbox in ui set a team
-            _this.model.teamSlug = investment.team ? investment.team.slug : null;
-            _this.model.investmentDistribution = investment.investmentDistribution;
-            for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
-                var portion = _a[_i];
-                _this.model.membersPercentage[portion.email] = portion.percentage;
-            }
-            _this.model.loanAmount = investment.loanAmount;
-            _this.model.loanAmountUnit = investment.loanAmountUnit;
-            _this.model.investmentAmount = investment.investmentAmount;
-            _this.model.investmentAmountUnit = investment.investmentAmountUnit;
-            _this.model.type = investment.type;
-            if (investment instanceof _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__["CurrencyInvestment"]) {
-                _this.model.investmentData = {
-                    type: investment.type,
-                    unit: investment.unit,
-                    amount: investment.amount,
-                    buyingPrice: investment.buyingPrice,
-                    buyingPriceUnit: investment.buyingPriceUnit,
-                    buyingDate: investment.buyingDate
-                };
-            }
-            else if (investment instanceof _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
-                _this.model.investmentData = {
-                    type: investment.type,
-                    property: investment.property,
-                    address: investment.property.address,
-                    buyingPrice: investment.buyingPrice,
-                    buyingPriceUnit: investment.buyingPriceUnit,
-                    buyingDate: investment.buyingDate
-                };
-            }
-            _this.getInvestmentServiceRunning = false;
-            if (_this.form && !_this.formChangesSubscription) {
-                _this.subscribeFormValueChanges();
+            if (investment) {
+                _this.investment = investment;
+                // populate the model
+                _this.model.owner = investment.team ? 'team' : 'me';
+                _this.model.team = investment.team;
+                _this.setSelectedTeam(); // this is necesary to make the selectbox in ui set a team
+                _this.model.teamSlug = investment.team ? investment.team.slug : null;
+                _this.model.investmentDistribution = investment.investmentDistribution;
+                for (var _i = 0, _a = investment.investmentDistribution; _i < _a.length; _i++) {
+                    var portion = _a[_i];
+                    _this.model.membersPercentage[portion.email] = portion.percentage;
+                }
+                _this.model.loanAmount = investment.loanAmount;
+                _this.model.loanAmountUnit = investment.loanAmountUnit;
+                _this.model.investmentAmount = investment.investmentAmount;
+                _this.model.investmentAmountUnit = investment.investmentAmountUnit;
+                _this.model.type = investment.type;
+                if (investment instanceof _models_currencyInvestment__WEBPACK_IMPORTED_MODULE_9__["CurrencyInvestment"]) {
+                    _this.model.investmentData = {
+                        type: investment.type,
+                        unit: investment.unit,
+                        amount: investment.amount,
+                        buyingPrice: investment.buyingPrice,
+                        buyingPriceUnit: investment.buyingPriceUnit,
+                        buyingDate: investment.buyingDate
+                    };
+                }
+                else if (investment instanceof _models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
+                    _this.model.investmentData = {
+                        type: investment.type,
+                        property: investment.property,
+                        address: investment.property.address,
+                        buyingPrice: investment.buyingPrice,
+                        buyingPriceUnit: investment.buyingPriceUnit,
+                        buyingDate: investment.buyingDate
+                    };
+                }
+                _this.getInvestmentServiceRunning = false;
+                if (_this.form && !_this.formChangesSubscription) {
+                    _this.subscribeFormValueChanges();
+                }
             }
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
@@ -2830,18 +2844,6 @@ var InvestmentsEditComponent = /** @class */ (function () {
             _this.getInvestmentServiceRunning = false;
         });
         this.subscription.add(newSubscription);
-        // get TYPE parameter
-        this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (params) { return params.get('type'); })).subscribe(function (type) {
-            if (![_constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CURRENCY, _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].CRYPTO, _constants__WEBPACK_IMPORTED_MODULE_10__["INVESTMENTS_TYPES"].PROPERTY].includes(type)) {
-                _this.appService.showResults('You must provide a valid investment type to continue.', 'error');
-                _this.router.navigate(['welcome']);
-            }
-            else {
-                _this.type = type;
-                _this.model.type = type;
-                _this.model.investmentData.type = type;
-            }
-        });
     };
     InvestmentsEditComponent.prototype.ngAfterViewInit = function () {
         if (this.form && !this.formChangesSubscription) {
@@ -2943,12 +2945,7 @@ var InvestmentsEditComponent = /** @class */ (function () {
         var newSubscription = this.teamsService.getTeams$(this.user.email).subscribe(function (teams) {
             _this.teams = teams;
             _this.getTeamsServiceRunning = false;
-            if (teams.length) {
-                _this.getSelectedTeam();
-            }
-            else {
-                _this.appService.showResults("You are not member of any team yet!. Create a team if you want to split your investment with other people.", 'info');
-            }
+            _this.setSelectedTeam();
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
@@ -2964,12 +2961,13 @@ var InvestmentsEditComponent = /** @class */ (function () {
     /**
      * Get the selected team . This is going to works when teams and investment is here (so we are in edit mode) and the investment has a team selected
      */
-    InvestmentsEditComponent.prototype.getSelectedTeam = function () {
+    InvestmentsEditComponent.prototype.setSelectedTeam = function () {
         if (this.teams && this.teams.length && this.investment && this.investment.team) {
             for (var _i = 0, _a = this.teams; _i < _a.length; _i++) {
                 var team = _a[_i];
                 if (this.investment.team.slug === team.slug) {
                     this.model.team = team;
+                    break;
                 }
             }
         }

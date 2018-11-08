@@ -69,22 +69,36 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     // generates a user source object from authUser from resolver
     const user$ = this.route.data.pipe(map((data: { authUser: User }): User => data.authUser));
 
-    // generates an investment id source from id parameter in url
-    const id$ = this.route.paramMap.pipe(map((params: ParamMap): string => params.get('id')));
+    // creates a params source from parameters in url useful for the rest of the code
+    const params$ = this.route.paramMap.pipe(map((params: ParamMap): any => { 
+      const type : string = params.get('type');
+
+      if (![INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO, INVESTMENTS_TYPES.PROPERTY].includes(type)) {
+        this.appService.showResults('You must provide a valid investment type to continue.', 'error');
+        this.router.navigate(['welcome']);
+      } else {
+        this.type = type;
+        this.model.type = type;
+        this.model.investmentData.type = type;
+      }
+
+      return { id : params.get('id') }; 
+    }));
     
     // combine user$ and id$ sources into one object and start listen to it for changes
     const newSubscription = user$.pipe(
-      combineLatest(id$, (user: User, id: string): string => {
+      combineLatest(params$, (user: User, urlParams: any): string => {
         this.user = user;
+        this.getTeams(); // don't need to wait for this
         const urlObject = (<BehaviorSubject<any>>this.route.url).getValue(); 
         let investmentId: string = null;
         let propertyId: string = null;
         if (urlObject[0]['path'] === INVESTMENTS_TYPES.PROPERTY && urlObject[1]['path'] === 'create') {
           // we are creating a property investment coming from the property component
-          propertyId = id;
+          propertyId = urlParams.id;
         } else {
           // we are editing an investment or creating a new one coming from the investment dashboard
-          investmentId = id;
+          investmentId = urlParams.id;
         }
         
         this.model.email = user.email;
@@ -111,7 +125,6 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       }),
       flatMap((investmentId: string): Observable<Investment> => {
         if (investmentId) {
-          this.getTeams(); // don't need to wait for this
           return this.getInvestment$(investmentId);
         }
         
@@ -119,44 +132,47 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       })
     ).subscribe(
       (investment: Investment) => {
-        this.investment = investment;
-        // populate the model
-        this.model.owner = investment.team ? 'team' : 'me';
-        this.model.team = investment.team;
-        this.getSelectedTeam(); // this is necesary to make the selectbox in ui set a team
-        this.model.teamSlug = investment.team ? investment.team.slug : null;
-        this.model.investmentDistribution = investment.investmentDistribution;
-        for (const portion of investment.investmentDistribution) {
-          this.model.membersPercentage[portion.email] = portion.percentage;
-        }
-        this.model.loanAmount = investment.loanAmount;
-        this.model.loanAmountUnit = investment.loanAmountUnit;
-        this.model.investmentAmount = investment.investmentAmount;
-        this.model.investmentAmountUnit = investment.investmentAmountUnit;
-        this.model.type = investment.type;
-        if (investment instanceof CurrencyInvestment) {
-          this.model.investmentData = {
-            type : investment.type,
-            unit : investment.unit,
-            amount : investment.amount,
-            buyingPrice : investment.buyingPrice,
-            buyingPriceUnit : investment.buyingPriceUnit,
-            buyingDate : investment.buyingDate
-          };
-        } else if (investment instanceof PropertyInvestment) {
-          this.model.investmentData = {
-            type : investment.type,
-            property : investment.property,
-            address : investment.property.address,
-            buyingPrice : investment.buyingPrice,
-            buyingPriceUnit : investment.buyingPriceUnit,
-            buyingDate : investment.buyingDate
-          };
-        }
+        if (investment) {
+          this.investment = investment;
+          
+          // populate the model
+          this.model.owner = investment.team ? 'team' : 'me';
+          this.model.team = investment.team;
+          this.setSelectedTeam(); // this is necesary to make the selectbox in ui set a team
+          this.model.teamSlug = investment.team ? investment.team.slug : null;
+          this.model.investmentDistribution = investment.investmentDistribution;
+          for (const portion of investment.investmentDistribution) {
+            this.model.membersPercentage[portion.email] = portion.percentage;
+          }
+          this.model.loanAmount = investment.loanAmount;
+          this.model.loanAmountUnit = investment.loanAmountUnit;
+          this.model.investmentAmount = investment.investmentAmount;
+          this.model.investmentAmountUnit = investment.investmentAmountUnit;
+          this.model.type = investment.type;
+          if (investment instanceof CurrencyInvestment) {
+            this.model.investmentData = {
+              type : investment.type,
+              unit : investment.unit,
+              amount : investment.amount,
+              buyingPrice : investment.buyingPrice,
+              buyingPriceUnit : investment.buyingPriceUnit,
+              buyingDate : investment.buyingDate
+            };
+          } else if (investment instanceof PropertyInvestment) {
+            this.model.investmentData = {
+              type : investment.type,
+              property : investment.property,
+              address : investment.property.address,
+              buyingPrice : investment.buyingPrice,
+              buyingPriceUnit : investment.buyingPriceUnit,
+              buyingDate : investment.buyingDate
+            };
+          }
 
-        this.getInvestmentServiceRunning = false;
-        if (this.form && !this.formChangesSubscription) {
-          this.subscribeFormValueChanges();
+          this.getInvestmentServiceRunning = false;
+          if (this.form && !this.formChangesSubscription) {
+            this.subscribeFormValueChanges();
+          }
         }
       },
       (error: any) => {
@@ -175,18 +191,6 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     );
 
     this.subscription.add(newSubscription);
-
-    // get TYPE parameter
-    this.route.paramMap.pipe(map((params: ParamMap) => params.get('type'))).subscribe(type => {
-      if (![INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO, INVESTMENTS_TYPES.PROPERTY].includes(type)) {
-        this.appService.showResults('You must provide a valid investment type to continue.', 'error');
-        this.router.navigate(['welcome']);
-      } else {
-        this.type = type;
-        this.model.type = type;
-        this.model.investmentData.type = type;
-      }
-    });
   }
 
   ngAfterViewInit(): void {
@@ -310,11 +314,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         this.teams = teams;
         this.getTeamsServiceRunning = false;
         
-        if (teams.length) {
-          this.getSelectedTeam();
-        } else {
-          this.appService.showResults(`You are not member of any team yet!. Create a team if you want to split your investment with other people.`, 'info');
-        }
+        this.setSelectedTeam();
       },
       (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
@@ -334,11 +334,12 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   /**
    * Get the selected team . This is going to works when teams and investment is here (so we are in edit mode) and the investment has a team selected
    */
-  getSelectedTeam() {
+  setSelectedTeam() {
     if (this.teams && this.teams.length && this.investment && this.investment.team) {
       for (const team of this.teams) {
         if (this.investment.team.slug === team.slug) {
           this.model.team = team;
+          break;
         }
       }
     }
