@@ -7763,7 +7763,7 @@ var TeamsService = /** @class */ (function () {
      */
     TeamsService.prototype.create$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > create$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > create$() > "; // for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
     };
@@ -7775,7 +7775,7 @@ var TeamsService = /** @class */ (function () {
      */
     TeamsService.prototype.update$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > update$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > update$() > "; // for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
     };
@@ -7786,7 +7786,7 @@ var TeamsService = /** @class */ (function () {
      * @return { Observable<any> }
      */
     TeamsService.prototype.getMyTeamBySlug$ = function (email, slug) {
-        var methodTrace = this.constructor.name + " > getMyTeamBySlug$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getMyTeamBySlug$() > "; // for debugging
         if (!email || !slug) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(null);
@@ -7805,7 +7805,7 @@ var TeamsService = /** @class */ (function () {
      */
     TeamsService.prototype.getTeams$ = function (email) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getTeams$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getTeams$() > "; // for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])([]);
@@ -7845,7 +7845,7 @@ var TeamsService = /** @class */ (function () {
      * @return { Observable<any> }
      */
     TeamsService.prototype.delete$ = function (slug, email) {
-        var methodTrace = this.constructor.name + " > delete$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > delete$() > "; // for debugging
         if (!slug || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return rxjs__WEBPACK_IMPORTED_MODULE_6__["Observable"].throw(null);
