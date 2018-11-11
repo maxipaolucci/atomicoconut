@@ -903,7 +903,7 @@ var AuthGuard = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  404 Page not found\r\n</p>\r\n"
+module.exports = "<p>\n  404 Page not found\n</p>\n"
 
 /***/ }),
 
@@ -5654,7 +5654,6 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var PropertiesService = /** @class */ (function () {
     function PropertiesService(http, appService) {
         this.http = http;
@@ -5668,7 +5667,7 @@ var PropertiesService = /** @class */ (function () {
      */
     PropertiesService.prototype.create = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > create() > "; //for debugging
+        var methodTrace = this.constructor.name + " > create() > "; // for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
@@ -5678,7 +5677,7 @@ var PropertiesService = /** @class */ (function () {
      */
     PropertiesService.prototype.update = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > update() > "; //for debugging
+        var methodTrace = this.constructor.name + " > update() > "; // for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
@@ -5688,7 +5687,7 @@ var PropertiesService = /** @class */ (function () {
      */
     PropertiesService.prototype.getPropertyById = function (email, id) {
         var _this = this;
-        var methodTrace = this.constructor.name + " > getPropertyById() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getPropertyById() > "; // for debugging
         if (!id || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(null);
@@ -5724,7 +5723,7 @@ var PropertiesService = /** @class */ (function () {
     PropertiesService.prototype.getProperties = function (email, justUserProperties) {
         var _this = this;
         if (justUserProperties === void 0) { justUserProperties = false; }
-        var methodTrace = this.constructor.name + " > getProperties() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getProperties() > "; // for debugging
         if (!email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])([]);
@@ -5759,7 +5758,7 @@ var PropertiesService = /** @class */ (function () {
      * @param {string} email . The current user email.
      */
     PropertiesService.prototype.delete = function (id, email) {
-        var methodTrace = this.constructor.name + " > delete() > "; //for debugging
+        var methodTrace = this.constructor.name + " > delete() > "; // for debugging
         if (!id || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
             return rxjs__WEBPACK_IMPORTED_MODULE_4__["Observable"].throw(null);
@@ -6390,7 +6389,7 @@ var MainNavigatorService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n  <mat-progress-bar \r\n      class=\"progress-bar\"\r\n      [ngClass]=\"extraClasses\"\r\n      [color]=\"color\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  <p *ngIf=\"message\">{{ message }}</p>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\n  <mat-progress-bar \n      class=\"progress-bar\"\n      [ngClass]=\"extraClasses\"\n      [color]=\"color\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n  <p *ngIf=\"message\">{{ message }}</p>\n</div>"
 
 /***/ }),
 
@@ -7275,9 +7274,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_models_user__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../users/models/user */ "./src/app/modules/users/models/user.ts");
 /* harmony import */ var _teams_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../teams.service */ "./src/app/modules/teams/teams.service.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
-/* harmony import */ var _models_team__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../models/team */ "./src/app/modules/teams/models/team.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7287,7 +7285,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -7318,7 +7315,7 @@ var TeamsEditComponent = /** @class */ (function () {
             members: []
         };
         this.slug = null;
-        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_9__["Subscription"]();
+        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_8__["Subscription"]();
     }
     TeamsEditComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -7328,13 +7325,13 @@ var TeamsEditComponent = /** @class */ (function () {
             { displayName: 'Teams', url: '/teams', selected: false }
         ]);
         // generates a user source object from authUser from resolver
-        var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (data) { return data.authUser; }));
+        var user$ = this.route.data.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function (data) { return data.authUser; }));
         // generates an investment id source from id parameter in url
-        var slug$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (params) { return params.get('slug'); }));
+        var slug$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function (params) { return params.get('slug'); }));
         // combine user$ and id$ sources into one object and start listen to it for changes
-        this.subscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(slug$, function (user, slug) {
+        this.subscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["combineLatest"])(slug$, function (user, slug) {
             return { user: user, teamSlug: slug };
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["switchMap"])(function (data) {
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["switchMap"])(function (data) {
             _this.user = data.user;
             _this.model.email = data.user.email;
             _this.editTeamServiceRunning = false;
@@ -7344,7 +7341,7 @@ var TeamsEditComponent = /** @class */ (function () {
                 _this.slug = null;
                 _this.editMode = false;
                 _this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected: true });
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["of"])(null);
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_8__["of"])(null);
             }
             else {
                 if (_this.slug) {
@@ -7359,12 +7356,16 @@ var TeamsEditComponent = /** @class */ (function () {
                 _this.editMode = true;
                 return _this.getTeam$(data.teamSlug); // get data
             }
-        })).subscribe(function (data) {
-            if (data && data.slug) {
-                _this.populateTeam(data);
+        })).subscribe(function (team) {
+            if (team) {
+                // we are editing a team
+                _this.team = team;
+                // populate the model
+                _this.model.name = _this.team.name;
+                _this.model.description = _this.team.description;
             }
             else {
-                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+                // we are creating a team, do nothing
             }
             _this.getTeamServiceRunning = false;
         }, function (error) {
@@ -7386,14 +7387,14 @@ var TeamsEditComponent = /** @class */ (function () {
      * Get a team observable from server based on the slug provided
      * @param {string} slug
      *
-     * @return {Observable<any>} teams source
+     * @return {Observable<Team>} teams source
      */
     TeamsEditComponent.prototype.getTeam$ = function (slug) {
         var methodTrace = this.constructor.name + " > getTeam$() > "; // for debugging
         if (!slug) {
             this.appService.showResults("Invalid team ID", 'error');
             this.appService.consoleLog('error', methodTrace + " Slug parameter must be provided, but was: ", slug);
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["of"])(false);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_8__["of"])(null);
         }
         this.getTeamServiceRunning = true;
         return this.teamsService.getMyTeamBySlug$(this.user.email, slug);
@@ -7408,10 +7409,10 @@ var TeamsEditComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.editTeamServiceRunning = true;
         // call the team create service
-        var newSubscription = this.teamsService.create$(this.model).subscribe(function (data) {
-            if (data && data.slug) {
-                _this.appService.showResults("Team " + data.name + " successfully created!", 'success');
-                _this.router.navigate(['/teams/edit', data.slug]);
+        var newSubscription = this.teamsService.create$(this.model).subscribe(function (newTeam) {
+            if (newTeam && newTeam.slug) {
+                _this.appService.showResults("Team " + newTeam.name + " successfully created!", 'success');
+                _this.router.navigate(['/teams/edit', newTeam.slug]);
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
@@ -7439,41 +7440,17 @@ var TeamsEditComponent = /** @class */ (function () {
         }
         // TODO check the new members are not duplicated, especially the admin
         // call the team update service
-        var newSubscription = this.teamsService.update$(this.model).subscribe(function (data) {
-            if (data && data.team && data.team.slug) {
-                var messages = [
-                    {
-                        message: "Team \"" + data.team.name + "\" successfully updated!",
-                        type: 'success'
-                    }
-                ];
-                if (data.usersNotRegistered.length) {
-                    // handle not registered users
-                    var message = {
-                        message: "The following emails added to the team are not registered users in AtomiCoconut: ",
-                        duration: 8000
-                    };
-                    for (var _i = 0, _a = data.usersNotRegistered; _i < _a.length; _i++) {
-                        var email = _a[_i];
-                        message.message += "\"" + email + "\", ";
-                    }
-                    message.message = message.message.slice(0, -2); // remove last comma char
-                    message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
-                    messages.push(message);
-                }
-                _this.appService.showManyResults(messages);
-                // TODO redirect to the new team slug name if changed
-                if (_this.slug !== data.team.slug) {
-                    // this means that the team name was update and therefore the slug too
-                    _this.router.navigate(['/teams/edit', data.team.slug]); // go home 
-                }
-                else {
-                    _this.populateTeam(data.team);
-                    _this.editTeamServiceRunning = false;
-                }
+        var newSubscription = this.teamsService.update$(this.model).subscribe(function (team) {
+            if (_this.slug !== team.slug) {
+                // this means that the team name was update and therefore the slug too
+                _this.router.navigate(['/teams/edit', team.slug]); // go home 
             }
             else {
-                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+                // create team
+                _this.team = team;
+                // populate the model
+                _this.model.name = _this.team.name;
+                _this.model.description = _this.team.description;
                 _this.editTeamServiceRunning = false;
             }
         }, function (error) {
@@ -7487,26 +7464,6 @@ var TeamsEditComponent = /** @class */ (function () {
             _this.editTeamServiceRunning = false;
         });
         this.subscription.add(newSubscription);
-    };
-    /**
-     * Populates the team and model with a team object coming from a service
-     * @param {*} team . Team object retrieved from a service
-     */
-    TeamsEditComponent.prototype.populateTeam = function (team) {
-        // populate admin
-        var admin = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](team.admin.name, team.admin.email, team.admin.gravatar);
-        // populate members
-        var members = [];
-        for (var _i = 0, _a = team.members; _i < _a.length; _i++) {
-            var member = _a[_i];
-            var newMember = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](member.name, member.email, member.gravatar);
-            members.push(newMember);
-        }
-        // create team
-        this.team = new _models_team__WEBPACK_IMPORTED_MODULE_8__["Team"](team.name, team.description || null, team.slug, admin, members);
-        // populate the model
-        this.model.name = this.team.name;
-        this.model.description = this.team.description;
     };
     TeamsEditComponent.prototype.openAddPersonDialog = function () {
         var _this = this;
@@ -7759,33 +7716,65 @@ var TeamsService = /** @class */ (function () {
      * Server call to Create a new team in the system
      * @param postData
      *
-     * @return { Observable<any> }
+     * @return { Observable<Team> }
      */
     TeamsService.prototype.create$ = function (postData) {
+        var _this = this;
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > create$() > "; // for debugging
-        return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
+        return this.http.post(this.serverHost + "/create", postData, { headers: this.headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["flatMap"])(function (data) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_this.populateTeam(data));
+        }));
     };
     /**
      * Server call to Update a team in the system
      * @param postData
      *
-     * @return { Observable<any> }
+     * @return { Observable<Team> }
      */
     TeamsService.prototype.update$ = function (postData) {
+        var _this = this;
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > update$() > "; // for debugging
-        return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
+        return this.http.post(this.serverHost + "/update", postData, { headers: this.headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["flatMap"])(function (data) {
+            if (data && data.team && data.team.slug) {
+                var messages = [
+                    {
+                        message: "Team \"" + data.team.name + "\" successfully updated!",
+                        type: 'success'
+                    }
+                ];
+                if (data.usersNotRegistered.length) {
+                    // handle not registered users
+                    var message = {
+                        message: "The following emails added to the team are not registered users in AtomiCoconut: ",
+                        duration: 8000
+                    };
+                    for (var _i = 0, _a = data.usersNotRegistered; _i < _a.length; _i++) {
+                        var email = _a[_i];
+                        message.message += "\"" + email + "\", ";
+                    }
+                    message.message = message.message.slice(0, -2); // remove last comma char
+                    message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
+                    messages.push(message);
+                }
+                _this.appService.showManyResults(messages);
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_this.populateTeam(data.team));
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(null);
+        }));
     };
     /**
      * Server call to Get a team from the server based on its slug
      * @param {string} slug . The team slug
      *
-     * @return { Observable<any> }
+     * @return { Observable<Team> }
      */
     TeamsService.prototype.getMyTeamBySlug$ = function (email, slug) {
+        var _this = this;
         var methodTrace = this.constructor.name + " > getMyTeamBySlug$() > "; // for debugging
         if (!email || !slug) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
@@ -7794,14 +7783,15 @@ var TeamsService = /** @class */ (function () {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]()
             .set('email', email)
             .set('slug', slug);
-        return this.http.get(this.serverHost + "/getMyTeamBySlug", { params: params })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
+        return this.http.get(this.serverHost + "/getMyTeamBySlug", { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["flatMap"])(function (data) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_this.populateTeam(data));
+        }));
     };
     /**
      * Server call to Get all the teams for the current user from the server
      * @param {string} slug . The team slug
      *
-     * @return { Observable<any> }
+     * @return { Observable<Team[]> }
      */
     TeamsService.prototype.getTeams$ = function (email) {
         var _this = this;
@@ -7813,22 +7803,12 @@ var TeamsService = /** @class */ (function () {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]().set('email', email);
         var teamsData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError));
-        return teamsData$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (teamsData) {
+        return teamsData$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["flatMap"])(function (teamsData) {
             var teams = [];
             if (teamsData && teamsData instanceof Array) {
                 for (var _i = 0, teamsData_1 = teamsData; _i < teamsData_1.length; _i++) {
                     var item = teamsData_1[_i];
-                    var admin = null;
-                    var members = [];
-                    for (var _a = 0, _b = item.members; _a < _b.length; _a++) {
-                        var member = _b[_a];
-                        var newMember = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](member.name, member.email, member.gravatar);
-                        members.push(newMember);
-                        if (member.isAdmin) {
-                            admin = newMember;
-                        }
-                    }
-                    teams.push(new _models_team__WEBPACK_IMPORTED_MODULE_4__["Team"](item.name, item.description || null, item.slug, admin, members));
+                    teams.push(_this.populateTeam(item));
                 }
             }
             else {
@@ -7836,6 +7816,32 @@ var TeamsService = /** @class */ (function () {
             }
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(teams);
         }));
+    };
+    /**
+     * Populates a team from an object from server
+     * @param { any } teamData
+     *
+     * @return { Team }
+     */
+    TeamsService.prototype.populateTeam = function (teamData) {
+        var methodTrace = this.constructor.name + " > populateTeam() > "; // for debugging
+        if (teamData && teamData.slug) {
+            // populate admin
+            var admin = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](teamData.admin.name, teamData.admin.email, teamData.admin.gravatar);
+            // populate members
+            var members = [];
+            for (var _i = 0, _a = teamData.members; _i < _a.length; _i++) {
+                var member = _a[_i];
+                var newMember = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](member.name, member.email, member.gravatar);
+                members.push(newMember);
+            }
+            // create team
+            return new _models_team__WEBPACK_IMPORTED_MODULE_4__["Team"](teamData.name, teamData.description || null, teamData.slug, admin, members);
+        }
+        else {
+            this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+        }
+        return null;
     };
     /**
      * Server call to Get all the teams for the current user from the server

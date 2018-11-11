@@ -80,13 +80,17 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
           return this.getTeam$(data.teamSlug); // get data
         }
       })
-    ).subscribe((data: any) => {
-      if (data && data.slug) {
-        this.populateTeam(data);
+    ).subscribe((team: Team) => {
+      if (team) {
+        // we are editing a team
+        this.team = team;
+        // populate the model
+        this.model.name = this.team.name;
+        this.model.description = this.team.description;  
       } else {
-        this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        // we are creating a team, do nothing
       }
-
+      
       this.getTeamServiceRunning = false;
     },
     (error: any) => {
@@ -108,15 +112,15 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
    * Get a team observable from server based on the slug provided
    * @param {string} slug 
    * 
-   * @return {Observable<any>} teams source
+   * @return {Observable<Team>} teams source
    */
-  getTeam$(slug: string): Observable<any> {
+  getTeam$(slug: string): Observable<Team> {
     const methodTrace = `${this.constructor.name} > getTeam$() > `; // for debugging
 
     if (!slug) {
       this.appService.showResults(`Invalid team ID`, 'error');
       this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
-      return of(false);
+      return of(null);
     }
 
     this.getTeamServiceRunning = true;
@@ -137,10 +141,10 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     this.editTeamServiceRunning = true;
     // call the team create service
     const newSubscription = this.teamsService.create$(this.model).subscribe(
-      (data: any) => {
-        if (data && data.slug) {
-          this.appService.showResults(`Team ${data.name} successfully created!`, 'success');
-          this.router.navigate(['/teams/edit', data.slug]);
+      (newTeam: Team) => {
+        if (newTeam && newTeam.slug) {
+          this.appService.showResults(`Team ${newTeam.name} successfully created!`, 'success');
+          this.router.navigate(['/teams/edit', newTeam.slug]);
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
           this.editTeamServiceRunning = false;
@@ -175,44 +179,18 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
 
     // call the team update service
     const newSubscription = this.teamsService.update$(this.model).subscribe(
-      (data: any) => {
-        if (data && data.team && data.team.slug) {
-          const messages: any[] = [
-            {
-              message : `Team "${data.team.name}" successfully updated!`,
-              type : 'success'
-            }
-          ];
-
-          if (data.usersNotRegistered.length) {
-            // handle not registered users
-            const message = {
-              message : `The following emails added to the team are not registered users in AtomiCoconut: `,
-              duration : 8000
-            };
-            
-            for (const email of data.usersNotRegistered) {
-              message.message += `"${email}", `;
-            }
-
-            message.message = message.message.slice(0, -2); // remove last comma char
-            message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
-
-            messages.push(message);
-          }
-
-          this.appService.showManyResults(messages);
-          // TODO redirect to the new team slug name if changed
-          if (this.slug !== data.team.slug) {
-            // this means that the team name was update and therefore the slug too
-            this.router.navigate(['/teams/edit', data.team.slug]); // go home 
-          } else {
-            this.populateTeam(data.team);
-            this.editTeamServiceRunning = false;  
-          }
+      (team: Team) => {
+          
+        if (this.slug !== team.slug) {
+          // this means that the team name was update and therefore the slug too
+          this.router.navigate(['/teams/edit', team.slug]); // go home 
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-          this.editTeamServiceRunning = false;
+          // create team
+          this.team = team;
+          // populate the model
+          this.model.name = this.team.name;
+          this.model.description = this.team.description;
+          this.editTeamServiceRunning = false;  
         }
       },
       (error: any) => {
@@ -228,26 +206,6 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     );
 
     this.subscription.add(newSubscription);
-  }
-
-  /**
-   * Populates the team and model with a team object coming from a service
-   * @param {*} team . Team object retrieved from a service
-   */
-  populateTeam(team: any) {
-    // populate admin
-    const admin = new User(team.admin.name, team.admin.email, team.admin.gravatar);
-    // populate members
-    const members = [];
-    for (const member of team.members) {
-      const newMember = new User(member.name, member.email, member.gravatar);
-      members.push(newMember);
-    }
-    // create team
-    this.team = new Team(team.name, team.description || null, team.slug, admin, members);
-    // populate the model
-    this.model.name = this.team.name;
-    this.model.description = this.team.description;
   }
 
   openAddPersonDialog() {

@@ -2,31 +2,29 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AppService } from '../../app.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Property } from './models/property';
 import { Response } from '../../models/response';
 import { User } from '../users/models/user';
 import { PROPERTY_TYPES } from '../../constants';
 import { House } from './models/house';
-import { of, from } from 'rxjs';
 import { Address } from './models/address';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { pipe } from '@angular/core/src/render3/pipe';
 
 @Injectable()
 export class PropertiesService {
 
-  private serverHost : string = environment.apiHost + '/api/properties';
+  private serverHost: string = environment.apiHost + '/api/properties';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(private http : HttpClient, private appService : AppService) {}
+  constructor(private http: HttpClient, private appService: AppService) {}
 
   /**
    * Server call to Create a new property in the system 
    * @param postData 
    */
-  create(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > create() > `; //for debugging
+  create(postData: any = {}): Observable<any> {
+    const methodTrace = `${this.constructor.name} > create() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .pipe(
@@ -39,8 +37,8 @@ export class PropertiesService {
    * Server call to Update an investment in the system 
    * @param postData 
    */
-  update(postData : any = {}) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > update() > `; //for debugging
+  update(postData: any = {}): Observable<any> {
+    const methodTrace = `${this.constructor.name} > update() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .pipe(
@@ -53,15 +51,15 @@ export class PropertiesService {
    * Server call to Get a property from the server based on its ID
    * @param {string} id . The property id
    */
-  getPropertyById(email : string, id : string) : Observable<Property> {
-    let methodTrace = `${this.constructor.name} > getPropertyById() > `; //for debugging
+  getPropertyById(email: string, id: string): Observable<Property> {
+    const methodTrace = `${this.constructor.name} > getPropertyById() > `; // for debugging
 
     if (!id || !email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
       return of(null);
     }
 
-    let params = new HttpParams().set('email', email);
+    const params = new HttpParams().set('email', email);
 
     const data$ = this.http.get<Response>(`${this.serverHost}/${id}`, { params })
         .pipe(
@@ -70,7 +68,7 @@ export class PropertiesService {
         );
 
     return data$.pipe(switchMap((data) => {
-      let result : Property = null;
+      let result: Property = null;
       if (data && data._id) {
         const createdBy = new User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
         let address = new Address();
@@ -102,15 +100,15 @@ export class PropertiesService {
    * @param {boolean} justUserProperties . If false it get properties created by the user with the email provided plus properties from investments where the user has a portion of it.
    *                                       If true it just bring back the properties created by the user with the email provided.
    */
-  getProperties(email : string, justUserProperties : boolean = false) : Observable<Property[]> {
-    let methodTrace = `${this.constructor.name} > getProperties() > `; //for debugging
+  getProperties(email: string, justUserProperties: boolean = false): Observable<Property[]> {
+    const methodTrace = `${this.constructor.name} > getProperties() > `; // for debugging
 
     if (!email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
       return of([]);
     }
 
-    let params = new HttpParams().set('email', email).set('justUserProperties', justUserProperties + '');
+    const params = new HttpParams().set('email', email).set('justUserProperties', justUserProperties + '');
 
     const responseData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
         .pipe(
@@ -119,10 +117,10 @@ export class PropertiesService {
         );
     
     return responseData$.pipe(switchMap((responseData) => {
-      let properties : Property[] = [];
+      const properties: Property[] = [];
 
       if (responseData && responseData instanceof Array) {
-        for (let data of responseData) {
+        for (const data of responseData) {
           const createdBy = new User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
           let address = new Address();
           if (data.location) {
@@ -136,7 +134,7 @@ export class PropertiesService {
                 data.insurance, data.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, 
                 data.description, data.otherCost, data.otherCostUnit, data.notes, data.capitalGrowth, data.bedrooms, data.bathrooms, data.parkingSpaces,
                 data.fenced, data.rented, data.rentPrice, data.rentPriceUnit, data.rentPricePeriod, data.rentAppraisalDone, data.vacancy, data.bodyCorporate,
-                data.bodyCorporateUnit, data.utilitiesCost, data.utilitiesCostUnit, data.agent, data.managed, data.managerRate, data.buildingType, data.titleType))
+                data.bodyCorporateUnit, data.utilitiesCost, data.utilitiesCostUnit, data.agent, data.managed, data.managerRate, data.buildingType, data.titleType));
           }
         }
       } else {
@@ -152,15 +150,15 @@ export class PropertiesService {
    * @param {string} id . The record id
    * @param {string} email . The current user email.
    */
-  delete(id : string, email : string) : Observable<any> {
-    let methodTrace = `${this.constructor.name} > delete() > `; //for debugging
+  delete(id: string, email: string): Observable<any> {
+    const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
 
     if (!id || !email) {
       this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
       return Observable.throw(null);
     }
 
-    let params = new HttpParams().set('email', email);
+    const params = new HttpParams().set('email', email);
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } )
         .pipe(

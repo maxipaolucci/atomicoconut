@@ -15,7 +15,7 @@ export class AppService {
    * Extract data from a server response
    * @param res
    */
-  public extractData(res: Response) : any {
+  public extractData(res: Response): any {
     if (res.codeno === 200 && res.status === 'success') {
       return res.data;
     } else {
@@ -41,8 +41,8 @@ export class AppService {
    * 
    * @return {MatSnackBar} . The snackbar ref
    */
-  showResults(message : string, type : string = 'info', duration : number = 5000) : any {
-    let snackBarRef = this.snackBar.openFromComponent(SnackbarSimpleComponent, {
+  showResults(message: string, type: string = 'info', duration: number = 5000): any {
+    const snackBarRef = this.snackBar.openFromComponent(SnackbarSimpleComponent, {
       data : {
         type,
         message
@@ -61,7 +61,7 @@ export class AppService {
    * 
    * @return {MatSnackBar} . The snackbar Ref
    */
-  showManyResults(messages : any[], index : number = 0) {
+  showManyResults(messages: any[], index: number = 0) {
     let snackBarRef = null;
     if (index < messages.length) {
       snackBarRef = this.showResults(messages[index].message, messages[index].type, messages[index].duration);
@@ -80,7 +80,7 @@ export class AppService {
    * @param message . The message to show
    * @param params . Any extra parameters to list in the log.
    */
-  consoleLog(type : 'log' | 'debug' | 'warn' | 'info' | 'error', message : string, ...params) {
+  consoleLog(type: 'log' | 'debug' | 'warn' | 'info' | 'error', message: string, ...params) {
     if (environment.showLogs) {
       console[type](message, params);
     }

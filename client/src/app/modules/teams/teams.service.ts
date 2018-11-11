@@ -7,7 +7,7 @@ import { User } from '../users/models/user';
 import { Observable } from 'rxjs';
 import { Response } from '../../models/response';
 import { of } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, flatMap } from 'rxjs/operators';
 
 
 @Injectable()
@@ -22,41 +22,76 @@ export class TeamsService {
    * Server call to Create a new team in the system 
    * @param postData 
    * 
-   * @return { Observable<any> }
+   * @return { Observable<Team> }
    */
-  create$(postData: any = {}): Observable<any> {
+  create$(postData: any = {}): Observable<Team> {
     const methodTrace = `${this.constructor.name} > create$() > `; // for debugging
 
-    return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
-        .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
-        );
+    return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers }).pipe(
+      map(this.appService.extractData),
+      catchError(this.appService.handleError),
+      flatMap((data: any): Observable<Team> => {
+        return of(this.populateTeam(data));
+      })
+    );
   } 
   
   /**
    * Server call to Update a team in the system 
    * @param postData
    * 
-   * @return { Observable<any> } 
+   * @return { Observable<Team> } 
    */
-  update$(postData: any = {}): Observable<any> {
+  update$(postData: any = {}): Observable<Team> {
     const methodTrace = `${this.constructor.name} > update$() > `; // for debugging
 
-    return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
-        .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
-        );
-  } 
+    return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers }).pipe(
+      map(this.appService.extractData),
+      catchError(this.appService.handleError),
+      flatMap((data: any): Observable<Team> => {
+        if (data && data.team && data.team.slug) {
+          const messages: any[] = [
+            {
+              message : `Team "${data.team.name}" successfully updated!`,
+              type : 'success'
+            }
+          ];
+
+          if (data.usersNotRegistered.length) {
+            // handle not registered users
+            const message = {
+              message : `The following emails added to the team are not registered users in AtomiCoconut: `,
+              duration : 8000
+            };
+            
+            for (const email of data.usersNotRegistered) {
+              message.message += `"${email}", `;
+            }
+
+            message.message = message.message.slice(0, -2); // remove last comma char
+            message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
+
+            messages.push(message);
+          }
+
+          this.appService.showManyResults(messages);
+          return of(this.populateTeam(data.team));
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        }
+
+        return of(null);
+      })
+    );
+  }
 
   /**
    * Server call to Get a team from the server based on its slug
    * @param {string} slug . The team slug
    * 
-   * @return { Observable<any> }
+   * @return { Observable<Team> }
    */
-  getMyTeamBySlug$(email: string, slug: string): Observable<any> {
+  getMyTeamBySlug$(email: string, slug: string): Observable<Team> {
     const methodTrace = `${this.constructor.name} > getMyTeamBySlug$() > `; // for debugging
 
     if (!email || !slug) {
@@ -68,20 +103,22 @@ export class TeamsService {
         .set('email', email)
         .set('slug', slug);
 
-    return this.http.get<Response>(`${this.serverHost}/getMyTeamBySlug`, { params })
-        .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
-        );
+    return this.http.get<Response>(`${this.serverHost}/getMyTeamBySlug`, { params }).pipe(
+      map(this.appService.extractData),
+      catchError(this.appService.handleError),
+      flatMap((data: any): Observable<Team> => {
+        return of(this.populateTeam(data));
+      })
+    );
   }
 
   /**
    * Server call to Get all the teams for the current user from the server
    * @param {string} slug . The team slug
    * 
-   * @return { Observable<any> }
+   * @return { Observable<Team[]> }
    */
-  getTeams$(email: string): Observable<any> {
+  getTeams$(email: string): Observable<Team[]> {
     const methodTrace = `${this.constructor.name} > getTeams$() > `; // for debugging
 
     if (!email) {
@@ -97,21 +134,12 @@ export class TeamsService {
           catchError(this.appService.handleError)
         );
     
-    return teamsData$.pipe(switchMap((teamsData) => {
+    return teamsData$.pipe(flatMap((teamsData): Observable<Team[]> => {
       const teams: Team[] = [];
 
       if (teamsData && teamsData instanceof Array) {
         for (const item of teamsData) {
-          let admin = null;
-          const members = [];
-          for (const member of item.members) {
-            const newMember = new User(member.name, member.email, member.gravatar);
-            members.push(newMember);
-            if (member.isAdmin) {
-              admin = newMember;
-            }
-          }
-          teams.push(new Team(item.name, item.description || null, item.slug, admin, members));
+          teams.push(this.populateTeam(item));
         }
       } else {
         this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
@@ -119,6 +147,33 @@ export class TeamsService {
 
       return of(teams);
     }));
+  }
+
+  /**
+   * Populates a team from an object from server
+   * @param { any } teamData
+   * 
+   * @return { Team } 
+   */
+  populateTeam(teamData: any): Team {
+    const methodTrace = `${this.constructor.name} > populateTeam() > `; // for debugging
+
+    if (teamData && teamData.slug) {
+      // populate admin
+      const admin = new User(teamData.admin.name, teamData.admin.email, teamData.admin.gravatar);
+      // populate members
+      const members = [];
+      for (const member of teamData.members) {
+        const newMember = new User(member.name, member.email, member.gravatar);
+        members.push(newMember);
+      }
+      // create team
+      return new Team(teamData.name, teamData.description || null, teamData.slug, admin, members);
+    } else {
+      this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+    }
+
+    return null;
   }
 
   /**
