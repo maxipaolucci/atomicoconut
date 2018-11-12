@@ -100,7 +100,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
 
     this.getPropertiesServiceRunning = true;
     
-    const newSubscription = this.propertiesService.getProperties(this.user.email, this.loadJustUserProperties).subscribe(
+    const newSubscription = this.propertiesService.getProperties$(this.user.email, this.loadJustUserProperties).subscribe(
       (properties: Property[]) => {
         this.properties = properties;
         this.propertiesDataSource.data = properties;
@@ -170,7 +170,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
 
     this.propertyTableActionRunning = true;
 
-    const newSuscription = this.propertiesService.delete(propertyToDelete.id, this.user.email).subscribe(
+    const newSuscription = this.propertiesService.delete$(propertyToDelete.id, this.user.email).subscribe(
       (data: any) => {
         if (data && data.removed > 0) {
           if (!this.propertiesDataSource.filter.length) {

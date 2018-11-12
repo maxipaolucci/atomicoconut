@@ -103,7 +103,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
 
     this.getPropertyServiceRunning = true;
 
-    const newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(
+    const newSubscription = this.propertiesService.getPropertyById$(this.user.email, id).subscribe(
       (property: Property) => {
         console.log(1, property);
         this.setProperty(property);

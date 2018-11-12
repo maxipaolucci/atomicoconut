@@ -3212,7 +3212,7 @@ var PropertyInvestmentFormComponent = /** @class */ (function () {
             this.router.navigate(['/properties']);
         }
         this.getPropertyServiceRunning = true;
-        var newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(function (property) {
+        var newSubscription = this.propertiesService.getPropertyById$(this.user.email, id).subscribe(function (property) {
             console.log(1, property);
             _this.setProperty(property);
         }, function (error) {
@@ -4717,7 +4717,7 @@ var PropertiesEditComponent = /** @class */ (function () {
             return false;
         }
         this.getPropertyServiceRunning = true;
-        var newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(function (property) {
+        var newSubscription = this.propertiesService.getPropertyById$(this.user.email, id).subscribe(function (property) {
             _this.property = property;
             // populate the model
             _this.model.address = property.address;
@@ -4798,7 +4798,7 @@ var PropertiesEditComponent = /** @class */ (function () {
         this.model.createdOn = new Date(Date.now());
         this.model.updatedOn = new Date(Date.now());
         // call the investment create service
-        var newSubscription = this.propertiesService.create(this.model).subscribe(function (data) {
+        var newSubscription = this.propertiesService.create$(this.model).subscribe(function (data) {
             if (data && data.id && data.type) {
                 _this.appService.showResults("Property successfully created!", 'success');
                 _this.router.navigate(['/properties/', data.type, 'edit', data.id]);
@@ -4822,7 +4822,7 @@ var PropertiesEditComponent = /** @class */ (function () {
         this.editPropertyServiceRunning = true;
         this.model.updatedOn = new Date(Date.now());
         // call the investment create service
-        var newSubscription = this.propertiesService.update(this.model).subscribe(function (data) {
+        var newSubscription = this.propertiesService.update$(this.model).subscribe(function (data) {
             if (data && data.id && data.type) {
                 _this.appService.showResults("Property successfully updated!", 'success');
             }
@@ -5016,7 +5016,7 @@ var PropertiesTableComponent = /** @class */ (function () {
         this.propertiesDataSource.data = [];
         this.propertiesDataSource.paginator = this.propertiesTablePaginator;
         this.getPropertiesServiceRunning = true;
-        var newSubscription = this.propertiesService.getProperties(this.user.email, this.loadJustUserProperties).subscribe(function (properties) {
+        var newSubscription = this.propertiesService.getProperties$(this.user.email, this.loadJustUserProperties).subscribe(function (properties) {
             _this.properties = properties;
             _this.propertiesDataSource.data = properties;
             _this.propertiesDataSource.paginator = _this.propertiesTablePaginator;
@@ -5076,7 +5076,7 @@ var PropertiesTableComponent = /** @class */ (function () {
         if (propertyToDelete === void 0) { propertyToDelete = null; }
         var methodTrace = this.constructor.name + " > delete() > "; // for debugging
         this.propertyTableActionRunning = true;
-        var newSuscription = this.propertiesService.delete(propertyToDelete.id, this.user.email).subscribe(function (data) {
+        var newSuscription = this.propertiesService.delete$(propertyToDelete.id, this.user.email).subscribe(function (data) {
             if (data && data.removed > 0) {
                 if (!_this.propertiesDataSource.filter.length) {
                     // data is not filtered, proceed with the easy way
@@ -5664,18 +5664,21 @@ var PropertiesService = /** @class */ (function () {
     /**
      * Server call to Create a new property in the system
      * @param postData
+     *
+     * @return { Observable<any> }
      */
-    PropertiesService.prototype.create = function (postData) {
+    PropertiesService.prototype.create$ = function (postData) {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > create() > "; // for debugging
-        return this.http.post(this.serverHost + "/create", postData, { headers: this.headers })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
+        return this.http.post(this.serverHost + "/create", postData, { headers: this.headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Update an investment in the system
      * @param postData
+     *
+     * @return { Observable<Property> }
      */
-    PropertiesService.prototype.update = function (postData) {
+    PropertiesService.prototype.update$ = function (postData) {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > update() > "; // for debugging
         return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
@@ -5684,8 +5687,10 @@ var PropertiesService = /** @class */ (function () {
     /**
      * Server call to Get a property from the server based on its ID
      * @param {string} id . The property id
+     *
+     * @return { Observable<Property> }
      */
-    PropertiesService.prototype.getPropertyById = function (email, id) {
+    PropertiesService.prototype.getPropertyById$ = function (email, id) {
         var _this = this;
         var methodTrace = this.constructor.name + " > getPropertyById() > "; // for debugging
         if (!id || !email) {
@@ -5695,23 +5700,32 @@ var PropertiesService = /** @class */ (function () {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('email', email);
         var data$ = this.http.get(this.serverHost + "/" + id, { params: params })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
-        return data$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["switchMap"])(function (data) {
-            var result = null;
-            if (data && data._id) {
-                var createdBy = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
-                var address = new _models_address__WEBPACK_IMPORTED_MODULE_8__["Address"]();
-                if (data.location) {
-                    address = new _models_address__WEBPACK_IMPORTED_MODULE_8__["Address"](data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
-                }
-                if (data.propertyType === _constants__WEBPACK_IMPORTED_MODULE_6__["PROPERTY_TYPES"].HOUSE) {
-                    result = new _models_house__WEBPACK_IMPORTED_MODULE_7__["House"](data._id, data.propertyType, address, createdBy, data.propertyTypeData.landArea, data.propertyTypeData.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.purchasePrice, data.purchasePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit, data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces, data.propertyTypeData.fenced, data.propertyTypeData.rented, data.propertyTypeData.rentPrice, data.propertyTypeData.rentPriceUnit, data.propertyTypeData.rentPricePeriod, data.propertyTypeData.rentAppraisalDone, data.propertyTypeData.vacancy, data.propertyTypeData.bodyCorporate, data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
-                }
-            }
-            else {
-                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
-            }
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(result);
+        return data$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["flatMap"])(function (data) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(_this.populate(data));
         }));
+    };
+    /**
+     * Populates a property from an object from server
+     * @param { any } data
+     *
+     * @return { Property }
+     */
+    PropertiesService.prototype.populate = function (data) {
+        var methodTrace = this.constructor.name + " > populateTeam() > "; // for debugging
+        if (data && data._id) {
+            var createdBy = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
+            var address = new _models_address__WEBPACK_IMPORTED_MODULE_8__["Address"]();
+            if (data.location) {
+                address = new _models_address__WEBPACK_IMPORTED_MODULE_8__["Address"](data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
+            }
+            if (data.propertyType === _constants__WEBPACK_IMPORTED_MODULE_6__["PROPERTY_TYPES"].HOUSE) {
+                return new _models_house__WEBPACK_IMPORTED_MODULE_7__["House"](data._id, data.propertyType, address, createdBy, data.propertyTypeData.landArea, data.propertyTypeData.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.purchasePrice, data.purchasePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit, data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces, data.propertyTypeData.fenced, data.propertyTypeData.rented, data.propertyTypeData.rentPrice, data.propertyTypeData.rentPriceUnit, data.propertyTypeData.rentPricePeriod, data.propertyTypeData.rentAppraisalDone, data.propertyTypeData.vacancy, data.propertyTypeData.bodyCorporate, data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
+            }
+        }
+        else {
+            this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+        }
+        return null;
     };
     /**
      * Server call to Get all the properties for the current user from the server.
@@ -5719,8 +5733,10 @@ var PropertiesService = /** @class */ (function () {
      * @param {string} email . The user email
      * @param {boolean} justUserProperties . If false it get properties created by the user with the email provided plus properties from investments where the user has a portion of it.
      *                                       If true it just bring back the properties created by the user with the email provided.
+     *
+     * @return { Observable<Property[]> }
      */
-    PropertiesService.prototype.getProperties = function (email, justUserProperties) {
+    PropertiesService.prototype.getProperties$ = function (email, justUserProperties) {
         var _this = this;
         if (justUserProperties === void 0) { justUserProperties = false; }
         var methodTrace = this.constructor.name + " > getProperties() > "; // for debugging
@@ -5731,19 +5747,12 @@ var PropertiesService = /** @class */ (function () {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('email', email).set('justUserProperties', justUserProperties + '');
         var responseData$ = this.http.get(this.serverHost + "/getAll", { params: params })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
-        return responseData$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["switchMap"])(function (responseData) {
+        return responseData$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["flatMap"])(function (responseData) {
             var properties = [];
             if (responseData && responseData instanceof Array) {
                 for (var _i = 0, responseData_1 = responseData; _i < responseData_1.length; _i++) {
                     var data = responseData_1[_i];
-                    var createdBy = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
-                    var address = new _models_address__WEBPACK_IMPORTED_MODULE_8__["Address"]();
-                    if (data.location) {
-                        address = new _models_address__WEBPACK_IMPORTED_MODULE_8__["Address"](data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
-                    }
-                    if (data.propertyType === _constants__WEBPACK_IMPORTED_MODULE_6__["PROPERTY_TYPES"].HOUSE) {
-                        properties.push(new _models_house__WEBPACK_IMPORTED_MODULE_7__["House"](data._id, data.propertyType, address, createdBy, data.landArea, data.floorArea, data.askingPrice, data.askingPriceUnit, data.offerPrice, data.offerPriceUnit, data.walkAwayPrice, data.walkAwayPriceUnit, data.purchasePrice, data.purchasePriceUnit, data.dateListed, data.reasonForSelling, data.marketValue, data.marketValueUnit, data.registeredValue, data.registeredValueUnit, data.rates, data.ratesUnit, data.insurance, data.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, data.description, data.otherCost, data.otherCostUnit, data.notes, data.capitalGrowth, data.bedrooms, data.bathrooms, data.parkingSpaces, data.fenced, data.rented, data.rentPrice, data.rentPriceUnit, data.rentPricePeriod, data.rentAppraisalDone, data.vacancy, data.bodyCorporate, data.bodyCorporateUnit, data.utilitiesCost, data.utilitiesCostUnit, data.agent, data.managed, data.managerRate, data.buildingType, data.titleType));
-                    }
+                    properties.push(_this.populate(data));
                 }
             }
             else {
@@ -5756,8 +5765,11 @@ var PropertiesService = /** @class */ (function () {
      * Server call to delete a property from the system
      * @param {string} id . The record id
      * @param {string} email . The current user email.
+     *
+     * @return { any }
+     *
      */
-    PropertiesService.prototype.delete = function (id, email) {
+    PropertiesService.prototype.delete$ = function (id, email) {
         var methodTrace = this.constructor.name + " > delete() > "; // for debugging
         if (!id || !email) {
             this.appService.consoleLog('error', methodTrace + " Required parameters missing.");
@@ -7723,7 +7735,7 @@ var TeamsService = /** @class */ (function () {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > create$() > "; // for debugging
         return this.http.post(this.serverHost + "/create", postData, { headers: this.headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["flatMap"])(function (data) {
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_this.populateTeam(data));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_this.populate(data));
         }));
     };
     /**
@@ -7759,7 +7771,7 @@ var TeamsService = /** @class */ (function () {
                     messages.push(message);
                 }
                 _this.appService.showManyResults(messages);
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_this.populateTeam(data.team));
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_this.populate(data.team));
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
@@ -7784,7 +7796,7 @@ var TeamsService = /** @class */ (function () {
             .set('email', email)
             .set('slug', slug);
         return this.http.get(this.serverHost + "/getMyTeamBySlug", { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["catchError"])(this.appService.handleError), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["flatMap"])(function (data) {
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_this.populateTeam(data));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(_this.populate(data));
         }));
     };
     /**
@@ -7808,7 +7820,7 @@ var TeamsService = /** @class */ (function () {
             if (teamsData && teamsData instanceof Array) {
                 for (var _i = 0, teamsData_1 = teamsData; _i < teamsData_1.length; _i++) {
                     var item = teamsData_1[_i];
-                    teams.push(_this.populateTeam(item));
+                    teams.push(_this.populate(item));
                 }
             }
             else {
@@ -7823,8 +7835,8 @@ var TeamsService = /** @class */ (function () {
      *
      * @return { Team }
      */
-    TeamsService.prototype.populateTeam = function (teamData) {
-        var methodTrace = this.constructor.name + " > populateTeam() > "; // for debugging
+    TeamsService.prototype.populate = function (teamData) {
+        var methodTrace = this.constructor.name + " > populate() > "; // for debugging
         if (teamData && teamData.slug) {
             // populate admin
             var admin = new _users_models_user__WEBPACK_IMPORTED_MODULE_5__["User"](teamData.admin.name, teamData.admin.email, teamData.admin.gravatar);

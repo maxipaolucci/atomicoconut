@@ -154,7 +154,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
     this.getPropertyServiceRunning = true;
 
-    const newSubscription = this.propertiesService.getPropertyById(this.user.email, id).subscribe(
+    const newSubscription = this.propertiesService.getPropertyById$(this.user.email, id).subscribe(
       (property: Property) => {
         this.property = property;
         // populate the model
@@ -242,7 +242,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.model.createdOn = new Date(Date.now());
     this.model.updatedOn = new Date(Date.now());
     // call the investment create service
-    const newSubscription = this.propertiesService.create(this.model).subscribe(
+    const newSubscription = this.propertiesService.create$(this.model).subscribe(
       (data: any) => {
         if (data && data.id && data.type) {
           this.appService.showResults(`Property successfully created!`, 'success');
@@ -272,7 +272,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
     this.model.updatedOn = new Date(Date.now());
     // call the investment create service
-    const newSubscription = this.propertiesService.update(this.model).subscribe(
+    const newSubscription = this.propertiesService.update$(this.model).subscribe(
       (data: any) => {
         if (data && data.id && data.type) {
           this.appService.showResults(`Property successfully updated!`, 'success');

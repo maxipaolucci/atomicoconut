@@ -31,7 +31,7 @@ export class TeamsService {
       map(this.appService.extractData),
       catchError(this.appService.handleError),
       flatMap((data: any): Observable<Team> => {
-        return of(this.populateTeam(data));
+        return of(this.populate(data));
       })
     );
   } 
@@ -75,7 +75,7 @@ export class TeamsService {
           }
 
           this.appService.showManyResults(messages);
-          return of(this.populateTeam(data.team));
+          return of(this.populate(data.team));
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
@@ -107,7 +107,7 @@ export class TeamsService {
       map(this.appService.extractData),
       catchError(this.appService.handleError),
       flatMap((data: any): Observable<Team> => {
-        return of(this.populateTeam(data));
+        return of(this.populate(data));
       })
     );
   }
@@ -139,7 +139,7 @@ export class TeamsService {
 
       if (teamsData && teamsData instanceof Array) {
         for (const item of teamsData) {
-          teams.push(this.populateTeam(item));
+          teams.push(this.populate(item));
         }
       } else {
         this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
@@ -155,8 +155,8 @@ export class TeamsService {
    * 
    * @return { Team } 
    */
-  populateTeam(teamData: any): Team {
-    const methodTrace = `${this.constructor.name} > populateTeam() > `; // for debugging
+  populate(teamData: any): Team {
+    const methodTrace = `${this.constructor.name} > populate() > `; // for debugging
 
     if (teamData && teamData.slug) {
       // populate admin
