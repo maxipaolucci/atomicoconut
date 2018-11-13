@@ -111,7 +111,7 @@ exports.updateAccountPersonalInfo = async (req, res) => {
             //search for the user and add the personal info id
             console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'User', 'user', user._id)}`);
             user = await User.findOneAndUpdate(
-                { _id : req.user._id },
+                { _id : user._id },
                 { $set : { personalInfo } },
                 { new : true, runValidators : true, context : 'query' }
             );
@@ -121,7 +121,7 @@ exports.updateAccountPersonalInfo = async (req, res) => {
                 status : 'success', 
                 codeno : 200,
                 msg : getMessage('message', 1020, null, false, user.email),
-                data : null
+                data : getUserDataObject(user, { personalInfo: 'true' })
             });
         } else {
             console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'PersonalInfo')}`);
@@ -141,7 +141,7 @@ exports.updateAccountPersonalInfo = async (req, res) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1028, null, false, 'PersonalInfo'),
-        data : null
+        data : getUserDataObject(user, { personalInfo: 'true' })
     });
 };
 

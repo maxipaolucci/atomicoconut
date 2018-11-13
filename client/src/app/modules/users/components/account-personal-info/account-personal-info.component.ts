@@ -13,13 +13,13 @@ import { UtilService } from '../../../../util.service';
 })
 export class AccountPersonalInfoComponent implements OnInit {
 
-  @Input() user : User;
-  model : any = { birthday : null, email : null };
-  startAt : Date = new Date(1990, 0, 1);
-  accountPersonalServiceRunning : boolean = false;
+  @Input() user: User;
+  model: any = { birthday : null, email : null };
+  startAt: Date = new Date(1990, 0, 1);
+  accountPersonalServiceRunning = false;
 
-  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private usersService : UsersService, private appService : AppService, 
-        public utilService : UtilService) {
+  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private usersService: UsersService, private appService: AppService, 
+        public utilService: UtilService) {
     this.dateAdapter.setLocale('en-GB');
   }
 
@@ -36,25 +36,19 @@ export class AccountPersonalInfoComponent implements OnInit {
   }
 
   onSubmit() {
-    const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
     this.accountPersonalServiceRunning = true;
-    //call the account service
+    // call the account service
     this.usersService.updatePersonalInfo$(this.model).subscribe(
-      (data : any) => {
-        if (data === null) {
-          let user = this.usersService.getUser();
-          user.personalInfo = new AccountPersonal(this.model.birthday);
-          this.usersService.setUser(user);
-
+      (user: User) => {
+        if (user) {
           this.appService.showResults(`Your personal information was successfully updated!.`, 'success');
-        } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`)
         }
 
         this.accountPersonalServiceRunning = false;
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');

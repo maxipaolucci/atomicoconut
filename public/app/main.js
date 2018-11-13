@@ -903,7 +903,7 @@ var AuthGuard = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  404 Page not found\n</p>\n"
+module.exports = "<p>\r\n  404 Page not found\r\n</p>\r\n"
 
 /***/ }),
 
@@ -4328,7 +4328,7 @@ var HousesEditComponent = /** @class */ (function () {
         this.appService = appService;
         this.utilService = utilService;
         this.defaultValues = null; // the default values of the component model
-        this.defaultCurrencyUnit = 'USD'; //the default currency unit
+        this.defaultCurrencyUnit = 'USD'; // the default currency unit
         this.values = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.model = {
             buildingType: null,
@@ -4410,7 +4410,7 @@ var HousesEditComponent = /** @class */ (function () {
     ], HousesEditComponent.prototype, "defaultValues", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
+        __metadata("design:type", Object)
     ], HousesEditComponent.prototype, "defaultCurrencyUnit", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
@@ -4652,6 +4652,7 @@ var PropertiesEditComponent = /** @class */ (function () {
     }
     PropertiesEditComponent.prototype.ngOnInit = function () {
         var _this = this;
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Investments', url: '/investments', selected: false },
@@ -4663,9 +4664,9 @@ var PropertiesEditComponent = /** @class */ (function () {
         var id$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["map"])(function (params) { return params.get('id'); }));
         // combine user$ and id$ sources into one object and start listen to it for changes
         var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["combineLatest"])(id$, function (user, id) {
+            _this.user = user;
             return { user: user, propertyId: id };
-        })).subscribe(function (data) {
-            _this.user = data.user;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_11__["flatMap"])(function (data) {
             _this.model.email = data.user.email;
             _this.model.askingPriceUnit = _this.model.offerPriceUnit = _this.model.walkAwayPriceUnit =
                 _this.model.purchasePriceUnit = _this.model.marketValueUnit = _this.model.renovationCostUnit =
@@ -4678,14 +4679,34 @@ var PropertiesEditComponent = /** @class */ (function () {
                 _this.id = null;
                 _this.editMode = false;
                 _this.mainNavigatorService.appendLink({ displayName: 'Create Property', url: '', selected: true });
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(null);
             }
             else {
                 _this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected: true });
                 // we are editing an existing property
                 _this.id = data.propertyId;
                 _this.editMode = true;
-                _this.getProperty(data.propertyId); // get data
+                _this.getPropertyServiceRunning = true;
+                return _this.propertiesService.getPropertyById$(_this.user.email, data.propertyId);
             }
+        })).subscribe(function (property) {
+            if (property) {
+                _this.populateModel(property);
+            }
+            _this.getPropertyServiceRunning = false;
+        }, function (error) {
+            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > ", error);
+            if (error.codeno === 400) {
+                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
+            }
+            else if (error.codeno === 461 || error.codeno === 462) {
+                _this.appService.showResults(error.msg, 'error');
+                _this.router.navigate(['/welcome']);
+            }
+            else {
+                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
+            }
+            _this.getPropertyServiceRunning = false;
         });
         this.subscription.add(newSubscription);
         // get TYPE parameter
@@ -4705,91 +4726,67 @@ var PropertiesEditComponent = /** @class */ (function () {
         this.subscription.unsubscribe();
     };
     /**
-     * Get a property from server based on the id provided
-     * @param {string} id
+     * Populates the model with the property as param
+     * @param { Property } property
      */
-    PropertiesEditComponent.prototype.getProperty = function (id) {
-        var _this = this;
-        var methodTrace = this.constructor.name + " > getProperty() > "; // for debugging
-        if (!id) {
-            this.appService.showResults("Invalid property ID", 'error');
-            this.appService.consoleLog('error', methodTrace + " ID parameter must be provided, but was: ", id);
-            return false;
+    PropertiesEditComponent.prototype.populateModel = function (property) {
+        var methodTrace = this.constructor.name + " > populateModel() > "; // for debugging
+        this.property = property;
+        // populate the model
+        this.model.address = property.address;
+        this.model.askingPrice = property.askingPrice;
+        this.model.askingPriceUnit = property.askingPriceUnit;
+        this.model.offerPrice = property.offerPrice;
+        this.model.offerPriceUnit = property.offerPriceUnit;
+        this.model.walkAwayPrice = property.walkAwayPrice;
+        this.model.walkAwayPriceUnit = property.walkAwayPriceUnit;
+        this.model.purchasePrice = property.purchasePrice;
+        this.model.purchasePriceUnit = property.purchasePriceUnit;
+        this.model.dateListed = property.dateListed;
+        this.model.reasonForSelling = property.reasonForSelling;
+        this.model.marketValue = property.marketValue;
+        this.model.marketValueUnit = property.marketValueUnit;
+        this.model.renovationCost = property.renovationCost;
+        this.model.renovationCostUnit = property.renovationCostUnit;
+        this.model.maintenanceCost = property.maintenanceCost;
+        this.model.maintenanceCostUnit = property.maintenanceCostUnit;
+        this.model.description = property.description;
+        this.model.otherCost = property.otherCost;
+        this.model.otherCostUnit = property.otherCostUnit;
+        this.model.notes = property.notes;
+        this.model.type = property.type;
+        if (property instanceof _models_house__WEBPACK_IMPORTED_MODULE_7__["House"]) {
+            this.model.propertyTypeData = {
+                buildingType: property.buildingType,
+                titleType: property.titleType,
+                landArea: property.landArea,
+                floorArea: property.floorArea,
+                registeredValue: property.registeredValue,
+                registeredValueUnit: property.registeredValueUnit,
+                rates: property.rates,
+                ratesUnit: property.ratesUnit,
+                insurance: property.insurance,
+                insuranceUnit: property.insuranceUnit,
+                capitalGrowth: property.capitalGrowth,
+                bedrooms: property.bedrooms,
+                bathrooms: property.bathrooms,
+                parkingSpaces: property.parkingSpaces,
+                fenced: property.fenced,
+                rented: property.rented,
+                rentPrice: property.rentPrice,
+                rentPriceUnit: property.rentPriceUnit,
+                rentPricePeriod: property.rentPricePeriod,
+                rentAppraisalDone: property.rentAppraisalDone,
+                vacancy: property.vacancy,
+                bodyCorporate: property.bodyCorporate,
+                bodyCorporateUnit: property.bodyCorporateUnit,
+                utilitiesCost: property.utilitiesCost,
+                utilitiesCostUnit: property.utilitiesCostUnit,
+                managed: property.managed,
+                managerRate: property.managerRate,
+                agent: property.agent
+            };
         }
-        this.getPropertyServiceRunning = true;
-        var newSubscription = this.propertiesService.getPropertyById$(this.user.email, id).subscribe(function (property) {
-            _this.property = property;
-            // populate the model
-            _this.model.address = property.address;
-            _this.model.askingPrice = property.askingPrice;
-            _this.model.askingPriceUnit = property.askingPriceUnit;
-            _this.model.offerPrice = property.offerPrice;
-            _this.model.offerPriceUnit = property.offerPriceUnit;
-            _this.model.walkAwayPrice = property.walkAwayPrice;
-            _this.model.walkAwayPriceUnit = property.walkAwayPriceUnit;
-            _this.model.purchasePrice = property.purchasePrice;
-            _this.model.purchasePriceUnit = property.purchasePriceUnit;
-            _this.model.dateListed = property.dateListed;
-            _this.model.reasonForSelling = property.reasonForSelling;
-            _this.model.marketValue = property.marketValue;
-            _this.model.marketValueUnit = property.marketValueUnit;
-            _this.model.renovationCost = property.renovationCost;
-            _this.model.renovationCostUnit = property.renovationCostUnit;
-            _this.model.maintenanceCost = property.maintenanceCost;
-            _this.model.maintenanceCostUnit = property.maintenanceCostUnit;
-            _this.model.description = property.description;
-            _this.model.otherCost = property.otherCost;
-            _this.model.otherCostUnit = property.otherCostUnit;
-            _this.model.notes = property.notes;
-            _this.model.type = property.type;
-            if (property instanceof _models_house__WEBPACK_IMPORTED_MODULE_7__["House"]) {
-                _this.model.propertyTypeData = {
-                    buildingType: property.buildingType,
-                    titleType: property.titleType,
-                    landArea: property.landArea,
-                    floorArea: property.floorArea,
-                    registeredValue: property.registeredValue,
-                    registeredValueUnit: property.registeredValueUnit,
-                    rates: property.rates,
-                    ratesUnit: property.ratesUnit,
-                    insurance: property.insurance,
-                    insuranceUnit: property.insuranceUnit,
-                    capitalGrowth: property.capitalGrowth,
-                    bedrooms: property.bedrooms,
-                    bathrooms: property.bathrooms,
-                    parkingSpaces: property.parkingSpaces,
-                    fenced: property.fenced,
-                    rented: property.rented,
-                    rentPrice: property.rentPrice,
-                    rentPriceUnit: property.rentPriceUnit,
-                    rentPricePeriod: property.rentPricePeriod,
-                    rentAppraisalDone: property.rentAppraisalDone,
-                    vacancy: property.vacancy,
-                    bodyCorporate: property.bodyCorporate,
-                    bodyCorporateUnit: property.bodyCorporateUnit,
-                    utilitiesCost: property.utilitiesCost,
-                    utilitiesCostUnit: property.utilitiesCostUnit,
-                    managed: property.managed,
-                    managerRate: property.managerRate,
-                    agent: property.agent
-                };
-            }
-            _this.getPropertyServiceRunning = false;
-        }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > ", error);
-            if (error.codeno === 400) {
-                _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
-            }
-            else if (error.codeno === 461 || error.codeno === 462) {
-                _this.appService.showResults(error.msg, 'error');
-                _this.router.navigate(['/welcome']);
-            }
-            else {
-                _this.appService.showResults("There was an error with this service and the information provided.", 'error');
-            }
-            _this.getPropertyServiceRunning = false;
-        });
-        this.subscription.add(newSubscription);
     };
     PropertiesEditComponent.prototype.onSubmit = function () {
         var _this = this;
@@ -5681,8 +5678,7 @@ var PropertiesService = /** @class */ (function () {
     PropertiesService.prototype.update$ = function (postData) {
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > update() > "; // for debugging
-        return this.http.post(this.serverHost + "/update", postData, { headers: this.headers })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
+        return this.http.post(this.serverHost + "/update", postData, { headers: this.headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to Get a property from the server based on its ID
@@ -5698,11 +5694,9 @@ var PropertiesService = /** @class */ (function () {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(null);
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('email', email);
-        var data$ = this.http.get(this.serverHost + "/" + id, { params: params })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
-        return data$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["flatMap"])(function (data) {
+        return this.http.get(this.serverHost + "/" + id, { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["flatMap"])(function (data) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(_this.populate(data));
-        }));
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     /**
      * Populates a property from an object from server
@@ -5745,9 +5739,7 @@ var PropertiesService = /** @class */ (function () {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])([]);
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('email', email).set('justUserProperties', justUserProperties + '');
-        var responseData$ = this.http.get(this.serverHost + "/getAll", { params: params })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
-        return responseData$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["flatMap"])(function (responseData) {
+        return this.http.get(this.serverHost + "/getAll", { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["flatMap"])(function (responseData) {
             var properties = [];
             if (responseData && responseData instanceof Array) {
                 for (var _i = 0, responseData_1 = responseData; _i < responseData_1.length; _i++) {
@@ -5759,7 +5751,7 @@ var PropertiesService = /** @class */ (function () {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(properties);
-        }));
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to delete a property from the system
@@ -5776,8 +5768,7 @@ var PropertiesService = /** @class */ (function () {
             return rxjs__WEBPACK_IMPORTED_MODULE_4__["Observable"].throw(null);
         }
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set('email', email);
-        return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, params: params })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
+        return this.http.delete(this.serverHost + "/delete/" + id, { headers: this.headers, params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["catchError"])(this.appService.handleError));
     };
     PropertiesService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -6401,7 +6392,7 @@ var MainNavigatorService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\n  <mat-progress-bar \n      class=\"progress-bar\"\n      [ngClass]=\"extraClasses\"\n      [color]=\"color\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n  <p *ngIf=\"message\">{{ message }}</p>\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n  <mat-progress-bar \r\n      class=\"progress-bar\"\r\n      [ngClass]=\"extraClasses\"\r\n      [color]=\"color\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  <p *ngIf=\"message\">{{ message }}</p>\r\n</div>"
 
 /***/ }),
 
@@ -8052,10 +8043,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/user */ "./src/app/modules/users/models/user.ts");
-/* harmony import */ var _models_account_personal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../models/account-personal */ "./src/app/modules/users/models/account-personal.ts");
-/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
-/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../util.service */ "./src/app/util.service.ts");
+/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../util.service */ "./src/app/util.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8065,7 +8055,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -8094,18 +8083,12 @@ var AccountPersonalInfoComponent = /** @class */ (function () {
     };
     AccountPersonalInfoComponent.prototype.onSubmit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.accountPersonalServiceRunning = true;
-        //call the account service
-        this.usersService.updatePersonalInfo$(this.model).subscribe(function (data) {
-            if (data === null) {
-                var user = _this.usersService.getUser();
-                user.personalInfo = new _models_account_personal__WEBPACK_IMPORTED_MODULE_3__["AccountPersonal"](_this.model.birthday);
-                _this.usersService.setUser(user);
+        // call the account service
+        this.usersService.updatePersonalInfo$(this.model).subscribe(function (user) {
+            if (user) {
                 _this.appService.showResults("Your personal information was successfully updated!.", 'success');
-            }
-            else {
-                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
             _this.accountPersonalServiceRunning = false;
         }, function (error) {
@@ -8129,8 +8112,8 @@ var AccountPersonalInfoComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./account-personal-info.component.html */ "./src/app/modules/users/components/account-personal-info/account-personal-info.component.html"),
             styles: [__webpack_require__(/*! ./account-personal-info.component.scss */ "./src/app/modules/users/components/account-personal-info/account-personal-info.component.scss")]
         }),
-        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_1__["DateAdapter"], _users_service__WEBPACK_IMPORTED_MODULE_4__["UsersService"], _app_service__WEBPACK_IMPORTED_MODULE_5__["AppService"],
-            _util_service__WEBPACK_IMPORTED_MODULE_6__["UtilService"]])
+        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_1__["DateAdapter"], _users_service__WEBPACK_IMPORTED_MODULE_3__["UsersService"], _app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"],
+            _util_service__WEBPACK_IMPORTED_MODULE_5__["UtilService"]])
     ], AccountPersonalInfoComponent);
     return AccountPersonalInfoComponent;
 }());
@@ -8209,20 +8192,12 @@ var AccountUserInfoComponent = /** @class */ (function () {
      */
     AccountUserInfoComponent.prototype.onSubmit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.updateAccountServiceRunning = true;
-        //call the account service
-        this.usersService.updateAccount(this.model).subscribe(function (data) {
-            if (data && data.email) {
-                var user = _this.usersService.getUser();
-                user.name = data.name;
-                user.email = data.email;
-                user.currency = data.currency;
-                _this.usersService.setUser(user);
+        // call the account service
+        this.usersService.updateAccount$(this.model).subscribe(function (user) {
+            if (user) {
                 _this.appService.showResults("Your profile was successfully updated!.", 'success');
-            }
-            else {
-                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
             _this.updateAccountServiceRunning = false;
         }, function (error) {
@@ -8532,8 +8507,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
-/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/user */ "./src/app/modules/users/models/user.ts");
-/* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8543,7 +8517,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -8560,7 +8533,7 @@ var RegisterComponent = /** @class */ (function () {
         this.showPassword = false;
     }
     RegisterComponent.prototype.ngOnInit = function () {
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Login', url: '/users/login', selected: false },
@@ -8572,32 +8545,27 @@ var RegisterComponent = /** @class */ (function () {
      */
     RegisterComponent.prototype.onSubmit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.registerServiceRunning = true;
-        //chech that the password and the confirmed password are the same
+        // chech that the password and the confirmed password are the same
         if (this.model.password !== this.model['password-confirm']) {
             this.appService.consoleLog('error', methodTrace + " Confirm password must match password.");
             this.registerServiceRunning = false;
             return false;
         }
-        this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
-        //call the register service
-        this.usersService.register$(this.model).subscribe(function (data) {
-            if (data && data.email) {
-                var user = new _models_user__WEBPACK_IMPORTED_MODULE_4__["User"](data.name, data.email, data.avatar, null, null, data.currency);
-                _this.usersService.setUser(user);
-                _this.router.navigate(['/']); //go home
+        this.usersService.setUser(null); // reset authenticated user. Register automatically authenticates the registered user.
+        // call the register service
+        this.usersService.register$(this.model).subscribe(function (user) {
+            if (user) {
+                _this.router.navigate(['/']); // go home
                 _this.appService.showResults(user.name + " welcome to AtomiCoconut!", 'success');
-            }
-            else {
-                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.", data);
             }
             _this.registerServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
                 if (error.data && error.data.name === 'UserExistsError') {
-                    //the mail system failed for external reasons
+                    // the mail system failed for external reasons
                     _this.appService.showResults("The selected email address already in use by another person, pick a different one please.", 'error');
                 }
                 else {
@@ -8617,7 +8585,7 @@ var RegisterComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./register.component.scss */ "./src/app/modules/users/components/register/register.component.scss")]
         }),
         __metadata("design:paramtypes", [_users_service__WEBPACK_IMPORTED_MODULE_2__["UsersService"], _app_service__WEBPACK_IMPORTED_MODULE_3__["AppService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
-            _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_5__["MainNavigatorService"]])
+            _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_4__["MainNavigatorService"]])
     ], RegisterComponent);
     return RegisterComponent;
 }());
@@ -9032,6 +9000,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./models/user */ "./src/app/modules/users/models/user.ts");
+/* harmony import */ var _models_account_personal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./models/account-personal */ "./src/app/modules/users/models/account-personal.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9047,13 +9017,15 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var UsersService = /** @class */ (function () {
     function UsersService(http, appService) {
         this.http = http;
         this.appService = appService;
         this.serverHost = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiHost + '/api/users';
         this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]().set('Content-Type', 'application/json');
-        this.routerRedirectUrl = null; //a route to redirect the user to when login is successfull
+        this.routerRedirectUrl = null; // a route to redirect the user to when login is successfull
         this.userSource = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
         this.user$ = this.userSource.asObservable();
     }
@@ -9074,35 +9046,72 @@ var UsersService = /** @class */ (function () {
      * Server call to Register a new user in the system
      * @param postData
      *
-     * @return { Observable<any>}
+     * @return { Observable<User> }
      */
     UsersService.prototype.register$ = function (postData) {
+        var _this = this;
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > register$() > "; //for debugging
-        return this.http.post(this.serverHost + "/register", postData, { headers: this.headers })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
+        var methodTrace = this.constructor.name + " > register$() > "; // for debugging
+        return this.http.post(this.serverHost + "/register", postData, { headers: this.headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
+            var user = null;
+            if (data && data.email) {
+                user = new _models_user__WEBPACK_IMPORTED_MODULE_6__["User"](data.name, data.email, data.avatar, null, null, data.currency);
+                _this.setUser(user);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.", data);
+            }
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(user);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to update account user details
      * @param postData
+     *
+     * @return { Observable<User> }
      */
-    UsersService.prototype.updateAccount = function (postData) {
+    UsersService.prototype.updateAccount$ = function (postData) {
+        var _this = this;
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > updateAccount() > "; //for debugging
-        return this.http.post(this.serverHost + "/account", postData, { headers: this.headers })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
+        var methodTrace = this.constructor.name + " > updateAccount() > "; // for debugging
+        return this.http.post(this.serverHost + "/account", postData, { headers: this.headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
+            var user = null;
+            if (data && data.email) {
+                user = _this.getUser();
+                user.name = data.name;
+                user.email = data.email;
+                user.currency = data.currency;
+                _this.setUser(user);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(user);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to update account personal details
      * @param postData
      *
-     * @return {Observable<any>}
+     * @return {Observable<User>}
      */
     UsersService.prototype.updatePersonalInfo$ = function (postData) {
+        var _this = this;
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > updatePersonalInfo$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > updatePersonalInfo$() > "; // for debugging
         return this.http.post(this.serverHost + "/accountPersonalInfo", postData, { headers: this.headers })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
+            var user = null;
+            if (data === null) {
+                user = _this.getUser();
+                user.personalInfo = new _models_account_personal__WEBPACK_IMPORTED_MODULE_7__["AccountPersonal"](data.personalInfo.birthday);
+                _this.setUser(user);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(user);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to update account financial details
@@ -9112,7 +9121,7 @@ var UsersService = /** @class */ (function () {
      */
     UsersService.prototype.updateFinancialInfo$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > updateFinancialInfo$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > updateFinancialInfo$() > "; // for debugging
         return this.http.post(this.serverHost + "/accountFinancialInfo", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
@@ -9124,7 +9133,7 @@ var UsersService = /** @class */ (function () {
      */
     UsersService.prototype.getAuthenticatedUser$ = function (parameters) {
         if (parameters === void 0) { parameters = null; }
-        var methodTrace = this.constructor.name + " > getAuthenticatedUser$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > getAuthenticatedUser$() > "; // for debugging
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]();
         if (parameters && Object.keys(parameters).length) {
             for (var _i = 0, _a = Object.keys(parameters); _i < _a.length; _i++) {
@@ -9142,7 +9151,7 @@ var UsersService = /** @class */ (function () {
      */
     UsersService.prototype.login$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > login$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > login$() > "; // for debugging
         return this.http.post(this.serverHost + "/login", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
@@ -9153,7 +9162,7 @@ var UsersService = /** @class */ (function () {
      */
     UsersService.prototype.forgot$ = function (postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > forgot$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > forgot$() > "; // for debugging
         return this.http.post(this.serverHost + "/account/forgot", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
@@ -9164,7 +9173,7 @@ var UsersService = /** @class */ (function () {
      */
     UsersService.prototype.reset$ = function (token, postData) {
         if (postData === void 0) { postData = {}; }
-        var methodTrace = this.constructor.name + " > reset$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > reset$() > "; // for debugging
         return this.http.post(this.serverHost + "/account/reset/" + token, postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
@@ -9174,7 +9183,7 @@ var UsersService = /** @class */ (function () {
      * @return { Observable<any>}
      */
     UsersService.prototype.logout$ = function () {
-        var methodTrace = this.constructor.name + " > logout$() > "; //for debugging
+        var methodTrace = this.constructor.name + " > logout$() > "; // for debugging
         return this.http.get(this.serverHost + "/logout")
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };

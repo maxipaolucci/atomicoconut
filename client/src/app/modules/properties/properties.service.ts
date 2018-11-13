@@ -43,11 +43,10 @@ export class PropertiesService {
   update$(postData: any = {}): Observable<any> {
     const methodTrace = `${this.constructor.name} > update() > `; // for debugging
 
-    return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
-        .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
-        );
+    return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers }).pipe(
+      map(this.appService.extractData),
+      catchError(this.appService.handleError)
+    );
   }
 
   /**
@@ -66,15 +65,13 @@ export class PropertiesService {
 
     const params = new HttpParams().set('email', email);
 
-    const data$ = this.http.get<Response>(`${this.serverHost}/${id}`, { params })
-        .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
-        );
-
-    return data$.pipe(flatMap((data) => {
-      return of(this.populate(data));
-    }));
+    return this.http.get<Response>(`${this.serverHost}/${id}`, { params }).pipe(
+      map(this.appService.extractData),
+      flatMap((data) => {
+        return of(this.populate(data));
+      }),
+      catchError(this.appService.handleError)
+    );
   }
 
   /**
@@ -129,25 +126,23 @@ export class PropertiesService {
 
     const params = new HttpParams().set('email', email).set('justUserProperties', justUserProperties + '');
 
-    const responseData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
-        .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
-        );
-    
-    return responseData$.pipe(flatMap((responseData) => {
-      const properties: Property[] = [];
-
-      if (responseData && responseData instanceof Array) {
-        for (const data of responseData) {
-          properties.push(this.populate(data));
+    return this.http.get<Response>(`${this.serverHost}/getAll`, { params }).pipe(
+      map(this.appService.extractData),
+      flatMap((responseData) => {
+        const properties: Property[] = [];
+  
+        if (responseData && responseData instanceof Array) {
+          for (const data of responseData) {
+            properties.push(this.populate(data));
+          }
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
-      } else {
-        this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-      }
-
-      return of(properties);
-    }));
+  
+        return of(properties);
+      }),
+      catchError(this.appService.handleError)
+    );
   }
 
   /**
@@ -168,10 +163,9 @@ export class PropertiesService {
 
     const params = new HttpParams().set('email', email);
 
-    return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } )
-        .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
-        );
+    return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } ).pipe(
+      map(this.appService.extractData),
+      catchError(this.appService.handleError)
+    );
   }
 }

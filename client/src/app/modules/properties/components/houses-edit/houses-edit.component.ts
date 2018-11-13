@@ -14,10 +14,10 @@ import { HOUSE_BUILDING_TYPES } from '../../../../constants';
 export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('editHouseForm') form;
-  @Input() defaultValues : any = null; // the default values of the component model
-  @Input() defaultCurrencyUnit : string = 'USD'; //the default currency unit
+  @Input() defaultValues: any = null; // the default values of the component model
+  @Input() defaultCurrencyUnit = 'USD'; // the default currency unit
   @Output() values: EventEmitter<any> = new EventEmitter();
-  model : any = {
+  model: any = {
     buildingType : null,
     titleType : null,
     landArea : null,
@@ -46,10 +46,11 @@ export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
     managed : false,
     managerRate : null,
     agent : null
-  }
-  subscription : Subscription = new Subscription();
+  };
+  
+  subscription: Subscription = new Subscription();
 
-  constructor(private appService : AppService, public utilService : UtilService) { }
+  constructor(private appService: AppService, public utilService: UtilService) { }
 
   ngOnInit() {
     this.model.registeredValueUnit = this.model.ratesUnit = this.model.insuranceUnit = this.model.rentPriceUnit = this.model.bodyCorporateUnit = 
@@ -67,13 +68,13 @@ export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscription.unsubscribe();
   }
 
-  onCurrencyUnitChange($event : MatSelectChange) {
+  onCurrencyUnitChange($event: MatSelectChange) {
     this.model[$event.source.id] = $event.value;
     
     this.emitValues();
   }
 
-  onSlideToggleChange($event : MatSlideToggleChange) {
+  onSlideToggleChange($event: MatSlideToggleChange) {
     this.model[$event.source.id] = $event.checked;
 
     this.emitValues();

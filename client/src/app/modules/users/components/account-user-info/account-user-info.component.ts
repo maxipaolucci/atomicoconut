@@ -11,18 +11,18 @@ import { AppService } from '../../../../app.service';
 })
 export class AccountUserInfoComponent implements OnInit {
 
-  @Input() user : User = null;
-  public model : any = {name : '', email : '', currency : ''};
-  public updateAccountServiceRunning : boolean = false;
+  @Input() user: User = null;
+  public model: any = {name : '', email : '', currency : ''};
+  public updateAccountServiceRunning = false;
 
   
-  constructor(private usersService : UsersService, private appService : AppService) {}
+  constructor(private usersService: UsersService, private appService: AppService) {}
 
   ngOnInit() {
     this.model = { name : this.user.name, email : this.user.email, currency : this.user.currency };
   }
 
-  onCurrencyUnitChange($event : MatSelectChange) {
+  onCurrencyUnitChange($event: MatSelectChange) {
     if ($event.source.id === 'preferredCurrency') {
       this.model.currency = $event.value;
     }
@@ -32,27 +32,19 @@ export class AccountUserInfoComponent implements OnInit {
    * When user submits the register form.
    */
   onSubmit() { 
-    const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
     this.updateAccountServiceRunning = true;
     
-    //call the account service
-    this.usersService.updateAccount(this.model).subscribe(
-      (data : any) => {
-        if (data && data.email) {
-          let user = this.usersService.getUser();
-          user.name = data.name;
-          user.email = data.email;
-          user.currency = data.currency;
-          this.usersService.setUser(user);
-
+    // call the account service
+    this.usersService.updateAccount$(this.model).subscribe(
+      (user: User) => {
+        if (user) {
           this.appService.showResults(`Your profile was successfully updated!.`, 'success');
-        } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
 
         this.updateAccountServiceRunning = false;
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');

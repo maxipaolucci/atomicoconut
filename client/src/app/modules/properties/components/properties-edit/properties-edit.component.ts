@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, of, Observable } from 'rxjs';
 import { User } from '../../../users/models/user';
 import { Property } from '../../models/property';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -11,7 +11,7 @@ import { House } from '../../models/house';
 import { MatSelectChange, DateAdapter, NativeDateAdapter, MatAutocompleteSelectedEvent, MatDialog } from '@angular/material';
 import { UtilService } from '../../../../util.service';
 import { HouseFiguresDialogComponent } from '../house-figures-dialog/house-figures-dialog.component';
-import { map, combineLatest } from 'rxjs/operators';
+import { map, combineLatest, flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'properties-edit',
@@ -80,6 +80,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
+
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Investments', url: '/investments', selected: false },
@@ -93,32 +95,56 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     const id$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('id')));
 
     // combine user$ and id$ sources into one object and start listen to it for changes
-    const newSubscription = user$.pipe(combineLatest(id$, (user, id) => {
-      return { user, propertyId : id };
-    })).subscribe(data => {
-      this.user = data.user;
-      this.model.email = data.user.email;
-      this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit =
-          this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit =
-          this.model.maintenanceCostUnit = this.model.otherCostUnit = this.user.currency;
-      this.model.id = data.propertyId || null;
-
-      this.editPropertyServiceRunning = false;
-      this.getPropertyServiceRunning = false;
-
-      if (!data.propertyId) {
-        // we are creating a new property
-        this.id = null;
-        this.editMode = false;
-        this.mainNavigatorService.appendLink({ displayName: 'Create Property', url: '', selected : true });
-      } else {
-        this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected : true });
-        // we are editing an existing property
-        this.id = data.propertyId;
-        this.editMode = true;
-
-        this.getProperty(data.propertyId); // get data
+    const newSubscription = user$.pipe(
+      combineLatest(id$, (user, id) => {
+        this.user = user;
+        return { user, propertyId : id };
+      }),
+      flatMap((data: any): Observable<Property> => {
+        this.model.email = data.user.email;
+        this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit =
+            this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit =
+            this.model.maintenanceCostUnit = this.model.otherCostUnit = this.user.currency;
+        this.model.id = data.propertyId || null;
+  
+        this.editPropertyServiceRunning = false;
+        this.getPropertyServiceRunning = false;
+  
+        if (!data.propertyId) {
+          // we are creating a new property
+          this.id = null;
+          this.editMode = false;
+          this.mainNavigatorService.appendLink({ displayName: 'Create Property', url: '', selected : true });
+          return of(null);
+        } else {
+          this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected : true });
+          // we are editing an existing property
+          this.id = data.propertyId;
+          this.editMode = true;
+          
+          this.getPropertyServiceRunning = true;
+          return this.propertiesService.getPropertyById$(this.user.email, data.propertyId);
+        }
+      })
+    ).subscribe((property: Property) => {
+      if (property) {
+        this.populateModel(property);
       }
+      
+      this.getPropertyServiceRunning = false;
+    },
+    (error: any) => {
+      this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > `, error);
+      if (error.codeno === 400) {
+        this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+      } else if (error.codeno === 461 || error.codeno === 462) {
+        this.appService.showResults(error.msg, 'error');
+        this.router.navigate(['/welcome']);
+      } else {
+        this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+      }
+
+      this.getPropertyServiceRunning = false;
     });
     this.subscription.add(newSubscription);
 
@@ -140,98 +166,69 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Get a property from server based on the id provided
-   * @param {string} id
+   * Populates the model with the property as param
+   * @param { Property } property
    */
-  getProperty(id: string) {
-    const methodTrace = `${this.constructor.name} > getProperty() > `; // for debugging
+  populateModel(property: Property) {
+    const methodTrace = `${this.constructor.name} > populateModel() > `; // for debugging
 
-    if (!id) {
-      this.appService.showResults(`Invalid property ID`, 'error');
-      this.appService.consoleLog('error', `${methodTrace} ID parameter must be provided, but was: `, id);
-      return false;
+    this.property = property;
+    // populate the model
+    this.model.address = property.address;
+    this.model.askingPrice = property.askingPrice;
+    this.model.askingPriceUnit = property.askingPriceUnit;
+    this.model.offerPrice = property.offerPrice;
+    this.model.offerPriceUnit = property.offerPriceUnit;
+    this.model.walkAwayPrice = property.walkAwayPrice;
+    this.model.walkAwayPriceUnit = property.walkAwayPriceUnit;
+    this.model.purchasePrice = property.purchasePrice;
+    this.model.purchasePriceUnit = property.purchasePriceUnit;
+    this.model.dateListed = property.dateListed;
+    this.model.reasonForSelling = property.reasonForSelling;
+    this.model.marketValue = property.marketValue;
+    this.model.marketValueUnit = property.marketValueUnit;
+    this.model.renovationCost = property.renovationCost;
+    this.model.renovationCostUnit = property.renovationCostUnit;
+    this.model.maintenanceCost = property.maintenanceCost;
+    this.model.maintenanceCostUnit = property.maintenanceCostUnit;
+    this.model.description = property.description;
+    this.model.otherCost = property.otherCost;
+    this.model.otherCostUnit = property.otherCostUnit;
+    this.model.notes = property.notes;
+    this.model.type = property.type;
+
+    if (property instanceof House) {
+      this.model.propertyTypeData = {
+        buildingType : property.buildingType,
+        titleType : property.titleType,
+        landArea : property.landArea,
+        floorArea : property.floorArea,
+        registeredValue : property.registeredValue,
+        registeredValueUnit : property.registeredValueUnit,
+        rates : property.rates,
+        ratesUnit : property.ratesUnit,
+        insurance : property.insurance,
+        insuranceUnit : property.insuranceUnit,
+        capitalGrowth : property.capitalGrowth,
+        bedrooms : property.bedrooms,
+        bathrooms : property.bathrooms,
+        parkingSpaces : property.parkingSpaces,
+        fenced : property.fenced,
+        rented : property.rented,
+        rentPrice : property.rentPrice,
+        rentPriceUnit : property.rentPriceUnit,
+        rentPricePeriod : property.rentPricePeriod,
+        rentAppraisalDone : property.rentAppraisalDone,
+        vacancy : property.vacancy,
+        bodyCorporate : property.bodyCorporate,
+        bodyCorporateUnit : property.bodyCorporateUnit,
+        utilitiesCost : property.utilitiesCost,
+        utilitiesCostUnit : property.utilitiesCostUnit,
+        managed : property.managed,
+        managerRate : property.managerRate,
+        agent : property.agent
+      };
     }
-
-    this.getPropertyServiceRunning = true;
-
-    const newSubscription = this.propertiesService.getPropertyById$(this.user.email, id).subscribe(
-      (property: Property) => {
-        this.property = property;
-        // populate the model
-        this.model.address = property.address;
-        this.model.askingPrice = property.askingPrice;
-        this.model.askingPriceUnit = property.askingPriceUnit;
-        this.model.offerPrice = property.offerPrice;
-        this.model.offerPriceUnit = property.offerPriceUnit;
-        this.model.walkAwayPrice = property.walkAwayPrice;
-        this.model.walkAwayPriceUnit = property.walkAwayPriceUnit;
-        this.model.purchasePrice = property.purchasePrice;
-        this.model.purchasePriceUnit = property.purchasePriceUnit;
-        this.model.dateListed = property.dateListed;
-        this.model.reasonForSelling = property.reasonForSelling;
-        this.model.marketValue = property.marketValue;
-        this.model.marketValueUnit = property.marketValueUnit;
-        this.model.renovationCost = property.renovationCost;
-        this.model.renovationCostUnit = property.renovationCostUnit;
-        this.model.maintenanceCost = property.maintenanceCost;
-        this.model.maintenanceCostUnit = property.maintenanceCostUnit;
-        this.model.description = property.description;
-        this.model.otherCost = property.otherCost;
-        this.model.otherCostUnit = property.otherCostUnit;
-        this.model.notes = property.notes;
-        this.model.type = property.type;
-
-        if (property instanceof House) {
-          this.model.propertyTypeData = {
-            buildingType : property.buildingType,
-            titleType : property.titleType,
-            landArea : property.landArea,
-            floorArea : property.floorArea,
-            registeredValue : property.registeredValue,
-            registeredValueUnit : property.registeredValueUnit,
-            rates : property.rates,
-            ratesUnit : property.ratesUnit,
-            insurance : property.insurance,
-            insuranceUnit : property.insuranceUnit,
-            capitalGrowth : property.capitalGrowth,
-            bedrooms : property.bedrooms,
-            bathrooms : property.bathrooms,
-            parkingSpaces : property.parkingSpaces,
-            fenced : property.fenced,
-            rented : property.rented,
-            rentPrice : property.rentPrice,
-            rentPriceUnit : property.rentPriceUnit,
-            rentPricePeriod : property.rentPricePeriod,
-            rentAppraisalDone : property.rentAppraisalDone,
-            vacancy : property.vacancy,
-            bodyCorporate : property.bodyCorporate,
-            bodyCorporateUnit : property.bodyCorporateUnit,
-            utilitiesCost : property.utilitiesCost,
-            utilitiesCostUnit : property.utilitiesCostUnit,
-            managed : property.managed,
-            managerRate : property.managerRate,
-            agent : property.agent
-          };
-        }
-
-        this.getPropertyServiceRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > `, error);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-        } else if (error.codeno === 461 || error.codeno === 462) {
-          this.appService.showResults(error.msg, 'error');
-          this.router.navigate(['/welcome']);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-        }
-
-        this.getPropertyServiceRunning = false;
-      }
-    );
-
-    this.subscription.add(newSubscription);
   }
 
   onSubmit() {
