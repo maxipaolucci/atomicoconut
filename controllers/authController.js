@@ -99,6 +99,38 @@ exports.isLogggedIn = (req, res, next) => {
     });
 };
 
+const getUserObject = async (email, fieldsToPopulate = {}) => {
+    const methodTrace = `${errorTrace} getUserObject() >`;
+
+    console.log(`${methodTrace} ${getMessage('message', 1006, email, true, email)}`);        
+    let user = null;
+    if (Object.keys(fieldsToPopulate).length) {
+        user = await User.findOneAndPopulate({ email }, fieldsToPopulate);//await User.findOne({ email }).populate('personalInfo');
+    } else {
+        user = await User.findOne({ email });
+    }
+
+    if (user) {
+        let dto = {
+            name : user.name, 
+            email : user.email, 
+            avatar : user.gravatar, 
+            currency : user.currency || 'USD'
+        };
+      
+        for (let key of Object.keys(fieldsToPopulate)) {
+            if (fieldsToPopulate[key] === 'true') {
+                dto[key] = user[key] || null;
+            }
+        }
+        
+        return dto;
+    }
+
+    return null;
+}
+exports.getUserObject = getUserObject;
+
 exports.getUser = async (req, res, next) => {
     const methodTrace = `${errorTrace} getUser() >`;
 
@@ -106,13 +138,7 @@ exports.getUser = async (req, res, next) => {
         const email = req.user.email;
         console.log(`${methodTrace} ${getMessage('message', 1004, email, true)}`);
 
-        console.log(`${methodTrace} ${getMessage('message', 1006, email, true, email)}`);        
-        let user = null;
-        if (Object.keys(req.query).length) {
-            user = await User.findOneAndPopulate({ email }, req.query);//await User.findOne({ email }).populate('personalInfo');
-        } else {
-            user = await User.findOne({ email });
-        }
+        const user = await getUserObject(email, req.query);
         
         if (!user) {
             console.log(`${methodTrace} ${getMessage('error', 455, email, true, email)}`);
@@ -129,7 +155,7 @@ exports.getUser = async (req, res, next) => {
             status : 'success',
             codeno : 200,
             msg : getMessage('message', 1004, null, false),
-            data : getUserDataObject(user, req.query)
+            data : user
         });
         return;
     }

@@ -8,6 +8,7 @@ import { User } from './models/user';
 import { Observable } from 'rxjs';
 import { Response } from '../../models/response';
 import { AccountPersonal } from './models/account-personal';
+import { AccountFinance } from './models/account-finance';
 
 @Injectable()
 export class UsersService {
@@ -109,7 +110,7 @@ export class UsersService {
           flatMap((data: any): Observable<User> => {
             let user: User = null;
 
-            if (data === null) {
+            if (data.personalInfo.birthday) {
               user = this.getUser();
               user.personalInfo = new AccountPersonal(data.personalInfo.birthday);
               this.setUser(user);
@@ -127,21 +128,35 @@ export class UsersService {
    * Server call to update account financial details 
    * @param postData 
    * 
-   * @return {Observable<any>}
+   * @return {Observable<User>}
    */
-  updateFinancialInfo$(postData: any = {}): Observable<any> {
+  updateFinancialInfo$(postData: any = {}): Observable<User> {
     const methodTrace = `${this.constructor.name} > updateFinancialInfo$() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/accountFinancialInfo`, postData, { headers : this.headers })
         .pipe(
           map(this.appService.extractData),
+          flatMap((data: any): Observable<User> => {
+            let user: User = null;
+
+            if (data.financialInfo.savingsUnit) {
+              user = this.getUser();
+              user.financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
+                  data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
+              this.setUser(user);
+            } else {
+              this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+            }
+    
+            return of(user);
+          }),
           catchError(this.appService.handleError)
         );
   }
 
   /**
    * Server call to retrieve the currently authenticated user, or null if nobody .
-   * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financeInfo (boolean)
+   * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financialInfo (boolean)
    * 
    * @return { Observable<any>}
    */

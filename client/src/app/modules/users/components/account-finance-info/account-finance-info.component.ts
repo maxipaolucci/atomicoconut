@@ -12,8 +12,8 @@ import { AppService } from '../../../../app.service';
 })
 export class AccountFinanceInfoComponent implements OnInit {
 
-  @Input() user : User;
-  model : any = { 
+  @Input() user: User;
+  model: any = { 
     email : null, 
     annualIncome : null,
     annualIncomeUnit : null,
@@ -21,13 +21,13 @@ export class AccountFinanceInfoComponent implements OnInit {
     savings : null,
     savingsUnit : null
   };
-  accountFinanceServiceRunning : boolean = false;
+  accountFinanceServiceRunning = false;
 
   
-  constructor(private usersService : UsersService, private appService : AppService) {}
+  constructor(private usersService: UsersService, private appService: AppService) {}
 
   ngOnInit() {
-    const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
     this.model.email = this.user.email;
     this.model.annualIncomeUnit = this.user.currency;
@@ -44,7 +44,7 @@ export class AccountFinanceInfoComponent implements OnInit {
     }
   }
 
-  onCurrencyUnitChange($event : MatSelectChange) {
+  onCurrencyUnitChange($event: MatSelectChange) {
     if ($event.source.id === 'annualIncomeUnit') {
       this.model.annualIncomeUnit = $event.value;
     } else if ($event.source.id === 'savingsUnit') {
@@ -53,26 +53,20 @@ export class AccountFinanceInfoComponent implements OnInit {
   }
 
   onSubmit() {
-    const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
     this.accountFinanceServiceRunning = true;
 
-    //call the account service
+    // call the account service
     this.usersService.updateFinancialInfo$(this.model).subscribe(
-      (data : any) => {
-        if (data === null) {
-          let user = this.usersService.getUser();
-          user.financialInfo = new AccountFinance(this.model.annualIncome, this.model.annualIncomeUnit, 
-            this.model.savings, this.model.savingsUnit, this.model.incomeTaxRate);
-          this.usersService.setUser(user);
-          this.appService.showResults(`Your personal information was successfully updated!.`, 'success');
-        } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+      (user: User) => {
+        if (user) {
+          this.appService.showResults(`Your financial information was successfully updated!.`, 'success');
         }
 
         this.accountFinanceServiceRunning = false;
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');

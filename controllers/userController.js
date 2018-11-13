@@ -4,7 +4,7 @@ const PersonalInfo = mongoose.model('PersonalInfo');
 const FinancialInfo = mongoose.model('FinancialInfo');
 const promisify = require('es6-promisify');
 const { getMessage } = require('../handlers/errorHandlers');
-const { getUserDataObject } = require('../handlers/userHandlers');
+const { getUserObject } = require('./authController');
 
 const errorTrace = 'userController >';
 
@@ -75,7 +75,7 @@ exports.updateAccount = async (req, res) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1020, null, false, user.email),
-        data : getUserDataObject(user)
+        data : await getUserObject(user.email)
     });
 };
 
@@ -116,12 +116,14 @@ exports.updateAccountPersonalInfo = async (req, res) => {
                 { new : true, runValidators : true, context : 'query' }
             );
 
+            user = await getUserObject(user.email, { personalInfo: 'true' });
+
             console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, user.email)}`);
             res.json({
                 status : 'success', 
                 codeno : 200,
                 msg : getMessage('message', 1020, null, false, user.email),
-                data : getUserDataObject(user, { personalInfo: 'true' })
+                data : user
             });
         } else {
             console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'PersonalInfo')}`);
@@ -136,12 +138,14 @@ exports.updateAccountPersonalInfo = async (req, res) => {
         return;
     }
 
+    user = await getUserObject(user.email, { personalInfo: 'true' });
+
     console.log(`${methodTrace} ${getMessage('message', 1028, user.email, true, 'PersonalInfo')}`);
     res.json({
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1028, null, false, 'PersonalInfo'),
-        data : getUserDataObject(user, { personalInfo: 'true' })
+        data : user
     });
 };
 
@@ -221,7 +225,7 @@ exports.updateAccountFinancialInfo = async (req, res) => {
                 status : 'success', 
                 codeno : 200,
                 msg : getMessage('message', 1020, null, false, user.email),
-                data : null
+                data : await getUserObject(user.email, { financialInfo: 'true' })
             });
         } else {
             console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'FinancialInfo')}`);
@@ -241,6 +245,6 @@ exports.updateAccountFinancialInfo = async (req, res) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1028, null, false, 'FinancialInfo'),
-        data : null
+        data : await getUserObject(user.email, { financialInfo: 'true' })
     });
 };

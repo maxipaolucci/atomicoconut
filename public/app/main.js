@@ -903,7 +903,7 @@ var AuthGuard = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  404 Page not found\r\n</p>\r\n"
+module.exports = "<p>\n  404 Page not found\n</p>\n"
 
 /***/ }),
 
@@ -6392,7 +6392,7 @@ var MainNavigatorService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n  <mat-progress-bar \r\n      class=\"progress-bar\"\r\n      [ngClass]=\"extraClasses\"\r\n      [color]=\"color\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  <p *ngIf=\"message\">{{ message }}</p>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\n  <mat-progress-bar \n      class=\"progress-bar\"\n      [ngClass]=\"extraClasses\"\n      [color]=\"color\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n  <p *ngIf=\"message\">{{ message }}</p>\n</div>"
 
 /***/ }),
 
@@ -7908,9 +7908,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AccountFinanceInfoComponent", function() { return AccountFinanceInfoComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/user */ "./src/app/modules/users/models/user.ts");
-/* harmony import */ var _models_account_finance__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../models/account-finance */ "./src/app/modules/users/models/account-finance.ts");
-/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7920,7 +7919,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -7940,7 +7938,7 @@ var AccountFinanceInfoComponent = /** @class */ (function () {
         this.accountFinanceServiceRunning = false;
     }
     AccountFinanceInfoComponent.prototype.ngOnInit = function () {
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         this.model.email = this.user.email;
         this.model.annualIncomeUnit = this.user.currency;
         this.model.savingsUnit = this.user.currency;
@@ -7964,18 +7962,12 @@ var AccountFinanceInfoComponent = /** @class */ (function () {
     };
     AccountFinanceInfoComponent.prototype.onSubmit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.accountFinanceServiceRunning = true;
-        //call the account service
-        this.usersService.updateFinancialInfo$(this.model).subscribe(function (data) {
-            if (data === null) {
-                var user = _this.usersService.getUser();
-                user.financialInfo = new _models_account_finance__WEBPACK_IMPORTED_MODULE_2__["AccountFinance"](_this.model.annualIncome, _this.model.annualIncomeUnit, _this.model.savings, _this.model.savingsUnit, _this.model.incomeTaxRate);
-                _this.usersService.setUser(user);
-                _this.appService.showResults("Your personal information was successfully updated!.", 'success');
-            }
-            else {
-                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+        // call the account service
+        this.usersService.updateFinancialInfo$(this.model).subscribe(function (user) {
+            if (user) {
+                _this.appService.showResults("Your financial information was successfully updated!.", 'success');
             }
             _this.accountFinanceServiceRunning = false;
         }, function (error) {
@@ -7999,7 +7991,7 @@ var AccountFinanceInfoComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./account-finance-info.component.html */ "./src/app/modules/users/components/account-finance-info/account-finance-info.component.html"),
             styles: [__webpack_require__(/*! ./account-finance-info.component.scss */ "./src/app/modules/users/components/account-finance-info/account-finance-info.component.scss")]
         }),
-        __metadata("design:paramtypes", [_users_service__WEBPACK_IMPORTED_MODULE_3__["UsersService"], _app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"]])
+        __metadata("design:paramtypes", [_users_service__WEBPACK_IMPORTED_MODULE_2__["UsersService"], _app_service__WEBPACK_IMPORTED_MODULE_3__["AppService"]])
     ], AccountFinanceInfoComponent);
     return AccountFinanceInfoComponent;
 }());
@@ -9002,6 +8994,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../app.service */ "./src/app/app.service.ts");
 /* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./models/user */ "./src/app/modules/users/models/user.ts");
 /* harmony import */ var _models_account_personal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./models/account-personal */ "./src/app/modules/users/models/account-personal.ts");
+/* harmony import */ var _models_account_finance__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./models/account-finance */ "./src/app/modules/users/models/account-finance.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9011,6 +9004,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -9102,7 +9096,7 @@ var UsersService = /** @class */ (function () {
         return this.http.post(this.serverHost + "/accountPersonalInfo", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
             var user = null;
-            if (data === null) {
+            if (data.personalInfo.birthday) {
                 user = _this.getUser();
                 user.personalInfo = new _models_account_personal__WEBPACK_IMPORTED_MODULE_7__["AccountPersonal"](data.personalInfo.birthday);
                 _this.setUser(user);
@@ -9117,17 +9111,29 @@ var UsersService = /** @class */ (function () {
      * Server call to update account financial details
      * @param postData
      *
-     * @return {Observable<any>}
+     * @return {Observable<User>}
      */
     UsersService.prototype.updateFinancialInfo$ = function (postData) {
+        var _this = this;
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > updateFinancialInfo$() > "; // for debugging
         return this.http.post(this.serverHost + "/accountFinancialInfo", postData, { headers: this.headers })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
+            var user = null;
+            if (data.financialInfo.savingsUnit) {
+                user = _this.getUser();
+                user.financialInfo = new _models_account_finance__WEBPACK_IMPORTED_MODULE_8__["AccountFinance"](data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
+                _this.setUser(user);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(user);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to retrieve the currently authenticated user, or null if nobody .
-     * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financeInfo (boolean)
+     * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financialInfo (boolean)
      *
      * @return { Observable<any>}
      */
