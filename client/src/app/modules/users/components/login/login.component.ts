@@ -13,17 +13,17 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 })
 export class LoginComponent implements OnInit {
 
-  model : any = {email : '', password : ''};
-  forgotModel : any = { email : '', forgot : false };
-  loginServiceRunning : boolean = false;
-  forgotServiceRunning : boolean = false;
-  showPassword : boolean = false;
+  model: any = {email : '', password : ''};
+  forgotModel: any = { email : '', forgot : false };
+  loginServiceRunning = false;
+  forgotServiceRunning = false;
+  showPassword = false;
 
-  constructor(private usersService : UsersService, private appService : AppService,  
-    private mainNavigatorService : MainNavigatorService, private router : Router, private route : ActivatedRoute) { }
+  constructor(private usersService: UsersService, private appService: AppService,  
+    private mainNavigatorService: MainNavigatorService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
@@ -41,25 +41,22 @@ export class LoginComponent implements OnInit {
    * When user submits the login form
    */
   onSubmit() { 
-    const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
     this.loginServiceRunning = true;
-    this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
-    //call the register service
+    this.usersService.setUser(null); // reset authenticated user. Register automatically authenticates the registered user.
+    // call the register service
     this.usersService.login$(this.model).subscribe(
-      (data : any) => {
-        if (data && data.email) {
-          const user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-          this.usersService.setUser(user);
+      (user: User) => {
+        if (user) {
           const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
           this.usersService.routerRedirectUrl = null;
-          this.router.navigate([redirectUrl]); //go home
-        } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-          this.loginServiceRunning = false;
+          this.router.navigate([redirectUrl]);
         }
+
+        this.loginServiceRunning = false;
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
@@ -78,21 +75,26 @@ export class LoginComponent implements OnInit {
    * When user submits the forgot password form
    */
   onForgotSubmit() { 
-    const methodTrace = `${this.constructor.name} > onForgotSubmit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > onForgotSubmit() > `; // for debugging
 
     this.forgotServiceRunning = true;
-    //call the register service
+    // call the register service
     this.usersService.forgot$(this.forgotModel).subscribe(
-      (data : any) => {
+      (data: any) => {
+        if (data && data.email && data.expires) {
+          this.appService.showResults(`We sent an email to ${data.email} with a password reset link that will expire in ${data.expires}.`, 'info');
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        }
+        
         this.forgotServiceRunning = false;
-        this.appService.showResults(`You have been emailed a password reset link.`, 'info');
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
         } else if (error.codeno === 455) {
-          //invalid email
+          // invalid email
           this.appService.showResults(error.msg, 'error');
         } else {
           this.appService.showResults(`There was an error with this service and the information provided.`, 'error');

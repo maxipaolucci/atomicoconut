@@ -13,16 +13,16 @@ import { AppService } from '../../../../app.service';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  model : any = { password : '', 'password-confirm' : ''};
-  private token : string = '';
-  resetPasswordServiceRunning : boolean = false;
-  showPassword : boolean = false;
+  model: any = { password : '', 'password-confirm' : ''};
+  private token = '';
+  resetPasswordServiceRunning = false;
+  showPassword = false;
 
-  constructor(private appService : AppService, private usersService : UsersService, private router : Router, private route : ActivatedRoute,
-      private mainNavigatorService : MainNavigatorService ) { }
+  constructor(private appService: AppService, private usersService: UsersService, private router: Router, private route: ActivatedRoute,
+      private mainNavigatorService: MainNavigatorService ) { }
 
   ngOnInit() {
-    const methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
@@ -41,10 +41,10 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit() { 
-    const methodTrace = `${this.constructor.name} > onSubmit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
     this.resetPasswordServiceRunning = true;
 
-    //chech that the password and the confirmed password are the same
+    // chech that the password and the confirmed password are the same
     if (this.model.password !== this.model['password-confirm']) {
       this.appService.consoleLog('error', `${methodTrace} Confirm password must match password.`);
 
@@ -52,22 +52,20 @@ export class ResetPasswordComponent implements OnInit {
       return false;
     }
 
-    //call the reset password service.
-    this.usersService.setUser(null); //reset authenticated user. Reset automatically authenticates the registered user.
+    // call the reset password service.
+    this.usersService.setUser(null); // reset authenticated user. Reset automatically authenticates the registered user.
     this.usersService.reset$(this.token, this.model).subscribe(
-      (data : any) => {
-        if (data) {
-          const user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-          this.usersService.setUser(user);
+      (user: User) => {
+        if (user) {
           this.appService.showResults('Your password was successfully updated!', 'success');
-          this.router.navigate(['/']); //go home
+          this.router.navigate(['/']); // go home
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`)
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
 
         this.resetPasswordServiceRunning = false;
       },
-      (error : any) => {
+      (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');

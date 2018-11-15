@@ -97,9 +97,8 @@ export class AppComponent implements OnInit {
     const methodTrace = `${this.constructor.name} > logout() > `; // for debugging
 
     this.usersService.logout$().subscribe(
-      (data: any) => {
-        this.usersService.setUser(null);
-        this.user = null;
+      (result: any) => {
+        this.user = result;
         this.router.navigate(['/']);
       },
       (error: any) =>  {

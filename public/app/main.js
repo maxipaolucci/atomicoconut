@@ -432,9 +432,8 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.logout = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > logout() > "; // for debugging
-        this.usersService.logout$().subscribe(function (data) {
-            _this.usersService.setUser(null);
-            _this.user = null;
+        this.usersService.logout$().subscribe(function (result) {
+            _this.user = result;
             _this.router.navigate(['/']);
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the logout service.", error);
@@ -8341,8 +8340,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
-/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../models/user */ "./src/app/modules/users/models/user.ts");
-/* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8352,7 +8350,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -8374,7 +8371,7 @@ var LoginComponent = /** @class */ (function () {
     }
     LoginComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Login', url: null, selected: true }
@@ -8391,22 +8388,17 @@ var LoginComponent = /** @class */ (function () {
      */
     LoginComponent.prototype.onSubmit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.loginServiceRunning = true;
-        this.usersService.setUser(null); //reset authenticated user. Register automatically authenticates the registered user.
-        //call the register service
-        this.usersService.login$(this.model).subscribe(function (data) {
-            if (data && data.email) {
-                var user = new _models_user__WEBPACK_IMPORTED_MODULE_5__["User"](data.name, data.email, data.avatar, null, null, data.currency);
-                _this.usersService.setUser(user);
+        this.usersService.setUser(null); // reset authenticated user. Register automatically authenticates the registered user.
+        // call the register service
+        this.usersService.login$(this.model).subscribe(function (user) {
+            if (user) {
                 var redirectUrl = _this.usersService.routerRedirectUrl ? _this.usersService.routerRedirectUrl : '/';
                 _this.usersService.routerRedirectUrl = null;
-                _this.router.navigate([redirectUrl]); //go home
+                _this.router.navigate([redirectUrl]);
             }
-            else {
-                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
-                _this.loginServiceRunning = false;
-            }
+            _this.loginServiceRunning = false;
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
@@ -8426,19 +8418,24 @@ var LoginComponent = /** @class */ (function () {
      */
     LoginComponent.prototype.onForgotSubmit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onForgotSubmit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onForgotSubmit() > "; // for debugging
         this.forgotServiceRunning = true;
-        //call the register service
+        // call the register service
         this.usersService.forgot$(this.forgotModel).subscribe(function (data) {
+            if (data && data.email && data.expires) {
+                _this.appService.showResults("We sent an email to " + data.email + " with a password reset link that will expire in " + data.expires + ".", 'info');
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
             _this.forgotServiceRunning = false;
-            _this.appService.showResults("You have been emailed a password reset link.", 'info');
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error in the server while performing this action > " + error);
             if (error.codeno === 400) {
                 _this.appService.showResults("There was an error in the server while performing this action, please try again in a few minutes.", 'error');
             }
             else if (error.codeno === 455) {
-                //invalid email
+                // invalid email
                 _this.appService.showResults(error.msg, 'error');
             }
             else {
@@ -8454,7 +8451,7 @@ var LoginComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./login.component.scss */ "./src/app/modules/users/components/login/login.component.scss")]
         }),
         __metadata("design:paramtypes", [_users_service__WEBPACK_IMPORTED_MODULE_3__["UsersService"], _app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"],
-            _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_6__["MainNavigatorService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]])
+            _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_5__["MainNavigatorService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]])
     ], LoginComponent);
     return LoginComponent;
 }());
@@ -8622,9 +8619,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
-/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../models/user */ "./src/app/modules/users/models/user.ts");
-/* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8634,7 +8630,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -8655,7 +8650,7 @@ var ResetPasswordComponent = /** @class */ (function () {
     }
     ResetPasswordComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > ngOnInit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         this.mainNavigatorService.setLinks([
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'Login', url: '/users/login', selected: false },
@@ -8674,22 +8669,20 @@ var ResetPasswordComponent = /** @class */ (function () {
     };
     ResetPasswordComponent.prototype.onSubmit = function () {
         var _this = this;
-        var methodTrace = this.constructor.name + " > onSubmit() > "; //for debugging
+        var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.resetPasswordServiceRunning = true;
-        //chech that the password and the confirmed password are the same
+        // chech that the password and the confirmed password are the same
         if (this.model.password !== this.model['password-confirm']) {
             this.appService.consoleLog('error', methodTrace + " Confirm password must match password.");
             this.resetPasswordServiceRunning = false;
             return false;
         }
-        //call the reset password service.
-        this.usersService.setUser(null); //reset authenticated user. Reset automatically authenticates the registered user.
-        this.usersService.reset$(this.token, this.model).subscribe(function (data) {
-            if (data) {
-                var user = new _models_user__WEBPACK_IMPORTED_MODULE_4__["User"](data.name, data.email, data.avatar, null, null, data.currency);
-                _this.usersService.setUser(user);
+        // call the reset password service.
+        this.usersService.setUser(null); // reset authenticated user. Reset automatically authenticates the registered user.
+        this.usersService.reset$(this.token, this.model).subscribe(function (user) {
+            if (user) {
                 _this.appService.showResults('Your password was successfully updated!', 'success');
-                _this.router.navigate(['/']); //go home
+                _this.router.navigate(['/']); // go home
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
@@ -8712,8 +8705,8 @@ var ResetPasswordComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./reset-password.component.html */ "./src/app/modules/users/components/reset-password/reset-password.component.html"),
             styles: [__webpack_require__(/*! ./reset-password.component.scss */ "./src/app/modules/users/components/reset-password/reset-password.component.scss")]
         }),
-        __metadata("design:paramtypes", [_app_service__WEBPACK_IMPORTED_MODULE_6__["AppService"], _users_service__WEBPACK_IMPORTED_MODULE_3__["UsersService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
-            _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_5__["MainNavigatorService"]])
+        __metadata("design:paramtypes", [_app_service__WEBPACK_IMPORTED_MODULE_5__["AppService"], _users_service__WEBPACK_IMPORTED_MODULE_3__["UsersService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
+            _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_4__["MainNavigatorService"]])
     ], ResetPasswordComponent);
     return ResetPasswordComponent;
 }());
@@ -9153,13 +9146,24 @@ var UsersService = /** @class */ (function () {
     /**
      * Server call to login the provided user email and pass.
      *
-     * @return { Observable<any>}
+     * @return { Observable<User>}
      */
     UsersService.prototype.login$ = function (postData) {
+        var _this = this;
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > login$() > "; // for debugging
         return this.http.post(this.serverHost + "/login", postData, { headers: this.headers })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
+            var user = null;
+            if (data && data.email) {
+                user = new _models_user__WEBPACK_IMPORTED_MODULE_6__["User"](data.name, data.email, data.avatar, null, null, data.currency);
+                _this.setUser(user);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(user);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to forgot with the provided user email.
@@ -9175,23 +9179,38 @@ var UsersService = /** @class */ (function () {
     /**
      * Server call to reset password api with the provided new password.
      *
-     * @return { Observable<any>}
+     * @return { Observable<User> }
      */
     UsersService.prototype.reset$ = function (token, postData) {
+        var _this = this;
         if (postData === void 0) { postData = {}; }
         var methodTrace = this.constructor.name + " > reset$() > "; // for debugging
         return this.http.post(this.serverHost + "/account/reset/" + token, postData, { headers: this.headers })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
+            var user = null;
+            if (data && data.email) {
+                user = new _models_user__WEBPACK_IMPORTED_MODULE_6__["User"](data.name, data.email, data.avatar, null, null, data.currency);
+                _this.setUser(user);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(user);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to login the provided user email and pass.
      *
-     * @return { Observable<any>}
+     * @return { Observable<null>}
      */
     UsersService.prototype.logout$ = function () {
+        var _this = this;
         var methodTrace = this.constructor.name + " > logout$() > "; // for debugging
         return this.http.get(this.serverHost + "/logout")
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
+            _this.setUser(null);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     UsersService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),

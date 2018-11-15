@@ -180,14 +180,26 @@ export class UsersService {
   /**
    * Server call to login the provided user email and pass.
    * 
-   * @return { Observable<any>}
+   * @return { Observable<User>}
    */
-  login$(postData: any = {}): Observable<any> {
+  login$(postData: any = {}): Observable<User> {
     const methodTrace = `${this.constructor.name} > login$() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/login`, postData, { headers : this.headers })
         .pipe(
           map(this.appService.extractData),
+          flatMap((data: any): Observable<User> => {
+            let user: User = null;
+
+            if (data && data.email) {
+              user = new User(data.name, data.email, data.avatar, null, null, data.currency);
+              this.setUser(user);
+            } else {
+              this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+            }
+
+            return of(user);
+          }),
           catchError(this.appService.handleError)
         );
   }
@@ -210,14 +222,26 @@ export class UsersService {
   /**
    * Server call to reset password api with the provided new password.
    * 
-   * @return { Observable<any>}
+   * @return { Observable<User> }
    */
-  reset$(token: string, postData: any = {}): Observable<any> {
+  reset$(token: string, postData: any = {}): Observable<User> {
     const methodTrace = `${this.constructor.name} > reset$() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/account/reset/${token}`, postData, { headers : this.headers })
         .pipe(
           map(this.appService.extractData),
+          flatMap((data: any): Observable<User> => {
+            let user: User = null;
+
+            if (data && data.email) {
+              user = new User(data.name, data.email, data.avatar, null, null, data.currency);
+              this.setUser(user);
+            } else {
+              this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+            }
+    
+            return of(user);
+          }),
           catchError(this.appService.handleError)
         );
   }
@@ -225,7 +249,7 @@ export class UsersService {
   /**
    * Server call to login the provided user email and pass.
    * 
-   * @return { Observable<any>}
+   * @return { Observable<null>}
    */
   logout$(): Observable<any> {
     const methodTrace = `${this.constructor.name} > logout$() > `; // for debugging
@@ -233,6 +257,10 @@ export class UsersService {
     return this.http.get<Response>(`${this.serverHost}/logout`)
         .pipe(
           map(this.appService.extractData),
+          flatMap((data: any): Observable<null> => {
+            this.setUser(null);
+            return of(null);
+          }),
           catchError(this.appService.handleError)
         );
   }

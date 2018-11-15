@@ -5,12 +5,41 @@ const User = mongoose.model('User');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
-const { getUserDataObject } = require('../handlers/userHandlers');
 
 
 const errorTrace = 'authController >';
 
+const getUserObject = async (email, fieldsToPopulate = {}) => {
+    const methodTrace = `${errorTrace} getUserObject() >`;
 
+    console.log(`${methodTrace} ${getMessage('message', 1006, email, true, email)}`);        
+    let user = null;
+    if (Object.keys(fieldsToPopulate).length) {
+        user = await User.findOneAndPopulate({ email }, fieldsToPopulate);//await User.findOne({ email }).populate('personalInfo');
+    } else {
+        user = await User.findOne({ email });
+    }
+
+    if (user) {
+        let dto = {
+            name : user.name, 
+            email : user.email, 
+            avatar : user.gravatar, 
+            currency : user.currency || 'USD'
+        };
+      
+        for (let key of Object.keys(fieldsToPopulate)) {
+            if (fieldsToPopulate[key] === 'true') {
+                dto[key] = user[key] || null;
+            }
+        }
+        
+        return dto;
+    }
+
+    return null;
+};
+exports.getUserObject = getUserObject;
 
 exports.login = (req, res, next) => {
     const methodTrace = `${errorTrace} login() > `;
@@ -39,7 +68,7 @@ exports.login = (req, res, next) => {
         }
 
         console.log(`${methodTrace}${getMessage('message', 1002, user.email, true)}`);
-        req.logIn(user, function(err) {
+        req.logIn(user, async function(err) {
             if (err) {
                 console.log(`${methodTrace}${getMessage('error', 452, user.email, true)}`);
                 res.status(401).json({ 
@@ -56,7 +85,7 @@ exports.login = (req, res, next) => {
                 status : 'success', 
                 codeno : 200,
                 msg : getMessage('message', 1000, null, false),
-                data : getUserDataObject(user)
+                data : await getUserObject(user.email)
             });
         });
     })(req, res, next);
@@ -98,38 +127,6 @@ exports.isLogggedIn = (req, res, next) => {
         data : null
     });
 };
-
-const getUserObject = async (email, fieldsToPopulate = {}) => {
-    const methodTrace = `${errorTrace} getUserObject() >`;
-
-    console.log(`${methodTrace} ${getMessage('message', 1006, email, true, email)}`);        
-    let user = null;
-    if (Object.keys(fieldsToPopulate).length) {
-        user = await User.findOneAndPopulate({ email }, fieldsToPopulate);//await User.findOne({ email }).populate('personalInfo');
-    } else {
-        user = await User.findOne({ email });
-    }
-
-    if (user) {
-        let dto = {
-            name : user.name, 
-            email : user.email, 
-            avatar : user.gravatar, 
-            currency : user.currency || 'USD'
-        };
-      
-        for (let key of Object.keys(fieldsToPopulate)) {
-            if (fieldsToPopulate[key] === 'true') {
-                dto[key] = user[key] || null;
-            }
-        }
-        
-        return dto;
-    }
-
-    return null;
-}
-exports.getUserObject = getUserObject;
 
 exports.getUser = async (req, res, next) => {
     const methodTrace = `${errorTrace} getUser() >`;
@@ -260,12 +257,21 @@ exports.update = async (req, res) => {
     const updatedUser = await user.save(); //here is when we save in the database the deleted values before 
     await req.login(updatedUser); //this comes from passport js
     
-    console.log(`${methodTrace} ${getMessage('message', 1013, user.email, true)}`);
-    res.json({
-        status : 'success', 
-        codeno : 200,
-        msg : getMessage('message', 1013, null, false),
-        data : getUserDataObject(req.user)
+    if (req.user) {
+        console.log(`${methodTrace} ${getMessage('message', 1013, user.email, true)}`);
+        res.json({
+            status : 'success', 
+            codeno : 200,
+            msg : getMessage('message', 1013, null, false),
+            data : await getUserObject(req.user.email)
+        });
+    }
+
+    res.status(401).json({
+        status : "error", 
+        codeno : 452,
+        msg : getMessage('error', 452, null, false),
+        data : null
     });
 };
 

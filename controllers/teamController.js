@@ -4,10 +4,8 @@ const User = mongoose.model('User');
 const Team = mongoose.model('Team');
 const Investment = mongoose.model('Investment');
 const TeamUser = mongoose.model('TeamUser');
-const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
-const { getUserDataObject } = require('../handlers/userHandlers');
 
 const errorTrace = 'teamController >';
 
