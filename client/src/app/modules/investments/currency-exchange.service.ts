@@ -66,14 +66,13 @@ export class CurrencyExchangeService {
       return of(this.cryptoRates[crypto.toUpperCase()]);
     }
     
-    return this.http.get(`${this.cryptoExchangeServerUrl}${crypto.toUpperCase()}`)
-        .pipe(
-          switchMap((res: Object) => {
-            this.cryptoRates[crypto.toUpperCase()] = this.extractCryptoExchangeData(crypto, res);
-            return of(this.cryptoRates[crypto.toUpperCase()]);
-          }),
-          catchError(this.appService.handleError) 
-        );
+    return this.http.get(`${this.cryptoExchangeServerUrl}${crypto.toUpperCase()}`).pipe(
+      switchMap((res: Object) => {
+        this.cryptoRates[crypto.toUpperCase()] = this.extractCryptoExchangeData(crypto, res);
+        return of(this.cryptoRates[crypto.toUpperCase()]);
+      }),
+      catchError(this.appService.handleError) 
+    );
   }
 
   private extractCryptoExchangeData(crypto: string, res: Object): any {

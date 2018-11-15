@@ -75,15 +75,8 @@ export class AppComponent implements OnInit {
     const methodTrace = `${this.constructor.name} > setUser() > `; // for debugging
 
     this.usersService.getAuthenticatedUser$().subscribe(
-      (data: any) => {
-        if (data && data.email) {
-          this.user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-          this.usersService.setUser(this.user);
-        } else {
-          this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
-          this.usersService.setUser(null);
-          this.user = null;
-        }
+      (user: User) => {
+        this.user = user; // this could be a user of null does not matter
       },
       (error: any) => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);

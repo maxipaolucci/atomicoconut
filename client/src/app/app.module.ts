@@ -5,13 +5,12 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import 'hammerjs';
 
-import { AppRoutingModule } from "./app.routing.module";
+import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { UtilService } from './util.service';
 import { AuthResolver } from './auth-resolver.service';
 import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
-import { AuthGuard } from './auth.guard';
 import { CustomMaterialDesignModule } from './modules/shared/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
 import { TeamsModule } from './modules/teams/teams.module'; 
@@ -42,7 +41,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     WelcomeComponent,
     PageNotFoundComponent
   ],
-  providers: [AppService, UtilService, CurrencyExchangeService, AuthResolver, AuthGuard],
+  providers: [AppService, UtilService, CurrencyExchangeService, AuthResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -22,17 +22,17 @@ import { PropertyInvestment } from '../../modules/investments/models/PropertyInv
 })
 export class WelcomeComponent implements OnInit, OnDestroy {
 
-  user : User = null;
-  wealthAmount : number = 0;
-  expectedWealth : number = 0;
-  progressBarWealthValue : number = 0;
-  subscription : Subscription = new Subscription();
+  user: User = null;
+  wealthAmount = 0;
+  expectedWealth = 0;
+  progressBarWealthValue = 0;
+  subscription: Subscription = new Subscription();
 
-  constructor(private mainNavigatorService : MainNavigatorService, private usersService : UsersService, private appService : AppService, 
-      private investmentsService : InvestmentsService, private currencyExchangeService : CurrencyExchangeService, private utilService : UtilService) { }
+  constructor(private mainNavigatorService: MainNavigatorService, private usersService: UsersService, private appService: AppService, 
+      private investmentsService: InvestmentsService, private currencyExchangeService: CurrencyExchangeService, private utilService: UtilService) { }
 
   ngOnInit() {
-    let methodTrace = `${this.constructor.name} > ngOnInit() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: null, selected: true },
@@ -41,27 +41,29 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       { displayName: 'Calculators', url: '/calculators', selected: false }
     ]);
     
-    let currentUserInvestments : Investment[] = [];
-    let newSubscription = this.setUserAndGetInvestments$().pipe(switchMap((userInvestments : Investment[]) => {
-      currentUserInvestments = userInvestments;
-      let investmentsDates : string[] = userInvestments.map((investment : Investment) => {
-        if (investment instanceof CurrencyInvestment) {  
-          return this.utilService.formatDate((<CurrencyInvestment>investment).buyingDate);
-        } else if (investment instanceof PropertyInvestment) {
-          return this.utilService.formatDate((<PropertyInvestment>investment).buyingDate);
-        }
+    let currentUserInvestments: Investment[] = [];
+    const newSubscription = this.setUserAndGetInvestments$().pipe(
+      switchMap((userInvestments: Investment[]) => {
+        currentUserInvestments = userInvestments;
+        const investmentsDates: string[] = userInvestments.map((investment: Investment) => {
+          if (investment instanceof CurrencyInvestment) {  
+            return this.utilService.formatDate((<CurrencyInvestment>investment).buyingDate);
+          } else if (investment instanceof PropertyInvestment) {
+            return this.utilService.formatDate((<PropertyInvestment>investment).buyingDate);
+          }
 
-        return this.utilService.formatToday(); //this should never happen. BuyingDate is required in investments
-      });
-      
-      return this.currencyExchangeService.getCurrencyRates$(investmentsDates);
-    })).subscribe(currencyRates => {
-      //iterate investments and sum returns using dated rates.
-      for (let investment of currentUserInvestments) {
-        let myPercentage = (investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
+          return this.utilService.formatToday(); // this should never happen. BuyingDate is required in investments
+        });
+        
+        return this.currencyExchangeService.getCurrencyRates$(investmentsDates);
+      })
+    ).subscribe(currencyRates => {
+      // iterate investments and sum returns using dated rates.
+      for (const investment of currentUserInvestments) {
+        const myPercentage = (investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
 
         if (investment instanceof CurrencyInvestment) {  
-          let currencyInvestment : CurrencyInvestment = <CurrencyInvestment>investment;
+          const currencyInvestment: CurrencyInvestment = <CurrencyInvestment>investment;
 
           if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
             this.wealthAmount += ((currencyInvestment.amount * (currencyRates[this.utilService.formatToday()][`USD${currencyInvestment.unit}`] || 1)) 
@@ -75,20 +77,20 @@ export class WelcomeComponent implements OnInit, OnDestroy {
                   * myPercentage / 100;
               this.calculateProgressBarWealthValue();
             },
-            (error : any) => {
+            (error: any) => {
               this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
               this.appService.showResults(`There was an error trying to get ${currencyInvestment.unit} rates data, please try again in a few minutes.`, 'error');
             });
           }
         } else if (investment instanceof PropertyInvestment) {
-          let propertyInvestment : PropertyInvestment = <PropertyInvestment>investment;
+          const propertyInvestment: PropertyInvestment = <PropertyInvestment>investment;
           this.wealthAmount += (this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit)
               - (propertyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(propertyInvestment.buyingDate)][`USD${propertyInvestment.loanAmountUnit}`] || 1)))
               * myPercentage / 100;
           this.calculateProgressBarWealthValue();
         }
       }
-    }, (error : any) => {
+    }, (error: any) => {
       this.appService.consoleLog('error', `${methodTrace} There was an error when trying retrieve currency rates with user investments observables.`, error);
       this.user = null;
     });
@@ -97,9 +99,9 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
     
-    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
@@ -108,11 +110,11 @@ export class WelcomeComponent implements OnInit, OnDestroy {
    * 
    * @return { Observable<Investment[]> } . An observable with array of the logged in user investments or [] if nobody is logged in yet
    */
-  setUserAndGetInvestments$() : Observable<Investment[]> {
-    let methodTrace = `${this.constructor.name} > setUserAndGetInvestments$() > `; //for debugging
+  setUserAndGetInvestments$(): Observable<Investment[]> {
+    const methodTrace = `${this.constructor.name} > setUserAndGetInvestments$() > `; // for debugging
 
     let gotAuthenticatedUserFromServer = false;
-    const user$ = this.usersService.user$.pipe(switchMap((user : User) => {
+    const user$ = this.usersService.user$.pipe(switchMap((user: User) => {
       if (!user) {
         return of(null);
       } else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
@@ -124,16 +126,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     }));
 
     return user$.pipe(switchMap(user => {
-      if (user && user.email) {
-        let personalInfo = null;
-        if (user.personalInfo) {
-          personalInfo = new AccountPersonal(user.personalInfo.birthday);
-        }
-
-        let financialInfo = null;
+      if (user) {
         if (user.financialInfo) {
-          financialInfo = new AccountFinance(user.financialInfo.annualIncome, user.financialInfo.annualIncomeUnit, 
-              user.financialInfo.savings, user.financialInfo.savingsUnit, user.financialInfo.incomeTaxRate);
           
           if (gotAuthenticatedUserFromServer !== null) {
             this.wealthAmount += this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
@@ -147,12 +141,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           
           this.calculateProgressBarWealthValue();
         }
-        user = new User(user.name, user.email, user.avatar, financialInfo, personalInfo, user.currency);          
         this.user = user;
+        
         if (gotAuthenticatedUserFromServer) {
-          gotAuthenticatedUserFromServer = null; //shut down the flag
-          //we just got updated information from server, let's update the current user source
-          this.usersService.setUser(user);
+          gotAuthenticatedUserFromServer = null; // shut down the flag
         }
 
         return this.investmentsService.getInvestments$(user.email);
@@ -170,7 +162,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let value = this.wealthAmount * 100 / this.expectedWealth;
+    const value = this.wealthAmount * 100 / this.expectedWealth;
     this.progressBarWealthValue = value > 100 ? 100 : value;
   }
 
