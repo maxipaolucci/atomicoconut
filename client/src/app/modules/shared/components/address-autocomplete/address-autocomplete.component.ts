@@ -16,10 +16,9 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
 
   @ViewChild('addressAutocompleteForm') form;
   @ViewChild('addressInput') addressInput: NgModel;
-  @Input() id : string;
+  @Input() id: string;
   @Input() placeHolder: string;
   @Input() defaultValues: any = null; // the default values of the component model
-  //@Input() required : boolean = false;
   @Output() values: EventEmitter<any> = new EventEmitter();
 
   model: any = {
@@ -99,7 +98,7 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
   /**
    * Using this function we can map our selection to the item description intead the whole object
    */
-  autocompleteDisplayFn(place? : google.maps.places.QueryAutocompletePrediction): string | undefined {
+  autocompleteDisplayFn(place?: google.maps.places.QueryAutocompletePrediction): string | undefined {
     return place ? place.description : '';
   }
 
@@ -138,7 +137,7 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
     if (this.model.mapsPlaceId) {
       // the user picked from the suggestion list
       address = new Address(this.model.description, this.model.latitude, this.model.longitude, this.model.mapsPlaceId);
-    } else if (description){
+    } else if (description) {
       // the user just type a custom address
       address = new Address(description, null, null, null);
     } else {

@@ -26,7 +26,7 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
     CustomMaterialDesignModule,
     AgmCoreModule.forRoot({
       apiKey: environment.mapsApiKey,
-      libraries: ["places"]
+      libraries: ['places']
     }),
   ],
   declarations: [ 
@@ -54,7 +54,7 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
     ProgressBarComponent
   ],
   entryComponents: [
-    YesNoDialogComponent, //added as material doc suggest to allow AOT on this on the fly created class
+    YesNoDialogComponent, // added as material doc suggest to allow AOT on this on the fly created class
     SnackbarSimpleComponent
   ]
 })

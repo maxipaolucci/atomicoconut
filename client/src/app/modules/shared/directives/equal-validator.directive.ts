@@ -19,7 +19,7 @@ export class EqualValidatorDirective implements Validator {
     return this.reverse === 'true' ? true : false;
   }
 
-  validate(control : AbstractControl) : { [key : string] : any } {
+  validate(control: AbstractControl): { [key: string]: any } {
     const equalsFormControl = control.root.get(this.equalFormControlName);
     if (equalsFormControl && equalsFormControl.value !== control.value) {
       if (this.isReverse) {
@@ -28,7 +28,7 @@ export class EqualValidatorDirective implements Validator {
         return { 'equalvalidator' : true };
       }
     } else if (equalsFormControl) {
-      //value is the same on both
+      // value is the same on both
       if (this.reverse) {
         delete equalsFormControl.errors['equalvalidator'];
         if (!Object.keys(equalsFormControl.errors).length) {

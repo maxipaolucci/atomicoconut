@@ -12,20 +12,20 @@ export class NumberValidatorDirective {
 
   constructor(@Attribute('numberValidator') public validationType: string) {}
 
-  validate(control : AbstractControl) : { [key : string] : any } {
+  validate(control: AbstractControl): { [key: string]: any } {
     
-    //if the field is empty return valid
-    const val : number = control.value;
+    // if the field is empty return valid
+    const val: number = control.value;
     if (!val) {
       return null;
     } 
 
-    let validationObj : any = {};
+    let validationObj: any = {};
     if (this.validationType) {
       validationObj = JSON.parse(this.validationType);
     }
 
-    //original pattern: ^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$
+    // original pattern: ^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$
     let pattern = '^[+-]?[0-9]{1,';
     pattern += !isNaN(validationObj.maxIntegerDigits) && validationObj.maxIntegerDigits > 1 ? validationObj.maxIntegerDigits : 9;
     pattern += '}(?:\.[0-9]{1,';
@@ -34,16 +34,16 @@ export class NumberValidatorDirective {
 
     const numberRegExp = new RegExp(pattern);
 
-    if(!numberRegExp.test(val + '')) {
-      return {"numberValidator": true};
+    if (!numberRegExp.test(val + '')) {
+      return {'numberValidator': true};
     }
     
-    let result : any = {};
-    if(!isNaN(validationObj.min) && val < validationObj.min) {
+    const result: any = {};
+    if (!isNaN(validationObj.min) && val < validationObj.min) {
       result.numberValidatorMin = true;
     }
     
-    if(!isNaN(validationObj.max) && val > validationObj.max) {
+    if (!isNaN(validationObj.max) && val > validationObj.max) {
       result.numberValidatorMax = true;
     }
 

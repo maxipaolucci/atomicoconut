@@ -10,7 +10,7 @@ export class DynamicMapComponent implements OnInit {
   @Input() latitude = null;
   @Input() longitude = null;
   @Input() markers = [];
-  @Input() mapContainerHeight = '300'; //px
+  @Input() mapContainerHeight = '300'; // px
 
   constructor() { }
 

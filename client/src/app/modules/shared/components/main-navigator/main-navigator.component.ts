@@ -10,19 +10,18 @@ import { AppService } from '../../../../app.service';
 })
 export class MainNavigatorComponent implements OnInit, OnDestroy {
   
-  links : any;
-  subscription : Subscription = new Subscription();
+  links: any;
+  subscription: Subscription = new Subscription();
   
-  constructor(private mainNavigatorService : MainNavigatorService, private appService : AppService) { }
+  constructor(private mainNavigatorService: MainNavigatorService, private appService: AppService) { }
 
   ngOnInit() {
-    this.subscription = this.mainNavigatorService.links$.subscribe((links : any[]) => this.links = links);
+    this.subscription = this.mainNavigatorService.links$.subscribe((links: any[]) => this.links = links);
   }
 
   ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; //for debugging
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
     
-    //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 }

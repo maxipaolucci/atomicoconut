@@ -7,9 +7,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class InfoTooltipComponent implements OnInit {
 
-  @Input() title : string = "";
-  @Input() text : string = "";
-  @Input() position : string ="above";
+  @Input() title = '';
+  @Input() text = '';
+  @Input() position = 'above';
 
   constructor() { }
 
