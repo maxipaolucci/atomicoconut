@@ -10,10 +10,11 @@ import { CurrencyExchangeService } from '../../modules/investments/currency-exch
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
 import { Subscription, of, from, Observable } from 'rxjs';
-import { switchMap, take, flatMap, map } from 'rxjs/operators';
+import { switchMap, take, flatMap, combineLatest, concatMap } from 'rxjs/operators';
 import { INVESTMENTS_TYPES } from '../../constants';
 import { UtilService } from '../../util.service';
 import { PropertyInvestment } from '../../modules/investments/models/PropertyInvestment';
+import { start } from 'repl';
 
 @Component({
   selector: 'welcome',
@@ -58,13 +59,14 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         return this.currencyExchangeService.getCurrencyRates$(investmentsDates);
       }),
       flatMap((currencyRates: any): Observable<any> => {
-        const investmentWithRates: any[] = currentUserInvestments.map((investment: Investment) => {
+        const investmentsWithRates: any[] = currentUserInvestments.map((investment: Investment) => {
           return { currencyRates, investment };
         });
 
-        return from(investmentWithRates);
+        return from(investmentsWithRates);
       }),
       flatMap((investmentWithRates: any): Observable<any> => {
+        console.log(investmentWithRates);
         const myPercentage = (investmentWithRates.investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
 
         if (investmentWithRates.investment instanceof CurrencyInvestment) {
@@ -79,10 +81,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           } else if (investmentWithRates.investment.type === INVESTMENTS_TYPES.CRYPTO) {
             return this.currencyExchangeService.getCryptoRates$(currencyInvestment.unit).pipe(
               take(1),
-              flatMap((rates: any) => {
-                //does this SHIT works, return result from pipe???
-                return 
-              })
+              ...
             );
           }
         } else if (investmentWithRates.investment instanceof PropertyInvestment) {
@@ -98,11 +97,14 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         }
         
       })
-    ).subscribe((rates) => {
-      this.wealthAmount += ((currencyInvestment.amount * rates.price) 
-          - (currencyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(currencyInvestment.buyingDate)][`USD${currencyInvestment.loanAmountUnit}`] || 1)))
-          * myPercentage / 100;
-      this.calculateProgressBarWealthValue();
+    ).subscribe((data) => {
+      if (data) {
+        this.wealthAmount += ((data.investment.amount * data.cryptoRates.price) 
+            - (data.investment.loanAmount / (data['currencyRates'][this.utilService.formatDate(data.investment.buyingDate)][`USD${data.investment.loanAmountUnit}`] || 1)))
+            * myPercentage / 100;
+        this.calculateProgressBarWealthValue();
+      }
+      
     },
     (error: any) => {
       this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
