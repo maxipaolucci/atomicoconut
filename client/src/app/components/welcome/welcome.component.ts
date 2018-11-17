@@ -3,14 +3,12 @@ import { MainNavigatorService } from '../../modules/shared/components/main-navig
 import { UsersService } from '../../modules/users/users.service';
 import { AppService } from '../../app.service';
 import { User } from '../../modules/users/models/user';
-import { AccountPersonal } from '../../modules/users/models/account-personal';
-import { AccountFinance } from '../../modules/users/models/account-finance';
 import { InvestmentsService } from '../../modules/investments/investments.service';
 import { CurrencyExchangeService } from '../../modules/investments/currency-exchange.service';
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
 import { Subscription, of, from, Observable } from 'rxjs';
-import { switchMap, take, flatMap, map } from 'rxjs/operators';
+import { flatMap, map } from 'rxjs/operators';
 import { INVESTMENTS_TYPES } from '../../constants';
 import { UtilService } from '../../util.service';
 import { PropertyInvestment } from '../../modules/investments/models/PropertyInvestment';
@@ -41,6 +39,17 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       { displayName: 'Calculators', url: '/calculators', selected: false }
     ]);
     
+    this.generateWealthComponentInfo();
+  }
+
+  ngOnDestroy() {
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
+  }
+
+  generateWealthComponentInfo() {
+    const methodTrace = `${this.constructor.name} > generateWealthComponentInfo() > `; // for debugging
+
     let currentUserInvestments: Investment[] = [];
     const newSubscription: Subscription = this.setUserAndGetInvestments$().pipe(
       flatMap((userInvestments: Investment[]) => {
@@ -58,7 +67,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         return this.currencyExchangeService.getCurrencyRates$(investmentsDates);
       }),
       flatMap((currencyRates: any): Observable<any> => {
-<<<<<<< HEAD
         const investmentsAndCurrencyRates: any[] = currentUserInvestments.map((investment: Investment) => {
           return { currencyRates, investment };
         });
@@ -66,7 +74,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         return from(investmentsAndCurrencyRates);
       }),
       flatMap((investmentAndCurrencyRates: any): Observable<any> => {
-        console.log(investmentAndCurrencyRates);
         const myPercentage = (investmentAndCurrencyRates.investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
 
         if (investmentAndCurrencyRates.investment instanceof CurrencyInvestment) {
@@ -92,56 +99,18 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           const investment: PropertyInvestment = <PropertyInvestment>investmentAndCurrencyRates.investment;
           this.wealthAmount += (this.currencyExchangeService.getUsdValueOf(investment.property.marketValue, investment.property.marketValueUnit)
               - (investment.loanAmount / (investmentAndCurrencyRates['currencyRates'][this.utilService.formatDate(investment.buyingDate)][`USD${investment.loanAmountUnit}`] || 1)))
-=======
-        const investmentWithRates: any[] = currentUserInvestments.map((investment: Investment) => {
-          return { currencyRates, investment };
-        });
-
-        return from(investmentWithRates);
-      }),
-      flatMap((investmentWithRates: any): Observable<any> => {
-        const myPercentage = (investmentWithRates.investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
-
-        if (investmentWithRates.investment instanceof CurrencyInvestment) {
-          const currencyInvestment: CurrencyInvestment = <CurrencyInvestment>investmentWithRates.investment;
-
-          if (investmentWithRates.investment.type === INVESTMENTS_TYPES.CURRENCY) {
-            this.wealthAmount += ((currencyInvestment.amount * (investmentWithRates['currencyRates'][this.utilService.formatToday()][`USD${currencyInvestment.unit}`] || 1)) 
-                - (currencyInvestment.loanAmount / (investmentWithRates['currencyRates'][this.utilService.formatDate(currencyInvestment.buyingDate)][`USD${currencyInvestment.loanAmountUnit}`] || 1)))
-                * myPercentage / 100;
-            this.calculateProgressBarWealthValue();
-            return of(null);
-          } else if (investmentWithRates.investment.type === INVESTMENTS_TYPES.CRYPTO) {
-            return this.currencyExchangeService.getCryptoRates$(currencyInvestment.unit).pipe(
-              take(1),
-              flatMap((rates: any) => {
-                //does this SHIT works, return result from pipe???
-                return 
-              })
-            );
-          }
-        } else if (investmentWithRates.investment instanceof PropertyInvestment) {
-          const propertyInvestment: PropertyInvestment = <PropertyInvestment>investmentWithRates.investment;
-          this.wealthAmount += (this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit)
-              - (propertyInvestment.loanAmount / (investmentWithRates['currencyRates'][this.utilService.formatDate(propertyInvestment.buyingDate)][`USD${propertyInvestment.loanAmountUnit}`] || 1)))
->>>>>>> more progress in this refactor
               * myPercentage / 100;
           this.calculateProgressBarWealthValue();
           return of(null);
         } else {
-<<<<<<< HEAD
           this.appService.consoleLog('error', `${methodTrace} Investment type not recognized by this component: ${investmentAndCurrencyRates.investment.type}`);
-=======
-          this.appService.consoleLog('error', `${methodTrace} Investment type not recognized by this component: ${investmentWithRates.investment.type}`);
->>>>>>> more progress in this refactor
           return of(null); // should never happen
         }
         
       })
-<<<<<<< HEAD
     ).subscribe((data) => {
       if (data) {
-        console.log(data);
+        // this is a crryptorate investment (all the others returns null)
         this.wealthAmount += ((data.investment.amount * data.cryptoRates.price) 
             - (data.investment.loanAmount / (data['currencyRates'][this.utilService.formatDate(data.investment.buyingDate)][`USD${data.investment.loanAmountUnit}`] || 1)))
             * data.myPercentage / 100;
@@ -152,27 +121,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     (error: any) => {
       this.appService.consoleLog('error', `${methodTrace} There was an error trying to get required data > `, error);
       this.appService.showResults(`There was an error trying to get required data, please try again in a few minutes.`, 'error');
-=======
-    ).subscribe((rates) => {
-      this.wealthAmount += ((currencyInvestment.amount * rates.price) 
-          - (currencyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(currencyInvestment.buyingDate)][`USD${currencyInvestment.loanAmountUnit}`] || 1)))
-          * myPercentage / 100;
-      this.calculateProgressBarWealthValue();
-    },
-    (error: any) => {
-      this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
-      this.appService.showResults(`There was an error trying to get ${currencyInvestment.unit} rates data, please try again in a few minutes.`, 'error');
->>>>>>> more progress in this refactor
     });
-
     this.subscription.add(newSubscription);
-  }
-
-  ngOnDestroy() {
-    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
-    
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
-    this.subscription.unsubscribe();
   }
 
   /**
@@ -183,14 +133,16 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   setUserAndGetInvestments$(): Observable<Investment[]> {
     const methodTrace = `${this.constructor.name} > setUserAndGetInvestments$() > `; // for debugging
 
-    let gotAuthenticatedUserFromServer = false;
-    return  this.usersService.user$.pipe(
+    return this.usersService.user$.pipe(
       flatMap((user: User) => {
+        // reset all values to recalculate for this user 
+        this.wealthAmount = 0;
+        this.expectedWealth = 0;
+        this.progressBarWealthValue = 0;
         if (!user) {
           return of(null);
-        } else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
-          gotAuthenticatedUserFromServer = true;
-          return this.usersService.getAuthenticatedUser$({ personalInfo : true, financialInfo : true });
+        } else if (!user.personalInfo || !user.financialInfo) {
+          return this.usersService.getAuthenticatedUser$({ personalInfo: true, financialInfo: true });
         } else {
           return of(user);
         }
@@ -200,9 +152,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
         if (user) {
           if (user.financialInfo) {
-            if (gotAuthenticatedUserFromServer !== null) {
-              this.wealthAmount += this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
-            }
+            this.wealthAmount += this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
             
             if (user.personalInfo && user.personalInfo.age) {
               this.expectedWealth = this.currencyExchangeService.getUsdValueOf(user.financialInfo.annualIncome || 0, user.financialInfo.annualIncomeUnit) * user.personalInfo.age / 10;
@@ -211,10 +161,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
             }
             
             this.calculateProgressBarWealthValue();
-          }
-          
-          if (gotAuthenticatedUserFromServer) {
-            gotAuthenticatedUserFromServer = null; // shut down the flag
           }
   
           return this.investmentsService.getInvestments$(user.email);
