@@ -968,6 +968,7 @@ var WelcomeComponent = /** @class */ (function () {
                 return _this.utilService.formatToday(); // this should never happen. BuyingDate is required in investments
             });
             return _this.currencyExchangeService.getCurrencyRates$(investmentsDates);
+<<<<<<< HEAD
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (currencyRates) {
             var investmentsAndCurrencyRates = currentUserInvestments.map(function (investment) {
                 return { currencyRates: currencyRates, investment: investment };
@@ -981,10 +982,37 @@ var WelcomeComponent = /** @class */ (function () {
                 if (investment_1.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CURRENCY) {
                     _this.wealthAmount += ((investment_1.amount * (investmentAndCurrencyRates['currencyRates'][_this.utilService.formatToday()]["USD" + investment_1.unit] || 1))
                         - (investment_1.loanAmount / (investmentAndCurrencyRates['currencyRates'][_this.utilService.formatDate(investment_1.buyingDate)]["USD" + investment_1.loanAmountUnit] || 1)))
+=======
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (currencyRates) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["from"])(currentUserInvestments);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (currencyRates) {
+            // iterate investments and sum returns using dated rates.
+            for (var _i = 0, currentUserInvestments_1 = currentUserInvestments; _i < currentUserInvestments_1.length; _i++) {
+                var investment = currentUserInvestments_1[_i];
+                var myPercentage = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
+                if (investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"]) {
+                    var currencyInvestment = investment;
+                    if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CURRENCY) {
+                        _this.wealthAmount += ((currencyInvestment.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment.unit] || 1))
+                            - (currencyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment.buyingDate)]["USD" + currencyInvestment.loanAmountUnit] || 1)))
+                            * myPercentage / 100;
+                        _this.calculateProgressBarWealthValue();
+                        return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
+                    }
+                    else if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CRYPTO) {
+                        return _this.currencyExchangeService.getCryptoRates$(currencyInvestment.unit).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["take"])(1));
+                    }
+                }
+                else if (investment instanceof _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
+                    var propertyInvestment = investment;
+                    _this.wealthAmount += (_this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit)
+                        - (propertyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(propertyInvestment.buyingDate)]["USD" + propertyInvestment.loanAmountUnit] || 1)))
+>>>>>>> more progress in this refactor
                         * myPercentage / 100;
                     _this.calculateProgressBarWealthValue();
                     return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
                 }
+<<<<<<< HEAD
                 else if (investment_1.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CRYPTO) {
                     return _this.currencyExchangeService.getCryptoRates$(investment_1.unit).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (cryptoRates) {
                         return { cryptoRates: cryptoRates, myPercentage: myPercentage, investment: investment_1, currencyRates: investmentAndCurrencyRates.currencyRates };
@@ -1014,10 +1042,26 @@ var WelcomeComponent = /** @class */ (function () {
                     - (data.investment.loanAmount / (data['currencyRates'][_this.utilService.formatDate(data.investment.buyingDate)]["USD" + data.investment.loanAmountUnit] || 1)))
                     * data.myPercentage / 100;
                 _this.calculateProgressBarWealthValue();
+=======
+                else {
+                    _this.appService.consoleLog('error', methodTrace + " Investment type not recognized by this component: " + investment.type);
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null); // should never happen
+                }
+>>>>>>> more progress in this refactor
             }
+        })).subscribe(function (rates) {
+            _this.wealthAmount += ((currencyInvestment.amount * rates.price)
+                - (currencyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment.buyingDate)]["USD" + currencyInvestment.loanAmountUnit] || 1)))
+                * myPercentage / 100;
+            _this.calculateProgressBarWealthValue();
         }, function (error) {
+<<<<<<< HEAD
             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get required data > ", error);
             _this.appService.showResults("There was an error trying to get required data, please try again in a few minutes.", 'error');
+=======
+            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment.unit + " rates data > ", error);
+            _this.appService.showResults("There was an error trying to get " + currencyInvestment.unit + " rates data, please try again in a few minutes.", 'error');
+>>>>>>> more progress in this refactor
         });
         this.subscription.add(newSubscription);
     };
@@ -3562,7 +3606,11 @@ var CurrencyExchangeService = /** @class */ (function () {
         if (this.cryptoRates[crypto.toUpperCase()]) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.cryptoRates[crypto.toUpperCase()]);
         }
+<<<<<<< HEAD
         return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase()).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (res) { return _this.extractCryptoExchangeData(crypto, res); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (rates) {
+=======
+        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase()).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(this.extractCryptoExchangeData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (rates) {
+>>>>>>> more progress in this refactor
             if (rates) {
                 _this.cryptoRates[crypto.toUpperCase()] = rates;
             }
