@@ -10,7 +10,7 @@ import { CurrencyExchangeService } from '../../modules/investments/currency-exch
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
 import { Subscription, of, from, Observable } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
+import { switchMap, take, flatMap, map } from 'rxjs/operators';
 import { INVESTMENTS_TYPES } from '../../constants';
 import { UtilService } from '../../util.service';
 import { PropertyInvestment } from '../../modules/investments/models/PropertyInvestment';
@@ -42,8 +42,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     ]);
     
     let currentUserInvestments: Investment[] = [];
-    const newSubscription = this.setUserAndGetInvestments$().pipe(
-      switchMap((userInvestments: Investment[]) => {
+    const newSubscription: Subscription = this.setUserAndGetInvestments$().pipe(
+      flatMap((userInvestments: Investment[]) => {
         currentUserInvestments = userInvestments;
         const investmentsDates: string[] = userInvestments.map((investment: Investment) => {
           if (investment instanceof CurrencyInvestment) {  
@@ -56,43 +56,57 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         });
         
         return this.currencyExchangeService.getCurrencyRates$(investmentsDates);
-      })
-    ).subscribe(currencyRates => {
-      // iterate investments and sum returns using dated rates.
-      for (const investment of currentUserInvestments) {
-        const myPercentage = (investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
+      }),
+      flatMap((currencyRates: any): Observable<any> => {
+        const investmentWithRates: any[] = currentUserInvestments.map((investment: Investment) => {
+          return { currencyRates, investment };
+        });
 
-        if (investment instanceof CurrencyInvestment) {  
-          const currencyInvestment: CurrencyInvestment = <CurrencyInvestment>investment;
+        return from(investmentWithRates);
+      }),
+      flatMap((investmentWithRates: any): Observable<any> => {
+        const myPercentage = (investmentWithRates.investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
 
-          if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
-            this.wealthAmount += ((currencyInvestment.amount * (currencyRates[this.utilService.formatToday()][`USD${currencyInvestment.unit}`] || 1)) 
-                - (currencyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(currencyInvestment.buyingDate)][`USD${currencyInvestment.loanAmountUnit}`] || 1)))
+        if (investmentWithRates.investment instanceof CurrencyInvestment) {
+          const currencyInvestment: CurrencyInvestment = <CurrencyInvestment>investmentWithRates.investment;
+
+          if (investmentWithRates.investment.type === INVESTMENTS_TYPES.CURRENCY) {
+            this.wealthAmount += ((currencyInvestment.amount * (investmentWithRates['currencyRates'][this.utilService.formatToday()][`USD${currencyInvestment.unit}`] || 1)) 
+                - (currencyInvestment.loanAmount / (investmentWithRates['currencyRates'][this.utilService.formatDate(currencyInvestment.buyingDate)][`USD${currencyInvestment.loanAmountUnit}`] || 1)))
                 * myPercentage / 100;
             this.calculateProgressBarWealthValue();
-          } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
-            this.currencyExchangeService.getCryptoRates$(currencyInvestment.unit).pipe(take(1)).subscribe((rates) => {
-              this.wealthAmount += ((currencyInvestment.amount * rates.price) 
-                  - (currencyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(currencyInvestment.buyingDate)][`USD${currencyInvestment.loanAmountUnit}`] || 1)))
-                  * myPercentage / 100;
-              this.calculateProgressBarWealthValue();
-            },
-            (error: any) => {
-              this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
-              this.appService.showResults(`There was an error trying to get ${currencyInvestment.unit} rates data, please try again in a few minutes.`, 'error');
-            });
+            return of(null);
+          } else if (investmentWithRates.investment.type === INVESTMENTS_TYPES.CRYPTO) {
+            return this.currencyExchangeService.getCryptoRates$(currencyInvestment.unit).pipe(
+              take(1),
+              flatMap((rates: any) => {
+                //does this SHIT works, return result from pipe???
+                return 
+              })
+            );
           }
-        } else if (investment instanceof PropertyInvestment) {
-          const propertyInvestment: PropertyInvestment = <PropertyInvestment>investment;
+        } else if (investmentWithRates.investment instanceof PropertyInvestment) {
+          const propertyInvestment: PropertyInvestment = <PropertyInvestment>investmentWithRates.investment;
           this.wealthAmount += (this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit)
-              - (propertyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(propertyInvestment.buyingDate)][`USD${propertyInvestment.loanAmountUnit}`] || 1)))
+              - (propertyInvestment.loanAmount / (investmentWithRates['currencyRates'][this.utilService.formatDate(propertyInvestment.buyingDate)][`USD${propertyInvestment.loanAmountUnit}`] || 1)))
               * myPercentage / 100;
           this.calculateProgressBarWealthValue();
+          return of(null);
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Investment type not recognized by this component: ${investmentWithRates.investment.type}`);
+          return of(null); // should never happen
         }
-      }
-    }, (error: any) => {
-      this.appService.consoleLog('error', `${methodTrace} There was an error when trying retrieve currency rates with user investments observables.`, error);
-      this.user = null;
+        
+      })
+    ).subscribe((rates) => {
+      this.wealthAmount += ((currencyInvestment.amount * rates.price) 
+          - (currencyInvestment.loanAmount / (currencyRates[this.utilService.formatDate(currencyInvestment.buyingDate)][`USD${currencyInvestment.loanAmountUnit}`] || 1)))
+          * myPercentage / 100;
+      this.calculateProgressBarWealthValue();
+    },
+    (error: any) => {
+      this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${currencyInvestment.unit} rates data > `, error);
+      this.appService.showResults(`There was an error trying to get ${currencyInvestment.unit} rates data, please try again in a few minutes.`, 'error');
     });
 
     this.subscription.add(newSubscription);
@@ -114,45 +128,45 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > setUserAndGetInvestments$() > `; // for debugging
 
     let gotAuthenticatedUserFromServer = false;
-    const user$ = this.usersService.user$.pipe(switchMap((user: User) => {
-      if (!user) {
-        return of(null);
-      } else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
-        gotAuthenticatedUserFromServer = true;
-        return this.usersService.getAuthenticatedUser$({ personalInfo : true, financialInfo : true });
-      } else {
-        return of(user);
-      }
-    }));
-
-    return user$.pipe(switchMap(user => {
-      if (user) {
-        if (user.financialInfo) {
-          
-          if (gotAuthenticatedUserFromServer !== null) {
-            this.wealthAmount += this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
-          }
-          
-          if (user.personalInfo && user.personalInfo.age) {
-            this.expectedWealth = this.currencyExchangeService.getUsdValueOf(user.financialInfo.annualIncome || 0, user.financialInfo.annualIncomeUnit) * user.personalInfo.age / 10;
-          } else {
-            this.expectedWealth = 0;
-          }
-          
-          this.calculateProgressBarWealthValue();
+    return  this.usersService.user$.pipe(
+      flatMap((user: User) => {
+        if (!user) {
+          return of(null);
+        } else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
+          gotAuthenticatedUserFromServer = true;
+          return this.usersService.getAuthenticatedUser$({ personalInfo : true, financialInfo : true });
+        } else {
+          return of(user);
         }
+      }),
+      flatMap((user: User) => {
         this.user = user;
-        
-        if (gotAuthenticatedUserFromServer) {
-          gotAuthenticatedUserFromServer = null; // shut down the flag
-        }
 
-        return this.investmentsService.getInvestments$(user.email);
-      } else {
-        this.user = null;
+        if (user) {
+          if (user.financialInfo) {
+            if (gotAuthenticatedUserFromServer !== null) {
+              this.wealthAmount += this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
+            }
+            
+            if (user.personalInfo && user.personalInfo.age) {
+              this.expectedWealth = this.currencyExchangeService.getUsdValueOf(user.financialInfo.annualIncome || 0, user.financialInfo.annualIncomeUnit) * user.personalInfo.age / 10;
+            } else {
+              this.expectedWealth = 0;
+            }
+            
+            this.calculateProgressBarWealthValue();
+          }
+          
+          if (gotAuthenticatedUserFromServer) {
+            gotAuthenticatedUserFromServer = null; // shut down the flag
+          }
+  
+          return this.investmentsService.getInvestments$(user.email);
+        }
+        
         return of([]);
-      }
-    }));
+      })
+    );
     
   }
 

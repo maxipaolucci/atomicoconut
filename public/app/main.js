@@ -371,12 +371,13 @@ var AppComponent = /** @class */ (function () {
         this.title = 'AtomiCoconut';
         this.user = null;
         this.todayUserPrefRate = null;
+        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subscription"]();
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
-        this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["switchMap"])(function (user) {
+        var newSubcription = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["switchMap"])(function (user) {
             _this.user = user;
             if (_this.user && _this.user.currency && _this.user.currency !== 'USD') {
                 return _this.currencyExchangeService.getCurrencyRates$();
@@ -393,20 +394,27 @@ var AppComponent = /** @class */ (function () {
             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get currency rates data > " + error);
             _this.appService.showResults("There was an error trying to get currency rates data.", 'error');
         }); // start listening the source of user
+        this.subscription.add(newSubcription);
         this.setUser();
         this.getCryptoRates('BTC');
         this.getCryptoRates('XMR');
+    };
+    AppComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
     };
     AppComponent.prototype.getCryptoRates = function (crypto) {
         var _this = this;
         if (crypto === void 0) { crypto = 'BTC'; }
         var methodTrace = this.constructor.name + " > getCryptoRates() > "; // for debugging
-        this.currencyExchangeService.getCryptoRates$(crypto).subscribe(function (data) {
+        var newSubscription = this.currencyExchangeService.getCryptoRates$(crypto).subscribe(function (data) {
             _this.appService.consoleLog('info', methodTrace + " " + crypto + " exchange rate successfully loaded!");
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + crypto + " rates data > " + error);
             _this.appService.showResults("There was an error trying to get " + crypto + " rates data, please try again in a few minutes.", 'warn');
         });
+        this.subscription.add(newSubscription);
     };
     AppComponent.prototype.setUser = function () {
         var _this = this;
@@ -422,12 +430,13 @@ var AppComponent = /** @class */ (function () {
     AppComponent.prototype.logout = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > logout() > "; // for debugging
-        this.usersService.logout$().subscribe(function (result) {
+        var newSubscription = this.usersService.logout$().subscribe(function (result) {
             _this.user = result;
             _this.router.navigate(['/']);
         }, function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the logout service.", error);
         });
+        this.subscription.add(newSubscription);
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -803,7 +812,7 @@ var AuthResolver = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  404 Page not found\n</p>\n"
+module.exports = "<p>\r\n  404 Page not found\r\n</p>\r\n"
 
 /***/ }),
 
@@ -948,7 +957,7 @@ var WelcomeComponent = /** @class */ (function () {
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
         var currentUserInvestments = [];
-        var newSubscription = this.setUserAndGetInvestments$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["switchMap"])(function (userInvestments) {
+        var newSubscription = this.setUserAndGetInvestments$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (userInvestments) {
             currentUserInvestments = userInvestments;
             var investmentsDates = userInvestments.map(function (investment) {
                 if (investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"]) {
@@ -960,27 +969,24 @@ var WelcomeComponent = /** @class */ (function () {
                 return _this.utilService.formatToday(); // this should never happen. BuyingDate is required in investments
             });
             return _this.currencyExchangeService.getCurrencyRates$(investmentsDates);
-        })).subscribe(function (currencyRates) {
-            var _loop_1 = function (investment) {
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (currencyRates) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["from"])(currentUserInvestments);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (currencyRates) {
+            // iterate investments and sum returns using dated rates.
+            for (var _i = 0, currentUserInvestments_1 = currentUserInvestments; _i < currentUserInvestments_1.length; _i++) {
+                var investment = currentUserInvestments_1[_i];
                 var myPercentage = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
                 if (investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"]) {
-                    var currencyInvestment_1 = investment;
+                    var currencyInvestment = investment;
                     if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CURRENCY) {
-                        _this.wealthAmount += ((currencyInvestment_1.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment_1.unit] || 1))
-                            - (currencyInvestment_1.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment_1.buyingDate)]["USD" + currencyInvestment_1.loanAmountUnit] || 1)))
+                        _this.wealthAmount += ((currencyInvestment.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment.unit] || 1))
+                            - (currencyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment.buyingDate)]["USD" + currencyInvestment.loanAmountUnit] || 1)))
                             * myPercentage / 100;
                         _this.calculateProgressBarWealthValue();
+                        return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
                     }
                     else if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CRYPTO) {
-                        _this.currencyExchangeService.getCryptoRates$(currencyInvestment_1.unit).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["take"])(1)).subscribe(function (rates) {
-                            _this.wealthAmount += ((currencyInvestment_1.amount * rates.price)
-                                - (currencyInvestment_1.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment_1.buyingDate)]["USD" + currencyInvestment_1.loanAmountUnit] || 1)))
-                                * myPercentage / 100;
-                            _this.calculateProgressBarWealthValue();
-                        }, function (error) {
-                            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment_1.unit + " rates data > ", error);
-                            _this.appService.showResults("There was an error trying to get " + currencyInvestment_1.unit + " rates data, please try again in a few minutes.", 'error');
-                        });
+                        return _this.currencyExchangeService.getCryptoRates$(currencyInvestment.unit).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["take"])(1));
                     }
                 }
                 else if (investment instanceof _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
@@ -989,16 +995,21 @@ var WelcomeComponent = /** @class */ (function () {
                         - (propertyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(propertyInvestment.buyingDate)]["USD" + propertyInvestment.loanAmountUnit] || 1)))
                         * myPercentage / 100;
                     _this.calculateProgressBarWealthValue();
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
                 }
-            };
-            // iterate investments and sum returns using dated rates.
-            for (var _i = 0, currentUserInvestments_1 = currentUserInvestments; _i < currentUserInvestments_1.length; _i++) {
-                var investment = currentUserInvestments_1[_i];
-                _loop_1(investment);
+                else {
+                    _this.appService.consoleLog('error', methodTrace + " Investment type not recognized by this component: " + investment.type);
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null); // should never happen
+                }
             }
+        })).subscribe(function (rates) {
+            _this.wealthAmount += ((currencyInvestment.amount * rates.price)
+                - (currencyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment.buyingDate)]["USD" + currencyInvestment.loanAmountUnit] || 1)))
+                * myPercentage / 100;
+            _this.calculateProgressBarWealthValue();
         }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error when trying retrieve currency rates with user investments observables.", error);
-            _this.user = null;
+            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment.unit + " rates data > ", error);
+            _this.appService.showResults("There was an error trying to get " + currencyInvestment.unit + " rates data, please try again in a few minutes.", 'error');
         });
         this.subscription.add(newSubscription);
     };
@@ -3525,12 +3536,14 @@ var CurrencyExchangeService = /** @class */ (function () {
         }
         // if here then we need to retrieve some dates from the server
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpParams"]().set('dates', "" + dates);
-        return this.http.get(this.serverHost + "/getByDates/" + base, { params: params })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (res) {
+        return this.http.get(this.serverHost + "/getByDates/" + base, { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (res) {
             var data = _this.appService.extractData(res);
             if (data) {
                 // merge results
                 Object.assign(_this.currencyRates, data);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
             return _this.currencyRates;
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.appService.handleError), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["retry"])(3));
@@ -3538,11 +3551,17 @@ var CurrencyExchangeService = /** @class */ (function () {
     CurrencyExchangeService.prototype.getCryptoRates$ = function (crypto) {
         var _this = this;
         if (crypto === void 0) { crypto = 'BTC'; }
+        var methodTrace = this.constructor.name + " > getCryptoRates$() > "; // for debugging
         if (this.cryptoRates[crypto.toUpperCase()]) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.cryptoRates[crypto.toUpperCase()]);
         }
-        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase()).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (res) {
-            _this.cryptoRates[crypto.toUpperCase()] = _this.extractCryptoExchangeData(crypto, res);
+        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase()).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(this.extractCryptoExchangeData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (rates) {
+            if (rates) {
+                _this.cryptoRates[crypto.toUpperCase()] = rates;
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
+            }
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(_this.cryptoRates[crypto.toUpperCase()]);
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.appService.handleError));
     };
@@ -5722,7 +5741,6 @@ var AddressAutocompleteComponent = /** @class */ (function () {
     function AddressAutocompleteComponent(mapsAPILoader) {
         this.mapsAPILoader = mapsAPILoader;
         this.defaultValues = null; // the default values of the component model
-        //@Input() required : boolean = false;
         this.values = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.model = {
             description: null,
@@ -6027,7 +6045,7 @@ var DynamicMapComponent = /** @class */ (function () {
         this.latitude = null;
         this.longitude = null;
         this.markers = [];
-        this.mapContainerHeight = '300'; //px
+        this.mapContainerHeight = '300'; // px
     }
     DynamicMapComponent.prototype.ngOnInit = function () {
     };
@@ -6107,23 +6125,23 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var InfoTooltipComponent = /** @class */ (function () {
     function InfoTooltipComponent() {
-        this.title = "";
-        this.text = "";
-        this.position = "above";
+        this.title = '';
+        this.text = '';
+        this.position = 'above';
     }
     InfoTooltipComponent.prototype.ngOnInit = function () {
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
+        __metadata("design:type", Object)
     ], InfoTooltipComponent.prototype, "title", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
+        __metadata("design:type", Object)
     ], InfoTooltipComponent.prototype, "text", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
+        __metadata("design:type", Object)
     ], InfoTooltipComponent.prototype, "position", void 0);
     InfoTooltipComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -6200,8 +6218,7 @@ var MainNavigatorComponent = /** @class */ (function () {
         this.subscription = this.mainNavigatorService.links$.subscribe(function (links) { return _this.links = links; });
     };
     MainNavigatorComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; //for debugging
-        //this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
         this.subscription.unsubscribe();
     };
     MainNavigatorComponent = __decorate([
@@ -6247,11 +6264,11 @@ var MainNavigatorService = /** @class */ (function () {
         this.linksSource = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
         this.links$ = this.linksSource.asObservable();
     }
-    //links source feeder
+    // links source feeder
     MainNavigatorService.prototype.setLinks = function (newLinks) {
         this.linksSource.next(newLinks);
     };
-    //add a link to the source feeder
+    // add a link to the source feeder
     MainNavigatorService.prototype.appendLink = function (link) {
         var currentLinks = this.linksSource.getValue();
         currentLinks.push(link);
@@ -6275,7 +6292,7 @@ var MainNavigatorService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\n  <mat-progress-bar \n      class=\"progress-bar\"\n      [ngClass]=\"extraClasses\"\n      [color]=\"color\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n  <p *ngIf=\"message\">{{ message }}</p>\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n  <mat-progress-bar \r\n      class=\"progress-bar\"\r\n      [ngClass]=\"extraClasses\"\r\n      [color]=\"color\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  <p *ngIf=\"message\">{{ message }}</p>\r\n</div>"
 
 /***/ }),
 
@@ -6313,23 +6330,23 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var ProgressBarComponent = /** @class */ (function () {
     function ProgressBarComponent() {
-        this.message = "";
-        this.color = "primary";
-        this.extraClasses = "";
+        this.message = '';
+        this.color = 'primary';
+        this.extraClasses = '';
     }
     ProgressBarComponent.prototype.ngOnInit = function () {
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
+        __metadata("design:type", Object)
     ], ProgressBarComponent.prototype, "message", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
+        __metadata("design:type", Object)
     ], ProgressBarComponent.prototype, "color", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
+        __metadata("design:type", Object)
     ], ProgressBarComponent.prototype, "extraClasses", void 0);
     ProgressBarComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -6639,7 +6656,7 @@ var EqualValidatorDirective = /** @class */ (function () {
             }
         }
         else if (equalsFormControl) {
-            //value is the same on both
+            // value is the same on both
             if (this.reverse) {
                 delete equalsFormControl.errors['equalvalidator'];
                 if (!Object.keys(equalsFormControl.errors).length) {
@@ -6698,7 +6715,7 @@ var NumberValidatorDirective = /** @class */ (function () {
     }
     NumberValidatorDirective_1 = NumberValidatorDirective;
     NumberValidatorDirective.prototype.validate = function (control) {
-        //if the field is empty return valid
+        // if the field is empty return valid
         var val = control.value;
         if (!val) {
             return null;
@@ -6707,7 +6724,7 @@ var NumberValidatorDirective = /** @class */ (function () {
         if (this.validationType) {
             validationObj = JSON.parse(this.validationType);
         }
-        //original pattern: ^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$
+        // original pattern: ^[+-]?[0-9]{1,9}(?:\.[0-9]{1,2})?$
         var pattern = '^[+-]?[0-9]{1,';
         pattern += !isNaN(validationObj.maxIntegerDigits) && validationObj.maxIntegerDigits > 1 ? validationObj.maxIntegerDigits : 9;
         pattern += '}(?:\.[0-9]{1,';
@@ -6715,7 +6732,7 @@ var NumberValidatorDirective = /** @class */ (function () {
         pattern += '})?$';
         var numberRegExp = new RegExp(pattern);
         if (!numberRegExp.test(val + '')) {
-            return { "numberValidator": true };
+            return { 'numberValidator': true };
         }
         var result = {};
         if (!isNaN(validationObj.min) && val < validationObj.min) {
@@ -6807,7 +6824,7 @@ var SharedModule = /** @class */ (function () {
                 _modules_shared_custom_material_design_module__WEBPACK_IMPORTED_MODULE_7__["CustomMaterialDesignModule"],
                 _agm_core__WEBPACK_IMPORTED_MODULE_15__["AgmCoreModule"].forRoot({
                     apiKey: _environments_environment__WEBPACK_IMPORTED_MODULE_16__["environment"].mapsApiKey,
-                    libraries: ["places"]
+                    libraries: ['places']
                 }),
             ],
             declarations: [

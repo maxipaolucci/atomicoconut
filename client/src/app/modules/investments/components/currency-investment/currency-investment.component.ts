@@ -57,7 +57,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     const currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
     const currencyRatesAndUser$ = this.usersService.user$.pipe(combineLatest(currencyRates$, (user, currencyRates) => {
       this.user = user;
-      return { user, currencyRates}
+      return { user, currencyRates};
     })); // (currency rates and user) source
     
     if (this.investment.type === INVESTMENTS_TYPES.CRYPTO) {
@@ -172,7 +172,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     }
 
     this.actionRunning = true;
-    let yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
+    const yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
       width: '250px',
       data: { 
         title : 'Delete investment',
@@ -218,7 +218,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
         }
       );
 
-      this.subscription.add(newSubscription)
+      this.subscription.add(newSubscription);
     } else {
       this.appService.showResults(`You are not logged into AtomiCoconut, you must login first.`, 'error');
       this.router.navigate(['/users/login']);

@@ -12,11 +12,8 @@ export class CurrencyExchangeService {
 
   private cryptoExchangeServerUrl = 'https://coincap.io/page/';
   cryptoRates: any = {};
-
   currencyRates: any = {};
-
   private serverHost: string = environment.apiHost + '/api/currencyRates';
-
 
   constructor(private http: HttpClient, private appService: AppService, private utilService: UtilService) { }
 
@@ -37,38 +34,45 @@ export class CurrencyExchangeService {
       // all dates cached then return this object
       return of(this.currencyRates);
     }
-    
 
     // if here then we need to retrieve some dates from the server
     const params = new HttpParams().set('dates', `${dates}`);
 
-    return this.http.get<Response>(`${this.serverHost}/getByDates/${base}`, { params })
-        .pipe(
-          map((res: Response) => {
-            const data = this.appService.extractData(res);
+    return this.http.get<Response>(`${this.serverHost}/getByDates/${base}`, { params }).pipe(
+      map((res: Response) => {
+        const data = this.appService.extractData(res);
 
-            if (data) {
-              // merge results
-              Object.assign(this.currencyRates, data);
-            }
+        if (data) {
+          // merge results
+          Object.assign(this.currencyRates, data);
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        }
 
-            return this.currencyRates;
-          }),
-          catchError(this.appService.handleError),
-          retry(3)
-        );
+        return this.currencyRates;
+      }),
+      catchError(this.appService.handleError),
+      retry(3)
+    );
   }
 
 
   getCryptoRates$(crypto: string = 'BTC'): Observable<any> {
+    const methodTrace = `${this.constructor.name} > getCryptoRates$() > `; // for debugging
 
     if (this.cryptoRates[crypto.toUpperCase()]) {
       return of(this.cryptoRates[crypto.toUpperCase()]);
     }
     
     return this.http.get(`${this.cryptoExchangeServerUrl}${crypto.toUpperCase()}`).pipe(
-      switchMap((res: Object) => {
-        this.cryptoRates[crypto.toUpperCase()] = this.extractCryptoExchangeData(crypto, res);
+      map(this.extractCryptoExchangeData),
+      switchMap((rates: Object) => {
+        if (rates) {
+          this.cryptoRates[crypto.toUpperCase()] = rates;
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        }
+        
         return of(this.cryptoRates[crypto.toUpperCase()]);
       }),
       catchError(this.appService.handleError) 
