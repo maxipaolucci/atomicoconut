@@ -65,8 +65,8 @@ export class CurrencyExchangeService {
       return of(this.cryptoRates[crypto.toUpperCase()]);
     }
     
-    return this.http.get(`${this.cryptoExchangeServerUrl}${crypto.toUpperCase()}`).pipe(
-      map(this.extractCryptoExchangeData),
+    return this.http.get<Response>(`${this.cryptoExchangeServerUrl}${crypto.toUpperCase()}`).pipe(
+      map((res: Response) => this.extractCryptoExchangeData(crypto, res)),
       switchMap((rates: Object) => {
         if (rates) {
           this.cryptoRates[crypto.toUpperCase()] = rates;

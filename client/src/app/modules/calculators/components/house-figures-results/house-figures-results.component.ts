@@ -27,7 +27,7 @@ export class HouseFiguresResultsComponent implements OnInit, OnChanges {
   @Input() insurance = 0;
   @Input() otherCosts = 0;
   @Input() managed = 0;
-<<<<<<< HEAD
+
   grossAnnualRent = 0;
   netAnnualRent = 0;
   grossYield = 0;
@@ -42,23 +42,7 @@ export class HouseFiguresResultsComponent implements OnInit, OnChanges {
   totalFirstYearReturn = 0;
   deposit = 0;
   returnOnDeposit = 0;
-=======
-  grossAnnualRent : number = 0;
-  netAnnualRent : number = 0;
-  grossYield : number = 0;
-  netYield : number = 0;
-  expenses : number = 0;
-  loanInterest : number = 0;
-  loanRepayments : number = 0;
-  loanRepaymentsLabels : any = { '12': 'Monthly', '26' : 'Fortnightly', '52' : 'Weekly' };
-  preTaxCashflow : number = 0;
-  discount : number = 0;
-  capitalGrowths : number = 0;
-  totalFirstYearReturn : number = 0;
-  deposit : number = 0;
-  returnOnDeposit : number = 0;
   cashflow = 0;
->>>>>>> Adds anual cashflow to results
 
   constructor() { }
 
