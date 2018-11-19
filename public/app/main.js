@@ -663,7 +663,6 @@ var AppService = /** @class */ (function () {
      * @param result (T). Optional, a result to handle the fail.
      */
     AppService.prototype.handleError = function (result) {
-        console.error(result);
         return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["throwError"])(result.error);
     };
     /**
@@ -969,47 +968,56 @@ var WelcomeComponent = /** @class */ (function () {
                 return _this.utilService.formatToday(); // this should never happen. BuyingDate is required in investments
             });
             return _this.currencyExchangeService.getCurrencyRates$(investmentsDates);
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (currencyRates) {
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["from"])(currentUserInvestments);
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (currencyRates) {
-            // iterate investments and sum returns using dated rates.
-            for (var _i = 0, currentUserInvestments_1 = currentUserInvestments; _i < currentUserInvestments_1.length; _i++) {
-                var investment = currentUserInvestments_1[_i];
-                var myPercentage = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
-                if (investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"]) {
-                    var currencyInvestment = investment;
-                    if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CURRENCY) {
-                        _this.wealthAmount += ((currencyInvestment.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment.unit] || 1))
-                            - (currencyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment.buyingDate)]["USD" + currencyInvestment.loanAmountUnit] || 1)))
-                            * myPercentage / 100;
-                        _this.calculateProgressBarWealthValue();
-                        return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
-                    }
-                    else if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CRYPTO) {
-                        return _this.currencyExchangeService.getCryptoRates$(currencyInvestment.unit).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["take"])(1));
-                    }
-                }
-                else if (investment instanceof _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
-                    var propertyInvestment = investment;
-                    _this.wealthAmount += (_this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit)
-                        - (propertyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(propertyInvestment.buyingDate)]["USD" + propertyInvestment.loanAmountUnit] || 1)))
+            var investmentsAndCurrencyRates = currentUserInvestments.map(function (investment) {
+                return { currencyRates: currencyRates, investment: investment };
+            });
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["from"])(investmentsAndCurrencyRates);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (investmentAndCurrencyRates) {
+            console.log(investmentAndCurrencyRates);
+            var myPercentage = (investmentAndCurrencyRates.investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
+            if (investmentAndCurrencyRates.investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"]) {
+                var investment_1 = investmentAndCurrencyRates.investment;
+                if (investment_1.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CURRENCY) {
+                    _this.wealthAmount += ((investment_1.amount * (investmentAndCurrencyRates['currencyRates'][_this.utilService.formatToday()]["USD" + investment_1.unit] || 1))
+                        - (investment_1.loanAmount / (investmentAndCurrencyRates['currencyRates'][_this.utilService.formatDate(investment_1.buyingDate)]["USD" + investment_1.loanAmountUnit] || 1)))
                         * myPercentage / 100;
                     _this.calculateProgressBarWealthValue();
                     return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
                 }
+                else if (investment_1.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CRYPTO) {
+                    return _this.currencyExchangeService.getCryptoRates$(investment_1.unit).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (cryptoRates) {
+                        return { cryptoRates: cryptoRates, myPercentage: myPercentage, investment: investment_1, currencyRates: investmentAndCurrencyRates.currencyRates };
+                    }));
+                }
                 else {
-                    _this.appService.consoleLog('error', methodTrace + " Investment type not recognized by this component: " + investment.type);
+                    _this.appService.consoleLog('error', methodTrace + " Currency Investment type not recognized by this component: " + investment_1.type);
                     return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null); // should never happen
                 }
             }
-        })).subscribe(function (rates) {
-            _this.wealthAmount += ((currencyInvestment.amount * rates.price)
-                - (currencyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment.buyingDate)]["USD" + currencyInvestment.loanAmountUnit] || 1)))
-                * myPercentage / 100;
-            _this.calculateProgressBarWealthValue();
+            else if (investmentAndCurrencyRates.investment instanceof _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
+                var investment = investmentAndCurrencyRates.investment;
+                _this.wealthAmount += (_this.currencyExchangeService.getUsdValueOf(investment.property.marketValue, investment.property.marketValueUnit)
+                    - (investment.loanAmount / (investmentAndCurrencyRates['currencyRates'][_this.utilService.formatDate(investment.buyingDate)]["USD" + investment.loanAmountUnit] || 1)))
+                    * myPercentage / 100;
+                _this.calculateProgressBarWealthValue();
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
+            }
+            else {
+                _this.appService.consoleLog('error', methodTrace + " Investment type not recognized by this component: " + investmentAndCurrencyRates.investment.type);
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null); // should never happen
+            }
+        })).subscribe(function (data) {
+            if (data) {
+                console.log(data);
+                _this.wealthAmount += ((data.investment.amount * data.cryptoRates.price)
+                    - (data.investment.loanAmount / (data['currencyRates'][_this.utilService.formatDate(data.investment.buyingDate)]["USD" + data.investment.loanAmountUnit] || 1)))
+                    * data.myPercentage / 100;
+                _this.calculateProgressBarWealthValue();
+            }
         }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment.unit + " rates data > ", error);
-            _this.appService.showResults("There was an error trying to get " + currencyInvestment.unit + " rates data, please try again in a few minutes.", 'error');
+            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get required data > ", error);
+            _this.appService.showResults("There was an error trying to get required data, please try again in a few minutes.", 'error');
         });
         this.subscription.add(newSubscription);
     };
@@ -1027,7 +1035,7 @@ var WelcomeComponent = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > setUserAndGetInvestments$() > "; // for debugging
         var gotAuthenticatedUserFromServer = false;
-        var user$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["switchMap"])(function (user) {
+        return this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
             if (!user) {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
             }
@@ -1038,8 +1046,8 @@ var WelcomeComponent = /** @class */ (function () {
             else {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(user);
             }
-        }));
-        return user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["switchMap"])(function (user) {
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
+            _this.user = user;
             if (user) {
                 if (user.financialInfo) {
                     if (gotAuthenticatedUserFromServer !== null) {
@@ -1053,16 +1061,12 @@ var WelcomeComponent = /** @class */ (function () {
                     }
                     _this.calculateProgressBarWealthValue();
                 }
-                _this.user = user;
                 if (gotAuthenticatedUserFromServer) {
                     gotAuthenticatedUserFromServer = null; // shut down the flag
                 }
                 return _this.investmentsService.getInvestments$(user.email);
             }
-            else {
-                _this.user = null;
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])([]);
-            }
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])([]);
         }));
     };
     WelcomeComponent.prototype.calculateProgressBarWealthValue = function () {
@@ -1472,9 +1476,9 @@ var HouseFiguresResultsComponent = /** @class */ (function () {
         this.loanCoverage = 0;
         this.interestRates = 0;
         this.loanTerm = 0;
-        this.paymentFrecuency = "26";
+        this.paymentFrecuency = '26';
         this.rentPrice = 0;
-        this.rentPaymentFrecuency = "weekly";
+        this.rentPaymentFrecuency = 'weekly';
         this.vacancy = 0;
         this.renovationCost = 0;
         this.mantainanceCost = 0;
@@ -1502,7 +1506,7 @@ var HouseFiguresResultsComponent = /** @class */ (function () {
     HouseFiguresResultsComponent.prototype.ngOnInit = function () {
     };
     HouseFiguresResultsComponent.prototype.ngOnChanges = function (changes) {
-        //any time something changes then refresh all values
+        // any time something changes then refresh all values
         var weeklyRent = this.getRentPricePerWeek();
         this.grossAnnualRent = weeklyRent * 52;
         this.netAnnualRent = this.grossAnnualRent - weeklyRent * this.vacancy;
@@ -1511,8 +1515,8 @@ var HouseFiguresResultsComponent = /** @class */ (function () {
             + this.otherCosts + this.netAnnualRent * (this.managed / 100);
         this.netYield = (this.netAnnualRent - this.expenses) / this.purchasePrice;
         this.loanInterest = this.purchasePrice * (this.interestRates / 100);
-        var numberOfPayments = this.loanTerm * parseInt(this.paymentFrecuency);
-        var periodicInterestRate = (this.interestRates / 100) / parseInt(this.paymentFrecuency);
+        var numberOfPayments = this.loanTerm * parseInt(this.paymentFrecuency, 10);
+        var periodicInterestRate = (this.interestRates / 100) / parseInt(this.paymentFrecuency, 10);
         var loanDiscountFactor = (Math.pow(1 + periodicInterestRate, numberOfPayments) - 1) / (periodicInterestRate * Math.pow(1 + periodicInterestRate, numberOfPayments));
         this.loanRepayments = (this.purchasePrice * (this.loanCoverage / 100)) / loanDiscountFactor;
         this.preTaxCashflow = this.netAnnualRent - this.expenses - this.loanInterest;
@@ -3520,6 +3524,7 @@ var CurrencyExchangeService = /** @class */ (function () {
         var _this = this;
         if (dates === void 0) { dates = []; }
         if (base === void 0) { base = 'USD'; }
+        var methodTrace = this.constructor.name + " > getCurrencyRates$() > "; // for debugging
         dates.push(this.utilService.formatToday('YYYY-MM-DD')); // adds today to the array
         // check if all the required dates are already cached in this service
         var found = true;
@@ -3555,7 +3560,7 @@ var CurrencyExchangeService = /** @class */ (function () {
         if (this.cryptoRates[crypto.toUpperCase()]) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.cryptoRates[crypto.toUpperCase()]);
         }
-        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase()).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(this.extractCryptoExchangeData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (rates) {
+        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase()).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (res) { return _this.extractCryptoExchangeData(crypto, res); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (rates) {
             if (rates) {
                 _this.cryptoRates[crypto.toUpperCase()] = rates;
             }
@@ -3566,6 +3571,7 @@ var CurrencyExchangeService = /** @class */ (function () {
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.appService.handleError));
     };
     CurrencyExchangeService.prototype.extractCryptoExchangeData = function (crypto, res) {
+        console.log(crypto, res);
         if (res['id'] === crypto.toUpperCase()) {
             return res;
         }

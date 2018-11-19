@@ -29,7 +29,6 @@ export class AppService {
    * @param result (T). Optional, a result to handle the fail. 
    */
   public handleError(result: HttpErrorResponse) {
-    console.error(result);
     return throwError(result.error);
   }
 

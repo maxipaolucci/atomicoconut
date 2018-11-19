@@ -18,7 +18,8 @@ export class CurrencyExchangeService {
   constructor(private http: HttpClient, private appService: AppService, private utilService: UtilService) { }
 
   getCurrencyRates$(dates: string[] = [], base: string = 'USD'): Observable<any> {
-    
+    const methodTrace = `${this.constructor.name} > getCurrencyRates$() > `; // for debugging
+
     dates.push(this.utilService.formatToday('YYYY-MM-DD')); // adds today to the array
     
     // check if all the required dates are already cached in this service
@@ -64,8 +65,8 @@ export class CurrencyExchangeService {
       return of(this.cryptoRates[crypto.toUpperCase()]);
     }
     
-    return this.http.get(`${this.cryptoExchangeServerUrl}${crypto.toUpperCase()}`).pipe(
-      map(this.extractCryptoExchangeData),
+    return this.http.get<Response>(`${this.cryptoExchangeServerUrl}${crypto.toUpperCase()}`).pipe(
+      map((res: Response) => this.extractCryptoExchangeData(crypto, res)),
       switchMap((rates: Object) => {
         if (rates) {
           this.cryptoRates[crypto.toUpperCase()] = rates;
@@ -80,6 +81,7 @@ export class CurrencyExchangeService {
   }
 
   private extractCryptoExchangeData(crypto: string, res: Object): any {
+    console.log(crypto, res);
     if (res['id'] === crypto.toUpperCase()) {
       return res;
     } else {
