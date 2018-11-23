@@ -120,6 +120,11 @@
         <span>{{expenses | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
       </div>
 
+      <div fxFlex.xs="none" fxFlex.gt-xs fxFlex.gt-sm="none" fxLayout="row" fxLayoutAlign="space-between center">
+        <info-tooltip title="Anual cashflow" text="Gross anual rent - Loan repay. * Repay frec - Expenses"></info-tooltip>
+        <span>{{cashflow | currency : 'USD' : 'symbol' : '1.2-2'}}</span>
+      </div>
+
     </div>
 
   </mat-card-content>
