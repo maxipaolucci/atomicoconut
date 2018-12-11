@@ -811,7 +811,7 @@ var AuthResolver = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  404 Page not found\r\n</p>\r\n"
+module.exports = "<p>\n  404 Page not found\n</p>\n"
 
 /***/ }),
 
@@ -957,6 +957,7 @@ var WelcomeComponent = /** @class */ (function () {
         ]);
         var currentUserInvestments = [];
         var newSubscription = this.setUserAndGetInvestments$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (userInvestments) {
+            console.log(userInvestments);
             currentUserInvestments = userInvestments;
             var investmentsDates = userInvestments.map(function (investment) {
                 if (investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"]) {
@@ -971,6 +972,7 @@ var WelcomeComponent = /** @class */ (function () {
 <<<<<<< HEAD
 <<<<<<< HEAD
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (currencyRates) {
+            console.log(currencyRates);
             var investmentsAndCurrencyRates = currentUserInvestments.map(function (investment) {
                 return { currencyRates: currencyRates, investment: investment };
             });
@@ -1122,6 +1124,11 @@ var WelcomeComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > setUserAndGetInvestments$() > "; // for debugging
         var gotAuthenticatedUserFromServer = false;
         return this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
+            // reset all values to recalculate for this user 
+            _this.wealthAmount = 0;
+            _this.expectedWealth = 0;
+            _this.progressBarWealthValue = 0;
+            console.log(user);
             if (!user) {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
             }
@@ -6394,7 +6401,7 @@ var MainNavigatorService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n  <mat-progress-bar \r\n      class=\"progress-bar\"\r\n      [ngClass]=\"extraClasses\"\r\n      [color]=\"color\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  <p *ngIf=\"message\">{{ message }}</p>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\n  <mat-progress-bar \n      class=\"progress-bar\"\n      [ngClass]=\"extraClasses\"\n      [color]=\"color\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n  <p *ngIf=\"message\">{{ message }}</p>\n</div>"
 
 /***/ }),
 

@@ -53,6 +53,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     let currentUserInvestments: Investment[] = [];
     const newSubscription: Subscription = this.setUserAndGetInvestments$().pipe(
       flatMap((userInvestments: Investment[]) => {
+        console.log(userInvestments);
         currentUserInvestments = userInvestments;
         const investmentsDates: string[] = userInvestments.map((investment: Investment) => {
           if (investment instanceof CurrencyInvestment) {  
@@ -67,6 +68,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         return this.currencyExchangeService.getCurrencyRates$(investmentsDates);
       }),
       flatMap((currencyRates: any): Observable<any> => {
+        console.log(currencyRates);
         const investmentsAndCurrencyRates: any[] = currentUserInvestments.map((investment: Investment) => {
           return { currencyRates, investment };
         });
