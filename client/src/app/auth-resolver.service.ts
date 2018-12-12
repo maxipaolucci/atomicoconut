@@ -20,8 +20,17 @@ export class AuthResolver implements Resolve<User> {
       params = { personalInfo : true, financialInfo : true };
     }
 
-    return this.usersService.getAuthenticatedUser$(params).pipe(map(
-      (user: User) => {
+    this.usersService.getAuthenticatedUser(params);
+    // if (user) {
+    //   this.usersService.routerRedirectUrl = null;
+    //   return user;
+    // } else {
+    //   this.router.navigate(['/users/login']);
+    //   return null;
+    // }
+
+    return this.usersService.user$.pipe(
+      map((user: User) => {
         if (user) {
           this.usersService.routerRedirectUrl = null;
           return user;

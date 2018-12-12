@@ -158,10 +158,9 @@ export class UsersService {
    * Server call to retrieve the currently authenticated user, or null if nobody .
    * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financialInfo (boolean)
    * 
-   * @return { Observable<User>}
    */
-  getAuthenticatedUser$(parameters: any = null): Observable<User> {
-    const methodTrace = `${this.constructor.name} > getAuthenticatedUser$() > `; // for debugging
+  getAuthenticatedUser(parameters: any = null) {
+    const methodTrace = `${this.constructor.name} > getAuthenticatedUser() > `; // for debugging
 
     let params = new HttpParams();
     if (parameters && Object.keys(parameters).length) {
@@ -170,34 +169,31 @@ export class UsersService {
       }
     }
     
-    return this.http.get<Response>(`${this.serverHost}/getUser`, { params }).pipe(
+    this.http.get<Response>(`${this.serverHost}/getUser`, { params }).pipe(
       map(this.appService.extractData),
-      flatMap((data: any): Observable<User> => {
-        let user: User = null;
+      catchError(this.appService.handleError)
+    ).subscribe((data: any) => {
+      let user: User = null;
 
-        if (data && data.email) {
-          let personalInfo = null;
-          if (data.personalInfo && data.personalInfo.birthday) {
-            personalInfo = new AccountPersonal(data.personalInfo.birthday);
-          }
-
-          let financialInfo = null;
-          if (data.financialInfo && data.financialInfo.savingsUnit) {
-            financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
-                data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
-          }
-          
-          user = new User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);          
-          this.setUser(user);
-        } else {
-          this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
-          this.setUser(null);
+      if (data && data.email) {
+        let personalInfo = null;
+        if (data.personalInfo && data.personalInfo.birthday) {
+          personalInfo = new AccountPersonal(data.personalInfo.birthday);
         }
 
-        return of(user);
-      }),
-      catchError(this.appService.handleError)
-    );
+        let financialInfo = null;
+        if (data.financialInfo && data.financialInfo.savingsUnit) {
+          financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
+              data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
+        }
+        
+        user = new User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);          
+        this.setUser(user);
+      } else {
+        this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
+        this.setUser(null);
+      }
+    });
   }
 
   /**

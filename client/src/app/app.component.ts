@@ -7,7 +7,7 @@ import { MainNavigatorService } from './modules/shared/components/main-navigator
 import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
 import { UtilService } from './util.service';
 import { of, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { flatMap } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -29,7 +29,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
     const newSubcription: Subscription = this.usersService.user$.pipe(
-      switchMap((user: User) => {
+      flatMap((user: User) => {
+        console.log(user);
         this.user = user;
 
         if (this.user && this.user.currency && this.user.currency !== 'USD') {
@@ -55,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
     ); // start listening the source of user
     this.subscription.add(newSubcription);
 
-    this.setUser();
+    this.usersService.getAuthenticatedUser();
 
     this.getCryptoRates('BTC');
     this.getCryptoRates('XMR');
@@ -83,20 +84,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription.add(newSubscription);
   }
 
-  setUser() {
-    const methodTrace = `${this.constructor.name} > setUser() > `; // for debugging
+  // setUser() {
+  //   const methodTrace = `${this.constructor.name} > setUser() > `; // for debugging
 
-    this.usersService.getAuthenticatedUser$().subscribe(
-      (user: User) => {
-        this.user = user; // this could be a user of null does not matter
-      },
-      (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
-        this.usersService.setUser(null);
-        this.user = null;
-      }
-    );
-  }
+  //   this.usersService.getAuthenticatedUser$().subscribe(
+  //     (user: User) => {
+  //       this.user = user; // this could be a user of null does not matter
+  //     },
+  //     (error: any) => {
+  //       this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
+  //       this.usersService.setUser(null);
+  //       this.user = null;
+  //     }
+  //   );
+  // }
 
   logout(): void {
     const methodTrace = `${this.constructor.name} > logout() > `; // for debugging

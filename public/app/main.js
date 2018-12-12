@@ -377,7 +377,8 @@ var AppComponent = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
-        var newSubcription = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["switchMap"])(function (user) {
+        var newSubcription = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
+            console.log(user);
             _this.user = user;
             if (_this.user && _this.user.currency && _this.user.currency !== 'USD') {
                 return _this.currencyExchangeService.getCurrencyRates$();
@@ -395,7 +396,7 @@ var AppComponent = /** @class */ (function () {
             _this.appService.showResults("There was an error trying to get currency rates data.", 'error');
         }); // start listening the source of user
         this.subscription.add(newSubcription);
-        this.setUser();
+        this.usersService.getAuthenticatedUser();
         this.getCryptoRates('BTC');
         this.getCryptoRates('XMR');
     };
@@ -416,17 +417,19 @@ var AppComponent = /** @class */ (function () {
         });
         this.subscription.add(newSubscription);
     };
-    AppComponent.prototype.setUser = function () {
-        var _this = this;
-        var methodTrace = this.constructor.name + " > setUser() > "; // for debugging
-        this.usersService.getAuthenticatedUser$().subscribe(function (user) {
-            _this.user = user; // this could be a user of null does not matter
-        }, function (error) {
-            _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
-            _this.usersService.setUser(null);
-            _this.user = null;
-        });
-    };
+    // setUser() {
+    //   const methodTrace = `${this.constructor.name} > setUser() > `; // for debugging
+    //   this.usersService.getAuthenticatedUser$().subscribe(
+    //     (user: User) => {
+    //       this.user = user; // this could be a user of null does not matter
+    //     },
+    //     (error: any) => {
+    //       this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
+    //       this.usersService.setUser(null);
+    //       this.user = null;
+    //     }
+    //   );
+    // }
     AppComponent.prototype.logout = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > logout() > "; // for debugging
@@ -777,7 +780,15 @@ var AuthResolver = /** @class */ (function () {
         if (urlsForCompleteUserData.includes(state.url)) {
             params = { personalInfo: true, financialInfo: true };
         }
-        return this.usersService.getAuthenticatedUser$(params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (user) {
+        this.usersService.getAuthenticatedUser(params);
+        // if (user) {
+        //   this.usersService.routerRedirectUrl = null;
+        //   return user;
+        // } else {
+        //   this.router.navigate(['/users/login']);
+        //   return null;
+        // }
+        return this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (user) {
             if (user) {
                 _this.usersService.routerRedirectUrl = null;
                 return user;
@@ -811,7 +822,7 @@ var AuthResolver = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  404 Page not found\n</p>\n"
+module.exports = "<p>\r\n  404 Page not found\r\n</p>\r\n"
 
 /***/ }),
 
@@ -1122,6 +1133,7 @@ var WelcomeComponent = /** @class */ (function () {
     WelcomeComponent.prototype.setUserAndGetInvestments$ = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > setUserAndGetInvestments$() > "; // for debugging
+        console.log(methodTrace + " called");
         var gotAuthenticatedUserFromServer = false;
         return this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
             // reset all values to recalculate for this user 
@@ -1134,7 +1146,8 @@ var WelcomeComponent = /** @class */ (function () {
             }
             else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
                 gotAuthenticatedUserFromServer = true;
-                return _this.usersService.getAuthenticatedUser$({ personalInfo: true, financialInfo: true });
+                _this.usersService.getAuthenticatedUser({ personalInfo: true, financialInfo: true });
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
             }
             else {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(user);
@@ -6401,7 +6414,7 @@ var MainNavigatorService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\n  <mat-progress-bar \n      class=\"progress-bar\"\n      [ngClass]=\"extraClasses\"\n      [color]=\"color\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n  <p *ngIf=\"message\">{{ message }}</p>\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n  <mat-progress-bar \r\n      class=\"progress-bar\"\r\n      [ngClass]=\"extraClasses\"\r\n      [color]=\"color\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  <p *ngIf=\"message\">{{ message }}</p>\r\n</div>"
 
 /***/ }),
 
@@ -9138,12 +9151,11 @@ var UsersService = /** @class */ (function () {
      * Server call to retrieve the currently authenticated user, or null if nobody .
      * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financialInfo (boolean)
      *
-     * @return { Observable<User>}
      */
-    UsersService.prototype.getAuthenticatedUser$ = function (parameters) {
+    UsersService.prototype.getAuthenticatedUser = function (parameters) {
         var _this = this;
         if (parameters === void 0) { parameters = null; }
-        var methodTrace = this.constructor.name + " > getAuthenticatedUser$() > "; // for debugging
+        var methodTrace = this.constructor.name + " > getAuthenticatedUser() > "; // for debugging
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]();
         if (parameters && Object.keys(parameters).length) {
             for (var _i = 0, _a = Object.keys(parameters); _i < _a.length; _i++) {
@@ -9151,7 +9163,7 @@ var UsersService = /** @class */ (function () {
                 params = params.set(key, parameters[key] + '');
             }
         }
-        return this.http.get(this.serverHost + "/getUser", { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
+        this.http.get(this.serverHost + "/getUser", { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError)).subscribe(function (data) {
             var user = null;
             if (data && data.email) {
                 var personalInfo = null;
@@ -9169,8 +9181,7 @@ var UsersService = /** @class */ (function () {
                 _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
                 _this.setUser(null);
             }
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(user);
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
+        });
     };
     /**
      * Server call to login the provided user email and pass.
