@@ -377,8 +377,7 @@ var AppComponent = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
-        var newSubcription = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
-            console.log(user);
+        var newSubcription = this.usersService.getAuthenticatedUser$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
             _this.user = user;
             if (_this.user && _this.user.currency && _this.user.currency !== 'USD') {
                 return _this.currencyExchangeService.getCurrencyRates$();
@@ -396,7 +395,6 @@ var AppComponent = /** @class */ (function () {
             _this.appService.showResults("There was an error trying to get currency rates data.", 'error');
         }); // start listening the source of user
         this.subscription.add(newSubcription);
-        this.usersService.getAuthenticatedUser();
         this.getCryptoRates('BTC');
         this.getCryptoRates('XMR');
     };
@@ -780,15 +778,7 @@ var AuthResolver = /** @class */ (function () {
         if (urlsForCompleteUserData.includes(state.url)) {
             params = { personalInfo: true, financialInfo: true };
         }
-        this.usersService.getAuthenticatedUser(params);
-        // if (user) {
-        //   this.usersService.routerRedirectUrl = null;
-        //   return user;
-        // } else {
-        //   this.router.navigate(['/users/login']);
-        //   return null;
-        // }
-        return this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (user) {
+        return this.usersService.getAuthenticatedUser$(params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (user) {
             if (user) {
                 _this.usersService.routerRedirectUrl = null;
                 return user;
@@ -797,9 +787,9 @@ var AuthResolver = /** @class */ (function () {
                 _this.router.navigate(['/users/login']);
                 return null;
             }
-        }, function (error) {
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (error) {
             _this.appService.consoleLog('error', methodTrace + " There was an error with the getAuthenticatedUser service.", error);
-            _this.usersService.setUser(null);
+            _this.usersService.user = null;
             _this.router.navigate(['/users/login']);
             return null;
         }));
@@ -822,7 +812,7 @@ var AuthResolver = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  404 Page not found\r\n</p>\r\n"
+module.exports = "<p>\n  404 Page not found\n</p>\n"
 
 /***/ }),
 
@@ -968,7 +958,6 @@ var WelcomeComponent = /** @class */ (function () {
         ]);
         var currentUserInvestments = [];
         var newSubscription = this.setUserAndGetInvestments$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (userInvestments) {
-            console.log(userInvestments);
             currentUserInvestments = userInvestments;
             var investmentsDates = userInvestments.map(function (investment) {
                 if (investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"]) {
@@ -983,13 +972,11 @@ var WelcomeComponent = /** @class */ (function () {
 <<<<<<< HEAD
 <<<<<<< HEAD
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (currencyRates) {
-            console.log(currencyRates);
             var investmentsAndCurrencyRates = currentUserInvestments.map(function (investment) {
                 return { currencyRates: currencyRates, investment: investment };
             });
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["from"])(investmentsAndCurrencyRates);
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (investmentAndCurrencyRates) {
-            console.log(investmentAndCurrencyRates);
             var myPercentage = (investmentAndCurrencyRates.investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
             if (investmentAndCurrencyRates.investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"]) {
                 var investment_1 = investmentAndCurrencyRates.investment;
@@ -1098,7 +1085,7 @@ var WelcomeComponent = /** @class */ (function () {
             }
         })).subscribe(function (data) {
             if (data) {
-                console.log(data);
+                // this is a crryptorate investment (all the others returns null)
                 _this.wealthAmount += ((data.investment.amount * data.cryptoRates.price)
                     - (data.investment.loanAmount / (data['currencyRates'][_this.utilService.formatDate(data.investment.buyingDate)]["USD" + data.investment.loanAmountUnit] || 1)))
                     * data.myPercentage / 100;
@@ -1121,7 +1108,6 @@ var WelcomeComponent = /** @class */ (function () {
         this.subscription.add(newSubscription);
     };
     WelcomeComponent.prototype.ngOnDestroy = function () {
-        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
         // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
         this.subscription.unsubscribe();
     };
@@ -1133,20 +1119,15 @@ var WelcomeComponent = /** @class */ (function () {
     WelcomeComponent.prototype.setUserAndGetInvestments$ = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > setUserAndGetInvestments$() > "; // for debugging
-        console.log(methodTrace + " called");
-        var gotAuthenticatedUserFromServer = false;
-        return this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
+        return this.usersService.getAuthenticatedUser$({ personalInfo: true, financialInfo: true }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
             // reset all values to recalculate for this user 
             _this.wealthAmount = 0;
             _this.expectedWealth = 0;
             _this.progressBarWealthValue = 0;
-            console.log(user);
             if (!user) {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
             }
-            else if ((!user.personalInfo || !user.financialInfo) && gotAuthenticatedUserFromServer === false) {
-                gotAuthenticatedUserFromServer = true;
-                _this.usersService.getAuthenticatedUser({ personalInfo: true, financialInfo: true });
+            else if (!user.personalInfo || !user.financialInfo) {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
             }
             else {
@@ -1156,9 +1137,7 @@ var WelcomeComponent = /** @class */ (function () {
             _this.user = user;
             if (user) {
                 if (user.financialInfo) {
-                    if (gotAuthenticatedUserFromServer !== null) {
-                        _this.wealthAmount += _this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
-                    }
+                    _this.wealthAmount += _this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
                     if (user.personalInfo && user.personalInfo.age) {
                         _this.expectedWealth = _this.currencyExchangeService.getUsdValueOf(user.financialInfo.annualIncome || 0, user.financialInfo.annualIncomeUnit) * user.personalInfo.age / 10;
                     }
@@ -1166,9 +1145,6 @@ var WelcomeComponent = /** @class */ (function () {
                         _this.expectedWealth = 0;
                     }
                     _this.calculateProgressBarWealthValue();
-                }
-                if (gotAuthenticatedUserFromServer) {
-                    gotAuthenticatedUserFromServer = null; // shut down the flag
                 }
                 return _this.investmentsService.getInvestments$(user.email);
             }
@@ -2082,7 +2058,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         // get the team of the investmetn if exists
         var newSubscription = null;
         var currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
-        var currencyRatesAndUser$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(currencyRates$, function (user, currencyRates) {
+        var currencyRatesAndUser$ = this.usersService.getAuthenticatedUser$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(currencyRates$, function (user, currencyRates) {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
         })); // (currency rates and user) source
@@ -3429,8 +3405,8 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         }
         // get the team of the investmetn if exists
         var newSubscription = null;
-        var currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); //get currency rates observable source
-        var currencyRatesAndUser$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["combineLatest"])(currencyRates$, function (user, currencyRates) {
+        var currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
+        var currencyRatesAndUser$ = this.usersService.getAuthenticatedUser$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["combineLatest"])(currencyRates$, function (user, currencyRates) {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
         })); // (currency rates and user) source
@@ -3687,7 +3663,6 @@ var CurrencyExchangeService = /** @class */ (function () {
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.appService.handleError));
     };
     CurrencyExchangeService.prototype.extractCryptoExchangeData = function (crypto, res) {
-        console.log(crypto, res);
         if (res['id'] === crypto.toUpperCase()) {
             return res;
         }
@@ -6414,7 +6389,7 @@ var MainNavigatorService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n  <mat-progress-bar \r\n      class=\"progress-bar\"\r\n      [ngClass]=\"extraClasses\"\r\n      [color]=\"color\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  <p *ngIf=\"message\">{{ message }}</p>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\n  <mat-progress-bar \n      class=\"progress-bar\"\n      [ngClass]=\"extraClasses\"\n      [color]=\"color\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n  <p *ngIf=\"message\">{{ message }}</p>\n</div>"
 
 /***/ }),
 
@@ -8413,7 +8388,7 @@ var LoginComponent = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.loginServiceRunning = true;
-        this.usersService.setUser(null); // reset authenticated user. Register automatically authenticates the registered user.
+        this.usersService.user = null; // reset authenticated user. Register automatically authenticates the registered user.
         // call the register service
         this.usersService.login$(this.model).subscribe(function (user) {
             if (user) {
@@ -8565,7 +8540,7 @@ var RegisterComponent = /** @class */ (function () {
             this.registerServiceRunning = false;
             return false;
         }
-        this.usersService.setUser(null); // reset authenticated user. Register automatically authenticates the registered user.
+        this.usersService.user = null; // reset authenticated user. Register automatically authenticates the registered user.
         // call the register service
         this.usersService.register$(this.model).subscribe(function (user) {
             if (user) {
@@ -8701,7 +8676,7 @@ var ResetPasswordComponent = /** @class */ (function () {
             return false;
         }
         // call the reset password service.
-        this.usersService.setUser(null); // reset authenticated user. Reset automatically authenticates the registered user.
+        this.usersService.user = null; // reset authenticated user. Reset automatically authenticates the registered user.
         this.usersService.reset$(this.token, this.model).subscribe(function (user) {
             if (user) {
                 _this.appService.showResults('Your password was successfully updated!', 'success');
@@ -9036,22 +9011,8 @@ var UsersService = /** @class */ (function () {
         this.serverHost = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiHost + '/api/users';
         this.headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]().set('Content-Type', 'application/json');
         this.routerRedirectUrl = null; // a route to redirect the user to when login is successfull
-        this.userSource = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
-        this.user$ = this.userSource.asObservable();
+        this.user = null;
     }
-    /**
-     * user source feeder
-     */
-    UsersService.prototype.setUser = function (user) {
-        if (user === void 0) { user = null; }
-        this.userSource.next(user);
-    };
-    /**
-     * get the current user from the source
-     */
-    UsersService.prototype.getUser = function () {
-        return this.userSource.getValue();
-    };
     /**
      * Server call to Register a new user in the system
      * @param postData
@@ -9066,7 +9027,7 @@ var UsersService = /** @class */ (function () {
             var user = null;
             if (data && data.email) {
                 user = new _models_user__WEBPACK_IMPORTED_MODULE_6__["User"](data.name, data.email, data.avatar, null, null, data.currency);
-                _this.setUser(user);
+                _this.user = user;
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.", data);
@@ -9087,11 +9048,11 @@ var UsersService = /** @class */ (function () {
         return this.http.post(this.serverHost + "/account", postData, { headers: this.headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
             var user = null;
             if (data && data.email) {
-                user = _this.getUser();
+                user = _this.user;
                 user.name = data.name;
                 user.email = data.email;
                 user.currency = data.currency;
-                _this.setUser(user);
+                _this.user = user;
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
@@ -9111,16 +9072,13 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > updatePersonalInfo$() > "; // for debugging
         return this.http.post(this.serverHost + "/accountPersonalInfo", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
-            var user = null;
             if (data.personalInfo.birthday) {
-                user = _this.getUser();
-                user.personalInfo = new _models_account_personal__WEBPACK_IMPORTED_MODULE_7__["AccountPersonal"](data.personalInfo.birthday);
-                _this.setUser(user);
+                _this.user.personalInfo = new _models_account_personal__WEBPACK_IMPORTED_MODULE_7__["AccountPersonal"](data.personalInfo.birthday);
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(user);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(_this.user);
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
@@ -9135,24 +9093,22 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > updateFinancialInfo$() > "; // for debugging
         return this.http.post(this.serverHost + "/accountFinancialInfo", postData, { headers: this.headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
-            var user = null;
             if (data.financialInfo.savingsUnit) {
-                user = _this.getUser();
-                user.financialInfo = new _models_account_finance__WEBPACK_IMPORTED_MODULE_8__["AccountFinance"](data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
-                _this.setUser(user);
+                _this.user.financialInfo = new _models_account_finance__WEBPACK_IMPORTED_MODULE_8__["AccountFinance"](data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
             }
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(user);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(_this.user);
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to retrieve the currently authenticated user, or null if nobody .
-     * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financialInfo (boolean)
+     * @param { any } parameters . The parameters for the service call. Accepted are personalInfo (boolean), financialInfo (boolean)
      *
+     * @return { Observable<User> }
      */
-    UsersService.prototype.getAuthenticatedUser = function (parameters) {
+    UsersService.prototype.getAuthenticatedUser$ = function (parameters) {
         var _this = this;
         if (parameters === void 0) { parameters = null; }
         var methodTrace = this.constructor.name + " > getAuthenticatedUser() > "; // for debugging
@@ -9163,8 +9119,7 @@ var UsersService = /** @class */ (function () {
                 params = params.set(key, parameters[key] + '');
             }
         }
-        this.http.get(this.serverHost + "/getUser", { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError)).subscribe(function (data) {
-            var user = null;
+        return this.http.get(this.serverHost + "/getUser", { params: params }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
             if (data && data.email) {
                 var personalInfo = null;
                 if (data.personalInfo && data.personalInfo.birthday) {
@@ -9174,14 +9129,14 @@ var UsersService = /** @class */ (function () {
                 if (data.financialInfo && data.financialInfo.savingsUnit) {
                     financialInfo = new _models_account_finance__WEBPACK_IMPORTED_MODULE_8__["AccountFinance"](data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
                 }
-                user = new _models_user__WEBPACK_IMPORTED_MODULE_6__["User"](data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
-                _this.setUser(user);
+                _this.user = new _models_user__WEBPACK_IMPORTED_MODULE_6__["User"](data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
             }
             else {
                 _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
-                _this.setUser(null);
+                _this.user = null;
             }
-        });
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(_this.user);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };
     /**
      * Server call to login the provided user email and pass.
@@ -9197,7 +9152,7 @@ var UsersService = /** @class */ (function () {
             var user = null;
             if (data && data.email) {
                 user = new _models_user__WEBPACK_IMPORTED_MODULE_6__["User"](data.name, data.email, data.avatar, null, null, data.currency);
-                _this.setUser(user);
+                _this.user = user;
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
@@ -9230,7 +9185,7 @@ var UsersService = /** @class */ (function () {
             var user = null;
             if (data && data.email) {
                 user = new _models_user__WEBPACK_IMPORTED_MODULE_6__["User"](data.name, data.email, data.avatar, null, null, data.currency);
-                _this.setUser(user);
+                _this.user = user;
             }
             else {
                 _this.appService.consoleLog('error', methodTrace + " Unexpected data format.");
@@ -9248,7 +9203,7 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > logout$() > "; // for debugging
         return this.http.get(this.serverHost + "/logout")
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(this.appService.extractData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (data) {
-            _this.setUser(null);
+            _this.user = null;
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
     };

@@ -81,7 +81,6 @@ export class CurrencyExchangeService {
   }
 
   private extractCryptoExchangeData(crypto: string, res: Object): any {
-    console.log(crypto, res);
     if (res['id'] === crypto.toUpperCase()) {
       return res;
     } else {

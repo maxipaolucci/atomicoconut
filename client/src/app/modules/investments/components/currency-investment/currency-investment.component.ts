@@ -55,10 +55,12 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     // get the team of the investmetn if exists
     let newSubscription = null;
     const currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
-    const currencyRatesAndUser$ = this.usersService.user$.pipe(combineLatest(currencyRates$, (user, currencyRates) => {
-      this.user = user;
-      return { user, currencyRates};
-    })); // (currency rates and user) source
+    const currencyRatesAndUser$ = this.usersService.getAuthenticatedUser$().pipe(
+      combineLatest(currencyRates$, (user, currencyRates) => {
+        this.user = user;
+        return { user, currencyRates};
+      })
+    ); // (currency rates and user) source
     
     if (this.investment.type === INVESTMENTS_TYPES.CRYPTO) {
       // crypto investment

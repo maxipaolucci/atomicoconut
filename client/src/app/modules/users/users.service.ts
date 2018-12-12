@@ -16,27 +16,12 @@ export class UsersService {
   private serverHost: string = environment.apiHost + '/api/users';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  private userSource: BehaviorSubject<User>; // Observable user source
-  user$: Observable<User>; // Observable user stream
+  
+  user: User; // Observable user stream
   routerRedirectUrl: string = null; // a route to redirect the user to when login is successfull
 
   constructor(private http: HttpClient, private appService: AppService) {
-    this.userSource = new BehaviorSubject<User>(null);
-    this.user$ = this.userSource.asObservable();
-  }
-
-  /**
-   * user source feeder
-   */
-  setUser(user: User = null) {
-    this.userSource.next(user);
-  }
-
-  /**
-   * get the current user from the source
-   */
-  getUser(): User {
-    return this.userSource.getValue();
+    this.user = null;
   }
 
   /**
@@ -54,7 +39,7 @@ export class UsersService {
         let user: User = null;
         if (data && data.email) {
           user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-          this.setUser(user);
+          this.user = user;
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`, data);
         }
@@ -80,11 +65,11 @@ export class UsersService {
         let user: User = null;
 
         if (data && data.email) {
-          user = this.getUser();
+          user = this.user;
           user.name = data.name;
           user.email = data.email;
           user.currency = data.currency;
-          this.setUser(user);
+          this.user = user;
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
@@ -108,17 +93,13 @@ export class UsersService {
         .pipe(
           map(this.appService.extractData),
           flatMap((data: any): Observable<User> => {
-            let user: User = null;
-
             if (data.personalInfo.birthday) {
-              user = this.getUser();
-              user.personalInfo = new AccountPersonal(data.personalInfo.birthday);
-              this.setUser(user);
+              this.user.personalInfo = new AccountPersonal(data.personalInfo.birthday);
             } else {
               this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
             }
 
-            return of(user);
+            return of(this.user);
           }),
           catchError(this.appService.handleError)
         );
@@ -137,18 +118,15 @@ export class UsersService {
         .pipe(
           map(this.appService.extractData),
           flatMap((data: any): Observable<User> => {
-            let user: User = null;
-
             if (data.financialInfo.savingsUnit) {
-              user = this.getUser();
-              user.financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
+              
+              this.user.financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
                   data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
-              this.setUser(user);
             } else {
               this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
             }
     
-            return of(user);
+            return of(this.user);
           }),
           catchError(this.appService.handleError)
         );
@@ -156,10 +134,11 @@ export class UsersService {
 
   /**
    * Server call to retrieve the currently authenticated user, or null if nobody .
-   * @param {any} parameters . The parameters for the service call. Accepted are personalInfo (boolean), financialInfo (boolean)
+   * @param { any } parameters . The parameters for the service call. Accepted are personalInfo (boolean), financialInfo (boolean)
    * 
+   * @return { Observable<User> }
    */
-  getAuthenticatedUser(parameters: any = null) {
+  getAuthenticatedUser$(parameters: any = null) {
     const methodTrace = `${this.constructor.name} > getAuthenticatedUser() > `; // for debugging
 
     let params = new HttpParams();
@@ -169,31 +148,32 @@ export class UsersService {
       }
     }
     
-    this.http.get<Response>(`${this.serverHost}/getUser`, { params }).pipe(
+    return this.http.get<Response>(`${this.serverHost}/getUser`, { params }).pipe(
       map(this.appService.extractData),
+      flatMap((data: any): Observable<User> => {
+  
+        if (data && data.email) {
+          let personalInfo = null;
+          if (data.personalInfo && data.personalInfo.birthday) {
+            personalInfo = new AccountPersonal(data.personalInfo.birthday);
+          }
+  
+          let financialInfo = null;
+          if (data.financialInfo && data.financialInfo.savingsUnit) {
+            financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
+                data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
+          }
+          
+          this.user = new User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);          
+        } else {
+          this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
+          this.user = null;
+        }
+
+        return of(this.user);
+      }),
       catchError(this.appService.handleError)
-    ).subscribe((data: any) => {
-      let user: User = null;
-
-      if (data && data.email) {
-        let personalInfo = null;
-        if (data.personalInfo && data.personalInfo.birthday) {
-          personalInfo = new AccountPersonal(data.personalInfo.birthday);
-        }
-
-        let financialInfo = null;
-        if (data.financialInfo && data.financialInfo.savingsUnit) {
-          financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
-              data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
-        }
-        
-        user = new User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);          
-        this.setUser(user);
-      } else {
-        this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
-        this.setUser(null);
-      }
-    });
+    );
   }
 
   /**
@@ -212,7 +192,7 @@ export class UsersService {
 
             if (data && data.email) {
               user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-              this.setUser(user);
+              this.user = user;
             } else {
               this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
             }
@@ -254,7 +234,7 @@ export class UsersService {
 
             if (data && data.email) {
               user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-              this.setUser(user);
+              this.user = user;
             } else {
               this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
             }
@@ -277,7 +257,7 @@ export class UsersService {
         .pipe(
           map(this.appService.extractData),
           flatMap((data: any): Observable<null> => {
-            this.setUser(null);
+            this.user = null;
             return of(null);
           }),
           catchError(this.appService.handleError)

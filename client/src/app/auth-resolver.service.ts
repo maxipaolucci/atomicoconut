@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { User } from './modules/users/models/user';
 import { UsersService } from './modules/users/users.service';
@@ -20,17 +20,8 @@ export class AuthResolver implements Resolve<User> {
       params = { personalInfo : true, financialInfo : true };
     }
 
-    this.usersService.getAuthenticatedUser(params);
-    // if (user) {
-    //   this.usersService.routerRedirectUrl = null;
-    //   return user;
-    // } else {
-    //   this.router.navigate(['/users/login']);
-    //   return null;
-    // }
-
-    return this.usersService.user$.pipe(
-      map((user: User) => {
+    return this.usersService.getAuthenticatedUser$(params).pipe(
+      map((user: User): User => {
         if (user) {
           this.usersService.routerRedirectUrl = null;
           return user;
@@ -38,14 +29,14 @@ export class AuthResolver implements Resolve<User> {
           this.router.navigate(['/users/login']);
           return null;
         }
-      }, 
-      (error: any) => {
+      }),
+      catchError((error: any): Observable<User> => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
-        this.usersService.setUser(null);
+        this.usersService.user = null;
         this.router.navigate(['/users/login']);
         return null;
-      }
-    ));
+      })
+    );
   }
   
 }

@@ -28,9 +28,8 @@ export class AppComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
     // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
-    const newSubcription: Subscription = this.usersService.user$.pipe(
+    const newSubcription: Subscription = this.usersService.getAuthenticatedUser$().pipe(
       flatMap((user: User) => {
-        console.log(user);
         this.user = user;
 
         if (this.user && this.user.currency && this.user.currency !== 'USD') {
@@ -55,8 +54,6 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     ); // start listening the source of user
     this.subscription.add(newSubcription);
-
-    this.usersService.getAuthenticatedUser();
 
     this.getCryptoRates('BTC');
     this.getCryptoRates('XMR');
