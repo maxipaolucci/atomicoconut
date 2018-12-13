@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
     this.loginServiceRunning = true;
-    this.usersService.user = null; // reset authenticated user. Register automatically authenticates the registered user.
+    
     // call the register service
     this.usersService.login$(this.model).subscribe(
       (user: User) => {

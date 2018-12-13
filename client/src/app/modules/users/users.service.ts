@@ -17,11 +17,25 @@ export class UsersService {
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   
-  user: User; // Observable user stream
+  user$: BehaviorSubject<User>; // Observable user stream
   routerRedirectUrl: string = null; // a route to redirect the user to when login is successfull
 
   constructor(private http: HttpClient, private appService: AppService) {
-    this.user = null;
+    this.user$ = new BehaviorSubject<User>(null);
+  }
+
+  /**
+   * user source feeder
+   */
+  setUser(user: User = null) {
+    this.user$.next(user);
+  }
+
+  /**
+   * get the current user from the source
+   */
+  getUser(): User {
+    return this.user$.getValue();
   }
 
   /**
@@ -33,13 +47,14 @@ export class UsersService {
   register$(postData: any = {}): Observable<User> {
     const methodTrace = `${this.constructor.name} > register$() > `; // for debugging
 
+    this.setUser(null);
     return this.http.post<Response>(`${this.serverHost}/register`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
       flatMap((data: any): Observable<User> => {
         let user: User = null;
         if (data && data.email) {
           user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-          this.user = user;
+          this.setUser(user);
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`, data);
         }
@@ -62,14 +77,14 @@ export class UsersService {
     return this.http.post<Response>(`${this.serverHost}/account`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
       flatMap((data: any): Observable<User> => {
-        let user: User = null;
+        const user: User = this.getUser();
 
         if (data && data.email) {
-          user = this.user;
           user.name = data.name;
           user.email = data.email;
           user.currency = data.currency;
-          this.user = user;
+
+          this.setUser(user);
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
@@ -89,20 +104,22 @@ export class UsersService {
   updatePersonalInfo$(postData: any = {}): Observable<User> {
     const methodTrace = `${this.constructor.name} > updatePersonalInfo$() > `; // for debugging
 
-    return this.http.post<Response>(`${this.serverHost}/accountPersonalInfo`, postData, { headers : this.headers })
-        .pipe(
-          map(this.appService.extractData),
-          flatMap((data: any): Observable<User> => {
-            if (data.personalInfo.birthday) {
-              this.user.personalInfo = new AccountPersonal(data.personalInfo.birthday);
-            } else {
-              this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-            }
+    return this.http.post<Response>(`${this.serverHost}/accountPersonalInfo`, postData, { headers : this.headers }).pipe(
+      map(this.appService.extractData),
+      flatMap((data: any): Observable<User> => {
+        const user = this.getUser();
 
-            return of(this.user);
-          }),
-          catchError(this.appService.handleError)
-        );
+        if (data.personalInfo.birthday) {
+          user.personalInfo = new AccountPersonal(data.personalInfo.birthday);
+          this.setUser(user);
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        }
+
+        return of(user);
+      }),
+      catchError(this.appService.handleError)
+    );
   }
 
   /**
@@ -114,22 +131,24 @@ export class UsersService {
   updateFinancialInfo$(postData: any = {}): Observable<User> {
     const methodTrace = `${this.constructor.name} > updateFinancialInfo$() > `; // for debugging
 
-    return this.http.post<Response>(`${this.serverHost}/accountFinancialInfo`, postData, { headers : this.headers })
-        .pipe(
-          map(this.appService.extractData),
-          flatMap((data: any): Observable<User> => {
-            if (data.financialInfo.savingsUnit) {
-              
-              this.user.financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
-                  data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
-            } else {
-              this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-            }
-    
-            return of(this.user);
-          }),
-          catchError(this.appService.handleError)
-        );
+    return this.http.post<Response>(`${this.serverHost}/accountFinancialInfo`, postData, { headers : this.headers }).pipe(
+      map(this.appService.extractData),
+      flatMap((data: any): Observable<User> => {
+        const user = this.getUser();
+
+        if (data.financialInfo.savingsUnit) {  
+          user.financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
+              data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
+          
+          this.setUser(user);
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        }
+
+        return of(user);
+      }),
+      catchError(this.appService.handleError)
+    );
   }
 
   /**
@@ -151,7 +170,8 @@ export class UsersService {
     return this.http.get<Response>(`${this.serverHost}/getUser`, { params }).pipe(
       map(this.appService.extractData),
       flatMap((data: any): Observable<User> => {
-  
+        let user: User = null;
+
         if (data && data.email) {
           let personalInfo = null;
           if (data.personalInfo && data.personalInfo.birthday) {
@@ -164,13 +184,14 @@ export class UsersService {
                 data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
           }
           
-          this.user = new User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);          
+          user = new User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
+          this.setUser(user);
         } else {
           this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
-          this.user = null;
+          this.setUser(null);
         }
 
-        return of(this.user);
+        return of(user);
       }),
       catchError(this.appService.handleError)
     );
@@ -183,24 +204,25 @@ export class UsersService {
    */
   login$(postData: any = {}): Observable<User> {
     const methodTrace = `${this.constructor.name} > login$() > `; // for debugging
+    this.setUser(null);
 
-    return this.http.post<Response>(`${this.serverHost}/login`, postData, { headers : this.headers })
-        .pipe(
-          map(this.appService.extractData),
-          flatMap((data: any): Observable<User> => {
-            let user: User = null;
+    return this.http.post<Response>(`${this.serverHost}/login`, postData, { headers : this.headers }).pipe(
+      map(this.appService.extractData),
+      flatMap((data: any): Observable<User> => {
+        let user: User = null;
 
-            if (data && data.email) {
-              user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-              this.user = user;
-            } else {
-              this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-            }
+        if (data && data.email) {
+          user = new User(data.name, data.email, data.avatar, null, null, data.currency);
+          this.setUser(user);
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.setUser(null);
+        }
 
-            return of(user);
-          }),
-          catchError(this.appService.handleError)
-        );
+        return of(user);
+      }),
+      catchError(this.appService.handleError)
+    );
   }
 
   /**
@@ -211,11 +233,10 @@ export class UsersService {
   forgot$(postData: any = {}): Observable<any> {
     const methodTrace = `${this.constructor.name} > forgot$() > `; // for debugging
 
-    return this.http.post<Response>(`${this.serverHost}/account/forgot`, postData, { headers : this.headers })
-        .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
-        );
+    return this.http.post<Response>(`${this.serverHost}/account/forgot`, postData, { headers : this.headers }).pipe(
+      map(this.appService.extractData),
+      catchError(this.appService.handleError)
+    );
   }
 
   /**
@@ -226,6 +247,7 @@ export class UsersService {
   reset$(token: string, postData: any = {}): Observable<User> {
     const methodTrace = `${this.constructor.name} > reset$() > `; // for debugging
 
+    this.setUser(null);
     return this.http.post<Response>(`${this.serverHost}/account/reset/${token}`, postData, { headers : this.headers })
         .pipe(
           map(this.appService.extractData),
@@ -234,8 +256,9 @@ export class UsersService {
 
             if (data && data.email) {
               user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-              this.user = user;
+              this.setUser(user);
             } else {
+              this.setUser(null);
               this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
             }
     
@@ -253,14 +276,13 @@ export class UsersService {
   logout$(): Observable<any> {
     const methodTrace = `${this.constructor.name} > logout$() > `; // for debugging
 
-    return this.http.get<Response>(`${this.serverHost}/logout`)
-        .pipe(
-          map(this.appService.extractData),
-          flatMap((data: any): Observable<null> => {
-            this.user = null;
-            return of(null);
-          }),
-          catchError(this.appService.handleError)
-        );
+    return this.http.get<Response>(`${this.serverHost}/logout`).pipe(
+      map(this.appService.extractData),
+      flatMap((data: any): Observable<null> => {
+        this.setUser(null);
+        return of(null);
+      }),
+      catchError(this.appService.handleError)
+    );
   }
 }

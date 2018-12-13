@@ -38,22 +38,28 @@ export class AppComponent implements OnInit, OnDestroy {
 
         return of(null); // is the user had not configure a preferred currency then we don't need to show the currency toolbar
       })
-    ).subscribe(
-      (currencyRates: any) => {
-        if (currencyRates === null) {
-          this.todayUserPrefRate = null;
-          return;
-        }
-
-        this.todayUserPrefRate = currencyRates[this.utilService.formatToday()][`USD${this.user.currency}`];
-        this.appService.consoleLog('info', `${methodTrace} Currency exchange rates successfully loaded!`);
-      },
-      (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > ${error}`);
-        this.appService.showResults(`There was an error trying to get currency rates data.`, 'error');
+    ).subscribe((currencyRates: any) => {
+      if (currencyRates === null) {
+        this.todayUserPrefRate = null;
+        return;
       }
-    ); // start listening the source of user
+
+      this.todayUserPrefRate = currencyRates[this.utilService.formatToday()][`USD${this.user.currency}`];
+      this.appService.consoleLog('info', `${methodTrace} Currency exchange rates successfully loaded!`);
+    },
+    (error: any) => {
+      this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > ${error}`);
+      this.appService.showResults(`There was an error trying to get currency rates data.`, 'error');
+    }); // start listening the source of user
     this.subscription.add(newSubcription);
+
+    // let's track the user state
+    const newSubscription2 = this.usersService.user$.subscribe((user: User) => {
+      if (!user) {
+        this.todayUserPrefRate = null;
+      }
+    });
+    this.subscription.add(newSubscription2);
 
     this.getCryptoRates('BTC');
     this.getCryptoRates('XMR');

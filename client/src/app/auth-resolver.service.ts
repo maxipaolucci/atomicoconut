@@ -32,7 +32,6 @@ export class AuthResolver implements Resolve<User> {
       }),
       catchError((error: any): Observable<User> => {
         this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
-        this.usersService.user = null;
         this.router.navigate(['/users/login']);
         return null;
       })
