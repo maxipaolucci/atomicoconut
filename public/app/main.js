@@ -309,7 +309,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"inner mat-typography\">  \r\n  <mat-toolbar fxLayout=\"row\" fxLayoutAlign=\"space-between center\" class=\"toolbar__primary mat-elevation-z1\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    \r\n    <span *ngIf=\"!user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"user.avatar\"/>\r\n      <mat-icon *ngIf=\"!user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n  </mat-toolbar>\r\n  <div class=\"toolbar__primary__spacer\"><!-- This is a spacer with main toolbar height to avoid any content going behind the toolbar --></div>\r\n\r\n  <mat-toolbar fxLayout=\"row\" fxLayoutAlign=\"space-between center\" class=\"toolbar__secondary\" *ngIf=\"todayUserPrefRate !== null\">\r\n    <span>Preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{user.currency}}</strong></a></span>\r\n    <span>1 USD = {{todayUserPrefRate | number : '1.0-3' }} {{user.currency}}</span>\r\n  </mat-toolbar>\r\n\r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
+module.exports = "<div class=\"inner mat-typography\">  \r\n  <mat-toolbar fxLayout=\"row\" fxLayoutAlign=\"space-between center\" class=\"toolbar__primary mat-elevation-z1\" color=\"primary\">\r\n    <a class=\"toolbar__brand-name color__almost-white\" routerLink=\"/\"><span>AtomiCoconut</span></a>\r\n    \r\n    <span *ngIf=\"!user\" fxLayoutAlign=\" center\">\r\n      <mat-icon routerLink=\"/users/login\" class=\"toolbar__icon\">account_circle</mat-icon>\r\n    </span>\r\n    <span *ngIf=\"user\" fxLayoutAlign=\" center\">\r\n      <img *ngIf=\"user.avatar\" \r\n          [matMenuTriggerFor]=\"userMenu\" \r\n          class=\"toolbar__icon user__avatar\" \r\n          [src]=\"user.avatar\"/>\r\n      <mat-icon *ngIf=\"!user.avatar\"\r\n          class=\"toolbar__icon user__icon--logged-in\" \r\n          [matMenuTriggerFor]=\"userMenu\">\r\n        account_circle\r\n      </mat-icon>\r\n      \r\n      <mat-menu class=\"user__menu--logged-in\" #userMenu=\"matMenu\" [overlapTrigger]=\"false\">\r\n        <button mat-menu-item routerLink=\"/users/account\">\r\n          <mat-icon>settings</mat-icon>\r\n          <span>My account</span>\r\n        </button>\r\n        <button mat-menu-item routerLink=\"/teams\">\r\n          <mat-icon>group</mat-icon>\r\n          <span>Teams</span>\r\n        </button>\r\n        <button mat-menu-item (click)=\"logout()\">\r\n          <mat-icon>exit_to_app</mat-icon>\r\n          <span>Logout</span>\r\n        </button>\r\n      </mat-menu>\r\n    </span>\r\n  </mat-toolbar>\r\n  <div class=\"toolbar__primary__spacer\"><!-- This is a spacer with main toolbar height to avoid any content going behind the toolbar --></div>\r\n\r\n  <mat-toolbar fxLayout=\"row\" fxLayoutAlign=\"space-between center\" class=\"toolbar__secondary\" *ngIf=\"user && todayUserPrefRate !== null\">\r\n    <span>Preferred currency is <a class=\"color__almost-white\" routerLink=\"/users/account\" matTooltip=\"Change...\"><strong>{{user.currency}}</strong></a></span>\r\n    <span>1 USD = {{todayUserPrefRate | number : '1.0-3' }} {{user.currency}}</span>\r\n  </mat-toolbar>\r\n\r\n  <!-- Main navigator (chips) -->\r\n  <main-navigator></main-navigator>\r\n\r\n  <router-outlet></router-outlet>\r\n</div>"
 
 /***/ }),
 
@@ -400,8 +400,10 @@ var AppComponent = /** @class */ (function () {
             if (!user) {
                 _this.todayUserPrefRate = null;
             }
+            _this.user = user;
         });
         this.subscription.add(newSubscription2);
+        this.usersService.updateSessionState(15000);
         this.getCryptoRates('BTC');
         this.getCryptoRates('XMR');
     };
@@ -818,7 +820,7 @@ var AuthResolver = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  404 Page not found\n</p>\n"
+module.exports = "<p>\r\n  404 Page not found\r\n</p>\r\n"
 
 /***/ }),
 
@@ -963,9 +965,10 @@ var WelcomeComponent = /** @class */ (function () {
         ]);
         this.generateWealthComponentInfo();
         // let's track the user state
-        var newSubscription = this.usersService.user$.subscribe(function (user) {
-        });
-        this.subscription.add(newSubscription);
+        // const newSubscription = this.usersService.user$.subscribe((user: User) => {
+        //   this.user = user;
+        // });
+        // this.subscription.add(newSubscription);
     };
     WelcomeComponent.prototype.ngOnDestroy = function () {
         // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
@@ -1133,7 +1136,7 @@ var WelcomeComponent = /** @class */ (function () {
     WelcomeComponent.prototype.setUserAndGetInvestments$ = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > setUserAndGetInvestments$() > "; // for debugging
-        return this.usersService.getAuthenticatedUser$({ personalInfo: true, financialInfo: true }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
+        return this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
             console.log(user);
             // reset all values to recalculate for this user 
             _this.wealthAmount = 0;
@@ -6404,7 +6407,7 @@ var MainNavigatorService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\n  <mat-progress-bar \n      class=\"progress-bar\"\n      [ngClass]=\"extraClasses\"\n      [color]=\"color\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n  <p *ngIf=\"message\">{{ message }}</p>\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n  <mat-progress-bar \r\n      class=\"progress-bar\"\r\n      [ngClass]=\"extraClasses\"\r\n      [color]=\"color\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  <p *ngIf=\"message\">{{ message }}</p>\r\n</div>"
 
 /***/ }),
 
@@ -8998,6 +9001,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./models/user */ "./src/app/modules/users/models/user.ts");
 /* harmony import */ var _models_account_personal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./models/account-personal */ "./src/app/modules/users/models/account-personal.ts");
 /* harmony import */ var _models_account_finance__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./models/account-finance */ "./src/app/modules/users/models/account-finance.ts");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_9__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9007,6 +9012,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -9158,14 +9164,38 @@ var UsersService = /** @class */ (function () {
                     financialInfo = new _models_account_finance__WEBPACK_IMPORTED_MODULE_8__["AccountFinance"](data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
                 }
                 user = new _models_user__WEBPACK_IMPORTED_MODULE_6__["User"](data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
-                _this.setUser(user);
             }
             else {
                 _this.appService.consoleLog('info', methodTrace + " User not logged in.", data);
-                _this.setUser(null);
+            }
+            if (!lodash__WEBPACK_IMPORTED_MODULE_9___default.a.isEqual(user, _this.getUser())) {
+                _this.appService.consoleLog('info', methodTrace + " User info updated.");
+                _this.setUser(user);
             }
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(user);
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.appService.handleError));
+    };
+    /**
+     * Checks for the authenticated user state every certain amount of time. This will make the user$ variable to update its value and
+     * each component observing it is going the refresh their state base on the new value
+     *
+     * @param { number } time. The amount of time in ms between each session state check
+     */
+    UsersService.prototype.updateSessionState = function (time) {
+        var _this = this;
+        var methodTrace = this.constructor.name + " > updateSessionState() > "; // for debugging
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["interval"])(time).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (checkNumber) {
+            var user = _this.getUser();
+            var params = {};
+            if (user) {
+                params = {
+                    financialInfo: user.financialInfo ? true : false,
+                    personalInfo: user.personalInfo ? true : false
+                };
+            }
+            console.log(checkNumber, params);
+            return _this.getAuthenticatedUser$(params);
+        })).subscribe(function (user) { return console.log(user); });
     };
     /**
      * Server call to login the provided user email and pass.

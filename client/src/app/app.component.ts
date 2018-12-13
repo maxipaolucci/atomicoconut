@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
 import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
 import { UtilService } from './util.service';
-import { of, Subscription } from 'rxjs';
+import { of, Subscription, interval } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 @Component({
   selector: 'app-root',
@@ -58,8 +58,12 @@ export class AppComponent implements OnInit, OnDestroy {
       if (!user) {
         this.todayUserPrefRate = null;
       }
+
+      this.user = user;
     });
     this.subscription.add(newSubscription2);
+
+    this.usersService.updateSessionState(15000);
 
     this.getCryptoRates('BTC');
     this.getCryptoRates('XMR');

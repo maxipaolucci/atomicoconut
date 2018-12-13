@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, of, interval } from 'rxjs';
 import { map, catchError, flatMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AppService } from '../../app.service';
@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { Response } from '../../models/response';
 import { AccountPersonal } from './models/account-personal';
 import { AccountFinance } from './models/account-finance';
+import _ from 'lodash';
 
 @Injectable()
 export class UsersService {
@@ -185,16 +186,44 @@ export class UsersService {
           }
           
           user = new User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
-          this.setUser(user);
         } else {
           this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
-          this.setUser(null);
+        }
+
+        if (!_.isEqual(user, this.getUser())) {
+          this.appService.consoleLog('info', `${methodTrace} User info updated.`);
+          this.setUser(user);
         }
 
         return of(user);
       }),
       catchError(this.appService.handleError)
     );
+  }
+
+  /**
+   * Checks for the authenticated user state every certain amount of time. This will make the user$ variable to update its value and
+   * each component observing it is going the refresh their state base on the new value
+   * 
+   * @param { number } time. The amount of time in ms between each session state check
+   */
+  updateSessionState(time: number) {
+    const methodTrace = `${this.constructor.name} > updateSessionState() > `; // for debugging
+
+    interval(time).pipe(
+      flatMap((checkNumber: number) => {
+        const user: User = this.getUser();
+        let params = {};
+        if (user) {
+          params = {
+            financialInfo: user.financialInfo ? true : false,
+            personalInfo: user.personalInfo ? true : false
+          };
+        }
+        console.log(checkNumber, params);
+        return this.getAuthenticatedUser$(params);
+      })
+    ).subscribe((user: User) => console.log(user));
   }
 
   /**
