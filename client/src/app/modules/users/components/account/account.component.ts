@@ -11,16 +11,16 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 })
 export class AccountComponent implements OnInit {
 
-  public user : User = null;
+  public user: User = null;
 
-  constructor(private mainNavigatorService : MainNavigatorService, private route : ActivatedRoute, public utilService : UtilService) { }
+  constructor(private mainNavigatorService: MainNavigatorService, private route: ActivatedRoute, public utilService: UtilService) { }
 
   ngOnInit() {
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'My account', url: null, selected: true }]);
     
-    //get authUser from resolver
+    // get authUser from resolver
     this.route.data.subscribe((data: { authUser: User }) => {
       this.user = data.authUser;
     });

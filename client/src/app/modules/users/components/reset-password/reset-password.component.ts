@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap  } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { UsersService } from '../../users.service';
 import {User} from '../../models/user';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { AppService } from '../../../../app.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'users-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit, OnDestroy {
 
   model: any = { password : '', 'password-confirm' : ''};
   private token = '';
   resetPasswordServiceRunning = false;
   showPassword = false;
+  subscription: Subscription = new Subscription();
 
   constructor(private appService: AppService, private usersService: UsersService, private router: Router, private route: ActivatedRoute,
       private mainNavigatorService: MainNavigatorService ) { }
@@ -40,6 +42,13 @@ export class ResetPasswordComponent implements OnInit {
         });
   }
 
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
+
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
+  }
+
   onSubmit() { 
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
     this.resetPasswordServiceRunning = true;
@@ -53,7 +62,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     // call the reset password service.
-    this.usersService.reset$(this.token, this.model).subscribe(
+    const newsubscription = this.usersService.reset$(this.token, this.model).subscribe(
       (user: User) => {
         if (user) {
           this.appService.showResults('Your password was successfully updated!', 'success');
@@ -74,6 +83,7 @@ export class ResetPasswordComponent implements OnInit {
         this.resetPasswordServiceRunning = false;
       }
     );
+    this.subscription.add(newsubscription);
   }
 
 }

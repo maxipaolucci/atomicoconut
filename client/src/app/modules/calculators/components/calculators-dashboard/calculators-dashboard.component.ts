@@ -8,7 +8,7 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 })
 export class CalculatorsDashboardComponent implements OnInit {
 
-  constructor(private mainNavigatorService : MainNavigatorService) { }
+  constructor(private mainNavigatorService: MainNavigatorService) { }
 
   ngOnInit() {
     this.mainNavigatorService.setLinks([

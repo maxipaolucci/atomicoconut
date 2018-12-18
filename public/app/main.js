@@ -377,7 +377,10 @@ var AppComponent = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
         // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
-        var newSubcription = this.usersService.getAuthenticatedUser$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
+        var newSubcription = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
+            if (!user) {
+                _this.todayUserPrefRate = null;
+            }
             _this.user = user;
             if (_this.user && _this.user.currency && _this.user.currency !== 'USD') {
                 return _this.currencyExchangeService.getCurrencyRates$();
@@ -395,15 +398,8 @@ var AppComponent = /** @class */ (function () {
             _this.appService.showResults("There was an error trying to get currency rates data.", 'error');
         }); // start listening the source of user
         this.subscription.add(newSubcription);
-        // let's track the user state
-        var newSubscription2 = this.usersService.user$.subscribe(function (user) {
-            if (!user) {
-                _this.todayUserPrefRate = null;
-            }
-            _this.user = user;
-        });
-        this.subscription.add(newSubscription2);
-        this.usersService.updateSessionState(15000);
+        // start tracking user changes every 10min (600000ms)
+        this.usersService.updateSessionState(600000);
         this.getCryptoRates('BTC');
         this.getCryptoRates('XMR');
     };
@@ -424,19 +420,6 @@ var AppComponent = /** @class */ (function () {
         });
         this.subscription.add(newSubscription);
     };
-    // setUser() {
-    //   const methodTrace = `${this.constructor.name} > setUser() > `; // for debugging
-    //   this.usersService.getAuthenticatedUser$().subscribe(
-    //     (user: User) => {
-    //       this.user = user; // this could be a user of null does not matter
-    //     },
-    //     (error: any) => {
-    //       this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
-    //       this.usersService.setUser(null);
-    //       this.user = null;
-    //     }
-    //   );
-    // }
     AppComponent.prototype.logout = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > logout() > "; // for debugging
@@ -788,6 +771,7 @@ var AuthResolver = /** @class */ (function () {
             params = { personalInfo: true, financialInfo: true };
         }
         return this.usersService.getAuthenticatedUser$(params).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (user) {
+            console.log(user);
             if (user) {
                 _this.usersService.routerRedirectUrl = null;
                 return user;
@@ -820,7 +804,7 @@ var AuthResolver = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  404 Page not found\r\n</p>\r\n"
+module.exports = "<p>\n  404 Page not found\n</p>\n"
 
 /***/ }),
 
@@ -964,11 +948,6 @@ var WelcomeComponent = /** @class */ (function () {
             { displayName: 'Calculators', url: '/calculators', selected: false }
         ]);
         this.generateWealthComponentInfo();
-        // let's track the user state
-        // const newSubscription = this.usersService.user$.subscribe((user: User) => {
-        //   this.user = user;
-        // });
-        // this.subscription.add(newSubscription);
     };
     WelcomeComponent.prototype.ngOnDestroy = function () {
         // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
@@ -1146,7 +1125,7 @@ var WelcomeComponent = /** @class */ (function () {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
             }
             else if (!user.personalInfo || !user.financialInfo) {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
+                return _this.usersService.getAuthenticatedUser$({ personalInfo: true, financialInfo: true });
             }
             else {
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(user);
@@ -1454,6 +1433,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1463,6 +1443,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1484,6 +1465,7 @@ var EquityComponent = /** @class */ (function () {
             loanAmountPaid: 0,
             secondLoanCoverage: 65
         };
+        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subscription"]();
     }
     EquityComponent.prototype.ngOnInit = function () {
         this.mainNavigatorService.setLinks([
@@ -1493,9 +1475,14 @@ var EquityComponent = /** @class */ (function () {
             { displayName: 'House figures', url: '/calculators/house-figures', selected: false }
         ]);
     };
+    EquityComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
     EquityComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
-        this.form.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(500)).subscribe(function (values) {
+        var newSubscription = this.form.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["debounceTime"])(500)).subscribe(function (values) {
             _this.loanAmount = values.purchasePrice * (values.loanCoverage / 100);
             _this.discount = values.marketValue - values.purchasePrice - values.renovationCost;
             _this.depositAmount = values.purchasePrice - _this.loanAmount;
@@ -1503,6 +1490,7 @@ var EquityComponent = /** @class */ (function () {
             _this.usableEquity = values.marketValue * (_this.model.loanCoverage / 100) - _this.loanAmount + values.loanAmountPaid + values.savings;
             _this.purchaseCapacity = (_this.usableEquity * 100) / (100 - values.secondLoanCoverage);
         });
+        this.subscription.add(newSubscription);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('equityForm'),
@@ -2076,7 +2064,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
         // get the team of the investmetn if exists
         var newSubscription = null;
         var currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
-        var currencyRatesAndUser$ = this.usersService.getAuthenticatedUser$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(currencyRates$, function (user, currencyRates) {
+        var currencyRatesAndUser$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["combineLatest"])(currencyRates$, function (user, currencyRates) {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
         })); // (currency rates and user) source
@@ -2187,7 +2175,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
                 message: "Are you sure you want to delete this investment forever?"
             }
         });
-        yesNoDialogRef.afterClosed().subscribe(function (result) {
+        var newSubscription = yesNoDialogRef.afterClosed().subscribe(function (result) {
             if (result === 'yes') {
                 _this.delete();
             }
@@ -2195,6 +2183,7 @@ var CurrencyInvestmentComponent = /** @class */ (function () {
                 _this.actionRunning = false;
             }
         });
+        this.subscription.add(newSubscription);
         return false;
     };
     CurrencyInvestmentComponent.prototype.delete = function () {
@@ -3424,7 +3413,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
         // get the team of the investmetn if exists
         var newSubscription = null;
         var currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
-        var currencyRatesAndUser$ = this.usersService.getAuthenticatedUser$().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["combineLatest"])(currencyRates$, function (user, currencyRates) {
+        var currencyRatesAndUser$ = this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["combineLatest"])(currencyRates$, function (user, currencyRates) {
             _this.user = user;
             return { user: user, currencyRates: currencyRates };
         })); // (currency rates and user) source
@@ -3505,7 +3494,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
                 message: "Are you sure you want to delete this investment forever?"
             }
         });
-        yesNoDialogRef.afterClosed().subscribe(function (result) {
+        var newSubscription = yesNoDialogRef.afterClosed().subscribe(function (result) {
             if (result === 'yes') {
                 _this.delete();
             }
@@ -3513,6 +3502,7 @@ var PropertyInvestmentComponent = /** @class */ (function () {
                 _this.actionRunning = false;
             }
         });
+        this.subscription.add(newSubscription);
         return false;
     };
     PropertyInvestmentComponent.prototype.delete = function () {
@@ -4992,9 +4982,10 @@ var PropertiesTableComponent = /** @class */ (function () {
             this.getProperties();
         }
         // selection changed
-        this.selection.onChange.subscribe(function (selectionChange) {
+        var newSubcription = this.selection.onChange.subscribe(function (selectionChange) {
             _this.selectedProperty.emit(_this.selection.selected[0]);
         });
+        this.subscription.add(newSubcription);
         // set filter predicate function to look just in the address field
         this.propertiesDataSource.filterPredicate = function (data, filter) {
             var address = data.address.description.toLowerCase().trim();
@@ -5046,6 +5037,7 @@ var PropertiesTableComponent = /** @class */ (function () {
             }
             _this.getPropertiesServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     PropertiesTableComponent.prototype.goToPropertyEdit = function (property) {
         if (this.allowEdition) {
@@ -6407,7 +6399,7 @@ var MainNavigatorService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\r\n  <mat-progress-bar \r\n      class=\"progress-bar\"\r\n      [ngClass]=\"extraClasses\"\r\n      [color]=\"color\"\r\n      mode=\"indeterminate\">\r\n  </mat-progress-bar>\r\n  <p *ngIf=\"message\">{{ message }}</p>\r\n</div>"
+module.exports = "<div fxLayout=\"column\" fxLayoutGap=\"10px\" fxLayoutAlign=\"start center\">\n  <mat-progress-bar \n      class=\"progress-bar\"\n      [ngClass]=\"extraClasses\"\n      [color]=\"color\"\n      mode=\"indeterminate\">\n  </mat-progress-bar>\n  <p *ngIf=\"message\">{{ message }}</p>\n</div>"
 
 /***/ }),
 
@@ -7347,7 +7339,7 @@ var TeamsEditComponent = /** @class */ (function () {
         // generates an investment id source from id parameter in url
         var slug$ = this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function (params) { return params.get('slug'); }));
         // combine user$ and id$ sources into one object and start listen to it for changes
-        this.subscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["combineLatest"])(slug$, function (user, slug) {
+        var newSubscription = user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["combineLatest"])(slug$, function (user, slug) {
             return { user: user, teamSlug: slug };
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["switchMap"])(function (data) {
             _this.user = data.user;
@@ -7400,6 +7392,7 @@ var TeamsEditComponent = /** @class */ (function () {
             }
             _this.getTeamServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     /**
      * Get a team observable from server based on the slug provided
@@ -7925,6 +7918,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/user */ "./src/app/modules/users/models/user.ts");
 /* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7934,6 +7928,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -7951,6 +7946,7 @@ var AccountFinanceInfoComponent = /** @class */ (function () {
             savingsUnit: null
         };
         this.accountFinanceServiceRunning = false;
+        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subscription"]();
     }
     AccountFinanceInfoComponent.prototype.ngOnInit = function () {
         var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
@@ -7967,6 +7963,11 @@ var AccountFinanceInfoComponent = /** @class */ (function () {
             });
         }
     };
+    AccountFinanceInfoComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
     AccountFinanceInfoComponent.prototype.onCurrencyUnitChange = function ($event) {
         if ($event.source.id === 'annualIncomeUnit') {
             this.model.annualIncomeUnit = $event.value;
@@ -7980,7 +7981,7 @@ var AccountFinanceInfoComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.accountFinanceServiceRunning = true;
         // call the account service
-        this.usersService.updateFinancialInfo$(this.model).subscribe(function (user) {
+        var newSubscription = this.usersService.updateFinancialInfo$(this.model).subscribe(function (user) {
             if (user) {
                 _this.appService.showResults("Your financial information was successfully updated!.", 'success');
             }
@@ -7995,6 +7996,7 @@ var AccountFinanceInfoComponent = /** @class */ (function () {
             }
             _this.accountFinanceServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -8053,6 +8055,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
 /* harmony import */ var _util_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../util.service */ "./src/app/util.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8068,6 +8071,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var AccountPersonalInfoComponent = /** @class */ (function () {
     function AccountPersonalInfoComponent(dateAdapter, usersService, appService, utilService) {
         this.dateAdapter = dateAdapter;
@@ -8077,6 +8081,7 @@ var AccountPersonalInfoComponent = /** @class */ (function () {
         this.model = { birthday: null, email: null };
         this.startAt = new Date(1990, 0, 1);
         this.accountPersonalServiceRunning = false;
+        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subscription"]();
         this.dateAdapter.setLocale('en-GB');
     }
     AccountPersonalInfoComponent.prototype.ngOnInit = function () {
@@ -8088,12 +8093,17 @@ var AccountPersonalInfoComponent = /** @class */ (function () {
             }
         }
     };
+    AccountPersonalInfoComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
     AccountPersonalInfoComponent.prototype.onSubmit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.accountPersonalServiceRunning = true;
         // call the account service
-        this.usersService.updatePersonalInfo$(this.model).subscribe(function (user) {
+        var newSubscription = this.usersService.updatePersonalInfo$(this.model).subscribe(function (user) {
             if (user) {
                 _this.appService.showResults("Your personal information was successfully updated!.", 'success');
             }
@@ -8108,6 +8118,7 @@ var AccountPersonalInfoComponent = /** @class */ (function () {
             }
             _this.accountPersonalServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -8165,6 +8176,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/user */ "./src/app/modules/users/models/user.ts");
 /* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8178,6 +8190,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var AccountUserInfoComponent = /** @class */ (function () {
     function AccountUserInfoComponent(usersService, appService) {
         this.usersService = usersService;
@@ -8185,9 +8198,15 @@ var AccountUserInfoComponent = /** @class */ (function () {
         this.user = null;
         this.model = { name: '', email: '', currency: '' };
         this.updateAccountServiceRunning = false;
+        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subscription"]();
     }
     AccountUserInfoComponent.prototype.ngOnInit = function () {
         this.model = { name: this.user.name, email: this.user.email, currency: this.user.currency };
+    };
+    AccountUserInfoComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
     };
     AccountUserInfoComponent.prototype.onCurrencyUnitChange = function ($event) {
         if ($event.source.id === 'preferredCurrency') {
@@ -8202,7 +8221,7 @@ var AccountUserInfoComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.updateAccountServiceRunning = true;
         // call the account service
-        this.usersService.updateAccount$(this.model).subscribe(function (user) {
+        var newSubscription = this.usersService.updateAccount$(this.model).subscribe(function (user) {
             if (user) {
                 _this.appService.showResults("Your profile was successfully updated!.", 'success');
             }
@@ -8217,6 +8236,7 @@ var AccountUserInfoComponent = /** @class */ (function () {
             }
             _this.updateAccountServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -8299,7 +8319,7 @@ var AccountComponent = /** @class */ (function () {
             { displayName: 'Welcome', url: '/welcome', selected: false },
             { displayName: 'My account', url: null, selected: true }
         ]);
-        //get authUser from resolver
+        // get authUser from resolver
         this.route.data.subscribe(function (data) {
             _this.user = data.authUser;
         });
@@ -8357,6 +8377,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
 /* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8366,6 +8387,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -8384,6 +8406,7 @@ var LoginComponent = /** @class */ (function () {
         this.loginServiceRunning = false;
         this.forgotServiceRunning = false;
         this.showPassword = false;
+        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subscription"]();
     }
     LoginComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -8399,6 +8422,11 @@ var LoginComponent = /** @class */ (function () {
             }
         });
     };
+    LoginComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
     /**
      * When user submits the login form
      */
@@ -8407,7 +8435,7 @@ var LoginComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
         this.loginServiceRunning = true;
         // call the register service
-        this.usersService.login$(this.model).subscribe(function (user) {
+        var newSubscription = this.usersService.login$(this.model).subscribe(function (user) {
             if (user) {
                 var redirectUrl = _this.usersService.routerRedirectUrl ? _this.usersService.routerRedirectUrl : '/';
                 _this.usersService.routerRedirectUrl = null;
@@ -8427,6 +8455,7 @@ var LoginComponent = /** @class */ (function () {
             }
             _this.loginServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     /**
      * When user submits the forgot password form
@@ -8436,7 +8465,7 @@ var LoginComponent = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > onForgotSubmit() > "; // for debugging
         this.forgotServiceRunning = true;
         // call the register service
-        this.usersService.forgot$(this.forgotModel).subscribe(function (data) {
+        var newSubscription = this.usersService.forgot$(this.forgotModel).subscribe(function (data) {
             if (data && data.email && data.expires) {
                 _this.appService.showResults("We sent an email to " + data.email + " with a password reset link that will expire in " + data.expires + ".", 'info');
             }
@@ -8458,6 +8487,7 @@ var LoginComponent = /** @class */ (function () {
             }
             _this.forgotServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     LoginComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -8512,6 +8542,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
 /* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8526,6 +8557,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var RegisterComponent = /** @class */ (function () {
     function RegisterComponent(usersService, appService, router, mainNavigatorService) {
         this.usersService = usersService;
@@ -8535,6 +8567,7 @@ var RegisterComponent = /** @class */ (function () {
         this.model = { name: '', email: '', password: '', 'password-confirm': '' };
         this.registerServiceRunning = false;
         this.showPassword = false;
+        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_5__["Subscription"]();
     }
     RegisterComponent.prototype.ngOnInit = function () {
         var methodTrace = this.constructor.name + " > ngOnInit() > "; // for debugging
@@ -8543,6 +8576,11 @@ var RegisterComponent = /** @class */ (function () {
             { displayName: 'Login', url: '/users/login', selected: false },
             { displayName: 'Create account', url: null, selected: true }
         ]);
+    };
+    RegisterComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
     };
     /**
      * When user submits the register form.
@@ -8558,7 +8596,7 @@ var RegisterComponent = /** @class */ (function () {
             return false;
         }
         // call the register service
-        this.usersService.register$(this.model).subscribe(function (user) {
+        var newSubscription = this.usersService.register$(this.model).subscribe(function (user) {
             if (user) {
                 _this.router.navigate(['/']); // go home
                 _this.appService.showResults(user.name + " welcome to AtomiCoconut!", 'success');
@@ -8580,6 +8618,7 @@ var RegisterComponent = /** @class */ (function () {
             }
             _this.registerServiceRunning = false;
         });
+        this.subscription.add(newSubscription);
     };
     RegisterComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -8635,6 +8674,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../users.service */ "./src/app/modules/users/users.service.ts");
 /* harmony import */ var _shared_components_main_navigator_main_navigator_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../shared/components/main-navigator/main-navigator.service */ "./src/app/modules/shared/components/main-navigator/main-navigator.service.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../app.service */ "./src/app/app.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8644,6 +8684,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -8661,6 +8702,7 @@ var ResetPasswordComponent = /** @class */ (function () {
         this.token = '';
         this.resetPasswordServiceRunning = false;
         this.showPassword = false;
+        this.subscription = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subscription"]();
     }
     ResetPasswordComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -8681,6 +8723,11 @@ var ResetPasswordComponent = /** @class */ (function () {
             }
         });
     };
+    ResetPasswordComponent.prototype.ngOnDestroy = function () {
+        var methodTrace = this.constructor.name + " > ngOnDestroy() > "; // for debugging
+        // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+        this.subscription.unsubscribe();
+    };
     ResetPasswordComponent.prototype.onSubmit = function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > onSubmit() > "; // for debugging
@@ -8692,7 +8739,7 @@ var ResetPasswordComponent = /** @class */ (function () {
             return false;
         }
         // call the reset password service.
-        this.usersService.reset$(this.token, this.model).subscribe(function (user) {
+        var newsubscription = this.usersService.reset$(this.token, this.model).subscribe(function (user) {
             if (user) {
                 _this.appService.showResults('Your password was successfully updated!', 'success');
                 _this.router.navigate(['/']); // go home
@@ -8711,6 +8758,7 @@ var ResetPasswordComponent = /** @class */ (function () {
             }
             _this.resetPasswordServiceRunning = false;
         });
+        this.subscription.add(newsubscription);
     };
     ResetPasswordComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -9186,16 +9234,15 @@ var UsersService = /** @class */ (function () {
         var methodTrace = this.constructor.name + " > updateSessionState() > "; // for debugging
         Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["interval"])(time).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (checkNumber) {
             var user = _this.getUser();
-            var params = {};
-            if (user) {
-                params = {
-                    financialInfo: user.financialInfo ? true : false,
-                    personalInfo: user.personalInfo ? true : false
-                };
-            }
+            var params = {
+                financialInfo: user && user.financialInfo ? true : false,
+                personalInfo: user && user.personalInfo ? true : false
+            };
             console.log(checkNumber, params);
             return _this.getAuthenticatedUser$(params);
-        })).subscribe(function (user) { return console.log(user); });
+        })).subscribe(function (user) {
+            // do nothing
+        });
     };
     /**
      * Server call to login the provided user email and pass.

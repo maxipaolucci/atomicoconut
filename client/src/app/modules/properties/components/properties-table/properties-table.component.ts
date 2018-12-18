@@ -52,9 +52,10 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     }
 
     // selection changed
-    this.selection.onChange.subscribe((selectionChange: SelectionChange<Property>) => {
+    const newSubcription: Subscription = this.selection.onChange.subscribe((selectionChange: SelectionChange<Property>) => {
         this.selectedProperty.emit(this.selection.selected[0]);
     });
+    this.subscription.add(newSubcription);
 
     // set filter predicate function to look just in the address field
     this.propertiesDataSource.filterPredicate = (data: Property, filter: string) => {
@@ -120,6 +121,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
         this.getPropertiesServiceRunning = false;
       }
     );
+    this.subscription.add(newSubscription);
   }
 
   goToPropertyEdit(property: Property) {
@@ -214,7 +216,6 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
         this.propertyTableActionRunning = false;
       }
     );
-
     this.subscription.add(newSuscription);
   }
 

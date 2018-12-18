@@ -23,7 +23,7 @@ export class CurrencyInvestmentFormComponent implements OnInit, OnDestroy, After
     buyingPrice : null,
     buyingPriceUnit : null,
     buyingDate : null
-  }
+  };
   subscription: Subscription = new Subscription();
 
   constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private appService: AppService, 

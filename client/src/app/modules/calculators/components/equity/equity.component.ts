@@ -1,23 +1,24 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { debounceTime } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-equity',
   templateUrl: './equity.component.html',
   styleUrls: ['./equity.component.scss']
 })
-export class EquityComponent implements OnInit, AfterViewInit {
+export class EquityComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('equityForm') form;
 
-  loanAmount : number = 0;
-  discount : number = 0;
-  equity : number = 0;
-  depositAmount : number = 0;
-  usableEquity : number = 0;
-  purchaseCapacity : number = 0;
+  loanAmount = 0;
+  discount = 0;
+  equity = 0;
+  depositAmount = 0;
+  usableEquity = 0;
+  purchaseCapacity = 0;
 
-  model : any = { 
+  model: any = { 
     purchasePrice : 0,
     marketValue : 0,
     loanCoverage : 80,
@@ -25,9 +26,11 @@ export class EquityComponent implements OnInit, AfterViewInit {
     renovationCost : 0,
     loanAmountPaid : 0,
     secondLoanCoverage : 65
-  }
+  };
 
-  constructor(private mainNavigatorService : MainNavigatorService) { }
+  subscription: Subscription = new Subscription();
+
+  constructor(private mainNavigatorService: MainNavigatorService) { }
 
   ngOnInit() {
     this.mainNavigatorService.setLinks([
@@ -37,16 +40,23 @@ export class EquityComponent implements OnInit, AfterViewInit {
       { displayName: 'House figures', url: '/calculators/house-figures', selected: false }]);
   }
 
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
+
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
+  }
+
   ngAfterViewInit() {
-    this.form.valueChanges.pipe(debounceTime(500)).subscribe(values => {
+    const newSubscription = this.form.valueChanges.pipe(debounceTime(500)).subscribe(values => {
       this.loanAmount = values.purchasePrice * (values.loanCoverage / 100);
       this.discount = values.marketValue - values.purchasePrice - values.renovationCost;
       this.depositAmount = values.purchasePrice - this.loanAmount;
       this.equity = values.savings + this.discount + this.depositAmount;
       this.usableEquity = values.marketValue * (this.model.loanCoverage / 100) - this.loanAmount + values.loanAmountPaid + values.savings;
       this.purchaseCapacity = (this.usableEquity * 100) / (100 - values.secondLoanCoverage);
-
     });
+    this.subscription.add(newSubscription);
   }
 
 }

@@ -1,16 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MatSelectChange } from '@angular/material';
 import { User } from '../../models/user';
 import { AccountFinance } from '../../models/account-finance';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'account-finance-info',
   templateUrl: './account-finance-info.component.html',
   styleUrls: ['./account-finance-info.component.scss']
 })
-export class AccountFinanceInfoComponent implements OnInit {
+export class AccountFinanceInfoComponent implements OnInit, OnDestroy {
 
   @Input() user: User;
   model: any = { 
@@ -22,7 +23,7 @@ export class AccountFinanceInfoComponent implements OnInit {
     savingsUnit : null
   };
   accountFinanceServiceRunning = false;
-
+  subscription: Subscription = new Subscription();
   
   constructor(private usersService: UsersService, private appService: AppService) {}
 
@@ -44,6 +45,13 @@ export class AccountFinanceInfoComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
+
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
+  }
+
   onCurrencyUnitChange($event: MatSelectChange) {
     if ($event.source.id === 'annualIncomeUnit') {
       this.model.annualIncomeUnit = $event.value;
@@ -58,7 +66,7 @@ export class AccountFinanceInfoComponent implements OnInit {
     this.accountFinanceServiceRunning = true;
 
     // call the account service
-    this.usersService.updateFinancialInfo$(this.model).subscribe(
+    const newSubscription: Subscription = this.usersService.updateFinancialInfo$(this.model).subscribe(
       (user: User) => {
         if (user) {
           this.appService.showResults(`Your financial information was successfully updated!.`, 'success');
@@ -77,5 +85,6 @@ export class AccountFinanceInfoComponent implements OnInit {
         this.accountFinanceServiceRunning = false;
       }
     );
+    this.subscription.add(newSubscription);
   }
 }

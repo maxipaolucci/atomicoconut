@@ -158,7 +158,7 @@ export class UsersService {
    * 
    * @return { Observable<User> }
    */
-  getAuthenticatedUser$(parameters: any = null) {
+  getAuthenticatedUser$(parameters: any = null): Observable<User> {
     const methodTrace = `${this.constructor.name} > getAuthenticatedUser() > `; // for debugging
 
     let params = new HttpParams();
@@ -213,17 +213,16 @@ export class UsersService {
     interval(time).pipe(
       flatMap((checkNumber: number) => {
         const user: User = this.getUser();
-        let params = {};
-        if (user) {
-          params = {
-            financialInfo: user.financialInfo ? true : false,
-            personalInfo: user.personalInfo ? true : false
-          };
-        }
+        const params = {
+          financialInfo: user && user.financialInfo ? true : false,
+          personalInfo: user && user.personalInfo ? true : false
+        };
         console.log(checkNumber, params);
         return this.getAuthenticatedUser$(params);
       })
-    ).subscribe((user: User) => console.log(user));
+    ).subscribe((user: User) => {
+      // do nothing
+    });
   }
 
   /**

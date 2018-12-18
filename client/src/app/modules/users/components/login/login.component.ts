@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import {User} from '../../models/user';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'users-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   model: any = {email : '', password : ''};
   forgotModel: any = { email : '', forgot : false };
   loginServiceRunning = false;
   forgotServiceRunning = false;
   showPassword = false;
+  subscription: Subscription = new Subscription();
 
   constructor(private usersService: UsersService, private appService: AppService,  
     private mainNavigatorService: MainNavigatorService, private router: Router, private route: ActivatedRoute) { }
@@ -37,6 +39,13 @@ export class LoginComponent implements OnInit {
         });
   }
 
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
+
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
+  }
+
   /**
    * When user submits the login form
    */
@@ -46,7 +55,7 @@ export class LoginComponent implements OnInit {
     this.loginServiceRunning = true;
     
     // call the register service
-    this.usersService.login$(this.model).subscribe(
+    const newSubscription: Subscription = this.usersService.login$(this.model).subscribe(
       (user: User) => {
         if (user) {
           const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
@@ -69,6 +78,7 @@ export class LoginComponent implements OnInit {
         this.loginServiceRunning = false;
       }
     );
+    this.subscription.add(newSubscription);
   }
 
   /**
@@ -79,7 +89,7 @@ export class LoginComponent implements OnInit {
 
     this.forgotServiceRunning = true;
     // call the register service
-    this.usersService.forgot$(this.forgotModel).subscribe(
+    const newSubscription: Subscription = this.usersService.forgot$(this.forgotModel).subscribe(
       (data: any) => {
         if (data && data.email && data.expires) {
           this.appService.showResults(`We sent an email to ${data.email} with a password reset link that will expire in ${data.expires}.`, 'info');
@@ -102,6 +112,7 @@ export class LoginComponent implements OnInit {
         this.forgotServiceRunning = false;
       }
     );
+    this.subscription.add(newSubscription);
   }
 
   

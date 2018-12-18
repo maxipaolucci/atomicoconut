@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import {User} from '../../models/user';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'users-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   public model: any = {name : '', email : '', password : '', 'password-confirm' : ''};
   public registerServiceRunning = false;
   showPassword = false;
+  subscription: Subscription = new Subscription();
   
   constructor(private usersService: UsersService, private appService: AppService, private router: Router,
       private mainNavigatorService: MainNavigatorService) {}
@@ -27,6 +29,13 @@ export class RegisterComponent implements OnInit {
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Login', url: '/users/login', selected: false },
       { displayName: 'Create account', url: null, selected: true }]);
+  }
+
+  ngOnDestroy() {
+    const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
+
+    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    this.subscription.unsubscribe();
   }
 
   /**
@@ -45,7 +54,7 @@ export class RegisterComponent implements OnInit {
     }
     
     // call the register service
-    this.usersService.register$(this.model).subscribe(
+    const newSubscription: Subscription = this.usersService.register$(this.model).subscribe(
       (user: User) => {
         if (user) {
           this.router.navigate(['/']); // go home
@@ -70,6 +79,7 @@ export class RegisterComponent implements OnInit {
         this.registerServiceRunning = false;
       }
     );
+    this.subscription.add(newSubscription);
   }
 
 }

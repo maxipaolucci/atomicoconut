@@ -28,8 +28,12 @@ export class AppComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
     // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
-    const newSubcription: Subscription = this.usersService.getAuthenticatedUser$().pipe(
+    const newSubcription: Subscription = this.usersService.user$.pipe(
       flatMap((user: User) => {
+        if (!user) {
+          this.todayUserPrefRate = null;
+        }
+  
         this.user = user;
 
         if (this.user && this.user.currency && this.user.currency !== 'USD') {
@@ -53,17 +57,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }); // start listening the source of user
     this.subscription.add(newSubcription);
 
-    // let's track the user state
-    const newSubscription2 = this.usersService.user$.subscribe((user: User) => {
-      if (!user) {
-        this.todayUserPrefRate = null;
-      }
-
-      this.user = user;
-    });
-    this.subscription.add(newSubscription2);
-
-    this.usersService.updateSessionState(15000);
+    // start tracking user changes every 10min (600000ms)
+    this.usersService.updateSessionState(600000);
 
     this.getCryptoRates('BTC');
     this.getCryptoRates('XMR');
@@ -90,21 +85,6 @@ export class AppComponent implements OnInit, OnDestroy {
     );
     this.subscription.add(newSubscription);
   }
-
-  // setUser() {
-  //   const methodTrace = `${this.constructor.name} > setUser() > `; // for debugging
-
-  //   this.usersService.getAuthenticatedUser$().subscribe(
-  //     (user: User) => {
-  //       this.user = user; // this could be a user of null does not matter
-  //     },
-  //     (error: any) => {
-  //       this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
-  //       this.usersService.setUser(null);
-  //       this.user = null;
-  //     }
-  //   );
-  // }
 
   logout(): void {
     const methodTrace = `${this.constructor.name} > logout() > `; // for debugging

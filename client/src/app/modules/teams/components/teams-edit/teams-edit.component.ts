@@ -49,7 +49,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     const slug$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('slug')));
 
     // combine user$ and id$ sources into one object and start listen to it for changes
-    this.subscription = user$.pipe(
+    const newSubscription: Subscription = user$.pipe(
       combineLatest(slug$, (user, slug) => { 
         return { user, teamSlug : slug }; 
       }), 
@@ -106,6 +106,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
 
       this.getTeamServiceRunning = false;
     });
+    this.subscription.add(newSubscription);
   }
 
   /**

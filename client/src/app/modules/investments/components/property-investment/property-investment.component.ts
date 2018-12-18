@@ -59,7 +59,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
     // get the team of the investmetn if exists
     let newSubscription = null;
     const currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
-    const currencyRatesAndUser$ = this.usersService.getAuthenticatedUser$().pipe(
+    const currencyRatesAndUser$ = this.usersService.user$.pipe(
       combineLatest(currencyRates$, (user, currencyRates) => { 
         this.user = user;
         return { user, currencyRates }; 
@@ -152,13 +152,14 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
       }
     });
 
-    yesNoDialogRef.afterClosed().subscribe(result => {
+    const newSubscription = yesNoDialogRef.afterClosed().subscribe(result => {
       if (result === 'yes') {
         this.delete();
       } else {
         this.actionRunning = false;
       }
     });
+    this.subscription.add(newSubscription);
 
     return false;
   }
