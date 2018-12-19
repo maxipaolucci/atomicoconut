@@ -9,7 +9,7 @@ import { UtilService } from '../../../../util.service';
 })
 export class InvestmentSelectorDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<InvestmentSelectorDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public utilService : UtilService) { }
+  constructor(public dialogRef: MatDialogRef<InvestmentSelectorDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public utilService: UtilService) { }
   
   ngOnInit() { }
 
@@ -17,7 +17,7 @@ export class InvestmentSelectorDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onChange(event : MatButtonToggleChange) {
+  onChange(event: MatButtonToggleChange) {
     this.dialogRef.close();
   }
 }

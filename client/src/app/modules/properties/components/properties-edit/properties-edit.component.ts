@@ -321,13 +321,15 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     });
 
     const newSubscription = houseFiguresDialogRef.afterClosed().subscribe(modelHouseFiguresResults => {
-      if (modelHouseFiguresResults) {
+      
+      if (houseFiguresDialogRef.componentInstance.modelHouseFiguresResults) {
         this.modelHouseFiguresResults = modelHouseFiguresResults;
-        this.showPropertyFiguresDialogSpinner = false;
       }
+
+      this.showPropertyFiguresDialogSpinner = false;
     });
     this.subscription.add(newSubscription);
-
+    
     return false;
   }
 }

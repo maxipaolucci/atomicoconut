@@ -372,7 +372,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     if (!this.model.team) {
       result.push({ email : this.user.email, percentage : 100 });
     } else {
-      for (let email of Object.keys(this.model.membersPercentage)) {
+      for (const email of Object.keys(this.model.membersPercentage)) {
         result.push({ email, percentage : this.model.membersPercentage[email] });
       }
     }

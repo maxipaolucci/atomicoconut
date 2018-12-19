@@ -22,7 +22,6 @@ export class AuthResolver implements Resolve<User> {
 
     return this.usersService.getAuthenticatedUser$(params).pipe(
       map((user: User): User => {
-        console.log(user);
         if (user) {
           this.usersService.routerRedirectUrl = null;
           return user;

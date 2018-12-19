@@ -217,7 +217,7 @@ export class UsersService {
           financialInfo: user && user.financialInfo ? true : false,
           personalInfo: user && user.personalInfo ? true : false
         };
-        console.log(checkNumber, params);
+        
         return this.getAuthenticatedUser$(params);
       })
     ).subscribe((user: User) => {
