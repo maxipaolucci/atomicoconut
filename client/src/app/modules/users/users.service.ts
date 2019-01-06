@@ -205,9 +205,9 @@ export class UsersService {
    * Checks for the authenticated user state every certain amount of time. This will make the user$ variable to update its value and
    * each component observing it is going the refresh their state base on the new value
    * 
-   * @param { number } time. The amount of time in ms between each session state check
+   * @param { number } time. The amount of time in ms between each session state check. Default to 10min
    */
-  updateSessionState(time: number) {
+  updateSessionState(time: number = 600000) {
     const methodTrace = `${this.constructor.name} > updateSessionState() > `; // for debugging
 
     interval(time).pipe(

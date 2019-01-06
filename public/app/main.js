@@ -968,8 +968,6 @@ var WelcomeComponent = /** @class */ (function () {
                 return _this.utilService.formatToday(); // this should never happen. BuyingDate is required in investments
             });
             return _this.currencyExchangeService.getCurrencyRates$(investmentsDates);
-<<<<<<< HEAD
-<<<<<<< HEAD
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (currencyRates) {
             var investmentsAndCurrencyRates = currentUserInvestments.map(function (investment) {
                 return { currencyRates: currencyRates, investment: investment };
@@ -982,93 +980,19 @@ var WelcomeComponent = /** @class */ (function () {
                 if (investment_1.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CURRENCY) {
                     _this.wealthAmount += ((investment_1.amount * (investmentAndCurrencyRates['currencyRates'][_this.utilService.formatToday()]["USD" + investment_1.unit] || 1))
                         - (investment_1.loanAmount / (investmentAndCurrencyRates['currencyRates'][_this.utilService.formatDate(investment_1.buyingDate)]["USD" + investment_1.loanAmountUnit] || 1)))
-=======
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (currencyRates) {
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["from"])(currentUserInvestments);
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (currencyRates) {
-            // iterate investments and sum returns using dated rates.
-            for (var _i = 0, currentUserInvestments_1 = currentUserInvestments; _i < currentUserInvestments_1.length; _i++) {
-                var investment = currentUserInvestments_1[_i];
-                var myPercentage = (investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
-                if (investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"]) {
-                    var currencyInvestment = investment;
-                    if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CURRENCY) {
-                        _this.wealthAmount += ((currencyInvestment.amount * (currencyRates[_this.utilService.formatToday()]["USD" + currencyInvestment.unit] || 1))
-                            - (currencyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(currencyInvestment.buyingDate)]["USD" + currencyInvestment.loanAmountUnit] || 1)))
-                            * myPercentage / 100;
-                        _this.calculateProgressBarWealthValue();
-                        return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
-                    }
-                    else if (investment.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CRYPTO) {
-                        return _this.currencyExchangeService.getCryptoRates$(currencyInvestment.unit).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["take"])(1));
-                    }
-                }
-                else if (investment instanceof _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
-                    var propertyInvestment = investment;
-                    _this.wealthAmount += (_this.currencyExchangeService.getUsdValueOf(propertyInvestment.property.marketValue, propertyInvestment.property.marketValueUnit)
-                        - (propertyInvestment.loanAmount / (currencyRates[_this.utilService.formatDate(propertyInvestment.buyingDate)]["USD" + propertyInvestment.loanAmountUnit] || 1)))
->>>>>>> more progress in this refactor
-=======
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (currencyRates) {
-            var investmentsAndCurrencyRates = currentUserInvestments.map(function (investment) {
-                return { currencyRates: currencyRates, investment: investment };
-            });
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["from"])(investmentsAndCurrencyRates);
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (investmentAndCurrencyRates) {
-            console.log(investmentAndCurrencyRates);
-            var myPercentage = (investmentAndCurrencyRates.investment.investmentDistribution.filter(function (portion) { return portion.email === _this.user.email; })[0]).percentage;
-            if (investmentAndCurrencyRates.investment instanceof _modules_investments_models_currencyInvestment__WEBPACK_IMPORTED_MODULE_6__["CurrencyInvestment"]) {
-                var investment_1 = investmentAndCurrencyRates.investment;
-                if (investment_1.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CURRENCY) {
-                    _this.wealthAmount += ((investment_1.amount * (investmentAndCurrencyRates['currencyRates'][_this.utilService.formatToday()]["USD" + investment_1.unit] || 1))
-                        - (investment_1.loanAmount / (investmentAndCurrencyRates['currencyRates'][_this.utilService.formatDate(investment_1.buyingDate)]["USD" + investment_1.loanAmountUnit] || 1)))
->>>>>>> more fixes in welcome component
                         * myPercentage / 100;
                     _this.calculateProgressBarWealthValue();
                     return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> more fixes in welcome component
                 else if (investment_1.type === _constants__WEBPACK_IMPORTED_MODULE_9__["INVESTMENTS_TYPES"].CRYPTO) {
                     return _this.currencyExchangeService.getCryptoRates$(investment_1.unit).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (cryptoRates) {
                         return { cryptoRates: cryptoRates, myPercentage: myPercentage, investment: investment_1, currencyRates: investmentAndCurrencyRates.currencyRates };
                     }));
                 }
-<<<<<<< HEAD
                 else {
                     _this.appService.consoleLog('error', methodTrace + " Currency Investment type not recognized by this component: " + investment_1.type);
                     return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null); // should never happen
                 }
-            }
-            else if (investmentAndCurrencyRates.investment instanceof _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
-                var investment = investmentAndCurrencyRates.investment;
-                _this.wealthAmount += (_this.currencyExchangeService.getUsdValueOf(investment.property.marketValue, investment.property.marketValueUnit)
-                    - (investment.loanAmount / (investmentAndCurrencyRates['currencyRates'][_this.utilService.formatDate(investment.buyingDate)]["USD" + investment.loanAmountUnit] || 1)))
-                    * myPercentage / 100;
-                _this.calculateProgressBarWealthValue();
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
-            }
-            else {
-                _this.appService.consoleLog('error', methodTrace + " Investment type not recognized by this component: " + investmentAndCurrencyRates.investment.type);
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null); // should never happen
-            }
-        })).subscribe(function (data) {
-            if (data) {
-                console.log(data);
-                _this.wealthAmount += ((data.investment.amount * data.cryptoRates.price)
-                    - (data.investment.loanAmount / (data['currencyRates'][_this.utilService.formatDate(data.investment.buyingDate)]["USD" + data.investment.loanAmountUnit] || 1)))
-                    * data.myPercentage / 100;
-                _this.calculateProgressBarWealthValue();
-=======
-=======
->>>>>>> more fixes in welcome component
-                else {
-                    _this.appService.consoleLog('error', methodTrace + " Currency Investment type not recognized by this component: " + investment_1.type);
-                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null); // should never happen
-                }
->>>>>>> more progress in this refactor
             }
             else if (investmentAndCurrencyRates.investment instanceof _modules_investments_models_PropertyInvestment__WEBPACK_IMPORTED_MODULE_11__["PropertyInvestment"]) {
                 var investment = investmentAndCurrencyRates.investment;
@@ -1091,18 +1015,8 @@ var WelcomeComponent = /** @class */ (function () {
                 _this.calculateProgressBarWealthValue();
             }
         }, function (error) {
-<<<<<<< HEAD
-<<<<<<< HEAD
             _this.appService.consoleLog('error', methodTrace + " There was an error trying to get required data > ", error);
             _this.appService.showResults("There was an error trying to get required data, please try again in a few minutes.", 'error');
-=======
-            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get " + currencyInvestment.unit + " rates data > ", error);
-            _this.appService.showResults("There was an error trying to get " + currencyInvestment.unit + " rates data, please try again in a few minutes.", 'error');
->>>>>>> more progress in this refactor
-=======
-            _this.appService.consoleLog('error', methodTrace + " There was an error trying to get required data > ", error);
-            _this.appService.showResults("There was an error trying to get required data, please try again in a few minutes.", 'error');
->>>>>>> more fixes in welcome component
         });
         this.subscription.add(newSubscription);
     };
@@ -1115,7 +1029,6 @@ var WelcomeComponent = /** @class */ (function () {
         var _this = this;
         var methodTrace = this.constructor.name + " > setUserAndGetInvestments$() > "; // for debugging
         return this.usersService.user$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["flatMap"])(function (user) {
-            console.log(user);
             // reset all values to recalculate for this user 
             _this.wealthAmount = 0;
             _this.expectedWealth = 0;
@@ -3651,15 +3564,7 @@ var CurrencyExchangeService = /** @class */ (function () {
         if (this.cryptoRates[crypto.toUpperCase()]) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(this.cryptoRates[crypto.toUpperCase()]);
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
         return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase()).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (res) { return _this.extractCryptoExchangeData(crypto, res); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (rates) {
-=======
-        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase()).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(this.extractCryptoExchangeData), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (rates) {
->>>>>>> more progress in this refactor
-=======
-        return this.http.get("" + this.cryptoExchangeServerUrl + crypto.toUpperCase()).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (res) { return _this.extractCryptoExchangeData(crypto, res); }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])(function (rates) {
->>>>>>> more fixes in welcome component
             if (rates) {
                 _this.cryptoRates[crypto.toUpperCase()] = rates;
             }
