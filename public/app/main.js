@@ -9130,10 +9130,11 @@ var UsersService = /** @class */ (function () {
      * Checks for the authenticated user state every certain amount of time. This will make the user$ variable to update its value and
      * each component observing it is going the refresh their state base on the new value
      *
-     * @param { number } time. The amount of time in ms between each session state check
+     * @param { number } time. The amount of time in ms between each session state check. Default to 10min
      */
     UsersService.prototype.updateSessionState = function (time) {
         var _this = this;
+        if (time === void 0) { time = 600000; }
         var methodTrace = this.constructor.name + " > updateSessionState() > "; // for debugging
         Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["interval"])(time).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["flatMap"])(function (checkNumber) {
             var user = _this.getUser();
