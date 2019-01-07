@@ -52,7 +52,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     walkAwayPriceUnit : null,
     purchasePrice : null,
     purchasePriceUnit : null,
-    purchase2Price : null,
+    purchasePrice2 : null,
     purchasePrice2Unit : null,
     purchasePrice3 : null,
     purchasePrice3Unit : null,
@@ -361,7 +361,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     });
 
     const newSubscription = propertyYieldsDialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
+      console.log(propertyYieldsDialogRef.componentInstance.model);
       if (propertyYieldsDialogRef.componentInstance.model) {
         this.model = propertyYieldsDialogRef.componentInstance.model;
       }

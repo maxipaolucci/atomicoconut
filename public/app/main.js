@@ -4541,7 +4541,7 @@ var PropertiesEditComponent = /** @class */ (function () {
             walkAwayPriceUnit: null,
             purchasePrice: null,
             purchasePriceUnit: null,
-            purchase2Price: null,
+            purchasePrice2: null,
             purchasePrice2Unit: null,
             purchasePrice3: null,
             purchasePrice3Unit: null,
@@ -4807,7 +4807,7 @@ var PropertiesEditComponent = /** @class */ (function () {
             }
         });
         var newSubscription = propertyYieldsDialogRef.afterClosed().subscribe(function (dialogResult) {
-            console.log(dialogResult);
+            console.log(propertyYieldsDialogRef.componentInstance.model);
             if (propertyYieldsDialogRef.componentInstance.model) {
                 _this.model = propertyYieldsDialogRef.componentInstance.model;
             }
@@ -5249,9 +5249,14 @@ var PropertyYieldsDialogComponent = /** @class */ (function () {
         this.dialogRef = dialogRef;
         this.data = data;
         this.model = {};
+        this.grossYield = 0;
+        this.netYield = 0;
         this.model = data.model;
     }
     PropertyYieldsDialogComponent.prototype.ngOnInit = function () { };
+    PropertyYieldsDialogComponent.prototype.onCurrencyUnitChange = function ($event) {
+        this.model[$event.source.id] = $event.value;
+    };
     PropertyYieldsDialogComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'property-yields-dialog',
@@ -5650,7 +5655,8 @@ var PropertiesModule = /** @class */ (function () {
             providers: [_properties_service__WEBPACK_IMPORTED_MODULE_5__["PropertiesService"]],
             entryComponents: [
                 _components_property_selector_dialog_property_selector_dialog_component__WEBPACK_IMPORTED_MODULE_12__["PropertySelectorDialogComponent"],
-                _components_house_figures_dialog_house_figures_dialog_component__WEBPACK_IMPORTED_MODULE_14__["HouseFiguresDialogComponent"]
+                _components_house_figures_dialog_house_figures_dialog_component__WEBPACK_IMPORTED_MODULE_14__["HouseFiguresDialogComponent"],
+                _components_property_yields_dialog_property_yields_dialog_component__WEBPACK_IMPORTED_MODULE_15__["PropertyYieldsDialogComponent"]
             ]
         })
     ], PropertiesModule);
