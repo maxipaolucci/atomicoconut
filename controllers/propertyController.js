@@ -57,6 +57,14 @@ exports.create = async (req, res, next) => {
         walkAwayPriceUnit : req.body.walkAwayPriceUnit,
         purchasePrice : req.body.purchasePrice,
         purchasePriceUnit : req.body.purchasePriceUnit,
+        purchasePrice2 : req.body.purchasePrice2,
+        purchasePrice2Unit : req.body.purchasePrice2Unit,
+        purchasePrice3 : req.body.purchasePrice3,
+        purchasePrice3Unit : req.body.purchasePrice3Unit,
+        purchasePrice4 : req.body.purchasePrice4,
+        purchasePrice4Unit : req.body.purchasePrice4Unit,
+        purchasePrice5 : req.body.purchasePrice5,
+        purchasePrice5Unit : req.body.purchasePrice5Unit,
         dateListed : req.body.dateListed,
         reasonForSelling : req.body.reasonForSelling,
         marketValue : req.body.marketValue,
@@ -211,6 +219,14 @@ exports.update = async (req, res, next) => {
         walkAwayPriceUnit : req.body.walkAwayPriceUnit,
         purchasePrice : req.body.purchasePrice,
         purchasePriceUnit : req.body.purchasePriceUnit,
+        purchasePrice2 : req.body.purchasePrice2,
+        purchasePrice2Unit : req.body.purchasePrice2Unit,
+        purchasePrice3 : req.body.purchasePrice3,
+        purchasePrice3Unit : req.body.purchasePrice3Unit,
+        purchasePrice4 : req.body.purchasePrice4,
+        purchasePrice4Unit : req.body.purchasePrice4Unit,
+        purchasePrice5 : req.body.purchasePrice5,
+        purchasePrice5Unit : req.body.purchasePrice5Unit,
         dateListed : req.body.dateListed,
         reasonForSelling : req.body.reasonForSelling,
         marketValue : req.body.marketValue,
@@ -641,4 +657,3 @@ const beautifyPropertiesFormat = async (properties, options = null) => {
 
     return result;
 };
-

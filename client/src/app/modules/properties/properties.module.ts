@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { PropertiesRoutingModule } from './properties-routing.module';
 import { PropertiesDashboardComponent } from './components/properties-dashboard/properties-dashboard.component';
 import { SharedModule } from '../shared/shared.module';
@@ -15,6 +14,7 @@ import { PropertySelectorDialogComponent } from './components/property-selector-
 import { AgmCoreModule } from '@agm/core';
 import { CalculatorsModule } from '../calculators/calculators.module';
 import { HouseFiguresDialogComponent } from './components/house-figures-dialog/house-figures-dialog.component';
+import { PropertyYieldsDialogComponent } from './components/property-yields-dialog/property-yields-dialog.component';
 
 @NgModule({
   imports: [
@@ -32,11 +32,12 @@ import { HouseFiguresDialogComponent } from './components/house-figures-dialog/h
     HousesEditComponent, 
     PropertiesTableComponent, 
     PropertySelectorDialogComponent, 
-    HouseFiguresDialogComponent 
+    HouseFiguresDialogComponent, 
+    PropertyYieldsDialogComponent 
   ],
   providers: [ PropertiesService ],
   entryComponents: [
-    PropertySelectorDialogComponent, //added as material doc suggest to allow AOT on this on the fly created class
+    PropertySelectorDialogComponent, // added as material doc suggest to allow AOT on this on the fly created class
     HouseFiguresDialogComponent
   ]
 })

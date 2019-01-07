@@ -11,6 +11,7 @@ import { House } from '../../models/house';
 import { MatSelectChange, DateAdapter, NativeDateAdapter, MatAutocompleteSelectedEvent, MatDialog } from '@angular/material';
 import { UtilService } from '../../../../util.service';
 import { HouseFiguresDialogComponent } from '../house-figures-dialog/house-figures-dialog.component';
+import { PropertyYieldsDialogComponent } from '../property-yields-dialog/property-yields-dialog.component';
 import { map, combineLatest, flatMap } from 'rxjs/operators';
 
 @Component({
@@ -34,6 +35,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   editPropertyServiceRunning = false;
   getPropertyServiceRunning = false;
   showPropertyFiguresDialogSpinner = false;
+  showPropertyYieldsDialogSpinner = false;
 
   // models
   model: any = {
@@ -50,6 +52,14 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     walkAwayPriceUnit : null,
     purchasePrice : null,
     purchasePriceUnit : null,
+    purchase2Price : null,
+    purchasePrice2Unit : null,
+    purchasePrice3 : null,
+    purchasePrice3Unit : null,
+    purchasePrice4 : null,
+    purchasePrice4Unit : null,
+    purchasePrice5 : null,
+    purchasePrice5Unit : null,
     dateListed : null,
     reasonForSelling : null,
     marketValue : null,
@@ -183,6 +193,14 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.model.walkAwayPriceUnit = property.walkAwayPriceUnit;
     this.model.purchasePrice = property.purchasePrice;
     this.model.purchasePriceUnit = property.purchasePriceUnit;
+    this.model.purchasePrice2 = property.purchasePrice2;
+    this.model.purchasePrice2Unit = property.purchasePrice2Unit;
+    this.model.purchasePrice3 = property.purchasePrice3;
+    this.model.purchasePrice3Unit = property.purchasePrice3Unit;
+    this.model.purchasePrice4 = property.purchasePrice4;
+    this.model.purchasePrice4Unit = property.purchasePrice4Unit;
+    this.model.purchasePrice5 = property.purchasePrice5;
+    this.model.purchasePrice5Unit = property.purchasePrice5Unit;
     this.model.dateListed = property.dateListed;
     this.model.reasonForSelling = property.reasonForSelling;
     this.model.marketValue = property.marketValue;
@@ -321,12 +339,34 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     });
 
     const newSubscription = houseFiguresDialogRef.afterClosed().subscribe(modelHouseFiguresResults => {
-      
+      console.log(modelHouseFiguresResults);
       if (houseFiguresDialogRef.componentInstance.modelHouseFiguresResults) {
         this.modelHouseFiguresResults = modelHouseFiguresResults;
       }
 
       this.showPropertyFiguresDialogSpinner = false;
+    });
+    this.subscription.add(newSubscription);
+    
+    return false;
+  }
+
+  openPropertyYieldsDialog() {
+    const methodTrace = `${this.constructor.name} > openPropertyYieldsDialog() > `; // for debugging
+
+    const propertyYieldsDialogRef = this.dialog.open(PropertyYieldsDialogComponent, {
+      data: {
+        model : this.model,
+      }
+    });
+
+    const newSubscription = propertyYieldsDialogRef.afterClosed().subscribe(dialogResult => {
+      console.log(dialogResult);
+      if (propertyYieldsDialogRef.componentInstance.model) {
+        this.model = propertyYieldsDialogRef.componentInstance.model;
+      }
+
+      this.showPropertyYieldsDialogSpinner = false;
     });
     this.subscription.add(newSubscription);
     

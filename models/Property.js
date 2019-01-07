@@ -67,11 +67,44 @@ const propertySchema = new mongoose.Schema({
     type : String,
     default : 'USD'
   },
+
   purchasePrice : {
     type : Number,
     default : null
   },
   purchasePriceUnit : {
+    type : String,
+    default : 'USD'
+  },
+  purchasePrice2 : {
+    type : Number,
+    default : null
+  },
+  purchasePrice2Unit : {
+    type : String,
+    default : 'USD'
+  },
+  purchasePrice3 : {
+    type : Number,
+    default : null
+  },
+  purchasePrice3Unit : {
+    type : String,
+    default : 'USD'
+  },
+  purchasePrice4 : {
+    type : Number,
+    default : null
+  },
+  purchasePrice4Unit : {
+    type : String,
+    default : 'USD'
+  },
+  purchasePrice5 : {
+    type : Number,
+    default : null
+  },
+  purchasePrice5Unit : {
     type : String,
     default : 'USD'
   },

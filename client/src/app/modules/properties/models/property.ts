@@ -3,56 +3,72 @@ import { Address } from './address';
 
 export class Property {
 
-  id : string;
-  type : 'house' /*| 'building' | 'condo'*/;
-  address : Address;
-  createdBy : User;
-  askingPrice : number;
-  askingPriceUnit : string;
-  offerPrice : number;
-  offerPriceUnit : string;
-  walkAwayPrice : number;
-  walkAwayPriceUnit : string;
-  purchasePrice : number;
-  purchasePriceUnit : string;
-  dateListed : Date;
-  reasonForSelling : string;
-  marketValue : number;
-  marketValueUnit : string;
-  renovationCost : number;
-  renovationCostUnit : string;
-  maintenanceCost : number;
-  maintenanceCostUnit : string;
-  description : string;
-  otherCost : number;
-  otherCostUnit : string;
-  notes : string;
+  id: string;
+  type: 'house' /*| 'building' | 'condo'*/;
+  address: Address;
+  createdBy: User;
+  askingPrice: number;
+  askingPriceUnit: string;
+  offerPrice: number;
+  offerPriceUnit: string;
+  walkAwayPrice: number;
+  walkAwayPriceUnit: string;
+  purchasePrice: number;
+  purchasePriceUnit: string;
+  purchasePrice2: number;
+  purchasePrice2Unit: string;
+  purchasePrice3: number;
+  purchasePrice3Unit: string;
+  purchasePrice4: number;
+  purchasePrice4Unit: string;
+  purchasePrice5: number;
+  purchasePrice5Unit: string;
+  dateListed: Date;
+  reasonForSelling: string;
+  marketValue: number;
+  marketValueUnit: string;
+  renovationCost: number;
+  renovationCostUnit: string;
+  maintenanceCost: number;
+  maintenanceCostUnit: string;
+  description: string;
+  otherCost: number;
+  otherCostUnit: string;
+  notes: string;
 
   constructor(
-      id : string = null,
-      type : 'house' = 'house',
-      address : Address = null,
-      createdBy : User = null,
-      askingPrice : number = null,
-      askingPriceUnit : string = null,
-      offerPrice : number = null,
-      offerPriceUnit : string = null,
-      walkAwayPrice : number = null,
-      walkAwayPriceUnit : string = null,
-      purchasePrice : number = null,
-      purchasePriceUnit : string = null,
-      dateListed : Date = null,
-      reasonForSelling : string = null,
-      marketValue : number = null,
-      marketValueUnit : string = null,
-      renovationCost : number = null,
-      renovationCostUnit : string = null,
-      maintenanceCost : number = null,
-      maintenanceCostUnit : string = null,
-      description : string = null,
-      otherCost : number = null,
-      otherCostUnit : string = null,
-      notes : string = null) {
+      id: string = null,
+      type: 'house' = 'house',
+      address: Address = null,
+      createdBy: User = null,
+      askingPrice: number = null,
+      askingPriceUnit: string = null,
+      offerPrice: number = null,
+      offerPriceUnit: string = null,
+      walkAwayPrice: number = null,
+      walkAwayPriceUnit: string = null,
+      purchasePrice: number = null,
+      purchasePriceUnit: string = null,
+      purchasePrice2: number = null,
+      purchasePrice2Unit: string = null,
+      purchasePrice3: number = null,
+      purchasePrice3Unit: string = null,
+      purchasePrice4: number = null,
+      purchasePrice4Unit: string = null,
+      purchasePrice5: number = null,
+      purchasePrice5Unit: string = null,
+      dateListed: Date = null,
+      reasonForSelling: string = null,
+      marketValue: number = null,
+      marketValueUnit: string = null,
+      renovationCost: number = null,
+      renovationCostUnit: string = null,
+      maintenanceCost: number = null,
+      maintenanceCostUnit: string = null,
+      description: string = null,
+      otherCost: number = null,
+      otherCostUnit: string = null,
+      notes: string = null) {
     
     this.id = id;
     this.type = type;
@@ -66,6 +82,14 @@ export class Property {
     this.walkAwayPriceUnit = walkAwayPriceUnit;
     this.purchasePrice = purchasePrice;
     this.purchasePriceUnit = purchasePriceUnit;
+    this.purchasePrice2 = purchasePrice2;
+    this.purchasePrice2Unit = purchasePrice2Unit;
+    this.purchasePrice3 = purchasePrice3;
+    this.purchasePrice3Unit = purchasePrice3Unit;
+    this.purchasePrice4 = purchasePrice4;
+    this.purchasePrice4Unit = purchasePrice4Unit;
+    this.purchasePrice5 = purchasePrice5;
+    this.purchasePrice5Unit = purchasePrice5Unit;
     this.dateListed = dateListed;
     this.reasonForSelling = reasonForSelling;
     this.marketValue = marketValue;
