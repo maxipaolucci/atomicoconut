@@ -197,15 +197,15 @@
   
           <!-- Mantainance cost -->
           <mat-form-field fxFlex  class="form__field">
-            <input matInput type="number" id="mantainanceCost" name="mantainanceCost" placeholder="Mantainance cost" 
-                [(ngModel)]="model.mantainanceCost" 
-                [value]="model.mantainanceCost"
+            <input matInput type="number" id="maintenanceCost" name="maintenanceCost" placeholder="Mantainance cost" 
+                [(ngModel)]="model.maintenanceCost" 
+                [value]="model.maintenanceCost"
                 numberValidator
-                #mantainanceCost="ngModel">
+                #maintenanceCost="ngModel">
 
                 <mat-icon matPrefix>attach_money</mat-icon>
                 <mat-hint align="start">The annual cost to maintain the property.</mat-hint>
-                <mat-error *ngIf="mantainanceCost.invalid && (mantainanceCost.dirty || mantainanceCost.touched) && mantainanceCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+                <mat-error *ngIf="maintenanceCost.invalid && (maintenanceCost.dirty || maintenanceCost.touched) && maintenanceCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
           </mat-form-field>
         </div>
 
@@ -293,7 +293,7 @@
         [rentPaymentFrecuency]="model.rentPaymentFrecuency"
         [vacancy]="model.vacancy"
         [renovationCost]="model.renovationCost"
-        [mantainanceCost]="model.mantainanceCost"
+        [maintenanceCost]="model.maintenanceCost"
         [bodyCorporate]="model.bodyCorporate"
         [houseRates]="model.houseRates"
         [utilities]="model.utilities"

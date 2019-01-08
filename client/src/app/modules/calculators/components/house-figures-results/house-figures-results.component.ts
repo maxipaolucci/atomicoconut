@@ -20,7 +20,7 @@ export class HouseFiguresResultsComponent implements OnInit, OnChanges {
   @Input() rentPaymentFrecuency = 'weekly';
   @Input() vacancy = 0;
   @Input() renovationCost = 0;
-  @Input() mantainanceCost = 0;
+  @Input() maintenanceCost = 0;
   @Input() bodyCorporate = 0;
   @Input() houseRates = 0;
   @Input() utilities = 0;
@@ -55,7 +55,7 @@ export class HouseFiguresResultsComponent implements OnInit, OnChanges {
     this.grossAnnualRent = weeklyRent * 52;
     this.netAnnualRent = this.grossAnnualRent - weeklyRent * this.vacancy;
     this.grossYield = this.grossAnnualRent / this.purchasePrice;
-    this.expenses = this.renovationCost + this.mantainanceCost + this.bodyCorporate + this.houseRates + this.utilities + this.insurance
+    this.expenses = this.renovationCost + this.maintenanceCost + this.bodyCorporate + this.houseRates + this.utilities + this.insurance
         + this.otherCosts + this.netAnnualRent * (this.managed / 100);
     this.netYield = (this.netAnnualRent - this.expenses) / this.purchasePrice;
     this.loanInterest = this.purchasePrice * (this.interestRates / 100);

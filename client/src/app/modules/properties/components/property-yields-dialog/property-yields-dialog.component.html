@@ -9,82 +9,108 @@
             <p class="mat-caption">Play with different purchase prices to get gross/net yields for each of them. Keep the same unit as the rent and expenses</p>
           </h3>
 
-          <div fxLayout="column" fxLayoutGap="10px" class="form__fields__row">
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
             <!-- Purchase price 2 -->
-            <div fxLayout="row" fxLayoutGap="10px">
-              <currency-unit fxFlex="50px"
-                  [id]="'purchasePrice2Unit'" 
-                  [value]="model.purchasePrice2Unit"
-                  [view]="'narrow'"
-                  (newValue)="onCurrencyUnitChange($event)">
-              </currency-unit>
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
+              <input matInput type="number" id="purchasePrice2" name="purchasePrice2" placeholder="Purchase price 2"
+                  [(ngModel)]="model.purchasePrice2" 
+                  [value]="model.purchasePrice2"
+                  numberValidator
+                  #purchasePrice2="ngModel">
               
-              <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
-                <input matInput type="number" id="purchasePrice2" name="purchasePrice2" placeholder="Purchase price 2"
-                    [(ngModel)]="model.purchasePrice2" 
-                    [value]="model.purchasePrice2"
-                    numberValidator
-                    #purchasePrice2="ngModel">
-                
-                <mat-error *ngIf="purchasePrice2.invalid && (purchasePrice2.dirty || purchasePrice2.touched) && purchasePrice2.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-              </mat-form-field>
+              <mat-error *ngIf="purchasePrice2.invalid && (purchasePrice2.dirty || purchasePrice2.touched) && purchasePrice2.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+
+            <div fxLayout="row" fxLayoutGap="10px">
+              <info-tooltip
+                  title="Gross yield" 
+                  text="Ratio between Gross annual rent / purchase price (as percentage)"
+                  position="right"></info-tooltip>
+              <span>{{grossYield2 | percent : '1.1-2'}}</span>
+
+              <info-tooltip 
+                  title="Net yield" 
+                  text="Ratio between (Net annual rent - Expenses) / Purchase price * 100"
+                  position="right"></info-tooltip>
+              <span>{{netYield2 | percent : '1.1-2'}}</span>
             </div>
+          </div>
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
             <!-- Purchase price 3 -->
-            <div fxLayout="row" fxLayoutGap="10px">
-              <currency-unit fxFlex="50px"
-                  [id]="'purchasePrice3Unit'" 
-                  [value]="model.purchasePrice3Unit"
-                  [view]="'narrow'"
-                  (newValue)="onCurrencyUnitChange($event)">
-              </currency-unit>
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
+              <input matInput type="number" id="purchasePrice3" name="purchasePrice3" placeholder="Purchase price 3"
+                  [(ngModel)]="model.purchasePrice3" 
+                  [value]="model.purchasePrice3"
+                  numberValidator
+                  #purchasePrice3="ngModel">
               
-              <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
-                <input matInput type="number" id="purchasePrice3" name="purchasePrice3" placeholder="Purchase price 3"
-                    [(ngModel)]="model.purchasePrice3" 
-                    [value]="model.purchasePrice3"
-                    numberValidator
-                    #purchasePrice3="ngModel">
-                
-                <mat-error *ngIf="purchasePrice3.invalid && (purchasePrice3.dirty || purchasePrice3.touched) && purchasePrice3.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-              </mat-form-field>
+              <mat-error *ngIf="purchasePrice3.invalid && (purchasePrice3.dirty || purchasePrice3.touched) && purchasePrice3.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+
+            <div fxLayout="row" fxLayoutGap="10px">
+              <info-tooltip
+                  title="Gross yield" 
+                  text="Ratio between Gross annual rent / purchase price (as percentage)"
+                  position="right"></info-tooltip>
+              <span>{{grossYield3 | percent : '1.1-2'}}</span>
+
+              <info-tooltip 
+                  title="Net yield" 
+                  text="Ratio between (Net annual rent - Expenses) / Purchase price * 100"
+                  position="right"></info-tooltip>
+              <span>{{netYield3 | percent : '1.1-2'}}</span>
             </div>
+          </div>
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
             <!-- Purchase price 4 -->
-            <div fxLayout="row" fxLayoutGap="10px">
-              <currency-unit fxFlex="50px"
-                  [id]="'purchasePrice4Unit'" 
-                  [value]="model.purchasePrice4Unit"
-                  [view]="'narrow'"
-                  (newValue)="onCurrencyUnitChange($event)">
-              </currency-unit>
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
+              <input matInput type="number" id="purchasePrice4" name="purchasePrice4" placeholder="Purchase price 4"
+                  [(ngModel)]="model.purchasePrice4" 
+                  [value]="model.purchasePrice4"
+                  numberValidator
+                  #purchasePrice4="ngModel">
               
-              <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
-                <input matInput type="number" id="purchasePrice4" name="purchasePrice4" placeholder="Purchase price 4"
-                    [(ngModel)]="model.purchasePrice4" 
-                    [value]="model.purchasePrice4"
-                    numberValidator
-                    #purchasePrice4="ngModel">
-                
-                <mat-error *ngIf="purchasePrice4.invalid && (purchasePrice4.dirty || purchasePrice4.touched) && purchasePrice4.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-              </mat-form-field>
+              <mat-error *ngIf="purchasePrice4.invalid && (purchasePrice4.dirty || purchasePrice4.touched) && purchasePrice4.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+
+            <div fxLayout="row" fxLayoutGap="10px">
+              <info-tooltip
+                  title="Gross yield" 
+                  text="Ratio between Gross annual rent / purchase price (as percentage)"
+                  position="right"></info-tooltip>
+              <span>{{grossYield4 | percent : '1.1-2'}}</span>
+
+              <info-tooltip 
+                  title="Net yield" 
+                  text="Ratio between (Net annual rent - Expenses) / Purchase price * 100"
+                  position="right"></info-tooltip>
+              <span>{{netYield4 | percent : '1.1-2'}}</span>
             </div>
+          </div>
+          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
             <!-- Purchase price 5 -->
-            <div fxLayout="row" fxLayoutGap="10px">
-              <currency-unit fxFlex="50px"
-                  [id]="'purchasePrice5Unit'" 
-                  [value]="model.purchasePrice5Unit"
-                  [view]="'narrow'"
-                  (newValue)="onCurrencyUnitChange($event)">
-              </currency-unit>
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
+              <input matInput type="number" id="purchasePrice5" name="purchasePrice5" placeholder="Purchase price 5"
+                  [(ngModel)]="model.purchasePrice5" 
+                  [value]="model.purchasePrice5"
+                  numberValidator
+                  #purchasePrice5="ngModel">
               
-              <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.md="140px" fxFlex.gt-md="200px" class="form__field">
-                <input matInput type="number" id="purchasePrice5" name="purchasePrice5" placeholder="Purchase price 5"
-                    [(ngModel)]="model.purchasePrice5" 
-                    [value]="model.purchasePrice5"
-                    numberValidator
-                    #purchasePrice5="ngModel">
-                
-                <mat-error *ngIf="purchasePrice5.invalid && (purchasePrice5.dirty || purchasePrice5.touched) && purchasePrice5.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-              </mat-form-field>
+              <mat-error *ngIf="purchasePrice5.invalid && (purchasePrice5.dirty || purchasePrice5.touched) && purchasePrice5.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+
+            <div fxLayout="row" fxLayoutGap="10px">
+              <info-tooltip
+                  title="Gross yield" 
+                  text="Ratio between Gross annual rent / purchase price (as percentage)"
+                  position="right"></info-tooltip>
+              <span>{{grossYield5 | percent : '1.1-2'}}</span>
+
+              <info-tooltip 
+                  title="Net yield" 
+                  text="Ratio between (Net annual rent - Expenses) / Purchase price * 100"
+                  position="right"></info-tooltip>
+              <span>{{netYield5 | percent : '1.1-2'}}</span>
             </div>
           </div>
         </div>

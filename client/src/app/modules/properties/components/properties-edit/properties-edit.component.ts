@@ -339,7 +339,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     });
 
     const newSubscription = houseFiguresDialogRef.afterClosed().subscribe(modelHouseFiguresResults => {
-      console.log(modelHouseFiguresResults);
       if (houseFiguresDialogRef.componentInstance.modelHouseFiguresResults) {
         this.modelHouseFiguresResults = modelHouseFiguresResults;
       }
@@ -361,7 +360,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     });
 
     const newSubscription = propertyYieldsDialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(propertyYieldsDialogRef.componentInstance.model);
       if (propertyYieldsDialogRef.componentInstance.model) {
         this.model = propertyYieldsDialogRef.componentInstance.model;
       }

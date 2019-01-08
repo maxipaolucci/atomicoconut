@@ -8,28 +8,28 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 })
 export class HouseFiguresComponent implements OnInit {
 
-  model : any = { 
+  model: any = { 
     purchasePrice : 0,
     capitalGrowth : 4,
     marketValue : 0,
     loanCoverage : 65,
     interestRates : 7,
     loanTerm : 30,
-    paymentFrecuency : "26",
+    paymentFrecuency : '26',
     rentPrice : 0,
     rentPaymentFrecuency : 'weekly',
     vacancy : 4,
     renovationCost : 0,
-    mantainanceCost : 0,
+    maintenanceCost : 0,
     bodyCorporate : 0,
     houseRates : 2000,
     utilities : 0,
     insurance : 900,
     otherCosts : 0,
     managed : 10
-  }
+  };
 
-  constructor(private mainNavigatorService : MainNavigatorService) { }
+  constructor(private mainNavigatorService: MainNavigatorService) { }
 
   ngOnInit() {
     this.mainNavigatorService.setLinks([
