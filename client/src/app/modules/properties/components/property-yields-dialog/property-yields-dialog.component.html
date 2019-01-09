@@ -7,6 +7,7 @@
           <h3 class="title">
             <!-- <p class="header">Figures extra info</p> -->
             <p class="mat-caption">Play with different purchase prices to get gross/net yields for each of them. Keep the same unit as the rent and expenses</p>
+            <p class="mat-caption color__almost-white">Rent: {{rentPrice}} "{{rentPricePeriod}}" | Purchase price: {{model.purchasePriceUnit}}{{purchasePrice}} | Gross yield: {{grossYield | percent : '1.1-2'}} | Net yield: {{netYield | percent : '1.1-2'}}</p>
           </h3>
 
           <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">

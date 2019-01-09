@@ -130,6 +130,20 @@
               
               <mat-error *ngIf="purchasePrice.invalid && (purchasePrice.dirty || purchasePrice.touched) && purchasePrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             </mat-form-field>
+
+            <button *ngIf="!showPropertyYieldsDialogSpinner" 
+                mat-raised-button type="button" color="primary" class="color__almost-white"
+                matTooltip="Set different potencial prices to see how gross and net yield fluctuates"
+                (click)="showPropertyYieldsDialogSpinner = true; openPropertyYieldsDialog()">
+              More prices/yields
+            </button>
+
+            <mat-progress-spinner *ngIf="showPropertyYieldsDialogSpinner"
+                class="progress-spinner progress-spinner--open-dialog"
+                color="warn"
+                [diameter]="40" [strokeWidth]="7"
+                mode="indeterminate">
+            </mat-progress-spinner>
           </div>
 
           <!-- Market value -->
@@ -432,24 +446,6 @@
     </button>
 
     <mat-progress-spinner *ngIf="showPropertyFiguresDialogSpinner"
-        class="progress-spinner progress-spinner--open-dialog"
-        color="warn"
-        [diameter]="40" [strokeWidth]="7"
-        mode="indeterminate">
-    </mat-progress-spinner>
-  </section>
-
-  <section *ngIf="!getPropertyServiceRunning" 
-      fxLayout="column" 
-      class="actions">
-    
-    <button mat-mini-fab class="mini-fab mat-elevation-z10" color="primary" *ngIf="!showPropertyYieldsDialogSpinner"
-        matTooltip="Show yields" matTooltipPosition="left" 
-        (click)="showPropertyYieldsDialogSpinner = true; openPropertyYieldsDialog()">
-      <mat-icon aria-label="Show property yields">attach_money</mat-icon>
-    </button>
-
-    <mat-progress-spinner *ngIf="showPropertyYieldsDialogSpinner"
         class="progress-spinner progress-spinner--open-dialog"
         color="warn"
         [diameter]="40" [strokeWidth]="7"

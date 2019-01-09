@@ -144,16 +144,22 @@
           </mat-form-field>
   
           <!-- Vacancy -->
-          <mat-form-field fxFlex  class="form__field">
-            <input matInput type="number" id="vacancy" name="vacancy" placeholder="Vacancy" 
-                [(ngModel)]="model.vacancy" 
-                numberValidator
-                [value]="model.vacancy"
-                #vacancy="ngModel">
-  
-            <mat-hint align="start">The number of weeks per year with no rent.</mat-hint>
-            <mat-error *ngIf="vacancy.invalid && (vacancy.dirty || vacancy.touched) && vacancy.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-          </mat-form-field>
+          <div fxFlex="none" fxFlex.gt-xs="250px" fxLayout="column" class="form__field">
+            <label class="slider__label">Vacancy</label>
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+              <mat-slider fxFlex id="vacancy" name="vacancy"
+                  color="accent"
+                  [max]="20"
+                  [min]="0"
+                  [step]="1"
+                  thumbLabel="true"
+                  tickInterval="1"
+                  [(ngModel)]="model.vacancy"
+                  [value]="model.vacancy"> 
+              </mat-slider>
+              <span *ngIf="model.vacancy">{{model.vacancy}} weeks</span>
+            </div>
+          </div>
   
           <!-- Rental manager -->
           <div fxFlex="none" fxFlex.gt-xs fxLayout="column" class="form__field slider__field">

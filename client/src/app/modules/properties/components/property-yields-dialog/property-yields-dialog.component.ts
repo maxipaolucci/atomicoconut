@@ -16,10 +16,13 @@ export class PropertyYieldsDialogComponent implements OnInit, AfterViewInit, OnD
   formChangesSubscription: any = null;
   subscription: Subscription = new Subscription();
 
+  purchasePrice = 0;
   purchasePrice2 = 0;
   purchasePrice3 = 0;
   purchasePrice4 = 0;
   purchasePrice5 = 0;
+  grossYield = 0;
+  netYield = 0;
   grossYield2 = 0;
   netYield2 = 0;
   grossYield3 = 0;
@@ -63,6 +66,9 @@ export class PropertyYieldsDialogComponent implements OnInit, AfterViewInit, OnD
   initValues() {
     const methodTrace = `${this.constructor.name} > initValues() > `; // for debugging
 
+    // set the same purchasePrice unit to every purchase price field
+    this.model.purchasePrice2Unit = this.model.purchasePrice3Unit = this.model.purchasePrice4Unit = this.model.purchasePrice5Unit = this.model.purchasePriceUnit;
+    this.purchasePrice = this.model.purchasePrice || 0;
     this.purchasePrice2 = this.model.purchasePrice2 || 0;
     this.purchasePrice3 = this.model.purchasePrice3 || 0;
     this.purchasePrice4 = this.model.purchasePrice4 || 0;
@@ -91,6 +97,8 @@ export class PropertyYieldsDialogComponent implements OnInit, AfterViewInit, OnD
         + this.utilitiesCost + this.insurance + this.otherCost 
         + this.netAnnualRent * (this.managerRate / 100);
     
+    this.grossYield = this.grossAnnualRent / this.purchasePrice;
+    this.netYield = (this.netAnnualRent - this.expenses) / this.purchasePrice;
     this.grossYield2 = this.grossAnnualRent / this.purchasePrice2;
     this.netYield2 = (this.netAnnualRent - this.expenses) / this.purchasePrice2;
     this.grossYield3 = this.grossAnnualRent / this.purchasePrice3;
