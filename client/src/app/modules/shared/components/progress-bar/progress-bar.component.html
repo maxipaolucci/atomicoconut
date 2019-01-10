@@ -1,7 +1,5 @@
-<div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start center">
+<div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start center" [ngClass]="extraClasses" class="progress-bar">
   <mat-progress-bar 
-      class="progress-bar"
-      [ngClass]="extraClasses"
       [color]="color"
       mode="indeterminate">
   </mat-progress-bar>

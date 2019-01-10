@@ -1,0 +1,15 @@
+// @import '../../../../../variables';
+
+
+// .progress-bar {
+//   width: 100%;
+// }
+
+// @media screen and (min-width: $screenGtXs) {
+
+//   .progress-bar {
+//     width: 300px;
+//   }
+// }
+
+// cannot do this because then from the parent component I cannot control the width of this component (specially in desktop view) and it will be fixed in 300px

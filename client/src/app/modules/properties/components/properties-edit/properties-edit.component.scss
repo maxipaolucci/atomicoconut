@@ -1,7 +1,8 @@
 @import '../../../../../variables';
 
 
-.progress-bar--get-property {
+.progress-bar--get-property, 
+.progress-bar--open-dialog {
   width: 100%;
 }
 
@@ -16,5 +17,9 @@
 
   .progress-bar--get-property {
     width: 300px;
+  }
+
+  .progress-bar--open-dialog {
+    width: 150px;
   }
 }
