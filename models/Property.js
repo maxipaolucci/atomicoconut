@@ -158,6 +158,10 @@ const propertySchema = new mongoose.Schema({
     type: String,
     default : null,
     trim: true
+  },
+  photos : {
+    type : [String],
+    default : []
   }
 });
 

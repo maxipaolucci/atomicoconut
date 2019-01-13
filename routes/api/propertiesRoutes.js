@@ -19,18 +19,23 @@ router.route('/create').post(
   authController.isLogggedIn, 
   catchErrors(userController.checkLoggedInUserWithEmail),
   propertyController.validateRegister,
+  propertyController.uploadPhotos,
+  catchErrors(propertyController.resizePhotos),
   catchErrors(propertyController.create)
 );
 
 router.route('/update').post(
   authController.isLogggedIn, 
   catchErrors(userController.checkLoggedInUserWithEmail),
+  propertyController.uploadPhotos,
+  catchErrors(propertyController.resizePhotos),
   propertyController.validateRegister,
   catchErrors(propertyController.update)
 );
 
 router.route('/delete/:id').delete( 
   catchErrors(userController.checkLoggedInUserWithEmail),
+  catchErrors(propertyController.deletePhotos),
   catchErrors(propertyController.delete)
 );
 
