@@ -36,15 +36,21 @@ exports.resizePhotos = async (req, res, next) => {
         next(); //skip to the next middleware
         return;
     }
+    console.log(req.files)
 
-    //set the filename using uuid
-    const extension = req.files.mimetype.split('/')[1];
-    req.body.photo = `${uuid.v4()}.${extension}`;
-    //now we resize
-    const photo = await jimp.read(req.file.buffer); //read the buffer where we temporary have stored the image in memory
-                                            //jimp is based on Promises so we can await them
-    await photo.resize(800, jimp.AUTO);
-    await photo.write(`./public/uploads/${req.body.photo}`);
+    req.body.photos = [];
+    for (const file of req.files) {
+        //set the filename using uuid
+        const extension = file.mimetype.split('/')[1];
+        const fileName = `${uuid.v4()}.${extension}`;
+        req.body.photos.push(fileNAme);
+        //now we resize
+        const photo = await jimp.read(file.buffer); //read the buffer where we temporary have stored the image in memory
+                                                //jimp is based on Promises so we can await them
+        await photo.resize(800, jimp.AUTO);
+        await photo.write(`./public/uploads/properties/${fileName}`);    
+    }
+    
     //once we have written the photo to our filesystem, keep going!
     next();
 }
@@ -112,7 +118,8 @@ exports.create = async (req, res, next) => {
         otherCost : req.body.otherCost,
         otherCostUnit : req.body.otherCostUnit,
         description : req.body.description,
-        notes : req.body.notes
+        notes : req.body.notes,
+        photos : req.body.photos
     })).save();
 
     if (property) {
@@ -274,7 +281,8 @@ exports.update = async (req, res, next) => {
         otherCost : req.body.otherCost,
         otherCostUnit : req.body.otherCostUnit,
         description : req.body.description,
-        notes : req.body.notes
+        notes : req.body.notes,
+        photos : req.body.photos
     };
 
     //update property

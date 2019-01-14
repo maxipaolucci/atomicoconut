@@ -26,6 +26,11 @@
         </div>
 
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Photos -->
+          <input type="file" #file style="display: none" (change)="onFilesAdded()" multiple />
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Description -->
           <mat-form-field fxFlex class="form__field">
             <textarea matInput id="description" name="description" placeholder="Description"
