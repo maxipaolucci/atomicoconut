@@ -1,7 +1,7 @@
 <div class="container__edit-property" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
   <!-- Form  -->
   <form *ngIf="!getPropertyServiceRunning" class="form__container form__edit-property" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editPropertyForm="ngForm" 
-      novalidate fxLayout="column" fxLayoutGap="10px">
+      novalidate fxLayout="column" fxLayoutGap="10px" enctype="multipart/form-data">
     
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
@@ -27,7 +27,7 @@
 
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Photos -->
-          <input type="file" #file style="display: none" (change)="onFilesAdded()" multiple />
+          <files-uploader [id]="'photos'" (files)="onPhotosChange($event)"></files-uploader>
         </div>
 
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">

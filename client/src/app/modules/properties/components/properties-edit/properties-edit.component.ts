@@ -13,6 +13,7 @@ import { UtilService } from '../../../../util.service';
 import { HouseFiguresDialogComponent } from '../house-figures-dialog/house-figures-dialog.component';
 import { PropertyYieldsDialogComponent } from '../property-yields-dialog/property-yields-dialog.component';
 import { map, combineLatest, flatMap } from 'rxjs/operators';
+import { FilesUploaderChange } from '../../../../modules/shared/components/files-uploader/models/filesUploaderChange';
 
 @Component({
   selector: 'properties-edit',
@@ -313,6 +314,11 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   }
 
   onCurrencyUnitChange($event: MatSelectChange) {
+    this.model[$event.source.id] = $event.value;
+  }
+
+  onPhotosChange($event: FilesUploaderChange) {
+    console.log($event);
     this.model[$event.source.id] = $event.value;
   }
 
