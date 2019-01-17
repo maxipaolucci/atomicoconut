@@ -35,10 +35,11 @@ exports.storePhotos = async (req, res, next) => {
         const photo = await jimp.read(file.buffer); //read the buffer where we temporary have stored the image in memory
                                                 //jimp is based on Promises so we can await them
         await photo.resize(800, jimp.AUTO);
-        await photo.write(`./public/uploads/properties/${fileName}`);    
+        const result = await photo.write(`./public/uploads/properties/${fileName}`);
+        console.log(result);    
     }
 
-    console.log(req.body);
+    //console.log(req.body);
     
     //once we have written the photo to our filesystem, keep going!
     next();
