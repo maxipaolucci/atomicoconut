@@ -154,7 +154,7 @@ exports.updateAccountPersonalInfo = async (req, res) => {
  */
 exports.checkLoggedInUserWithEmail = async (req, res, next) => {
     const methodTrace = `${errorTrace} checkLoggedInUserWithEmail() >`;
-
+    
     const email = req.body.email ? req.body.email : req.query.email;
     //check for a user with the provided email
     console.log(`${methodTrace} ${getMessage('message', 1029, email, true, email)}`);

@@ -40,10 +40,10 @@ export class PropertiesService {
    * 
    * @return { Observable<Property> }
    */
-  update$(postData: any = {}): Observable<any> {
+  update$(postData: any | FormData = {}): Observable<any> {
     const methodTrace = `${this.constructor.name} > update() > `; // for debugging
-
-    return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers }).pipe(
+    
+    return this.http.post<Response>(`${this.serverHost}/update`, postData).pipe(
       map(this.appService.extractData),
       catchError(this.appService.handleError)
     );

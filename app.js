@@ -5,6 +5,7 @@ const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const multer = require('multer');
 const passport = require('passport');
 const promisify = require('es6-promisify');
 const flash = require('connect-flash');
@@ -32,6 +33,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// takes the request of multipart/form-data types and put the payload and files into req.body and req.files respectively (thanks to multer)
+const multerOptions = {
+  storage : multer.memoryStorage(), //setup to storage in memory at this point cause we are going to resize files before store in disk
+  fileFilter(req, file, next) {
+    console.log(123);
+      // check for only images in file uploads. 
+      const isPhoto = file.mimetype.startsWith('image/');
+      if (isPhoto) {
+          next(null, true); //next works like promises. If we pass just one, that means that the promise fails
+                            //and it is going to be catch as an error, if we set it to null and pass a true
+                            // the promise is process as a success
+      } else {
+          next({ message : 'That filetype is not allowed!' }, false); //here the promise is set to fail
+      }
+  }
+};
+app.use(multer(multerOptions).array('files'));
 
 // Exposes a bunch of methods for validating data. Used heavily on userController.validateRegister
 app.use(expressValidator());

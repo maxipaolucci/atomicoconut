@@ -1,7 +1,7 @@
 <div class="container__edit-property" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
   <!-- Form  -->
   <form *ngIf="!getPropertyServiceRunning" class="form__container form__edit-property" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editPropertyForm="ngForm" 
-      novalidate fxLayout="column" fxLayoutGap="10px" enctype="multipart/form-data">
+      novalidate fxLayout="column" fxLayoutGap="10px">
     
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">

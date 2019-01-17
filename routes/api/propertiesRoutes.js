@@ -19,17 +19,15 @@ router.route('/create').post(
   authController.isLogggedIn, 
   catchErrors(userController.checkLoggedInUserWithEmail),
   propertyController.validateRegister,
-  propertyController.uploadPhotos,
-  catchErrors(propertyController.resizePhotos),
+  catchErrors(propertyController.storePhotos),
   catchErrors(propertyController.create)
 );
 
 router.route('/update').post(
   authController.isLogggedIn, 
   catchErrors(userController.checkLoggedInUserWithEmail),
-  propertyController.uploadPhotos,
-  catchErrors(propertyController.resizePhotos),
   propertyController.validateRegister,
+  catchErrors(propertyController.storePhotos),
   catchErrors(propertyController.update)
 );
 

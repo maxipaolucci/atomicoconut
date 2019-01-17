@@ -9,51 +9,40 @@ const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
 const { getPropertyIdsInInvestments } = require('./investmentController');
-const multer = require('multer'); //manage images
 const jimp = require('jimp'); //resize images
 const uuid = require('uuid'); //unique names for the images files
 
 const errorTrace = 'propertyController >';
-const multerOptions = {
-    storage : multer.memoryStorage(), //setup to storage in memory at this point cause we are going to resize files before store in disk
-    fileFilter(req, file, next) {
-        const isPhoto = file.mimetype.startsWith('image/');
-        if (isPhoto) {
-            next(null, true); //next works like promises. If we pass just one, that means that the promise fails
-                              //and it is going to be catch as an error, if we set it to null and pass a true
-                              // the promise is process as a success
-        } else {
-            next({ message : 'That filetype is not allowed!' }, false); //here the promise is set to fail
-        }
-    }
-};
 
-exports.uploadPhotos = multer(multerOptions).array('photos'); //this stores the file temporary in the memory of the server as multerOptions is config.
+exports.storePhotos = async (req, res, next) => {
+    const methodTrace = `${errorTrace} storePhotos() >`;
 
-exports.resizePhotos = async (req, res, next) => {
+    //console.log(`${methodTrace} ${getMessage('message', 1016, req.user.email, true)}`);
     //check if there is no file to resize
     if (!req.files) { //check req.file because multer is going to put the photo, if present, in a property called file in req object
+        
         next(); //skip to the next middleware
         return;
     }
-    console.log(req.files)
 
     req.body.photos = [];
     for (const file of req.files) {
         //set the filename using uuid
         const extension = file.mimetype.split('/')[1];
         const fileName = `${uuid.v4()}.${extension}`;
-        req.body.photos.push(fileNAme);
+        req.body.photos.push(fileName);
         //now we resize
         const photo = await jimp.read(file.buffer); //read the buffer where we temporary have stored the image in memory
                                                 //jimp is based on Promises so we can await them
         await photo.resize(800, jimp.AUTO);
         await photo.write(`./public/uploads/properties/${fileName}`);    
     }
+
+    console.log(req.body);
     
     //once we have written the photo to our filesystem, keep going!
     next();
-}
+};
 
 exports.validateRegister = (req, res, next) => {
     const methodTrace = `${errorTrace} validateRegister() >`;
