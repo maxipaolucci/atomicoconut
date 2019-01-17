@@ -63,4 +63,8 @@ data/**/*
 
 # Public folder
 public/app/index.html
-public/uploads/*
+public/uploads/**/*.jpg
+public/uploads/**/*.jpeg
+public/uploads/**/*.png
+public/uploads/**/*.bmp
+public/uploads/**/*.gif
