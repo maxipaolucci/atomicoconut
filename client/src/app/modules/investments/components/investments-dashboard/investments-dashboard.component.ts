@@ -17,7 +17,7 @@ import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
-import { PropertyInvestment } from '../../models/PropertyInvestment';
+import { PropertyInvestment } from '../../models/propertyInvestment';
 
 @Component({
   selector: 'investments-dashboard',

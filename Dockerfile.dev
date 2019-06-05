@@ -1,0 +1,21 @@
+FROM node:8-alpine
+
+RUN node -v && npm -v
+
+WORKDIR /app
+
+RUN mkdir ./client
+
+COPY ./client/package.json ./client/
+
+RUN cd client && npm install
+
+COPY ./package.json ./
+
+RUN npm install
+
+RUN npm install -g @angular/cli@7.0.3
+
+COPY . .
+
+RUN cd client && ng build
