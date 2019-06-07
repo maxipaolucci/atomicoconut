@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AtomiCoconut</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+</head>
+<body class="mat-app-background">
+  <script type="text/javascript">
+    window.location.href="/"; //this is a path to solve an issue when user access "<host>/app/" in this case we are loading the index.html file inside public/app folder instead to 
+                //leave node serve the home.pug file, making all the js files for angular not be found. This way when the user access the above mentioned url we redirect him
+                //to "/" an solves the issue.
+                // >>> WOULD BE IDEAL TO AVOID NG BUILD TO DEPLOY THIS INDEX.HTML INSIDE PUBLIC/APP/ BUT COULD NOT FIGURE OUT HOW TO.
+  </script>
+<script type="text/javascript" src="runtime.js"></script><script type="text/javascript" src="polyfills.js"></script><script type="text/javascript" src="styles.js"></script><script type="text/javascript" src="vendor.js"></script><script type="text/javascript" src="main.js"></script></body>
+</html>
