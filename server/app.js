@@ -18,11 +18,13 @@ const propertiesRoutes = require('./routes/api/propertiesRoutes');
 const currencyRatesRoutes = require('./routes/api/currencyRatesRoutes');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
+const cors = require('cors');
 require('./handlers/passport'); //used by passport library
 
 // create our Express app
 const app = express();
-
+// cross domain requests
+app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views')); // this is the folder where we keep our pug files
 app.set('view engine', 'pug'); // we use the engine pug, mustache or EJS work great too
@@ -38,16 +40,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const multerOptions = {
   storage : multer.memoryStorage(), //setup to storage in memory at this point cause we are going to resize files before store in disk
   fileFilter(req, file, next) {
-    console.log(123);
-      // check for only images in file uploads. 
-      const isPhoto = file.mimetype.startsWith('image/');
-      if (isPhoto) {
-          next(null, true); //next works like promises. If we pass just one, that means that the promise fails
-                            //and it is going to be catch as an error, if we set it to null and pass a true
-                            // the promise is process as a success
-      } else {
-          next({ message : 'That filetype is not allowed!' }, false); //here the promise is set to fail
-      }
+    // check for only images in file uploads. 
+    const isPhoto = file.mimetype.startsWith('image/');
+    if (isPhoto) {
+        next(null, true); //next works like promises. If we pass just one, that means that the promise fails
+                          //and it is going to be catch as an error, if we set it to null and pass a true
+                          // the promise is process as a success
+    } else {
+        next({ message : 'That filetype is not allowed!' }, false); //here the promise is set to fail
+    }
   }
 };
 app.use(multer(multerOptions).array('files'));
