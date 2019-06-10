@@ -10,18 +10,6 @@ const { catchErrors, catchApiErrors } = require('../../handlers/errorHandlers');
 //****************************** TEAM API *********************************** */
 //*************************************************************************** */
 
-router.route('/test').get(
-  (req, res, next) => {
-    console.log('testing teams service connection...');
-    res.json({
-      status : 'success', 
-      codeno : 200,
-      msg : "success retrieving test data",
-      data : { test: true }
-    });
-  }
-);
-
 router.route('/getMyTeamBySlug').get(
   authController.isLogggedIn,
   catchErrors(userController.checkLoggedInUserWithEmail),
