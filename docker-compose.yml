@@ -19,8 +19,6 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
 
   acserver:
-    # env_file:
-    #   - variables.env
     build:
       context: ./server
       dockerfile: Dockerfile.dev
