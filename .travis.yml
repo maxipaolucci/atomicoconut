@@ -1,0 +1,47 @@
+# needs sudo to run docker
+sudo: required
+services:
+  # travis installs docker
+  - docker
+
+# before_install:
+  # - docker build -t maxipaolucci/atomic-coconut-test -f ./client/Dockerfile.dev ./client
+  
+# script:
+  # CI=true to tell docker to not run in watch mode and exit the test script when test finish running
+  # - docker run -e CI=true maxipaolucci/atomic-coconut-test npm run test -- --coverage
+  # again as in the before_install section we can run more containers for other testing or required tasks if needed
+  # - docker run -e CI=true maxipaolucci/server-test npm run test -- --coverage
+
+after_success:
+  - docker build -t maxipaolucci/atomic-coconut-client ./client
+  - docker build -t maxipaolucci/atomic-coconut-nginx ./nginx
+  - docker build -t maxipaolucci/atomic-coconut-server ./server
+  # Log in to the docker CLI 
+  ## this docker user and pass variables are env vars in travis ci
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # push the images to Dockerhub
+  - docker push maxipaolucci/atomic-coconut-client
+  - docker push maxipaolucci/atomic-coconut-nginx
+  - docker push maxipaolucci/atomic-coconut-server
+
+# deploy:
+#     # travis has integracions with AWS, providing the service name is enough to travis to find it
+#     provider: elasticbeanstalk
+#     # the region can be found in the app url created by AWS when we created the app:  DockerReact-env.s23cypvida.us-east-2.elasticbeanstalk.com
+#     region: "us-east-2"
+#     app: "atomic-coconut"
+#     env: "atomic-coconut-env"
+#     # the bucket is basically a hardrive (S3 bucket) in AWS where travis is going to copy the deploy package zipfile
+#     # this bucket is going to be reuse for all the env that we will create.
+#     # look in "Service > S3 Scalable storage in the cloud"
+#     bucket_name: "elasticbeanstalk-us-east-2-782522910439"
+#     # by default the same as app name
+#     bucket_path: "atomic-coconut"
+#     on:
+#       #deploy just when we push on master 
+#       branch: master
+#     # these keys we stored as env vars in travis, and generated in aws services > IAM, check lesson "91 Automated deployments"
+#     access_key_id: $AWS_ACCESS_KEY
+#     secret_access_key:
+#       secure: "$AWS_SECRET_KEY"

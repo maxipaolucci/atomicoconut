@@ -55,7 +55,7 @@ client/e2e/*.map
 node_modules
 
 # variables
-variables.env
+*.env
 
 # data
 data/**/*
