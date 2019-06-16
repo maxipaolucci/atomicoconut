@@ -19,7 +19,7 @@ RUN ng build --prod
 FROM nginx
 
 # EBS reads this and creates the mapping when starts the container
-EXPOSE 3000
+EXPOSE 4200
 
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
