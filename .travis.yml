@@ -17,3 +17,16 @@ after_success:
   - docker push $DOCKER_ID/atomic-coconut-client
   - docker push $DOCKER_ID/atomic-coconut-nginx
   - docker push $DOCKER_ID/atomic-coconut-server
+
+deploy:
+  provider: elasticbeanstalk
+  region: ap-southeast-2
+  app: atomiCoconut
+  env: Atomicoconut-env
+  bucket_name: elasticbeanstalk-ap-southeast-2-782522910439
+  bucket_path: atomiCoconut
+  on:
+    branch: devops
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
