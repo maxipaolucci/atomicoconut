@@ -18,15 +18,6 @@ const transportMailTrap = nodemailer.createTransport({
   }
 });
 
-//for use a gmail account go to https://www.google.com/settings/security/lesssecureapps and turn less secure app ON
-const transportGmail = nodemailer.createTransport({
-  service: 'gmail',
-  auth : {
-    user : process.env.GMAIL_USER,
-    pass : process.env.GMAIL_PASS
-  }
-});
-
 const generateHTML = (filename, options = {}) => {
   const html = pug.renderFile(`${__dirname}/../views/email/${filename}.pug`, options); //we donot know where renderfile is executed, propably inside node_modules that's is why we use __dirname = current directory this file is running
   const inlined = juice(html); //inline the html

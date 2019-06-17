@@ -8,7 +8,7 @@ if (major < 7 || (major === 7 && minor <= 5)) {
 }
 
 // import environmental variables from our variables.env file
-require('dotenv').config({ path: 'variables.env' });
+// require('dotenv').config({ path: 'variables.env' }); //not needed we are using enviroment vars from docker-compose
 
 // Connect to our Database and handle an bad connections
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
@@ -33,7 +33,7 @@ require('./models/CurrencyRate');
 
 // Start our app!
 const app = require('./app');
-app.set('port', process.env.PORT || 7777);
+app.set('port', process.env.PORT);
 const server = app.listen(app.get('port'), () => {
   console.log(`Express running → PORT ${server.address().port}`);
 });

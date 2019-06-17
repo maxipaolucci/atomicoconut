@@ -24,6 +24,18 @@ services:
       dockerfile: Dockerfile.dev
     # ports: 
     #   - "7777:7777"
+    environment:
+      NODE_ENV: ${ENV}
+      DATABASE: ${DATABASE}
+      MAIL_TRAP_USER: ${MAIL_TRAP_USER}
+      MAIL_TRAP_PASS: ${MAIL_TRAP_PASS}
+      MAIL_TRAP_HOST: ${MAIL_TRAP_HOST}
+      MAIL_TRAP_PORT: ${MAIL_TRAP_PORT}
+      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
+      PORT: ${PORT}
+      SECRET: ${SECRET}
+      KEY: ${KEY}
+      CURRENCYLAYER_KEY: ${CURRENCYLAYER_KEY}
     volumes:
       - /app/node_modules
       - ./server:/app
