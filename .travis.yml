@@ -10,6 +10,8 @@ script:
   - docker run -e CI=true $DOCKER_ID/atomic-coconut-client-dev ng build
 
 after_success:
+  on:
+    branch: master
   - docker build -t $DOCKER_ID/atomic-coconut-client ./client
   - docker build -t $DOCKER_ID/atomic-coconut-nginx ./nginx
   - docker build -t $DOCKER_ID/atomic-coconut-server ./server
