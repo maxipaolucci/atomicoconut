@@ -6,6 +6,7 @@ before_install:
   - docker build -t $DOCKER_ID/atomic-coconut-client-dev -f ./client/Dockerfile.dev ./client
 
 script:
+  - echo "here we put a useful script :)"
   # - docker run -e CI=true $DOCKER_ID/atomic-coconut-client npm run test -- --coverage
   # - docker run -e CI=true $DOCKER_ID/atomic-coconut-client-dev ng build
 
