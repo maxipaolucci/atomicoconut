@@ -1,6 +1,8 @@
 # Access my EC2 instance from SSH console
 Mac
-ssh -i [key-pair.pem] ec2-user@[ec2 instance public dns]
+ssh -i [key-pair.pem] ec2-user@[ec2 instance public dns | ip]
+
+ssh -i xxx ec2-user@13.239.181.176
 
 Windows
 1- enable port TCP 22 in VPC group for ElastikBeanStalk env
