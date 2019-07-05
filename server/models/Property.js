@@ -162,6 +162,11 @@ const propertySchema = new mongoose.Schema({
   photos : {
     type : [String],
     default : []
+  },
+  unit: {
+    type: String,
+    default : null,
+    trim: true
   }
 });
 

@@ -17,6 +17,14 @@
               [placeHolder]="'Address'"
               (values)="onAddressChange($event)">
           </address-autocomplete>
+          
+          <!-- Unit -->
+          <mat-form-field fxFlex fxFlex.gt-xs="80px" class="form__field">
+            <input matInput type="text" id="unit" name="unit" placeholder="Unit" 
+                [(ngModel)]="model.unit" 
+                [value]="model.unit"
+                #unit="ngModel">
+          </mat-form-field>
         </div>
 
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">

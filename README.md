@@ -107,4 +107,4 @@ master *--*-------*---*---------------*--------*
 testing    \*---*/     \*-----------*/
 featureBranch            \*--*----*/
 
-master--->testing--->devops
+master--->testing--->propUnit
