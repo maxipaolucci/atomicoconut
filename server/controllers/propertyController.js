@@ -45,6 +45,11 @@ exports.storePhotos = async (req, res, next) => {
     next();
 };
 
+exports.deletePhotos = async (req, res, next) => {
+    //do something
+    next();
+};
+
 exports.validateRegister = (req, res, next) => {
     const methodTrace = `${errorTrace} validateRegister() >`;
 

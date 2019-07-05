@@ -75,7 +75,7 @@
                   numberValidator
                   #askingPrice="ngModel">
               
-              <mat-hint align="start">The price the owner ask for sell the house.</mat-hint>
+              <mat-hint align="start">The price the owner ask for sell the property.</mat-hint>
               <mat-error *ngIf="askingPrice.invalid && (askingPrice.dirty || askingPrice.touched) && askingPrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             </mat-form-field>
           </div>
@@ -96,7 +96,7 @@
                   numberValidator
                   #offerPrice="ngModel">
               
-              <mat-hint align="start">The price the owner ask for sell the house.</mat-hint>
+              <mat-hint align="start">The price offered to buy the property.</mat-hint>
               <mat-error *ngIf="offerPrice.invalid && (offerPrice.dirty || offerPrice.touched) && offerPrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             </mat-form-field>
           </div>
@@ -117,7 +117,7 @@
                   numberValidator
                   #walkAwayPrice="ngModel">
               
-              <mat-hint align="start">The price the owner ask for sell the house.</mat-hint>
+              <mat-hint align="start">The biggest amount willing to pay for the property.</mat-hint>
               <mat-error *ngIf="walkAwayPrice.invalid && (walkAwayPrice.dirty || walkAwayPrice.touched) && walkAwayPrice.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             </mat-form-field>
           </div>
@@ -182,7 +182,7 @@
                   numberValidator
                   #marketValue="ngModel">
               
-              <mat-hint align="start">Last sale price.</mat-hint>
+              <mat-hint align="start">Current market value for this property.</mat-hint>
               <mat-error *ngIf="marketValue.invalid && (marketValue.dirty || marketValue.touched) && marketValue.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             </mat-form-field>
           </div>
@@ -211,7 +211,7 @@
                   numberValidator
                   #renovationCost="ngModel">
               
-              <mat-hint align="start">Last sale price.</mat-hint>
+              <mat-hint align="start">Cost of renovations required.</mat-hint>
               <mat-error *ngIf="renovationCost.invalid && (renovationCost.dirty || renovationCost.touched) && renovationCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             </mat-form-field>
           </div>
@@ -232,7 +232,7 @@
                   numberValidator
                   #maintenanceCost="ngModel">
               
-              <mat-hint align="start">Last sale price.</mat-hint>
+              <mat-hint align="start">Maintenance cost per year.</mat-hint>
               <mat-error *ngIf="maintenanceCost.invalid && (maintenanceCost.dirty || maintenanceCost.touched) && maintenanceCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             </mat-form-field>
           </div>
@@ -253,7 +253,6 @@
                   numberValidator
                   #otherCost="ngModel">
               
-              <mat-hint align="start">Last sale price.</mat-hint>
               <mat-error *ngIf="otherCost.invalid && (otherCost.dirty || otherCost.touched) && otherCost.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             </mat-form-field>
           </div>
