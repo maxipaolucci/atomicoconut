@@ -38,7 +38,7 @@ deploy:
     bucket_name: elasticbeanstalk-ap-southeast-2-782522910439
     bucket_path: atomiCoconut-testing
     on:
-      branch: devops
+      branch: testing
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key:
       secure: $AWS_SECRET_KEY
