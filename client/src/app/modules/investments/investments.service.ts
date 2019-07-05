@@ -6,7 +6,7 @@ import { AppService } from '../../app.service';
 import { User } from '../users/models/user';
 import { Investment } from './models/investment';
 import { CurrencyInvestment } from './models/currencyInvestment';
-import { PropertyInvestment } from './models/PropertyInvestment';
+import { PropertyInvestment } from './models/propertyInvestment';
 import { Team } from '../teams/models/team';
 import { Response } from '../../models/response';
 import { of, from } from 'rxjs';

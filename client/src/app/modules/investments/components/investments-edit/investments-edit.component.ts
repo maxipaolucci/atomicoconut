@@ -14,7 +14,7 @@ import { Investment } from '../../models/investment';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES } from '../../../../constants';
 import { BehaviorSubject } from 'rxjs';
-import { PropertyInvestment } from '../../models/PropertyInvestment';
+import { PropertyInvestment } from '../../models/propertyInvestment';
 
 @Component({
   selector: 'investments-edit',

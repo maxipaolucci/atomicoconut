@@ -75,6 +75,8 @@ export class House extends Property {
       otherCost: number = null,
       otherCostUnit: string = null,
       notes: string = null,
+      photos: String[] = [],
+      unit: string = null,
       capitalGrowth: number = null,
       bedrooms: number = null,
       bathrooms: number = null,
@@ -100,7 +102,7 @@ export class House extends Property {
         walkAwayPrice, walkAwayPriceUnit, purchasePrice, purchasePriceUnit, purchasePrice2, purchasePrice2Unit, purchasePrice3, 
         purchasePrice3Unit, purchasePrice4, purchasePrice4Unit, purchasePrice5, purchasePrice5Unit, dateListed, reasonForSelling, marketValue,
         marketValueUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost,
-        otherCostUnit, notes);
+        otherCostUnit, notes, photos, unit);
     
     this.landArea = landArea;
     this.floorArea = floorArea;

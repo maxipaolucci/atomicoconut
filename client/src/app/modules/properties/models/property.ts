@@ -35,6 +35,8 @@ export class Property {
   otherCost: number;
   otherCostUnit: string;
   notes: string;
+  photos: String[];
+  unit: string;
 
   constructor(
       id: string = null,
@@ -68,7 +70,9 @@ export class Property {
       description: string = null,
       otherCost: number = null,
       otherCostUnit: string = null,
-      notes: string = null) {
+      notes: string = null,
+      photos: String[] = [],
+      unit: string = null) {
     
     this.id = id;
     this.type = type;
@@ -102,5 +106,7 @@ export class Property {
     this.otherCost = otherCost;
     this.otherCostUnit = otherCostUnit;
     this.notes = notes;
+    this.photos = photos;
+    this.unit = unit;
   }
 }

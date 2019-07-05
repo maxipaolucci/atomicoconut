@@ -8,8 +8,26 @@
 
   mat-table {
     
-    mat-row  .mat-column-address {
+    mat-header-row {
+      
+      .mat-column-invest, .mat-column-delete {
+        text-align: center;
+      }
+    }
+
+    .mat-column-address, .mat-column-unit {
       cursor: pointer;
+    }
+
+    .mat-column-unit {
+      flex: 0 0 40px;
+      margin-right: 10px;
+    }
+
+    .mat-column-invest, .mat-column-delete {
+      flex: 0 0 40px;
+      margin-left: 10px;
+      align-self: center;
     }
 
     .mat-row.selected {

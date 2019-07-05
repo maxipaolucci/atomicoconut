@@ -1,0 +1,1 @@
+here we store all images related to properties

@@ -55,7 +55,7 @@ client/e2e/*.map
 node_modules
 
 # variables
-variables.env
+*.env
 
 # data
 data/**/*
@@ -63,4 +63,8 @@ data/**/*
 
 # Public folder
 public/app/index.html
-public/uploads/*
+public/uploads/**/*.jpg
+public/uploads/**/*.jpeg
+public/uploads/**/*.png
+public/uploads/**/*.bmp
+public/uploads/**/*.gif

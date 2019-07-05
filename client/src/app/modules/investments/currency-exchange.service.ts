@@ -3,7 +3,7 @@ import { map, catchError, retry, switchMap } from 'rxjs/operators';
 import { AppService } from '../../app.service';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Response } from '../../models/Response';
+import { Response } from '../../models/response';
 import { environment } from '../../../environments/environment';
 import { UtilService } from '../../util.service';
 

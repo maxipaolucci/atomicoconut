@@ -16,6 +16,7 @@ import { DynamicMapComponent } from './components/dynamic-map/dynamic-map.compon
 import { AgmCoreModule } from '@agm/core';
 import { environment } from '../../../environments/environment';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { FilesUploaderComponent } from './components/files-uploader/files-uploader.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
     InfoTooltipComponent,
     AddressAutocompleteComponent,
     DynamicMapComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    FilesUploaderComponent
   ],
   exports: [ 
     MainNavigatorComponent, 
@@ -51,7 +53,8 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
     InfoTooltipComponent,
     AddressAutocompleteComponent,
     DynamicMapComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    FilesUploaderComponent
   ],
   entryComponents: [
     YesNoDialogComponent, // added as material doc suggest to allow AOT on this on the fly created class

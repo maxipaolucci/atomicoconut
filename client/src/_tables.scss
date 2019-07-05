@@ -16,18 +16,7 @@
 
   mat-table {
       
-    .mat-column-invest, .mat-column-delete {
-      flex: 0 0 40px;
-      margin-left: 10px;
-      align-self: center;
-    }
     
-    mat-header-row {
-      
-      .mat-column-invest, .mat-column-delete {
-        text-align: center;
-      }
-    }
   }
 }
 

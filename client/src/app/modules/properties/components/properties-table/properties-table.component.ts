@@ -42,7 +42,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
-    this.displayedColumns = ['address'];
+    this.displayedColumns = ['unit','address'];
     if (this.showActions) {
       this.displayedColumns = this.displayedColumns.concat(['invest', 'delete']);
     }
@@ -60,8 +60,9 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     // set filter predicate function to look just in the address field
     this.propertiesDataSource.filterPredicate = (data: Property, filter: string) => {
       const address = data.address.description.toLowerCase().trim();
+      const unit = data.unit ? data.unit.toLowerCase().trim() : '';
       const filterStr = filter.toLowerCase().trim(); 
-      if (address.indexOf(filterStr) > -1) {
+      if (address.indexOf(filterStr) > -1 || unit.indexOf(filterStr) > -1) {
         return true;
       }
 
@@ -72,7 +73,10 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     this.propertiesDataSource.sortingDataAccessor = (data: Property, sortHeaderId: string) => {
       if (sortHeaderId === 'address') {
         return data.address.description;
+      } else if (sortHeaderId === 'unit') {
+        return data.unit;
       }
+
 
       return 1;
     };

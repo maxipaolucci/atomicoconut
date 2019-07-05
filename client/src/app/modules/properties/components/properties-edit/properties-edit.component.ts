@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, of, Observable } from 'rxjs';
+import obj2fd from 'obj2fd';
 import { User } from '../../../users/models/user';
 import { Property } from '../../models/property';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -13,6 +14,7 @@ import { UtilService } from '../../../../util.service';
 import { HouseFiguresDialogComponent } from '../house-figures-dialog/house-figures-dialog.component';
 import { PropertyYieldsDialogComponent } from '../property-yields-dialog/property-yields-dialog.component';
 import { map, combineLatest, flatMap } from 'rxjs/operators';
+import { FilesUploaderChange } from '../../../../modules/shared/components/files-uploader/models/filesUploaderChange';
 
 @Component({
   selector: 'properties-edit',
@@ -30,6 +32,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   propertyTypeDataValid = false; // this value is set when property type data form is updated
   addressValid = false;
+  propertyPhotos: File[] = [];
 
   // services flags
   editPropertyServiceRunning = false;
@@ -71,7 +74,9 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     description : null,
     otherCost : null,
     otherCostUnit : null,
-    notes : null
+    notes : null,
+    photos : [],
+    unit: null
   };
 
   modelHouseFiguresResults: any = {
@@ -213,7 +218,9 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.model.otherCost = property.otherCost;
     this.model.otherCostUnit = property.otherCostUnit;
     this.model.notes = property.notes;
+    this.model.photos = property.photos;
     this.model.type = property.type;
+    this.model.unit = property.unit;
 
     if (property instanceof House) {
       this.model.propertyTypeData = {
@@ -287,7 +294,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
     this.model.updatedOn = new Date(Date.now());
     // call the investment create service
-    const newSubscription = this.propertiesService.update$(this.model).subscribe(
+    const newSubscription = this.propertiesService.update$(this.generateFormData()).subscribe(
       (data: any) => {
         if (data && data.id && data.type) {
           this.appService.showResults(`Property successfully updated!`, 'success');
@@ -310,8 +317,29 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.subscription.add(newSubscription);
   }
 
+  /**
+   * Generates a FormData object from the model to send it to the server on create or update. This is required because this form handkles files/photos
+   */
+  generateFormData(): FormData {
+    const files = this.model.photos;
+    
+    const fd = obj2fd(this.model);
+    // add the files to the files property (expected in the backend by multer plugin (app.js))
+    for (const file of this.propertyPhotos) {
+      fd.append('files', file, file.name);
+    }
+
+    
+    
+    return fd;
+  }
+
   onCurrencyUnitChange($event: MatSelectChange) {
     this.model[$event.source.id] = $event.value;
+  }
+
+  onPhotosChange($event: FilesUploaderChange) {
+    this.propertyPhotos = $event.value;
   }
 
   onPropertyTypeDataChange($event: any) {

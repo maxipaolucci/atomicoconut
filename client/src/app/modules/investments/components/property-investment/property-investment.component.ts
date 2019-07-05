@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { PropertyInvestment } from '../../models/PropertyInvestment';
+import { PropertyInvestment } from '../../models/propertyInvestment';
 import { Team } from '../../../teams/models/team';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { combineLatest, switchMap } from 'rxjs/operators';

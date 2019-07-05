@@ -11,7 +11,7 @@ import { Subscription, of, from, Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { INVESTMENTS_TYPES } from '../../constants';
 import { UtilService } from '../../util.service';
-import { PropertyInvestment } from '../../modules/investments/models/PropertyInvestment';
+import { PropertyInvestment } from '../../modules/investments/models/propertyInvestment';
 
 @Component({
   selector: 'welcome',
