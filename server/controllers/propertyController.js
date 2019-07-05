@@ -115,7 +115,9 @@ exports.create = async (req, res, next) => {
         description : req.body.description,
         notes : req.body.notes,
         photos : req.body.photos,
-        unit : req.body.unit
+        unit : req.body.unit,
+        status : req.body.status,
+        statusDetail : req.body.statusDetail
     })).save();
 
     if (property) {
@@ -279,7 +281,9 @@ exports.update = async (req, res, next) => {
         description : req.body.description,
         notes : req.body.notes,
         photos : req.body.photos,
-        unit : req.body.unit
+        unit : req.body.unit,
+        status : req.body.status,
+        statusDetail : req.body.statusDetail
     };
 
     //update property

@@ -76,7 +76,9 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     otherCostUnit : null,
     notes : null,
     photos : [],
-    unit: null
+    unit: null,
+    status: null,
+    statusDetail: null
   };
 
   modelHouseFiguresResults: any = {
@@ -221,6 +223,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.model.photos = property.photos;
     this.model.type = property.type;
     this.model.unit = property.unit;
+    this.model.status = property.status;
+    this.model.statusDetail = property.statusDetail;
 
     if (property instanceof House) {
       this.model.propertyTypeData = {

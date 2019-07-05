@@ -167,6 +167,16 @@ const propertySchema = new mongoose.Schema({
     type: String,
     default : null,
     trim: true
+  },
+  status: {
+    type: String,
+    default : null,
+    trim: true
+  },
+  statusDetail: {
+    type: String,
+    default : null,
+    trim: true
   }
 });
 

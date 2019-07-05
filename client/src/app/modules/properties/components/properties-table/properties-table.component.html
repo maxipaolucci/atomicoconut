@@ -14,7 +14,11 @@
       <!-- Position Column -->
       <ng-container matColumnDef="unit">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Unit</mat-header-cell>
-        <mat-cell *matCellDef="let element" (click)="selection.select(element); goToPropertyEdit(element);">{{element.unit}}</mat-cell>
+        <mat-cell *matCellDef="let element" 
+          [matTooltip]="element.status ? ('[' + propertiesService.getStatusTitle(element.status) + (element.statusDetail ? '] :   ' + element.statusDetail : '] ')) : ''"
+          [matTooltipPosition]="'right'"
+          [ngClass]="element.status ? 'status status_' + element.status : 'status'" 
+          (click)="selection.select(element); goToPropertyEdit(element);">{{element.unit}}</mat-cell>
       </ng-container>
       
       <ng-container matColumnDef="address">
@@ -51,7 +55,8 @@
       
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"
-          [ngClass]="{ 'selected': selection.isSelected(row)}"></mat-row>
+          [ngClass]="{ 'selected': selection.isSelected(row)}" 
+          ></mat-row>
     </mat-table>
   </section>
   <mat-paginator [fxShow]="!getPropertiesServiceRunning && properties.length > 0" #propertiesPaginator 

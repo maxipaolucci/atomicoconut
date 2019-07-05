@@ -8,6 +8,48 @@
 
   mat-table {
     
+    mat-row mat-cell {
+      &.status {
+        border-left: solid 10px;
+        border-color: transparent;
+      }
+
+      &.status_agent_contacted {
+        border-color: $pink;
+      }
+
+      &.status_viewing_arranged {
+        border-color: $lightOrange;
+      }
+
+      &.status_viewed {
+        border-color: $orange;
+      }
+
+      &.status_negotiating {
+        border-color: $warn;
+      }
+
+      &.status_backup_offer {
+        border-color: $lightBlue;
+      }
+      
+      &.status_conditional {
+        border-color: $accent;
+      }
+      
+      &.status_unconditional {
+        border-color: $green;
+      }
+      &.status_owned {
+        border-color: $secondary;
+      }
+      &.status_discarded {
+        border-color: $grey;
+      }
+
+    }
+
     mat-header-row {
       
       .mat-column-invest, .mat-column-delete {

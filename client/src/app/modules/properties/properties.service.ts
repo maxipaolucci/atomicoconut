@@ -97,7 +97,7 @@ export class PropertiesService {
             data.purchasePrice3, data.purchasePrice3Unit, data.purchasePrice4, data.purchasePrice4Unit, data.purchasePrice5, data.purchasePrice5Unit, data.dateListed, 
             data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit,
             data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, 
-            data.description, data.otherCost, data.otherCostUnit, data.notes, data.photos, data.unit, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces,
+            data.description, data.otherCost, data.otherCostUnit, data.notes, data.photos, data.unit, data.status, data.statusDetail, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces,
             data.propertyTypeData.fenced, data.propertyTypeData.rented, data.propertyTypeData.rentPrice, data.propertyTypeData.rentPriceUnit, data.propertyTypeData.rentPricePeriod, data.propertyTypeData.rentAppraisalDone, data.propertyTypeData.vacancy, data.propertyTypeData.bodyCorporate,
             data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
       }
@@ -168,5 +168,56 @@ export class PropertiesService {
       map(this.appService.extractData),
       catchError(this.appService.handleError)
     );
+  }
+
+  getStatusTitle(statusId: string): string {
+    let title :string = '';
+
+    switch(statusId) {
+      case 'agent_contacted': {
+        title = 'Agent contacted';
+        break;
+      }
+      
+      case 'viewing_arranged': {
+        title = 'Viewing arranged';
+        break;
+      }
+      case 'viewed': {
+        title = 'Viewed';
+        break;
+      }
+      case 'negotiating': {
+        title = 'Negotiating';
+        break;
+      }
+      case 'backup_offer': {
+        title = 'Backup offer accepted';
+        break;
+      }
+      case 'conditional': {
+        title = 'Conditional';
+        break;
+      }
+      case 'unconditional': {
+        title = 'Unconditional';
+        break;
+      }
+      case 'owned': {
+        title = 'Owned';
+        break;
+      }
+      case 'discarded': {
+        title = 'Discarded';
+        break;
+      }
+
+      default: {
+        title = null;
+        break;
+      }
+    }
+
+    return title;
   }
 }

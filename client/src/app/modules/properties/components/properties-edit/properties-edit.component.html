@@ -28,6 +28,33 @@
         </div>
 
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Status -->
+          <mat-form-field fxFlex fxFlex.gt-xs="150px" class="form__field">
+            <mat-select id="status" name="status" placeholder="Status" [value]="model.status" [(ngModel)]="model.status">
+              <mat-option value=""></mat-option>
+              <mat-option value="agent_contacted">Agent contacted</mat-option>
+              <mat-option value="viewing_arranged">Viewing arranged</mat-option>
+              <mat-option value="viewed">Viewed</mat-option>
+              <mat-option value="negotiating">Negotiating</mat-option>
+              <mat-option value="backup_offer">Backup offer accepted</mat-option>
+              <mat-option value="conditional">Conditional</mat-option>
+              <mat-option value="unconditional">Unconditional</mat-option>
+              <mat-option value="owned">Owned</mat-option>
+              <mat-option value="discarded">Discarded</mat-option>
+            </mat-select>
+  
+            <mat-icon matPrefix>home</mat-icon>
+          </mat-form-field>
+          
+          <mat-form-field fxFlex  class="form__field">
+            <input matInput type="text" id="statusDetail" name="statusDetail" placeholder="Status detail..." 
+                [(ngModel)]="model.statusDetail" 
+                [value]="model.statusDetail"
+                #statusDetail="ngModel">
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Map -->
           <dynamic-map *ngIf="model.address && model.address.latitude && model.address.longitude"
               fxFlex [latitude]="model.address.latitude" [longitude]="model.address.longitude" [markers]="[model.address]" [mapContainerHeight]="300"></dynamic-map>
