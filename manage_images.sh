@@ -1,8 +1,8 @@
 #!/bin/bash
 
-IMAGE_TAG = 'latest'
+IMAGE_TAG='latest'
 if ["$TRAVIS_BRANCH" != "master"]; then
-  IMAGE_TAG = $TRAVIS_BRANCH
+  IMAGE_TAG=$TRAVIS_BRANCH
 fi
 
 echo "Current branch: $TRAVIS_BRANCH -- Images tag: $IMAGE_TAG"
