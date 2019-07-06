@@ -11,7 +11,7 @@ docker build -t $DOCKER_ID/atomic-coconut-client:$IMAGE_TAG ./client
 docker build -t $DOCKER_ID/atomic-coconut-nginx:$IMAGE_TAG ./nginx
 docker build -t $DOCKER_ID/atomic-coconut-server:$IMAGE_TAG ./server
 
-if [ "$TRAVIS_BRANCH" == "devops" ]; then
+if [[ "$TRAVIS_BRANCH" == "master" || "$TRAVIS_BRANCH" == "testing" ]]; then
   echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   docker push $DOCKER_ID/atomic-coconut-client:$IMAGE_TAG
   docker push $DOCKER_ID/atomic-coconut-nginx:$IMAGE_TAG
