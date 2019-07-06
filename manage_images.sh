@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IMAGE_TAG='latest'
-if [ "$TRAVIS_BRANCH" -ne "master" ]; then
+if [ "$TRAVIS_BRANCH" != "master" ]; then
   IMAGE_TAG=$TRAVIS_BRANCH
 fi
 
