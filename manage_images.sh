@@ -21,4 +21,9 @@ if [[ "$TRAVIS_BRANCH" == "master" || "$TRAVIS_BRANCH" == "testing" ]]; then
   sed -i "s?atomic-coconut-client?atomic-coconut-client:$IMAGE_TAG?" Dockerrun.aws.json
   sed -i "s?atomic-coconut-server?atomic-coconut-server:$IMAGE_TAG?" Dockerrun.aws.json
   sed -i "s?atomic-coconut-nginx?atomic-coconut-nginx:$IMAGE_TAG?" Dockerrun.aws.json
+
+else
+  echo
+  echo "Image push is skipped for $TRAVIS_BRANCH. Only 'master' and 'testing' branches push their images to dockerhub"
+  echo
 fi
