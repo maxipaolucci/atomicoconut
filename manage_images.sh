@@ -11,8 +11,8 @@
 #   docker push $DOCKER_ID/atomic-coconut-server:$TRAVIS_BRANCH
 # fi
 
-sed -i 's?atomic-coconut-client?atomic-coconut-client:$TRAVIS_BRANCH?' Dockerrun.aws.json
-sed -i 's?atomic-coconut-client?atomic-coconut-server:$TRAVIS_BRANCH?' Dockerrun.aws.json
-sed -i 's?atomic-coconut-client?atomic-coconut-nginx:$TRAVIS_BRANCH?' Dockerrun.aws.json
+sed -i "s?atomic-coconut-client?atomic-coconut-client:$TRAVIS_BRANCH?" Dockerrun.aws.json
+sed -i "s?atomic-coconut-server?atomic-coconut-server:$TRAVIS_BRANCH?" Dockerrun.aws.json
+sed -i "s?atomic-coconut-nginx?atomic-coconut-nginx:$TRAVIS_BRANCH?" Dockerrun.aws.json
 
 cat Dockerrun.aws.json
