@@ -5,7 +5,9 @@ if [ "$TRAVIS_BRANCH" != "master" ]; then
   IMAGE_TAG=$TRAVIS_BRANCH
 fi
 
+echo
 echo "Current branch: $TRAVIS_BRANCH -- Images tag: $IMAGE_TAG"
+echo
 
 docker build -t $DOCKER_ID/atomic-coconut-client:$IMAGE_TAG ./client
 docker build -t $DOCKER_ID/atomic-coconut-nginx:$IMAGE_TAG ./nginx
@@ -24,6 +26,6 @@ if [[ "$TRAVIS_BRANCH" == "master" || "$TRAVIS_BRANCH" == "testing" ]]; then
   git commit -am "updated images tags in Dockerrun.aws.json by Travis job in manage_images.sh"
 else
   echo
-  echo "Image push is skipped for $TRAVIS_BRANCH. Only 'master' and 'testing' branches push their images to dockerhub"
+  echo "Image push is skipped in branch '$TRAVIS_BRANCH'. Only 'master' and 'testing' branches push images to Dockerhub"
   echo
 fi
