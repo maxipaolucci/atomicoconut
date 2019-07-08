@@ -1,9 +1,8 @@
-const { INVESTMENTS_TYPES, PROPERTY_TYPES } = require('../constants/constants');
+const { PROPERTY_TYPES } = require('../constants/constants');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 const md5 = require('md5');
 const Property = mongoose.model('Property');
-const Investment = mongoose.model('Investment');
 const House = mongoose.model('House');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
@@ -11,11 +10,15 @@ const { getMessage } = require('../handlers/errorHandlers');
 const { getPropertyIdsInInvestments } = require('./investmentController');
 const jimp = require('jimp'); //resize images
 const uuid = require('uuid'); //unique names for the images files
-
+const propertyUserController = require('../controllers/propertyUserController');
 const errorTrace = 'propertyController >';
 
 exports.storePhotos = async (req, res, next) => {
     const methodTrace = `${errorTrace} storePhotos() >`;
+
+    //add this for new to disable the functionality
+    next();
+    return;
 
     //console.log(`${methodTrace} ${getMessage('message', 1016, req.user.email, true)}`);
     //check if there is no file to resize
@@ -120,66 +123,7 @@ exports.create = async (req, res, next) => {
         statusDetail : req.body.statusDetail
     })).save();
 
-    if (property) {
-        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Property')}`);
-
-        let propertyType = null;
-        if (property.propertyType === PROPERTY_TYPES.HOUSE) {
-            //save a new house record in DB
-            console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'House')}`);
-            propertyType = await (new House({
-                parent : property._id,
-                buildingType : req.body.propertyTypeData.buildingType,
-                titleType : req.body.propertyTypeData.titleType,
-                landArea : req.body.propertyTypeData.landArea,
-                floorArea : req.body.propertyTypeData.floorArea,
-                registeredValue : req.body.propertyTypeData.registeredValue,
-                registeredValueUnit : req.body.propertyTypeData.registeredValueUnit,
-                rates : req.body.propertyTypeData.rates,
-                ratesUnit : req.body.propertyTypeData.ratesUnit,
-                insurance : req.body.propertyTypeData.insurance,
-                insuranceUnit : req.body.propertyTypeData.insuranceUnit,
-                capitalGrowth : req.body.propertyTypeData.capitalGrowth,
-                bedrooms : req.body.propertyTypeData.bedrooms,
-                bathrooms : req.body.propertyTypeData.bathrooms,
-                parkingSpaces : req.body.propertyTypeData.parkingSpaces,
-                fenced : req.body.propertyTypeData.fenced,
-                rented : req.body.propertyTypeData.rented,
-                rentPrice : req.body.propertyTypeData.rentPrice,
-                rentPriceUnit : req.body.propertyTypeData.rentPriceUnit,
-                rentPricePeriod : req.body.propertyTypeData.rentPricePeriod,
-                rentAppraisalDone : req.body.propertyTypeData.rentAppraisalDone,
-                vacancy : req.body.propertyTypeData.vacancy,
-                bodyCorporate : req.body.propertyTypeData.bodyCorporate,
-                bodyCorporateUnit : req.body.propertyTypeData.bodyCorporateUnit,
-                utilitiesCost : req.body.propertyTypeData.utilitiesCost,
-                utilitiesCostUnit : req.body.propertyTypeData.utilitiesCostUnit,
-                managed : req.body.propertyTypeData.managed,
-                managerRate : req.body.propertyTypeData.managerRate,
-                agent : req.body.propertyTypeData.agent
-            })).save();
-        }
-
-        if (propertyType) {
-            console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, property.propertyType)}`);
-            
-            console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Property')}`);
-            res.json({
-                status : 'success', 
-                codeno : 200,
-                msg : getMessage('message', 1033, null, false, 'Property'),
-                data : { type : property.propertyType, id : property._id }
-            });
-        } else {
-            console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, property.propertyType)}`);
-            res.status(401).json({ 
-                status : "error", 
-                codeno : 459,
-                msg : getMessage('error', 459, null, false, property.propertyType),
-                data : null
-            });
-        }        
-    } else {
+    if (!property) {
         console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'Property')}`);
         res.status(401).json({ 
             status : "error", 
@@ -187,7 +131,81 @@ exports.create = async (req, res, next) => {
             msg : getMessage('error', 459, null, false, 'Property'),
             data : null
         });
+
+        return;
     }
+        
+    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Property')}`);
+
+    let propertyType = null;
+    if (property.propertyType === PROPERTY_TYPES.HOUSE) {
+        //save a new house record in DB
+        console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'House')}`);
+        propertyType = await (new House({
+            parent : property._id,
+            buildingType : req.body.propertyTypeData.buildingType,
+            titleType : req.body.propertyTypeData.titleType,
+            landArea : req.body.propertyTypeData.landArea,
+            floorArea : req.body.propertyTypeData.floorArea,
+            registeredValue : req.body.propertyTypeData.registeredValue,
+            registeredValueUnit : req.body.propertyTypeData.registeredValueUnit,
+            rates : req.body.propertyTypeData.rates,
+            ratesUnit : req.body.propertyTypeData.ratesUnit,
+            insurance : req.body.propertyTypeData.insurance,
+            insuranceUnit : req.body.propertyTypeData.insuranceUnit,
+            capitalGrowth : req.body.propertyTypeData.capitalGrowth,
+            bedrooms : req.body.propertyTypeData.bedrooms,
+            bathrooms : req.body.propertyTypeData.bathrooms,
+            parkingSpaces : req.body.propertyTypeData.parkingSpaces,
+            fenced : req.body.propertyTypeData.fenced,
+            rented : req.body.propertyTypeData.rented,
+            rentPrice : req.body.propertyTypeData.rentPrice,
+            rentPriceUnit : req.body.propertyTypeData.rentPriceUnit,
+            rentPricePeriod : req.body.propertyTypeData.rentPricePeriod,
+            rentAppraisalDone : req.body.propertyTypeData.rentAppraisalDone,
+            vacancy : req.body.propertyTypeData.vacancy,
+            bodyCorporate : req.body.propertyTypeData.bodyCorporate,
+            bodyCorporateUnit : req.body.propertyTypeData.bodyCorporateUnit,
+            utilitiesCost : req.body.propertyTypeData.utilitiesCost,
+            utilitiesCostUnit : req.body.propertyTypeData.utilitiesCostUnit,
+            managed : req.body.propertyTypeData.managed,
+            managerRate : req.body.propertyTypeData.managerRate,
+            agent : req.body.propertyTypeData.agent
+        })).save();
+    }
+
+    if (!propertyType) {
+        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, property.propertyType)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 459,
+            msg : getMessage('error', 459, null, false, property.propertyType),
+            data : null
+        });
+
+        return;
+    } 
+    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, property.propertyType)}`);
+    
+    let propertyUserCreated = await(propertyUserController.addPropertyUser(property._id, user._id, user.email, true));
+    if (!propertyUserCreated) {
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 459,
+            msg : getMessage('error', 459, null, false, 'PropertyUser'),
+            data : null
+        });
+
+        return;
+    }
+
+    console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Property')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1033, null, false, 'Property'),
+        data : { type : property.propertyType, id : property._id }
+    });       
 };
 
 exports.update = async (req, res, next) => {
@@ -212,41 +230,43 @@ exports.update = async (req, res, next) => {
         });
 
         return;
+    }
+
+    //check the property was created by the user or part of an investment of the user
+    let found = false;
+    
+    if (property.createdBy.email === user.email) {
+        found = true;
     } else {
-        //check the property was created by the user or part of an investment of the user
-        let found = false;
-        
-        if (property.createdBy.email === user.email) {
-            found = true;
-        } else {
-            //get my property investments to see if I have an investment in this property
-            const propertyIds = await getPropertyIdsInInvestments(user.email);
-        
-            for (let propertyId of propertyIds) {
-                if (property._id.equals(propertyId)) {
-                    found = true;
-                    break;
-                }
+        //get my property investments to see if I have an investment in this property
+        const propertyIds = await getPropertyIdsInInvestments(user.email);
+    
+        for (let propertyId of propertyIds) {
+            if (property._id.equals(propertyId)) {
+                found = true;
+                break;
             }
         }
-
-        if (!found) {
-            //the client is not an owner  of the property requested
-            console.log(`${methodTrace} ${getMessage('error', 470, user.email, true, 'Property')}`);
-            res.status(401).json({ 
-                status : "error", 
-                codeno : 470,
-                msg : getMessage('error', 470, null, false, 'Property'),
-                data : null
-            });
-
-            return;
-        }
     }
+
+    if (!found) {
+        //the client is not an owner  of the property requested
+        console.log(`${methodTrace} ${getMessage('error', 470, user.email, true, 'Property')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 470,
+            msg : getMessage('error', 470, null, false, 'Property'),
+            data : null
+        });
+
+        return;
+    }
+    
 
     //fields to update
     const originalProperty = property; //we save the "beautified" version of property to easily access data
     const location = { address : req.body.address.description, coordinates : [req.body.address.longitude, req.body.address.latitude], mapsPlaceId : req.body.address.mapsPlaceId };
+    const propertyUsers = req.body.propertyUsers; //array of emails
 
     const updates = {
         updatedBy: user._id,
@@ -294,66 +314,61 @@ exports.update = async (req, res, next) => {
         { new : true, runValidators : true, context : 'query' }
     );
 
-    if (property) {
-        //update property type data
-        console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Property')}`);
+    if (!property) {
+        //failed to update property
+        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'Property', '_id', originalProperty._id)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 465,
+            msg : getMessage('error', 465, null, false, 'Property', '_id', originalProperty._id),
+            data : null
+        });
+    }
+    
+    //update property type data
+    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Property')}`);
+    let propertyType = null;
+    if (property.propertyType === PROPERTY_TYPES.HOUSE) {
+        const propertyTypeUpdates = {
+            buildingType : req.body.propertyTypeData.buildingType,
+            titleType : req.body.propertyTypeData.titleType,
+            landArea : req.body.propertyTypeData.landArea,
+            floorArea : req.body.propertyTypeData.floorArea,
+            registeredValue : req.body.propertyTypeData.registeredValue,
+            registeredValueUnit : req.body.propertyTypeData.registeredValueUnit,
+            rates : req.body.propertyTypeData.rates,
+            ratesUnit : req.body.propertyTypeData.ratesUnit,
+            insurance : req.body.propertyTypeData.insurance,
+            insuranceUnit : req.body.propertyTypeData.insuranceUnit,
+            capitalGrowth : req.body.propertyTypeData.capitalGrowth,
+            bedrooms : req.body.propertyTypeData.bedrooms,
+            bathrooms : req.body.propertyTypeData.bathrooms,
+            parkingSpaces : req.body.propertyTypeData.parkingSpaces,
+            fenced : req.body.propertyTypeData.fenced,
+            rented : req.body.propertyTypeData.rented,
+            rentPrice : req.body.propertyTypeData.rentPrice,
+            rentPriceUnit : req.body.propertyTypeData.rentPriceUnit,
+            rentPricePeriod : req.body.propertyTypeData.rentPricePeriod,
+            rentAppraisalDone : req.body.propertyTypeData.rentAppraisalDone,
+            vacancy : req.body.propertyTypeData.vacancy,
+            bodyCorporate : req.body.propertyTypeData.bodyCorporate,
+            bodyCorporateUnit : req.body.propertyTypeData.bodyCorporateUnit,
+            utilitiesCost : req.body.propertyTypeData.utilitiesCost,
+            utilitiesCostUnit : req.body.propertyTypeData.utilitiesCostUnit,
+            managed : req.body.propertyTypeData.managed,
+            managerRate : req.body.propertyTypeData.managerRate,
+            agent : req.body.propertyTypeData.agent
+        };
         
-        let propertyType = null;
-        if (property.propertyType === PROPERTY_TYPES.HOUSE) {
-            const propertyTypeUpdates = {
-                buildingType : req.body.propertyTypeData.buildingType,
-                titleType : req.body.propertyTypeData.titleType,
-                landArea : req.body.propertyTypeData.landArea,
-                floorArea : req.body.propertyTypeData.floorArea,
-                registeredValue : req.body.propertyTypeData.registeredValue,
-                registeredValueUnit : req.body.propertyTypeData.registeredValueUnit,
-                rates : req.body.propertyTypeData.rates,
-                ratesUnit : req.body.propertyTypeData.ratesUnit,
-                insurance : req.body.propertyTypeData.insurance,
-                insuranceUnit : req.body.propertyTypeData.insuranceUnit,
-                capitalGrowth : req.body.propertyTypeData.capitalGrowth,
-                bedrooms : req.body.propertyTypeData.bedrooms,
-                bathrooms : req.body.propertyTypeData.bathrooms,
-                parkingSpaces : req.body.propertyTypeData.parkingSpaces,
-                fenced : req.body.propertyTypeData.fenced,
-                rented : req.body.propertyTypeData.rented,
-                rentPrice : req.body.propertyTypeData.rentPrice,
-                rentPriceUnit : req.body.propertyTypeData.rentPriceUnit,
-                rentPricePeriod : req.body.propertyTypeData.rentPricePeriod,
-                rentAppraisalDone : req.body.propertyTypeData.rentAppraisalDone,
-                vacancy : req.body.propertyTypeData.vacancy,
-                bodyCorporate : req.body.propertyTypeData.bodyCorporate,
-                bodyCorporateUnit : req.body.propertyTypeData.bodyCorporateUnit,
-                utilitiesCost : req.body.propertyTypeData.utilitiesCost,
-                utilitiesCostUnit : req.body.propertyTypeData.utilitiesCostUnit,
-                managed : req.body.propertyTypeData.managed,
-                managerRate : req.body.propertyTypeData.managerRate,
-                agent : req.body.propertyTypeData.agent
-            };
-            
-            propertyType = await House.findOneAndUpdate(
-                { _id : originalProperty.propertyTypeData._id },
-                { $set : propertyTypeUpdates },
-                { new : true, runValidators : true, context : 'query' }
-            );
-        }
-        
+        propertyType = await House.findOneAndUpdate(
+            { _id : originalProperty.propertyTypeData._id },
+            { $set : propertyTypeUpdates },
+            { new : true, runValidators : true, context : 'query' }
+        );
+    }
+    
 
-        if (propertyType) {
-            //success
-            console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, property.propertyType)}`);
-            
-            console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Property')}`);
-            res.json({
-                status : 'success', 
-                codeno : 200,
-                msg : getMessage('message', 1042, null, false, 'Property'),
-                data : { type : property.propertyType, id : property._id }
-            });
-
-            return;
-        }
-        
+    if (!propertyType) { 
         //failed to update proeprty type data
         console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, property.propertyType, '_id', property.propertyTypeData._id)}`);
         res.status(401).json({ 
@@ -362,15 +377,18 @@ exports.update = async (req, res, next) => {
             msg : getMessage('error', 465, null, false, property.propertyType, '_id', property.propertyTypeData._id),
             data : null
         });
-    }
 
-    //failed to update property
-    console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'Property', '_id', originalProperty._id)}`);
-    res.status(401).json({ 
-        status : "error", 
-        codeno : 465,
-        msg : getMessage('error', 465, null, false, 'Property', '_id', originalProperty._id),
-        data : null
+        return;
+    }
+    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, property.propertyType)}`);
+
+    //success
+    console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Property')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1042, null, false, 'Property'),
+        data : { type : property.propertyType, id : property._id }
     });
 };
 
@@ -385,84 +403,7 @@ exports.delete = async (req, res) => {
 
     let creator = null;
     
-    //2 - check that the property was created by the user
-    if (property) {
-        creator = property.createdBy;
-
-        let found = false;
-        if (creator.email === user.email) {
-            found = true;
-
-            //get my property investments to see if I have an investment in this property. If true then we cannot delete the property
-            const propertyIds = await getPropertyIdsInInvestments(user.email);
-            for (let propertyId of propertyIds) {
-                if (property._id.equals(propertyId)) {
-                    console.log(`${methodTrace} ${getMessage('error', 475, user.email, true, 'Property', 'Investments')}`);
-                    res.status(401).json({ 
-                        status : "error", 
-                        codeno : 475,
-                        msg : getMessage('error', 475, null, false, 'Property', 'Investments'),
-                        data : null
-                    });
-            
-                    return;
-                }
-            }
-        }
-
-        if (found) {
-            //3.1 - The property belongs to the user, we proceed to delete
-            let writeResult = null;
-            let propertyTypeDataId = null;
-            let propertyTypeDataModel = null;
-            if (property.propertyType === PROPERTY_TYPES.HOUSE) {
-                propertyTypeDataModel = 'House';
-                propertyTypeDataId = property.propertyTypeData._id;
-                writeResult = await deletePropertyTypeData(propertyTypeDataModel, propertyTypeDataId, user.email);
-            }
-            
-            if (writeResult && writeResult.n > 0) {
-                writeResult = null;
-                console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Property', '_id', property._id)}`);
-
-                writeResult = await Property.remove({ _id : property._id });
-                if (writeResult && writeResult.n > 0) {
-                    //Success deleting property
-                    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Property')}`);
-                    res.json({
-                        status : 'success', 
-                        codeno : 200,
-                        msg : getMessage('message', 1039, null, false, 'Property'),
-                        data : { removed : writeResult.n }
-                    });
-    
-                    return;
-                } else {
-                    //Failed to delete property
-                    console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Property', '_id', property._id)}`);
-                    res.status(401).json({ 
-                        status : "error", 
-                        codeno : 464,
-                        msg : getMessage('error', 464, null, false, 'Property', '_id', property._id),
-                        data : null
-                    });
-    
-                    return;
-                }
-            } else {
-                //Failed to delete property type data
-                res.status(401).json({ 
-                    status : "error", 
-                    codeno : 464,
-                    msg : getMessage('error', 464, null, false, propertyTypeDataModel, '_id', propertyTypeDataId),
-                    data : null
-                });
-
-                return;
-            }
-            
-        }
-    } else if (!property){
+    if (!property){
         //Nothing found for that ID
         console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Property')}`);
         res.status(401).json({ 
@@ -474,14 +415,97 @@ exports.delete = async (req, res) => {
 
         return;
     }
+    
+    //2 - check that the property was created by the user
+    creator = property.createdBy;
 
-    //3.2 - the user it is not the creator of the property
-    console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Property', req.user.email)}`);
-    res.status(401).json({ 
-        status : "error", 
-        codeno : 462,
-        msg : getMessage('error', 462, null, false, 'Property', req.user.email),
-        data : { creator }
+    if (creator.email !== user.email) {
+        //3.2 - the user it is not the creator of the property
+        console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Property', req.user.email)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 462,
+            msg : getMessage('error', 462, null, false, 'Property', req.user.email),
+            data : { creator }
+        });
+
+        return
+    }
+
+    //get my property investments to see if I have an investment in this property. If true then we cannot delete the property
+    const propertyIds = await getPropertyIdsInInvestments(user.email);
+    for (let propertyId of propertyIds) {
+        if (property._id.equals(propertyId)) {
+            console.log(`${methodTrace} ${getMessage('error', 475, user.email, true, 'Property', 'Investments')}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 475,
+                msg : getMessage('error', 475, null, false, 'Property', 'Investments'),
+                data : null
+            });
+    
+            return;
+        }
+    }
+
+    //3.1 - The property belongs to the user, we proceed to delete
+    let propertyUsersRemoved = await propertyUserController.deleteAllForProperty(property._id, user.email);
+    if (!propertyUsersRemoved) {
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 459,
+            msg : getMessage('error', 464, user.email, true, 'PropertyUser', 'property', property._id),
+            data : null
+        });
+
+        return;
+    }
+
+    let writeResult = null;
+    let propertyTypeDataId = null;
+    let propertyTypeDataModel = null;
+    if (property.propertyType === PROPERTY_TYPES.HOUSE) {
+        propertyTypeDataModel = PROPERTY_TYPES.HOUSE;
+        propertyTypeDataId = property.propertyTypeData._id;
+        writeResult = await deletePropertyTypeData(propertyTypeDataModel, propertyTypeDataId, user.email);
+    }
+    
+    if (!(writeResult && writeResult.n > 0)) {
+        //Failed to delete property type data
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 464,
+            msg : getMessage('error', 464, null, false, propertyTypeDataModel, '_id', propertyTypeDataId),
+            data : null
+        });
+
+        return;
+    }
+        
+    writeResult = null;
+    console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Property', '_id', property._id)}`);
+
+    writeResult = await Property.remove({ _id : property._id });
+    if (!(writeResult && writeResult.n > 0)) {
+        //Failed to delete property
+        console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Property', '_id', property._id)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 464,
+            msg : getMessage('error', 464, null, false, 'Property', '_id', property._id),
+            data : null
+        });
+
+        return;
+    }
+    
+    //Success deleting property
+    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Property')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1039, null, false, 'Property'),
+        data : { removed : writeResult.n }
     });
 };
 

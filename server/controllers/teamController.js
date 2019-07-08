@@ -238,11 +238,11 @@ exports.update = async (req, res, next) => {
     for (let oldMember of team.members) {
         memberState[oldMember.email] = req.body.members.includes(oldMember.email) ? 'keep' : 'remove';
         if (memberState[oldMember.email] === 'remove' && oldMember.isAdmin) {
-            console.log(`${methodTrace} ${getMessage('error', 463, user.email, true)}`);
+            console.log(`${methodTrace} ${getMessage('error', 463, user.email, true, 'Team')}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 463,
-                msg : getMessage('error', 463, null, false),
+                msg : getMessage('error', 463, null, false, 'Team'),
                 data : null
             });
     

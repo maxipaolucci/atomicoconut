@@ -41,6 +41,10 @@ const userSchema = new Schema({
   teamUsers : [{
     type : mongoose.Schema.ObjectId,
     ref : 'TeamUser'
+  }],
+  propertyUsers : [{
+    type : mongoose.Schema.ObjectId,
+    ref : 'PropertyUser'
   }]
 });
 

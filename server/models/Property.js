@@ -177,7 +177,11 @@ const propertySchema = new mongoose.Schema({
     type: String,
     default : null,
     trim: true
-  }
+  },
+  propertyUsers : [{
+    type : mongoose.Schema.ObjectId,
+    ref : 'PropertyUser'
+  }]
 });
 
 module.exports = mongoose.model('Property', propertySchema);

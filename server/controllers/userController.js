@@ -248,3 +248,36 @@ exports.updateAccountFinancialInfo = async (req, res) => {
         data : await getUserObject(user.email, { financialInfo: 'true' })
     });
 };
+
+/**
+ * Returns all the users with the provided ids
+ * 
+ * @param {Array<id>} userIds . The ids of the users to retrieve
+ * @return {Cursor} . A mongoDB Cursor of User documents.
+ */
+exports.getUsersByIds = async(userIds) => {
+    const methodTrace = `${errorTrace} getUsersByIds() >`;
+
+    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, 'User(s)', `ids in: ${userIds}`)}`);
+    const usersCursor = await User.find({ _id : { $in: userIds } });
+    const records = usersCursor.size();
+    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, records, 'User(s)')}`);
+
+    return usersCursor;
+} 
+/**
+ * Returns all the users with the provided emails
+ * 
+ * @param {array<string>} emails . The emails of the users to retrieve
+ * @return {Cursor} . A mongoDB Cursor of User documents.
+ */
+exports.getUsersByEmails = async(emails) => {
+    const methodTrace = `${errorTrace} getUsersByEmails() >`;
+
+    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, 'User(s)', `emails in: ${emails}`)}`);
+    const usersCursor = await User.find({ email : { $in: emails } });
+    const records = usersCursor.size();
+    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, records, 'User(s)')}`);
+
+    return usersCursor;
+} 

@@ -1,0 +1,9 @@
+extends email-layout
+
+block content
+  h2 Join AtomiCoconut!!!
+  p Hello. You have been invited by #{adminName} to join AtomiCocount investment platform. Please click the following button to create your user account and become a member.
+  +button(registerURL, 'Go to AtomiCoconut →')
+  p If you can't click the above button please visit #{registerURL}
+  br
+  p If you are not interested, please ignore it.
