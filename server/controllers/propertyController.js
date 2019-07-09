@@ -219,49 +219,17 @@ exports.update = async (req, res, next) => {
         propertyTypeDataId : true
     });
 
-    if (!property) {
-        //no record found with that id
-        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, 'Property')}`);
+    const hasPropertyAccess = await checkUserCanViewEditProperty(property, user);
+    if (!hasPropertyAccess.status) {
         res.status(401).json({ 
             status : "error", 
-            codeno : 461,
-            msg : getMessage('error', 461, null, false, 'Property'),
+            codeno : hasPropertyAccess.codeno,
+            msg : hasPropertyAccess.msg,
             data : null
         });
 
         return;
     }
-
-    //check the property was created by the user or part of an investment of the user
-    let found = false;
-    
-    if (property.createdBy.email === user.email) {
-        found = true;
-    } else {
-        //get my property investments to see if I have an investment in this property
-        const propertyIds = await getPropertyIdsInInvestments(user.email);
-    
-        for (let propertyId of propertyIds) {
-            if (property._id.equals(propertyId)) {
-                found = true;
-                break;
-            }
-        }
-    }
-
-    if (!found) {
-        //the client is not an owner  of the property requested
-        console.log(`${methodTrace} ${getMessage('error', 470, user.email, true, 'Property')}`);
-        res.status(401).json({ 
-            status : "error", 
-            codeno : 470,
-            msg : getMessage('error', 470, null, false, 'Property'),
-            data : null
-        });
-
-        return;
-    }
-    
 
     //fields to update
     const originalProperty = property; //we save the "beautified" version of property to easily access data
@@ -382,14 +350,69 @@ exports.update = async (req, res, next) => {
     }
     console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, property.propertyType)}`);
 
+    const propertyUsersUpdateResult = await(propertyUserController.updatePropertyUsers());
+
     //success
     console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Property')}`);
     res.json({
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1042, null, false, 'Property'),
-        data : { type : property.propertyType, id : property._id }
+        data : { type : property.propertyType, id : property._id, propertyUsersUpdateResult }
     });
+};
+
+/**
+ * Checks if the user is able to view or edit a property.
+ * @param {Property} property 
+ * @param {User} user 
+ * 
+ * @return {*} . Object with a status field telling if yes or no.
+ */
+const checkUserCanViewEditProperty = async(property, user) => {
+    if (!property) {
+        //no record found with that id
+        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, 'Property')}`);
+        return {
+            status : false,
+            codeno : 461,
+            msg : getMessage('error', 461, null, false, 'Property')
+        };
+    }
+
+    //check the property was created by the user or part of an investment of the user or is shared with the user
+    if (property.createdBy.email === user.email) {
+        return {
+            status : true
+        };
+    }
+
+    //get my property investments to see if I have an investment in this property
+    const propertyIds = await getPropertyIdsInInvestments(user.email);
+    for (let propertyId of propertyIds) {
+        if (property._id.equals(propertyId)) {
+            return {
+                status : true
+            };
+        }
+    } 
+    
+    //check that the property is shared with the user
+    const propertyUserCursor = await propertyUserController.getPropertyUsersByProperty(property._id, user.email);
+    propertyUserCursor.forEach(propertyUser => {
+        if (propertyUser.user == user._id) {
+            return {
+                status : true
+            };
+        }
+    });
+    
+    console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Property')}`);
+    return {
+        status : false,
+        codeno : 462,
+        msg : getMessage('error', 462, null, false, 'Property', user.email)
+    };
 };
 
 exports.delete = async (req, res) => {
@@ -545,56 +568,25 @@ exports.getById = async (req, res) => {
         propertyTypeDataId : false
     });
 
-    
-    //2 - check that the user is the creator of the property or he is investing in it
-    if (result) {
-        let found = false;
-
-        if (result.createdBy.email === req.user.email) {
-            found = true;
-        } else {
-            //get my property investments to see if I have an investment in this property
-            const propertyIds = await getPropertyIdsInInvestments(req.user.email);
-        
-            for (let propertyId of propertyIds) {
-                if (result._id.equals(propertyId)) {
-                    found = true;
-                    break;
-                }
-            }
-        }
-        
-        if (found) {
-            //3.1 - The user is member of the property, send it back to the client
-            res.json({
-                status : 'success', 
-                codeno : 200,
-                msg : getMessage('message', 1036, null, false, 1, 'Property(s)'),
-                data : result
-            });
-
-            return;
-        }
-    } else if (!result){
-        //Nothing found for that ID
-        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Property')}`);
+    //2 - check that the user can edit or view the property
+    const hasPropertyAccess = await checkUserCanViewEditProperty(result, req.user);
+    if (!hasPropertyAccess.status) {
         res.status(401).json({ 
             status : "error", 
-            codeno : 461,
-            msg : getMessage('error', 461, null, false, 'Property'),
+            codeno : hasPropertyAccess.codeno,
+            msg : hasPropertyAccess.msg,
             data : null
         });
 
         return;
     }
 
-    //3.2 - the user is not allow to receive information for the record requested
-    console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Property', req.user.email)}`);
-    res.status(401).json({ 
-        status : "error", 
-        codeno : 462,
-        msg : getMessage('error', 462, null, false, 'Property', req.user.email),
-        data : null
+    //3.1 - The user is member of the property, send it back to the client
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1036, null, false, 1, 'Property(s)'),
+        data : result
     });
 };
 
@@ -677,6 +669,11 @@ const aggregationStages = () => {
             }
         },
         { $lookup : { from : 'houses', localField : '_id', foreignField : 'parent', as : 'houseData' } }, //for houses
+        // { $unwind : '$propertyUsers' }
+        // ////////////////////////// hereeeeeeeeeeeee
+        // { $lookup : { from : 'propertyUsers', localField : '_id', foreignField : 'property', as : 'propertyUsersData' } }, //for propertyUsers
+        // { $lookup : { from : 'users', localField : '_id', foreignField : 'property', as : 'propertyUsersData' } }, //for propertyUsers
+
         {
             $project : {
                 __v : false,

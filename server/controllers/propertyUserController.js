@@ -6,8 +6,27 @@ const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
 const userController = require('../controllers/userController');
 
-const errorTrace = 'teamController >';
+const errorTrace = 'propertyUserController >';
 
+/**
+ * Get all the PropertyUser records for a specific property
+ * @param {Property} propertyId . The property id 
+ * @param {string} userEmail . The email of the current logged in user in the system performing this action
+ * 
+ * @return {Cursor<PropertyUser>} . A mongodb cursor of PropertyUser docs 
+ */
+const getPropertyUsersByProperty = async(propertyId, userEmail) => {
+    const methodTrace = `${errorTrace} getPropertyUsersByProperty() >`;
+
+    //Look for the specific PropertyUser
+    console.log(`${methodTrace} ${getMessage('message', 1037, userEmail, true, 'PropertyUser', `propertyID : ${propertyId}`)}`);
+    const propertyUserCursor = await PropertyUser.find({ property : propertyId });
+    const records = propertyUserCursor.size();
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'PropertyUser(s)')}`);
+    
+    return propertyUserCursor;
+};
+exports.getPropertyUsersByProperty = getPropertyUsersByProperty;
 
 
 /**
@@ -124,25 +143,6 @@ const deletePropertyUser = async (propertyId, userId, userEmail, force = false) 
 exports.deletePropertyUser = deletePropertyUser;
 
 /**
- * Get all the PropertyUser records for a specific property
- * @param {Property} propertyId . The property id 
- * @param {string} userEmail . The email of the current logged in user in the system performing this action
- * 
- * @return {Cursor<PropertyUser>} . A mongodb cursor of PropertyUser docs 
- */
-const getPropertyUsersByProperty = async(propertyId, userEmail) => {
-    const methodTrace = `${errorTrace} getPropertyUsersByProperty() >`;
-
-    //Look for the specific PropertyUser
-    console.log(`${methodTrace} ${getMessage('message', 1037, userEmail, true, 'PropertyUser', `propertyID : ${propertyId}`)}`);
-    const propertyUserCursor = await PropertyUser.find({ property : propertyId });
-    const records = propertyUserCursor.size();
-    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'PropertyUser(s)')}`);
-    
-    return propertyUserCursor;
-};
-
-/**
  * Deletes all propertyUser for the specified properties. Only prop owner must call this method.
  * @param {Property} propertyId . The Property id to remove all the propertyUsers links
  * @param {string} userEmail . The email of the current logged in user in the system performing this action
@@ -177,22 +177,30 @@ exports.updatePropertyUsers = async(property, emails, userEmail) => {
 
     //remove duplicates from emails array
     emails = [...new Set(emails)];
-    console.log(emails);
+    console.log('REMOVE emails (no duplicates): ', emails);
 
     //Look for the specific PropertyUser
     const propertyUserCursor = await getPropertyUsersByProperty(property._id, userEmail);
     if (!propertyUserCursor.size()) {
-        return true;
+        return [];
     }
     
     //get array users ids of propertyUser cursor
     const currentUserIds = propertyUserCursor.map(propertyUser => propertyUser.user);
-    console.log(currentUserIds);
+    console.log('REMOVE currentUserIds: ', currentUserIds);
     
+
+    let updatedList = []; //this is going to be the final result stored in db
     let usersState = {};
     let usersCursor = await userController.getUsersByIds(currentUserIds);
     usersCursor.forEach(user => {
-        usersState[user._id] = emails.includes(user.email) ? 'keep' : 'remove';
+        if (emails.includes(user.email)) {
+            usersState[user._id] = 'keep';
+            updatedList.push(user.email);
+        } else {
+            usersState[user._id] = 'remove';
+        }
+        
     });
     
     usersCursor = await userController.getUsersByEmails(emails);
@@ -200,8 +208,12 @@ exports.updatePropertyUsers = async(property, emails, userEmail) => {
     usersCursor.forEach(user => {
         usersState[user._id] = currentUserIds.includes(user._id) ? 'keep' : 'add';
         usersCursorEmails.push(user.email);  //this are the emails of users registered in atommiCoconut
+        updatedList.push[user.email];
     });
-    console.log(userState);
+    console.log('REMOVE userState: ', userState);
+    //remove duplicates if there is any
+    updatedList = [...new Set(updatedList)];
+    console.log('REMOVE updatedList: ', updatedList)
 
     //get the emails not registered in atomiCoconut yet
     let emailsNotRegistered = emails.filter(x => !usersCursorEmails.includes(x));
@@ -217,7 +229,6 @@ exports.updatePropertyUsers = async(property, emails, userEmail) => {
         });
     }
 
-    
     //iterate usersState object and perform the proper action
     for (userId of Object.keys(usersState)) {
         const state = usersState[userId];
@@ -234,5 +245,5 @@ exports.updatePropertyUsers = async(property, emails, userEmail) => {
         }
     }
 
-    return { emailsNotRegistered };
+    return { emailsNotRegistered, updatedList };
 };
