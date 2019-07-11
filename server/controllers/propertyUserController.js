@@ -19,7 +19,7 @@ const getPropertyUsersByProperty = async(propertyId, userEmail) => {
     const methodTrace = `${errorTrace} getPropertyUsersByProperty() >`;
 
     //Look for the specific PropertyUser
-    console.log(`${methodTrace} ${getMessage('message', 1037, userEmail, true, 'PropertyUser', `propertyID : ${propertyId}`)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, 'PropertyUser', `propertyID = ${propertyId}`)}`);
     const propertyUserCursor = await PropertyUser.find({ property : propertyId });
     const records = propertyUserCursor.size();
     console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'PropertyUser(s)')}`);
@@ -246,4 +246,28 @@ exports.updatePropertyUsers = async(property, emails, userEmail) => {
     }
 
     return { emailsNotRegistered, updatedList };
+};
+
+/**
+ * Returns an array of property ids with all the properties shared with the userId as param. Remember that when the user creates a
+ * a property is automatically registered in the propertyUsers table too.
+ * 
+ * @param {ObjectId} userId . The id of the user we want to filter properties
+ * @param {string} userEmail . The email of the current logged in user in the system performing this action
+ * 
+ * @return {array<ObjectId>} . The array of property ids
+ */
+exports.getPropertyIdsSharedWith = async(userId, userEmail) => {
+    const methodTrace = `${errorTrace} getPropertyIdsSharedWithMe() >`;
+
+    //Look for the PropertyUsers that matches the userId as param
+    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, 'PropertyUser', `userID = ${userId}`)}`);
+    let propertyUserCursor = await PropertyUser.find({ user : userId });
+    const records = propertyUserCursor.length;
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'PropertyUser(s)')}`);
+    
+    //generate array of property ids
+    let propertyIds = propertyUserCursor.map(propertyUser => propertyUser.property);
+
+    return propertyIds;
 };

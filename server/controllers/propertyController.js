@@ -7,6 +7,7 @@ const House = mongoose.model('House');
 const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
+const { removeDuplicatesFromObjectIdArray } = require('../handlers/utils');
 const { getPropertyIdsInInvestments } = require('./investmentController');
 const jimp = require('jimp'); //resize images
 const uuid = require('uuid'); //unique names for the images files
@@ -370,6 +371,8 @@ exports.update = async (req, res, next) => {
  * @return {*} . Object with a status field telling if yes or no.
  */
 const checkUserCanViewEditProperty = async(property, user) => {
+    const methodTrace = `${errorTrace} checkUserCanViewEditProperty() >`;
+
     if (!property) {
         //no record found with that id
         console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, 'Property')}`);
@@ -603,7 +606,7 @@ const getByIdObject = async (id, userEmail = null, options = null) => {
 
     const aggregationStagesArr = [{ $match : { _id : id } }].concat(aggregationStages());
     let results = await Property.aggregate(aggregationStagesArr);
-
+    
     //2 - Parse the recordset from DB and organize the info better.
     let result = await beautifyPropertiesFormat(results, options);
     
@@ -624,12 +627,18 @@ exports.getAllProperties = async (req, res) => {
 
     const user = req.user;
 
+    // get all the properties shared with me (My own props are by default shared with me too)
+    const propertyIdsSharedWithMe = await propertyUserController.getPropertyIdsSharedWith(user.id, user.email);
+    
     // Get all the properties from property investments where I am a member of if justUserProperties is true.
-    const propertyIds = req.query.justUserProperties === 'true' ? [] : await getPropertyIdsInInvestments(user.email);
-
+    const propertyIdsInMyInvestments = req.query.justUserProperties === 'true' ? [] : await getPropertyIdsInInvestments(user.email);
+    
+    // Merge the two arrays into one without duplicates
+    const propertyIds = removeDuplicatesFromObjectIdArray(propertyIdsSharedWithMe.concat(propertyIdsInMyInvestments));
+    
     // - Get all the properties where user is involved (created or has a part of an investment in the property)
     console.log(`${methodTrace} ${getMessage('message', 1034, user.email, true, 'all Properties', 'user', user.email)}`);
-    const aggregationStagesArr = [{ $match : { $or : [ { createdBy : user._id }, { _id : { $in : propertyIds } } ] } }].concat(aggregationStages(), { $sort : { "location.address" : 1 } });
+    const aggregationStagesArr = [{ $match : { _id : { $in : propertyIds } } }].concat(aggregationStages(), { $sort : { "location.address" : 1 } });
     let properties = await Property.aggregate(aggregationStagesArr);
 
     // - Parse the recordset from DB and organize the info better.
@@ -669,21 +678,28 @@ const aggregationStages = () => {
             }
         },
         { $lookup : { from : 'houses', localField : '_id', foreignField : 'parent', as : 'houseData' } }, //for houses
-        // { $unwind : '$propertyUsers' }
-        // ////////////////////////// hereeeeeeeeeeeee
-        // { $lookup : { from : 'propertyUsers', localField : '_id', foreignField : 'property', as : 'propertyUsersData' } }, //for propertyUsers
-        // { $lookup : { from : 'users', localField : '_id', foreignField : 'property', as : 'propertyUsersData' } }, //for propertyUsers
-
+        { $lookup : { from : 'properties', localField : '_id', foreignField : '_id', as : 'propertyData' } }, //we do this to be able to easily retrieve data after grouping
+        { $unwind : '$propertyUsers' },
+        { $lookup : { from : 'propertyusers', localField : 'propertyUsers', foreignField : '_id', as : 'propertyUsersData' } }, //for propertyUsers
+        { $lookup : { from : 'users', localField : 'propertyUsersData.user', foreignField : '_id', as : 'usersShareData' } }, 
         {
-            $project : {
-                __v : false,
-                creatorData : false,
-                updatorData : false,
-                houseData : { 
-                    __v : false
+            $addFields : {
+                sharedWith : { //replaces the exitent createdBy field with this
+                    name : '$usersShareData.name',
+                    email : '$usersShareData.email'
                 }
             }
-        }
+        }, //at this point we have multiple rows (unwind), all are the same except for the sharedWith field
+        { 
+            $group : { 
+                _id : "$_id",
+                createdBy: { $first: '$createdBy'}, 
+                updatedBy: { $first: '$updatedBy'}, 
+                houseData: { $first: '$houseData'}, 
+                propertyData: { $first: '$propertyData'}, 
+                sharedWith: { $push: "$sharedWith" }
+            } 
+        } //grouping back and putting different sharewith persons into an array
     ];
 };
 
@@ -696,8 +712,17 @@ const aggregationStages = () => {
  * @return {array} . The formatted result
  */
 const beautifyPropertiesFormat = async (properties, options = null) => {
-    let result = [];
+    let results = [];
     for (let property of properties) {
+        // shared with
+        property.sharedWith = property.sharedWith.map(person => {
+            return {
+                name: person.name[0],
+                email: person.email[0],
+                gravatar: 'https://gravatar.com/avatar/' + md5(person.email[0]) + '?s=200'
+            }
+        });
+
         //created by data
         property.createdBy.name = property.createdBy.name[0];
         property.createdBy.email = property.createdBy.email[0];
@@ -711,15 +736,23 @@ const beautifyPropertiesFormat = async (properties, options = null) => {
         //property type data
         if (property.houseData[0]) {
             property.propertyTypeData = property.houseData[0];
-            delete property['houseData'];
         }
 
         if (property.propertyTypeData && !(options && options.propertyTypeDataId)) {
             delete property.propertyTypeData['_id'];
         }
         
-        result.push(property);
+        let result = Object.assign(
+            {}, 
+            property.propertyData[0], 
+            { createdBy : property.createdBy }, 
+            { updatedBy : property.updatedBy }, 
+            { propertyTypeData : property.propertyTypeData },
+            { sharedWith: property.sharedWith }
+        );
+        delete result['__v'];
+        results.push(result);
     }
 
-    return result;
+    return results;
 };

@@ -63,8 +63,7 @@ If it is the first time we create the mongo db container we need to create the d
   >docker exec -ti [container id] sh
 - Initialize mongo command line:
   >mongo --port 27017 -u [mongo_adming_user] -p [mongo_admin_pass] --authenticationDatabase admin
-  >mongo --port 27017 -u admin -p mongo --authenticationDatabase admin
-
+  
 - Create a db user is required to connect and manage the db
   
   >use atomicoconut_dev   (this will create the db if it does not exist)

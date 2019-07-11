@@ -1,7 +1,7 @@
 version: '3'
 services:
   mongo:
-    image: mongo
+    image: mongo:3.6.13-xenial
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
@@ -27,6 +27,8 @@ services:
     environment:
       NODE_ENV: ${ENV}
       DATABASE: ${DATABASE}
+      DATABASE_TEST: ${DATABASE_TEST} # required to run data-handler.js against test env
+      DATABASE_PROD: ${DATABASE_PROD} # required to run data-handler.js against prod env
       MAIL_TRAP_USER: ${MAIL_TRAP_USER}
       MAIL_TRAP_PASS: ${MAIL_TRAP_PASS}
       MAIL_TRAP_HOST: ${MAIL_TRAP_HOST}

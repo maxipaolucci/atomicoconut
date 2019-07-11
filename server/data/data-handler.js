@@ -1,4 +1,4 @@
-require('dotenv').config({ path: __dirname + '/../variables.env' });
+// require('dotenv').config({ path: __dirname + '/../variables.env' });
 const fs = require('fs');
 const jsonfile = require('jsonfile');
 
@@ -11,11 +11,12 @@ if (!environment) {
   environment = 'dev';
 }
 
+console.log(`Environment: ${environment}`);
 const mongoose = require('mongoose');
 if (environment === 'dev'){
   mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
 } else {
-  mongoose.connect(process.env[`DATABASE_${environment.toUpperCase()}`, { useNewUrlParser: true }]);  
+  mongoose.connect(process.env[`DATABASE_${environment.toUpperCase()}`], { useNewUrlParser: true });  
 }
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 
@@ -31,6 +32,7 @@ const PropertyInvestment = require('../models/PropertyInvestment');
 const Property = require('../models/Property');
 const House = require('../models/House');
 const CurrencyRate = require('../models/CurrencyRate');
+const PropertyUser = require('../models/Property_User');
 
 
 async function deleteData() {
@@ -59,6 +61,8 @@ async function deleteData() {
     console.log(`House table is empty.`);
     await CurrencyRate.remove();
     console.log(`CurrencyRate table is empty.`);
+    await PropertyUser.remove();
+    console.log(`PropertyUser table is empty.`);
 
 
     console.log('\n\n👍👍👍👍👍👍👍👍 Done!. To load sample data, run\n\n\t npm run loadData [prod|test|dev]\n\n');
@@ -86,6 +90,7 @@ async function loadData(source = 'dev') {
     const properties = jsonfile.readFileSync(`${__dirname}/${source}/properties.json`);
     const houses = jsonfile.readFileSync(`${__dirname}/${source}/houses.json`);
     const currencyrates = jsonfile.readFileSync(`${__dirname}/${source}/currencyrates.json`);
+    const propertyusers = jsonfile.readFileSync(`${__dirname}/${source}/propertyusers.json`);
 
     if (users.length) {
       await User.insertMany(users);
@@ -139,7 +144,12 @@ async function loadData(source = 'dev') {
 
     if (currencyrates.length) {
       await CurrencyRate.insertMany(currencyrates);
-      console.log(`${currencyrates.length} Currencyrates loaded successfully.`);
+      console.log(`${currencyrates.length} CurrencyRates loaded successfully.`);
+    }
+
+    if (propertyusers.length) {
+      await PropertyUser.insertMany(propertyusers);
+      console.log(`${propertyusers.length} PropertyUsers loaded successfully.`);
     }
     
     console.log('\n\n👍👍👍👍👍👍👍👍 Done!');
@@ -198,6 +208,10 @@ async function dumpData() {
     const currencyrates = await CurrencyRate.find({}, { __v : false });
     jsonfile.writeFileSync(`${__dirname}/${environment}/currencyrates.json`, currencyrates);
     console.log(`${currencyrates.length} currencyrates exported to json successfully.`);
+    
+    const propertyusers = await PropertyUser.find({}, { __v : false });
+    jsonfile.writeFileSync(`${__dirname}/${environment}/propertyusers.json`, propertyusers);
+    console.log(`${propertyusers.length} propertyusers exported to json successfully.`);
 
     console.log(`\n\n👍👍👍👍👍👍👍👍 Done!. To load the data, run\n\n\t npm run loadData [prod|test|dev]\n\n`);
     process.exit();
