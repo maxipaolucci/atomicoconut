@@ -14,6 +14,7 @@ import { PropertySelectorDialogComponent } from './components/property-selector-
 import { CalculatorsModule } from '../calculators/calculators.module';
 import { HouseFiguresDialogComponent } from './components/house-figures-dialog/house-figures-dialog.component';
 import { PropertyYieldsDialogComponent } from './components/property-yields-dialog/property-yields-dialog.component';
+import { ShareWithDialogComponent } from './components/share-with-dialog/share-with-dialog.component';
 
 @NgModule({
   imports: [
@@ -32,13 +33,15 @@ import { PropertyYieldsDialogComponent } from './components/property-yields-dial
     PropertiesTableComponent, 
     PropertySelectorDialogComponent, 
     HouseFiguresDialogComponent, 
-    PropertyYieldsDialogComponent 
+    PropertyYieldsDialogComponent,
+    ShareWithDialogComponent
   ],
   providers: [ PropertiesService ],
   entryComponents: [
     PropertySelectorDialogComponent, // added as material doc suggest to allow AOT on this on the fly created class
     HouseFiguresDialogComponent,
-    PropertyYieldsDialogComponent
+    PropertyYieldsDialogComponent,
+    ShareWithDialogComponent
   ]
 })
 export class PropertiesModule { }

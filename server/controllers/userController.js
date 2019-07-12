@@ -253,15 +253,17 @@ exports.updateAccountFinancialInfo = async (req, res) => {
  * Returns all the users with the provided ids
  * 
  * @param {Array<id>} userIds . The ids of the users to retrieve
+ * @param {string} userEmail . The email of the logged in user performing this action.
+ * 
  * @return {Cursor} . A mongoDB Cursor of User documents.
  */
-exports.getUsersByIds = async(userIds) => {
+exports.getUsersByIds = async(userIds, userEmail) => {
     const methodTrace = `${errorTrace} getUsersByIds() >`;
 
     console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, 'User(s)', `ids in: ${userIds}`)}`);
     const usersCursor = await User.find({ _id : { $in: userIds } });
-    const records = usersCursor.size();
-    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, records, 'User(s)')}`);
+    const records = usersCursor.length;
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'User(s)')}`);
 
     return usersCursor;
 } 
@@ -269,15 +271,17 @@ exports.getUsersByIds = async(userIds) => {
  * Returns all the users with the provided emails
  * 
  * @param {array<string>} emails . The emails of the users to retrieve
+ * @param {string} userEmail . The email of the logged in user performing this action.
+ * 
  * @return {Cursor} . A mongoDB Cursor of User documents.
  */
-exports.getUsersByEmails = async(emails) => {
+exports.getUsersByEmails = async(emails, userEmail) => {
     const methodTrace = `${errorTrace} getUsersByEmails() >`;
 
     console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, 'User(s)', `emails in: ${emails}`)}`);
     const usersCursor = await User.find({ email : { $in: emails } });
-    const records = usersCursor.size();
-    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, records, 'User(s)')}`);
+    const records = usersCursor.length;
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'User(s)')}`);
 
     return usersCursor;
 } 

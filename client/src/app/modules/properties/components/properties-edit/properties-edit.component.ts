@@ -15,6 +15,7 @@ import { HouseFiguresDialogComponent } from '../house-figures-dialog/house-figur
 import { PropertyYieldsDialogComponent } from '../property-yields-dialog/property-yields-dialog.component';
 import { map, combineLatest, flatMap } from 'rxjs/operators';
 import { FilesUploaderChange } from '../../../../modules/shared/components/files-uploader/models/filesUploaderChange';
+import { ShareWithDialogComponent } from '../share-with-dialog/share-with-dialog.component';
 
 @Component({
   selector: 'properties-edit',
@@ -78,7 +79,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     photos : [],
     unit: null,
     status: null,
-    statusDetail: null
+    statusDetail: null,
+    sharedWith: []
   };
 
   modelHouseFiguresResults: any = {
@@ -108,7 +110,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     // generates a user source object from authUser from resolver
     const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
 
-    // generates an property id source from id parameter in url
+    // generates a property id source from id parameter in url
     const id$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('id')));
 
     // combine user$ and id$ sources into one object and start listen to it for changes
@@ -297,11 +299,48 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.editPropertyServiceRunning = true;
 
     this.model.updatedOn = new Date(Date.now());
-    // call the investment create service
+
+    this.model.sharedWith = []; // reset the sharedWith array
+    for (const member of this.property.sharedWith) {
+      this.model.sharedWith.push(member.email);
+    }
+
+    // call the property update service
     const newSubscription = this.propertiesService.update$(this.generateFormData()).subscribe(
       (data: any) => {
         if (data && data.id && data.type) {
-          this.appService.showResults(`Property successfully updated!`, 'success');
+          const messages: any[] = [
+            {
+              message : `Property successfully updated!`,
+              type : 'success'
+            }
+          ];
+
+          if (data.propertyUsersUpdateResult && data.propertyUsersUpdateResult.emailsNotRegistered.length) {
+            // handle not registered users
+            const message = {
+              message : `The following emails added to the team are not registered users in AtomiCoconut: `,
+              duration : 8000
+            };
+            
+            for (const email of data.propertyUsersUpdateResult.emailsNotRegistered) {
+              message.message += `"${email}", `;
+            }
+
+            message.message = message.message.slice(0, -2); // remove last comma char
+            message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
+
+            messages.push(message);
+          }
+
+          if (data.propertyUsersUpdateResult && data.propertyUsersUpdateResult.updatedList) {
+            this.property.sharedWith = [];
+            for (const member of data.propertyUsersUpdateResult.updatedList) {
+              this.property.sharedWith.push(new User(member.name, member.email, member.gravatar));
+            }
+          }
+
+          this.appService.showManyResults(messages);
         } else {
           this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
@@ -326,15 +365,12 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
    */
   generateFormData(): FormData {
     const files = this.model.photos;
-    
     const fd = obj2fd(this.model);
     // add the files to the files property (expected in the backend by multer plugin (app.js))
     for (const file of this.propertyPhotos) {
       fd.append('files', file, file.name);
     }
 
-    
-    
     return fd;
   }
 
@@ -400,6 +436,28 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     });
     this.subscription.add(newSubscription);
     
+    return false;
+  }
+
+  removeShareWith(index: number) {
+    this.property.sharedWith.splice(index, 1);
+  }
+
+  openShareWithDialog() {
+    const shareWithDialogRef = this.dialog.open(ShareWithDialogComponent, {
+      width: '250px',
+      data: {}
+    });
+
+    const newSubscription = shareWithDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const newMember = new User('', result);
+        this.property.sharedWith.push(newMember);
+      }
+    });
+
+    this.subscription.add(newSubscription);
+
     return false;
   }
 }

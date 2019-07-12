@@ -1,5 +1,46 @@
 @import '../../../../../variables';
 
+.members .member {
+  margin-bottom: 10px;
+  padding: 14px;
+  border-radius: 50px;
+  cursor: default;
+
+  .member__avatar {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+
+  .member__info {
+    
+    .icon__admin {
+      font-size: 14px;
+      height: auto;
+      width: auto;
+    }
+
+    .member__email {
+      font-size: 11px;
+    }
+  }
+
+    
+  .icon__remove-member {
+    font-size: 16px;
+    height: auto;
+    width: auto;
+    cursor: pointer;
+  }
+
+  &.not-saved-yet {
+    
+    .member__avatar--default {
+      font-size: 40px;
+      color : $warn;
+    }
+  }
+}
 
 .progress-bar--get-property, 
 .progress-bar--open-dialog {

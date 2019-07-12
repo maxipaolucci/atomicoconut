@@ -39,6 +39,7 @@ export class Property {
   unit: string;
   status: string;
   statusDetail: string;
+  sharedWith: User[];
 
   constructor(
       id: string = null,
@@ -76,7 +77,8 @@ export class Property {
       photos: String[] = [],
       unit: string = null,
       status: string = null,
-      statusDetail: string = null) {
+      statusDetail: string = null,
+      sharedWith: User[] = null) {
     
     this.id = id;
     this.type = type;
@@ -114,5 +116,6 @@ export class Property {
     this.unit = unit;
     this.status = status;
     this.statusDetail = statusDetail;
+    this.sharedWith = sharedWith;
   }
 }

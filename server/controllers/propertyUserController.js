@@ -5,6 +5,7 @@ const PropertyUser = mongoose.model('PropertyUser');
 const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
 const userController = require('../controllers/userController');
+const md5 = require('md5');
 
 const errorTrace = 'propertyUserController >';
 
@@ -21,7 +22,7 @@ const getPropertyUsersByProperty = async(propertyId, userEmail) => {
     //Look for the specific PropertyUser
     console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, 'PropertyUser', `propertyID = ${propertyId}`)}`);
     const propertyUserCursor = await PropertyUser.find({ property : propertyId });
-    const records = propertyUserCursor.size();
+    const records = propertyUserCursor.length;
     console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'PropertyUser(s)')}`);
     
     return propertyUserCursor;
@@ -38,14 +39,6 @@ exports.getPropertyUsersByProperty = getPropertyUsersByProperty;
  */
 const addPropertyUser = async (propertyId, userId, userEmail, isAdmin = false) => {
     const methodTrace = `${errorTrace} addPropertyUser() >`;
-
-    //Check for a propertyUser that matches the team and property provided
-    // let propertyUser = await TeamUser.findOne({user : property._id, team : team._id});
-    // if (propertyUser) {
-    //     //if one is found means that the property to add already belong to the Team, return
-    //     console.log(`${methodTrace} ${getMessage('error', 466, userEmail, true, member.email, team.name)}`);
-    //     return false;
-    // }
 
     //Add a new record in PropertyUser with the user and property provided
     console.log(`${methodTrace} ${getMessage('message', 1031, userEmail, true, 'PropertyUser')}`);
@@ -100,7 +93,7 @@ const deletePropertyUser = async (propertyId, userId, userEmail, force = false) 
     console.log(`${methodTrace} ${getMessage('message', 1037, userEmail, true, 'PropertyUser', `with propertyID : ${propertyId} and userID : ${userId}`)}`);
     const propertyUser = await PropertyUser.findOne({ property : propertyId, user : userId });
     if (!propertyUser) {
-        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, 'TeamUser')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, 'PropertyUser')}`);
         return false;
     }
     console.log(`${methodTrace} ${getMessage('message', 1035, userEmail, true, 'PropertyUser')}`);
@@ -124,7 +117,7 @@ const deletePropertyUser = async (propertyId, userId, userEmail, force = false) 
     console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, 'Property', '_id', propertyId)}`);
     property = await Property.findByIdAndUpdate(
         { _id : propertyUser.property },
-        { $pull : { tpropertyUsers : propertyUser._id } },
+        { $pull : { propertyUsers : propertyUser._id } },
         { new : true }
     );
     console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, 'Property')}`);
@@ -152,7 +145,7 @@ exports.deleteAllForProperty = async(propertyId, userEmail) => {
 
     //Look for the specific PropertyUser
     const propertyUserCursor = await getPropertyUsersByProperty(propertyId, userEmail);
-    if (!propertyUserCursor.size()) {
+    if (!propertyUserCursor.length) {
         return true;
     }
     
@@ -161,65 +154,69 @@ exports.deleteAllForProperty = async(propertyId, userEmail) => {
         await deletePropertyUser(propertyUser.property, propertyUser.user, userEmail, true);
     });
 
-    console.log(`${methodTrace} ${getMessage('message', 1050, userEmail, true, writeResult.n,'PropertyUser')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1050, userEmail, true, propertyUserCursor.length, 'PropertyUser')}`);
     return true;
 };
 
 /**
- * @param {Property} property . The Property to update the propertyUsers links
+ * @param {Property} propertyId . The Property to update the propertyUsers links
  * @param {array<string>} emails . The array of emails comming from the update action. 
  * @param {string} userEmail . The email of the logged in user performing this action.
- * 
+ * @param {string} hostname . The host in the url
  * @return {array<string>} . A list with the emails not registered in the platform
  */
-exports.updatePropertyUsers = async(property, emails, userEmail) => {
+exports.updatePropertyUsers = async(propertyId, emails, userEmail, hostname) => {
     const methodTrace = `${errorTrace} updatePropertyUsers() >`;
 
     //remove duplicates from emails array
     emails = [...new Set(emails)];
-    console.log('REMOVE emails (no duplicates): ', emails);
 
     //Look for the specific PropertyUser
-    const propertyUserCursor = await getPropertyUsersByProperty(property._id, userEmail);
-    if (!propertyUserCursor.size()) {
+    const propertyUserCursor = await getPropertyUsersByProperty(propertyId, userEmail);
+    if (!propertyUserCursor.length) {
         return [];
     }
     
     //get array users ids of propertyUser cursor
     const currentUserIds = propertyUserCursor.map(propertyUser => propertyUser.user);
-    console.log('REMOVE currentUserIds: ', currentUserIds);
     
-
-    let updatedList = []; //this is going to be the final result stored in db
+    let updatedList = {}; //this is going to be the final result stored in db
     let usersState = {};
-    let usersCursor = await userController.getUsersByIds(currentUserIds);
+    let usersCursor = await userController.getUsersByIds(currentUserIds, userEmail);
     usersCursor.forEach(user => {
         if (emails.includes(user.email)) {
             usersState[user._id] = 'keep';
-            updatedList.push(user.email);
+            updatedList[user.email] = {
+                name : user.name,
+                email : user.email,
+                gravatar : 'https://gravatar.com/avatar/' + md5(user.email) + '?s=200'
+            };
         } else {
             usersState[user._id] = 'remove';
         }
         
     });
     
-    usersCursor = await userController.getUsersByEmails(emails);
-    usersCursorEmails = [];
+    const currentUserIdsAsStr = currentUserIds.map(id => `${id}`); //convert to array of strings to be able to use include method
+    usersCursor = await userController.getUsersByEmails(emails, userEmail);
+    let usersCursorEmails = [];
     usersCursor.forEach(user => {
-        usersState[user._id] = currentUserIds.includes(user._id) ? 'keep' : 'add';
+        usersState[user._id] = currentUserIdsAsStr.includes(`${user._id}`) ? 'keep' : 'add';
         usersCursorEmails.push(user.email);  //this are the emails of users registered in atommiCoconut
-        updatedList.push[user.email];
+        updatedList[user.email] = {
+            name : user.name,
+            email : user.email,
+            gravatar : 'https://gravatar.com/avatar/' + md5(user.email) + '?s=200'
+        };
     });
-    console.log('REMOVE userState: ', userState);
-    //remove duplicates if there is any
-    updatedList = [...new Set(updatedList)];
-    console.log('REMOVE updatedList: ', updatedList)
-
+    
+    updatedList = Object.values(updatedList); // convert into array
+    
     //get the emails not registered in atomiCoconut yet
     let emailsNotRegistered = emails.filter(x => !usersCursorEmails.includes(x));
     for (const email of emailsNotRegistered) {
-        console.log(`${methodTrace} ${getMessage('message', 1040, user.email, true, email)}`);
-        const registerURL = `http://${req.headers.host}/app/users/register`;
+        console.log(`${methodTrace} ${getMessage('message', 1040, userEmail, true, email)}`);
+        const registerURL = `http://${hostname}/app/users/register`;
         mail.send({
             toEmail : email,
             subject : `AtomiCoconut - Join the investment platform`,
@@ -237,10 +234,10 @@ exports.updatePropertyUsers = async(property, emails, userEmail) => {
             // const member = await User.findOne({ email : memberEmail});
             
             if (state === 'add') {
-                await addPropertyUser(property._id, userId, userEmail, false);
+                await addPropertyUser(propertyId, userId, userEmail, false);
             } else {
                 //removes record
-                await deletePropertyUser(property._id, userId, userEmail, false);
+                await deletePropertyUser(propertyId, userId, userEmail, false);
             }
         }
     }

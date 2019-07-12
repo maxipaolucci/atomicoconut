@@ -121,7 +121,8 @@ exports.create = async (req, res, next) => {
         photos : req.body.photos,
         unit : req.body.unit,
         status : req.body.status,
-        statusDetail : req.body.statusDetail
+        statusDetail : req.body.statusDetail,
+        propertyUsers : []
     })).save();
 
     if (!property) {
@@ -235,7 +236,7 @@ exports.update = async (req, res, next) => {
     //fields to update
     const originalProperty = property; //we save the "beautified" version of property to easily access data
     const location = { address : req.body.address.description, coordinates : [req.body.address.longitude, req.body.address.latitude], mapsPlaceId : req.body.address.mapsPlaceId };
-    const propertyUsers = req.body.propertyUsers; //array of emails
+    const sharedWithEmails = req.body.sharedWith; //array of emails
 
     const updates = {
         updatedBy: user._id,
@@ -351,7 +352,11 @@ exports.update = async (req, res, next) => {
     }
     console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, property.propertyType)}`);
 
-    const propertyUsersUpdateResult = await(propertyUserController.updatePropertyUsers());
+    // if user is the admin of the property then update property_users, this are the users sharing this property
+    let propertyUsersUpdateResult = null;
+    if (user.email == originalProperty.createdBy.email) {
+        propertyUsersUpdateResult = await(propertyUserController.updatePropertyUsers(originalProperty._id, sharedWithEmails, user.email, req.headers.host));
+    }
 
     //success
     console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Property')}`);
@@ -402,19 +407,25 @@ const checkUserCanViewEditProperty = async(property, user) => {
     
     //check that the property is shared with the user
     const propertyUserCursor = await propertyUserController.getPropertyUsersByProperty(property._id, user.email);
+    let sharedUser = false;
     propertyUserCursor.forEach(propertyUser => {
-        if (propertyUser.user == user._id) {
-            return {
-                status : true
-            };
+        if (propertyUser.user.equals(user._id)) {
+            sharedUser = true;
+            return;
         }
     });
-    
-    console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Property')}`);
+
+    if (!sharedUser) {
+        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Property', user.email)}`);
+        return {
+            status : false,
+            codeno : 462,
+            msg : getMessage('error', 462, null, false, 'Property', user.email)
+        };
+    }
+
     return {
-        status : false,
-        codeno : 462,
-        msg : getMessage('error', 462, null, false, 'Property', user.email)
+        status : true
     };
 };
 
@@ -689,9 +700,9 @@ const aggregationStages = () => {
                     email : '$usersShareData.email'
                 }
             }
-        }, //at this point we have multiple rows (unwind), all are the same except for the sharedWith field
+        },
         { 
-            $group : { 
+            $group : { //at this point we have multiple rows (unwind), all are the same except for the sharedWith field
                 _id : "$_id",
                 createdBy: { $first: '$createdBy'}, 
                 updatedBy: { $first: '$updatedBy'}, 
@@ -717,9 +728,9 @@ const beautifyPropertiesFormat = async (properties, options = null) => {
         // shared with
         property.sharedWith = property.sharedWith.map(person => {
             return {
-                name: person.name[0],
-                email: person.email[0],
-                gravatar: 'https://gravatar.com/avatar/' + md5(person.email[0]) + '?s=200'
+                name : person.name[0],
+                email : person.email[0],
+                gravatar : 'https://gravatar.com/avatar/' + md5(person.email[0]) + '?s=200'
             }
         });
 
