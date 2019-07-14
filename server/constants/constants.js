@@ -9,3 +9,5 @@ exports.PROPERTY_TYPES = {
 };
 
 exports.ANONYMOUS_USER = 'Anonymous User';
+
+exports.PUSHER_CHANNEL = 'pusher-events-channel'

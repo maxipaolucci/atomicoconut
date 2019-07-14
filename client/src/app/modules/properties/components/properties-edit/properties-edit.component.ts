@@ -107,6 +107,11 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       { displayName: 'Properties', url: '/properties', selected: false }
     ]);
 
+    //start listening to Pusher notification channel
+    this.appService.pusherChannel.bind('update-property', data => {
+      console.log(data);
+    });
+
     // generates a user source object from authUser from resolver
     const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
 
@@ -304,6 +309,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     for (const member of this.property.sharedWith) {
       this.model.sharedWith.push(member.email);
     }
+
+    this.model.pusherSocketID = this.appService.pusherSocketID; //to prevent receiving notification of actions we executed
 
     // call the property update service
     const newSubscription = this.propertiesService.update$(this.generateFormData()).subscribe(

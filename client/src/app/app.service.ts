@@ -5,11 +5,29 @@ import { SnackbarSimpleComponent } from './modules/shared/components/snackbar-si
 import { Response } from './models/response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import Pusher from 'pusher-js';
 
 @Injectable()
 export class AppService {
 
-  constructor(public snackBar: MatSnackBar) {}
+  pusher: any;
+  pusherChannel: any;
+  pusherSocketID: any;
+
+  constructor(public snackBar: MatSnackBar) {
+    this.pusher = new Pusher(environment.pusher.key, {
+      cluster: environment.pusher.cluster,
+      encrypted: true
+    });
+    
+    this.pusher.connection.bind('connected', () => {
+      // we'll use this id to prevent the executor of the action to receive a notification
+      this.pusherSocketID = this.pusher.connection.socket_id;
+    });
+    
+    //start listening to the same channel where the server is emiting msgs
+    this.pusherChannel = this.pusher.subscribe(environment.pusher.channel);
+  }
 
   /**
    * Extract data from a server response
@@ -84,4 +102,6 @@ export class AppService {
       console[type](message, params);
     }
   }
+
+
 }

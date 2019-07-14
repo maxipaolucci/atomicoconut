@@ -1,13 +1,11 @@
-const { PROPERTY_TYPES } = require('../constants/constants');
+const { PROPERTY_TYPES, PUSHER_CHANNEL } = require('../constants/constants');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 const md5 = require('md5');
 const Property = mongoose.model('Property');
 const House = mongoose.model('House');
-const promisify = require('es6-promisify');
-const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
-const { removeDuplicatesFromObjectIdArray } = require('../handlers/utils');
+const { getPusher, removeDuplicatesFromObjectIdArray } = require('../handlers/utils');
 const { getPropertyIdsInInvestments } = require('./investmentController');
 const jimp = require('jimp'); //resize images
 const uuid = require('uuid'); //unique names for the images files
@@ -357,6 +355,12 @@ exports.update = async (req, res, next) => {
     if (user.email == originalProperty.createdBy.email) {
         propertyUsersUpdateResult = await(propertyUserController.updatePropertyUsers(originalProperty._id, sharedWithEmails, user.email, req.headers.host));
     }
+    
+    // send push notification to client
+    getPusher().trigger(PUSHER_CHANNEL, 'update-property', {
+        heyhey: 'testsssss hey hey',
+        propertyUsersUpdateResult
+    }, req.body.pusherSocketID);
 
     //success
     console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Property')}`);
