@@ -4,6 +4,11 @@ const Pusher = require("pusher");
 
 let pusher = null; 
 
+/**
+ * Returns and instance of Pusher object. This is use to send push notifications to the frontend
+ * 
+ * @return {Pusher}
+ */
 exports.getPusher = () => {
   if (pusher) {
     return pusher;

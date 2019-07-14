@@ -42,6 +42,12 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
+    //start listening to Pusher notifications
+    this.appService.pusherChannel.bind('property-deleted', data => {
+      console.log(data);
+      //remove row from table
+    });
+
     this.displayedColumns = ['unit','address'];
     if (this.showActions) {
       this.displayedColumns = this.displayedColumns.concat(['invest', 'delete']);

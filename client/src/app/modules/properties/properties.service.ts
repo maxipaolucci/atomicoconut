@@ -169,8 +169,9 @@ export class PropertiesService {
       return Observable.throw(null);
     }
 
-    const params = new HttpParams().set('email', email);
-
+    const params = new HttpParams().set('email', email)
+        .set('pusherSocketID', this.appService.pusherSocketID);
+    
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } ).pipe(
       map(this.appService.extractData),
       catchError(this.appService.handleError)

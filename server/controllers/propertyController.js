@@ -357,8 +357,8 @@ exports.update = async (req, res, next) => {
     }
     
     // send push notification to client
-    getPusher().trigger(PUSHER_CHANNEL, 'update-property', {
-        heyhey: 'testsssss hey hey',
+    getPusher().trigger(PUSHER_CHANNEL, 'property-updated', {
+        property,
         propertyUsersUpdateResult
     }, req.body.pusherSocketID);
 
@@ -540,6 +540,13 @@ exports.delete = async (req, res) => {
         return;
     }
     
+    // send push notification to client
+    getPusher().trigger(PUSHER_CHANNEL, 'property-deleted', {
+        email: user.email,
+        address: property.location.address,
+        unit: property.unit
+    }, req.query.pusherSocketID);
+
     //Success deleting property
     console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Property')}`);
     res.json({

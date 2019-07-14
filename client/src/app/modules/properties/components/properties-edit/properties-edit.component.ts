@@ -107,10 +107,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       { displayName: 'Properties', url: '/properties', selected: false }
     ]);
 
-    //start listening to Pusher notification channel
-    this.appService.pusherChannel.bind('update-property', data => {
-      console.log(data);
-    });
+    //start listening to Pusher notifications related to this component
+    this.bindToPushNotificationEvents();
 
     // generates a user source object from authUser from resolver
     const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
@@ -185,8 +183,31 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Start listening to Pusher notifications comming from server
+   */
+  bindToPushNotificationEvents() {
+    this.appService.pusherChannel.bind('property-updated', data => {
+      //console.log(data);
+    });
+
+    this.appService.pusherChannel.bind('property-deleted', data => {
+      const unit = data.unit && data.unit != 'null' + '/' ? data.unit : '';
+      this.appService.showResults(`Sorry, property ${unit}${data.address} was just delete by its admin ${data.email}.`, 'info', 20000);
+      this.router.navigate(['/properties']);
+    });
+  }
+
+  /**
+   * Stop listening to Pusher notifications comming from server
+   */
+  unbindToPushNotificationEvents() {
+    this.appService.pusherChannel.unbind('property-deleted');
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.unbindToPushNotificationEvents();
   }
 
   /**
@@ -310,7 +331,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       this.model.sharedWith.push(member.email);
     }
 
-    this.model.pusherSocketID = this.appService.pusherSocketID; //to prevent receiving notification of actions we executed
+    //to prevent receiving notification of actions performed by current user
+    this.model.pusherSocketID = this.appService.pusherSocketID;
 
     // call the property update service
     const newSubscription = this.propertiesService.update$(this.generateFormData()).subscribe(
