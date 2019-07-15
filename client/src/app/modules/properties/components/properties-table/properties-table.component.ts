@@ -42,11 +42,8 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
-    //start listening to Pusher notifications
-    this.appService.pusherChannel.bind('property-deleted', data => {
-      console.log(data);
-      //remove row from table
-    });
+    //start listening to Pusher notifications related to this component
+    this.bindToPushNotificationEvents();
 
     this.displayedColumns = ['unit','address'];
     if (this.showActions) {
@@ -83,7 +80,6 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
         return data.unit;
       }
 
-
       return 1;
     };
   }
@@ -92,11 +88,42 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     this.propertiesDataSource.sort = this.propertiesSort;
   }
 
+  /**
+   * Start listening to Pusher notifications comming from server
+   */
+  bindToPushNotificationEvents() {
+    this.appService.pusherChannel.bind('property-deleted', data => {
+      let propertyIndex = 0;
+      for (const property of this.properties) {
+        if (property.id == data.id) {
+          const unit = data.unit && data.unit != 'null' + '/' ? data.unit : '';
+          this.appService.showResults(`The property ${unit}${data.address} was just delete by its admin ${data.email}.`, 'info', 8000);
+          break;
+        }
+
+        propertyIndex += 1;
+      }
+
+      if (propertyIndex < this.properties.length) {
+        this.properties.splice(propertyIndex, 1);
+        this.propertiesDataSource.data = this.properties;
+      }
+    });
+  }
+
+  /**
+   * Stop listening to Pusher notifications comming from server
+   */
+  unbindToPushNotificationEvents() {
+    this.appService.pusherChannel.unbind('property-deleted');
+  }
+
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
     // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
+    this.unbindToPushNotificationEvents();
   }
 
   /**

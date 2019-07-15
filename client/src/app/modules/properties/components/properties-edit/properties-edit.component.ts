@@ -188,13 +188,17 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
    */
   bindToPushNotificationEvents() {
     this.appService.pusherChannel.bind('property-updated', data => {
-      //console.log(data);
+      if (this.property.id == data.id) {
+        this.appService.showResults(`This property was just update by ${data.email}`, 'info');
+      }
     });
 
     this.appService.pusherChannel.bind('property-deleted', data => {
-      const unit = data.unit && data.unit != 'null' + '/' ? data.unit : '';
-      this.appService.showResults(`Sorry, property ${unit}${data.address} was just delete by its admin ${data.email}.`, 'info', 20000);
-      this.router.navigate(['/properties']);
+      if (this.property.id == data.id) {
+        const unit = data.unit && data.unit != 'null' + '/' ? data.unit : '';
+        this.appService.showResults(`The property ${unit}${data.address} was just delete by its admin ${data.email}.`, 'info', 20000);
+        this.router.navigate(['/properties']);
+      }
     });
   }
 
@@ -203,6 +207,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
    */
   unbindToPushNotificationEvents() {
     this.appService.pusherChannel.unbind('property-deleted');
+    this.appService.pusherChannel.unbind('property-updated');
   }
 
   ngOnDestroy(): void {
