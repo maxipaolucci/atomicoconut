@@ -359,7 +359,8 @@ exports.update = async (req, res, next) => {
     // send push notification to client
     getPusher().trigger(PUSHER_CHANNEL, 'property-updated', {
         id: property._id,
-        email: user.email
+        email: user.email,
+        name: user.name,
     }, req.body.pusherSocketID);
 
     //success
@@ -543,6 +544,7 @@ exports.delete = async (req, res) => {
     // send push notification to client
     getPusher().trigger(PUSHER_CHANNEL, 'property-deleted', {
         email: user.email,
+        name: user.name,
         address: property.location.address,
         unit: property.unit,
         id: property._id

@@ -96,8 +96,6 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
       let propertyIndex = 0;
       for (const property of this.properties) {
         if (property.id == data.id) {
-          const unit = data.unit && data.unit != 'null' + '/' ? data.unit : '';
-          this.appService.showResults(`The property ${unit}${data.address} was just delete by its admin ${data.email}.`, 'info', 8000);
           break;
         }
 
@@ -107,6 +105,8 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
       if (propertyIndex < this.properties.length) {
         this.properties.splice(propertyIndex, 1);
         this.propertiesDataSource.data = this.properties;
+        const unit = data.unit && data.unit != 'null' + '/' ? data.unit : '';
+        this.appService.showResults(`The property ${unit}${data.address} was just delete by its admin ${data.name}.`, 'info', 8000);
       }
     });
   }

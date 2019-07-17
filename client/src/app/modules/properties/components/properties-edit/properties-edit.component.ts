@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, of, Observable } from 'rxjs';
-import obj2fd from 'obj2fd';
 import { User } from '../../../users/models/user';
 import { Property } from '../../models/property';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -9,7 +8,7 @@ import { PropertiesService } from '../../properties.service';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { PROPERTY_TYPES } from '../../../../constants';
 import { House } from '../../models/house';
-import { MatSelectChange, DateAdapter, NativeDateAdapter, MatAutocompleteSelectedEvent, MatDialog } from '@angular/material';
+import { MatSelectChange, DateAdapter, NativeDateAdapter, MatDialog } from '@angular/material';
 import { UtilService } from '../../../../util.service';
 import { HouseFiguresDialogComponent } from '../house-figures-dialog/house-figures-dialog.component';
 import { PropertyYieldsDialogComponent } from '../property-yields-dialog/property-yields-dialog.component';
@@ -189,14 +188,14 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   bindToPushNotificationEvents() {
     this.appService.pusherChannel.bind('property-updated', data => {
       if (this.property.id == data.id) {
-        this.appService.showResults(`This property was just update by ${data.email}`, 'info');
+        this.appService.showResults(`This property was just update by ${data.name}`, 'info');
       }
     });
 
     this.appService.pusherChannel.bind('property-deleted', data => {
       if (this.property.id == data.id) {
         const unit = data.unit && data.unit != 'null' + '/' ? data.unit : '';
-        this.appService.showResults(`The property ${unit}${data.address} was just delete by its admin ${data.email}.`, 'info', 20000);
+        this.appService.showResults(`The property ${unit}${data.address} was just delete by its admin ${data.name}.`, 'info', 20000);
         this.router.navigate(['/properties']);
       }
     });
@@ -336,11 +335,10 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       this.model.sharedWith.push(member.email);
     }
 
-    //to prevent receiving notification of actions performed by current user
-    this.model.pusherSocketID = this.appService.pusherSocketID;
-
+    this.model.propertyPhotos = this.propertyPhotos;
+    
     // call the property update service
-    const newSubscription = this.propertiesService.update$(this.generateFormData()).subscribe(
+    const newSubscription = this.propertiesService.update$(this.model).subscribe(
       (data: any) => {
         if (data && data.id && data.type) {
           const messages: any[] = [
@@ -392,20 +390,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     );
 
     this.subscription.add(newSubscription);
-  }
-
-  /**
-   * Generates a FormData object from the model to send it to the server on create or update. This is required because this form handkles files/photos
-   */
-  generateFormData(): FormData {
-    const files = this.model.photos;
-    const fd = obj2fd(this.model);
-    // add the files to the files property (expected in the backend by multer plugin (app.js))
-    for (const file of this.propertyPhotos) {
-      fd.append('files', file, file.name);
-    }
-
-    return fd;
   }
 
   onCurrencyUnitChange($event: MatSelectChange) {

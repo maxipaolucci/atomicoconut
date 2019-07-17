@@ -10,6 +10,7 @@ import { PROPERTY_TYPES } from '../../constants';
 import { House } from './models/house';
 import { Address } from './models/address';
 import { map, catchError, switchMap, flatMap } from 'rxjs/operators';
+import obj2fd from 'obj2fd';
 
 @Injectable()
 export class PropertiesService {
@@ -40,13 +41,31 @@ export class PropertiesService {
    * 
    * @return { Observable<Property> }
    */
-  update$(postData: any | FormData = {}): Observable<any> {
+  update$(postData: any = {}): Observable<any> {
     const methodTrace = `${this.constructor.name} > update() > `; // for debugging
     
+    //to prevent receiving notification of actions performed by current user
+    postData.pusherSocketID = this.appService.pusherSocketID;
+
+    postData = this.generateFormData(postData);
+
     return this.http.post<Response>(`${this.serverHost}/update`, postData).pipe(
       map(this.appService.extractData),
       catchError(this.appService.handleError)
     );
+  }
+
+  /**
+   * Generates a FormData object from the model to send it to the server on create or update. This is required because this form handkles files/photos
+   */
+  generateFormData(postData: any = {}): FormData {
+    const fd = obj2fd(postData);
+    // add the files to the files property (expected in the backend by multer plugin (app.js))
+    // for (const file of this.propertyPhotos) {
+    //   fd.append('files', file, file.name);
+    // }
+
+    return fd;
   }
 
   /**

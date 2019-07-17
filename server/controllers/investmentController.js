@@ -1,14 +1,13 @@
-const { INVESTMENTS_TYPES } = require('../constants/constants');
+const { INVESTMENTS_TYPES, PUSHER_CHANNEL } = require('../constants/constants');
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Types.ObjectId;
 const md5 = require('md5');
 const Investment = mongoose.model('Investment');
 const CurrencyInvestment = mongoose.model('CurrencyInvestment');
 const PropertyInvestment = mongoose.model('PropertyInvestment');
-const promisify = require('es6-promisify');
-const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
 const teamController = require('../controllers/teamController');
+const { getPusher } = require('../handlers/utils');
 
 const errorTrace = 'investmentController >';
 
@@ -87,38 +86,7 @@ exports.create = async (req, res, next) => {
         loanAmountUnit : req.body.loanAmountUnit
     })).save();
 
-    if (investment) {
-        //save a new currency investment record in DB
-        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Investment')}`);
-        let investmentType = null;
-        if (investment.investmentType === INVESTMENTS_TYPES.CRYPTO || investment.investmentType === INVESTMENTS_TYPES.CURRENCY) {
-            investmentType = await createCurrencyInvestment(req.body.type, investment._id, req.body.investmentData);
-        } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
-            investmentType = await createPropertyInvestment(investment._id, req.body.investmentData);
-        }
-        
-        if (investmentType) {
-            console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'CurrencyInvestment')}`);
-            
-            console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Investment')}`);
-            res.json({
-                status : 'success', 
-                codeno : 200,
-                msg : getMessage('message', 1033, null, false, 'Investment'),
-                data : { type : investment.investmentType, id : investment._id }
-            });
-        } else {
-            console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'CurrencyInvestment')}`);
-            res.status(401).json({ 
-                status : "error", 
-                codeno : 459,
-                msg : getMessage('error', 459, null, false, 'CurrencyInvestment'),
-                data : null
-            });
-        }
-
-        
-    } else {
+    if (!investment) {
         console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'Investment')}`);
         res.status(401).json({ 
             status : "error", 
@@ -126,7 +94,51 @@ exports.create = async (req, res, next) => {
             msg : getMessage('error', 459, null, false, 'Investment'),
             data : null
         });
+
+        return;
     }
+        
+    //save a new investment type record in DB
+    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Investment')}`);
+    let investmentType = null;
+    if (investment.investmentType === INVESTMENTS_TYPES.CRYPTO || investment.investmentType === INVESTMENTS_TYPES.CURRENCY) {
+        investmentType = await createCurrencyInvestment(req.body.type, investment._id, req.body.investmentData);
+    } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
+        investmentType = await createPropertyInvestment(investment._id, req.body.investmentData);
+    }
+    
+    if (!investmentType) {
+        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'CurrencyInvestment')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 459,
+            msg : getMessage('error', 459, null, false, 'CurrencyInvestment'),
+            data : null
+        });
+
+        return;
+    }
+    
+    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'CurrencyInvestment')}`);
+    
+    // Send notification to team members 
+    if (team && investment.team) {
+        // send push notification to client
+        getPusher().trigger(PUSHER_CHANNEL, 'investment-created', {
+            email: user.email,
+            name: user.name,
+            teamName: team.name,
+            teamSlug: team.slug
+        }, req.body.pusherSocketID);    
+    }
+    
+    console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Investment')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1033, null, false, 'Investment'),
+        data : { type : investment.investmentType, id : investment._id }
+    });
 };
 
 const createCurrencyInvestment = async (currencyType, parentId, investmentData) => {
@@ -165,6 +177,7 @@ exports.update = async (req, res, next) => {
     let investment = await getByIdObject(req.body.id, user.email, {
         investmentDataId : true
     });
+
     if (!investment) {
         //no investment found with that id
         console.log(`${methodTrace} ${getMessage('error', 461, user.email, true,'Investment')}`);
@@ -176,30 +189,29 @@ exports.update = async (req, res, next) => {
         });
 
         return;
-    } else {
-        //check the client is part of this investment
-        let found = false;
-        for (let portion of investment.investmentDistribution) {
-            if (user.email === portion.email) {
-                found = true;
-                break;
-            }
-        }
+    }
 
-        if (!found) {
-            //the client is not an owner  of the investment requested
-            console.log(`${methodTrace} ${getMessage('error', 470, user.email, true, 'Investment')}`);
-            res.status(401).json({ 
-                status : "error", 
-                codeno : 470,
-                msg : getMessage('error', 470, null, false, 'Investment'),
-                data : null
-            });
-
-            return;
+    //check the client is part of this investment
+    let found = false;
+    for (let portion of investment.investmentDistribution) {
+        if (user.email === portion.email) {
+            found = true;
+            break;
         }
     }
 
+    if (!found) {
+        //the client is not an owner  of the investment requested
+        console.log(`${methodTrace} ${getMessage('error', 470, user.email, true, 'Investment')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 470,
+            msg : getMessage('error', 470, null, false, 'Investment'),
+            data : null
+        });
+
+        return;
+    }
 
     //get the team if provided
     let team = null;
@@ -228,57 +240,54 @@ exports.update = async (req, res, next) => {
         { new : true, runValidators : true, context : 'query' }
     );
 
-    if (investment) {
-        console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Investment')}`);
+    if (!investment) {
+        //failed to update investment
+        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'Investment', '_id', originalInvestment._id)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 465,
+            msg : getMessage('error', 465, null, false, 'Investment', '_id', originalInvestment._id),
+            data : null
+        });
 
-        let investmentData = null;
-        let modelName = null;
-        if (investment.investmentType === INVESTMENTS_TYPES.CRYPTO || investment.investmentType === INVESTMENTS_TYPES.CURRENCY) {
-            modelName = 'CurrencyInvestment';
-            const investmentDataUpdates = {
-                amount : req.body.investmentData.amount,
-                amountUnit : req.body.investmentData.unit,
-                buyingPrice : req.body.investmentData.buyingPrice,
-                buyingPriceUnit : req.body.investmentData.buyingPriceUnit,
-                buyingDate : req.body.investmentData.buyingDate
-            };
-            
-            investmentData = await CurrencyInvestment.findOneAndUpdate(
-                { _id : originalInvestment.investmentData._id },
-                { $set : investmentDataUpdates },
-                { new : true, runValidators : true, context : 'query' }
-            );
-        } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
-            modelName = 'PropertyInvestment';
-            const investmentDataUpdates = {
-                buyingPrice : req.body.investmentData.buyingPrice,
-                buyingPriceUnit : req.body.investmentData.buyingPriceUnit,
-                buyingDate : req.body.investmentData.buyingDate,
-                property : req.body.investmentData.property.id
-            };
-            
-            investmentData = await PropertyInvestment.findOneAndUpdate(
-                { _id : originalInvestment.investmentData._id },
-                { $set : investmentDataUpdates },
-                { new : true, runValidators : true, context : 'query' }
-            );
-        }
+        return;
+    }
+    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Investment')}`);
 
-        if (investmentData) {
-            //success
-            console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, modelName)}`);
-            
-            console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Investment')}`);
-            res.json({
-                status : 'success', 
-                codeno : 200,
-                msg : getMessage('message', 1042, null, false, 'Investment'),
-                data : { type : investment.investmentType, id : investment._id }
-            });
-
-            return;
-        }
+    let investmentData = null;
+    let modelName = null;
+    if (investment.investmentType === INVESTMENTS_TYPES.CRYPTO || investment.investmentType === INVESTMENTS_TYPES.CURRENCY) {
+        modelName = 'CurrencyInvestment';
+        const investmentDataUpdates = {
+            amount : req.body.investmentData.amount,
+            amountUnit : req.body.investmentData.unit,
+            buyingPrice : req.body.investmentData.buyingPrice,
+            buyingPriceUnit : req.body.investmentData.buyingPriceUnit,
+            buyingDate : req.body.investmentData.buyingDate
+        };
         
+        investmentData = await CurrencyInvestment.findOneAndUpdate(
+            { _id : originalInvestment.investmentData._id },
+            { $set : investmentDataUpdates },
+            { new : true, runValidators : true, context : 'query' }
+        );
+    } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
+        modelName = 'PropertyInvestment';
+        const investmentDataUpdates = {
+            buyingPrice : req.body.investmentData.buyingPrice,
+            buyingPriceUnit : req.body.investmentData.buyingPriceUnit,
+            buyingDate : req.body.investmentData.buyingDate,
+            property : req.body.investmentData.property.id
+        };
+        
+        investmentData = await PropertyInvestment.findOneAndUpdate(
+            { _id : originalInvestment.investmentData._id },
+            { $set : investmentDataUpdates },
+            { new : true, runValidators : true, context : 'query' }
+        );
+    }
+
+    if (!investmentData) {
         //failed to update investment data
         console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'CurrencyInvestment', '_id', investment.investmentData._id)}`);
         res.status(401).json({ 
@@ -287,16 +296,31 @@ exports.update = async (req, res, next) => {
             msg : getMessage('error', 465, null, false, 'CurrencyInvestment', '_id', investment.investmentData._id),
             data : null
         });
+
+        return;
     }
 
-    //failed to update investment
-    console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'Investment', '_id', originalInvestment._id)}`);
-    res.status(401).json({ 
-        status : "error", 
-        codeno : 465,
-        msg : getMessage('error', 465, null, false, 'Investment', '_id', originalInvestment._id),
-        data : null
-    });
+    //success
+    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, modelName)}`);
+    
+    // Send notification to team members 
+    if (team && investment.team) {
+        // send push notification to client
+        getPusher().trigger(PUSHER_CHANNEL, 'investment-updated', {
+            email: user.email,
+            name: user.name,
+            teamName: team.name,
+            teamSlug: team.slug
+        }, req.body.pusherSocketID);    
+    }
+
+    console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Investment')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1042, null, false, 'Investment'),
+        data : { type : investment.investmentType, id : investment._id }
+    });    
 };
 
 /**
@@ -553,73 +577,8 @@ exports.delete = async (req, res) => {
     const investment = await getByIdObject(req.params.id, user.email, {
         investmentDataId : true
     });
-    
-    //2 - check that the user is part of the invesment
-    if (investment && investment.investmentDistribution) {
-        let found = false;
-        for (let member of investment.investmentDistribution) {
-            if (user.email === member.email) {
-                found = true;
-                break;
-            }
-        }
 
-        if (found) {
-            //3.1 - The user is member of the investment, proceed to delete
-            let writeResult = null;
-            let investmentDataId = null;
-            let investmentDataModel = null;
-            if (investment.investmentType === INVESTMENTS_TYPES.CURRENCY || investment.investmentType === INVESTMENTS_TYPES.CRYPTO) {
-                investmentDataModel = 'CurrencyInvestment';
-                investmentDataId = investment.investmentData._id;
-                writeResult = await deleteCurrencyInvestment(investmentDataId, user.email);
-            } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
-                investmentDataModel = 'PropertyInvestment';
-                investmentDataId = investment.investmentData._id;
-                writeResult = await deletePropertyInvestment(investmentDataId, user.email);
-            }
-            
-            if (writeResult && writeResult.n > 0) {
-                writeResult = null;
-                console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Investment', '_id', investment._id)}`);
-                writeResult = await Investment.remove({ _id : investment._id });
-                if (writeResult && writeResult.n > 0) {
-                    //Success deleting investment
-                    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Investment')}`);
-                    res.json({
-                        status : 'success', 
-                        codeno : 200,
-                        msg : getMessage('message', 1039, null, false, 'Investment'),
-                        data : { removed : writeResult.n }
-                    });
-    
-                    return;
-                } else {
-                    //Failed to delete investment
-                    console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Investment', '_id', investment._id)}`);
-                    res.status(401).json({ 
-                        status : "error", 
-                        codeno : 464,
-                        msg : getMessage('error', 464, null, false, 'Investment', '_id', investment._id),
-                        data : null
-                    });
-    
-                    return;
-                }
-            } else {
-                //Failed to delete investment data
-                res.status(401).json({ 
-                    status : "error", 
-                    codeno : 464,
-                    msg : getMessage('error', 464, null, false, investmentDataModel, '_id', investmentDataId),
-                    data : null
-                });
-
-                return;
-            }
-            
-        }
-    } else if (!investment){
+    if (!investment){
         //Nothing found for that ID
         console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Investment')}`);
         res.status(401).json({ 
@@ -632,13 +591,91 @@ exports.delete = async (req, res) => {
         return;
     }
 
-    //3.2 - the client is not member of the investment requested
-    console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Investment', req.user.email)}`);
-    res.status(401).json({ 
-        status : "error", 
-        codeno : 462,
-        msg : getMessage('error', 462, null, false, 'Investment', req.user.email),
-        data : null
+    //2 - check that the user is part of the invesment
+    let found = false;
+    if (investment.investmentDistribution) {
+        for (let member of investment.investmentDistribution) {
+            if (user.email === member.email) {
+                found = true;
+                break;
+            }
+        }    
+    }
+    
+    if (!found) {
+        //3.2 - the client is not member of the investment requested
+        console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Investment', req.user.email)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 462,
+            msg : getMessage('error', 462, null, false, 'Investment', req.user.email),
+            data : null
+        });
+
+        return;
+    }
+
+    //3.1 - The user is member of the investment, proceed to delete
+    let writeResult = null;
+    let investmentDataId = null;
+    let investmentDataModel = null;
+    if (investment.investmentType === INVESTMENTS_TYPES.CURRENCY || investment.investmentType === INVESTMENTS_TYPES.CRYPTO) {
+        investmentDataModel = 'CurrencyInvestment';
+        investmentDataId = investment.investmentData._id;
+        writeResult = await deleteCurrencyInvestment(investmentDataId, user.email);
+    } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
+        investmentDataModel = 'PropertyInvestment';
+        investmentDataId = investment.investmentData._id;
+        writeResult = await deletePropertyInvestment(investmentDataId, user.email);
+    }
+    
+    if (!(writeResult && writeResult.n > 0)) {
+        //Failed to delete investment data
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 464,
+            msg : getMessage('error', 464, null, false, investmentDataModel, '_id', investmentDataId),
+            data : null
+        });
+
+        return;
+    }
+
+    writeResult = null;
+    console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Investment', '_id', investment._id)}`);
+    writeResult = await Investment.remove({ _id : investment._id });
+    if (!(writeResult && writeResult.n > 0)) {
+        //Failed to delete investment
+        console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Investment', '_id', investment._id)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 464,
+            msg : getMessage('error', 464, null, false, 'Investment', '_id', investment._id),
+            data : null
+        });
+
+        return;
+    }
+
+    // Send notification to team members 
+    if (investment.team) {
+        console.log(investment.team);
+        // send push notification to client
+        getPusher().trigger(PUSHER_CHANNEL, 'investment-deleted', {
+            email: user.email,
+            name: user.name,
+            teamName: investment.team.name,
+            teamSlug: investment.team.slug
+        }, req.query.pusherSocketID);    
+    }
+
+    //Success deleting investment
+    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Investment')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1039, null, false, 'Investment'),
+        data : { removed : writeResult.n }
     });
 };
 

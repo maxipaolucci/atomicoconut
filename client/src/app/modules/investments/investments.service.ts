@@ -33,6 +33,9 @@ export class InvestmentsService {
   create$(postData: any = {}): Observable<any> {
     const methodTrace = `${this.constructor.name} > create$() > `; // for debugging
 
+    //to prevent receiving notification of actions performed by current user
+    postData.pusherSocketID = this.appService.pusherSocketID;
+
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .pipe(
           map(this.appService.extractData),
@@ -48,6 +51,9 @@ export class InvestmentsService {
    */
   update$(postData: any = {}): Observable<any> {
     const methodTrace = `${this.constructor.name} > update$() > `; // for debugging
+
+    //to prevent receiving notification of actions performed by current user
+    postData.pusherSocketID = this.appService.pusherSocketID;
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .pipe(
@@ -222,7 +228,9 @@ export class InvestmentsService {
       return Observable.throw(null);
     }
 
-    const params = new HttpParams().set('email', email);
+    const params = new HttpParams()
+        .set('email', email)
+        .set('pusherSocketID', this.appService.pusherSocketID); //to prevent receiving notification of actions performed by current user
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } )
         .pipe(

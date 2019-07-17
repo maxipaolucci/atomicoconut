@@ -8,6 +8,8 @@ import { CurrencyExchangeService } from './modules/investments/currency-exchange
 import { UtilService } from './util.service';
 import { of, Subscription, interval } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
+import { Team } from './modules/teams/models/team';
+import { TeamsService } from './modules/teams/teams.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
   todayUserPrefRate: number = null;
   subscription: Subscription = new Subscription();
 
-  constructor(private router: Router, private appService: AppService, public usersService: UsersService, public currencyExchangeService: CurrencyExchangeService,
+  constructor(private router: Router, private appService: AppService, private teamsService: TeamsService, public usersService: UsersService, public currencyExchangeService: CurrencyExchangeService,
       private utilService: UtilService) { }
 
   ngOnInit() {
@@ -35,6 +37,10 @@ export class AppComponent implements OnInit, OnDestroy {
         }
   
         this.user = user;
+
+        if (this.user) {
+          this.bindToPushNotificationEvents();
+        }
 
         if (this.user && this.user.currency && this.user.currency !== 'USD') {
           return this.currencyExchangeService.getCurrencyRates$();
@@ -69,6 +75,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
+
+    this.unbindToPushNotificationEvents();
   }
 
   getCryptoRates(crypto: string = 'BTC') {
@@ -92,6 +100,7 @@ export class AppComponent implements OnInit, OnDestroy {
     const newSubscription: Subscription = this.usersService.logout$().subscribe(
       (result: any) => {
         this.user = result;
+        this.unbindToPushNotificationEvents();
         this.router.navigate(['/']);
       },
       (error: any) =>  {
@@ -99,5 +108,44 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     );
     this.subscription.add(newSubscription);
+  }
+
+  /**
+   * Start listening to Pusher notifications comming from server
+   */
+  bindToPushNotificationEvents() {
+    this.appService.pusherChannel.bind('investment-created', data => {
+      const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe((teams: Team[]) => this.showInvestmentNotification('created', data, teams));
+      this.subscription.add(newSubscription);
+    });
+
+    this.appService.pusherChannel.bind('investment-updated', data => {
+      console.log(data);
+      const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe((teams: Team[]) => this.showInvestmentNotification('updated', data, teams));
+      this.subscription.add(newSubscription);
+    });
+
+    this.appService.pusherChannel.bind('investment-deleted', data => {
+      const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe((teams: Team[]) => this.showInvestmentNotification('deleted', data, teams));
+      this.subscription.add(newSubscription);
+    });
+  }
+
+  showInvestmentNotification(action: string, data: any = {}, teams: Team[] = []) {
+    for (const team of teams) {
+      if (team.slug === data.teamSlug) {
+        this.appService.showResults(`${data.name} has ${action} an investment associated with your team ${data.teamName}.`, 'info', 8000);
+        return;
+      }
+    }
+  }
+
+  /**
+   * Stop listening to Pusher notifications comming from server
+   */
+  unbindToPushNotificationEvents() {
+    this.appService.pusherChannel.unbind('investment-created');
+    this.appService.pusherChannel.unbind('investment-updated');
+    this.appService.pusherChannel.unbind('investment-deleted');
   }
 }
