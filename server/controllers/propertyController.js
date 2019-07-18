@@ -356,9 +356,24 @@ exports.update = async (req, res, next) => {
         propertyUsersUpdateResult = await(propertyUserController.updatePropertyUsers(originalProperty._id, sharedWithEmails, user.email, req.headers.host));
     }
     
+    //get the new property object with sharedWith info to know if a client must be updated with a new property shared with him
+    property = await getByIdObject(property.id, user.email, {
+        propertyTypeDataId : true
+    });
+    
     // send push notification to client
     getPusher().trigger(PUSHER_CHANNEL, 'property-updated', {
-        id: property._id,
+        originalProperty: {
+            address: originalProperty.location.address,
+            unit: originalProperty.unit,
+            sharedWith: originalProperty.sharedWith
+        },
+        property: {
+            id: property._id,
+            address: property.location.address,
+            unit: property.unit,
+            sharedWith: property.sharedWith
+        },
         email: user.email,
         name: user.name,
     }, req.body.pusherSocketID);

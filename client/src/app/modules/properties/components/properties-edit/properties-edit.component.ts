@@ -194,7 +194,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
     this.appService.pusherChannel.bind('property-deleted', data => {
       if (this.property.id == data.id) {
-        const unit = data.unit && data.unit != 'null' + '/' ? data.unit : '';
+        const unit = data.unit && data.unit != 'null' ? `${data.unit}/` : '';
         this.appService.showResults(`The property ${unit}${data.address} was just delete by its admin ${data.name}.`, 'info', 20000);
         this.router.navigate(['/properties']);
       }
