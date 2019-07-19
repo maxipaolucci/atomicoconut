@@ -93,52 +93,27 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   bindToPushNotificationEvents() {
     // if a property shared with me was updated by another person then update values shown in this table
     this.appService.pusherChannel.bind('property-updated', data => {
-      // TODO implement a removal or addition to the table if i was removed or added to the sharedwith array of the updated property
-
-
-      // for (const person of data.property.sharedWith) {
-      //   if (person.email === this.user.email) {
-      //     this.getProperties();
-      //     this.propertiesDataSource.data = this.properties;
-      //     break;
-      //   }
-      // }
-      
-//       let a = [{"name":"Maxi Paolucci","email":"maxipaolucciaaaa@gmail.com","gravatar":"https://gravatar.com/avatar/66c43c38d98fae1cf8cdf173d0ede425?s=200"},{"name":"Stefi Ezquerra","email":"stefaniaezquerra@gmail.com","gravatar":"https://gravatar.com/avatar/2258024e6d4f224744ac8f03ae8c9dc3?s=200"},{"name":"Juan","email":"juan@gmail.com","gravatar":"https://gravatar.com/avatar/7038663cc684aa330956752c7e6fe7d4?s=200"}];
-// let b = [{"name":"Maxi Paolucci","email":"maxipaolucci@gmail.com","gravatar":"https://gravatar.com/avatar/66c43c38d98fae1cf8cdf173d0ede425?s=200"},{"name":"Stefi Ezquerra","email":"stefaniaezquerra@gmail.com","gravatar":"https://gravatar.com/avatar/2258024e6d4f224744ac8f03ae8c9dc3?s=200"},{"name":"Juan","email":"juan@gmail.com","gravatar":"https://gravatar.com/avatar/7038663cc684aa330956752c7e6fe7d4?s=200"}];
-// let c = b.filter(item => !a.some(other => item.email === other.email));
-// console.log(c); // [{x:0}, {x: 3}]
-      
-      
-      let propertyIndex = 0;
-      for (const property of this.properties) {
-        if (property.id == data.property.id) {
-          break;
-        }
-
-        propertyIndex += 1;
+      let reloadProperties = this.properties.some(property => property.id == data.property.id);
+      if (!reloadProperties) {
+        // check if the updated property is now shared with me, we need to reload my list of properties
+        reloadProperties = data.property.sharedWith.some(person => person.email === this.user.email);  
       }
 
-      if (propertyIndex < this.properties.length) {
-        const unit = data.originalProperty.unit && data.originalProperty.unit != 'null' ? `${data.originalProperty.unit}/` : '';
-        [ this.properties[propertyIndex].address.description, this.properties[propertyIndex].unit ] = [data.property.address, data.property.unit]; //using es6 destructuring
-        this.propertiesDataSource.data = this.properties;
-        this.appService.showResults(`The property ${unit}${data.originalProperty.address} was just update by ${data.name}.`, 'info', 8000);
+      if (!reloadProperties) {
+        // nothing to update nor notify
+        return;
       }
+
+      this.getProperties(); //reload my properties and table datasource
+      const unit = data.originalProperty.unit && data.originalProperty.unit != 'null' ? `${data.originalProperty.unit}/` : '';
+      this.appService.showResults(`The property ${unit}${data.originalProperty.address} was just update by ${data.name}.`, 'info', 8000);
     });
 
     // if a property shared with me was deleted by another person then remove it from this table
     this.appService.pusherChannel.bind('property-deleted', data => {
-      let propertyIndex = 0;
-      for (const property of this.properties) {
-        if (property.id == data.id) {
-          break;
-        }
-
-        propertyIndex += 1;
-      }
-
-      if (propertyIndex < this.properties.length) {
+      const propertyIndex = this.properties.findIndex(property => property.id == data.id);
+      
+      if (propertyIndex >= 0) {
         this.properties.splice(propertyIndex, 1);
         this.propertiesDataSource.data = this.properties;
         const unit = data.unit && data.unit != 'null' ? `${data.unit}/` : '';
