@@ -19,3 +19,8 @@ export const INVESTMENTS_TYPES = {
   CRYPTO : 'crypto',
   PROPERTY : 'property'
 };
+
+export const COINCAP_CRYPTO_TYPES = {
+  BTC: 'bitcoin',
+  XMR: 'monero'
+}

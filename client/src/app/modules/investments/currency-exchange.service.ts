@@ -6,11 +6,12 @@ import { Observable, of } from 'rxjs';
 import { Response } from '../../models/response';
 import { environment } from '../../../environments/environment';
 import { UtilService } from '../../util.service';
+import { COINCAP_CRYPTO_TYPES } from '../../constants';
 
 @Injectable()
 export class CurrencyExchangeService {
 
-  private cryptoExchangeServerUrl = 'https://coincap.io/page/';
+  private cryptoExchangeServerUrl = 'https://api.coincap.io/v2/assets/';
   cryptoRates: any = {};
   currencyRates: any = {};
   private serverHost: string = environment.apiHost + '/api/currencyRates';
@@ -65,7 +66,7 @@ export class CurrencyExchangeService {
       return of(this.cryptoRates[crypto.toUpperCase()]);
     }
     
-    return this.http.get<Response>(`${this.cryptoExchangeServerUrl}${crypto.toUpperCase()}`).pipe(
+    return this.http.get<Response>(`${this.cryptoExchangeServerUrl}${COINCAP_CRYPTO_TYPES[crypto.toUpperCase()]}`).pipe(
       map((res: Response) => this.extractCryptoExchangeData(crypto, res)),
       switchMap((rates: Object) => {
         if (rates) {
@@ -81,8 +82,8 @@ export class CurrencyExchangeService {
   }
 
   private extractCryptoExchangeData(crypto: string, res: Object): any {
-    if (res['id'] === crypto.toUpperCase()) {
-      return res;
+    if (res['data']['id'] === COINCAP_CRYPTO_TYPES[crypto.toUpperCase()]) {
+      return res['data'];
     } else {
       throw res;
     }

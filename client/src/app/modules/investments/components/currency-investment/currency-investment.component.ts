@@ -75,7 +75,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
           }; 
         }),
         switchMap((data) => {
-          this.currentPrice = data.cryptoRates.price;
+          this.currentPrice = Number(data.cryptoRates.priceUsd);
           // the investment amount was paid on the date of the investment so we need to convert using that day rates
           this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
           // the loan amount was requested on the date of the investment so we need to convert using that day rates
