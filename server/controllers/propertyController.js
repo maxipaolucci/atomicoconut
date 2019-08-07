@@ -364,6 +364,7 @@ exports.update = async (req, res, next) => {
     // send push notification to client
     getPusher().trigger(PUSHER_CHANNEL, 'property-updated', {
         originalProperty: {
+            id: originalProperty._id,
             address: originalProperty.location.address,
             unit: originalProperty.unit,
             sharedWith: originalProperty.sharedWith

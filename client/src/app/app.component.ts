@@ -120,7 +120,6 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.appService.pusherChannel.bind('investment-updated', data => {
-      console.log(data);
       const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe((teams: Team[]) => this.showInvestmentNotification('updated', data, teams));
       this.subscription.add(newSubscription);
     });

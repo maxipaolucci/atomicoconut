@@ -187,15 +187,15 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
    */
   bindToPushNotificationEvents() {
     this.appService.pusherChannel.bind('property-updated', data => {
-      if (this.property.id == data.id) {
-        this.appService.showResults(`This property was just update by ${data.name}`, 'info');
+      if (this.property.id == data.property.id) {
+        this.appService.showResults(`This property was just updated by ${data.name}`, 'info');
       }
     });
 
     this.appService.pusherChannel.bind('property-deleted', data => {
       if (this.property.id == data.id) {
         const unit = data.unit && data.unit != 'null' ? `${data.unit}/` : '';
-        this.appService.showResults(`The property ${unit}${data.address} was just delete by its admin ${data.name}.`, 'info', 20000);
+        this.appService.showResults(`The property ${unit}${data.address} was just deleted by its admin ${data.name}.`, 'info', 20000);
         this.router.navigate(['/properties']);
       }
     });
