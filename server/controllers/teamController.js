@@ -1,3 +1,4 @@
+const { PUSHER_CHANNEL } = require('../constants/constants');
 const mongoose = require('mongoose');
 const md5 = require('md5');
 const User = mongoose.model('User');
@@ -6,7 +7,7 @@ const Investment = mongoose.model('Investment');
 const TeamUser = mongoose.model('TeamUser');
 const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
-
+const { getPusher } = require('../handlers/utils');
 const errorTrace = 'teamController >';
 
 exports.validateRegister = (req, res, next) => {
@@ -146,6 +147,8 @@ const addMemberToTeam = async (member, team, userEmail) => {
  * @param {*} member . The member to delete from the team as parameter
  * @param {*} team . The team where to remove the member
  * @param {string} userEmail . The email or the current logged in user in the system
+ * 
+ * @return {boolean} . True if a record was deleted.
  */
 const deleteMemberFromTeam = async (member, team, userEmail) => {
     const methodTrace = `${errorTrace} deleteMemberFromTeam() >`;
@@ -156,7 +159,7 @@ const deleteMemberFromTeam = async (member, team, userEmail) => {
     if (teamUser) {
         console.log(`${methodTrace} ${getMessage('message', 1035, userEmail, true, 'TeamUser')}`);
     } else {
-        console.log(`${methodTrace} ${getMessage('message', 461, userEmail, true, 'TeamUser')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, 'TeamUser')}`);
         return false;
     }
 
@@ -272,6 +275,7 @@ exports.update = async (req, res, next) => {
                     }
                 } else {
                     usersNotRegistered.push(memberEmail);
+                    memberState[memberEmail] = 'email-sent';
                     
                     console.log(`${methodTrace} ${getMessage('message', 1040, user.email, true, memberEmail)}`);
                     const registerURL = `http://${req.headers.host}/app/users/register`;
@@ -307,7 +311,6 @@ exports.update = async (req, res, next) => {
                                     //so we check if the property is there to konw it changed.
     }
 
-
     console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'Team', 'slug', team.slug)}`);
     team = await Team.findOneAndUpdate(
         { slug : team.slug },
@@ -329,6 +332,17 @@ exports.update = async (req, res, next) => {
     
     console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Team')}`);
     team = await getTeamBySlugObject(team.slug, user.email, { withId : false });
+
+    // send push notification to client
+    getPusher().trigger(PUSHER_CHANNEL, 'team-updated', {
+        team: {
+            slug: team.slug,
+            name: team.name,
+            memberState
+        },
+        email: user.email,
+        name: user.name,
+    }, req.body.pusherSocketID);
 
     res.json({
         status : 'success', 
@@ -591,6 +605,16 @@ exports.delete = async (req, res) => {
     const user = req.user;
     const team = await getTeamBySlugObject(req.params.slug, req.query.email, { withId : true, withInvestments : true });
 
+    if (!team) {
+        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 461,
+            msg : getMessage('error', 461, null, false, 'Team'),
+            data : null
+        });
+    }
+
     if (team && team.admin && team.admin.email !== req.query.email) {
         //the client is not the admin of the team requested
         console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Team', user.email)}`);
@@ -602,61 +626,62 @@ exports.delete = async (req, res) => {
         });
 
         return;
-    } else if (team) {
-        //check if the team has any investment
-        if (team.investments && team.investments.length) {
-            console.log(`${methodTrace} ${getMessage('error', 471, user.email, true, 'Team', 'Investments')}`);
-            res.status(401).json({ 
-                status : "error", 
-                codeno : 471,
-                msg : getMessage('error', 471, null, false, 'Team', 'Investments'),
-                data : null
-            });
-    
-            return;
-        }
+    }
 
-        //remove all the members in the team
-        for (let member of team.members) {
-            const person = await User.findOne({ email : member.email});
-            const result = await deleteMemberFromTeam(person, team, user.email);
-            if (!result) {
-                console.log(`${methodTrace} ${getMessage('error', 469, user.email, true, `user = ${member.email}`, `team = ${team.slug}`)}`);
-            }
-        }
+    //check if the team has any investment
+    if (team.investments && team.investments.length) {
+        console.log(`${methodTrace} ${getMessage('error', 471, user.email, true, 'Team', 'Investments')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 471,
+            msg : getMessage('error', 471, null, false, 'Team', 'Investments'),
+            data : null
+        });
 
-        //remove the team
-        console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Team', '_id', team._id)}`);
-        const writeResult = await Team.remove({ _id : team._id });
-        if (writeResult.n > 0) {
-            console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Team')}`);
-            res.json({
-                status : 'success', 
-                codeno : 200,
-                msg : getMessage('message', 1039, null, false, 'Team'),
-                data : { removed : writeResult.n }
-            });
+        return;
+    }
 
-            return;
-        } else {
-            console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Team', '_id', team._id)}`);
-            res.status(401).json({ 
-                status : "error", 
-                codeno : 464,
-                msg : getMessage('error', 464, null, false, 'Team', '_id', team._id),
-                data : null
-            });
-
-            return;
+    //remove all the members in the team
+    for (let member of team.members) {
+        const person = await User.findOne({ email : member.email});
+        const result = await deleteMemberFromTeam(person, team, user.email);
+        if (!result) {
+            console.log(`${methodTrace} ${getMessage('error', 469, user.email, true, `user = ${member.email}`, `team = ${team.slug}`)}`);
         }
     }
 
-    console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
-    res.status(401).json({ 
-        status : "error", 
-        codeno : 461,
-        msg : getMessage('error', 461, null, false, 'Team'),
-        data : null
+    //remove the team
+    console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Team', '_id', team._id)}`);
+    const writeResult = await Team.remove({ _id : team._id });
+    if (!(writeResult && writeResult.n > 0)) {
+        console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Team', '_id', team._id)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 464,
+            msg : getMessage('error', 464, null, false, 'Team', '_id', team._id),
+            data : null
+        });
+
+        return;
+    }
+
+    // send push notification to client
+    getPusher().trigger(PUSHER_CHANNEL, 'team-deleted', {
+        team: {
+            members: team.members,
+            name: team.name,
+            slug: team.slug
+        },
+        email: user.email,
+        name: user.name,
+    }, req.query.pusherSocketID);
+
+    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Team')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1039, null, false, 'Team'),
+        data : { removed : writeResult.n }
     });
 };
 

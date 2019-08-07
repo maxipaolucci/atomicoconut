@@ -45,6 +45,9 @@ export class TeamsService {
   update$(postData: any = {}): Observable<Team> {
     const methodTrace = `${this.constructor.name} > update$() > `; // for debugging
 
+    //to prevent receiving notification of actions performed by current user
+    postData.pusherSocketID = this.appService.pusherSocketID;
+
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
       catchError(this.appService.handleError),
@@ -191,7 +194,9 @@ export class TeamsService {
       return Observable.throw(null);
     }
 
-    const params = new HttpParams().set('email', email);
+    const params = new HttpParams()
+        .set('email', email)
+        .set('pusherSocketID', this.appService.pusherSocketID);
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${slug}`, {headers : this.headers, params } )
         .pipe(

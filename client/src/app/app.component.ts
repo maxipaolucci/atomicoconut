@@ -128,6 +128,36 @@ export class AppComponent implements OnInit, OnDestroy {
       const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe((teams: Team[]) => this.showInvestmentNotification('deleted', data, teams));
       this.subscription.add(newSubscription);
     });
+
+    this.appService.pusherChannel.bind('team-updated', data => {
+      if (data && data.team.memberState[this.user.email]) {
+        const currentUserState = data.team.memberState[this.user.email];
+        switch(currentUserState) {
+          case 'add': {
+            this.appService.showResults(`${data.name} added you to the team ${data.team.name}.`, 'info', 8000);
+            break;
+          }
+
+          case 'remove': {
+            this.appService.showResults(`${data.name} removed you from the team ${data.team.name}.`, 'info', 8000);
+            break;
+          }
+
+          default: {
+            break;
+          }
+        }
+      }
+    });
+    
+    this.appService.pusherChannel.bind('team-deleted', data => {
+      if (data && data.team) {
+        const isMember = data.team.members.some((member: any) => member.email == this.user.email);
+        if (isMember) {
+          this.appService.showResults(`${data.name} deleted the team ${data.team.name} you was member of.`, 'info', 8000);
+        }
+      }
+    });
   }
 
   showInvestmentNotification(action: string, data: any = {}, teams: Team[] = []) {
@@ -146,5 +176,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.appService.pusherChannel.unbind('investment-created');
     this.appService.pusherChannel.unbind('investment-updated');
     this.appService.pusherChannel.unbind('investment-deleted');
+    this.appService.pusherChannel.unbind('team-updated');
+    this.appService.pusherChannel.unbind('team-deleted');
   }
 }

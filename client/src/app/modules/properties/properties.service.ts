@@ -211,30 +211,37 @@ export class PropertiesService {
         title = 'Viewing arranged';
         break;
       }
+
       case 'viewed': {
         title = 'Viewed';
         break;
       }
+
       case 'negotiating': {
         title = 'Negotiating';
         break;
       }
+
       case 'backup_offer': {
         title = 'Backup offer accepted';
         break;
       }
+
       case 'conditional': {
         title = 'Conditional';
         break;
       }
+
       case 'unconditional': {
         title = 'Unconditional';
         break;
       }
+
       case 'owned': {
         title = 'Owned';
         break;
       }
+      
       case 'discarded': {
         title = 'Discarded';
         break;
