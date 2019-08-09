@@ -138,6 +138,11 @@ export class AppComponent implements OnInit, OnDestroy {
             break;
           }
 
+          case 'keep': {
+            this.appService.showResults(`${data.name} updated the team ${data.team.name}.`, 'info', 8000);
+            break;
+          }
+
           case 'remove': {
             this.appService.showResults(`${data.name} removed you from the team ${data.team.name}.`, 'info', 8000);
             break;

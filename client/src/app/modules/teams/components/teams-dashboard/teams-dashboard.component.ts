@@ -41,11 +41,10 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     });
     // generates a user source object from authUser from resolver
     const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
-    
-    
     const newSubscription = user$.pipe(
       switchMap((user: User): Observable<any> => {
         this.user = user;
+        this.bindToPushNotificationEvents();
 
         if (!this.teams.length) {
           return this.getTeams$();
@@ -77,12 +76,57 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
+    this.unbindToPushNotificationEvents();
   }
 
   /**
-   * Get a teams observable from server
+   * Start listening to Pusher notifications comming from server
+   */
+  bindToPushNotificationEvents() {
+    // when a user updates a team I am member of
+    this.appService.pusherChannel.bind('team-updated', data => {
+      let reloadData = this.teams.some((team : Team) => team.slug == data.team.slug);
+      if (!reloadData) {
+        // if the team is not in my local list but I am in the list of member of the updated one...
+        reloadData = data.team.memberState[this.user.email] ? true : false;
+      }
+
+      if (!reloadData) {
+        return;
+      }
+
+      this.fetchTeamsSilently();
+    });
+
+    this.appService.pusherChannel.bind('team-deleted', data => {
+      const reloadData = this.teams.some((team : Team) => team.slug == data.team.slug);
+      if (!reloadData) {
+        return;
+      }
+
+      this.fetchTeamsSilently();
+    });
+  }
+
+  /**
+   * Stop listening to Pusher notifications comming from server
+   */
+  unbindToPushNotificationEvents() {
+    this.appService.pusherChannel.unbind('team-deleted');
+    this.appService.pusherChannel.unbind('team-updated');
+  }
+
+  /**
+   * Refetch silently the teams from the server, and update the team data in the background
+   */
+  fetchTeamsSilently() {
+    const newSubscription = this.fetchTeams$().subscribe((teams : Team[]) => this.teams = teams);
+    this.subscription.add(newSubscription);
+  }
+
+  /**
+   * Make and explicit request for user teams to the server and returns a teams observable
    * 
    * @return { Observable<Team[]> }
    */
@@ -91,6 +135,17 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
     this.teams = [];
     this.getTeamsServiceRunning = true;
+
+    return  this.fetchTeams$();
+  }
+
+  /**
+   * Get a teams observable from server
+   * 
+   * @return { Observable<Team[]> }
+   */
+  fetchTeams$(): Observable<Team[]> {
+    const methodTrace = `${this.constructor.name} > fetchTeams$() > `; // for debugging
 
     return  this.teamsService.getTeams$(this.user.email);
   }

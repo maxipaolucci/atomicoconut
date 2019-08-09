@@ -93,7 +93,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   bindToPushNotificationEvents() {
     // if a property shared with me was updated by another person then update values shown in this table
     this.appService.pusherChannel.bind('property-updated', data => {
-      let reloadProperties = this.properties.some(property => property.id == data.property.id);
+      let reloadProperties = this.properties.some((property : Property) => property.id == data.property.id);
       if (!reloadProperties) {
         // check if the updated property is now shared with me, we need to reload my list of properties
         reloadProperties = data.property.sharedWith.some(person => person.email === this.user.email);  
