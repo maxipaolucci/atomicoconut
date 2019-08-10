@@ -56,40 +56,17 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     const newSubscription = this.route.data.pipe(
       map((data: { authUser: User }): User =>  {
         this.user = data.authUser;
+        this.bindToPushNotificationEvents();
+
         return data.authUser;
       }), 
       flatMap((user: User): Observable<Investment[]> => {
-        this.getTeams(user); // I don't care when this come back
-        return this.getInvestments$(user);
+        this.getTeams(); // I don't care when this come back
+        return this.getInvestments$();
       })
     ).subscribe(
       (investments: Investment[]) => {
-        // organize investments in rows of n-items to show in the view
-        let investmentsRow: any[] = [];
-        const investmentsDates: string[] = [];
-
-        for (const item of investments) {
-          if (investmentsRow.length < 2) {
-            investmentsRow.push(item);
-          } else {
-            this.investmentsUI.push(investmentsRow);
-            investmentsRow = [item];
-          }
-
-          if (item instanceof CurrencyInvestment) {
-            investmentsDates.push(this.utilService.formatDate((<CurrencyInvestment>item).buyingDate, 'YYYY-MM-DD'));
-          } else if (item instanceof PropertyInvestment) {
-            investmentsDates.push(this.utilService.formatDate((<PropertyInvestment>item).buyingDate, 'YYYY-MM-DD'));
-          }
-        }
-
-        this.currencyExchangeService.getCurrencyRates$(investmentsDates); // lets retrieve investment dates for future usage in each investment
-
-        if (investmentsRow.length) {
-          this.investmentsUI.push(investmentsRow);
-        }
-
-        this.investments = investments;
+        this.organizeInvestmentsData(investments);
         this.getInvestmentsServiceRunning = false;
       },
       (error: any) => {
@@ -112,30 +89,128 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
 
     // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
+    this.unbindToPushNotificationEvents();
   }
 
   /**
-   * Get my investments source from server
+   * Start listening to Pusher notifications comming from server
    */
-  getInvestments$(user: User): Observable<Investment[]>  {
+  bindToPushNotificationEvents() {
+    // when a user updates an investment
+    this.appService.pusherChannel.bind('investment-updated', data => {
+      console.log(data);
+      let reloadData = this.investments.some((investment : Investment) => investment.id == data.inveestment.id);
+      if (!reloadData) {
+        // if the investment is not in my local list check if I am participating of the updated one...
+        //TODOOOOOO I need that the investment updated provides the team members to know if reload is req.
+      
+      
+        //que pasa si se me borra de un equipo asociado a un investment en mi lista, deberia dejar de ver el investment
+      }
+
+      if (!reloadData) {
+        return;
+      }
+
+      this.fetchInvestmentsSilently();
+    });
+
+    // when a user removes an investment
+    this.appService.pusherChannel.bind('investment-deleted', data => {
+      console.log(data);
+    });
+
+    // when a user creates an investment
+    this.appService.pusherChannel.bind('investment-created', data => {
+      console.log(data);
+    });
+  }
+
+  /**
+   * Stop listening to Pusher notifications comming from server
+   */
+  unbindToPushNotificationEvents() {
+    this.appService.pusherChannel.unbind('investment-deleted');
+    this.appService.pusherChannel.unbind('investment-updated');
+  }
+
+  /**
+   * Refetch silently the user investments from the server, and update the investment data in the background
+   */
+  fetchInvestmentsSilently() {
+    const newSubscription = this.fetchInvestments$().subscribe((investments : Investment[]) => this.organizeInvestmentsData(investments));
+    this.subscription.add(newSubscription);
+  }
+
+  /**
+   * Organize investments into a kind of matrix to allow show it in the view as a grid
+   * 
+   * @param {Array<Investment>} investments . The investments of the user to organize
+   */
+  organizeInvestmentsData(investments : Investment[]) {
+    let investmentsRow: any[] = [];
+    const investmentsDates: string[] = [];
+
+    this.totals = {}; //empty totals object to be refilled with the set of investments
+    this.investmentsUI = [];
+    for (const item of investments) {
+      if (investmentsRow.length < 2) {
+        investmentsRow.push(item);
+      } else {
+        this.investmentsUI.push(investmentsRow);
+        investmentsRow = [item];
+      }
+
+      if (item instanceof CurrencyInvestment) {
+        investmentsDates.push(this.utilService.formatDate((<CurrencyInvestment>item).buyingDate, 'YYYY-MM-DD'));
+      } else if (item instanceof PropertyInvestment) {
+        investmentsDates.push(this.utilService.formatDate((<PropertyInvestment>item).buyingDate, 'YYYY-MM-DD'));
+      }
+    }
+
+    if (investmentsRow.length) {
+      this.investmentsUI.push(investmentsRow);
+    }
+
+    this.currencyExchangeService.getCurrencyRates$(investmentsDates); // lets retrieve investment dates for future usage in each investment
+    this.investments = investments;
+  }
+
+  /**
+   * Make and explicit request for user investments to the server and returns an investments observable
+   * 
+   * @return { Observable<Investment[]> }
+   */
+  getInvestments$(): Observable<Investment[]>  {
     const methodTrace = `${this.constructor.name} > getInvestments$() > `; // for debugging
 
     this.investments = [];
     this.getInvestmentsServiceRunning = true;
 
-    return this.investmentsService.getInvestments$(user.email);
+    return this.fetchInvestments$();
+  }
+
+  /**
+   * Get a investments observable from server
+   * 
+   * @return { Observable<Investment[]> }
+   */
+  fetchInvestments$(): Observable<Investment[]> {
+    const methodTrace = `${this.constructor.name} > fetchInvestments$() > `; // for debugging
+
+    return this.investmentsService.getInvestments$(this.user.email);
   }
 
   /**
    * Get my teams from server
    */
-  getTeams(user: User) {
+  getTeams() {
     const methodTrace = `${this.constructor.name} > getTeams() > `; // for debugging
 
     this.teams = [];
     this.getTeamsServiceRunning = true;
 
-    const newSubscription = this.teamsService.getTeams$(user.email).subscribe(
+    const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe(
       (teams: Team[]) => {
         this.teams = teams;
         this.getTeamsServiceRunning = false;

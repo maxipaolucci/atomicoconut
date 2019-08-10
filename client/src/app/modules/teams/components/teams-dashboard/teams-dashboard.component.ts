@@ -84,11 +84,11 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
    * Start listening to Pusher notifications comming from server
    */
   bindToPushNotificationEvents() {
-    // when a user updates a team I am member of
+    // when a user updates a team
     this.appService.pusherChannel.bind('team-updated', data => {
       let reloadData = this.teams.some((team : Team) => team.slug == data.team.slug);
       if (!reloadData) {
-        // if the team is not in my local list but I am in the list of member of the updated one...
+        // if the team is not in my local list check if I am in the list of member of the updated one...
         reloadData = data.team.memberState[this.user.email] ? true : false;
       }
 
@@ -99,6 +99,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
       this.fetchTeamsSilently();
     });
 
+    // when a user removes a team
     this.appService.pusherChannel.bind('team-deleted', data => {
       const reloadData = this.teams.some((team : Team) => team.slug == data.team.slug);
       if (!reloadData) {

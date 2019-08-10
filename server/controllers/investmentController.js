@@ -309,8 +309,16 @@ exports.update = async (req, res, next) => {
         getPusher().trigger(PUSHER_CHANNEL, 'investment-updated', {
             email: user.email,
             name: user.name,
-            teamName: team.name,
-            teamSlug: team.slug
+            investment: {
+                team : {
+                    name: team.name,
+                    slug: team.slug,
+                    members: team.members
+                },
+                id : investment._id
+            },
+            teamName: team.name, //TODO remove this, cause is duplicate in team
+            teamSlug: team.slug //TODO remove this, cause is duplicate in team
         }, req.body.pusherSocketID);    
     }
 
