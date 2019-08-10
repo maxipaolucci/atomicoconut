@@ -175,7 +175,8 @@ exports.update = async (req, res, next) => {
 
     //1 - get the investment by ID
     let investment = await getByIdObject(req.body.id, user.email, {
-        investmentDataId : true
+        investmentDataId: true, 
+        teamMembers: true
     });
 
     if (!investment) {
@@ -303,24 +304,28 @@ exports.update = async (req, res, next) => {
     //success
     console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, modelName)}`);
     
-    // Send notification to team members 
-    if (team && investment.team) {
-        // send push notification to client
-        getPusher().trigger(PUSHER_CHANNEL, 'investment-updated', {
-            email: user.email,
-            name: user.name,
-            investment: {
-                team : {
-                    name: team.name,
-                    slug: team.slug,
-                    members: team.members
-                },
-                id : investment._id
-            },
-            teamName: team.name, //TODO remove this, cause is duplicate in team
-            teamSlug: team.slug //TODO remove this, cause is duplicate in team
-        }, req.body.pusherSocketID);    
+
+    let pusherData = {
+        email: user.email,
+        name: user.name,
+        oldInvestment: {
+            team: originalInvestment.team
+        },
+        investment: {
+            team : null,
+            id : investment._id
+        }
     }
+
+    if (team) {
+        pusherData.investment.team = {
+            name: team.name,
+            slug: team.slug,
+            members: team.members
+        }
+    }
+    // send push notification to client
+    getPusher().trigger(PUSHER_CHANNEL, 'investment-updated', pusherData, req.body.pusherSocketID);    
 
     console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Investment')}`);
     res.json({

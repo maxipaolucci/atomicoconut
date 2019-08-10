@@ -98,16 +98,12 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   bindToPushNotificationEvents() {
     // when a user updates an investment
     this.appService.pusherChannel.bind('investment-updated', data => {
-      console.log(data);
-      let reloadData = this.investments.some((investment : Investment) => investment.id == data.inveestment.id);
-      if (!reloadData) {
-        // if the investment is not in my local list check if I am participating of the updated one...
-        //TODOOOOOO I need that the investment updated provides the team members to know if reload is req.
-      
-      
-        //que pasa si se me borra de un equipo asociado a un investment en mi lista, deberia dejar de ver el investment
-        //para eso deberia bindear el evento team-updated, no es algo que deberia hacer aca supongo...
+      let reloadData = this.investments.some((investment : Investment) => investment.id == data.investment.id);
+      if (!reloadData && data.investment.team) {
+        reloadData = data.investment.team.members.some((member: any) => member.email == this.user.email);
       }
+      //TODO OOO que pasa si se me borra de un equipo asociado a un investment en mi lista, deberia dejar de ver el investment
+      //para eso deberia bindear el evento team-updated, no es algo que deberia hacer aca supongo...
 
       if (!reloadData) {
         return;
@@ -133,14 +129,6 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   unbindToPushNotificationEvents() {
     this.appService.pusherChannel.unbind('investment-deleted');
     this.appService.pusherChannel.unbind('investment-updated');
-  }
-
-  /**
-   * Refetch silently the user investments from the server, and update the investment data in the background
-   */
-  fetchInvestmentsSilently() {
-    const newSubscription = this.fetchInvestments$().subscribe((investments : Investment[]) => this.organizeInvestmentsData(investments));
-    this.subscription.add(newSubscription);
   }
 
   /**
@@ -175,6 +163,14 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
 
     this.currencyExchangeService.getCurrencyRates$(investmentsDates); // lets retrieve investment dates for future usage in each investment
     this.investments = investments;
+  }
+
+  /**
+   * Refetch silently the user investments from the server, and update the investment data in the background
+   */
+  fetchInvestmentsSilently() {
+    const newSubscription = this.fetchInvestments$().subscribe((investments : Investment[]) => this.organizeInvestmentsData(investments));
+    this.subscription.add(newSubscription);
   }
 
   /**

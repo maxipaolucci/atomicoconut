@@ -166,12 +166,20 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   showInvestmentNotification(action: string, data: any = {}, teams: Team[] = []) {
-    for (const team of teams) {
-      if (team.slug === data.teamSlug) {
-        this.appService.showResults(`${data.name} has ${action} an investment associated with your team ${data.teamName}.`, 'info', 8000);
-        return;
-      }
+    let myTeam = null;
+    if (data.oldInvestment.team) {
+      myTeam = teams.find((team: Team) => team.slug == data.oldInvestment.team.slug);
     }
+
+    if (!myTeam && data.investment.team) {
+      myTeam = teams.find((team: Team) => team.slug == data.investment.team.slug);
+    }
+
+    if (!myTeam) {
+      return;
+    }
+
+    this.appService.showResults(`${data.name} has ${action} an investment associated with your team ${myTeam.name}.`, 'info', 8000);
   }
 
   /**
