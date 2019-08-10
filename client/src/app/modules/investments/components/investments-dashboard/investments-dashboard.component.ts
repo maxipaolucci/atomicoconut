@@ -106,6 +106,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
       
       
         //que pasa si se me borra de un equipo asociado a un investment en mi lista, deberia dejar de ver el investment
+        //para eso deberia bindear el evento team-updated, no es algo que deberia hacer aca supongo...
       }
 
       if (!reloadData) {
