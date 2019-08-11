@@ -100,6 +100,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     this.appService.pusherChannel.bind('investment-updated', data => {
       let reloadData = this.investments.some((investment : Investment) => investment.id == data.investment.id);
       if (!reloadData && data.investment.team) {
+        // check if the updated investment was associated to one of my teams
         reloadData = data.investment.team.members.some((member: any) => member.email == this.user.email);
       }
       //TODO OOO que pasa si se me borra de un equipo asociado a un investment en mi lista, deberia dejar de ver el investment
@@ -114,12 +115,22 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
 
     // when a user removes an investment
     this.appService.pusherChannel.bind('investment-deleted', data => {
-      console.log(data);
+      let reloadData = this.investments.some((investment : Investment) => investment.id == data.investment.id);
+      if (!reloadData) {
+        return;
+      }
+
+      this.fetchInvestmentsSilently();
     });
 
     // when a user creates an investment
     this.appService.pusherChannel.bind('investment-created', data => {
-      console.log(data);
+      let reloadData = data.investment.team && data.investment.team.members.some((member: any) => member.email == this.user.email);
+      if (!reloadData) {
+        return;
+      }
+
+      this.fetchInvestmentsSilently();
     });
   }
 
@@ -129,6 +140,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   unbindToPushNotificationEvents() {
     this.appService.pusherChannel.unbind('investment-deleted');
     this.appService.pusherChannel.unbind('investment-updated');
+    this.appService.pusherChannel.unbind('investment-created');
   }
 
   /**
@@ -137,6 +149,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
    * @param {Array<Investment>} investments . The investments of the user to organize
    */
   organizeInvestmentsData(investments : Investment[]) {
+    const methodTrace = `${this.constructor.name} > organizeInvestmentsData$() > `; // for debugging
+
     let investmentsRow: any[] = [];
     const investmentsDates: string[] = [];
 
@@ -169,6 +183,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
    * Refetch silently the user investments from the server, and update the investment data in the background
    */
   fetchInvestmentsSilently() {
+    const methodTrace = `${this.constructor.name} > fetchInvestmentsSilently$() > `; // for debugging
+
     const newSubscription = this.fetchInvestments$().subscribe((investments : Investment[]) => this.organizeInvestmentsData(investments));
     this.subscription.add(newSubscription);
   }

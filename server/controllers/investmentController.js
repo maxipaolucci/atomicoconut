@@ -127,9 +127,15 @@ exports.create = async (req, res, next) => {
         getPusher().trigger(PUSHER_CHANNEL, 'investment-created', {
             email: user.email,
             name: user.name,
-            teamName: team.name,
-            teamSlug: team.slug
-        }, req.body.pusherSocketID);    
+            investment: {
+                id: investment._id,
+                team: {
+                    name: team.name,
+                    slug: team.slug,
+                    members: team.members 
+                }
+            }
+        }, req.body.pusherSocketID);  
     }
     
     console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Investment')}`);
@@ -588,7 +594,8 @@ exports.delete = async (req, res) => {
     const user = req.user;
     //1 - get the investment by ID
     const investment = await getByIdObject(req.params.id, user.email, {
-        investmentDataId : true
+        investmentDataId : true,
+        teamMembers: true
     });
 
     if (!investment){
@@ -672,14 +679,21 @@ exports.delete = async (req, res) => {
 
     // Send notification to team members 
     if (investment.team) {
-        console.log(investment.team);
-        // send push notification to client
-        getPusher().trigger(PUSHER_CHANNEL, 'investment-deleted', {
+        const pusherData = {
             email: user.email,
             name: user.name,
-            teamName: investment.team.name,
-            teamSlug: investment.team.slug
-        }, req.query.pusherSocketID);    
+            investment: {
+                id: investment._id,
+                team: {
+                    name: investment.team.name,
+                    slug: investment.team.slug,
+                    members: investment.team.members 
+                }
+            }
+        };
+        
+        // send push notification to client
+        getPusher().trigger(PUSHER_CHANNEL, 'investment-deleted', pusherData, req.query.pusherSocketID);    
     }
 
     //Success deleting investment

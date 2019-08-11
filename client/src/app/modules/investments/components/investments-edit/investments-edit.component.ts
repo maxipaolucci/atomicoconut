@@ -65,6 +65,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Investments', url: '/investments', selected: false }
     ]);
+
+    //start listening to Pusher notifications related to this component
+    this.bindToPushNotificationEvents();
     
     // generates a user source object from authUser from resolver
     const user$ = this.route.data.pipe(map((data: { authUser: User }): User => data.authUser));
@@ -245,11 +248,29 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.subscription.add(this.formChangesSubscription);
   }
 
+  /**
+   * Start listening to Pusher notifications comming from server
+   */
+  bindToPushNotificationEvents() {
+    this.appService.pusherChannel.bind('investment-deleted', data => {
+      if (this.investment.id == data.investment.id) {
+        this.router.navigate(['/investments']);
+      }
+    });
+  }
+
+  /**
+   * Stop listening to Pusher notifications comming from server
+   */
+  unbindToPushNotificationEvents() {
+    this.appService.pusherChannel.unbind('investment-deleted');
+  }
+
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
     
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
+    this.unbindToPushNotificationEvents();
   }
 
   onSubmit() {

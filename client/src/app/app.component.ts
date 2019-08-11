@@ -119,17 +119,17 @@ export class AppComponent implements OnInit, OnDestroy {
       this.subscription.add(newSubscription);
     });
 
-    this.appService.pusherChannel.bind('investment-updated', data => {
+    this.appService.pusherChannel.bind('investment-updated', (data: any) => {
       const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe((teams: Team[]) => this.showInvestmentNotification('updated', data, teams));
       this.subscription.add(newSubscription);
     });
 
-    this.appService.pusherChannel.bind('investment-deleted', data => {
+    this.appService.pusherChannel.bind('investment-deleted', (data: any) => {
       const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe((teams: Team[]) => this.showInvestmentNotification('deleted', data, teams));
       this.subscription.add(newSubscription);
     });
 
-    this.appService.pusherChannel.bind('team-updated', data => {
+    this.appService.pusherChannel.bind('team-updated', (data: any) => {
       if (data && data.team.memberState[this.user.email]) {
         const currentUserState = data.team.memberState[this.user.email];
         switch(currentUserState) {
@@ -167,15 +167,18 @@ export class AppComponent implements OnInit, OnDestroy {
 
   showInvestmentNotification(action: string, data: any = {}, teams: Team[] = []) {
     let myTeam = null;
-    if (data.oldInvestment.team) {
+    if (data.oldInvestment && data.oldInvestment.team) {
+      // check if I as part of the original investment before the update
       myTeam = teams.find((team: Team) => team.slug == data.oldInvestment.team.slug);
     }
 
     if (!myTeam && data.investment.team) {
+      // check if I am part of the updated investment
       myTeam = teams.find((team: Team) => team.slug == data.investment.team.slug);
     }
 
     if (!myTeam) {
+      // I was not and I am not part of the investment 
       return;
     }
 
