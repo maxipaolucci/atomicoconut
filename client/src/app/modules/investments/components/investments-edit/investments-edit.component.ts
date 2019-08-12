@@ -257,6 +257,14 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         this.router.navigate(['/investments']);
       }
     });
+
+    // when a user updates a team
+    this.appService.pusherChannel.bind('team-updated', data => {
+      if (data.team && data.team.slug == this.investment.team.slug && data.team.memberState[this.user.email] == 'remove') {
+        // the user was removed from the investment team
+        this.router.navigate(['/investments']);
+      }
+    });
   }
 
   /**

@@ -131,7 +131,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
       this.fetchInvestmentsSilently();
     });
 
-    // when a user updates an investment
+    // when a user updates a team
     this.appService.pusherChannel.bind('team-updated', data => {
       let reloadData = data.team && data.team.memberState[this.user.email];
       
