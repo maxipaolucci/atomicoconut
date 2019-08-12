@@ -103,8 +103,6 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         // check if the updated investment was associated to one of my teams
         reloadData = data.investment.team.members.some((member: any) => member.email == this.user.email);
       }
-      //TODO OOO que pasa si se me borra de un equipo asociado a un investment en mi lista, deberia dejar de ver el investment
-      //para eso deberia bindear el evento team-updated, no es algo que deberia hacer aca supongo...
 
       if (!reloadData) {
         return;
@@ -132,6 +130,18 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
 
       this.fetchInvestmentsSilently();
     });
+
+    // when a user updates an investment
+    this.appService.pusherChannel.bind('team-updated', data => {
+      let reloadData = data.team && data.team.memberState[this.user.email];
+      
+      if (!reloadData) {
+        return;
+      }
+
+      this.fetchTeamsSilently();
+      this.fetchInvestmentsSilently();
+    });
   }
 
   /**
@@ -141,6 +151,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     this.appService.pusherChannel.unbind('investment-deleted');
     this.appService.pusherChannel.unbind('investment-updated');
     this.appService.pusherChannel.unbind('investment-created');
+    this.appService.pusherChannel.unbind('team-updated');
   }
 
   /**
@@ -223,7 +234,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     this.teams = [];
     this.getTeamsServiceRunning = true;
 
-    const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe(
+    const newSubscription = this.fetchTeams$().subscribe(
       (teams: Team[]) => {
         this.teams = teams;
         this.getTeamsServiceRunning = false;
@@ -241,6 +252,27 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     );
 
     this.subscription.add(newSubscription);
+  }
+
+  /**
+   * Refetch silently the user teams from the server, and update the teams data in the background
+   */
+  fetchTeamsSilently() {
+    const methodTrace = `${this.constructor.name} > fetchTeamsSilently$() > `; // for debugging
+
+    const newSubscription = this.fetchTeams$().subscribe((teams : Team[]) => this.teams = teams);
+    this.subscription.add(newSubscription);
+  }
+
+  /**
+   * Get a teams observable from server
+   * 
+   * @return { Observable<Team[]> }
+   */
+  fetchTeams$(): Observable<Team[]> {
+    const methodTrace = `${this.constructor.name} > fetchTeams$() > `; // for debugging
+    
+    return this.teamsService.getTeams$(this.user.email);
   }
 
   setTotals(totalReturns: any): void {
