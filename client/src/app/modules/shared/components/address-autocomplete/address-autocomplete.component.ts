@@ -14,8 +14,8 @@ import { NgModel } from '@angular/forms';
 })
 export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('addressAutocompleteForm') form;
-  @ViewChild('addressInput') addressInput: NgModel;
+  @ViewChild('addressAutocompleteForm', {static: false}) form;
+  @ViewChild('addressInput', {static: false}) addressInput: NgModel;
   @Input() id: string;
   @Input() placeHolder: string;
   @Input() defaultValues: any = null; // the default values of the component model

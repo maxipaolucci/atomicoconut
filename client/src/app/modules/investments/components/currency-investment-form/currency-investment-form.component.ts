@@ -13,7 +13,7 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class CurrencyInvestmentFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('editCurrencyInvestmentForm') form;
+  @ViewChild('editCurrencyInvestmentForm', {static: false}) form;
   @Input() defaultValues: any = null; // the default values of the component model  
   @Output() values: EventEmitter<any> = new EventEmitter();
   model: any = {

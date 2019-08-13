@@ -11,7 +11,7 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class PropertyYieldsDialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('propertyYieldsDialogForm') form;
+  @ViewChild('propertyYieldsDialogForm', {static: false}) form;
   model: any = {};
   formChangesSubscription: any = null;
   subscription: Subscription = new Subscription();

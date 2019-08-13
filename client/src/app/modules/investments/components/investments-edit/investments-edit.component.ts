@@ -23,7 +23,7 @@ import { PropertyInvestment } from '../../models/propertyInvestment';
 })
 export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('editInvestmentForm') form;
+  @ViewChild('editInvestmentForm', {static: false}) form;
   editMode = false;
   user: User = null;
   teams: Team[] = [];

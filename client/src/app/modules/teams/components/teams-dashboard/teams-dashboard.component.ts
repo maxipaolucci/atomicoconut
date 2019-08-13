@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +8,6 @@ import { Team } from '../../models/team';
 import { User } from '../../../users/models/user';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { Subscription, Observable, of } from 'rxjs';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { map, switchMap } from 'rxjs/operators';
 
 @Component({

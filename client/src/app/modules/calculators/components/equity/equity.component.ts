@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./equity.component.scss']
 })
 export class EquityComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('equityForm') form;
+  @ViewChild('equityForm', {static: false}) form;
 
   loanAmount = 0;
   discount = 0;
