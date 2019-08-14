@@ -24,8 +24,8 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   @Output() selectedProperty: EventEmitter<Property> = new EventEmitter();
   @Output() onPropertiesLoad: EventEmitter<number> = new EventEmitter();
   
-  @ViewChild('propertiesPaginator') propertiesTablePaginator: MatPaginator;
-  @ViewChild(MatSort) propertiesSort: MatSort;
+  @ViewChild('propertiesPaginator', {static: false}) propertiesTablePaginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) propertiesSort: MatSort;
   
   properties: Property[] = [];
   propertiesDataSource: MatTableDataSource<Property> = new MatTableDataSource([]);
@@ -36,7 +36,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   propertyTableActionRunning = false;
   displayedColumns: string[] = [];
 
-  constructor(private appService: AppService, private propertiesService: PropertiesService, public dialog: MatDialog, private router: Router) { }
+  constructor(private appService: AppService, public propertiesService: PropertiesService, public dialog: MatDialog, private router: Router) { }
 
 
   ngOnInit() {

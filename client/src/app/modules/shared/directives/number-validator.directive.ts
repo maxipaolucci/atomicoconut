@@ -1,6 +1,5 @@
-import { Directive, Input, Attribute } from '@angular/core';
-import { Validator, AbstractControl, NG_VALIDATORS } from '@angular/forms';
-import { validateConfig } from '@angular/router/src/config';
+import { Directive, Attribute } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS } from '@angular/forms';
 
 @Directive({
   selector: '[numberValidator]',

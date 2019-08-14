@@ -1,10 +1,10 @@
-FROM node:8-alpine as builder
+FROM node:10.16.2-alpine as builder
 
 RUN node -v && npm -v
 
 WORKDIR /app
 
-RUN npm install -g @angular/cli@7.0.3
+RUN npm install -g @angular/cli
 
 COPY ./package.json ./
 
