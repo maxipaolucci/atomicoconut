@@ -20,6 +20,13 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { PropertiesModule } from './modules/properties/properties.module';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './modules/shared/custom-router-serializer';
 
 @NgModule({
   imports: [
@@ -34,7 +41,17 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     InvestmentsModule,
     CalculatorsModule,
     PropertiesModule,
-    AppRoutingModule
+    AppRoutingModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers, 
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      }
+    }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer })
   ],
   declarations: [
     AppComponent,

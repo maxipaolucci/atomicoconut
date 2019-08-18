@@ -209,9 +209,10 @@ export class UsersService {
    */
   updateSessionState(time: number = 600000) {
     const methodTrace = `${this.constructor.name} > updateSessionState() > `; // for debugging
-
+    
     interval(time).pipe(
       flatMap((checkNumber: number) => {
+        console.log(methodTrace, checkNumber);
         const user: User = this.getUser();
         const params = {
           financialInfo: user && user.financialInfo ? true : false,

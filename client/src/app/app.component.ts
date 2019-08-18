@@ -63,8 +63,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }); // start listening the source of user
     this.subscription.add(newSubcription);
 
-    // start tracking user changes every 10min (600000ms)
-    this.usersService.updateSessionState(600000);
+    // start tracking user changes every
+    this.usersService.updateSessionState();
 
     this.getCryptoRates('BTC');
     this.getCryptoRates('XMR');

@@ -137,19 +137,21 @@ export class TeamsService {
           catchError(this.appService.handleError)
         );
     
-    return teamsData$.pipe(flatMap((teamsData): Observable<Team[]> => {
-      const teams: Team[] = [];
+    return teamsData$.pipe(
+      flatMap((teamsData): Observable<Team[]> => {
+        const teams: Team[] = [];
 
-      if (teamsData && teamsData instanceof Array) {
-        for (const item of teamsData) {
-          teams.push(this.populate(item));
+        if (teamsData && teamsData instanceof Array) {
+          for (const item of teamsData) {
+            teams.push(this.populate(item));
+          }
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
-      } else {
-        this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-      }
 
-      return of(teams);
-    }));
+        return of(teams);
+      })
+    );
   }
 
   /**
