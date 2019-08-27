@@ -52,9 +52,7 @@ export class CurrencyExchangeService {
         }
 
         return this.currencyRates;
-      }),
-      catchError(this.appService.handleError),
-      retry(3)
+      })
     );
   }
 
@@ -76,8 +74,7 @@ export class CurrencyExchangeService {
         }
         
         return of(this.cryptoRates[crypto.toUpperCase()]);
-      }),
-      catchError(this.appService.handleError) 
+      }) 
     );
   }
 

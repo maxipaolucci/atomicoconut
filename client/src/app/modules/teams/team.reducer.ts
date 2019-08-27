@@ -6,7 +6,7 @@ export const teamsFeatureKey = 'teams';
 
 export interface State extends EntityState<Team> {
   // additional entities state properties
-  initial: boolean;
+  allTeamsLoaded: boolean;
 }
 
 export const adapter: EntityAdapter<Team> = createEntityAdapter<Team>(
@@ -17,14 +17,14 @@ export const adapter: EntityAdapter<Team> = createEntityAdapter<Team>(
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
-  initial: true
+  allTeamsLoaded: false
 });
 
 export function reducer(state = initialState, action: TeamActions): State {
   switch (action.type) { 
 
     case TeamActionTypes.LoadTeams: {
-      return adapter.addAll(action.payload.teams, { ...state, initial: false });
+      return adapter.addAll(action.payload.teams, { ...state, allTeamsLoaded: true });
     }
     
     default: {
@@ -33,7 +33,7 @@ export function reducer(state = initialState, action: TeamActions): State {
   }
 }
 
-export const isInitialState = (state: State) => state.initial;
+export const allTeamsLoaded = (state: State) => state.allTeamsLoaded;
 
 export const {
   selectAll,

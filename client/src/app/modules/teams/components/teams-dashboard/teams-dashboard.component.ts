@@ -7,15 +7,15 @@ import { AppService } from '../../../../app.service';
 import { Team } from '../../models/team';
 import { User } from '../../../users/models/user';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
-import { Subscription, Observable, of, BehaviorSubject } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { Subscription, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
 import { LoadTeams } from '../../team.actions';
-import { ProgressBarDialogComponent } from 'src/app/modules/shared/components/progress-bar-dialog/progress-bar-dialog.component';
-import { Dictionary } from '@ngrx/entity';
+import { ProgressBarDialogComponent } from '../../../shared/components/progress-bar-dialog/progress-bar-dialog.component';
 import { UsersService } from 'src/app/modules/users/users.service';
-
+import { RequestTeams } from '../../team.actions';
+import { teamsSelector } from '../../team.selectors';
 
 @Component({
   selector: 'app-teams-dashboard',
@@ -48,7 +48,23 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
       { displayName: 'Teams', url: null, selected: true }
     ]);
 
+    this.getTeamsServiceRunning = true;
     this.user = this.usersService.getUser();
+    this.store.dispatch(new RequestTeams({ userEmail: this.user.email, forceServerRequest: false }));
+    this.teams$ = this.store.pipe(
+      select(teamsSelector()),
+    );
+
+    const newSubscription = this.teams$.subscribe((teams: Team[]) => {
+      this.teams = teams;
+      this.bindToPushNotificationEvents();
+      this.teamActionRunning = new Array(teams.length).fill(false);
+      this.getTeamsServiceRunning = false;
+    }, (error: any) => {
+      this.getTeamsServiceRunning = false;
+      this.teams = [];
+    });
+    this.subscription.add(newSubscription);
 
     // Create a teams$ observer from the store
     // this.teams$ = this.store.pipe(
@@ -67,11 +83,10 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     // this.route.data.subscribe((data: { authUser: User }) => {
     //   this.user = data.authUser;
     // });
-    this.route.data.subscribe((data: { teams: Team[] }) => {
-      console.log(data.teams);
-      this.teams$ = of(data.teams);
-      this.teams = data.teams;
-    });
+    // this.route.data.subscribe((data: { teams: Team[] }) => {
+    //   console.log(data.teams);
+    //   this.teams = data.teams;
+    // });
     // generates a user source object from authUser from resolver
     //const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
     // user$.subscribe(
@@ -122,7 +137,6 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > bindToPushNotificationEvents$() > `; // for debugging
     // when a user updates a team
     this.appService.pusherChannel.bind('team-updated', data => {
-      //console.log(`${methodTrace} current teams: `,this.teams$.getValue());
       let reloadData = this.teams.some((team : Team) => team.slug == data.team.slug);
       if (!reloadData) {
         // if the team is not in my local list check if I am in the list of member of the updated one...
@@ -159,20 +173,21 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
    * Refetch silently the teams from the server, and update the team data in the background
    */
   fetchTeamsSilently() {
-    this.fetchTeams$();
+    this.store.dispatch(new RequestTeams({ userEmail: this.user.email, forceServerRequest: true }));
+    // this.fetchTeams$();
   }
 
   /**
    * Make and explicit request for user teams to the server and returns a teams observable
    */
-  getTeams$() {
-    const methodTrace = `${this.constructor.name} > getTeams$() > `; // for debugging
+  // getTeams$() {
+  //   const methodTrace = `${this.constructor.name} > getTeams$() > `; // for debugging
 
-    this.teams = [];
-    this.getTeamsServiceRunning = true;
+  //   this.teams = [];
+  //   this.getTeamsServiceRunning = true;
     
-    return this.fetchTeams$();
-  }
+  //   return this.fetchTeams$();
+  // }
 
   /**
    * Get a teams observable from server

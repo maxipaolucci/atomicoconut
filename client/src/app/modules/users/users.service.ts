@@ -61,8 +61,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -91,8 +90,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -118,8 +116,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -147,8 +144,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -196,8 +192,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -249,8 +244,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -263,8 +257,7 @@ export class UsersService {
     const methodTrace = `${this.constructor.name} > forgot$() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/account/forgot`, postData, { headers : this.headers }).pipe(
-      map(this.appService.extractData),
-      catchError(this.appService.handleError)
+      map(this.appService.extractData)
     );
   }
 
@@ -292,8 +285,7 @@ export class UsersService {
             }
     
             return of(user);
-          }),
-          catchError(this.appService.handleError)
+          })
         );
   }
 
@@ -310,8 +302,7 @@ export class UsersService {
       flatMap((data: any): Observable<null> => {
         this.setUser(null);
         return of(null);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 }

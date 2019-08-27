@@ -435,7 +435,7 @@ exports.getAllTeams = async (req, res) => {
     for (let teamId of Object.keys(teamsObj)) {
         result.push(teamsObj[teamId]);
     }
-
+    
     //5 - Return teams info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
     res.json({

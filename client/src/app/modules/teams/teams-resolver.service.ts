@@ -7,11 +7,11 @@ import { UsersService } from '../users/users.service';
 import { AppService } from '../../app.service';
 import { MatDialog } from '@angular/material';
 import { ProgressBarDialogComponent } from '../shared/components/progress-bar-dialog/progress-bar-dialog.component';
-import { AppState } from 'src/app/reducers';
+import { AppState } from '../../reducers';
 import { Store, select } from '@ngrx/store';
 import { Team } from './models/team';
 import { RequestTeams } from './team.actions';
-import { teamsSelector, selectIsInitialState } from './team.selectors';
+import { teamsSelector, allTeamsLoaded } from './team.selectors';
 
 
 @Injectable()
@@ -32,7 +32,7 @@ export class TeamsResolver implements Resolve<any> {
     const user: User = this.usersService.getUser(); //thanks to auth guard I know there is a user logged in
     return this.store.pipe(
       select(teamsSelector()),
-      combineLatest(this.store.select(selectIsInitialState()), (teams: Team[], isInitialState: boolean) => {
+      combineLatest(this.store.select(allTeamsLoaded()), (teams: Team[], isInitialState: boolean) => {
         return { isInitialState, teams };
       }),
       tap(data => {
@@ -40,7 +40,7 @@ export class TeamsResolver implements Resolve<any> {
           // the initial state assigned from the ngrx adapter is [], so in this case we are not sure if it is 
           // empty due that it was never loaded before or because the user has not got any teams so lets fetch it
           // Anyway this is going to happen every time the user access the teams dashboard with no teams
-          this.store.dispatch(new RequestTeams({ userEmail: user.email }))
+          this.store.dispatch(new RequestTeams({ userEmail: user.email, forceServerRequest: true }))
         }
       }),
       filter(data => !(!data.teams.length && data.isInitialState) ), //if the teams is undefined then filter this element, and wait the dispatched request event

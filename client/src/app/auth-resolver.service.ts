@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, retry } from 'rxjs/operators';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { User } from './modules/users/models/user';
 import { UsersService } from './modules/users/users.service';
@@ -36,6 +36,7 @@ export class AuthResolver implements Resolve<User> {
             return user;
           }
         }),
+        retry(1),
         catchError((error: any): Observable<User> => {
           this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
           return of(user);

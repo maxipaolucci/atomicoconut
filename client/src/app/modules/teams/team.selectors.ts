@@ -1,6 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import * as fromTeam from  './team.reducer';
-import { Team } from './models/team';
 
 
 export const selectTeamsState = createFeatureSelector<fromTeam.State>("teams");
@@ -10,7 +9,7 @@ export const teamsSelector = () => createSelector(
   fromTeam.selectAll
 );
 
-export const selectIsInitialState = () => createSelector(
+export const allTeamsLoaded = () => createSelector(
   selectTeamsState,
-  fromTeam.isInitialState
+  fromTeam.allTeamsLoaded
 );

@@ -15,7 +15,7 @@ export class LoadTeams implements Action {
 export class RequestTeams implements Action {
   readonly type = TeamActionTypes.RequestTeams;
 
-  constructor(public payload: { userEmail: string }) {}
+  constructor(public payload: { userEmail: string, forceServerRequest: boolean }) {}
 }
 
 export type TeamActions = LoadTeams | RequestTeams

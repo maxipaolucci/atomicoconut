@@ -30,8 +30,7 @@ export class PropertiesService {
     const methodTrace = `${this.constructor.name} > create() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers }).pipe(
-      map(this.appService.extractData),
-      catchError(this.appService.handleError)
+      map(this.appService.extractData)
     );
   } 
   
@@ -50,8 +49,7 @@ export class PropertiesService {
     postData = this.generateFormData(postData);
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData).pipe(
-      map(this.appService.extractData),
-      catchError(this.appService.handleError)
+      map(this.appService.extractData)
     );
   }
 
@@ -88,8 +86,7 @@ export class PropertiesService {
       map(this.appService.extractData),
       flatMap((data) => {
         return of(this.populate(data));
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -167,8 +164,7 @@ export class PropertiesService {
         }
   
         return of(properties);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -193,8 +189,7 @@ export class PropertiesService {
         .set('pusherSocketID', this.appService.pusherSocketID);
     
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } ).pipe(
-      map(this.appService.extractData),
-      catchError(this.appService.handleError)
+      map(this.appService.extractData)
     );
   }
 

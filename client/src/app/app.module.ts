@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import 'hammerjs';
@@ -27,6 +27,7 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './modules/shared/custom-router-serializer';
+import { HttpErrorInterceptor } from './http-error.interceptor';
 
 @NgModule({
   imports: [
@@ -58,7 +59,17 @@ import { CustomSerializer } from './modules/shared/custom-router-serializer';
     WelcomeComponent,
     PageNotFoundComponent
   ],
-  providers: [AppService, UtilService, CurrencyExchangeService, AuthResolver],
+  providers: [
+    AppService, 
+    UtilService, 
+    CurrencyExchangeService, 
+    AuthResolver,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -28,10 +28,7 @@ const routes: Routes = [
       { 
         path : '', 
         pathMatch : 'full',
-        component : TeamsDashboardComponent,
-        resolve : {
-          teams: TeamsResolver
-        }
+        component : TeamsDashboardComponent
       }
     ]
   }

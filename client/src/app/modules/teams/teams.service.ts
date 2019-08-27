@@ -7,10 +7,13 @@ import { User } from '../users/models/user';
 import { Observable } from 'rxjs';
 import { Response } from '../../models/response';
 import { of } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 import { map, catchError, flatMap } from 'rxjs/operators';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class TeamsService {
 
   private serverHost: string = environment.apiHost + '/api/teams';
@@ -29,7 +32,6 @@ export class TeamsService {
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      catchError(this.appService.handleError),
       flatMap((data: any): Observable<Team> => {
         return of(this.populate(data));
       })
@@ -50,7 +52,6 @@ export class TeamsService {
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      catchError(this.appService.handleError),
       flatMap((data: any): Observable<Team> => {
         if (data && data.team && data.team.slug) {
           const messages: any[] = [
@@ -108,7 +109,6 @@ export class TeamsService {
 
     return this.http.get<Response>(`${this.serverHost}/getMyTeamBySlug`, { params }).pipe(
       map(this.appService.extractData),
-      catchError(this.appService.handleError),
       flatMap((data: any): Observable<Team> => {
         return of(this.populate(data));
       })
@@ -131,13 +131,8 @@ export class TeamsService {
 
     const params = new HttpParams().set('email', email);
 
-    const teamsData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
-        .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
-        );
-    
-    return teamsData$.pipe(
+    return this.http.get<Response>(`${this.serverHost}/getAll`, { params }).pipe(
+      map(this.appService.extractData),
       flatMap((teamsData): Observable<Team[]> => {
         const teams: Team[] = [];
 
@@ -202,8 +197,7 @@ export class TeamsService {
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${slug}`, {headers : this.headers, params } )
         .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
+          map(this.appService.extractData)
         );
   }
 }
