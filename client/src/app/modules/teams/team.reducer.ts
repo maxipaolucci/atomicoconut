@@ -21,10 +21,16 @@ export const initialState: State = adapter.getInitialState({
 });
 
 export function reducer(state = initialState, action: TeamActions): State {
+  const methodTrace = `team > reducer( ${action.type} ) > `; // for debugging
+
   switch (action.type) { 
 
     case TeamActionTypes.LoadTeams: {
       return adapter.addAll(action.payload.teams, { ...state, allTeamsLoaded: true });
+    }
+
+    case TeamActionTypes.DeleteTeam: {
+      return adapter.removeOne(action.payload.slug, { ...state });
     }
     
     default: {

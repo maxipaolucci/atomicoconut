@@ -11,7 +11,7 @@ import { Subscription, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
-import { LoadTeams } from '../../team.actions';
+import { LoadTeams, RequestDeleteTeam } from '../../team.actions';
 import { ProgressBarDialogComponent } from '../../../shared/components/progress-bar-dialog/progress-bar-dialog.component';
 import { UsersService } from 'src/app/modules/users/users.service';
 import { RequestTeams } from '../../team.actions';
@@ -30,6 +30,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   teams: Team[] = [];
   teams$: Observable<any> = null;
   subscription: Subscription = new Subscription();
+  bindedToPushNotifications: boolean = false;
 
   constructor(
     private route: ActivatedRoute, 
@@ -56,12 +57,16 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     );
 
     const newSubscription = this.teams$.subscribe((teams: Team[]) => {
+      console.log(teams);
       this.teams = teams;
-      this.bindToPushNotificationEvents();
+      if (!this.bindedToPushNotifications) {
+        this.bindToPushNotificationEvents();
+      }
       this.teamActionRunning = new Array(teams.length).fill(false);
       this.getTeamsServiceRunning = false;
     }, (error: any) => {
       this.getTeamsServiceRunning = false;
+      this.teamActionRunning = [];
       this.teams = [];
     });
     this.subscription.add(newSubscription);
@@ -159,6 +164,8 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
       this.fetchTeamsSilently();
     });
+
+    this.bindedToPushNotifications = true;
   }
 
   /**
@@ -192,32 +199,32 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   /**
    * Get a teams observable from server
    */
-  fetchTeams$() {
-    const methodTrace = `${this.constructor.name} > fetchTeams$() > `; // for debugging
+  // fetchTeams$() {
+  //   const methodTrace = `${this.constructor.name} > fetchTeams$() > `; // for debugging
 
-    return this.teamsService.getTeams$(this.user.email)
-      .pipe(
-        tap((teams : Team[]) => {
-          this.store.dispatch(new LoadTeams({ teams }));
-        })
-      );
-  }
+  //   return this.teamsService.getTeams$(this.user.email)
+  //     .pipe(
+  //       tap((teams : Team[]) => {
+  //         this.store.dispatch(new LoadTeams({ teams }));
+  //       })
+  //     );
+  // }
 
-  openProgressBarDialog() {
-    const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
+  // openProgressBarDialog() {
+  //   const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
     
-    const progressBarDialogRef = this.dialog.open(ProgressBarDialogComponent, {
-      width: '250px',
-      disableClose: true,
-      data: {
-        color : 'primary', 
-        message : `Loading teams...`,
-        extraClasses: 'pepe-class' 
-      }
-    });
+  //   const progressBarDialogRef = this.dialog.open(ProgressBarDialogComponent, {
+  //     width: '250px',
+  //     disableClose: true,
+  //     data: {
+  //       color : 'primary', 
+  //       message : `Loading teams...`,
+  //       extraClasses: 'pepe-class' 
+  //     }
+  //   });
 
-    return false;
-  }
+  //   return false;
+  // }
 
   openDeleteTeamDialog(index: number, team: Team = null) {
     const methodTrace = `${this.constructor.name} > openDeleteTeamDialog() > `; // for debugging
@@ -253,33 +260,68 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
     this.teamActionRunning[index] = true;
 
-    const newSubscription = this.teamsService.delete$(team.slug, this.user.email).subscribe(
-      (data: any) => {
-        if (data && data.removed > 0) {
-          this.teams.splice(index, 1);
-          this.teamActionRunning.splice(index, 1);
-          this.appService.showResults(`Team "${team.name}" successfully removed!`, 'success');
-        } else {
-          this.appService.showResults(`Team "${team.name}" could not be removed, please try again.`, 'error');
-        }
+    this.store.dispatch(new RequestDeleteTeam({ userEmail: this.user.email, slug: team.slug }));
 
-        this.teamActionRunning[index] = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-        } else if (error.codeno === 471) {
-          this.appService.showResults(error.msg, 'error', 7000);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-        }
+    // const newSubscription = this.teamsService.delete$(team.slug, this.user.email).subscribe(
+    //   (data: any) => {
+    //     if (data && data.removed > 0) {
+    //       this.teams.splice(index, 1);
+    //       this.teamActionRunning.splice(index, 1);
+    //       this.appService.showResults(`Team "${team.name}" successfully removed!`, 'success');
+    //     } else {
+    //       this.appService.showResults(`Team "${team.name}" could not be removed, please try again.`, 'error');
+    //     }
 
-        this.teamActionRunning[index] = false;
-      }
-    );
+    //     this.teamActionRunning[index] = false;
+    //   },
+    //   (error: any) => {
+    //     this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+    //     if (error.codeno === 400) {
+    //       this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+    //     } else if (error.codeno === 471) {
+    //       this.appService.showResults(error.msg, 'error', 7000);
+    //     } else {
+    //       this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+    //     }
 
-    this.subscription.add(newSubscription);
+    //     this.teamActionRunning[index] = false;
+    //   }
+    // );
+
+    // this.subscription.add(newSubscription);
   }
+  // delete(index: number, team: Team = null) {
+  //   const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
+
+  //   this.teamActionRunning[index] = true;
+
+  //   const newSubscription = this.teamsService.delete$(team.slug, this.user.email).subscribe(
+  //     (data: any) => {
+  //       if (data && data.removed > 0) {
+  //         this.teams.splice(index, 1);
+  //         this.teamActionRunning.splice(index, 1);
+  //         this.appService.showResults(`Team "${team.name}" successfully removed!`, 'success');
+  //       } else {
+  //         this.appService.showResults(`Team "${team.name}" could not be removed, please try again.`, 'error');
+  //       }
+
+  //       this.teamActionRunning[index] = false;
+  //     },
+  //     (error: any) => {
+  //       this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+  //       if (error.codeno === 400) {
+  //         this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+  //       } else if (error.codeno === 471) {
+  //         this.appService.showResults(error.msg, 'error', 7000);
+  //       } else {
+  //         this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+  //       }
+
+  //       this.teamActionRunning[index] = false;
+  //     }
+  //   );
+
+  //   this.subscription.add(newSubscription);
+  // }
 
 }

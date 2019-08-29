@@ -605,7 +605,7 @@ exports.delete = async (req, res) => {
     const user = req.user;
     const team = await getTeamBySlugObject(req.params.slug, req.query.email, { withId : true, withInvestments : true });
 
-    if (!team) {
+    if (team) {
         console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
         res.status(401).json({ 
             status : "error", 
@@ -613,6 +613,8 @@ exports.delete = async (req, res) => {
             msg : getMessage('error', 461, null, false, 'Team'),
             data : null
         });
+
+        return;
     }
 
     if (team && team.admin && team.admin.email !== req.query.email) {
@@ -681,7 +683,13 @@ exports.delete = async (req, res) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1039, null, false, 'Team'),
-        data : { removed : writeResult.n }
+        data : { 
+            removed: writeResult.n, 
+            team: {
+                slug: team.slug,
+                name: team.name
+            }
+        }
     });
 };
 
