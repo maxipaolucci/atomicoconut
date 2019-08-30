@@ -6,7 +6,8 @@ export enum TeamActionTypes {
   LoadTeams = '[Team] Load Teams',
   RequestTeams = '[Team] Request Teams',
   DeleteTeam = '[Team] Delete Team',
-  RequestDeleteTeam = '[Team] Request Delete Team'
+  RequestDeleteTeam = '[Team] Request Delete Team',
+  // RequestTeam = '[Team] Request Team'
 }
 
 export class CancelRequest implements Action {
@@ -36,6 +37,12 @@ export class DeleteTeam implements Action {
 
   constructor(public payload: { slug: string }) {}
 }
+
+// export class RequestTeam implements Action {
+//   readonly type = TeamActionTypes.RequestTeam;
+
+//   constructor(public payload: { userEmail: string, slug: string }) {}
+// }
 
 export type TeamActions = CancelRequest | 
     LoadTeams | RequestTeams | 

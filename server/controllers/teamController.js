@@ -436,17 +436,14 @@ exports.getAllTeams = async (req, res) => {
         result.push(teamsObj[teamId]);
     }
     
-    setTimeout(function() {
-        //5 - Return teams info to the user.
-        console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
-        res.json({
-            status : 'success', 
-            codeno : 200,
-            msg : getMessage('message', 1036, null, false, teams.length, 'Team(s)'),
-            data : result
-        });    
-    }, 3000);
-    
+    //5 - Return teams info to the user.
+    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1036, null, false, teams.length, 'Team(s)'),
+        data : result
+    });
 };
 
 
