@@ -28,6 +28,13 @@ export function reducer(state = initialState, action: TeamActions): State {
 
   switch (action.type) { 
 
+    case TeamActionTypes.CancelRequest: {
+      return {
+        ...state,
+        loadingData: null
+      };
+    }
+
     case TeamActionTypes.RequestTeams: {
       return {
         ...state,
@@ -39,7 +46,11 @@ export function reducer(state = initialState, action: TeamActions): State {
     }
 
     case TeamActionTypes.LoadTeams: {
-      return adapter.addAll(action.payload.teams, { ...state, allTeamsLoaded: true, loadingData: null });
+      return adapter.addAll(action.payload.teams, { 
+        ...state, 
+        allTeamsLoaded: action.payload.serverError ? false : true, 
+        loadingData: null 
+      });
     }
 
     case TeamActionTypes.RequestDeleteTeam: {
@@ -53,7 +64,10 @@ export function reducer(state = initialState, action: TeamActions): State {
     }
 
     case TeamActionTypes.DeleteTeam: {
-      return adapter.removeOne(action.payload.slug, { ...state, loadingData: null });
+      return adapter.removeOne(action.payload.slug, { 
+        ...state, 
+        loadingData: null 
+      });
     }
     
     default: {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { TeamActionTypes, RequestTeams, LoadTeams, RequestDeleteTeam, DeleteTeam, CancelRequest } from './team.actions';
 import { TeamsService } from './teams.service';
-import { mergeMap, map, withLatestFrom, filter, catchError, partition } from 'rxjs/operators';
+import { mergeMap, map, withLatestFrom, filter, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Team } from './models/team';
 import { allTeamsLoaded } from './team.selectors';
@@ -23,12 +23,23 @@ export class TeamEffects {
         return true;
       } else {
         // teams are in the store 
-        this.store.dispatch(new CancelRequest);
+        this.store.dispatch(new CancelRequest());
         return false;
       }
-    }), //filter action if teams are loaded
-    mergeMap(([{ payload }, allTeamsLoaded]) => this.teamsService.getTeams$(payload.userEmail)),
-    map((teams: Team[]) => new LoadTeams({ teams })) //dispatch the action to save the value in the store
+    }),
+    mergeMap(([{ payload }, allTeamsLoaded]) => this.teamsService.getTeams$(payload.userEmail)
+      .pipe(
+        catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+      )
+    ),
+    map((teams: Team[]) => {
+      //dispatch the action to save the value in the store
+      if (teams) {
+        return new LoadTeams({ teams });
+      }
+
+      return new LoadTeams({ teams: [], serverError: true }); //avoid set allTeamsLoaded flag to true
+    }) 
   );
 
   @Effect()
@@ -36,7 +47,7 @@ export class TeamEffects {
     ofType<RequestDeleteTeam>(TeamActionTypes.RequestDeleteTeam),
     mergeMap(({ payload }) => this.teamsService.delete$(payload.slug, payload.userEmail).
       pipe(
-        catchError(err => of(null))
+        catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
     ),
     map((data: any) => {
@@ -49,7 +60,7 @@ export class TeamEffects {
         } 
       }
       
-      return new CancelRequest(); //we don't want to remove anything in this case
+      return new CancelRequest(); //we don't want to remove anything in this case, stop the loadingData flag
     })
   );
 

@@ -16,7 +16,7 @@ export class CancelRequest implements Action {
 export class LoadTeams implements Action {
   readonly type = TeamActionTypes.LoadTeams;
 
-  constructor(public payload: { teams: Team[] }) {}
+  constructor(public payload: { teams: Team[], serverError?: boolean }) {}
 }
 
 export class RequestTeams implements Action {

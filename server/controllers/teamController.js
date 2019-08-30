@@ -608,17 +608,14 @@ exports.delete = async (req, res) => {
     const user = req.user;
     const team = await getTeamBySlugObject(req.params.slug, req.query.email, { withId : true, withInvestments : true });
 
-    if (team) {
-        setTimeout(function() {
-            console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
-            res.status(401).json({ 
-                status : "error", 
-                codeno : 461,
-                msg : getMessage('error', 461, null, false, 'Team'),
-                data : null
-            });    
-        }, 3000);
-        
+    if (!team) {
+        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 461,
+            msg : getMessage('error', 461, null, false, 'Team'),
+            data : null
+        });
 
         return;
     }
