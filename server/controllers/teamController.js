@@ -436,14 +436,17 @@ exports.getAllTeams = async (req, res) => {
         result.push(teamsObj[teamId]);
     }
     
-    //5 - Return teams info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
-    res.json({
-        status : 'success', 
-        codeno : 200,
-        msg : getMessage('message', 1036, null, false, teams.length, 'Team(s)'),
-        data : result
-    });
+    setTimeout(function() {
+        //5 - Return teams info to the user.
+        console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
+        res.json({
+            status : 'success', 
+            codeno : 200,
+            msg : getMessage('message', 1036, null, false, teams.length, 'Team(s)'),
+            data : result
+        });    
+    }, 3000);
+    
 };
 
 
@@ -606,13 +609,16 @@ exports.delete = async (req, res) => {
     const team = await getTeamBySlugObject(req.params.slug, req.query.email, { withId : true, withInvestments : true });
 
     if (team) {
-        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
-        res.status(401).json({ 
-            status : "error", 
-            codeno : 461,
-            msg : getMessage('error', 461, null, false, 'Team'),
-            data : null
-        });
+        setTimeout(function() {
+            console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 461,
+                msg : getMessage('error', 461, null, false, 'Team'),
+                data : null
+            });    
+        }, 3000);
+        
 
         return;
     }

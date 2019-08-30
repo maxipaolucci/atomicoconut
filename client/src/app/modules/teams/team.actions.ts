@@ -2,15 +2,15 @@ import { Action } from '@ngrx/store';
 import { Team } from './models/team';
 
 export enum TeamActionTypes {
-  DoNone = '[Team] Do none',
+  CancelRequest = '[Team] Cancel Request',
   LoadTeams = '[Team] Load Teams',
   RequestTeams = '[Team] Request Teams',
   DeleteTeam = '[Team] Delete Team',
   RequestDeleteTeam = '[Team] Request Delete Team'
 }
 
-export class DoNone implements Action {
-  readonly type = TeamActionTypes.DoNone;
+export class CancelRequest implements Action {
+  readonly type = TeamActionTypes.CancelRequest;
 }
 
 export class LoadTeams implements Action {
@@ -37,6 +37,6 @@ export class DeleteTeam implements Action {
   constructor(public payload: { slug: string }) {}
 }
 
-export type TeamActions = DoNone | 
+export type TeamActions = CancelRequest | 
     LoadTeams | RequestTeams | 
     DeleteTeam | RequestDeleteTeam;

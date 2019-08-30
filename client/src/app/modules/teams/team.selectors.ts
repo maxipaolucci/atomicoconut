@@ -13,3 +13,8 @@ export const allTeamsLoaded = () => createSelector(
   selectTeamsState,
   fromTeam.allTeamsLoaded
 );
+
+export const loadingSelector = () => createSelector(
+  selectTeamsState,
+  fromTeam.loading
+);

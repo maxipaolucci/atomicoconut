@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TeamsService } from '../../teams.service';
@@ -15,7 +15,9 @@ import { LoadTeams, RequestDeleteTeam } from '../../team.actions';
 import { ProgressBarDialogComponent } from '../../../shared/components/progress-bar-dialog/progress-bar-dialog.component';
 import { UsersService } from 'src/app/modules/users/users.service';
 import { RequestTeams } from '../../team.actions';
-import { teamsSelector } from '../../team.selectors';
+import { teamsSelector, loadingSelector } from '../../team.selectors';
+import { LoadingData } from 'src/app/models/loadingData';
+import { loading } from '../../team.reducer';
 
 @Component({
   selector: 'app-teams-dashboard',
@@ -25,12 +27,14 @@ import { teamsSelector } from '../../team.selectors';
 export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
   user: User = null;
-  getTeamsServiceRunning = false;
-  teamActionRunning: boolean[] = [];
+  //getTeamsServiceRunning = false;
+  //teamActionRunning: boolean[] = [];
   teams: Team[] = [];
   teams$: Observable<any> = null;
   subscription: Subscription = new Subscription();
   bindedToPushNotifications: boolean = false;
+  loading$: Observable<LoadingData>;
+  progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
 
   constructor(
     private route: ActivatedRoute, 
@@ -49,28 +53,39 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
       { displayName: 'Teams', url: null, selected: true }
     ]);
 
-    this.getTeamsServiceRunning = true;
+    //this.getTeamsServiceRunning = true;
     this.user = this.usersService.getUser();
     this.store.dispatch(new RequestTeams({ userEmail: this.user.email, forceServerRequest: false }));
     this.teams$ = this.store.pipe(
-      select(teamsSelector()),
+      select(teamsSelector())
     );
 
-    const newSubscription = this.teams$.subscribe((teams: Team[]) => {
-      console.log(teams);
+    let newSubscription = this.teams$.subscribe((teams: Team[]) => {
       this.teams = teams;
       if (!this.bindedToPushNotifications) {
         this.bindToPushNotificationEvents();
       }
-      this.teamActionRunning = new Array(teams.length).fill(false);
-      this.getTeamsServiceRunning = false;
+      //this.teamActionRunning = new Array(teams.length).fill(false);
+      //this.getTeamsServiceRunning = false;
     }, (error: any) => {
-      this.getTeamsServiceRunning = false;
-      this.teamActionRunning = [];
+      //this.getTeamsServiceRunning = false;
+      //this.teamActionRunning = [];
       this.teams = [];
     });
     this.subscription.add(newSubscription);
 
+    this.loading$ = this.store.pipe(
+      select(loadingSelector())
+    );
+
+    newSubscription = this.loading$.subscribe((loadingData: LoadingData) => {
+      if (loadingData) {
+        this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
+      } else if(this.progressBarDialogRef) {
+        this.progressBarDialogRef.close();
+      }
+    });
+    this.subscription.add(newSubscription);
     // Create a teams$ observer from the store
     // this.teams$ = this.store.pipe(
     //   select(teamsSelector)
@@ -210,21 +225,15 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   //     );
   // }
 
-  // openProgressBarDialog() {
-  //   const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
+  openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
+    const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
     
-  //   const progressBarDialogRef = this.dialog.open(ProgressBarDialogComponent, {
-  //     width: '250px',
-  //     disableClose: true,
-  //     data: {
-  //       color : 'primary', 
-  //       message : `Loading teams...`,
-  //       extraClasses: 'pepe-class' 
-  //     }
-  //   });
-
-  //   return false;
-  // }
+    return this.dialog.open(ProgressBarDialogComponent, {
+      width: '250px',
+      disableClose: true,
+      data: loadingData
+    });
+  }
 
   openDeleteTeamDialog(index: number, team: Team = null) {
     const methodTrace = `${this.constructor.name} > openDeleteTeamDialog() > `; // for debugging
@@ -234,7 +243,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    this.teamActionRunning[index] = true;
+    //this.teamActionRunning[index] = true;
     const yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
       width: '250px',
       data: {
@@ -247,7 +256,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
       if (result === 'yes') {
         this.delete(index, team);
       } else {
-        this.teamActionRunning[index] = false;
+        //this.teamActionRunning[index] = false;
       }
     });
     this.subscription.add(newSubscription);
@@ -258,7 +267,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   delete(index: number, team: Team = null) {
     const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
 
-    this.teamActionRunning[index] = true;
+    //this.teamActionRunning[index] = true;
 
     this.store.dispatch(new RequestDeleteTeam({ userEmail: this.user.email, slug: team.slug }));
 

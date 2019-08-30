@@ -1,12 +1,14 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Team } from './models/team';
 import { TeamActions, TeamActionTypes } from './team.actions';
+import { LoadingData } from '../../models/loadingData'
 
 export const teamsFeatureKey = 'teams';
 
 export interface State extends EntityState<Team> {
   // additional entities state properties
   allTeamsLoaded: boolean;
+  loadingData: LoadingData;
 }
 
 export const adapter: EntityAdapter<Team> = createEntityAdapter<Team>(
@@ -17,7 +19,8 @@ export const adapter: EntityAdapter<Team> = createEntityAdapter<Team>(
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
-  allTeamsLoaded: false
+  allTeamsLoaded: false,
+  loadingData: null
 });
 
 export function reducer(state = initialState, action: TeamActions): State {
@@ -25,21 +28,46 @@ export function reducer(state = initialState, action: TeamActions): State {
 
   switch (action.type) { 
 
+    case TeamActionTypes.RequestTeams: {
+      return {
+        ...state,
+        loadingData: {
+          message: 'Fetching teams...',
+          color: 'primary'
+        }
+      }
+    }
+
     case TeamActionTypes.LoadTeams: {
-      return adapter.addAll(action.payload.teams, { ...state, allTeamsLoaded: true });
+      return adapter.addAll(action.payload.teams, { ...state, allTeamsLoaded: true, loadingData: null });
+    }
+
+    case TeamActionTypes.RequestDeleteTeam: {
+      return {
+        ...state,
+        loadingData: {
+          message: 'Removing team...',
+          color: 'warn'
+        }
+      }
     }
 
     case TeamActionTypes.DeleteTeam: {
-      return adapter.removeOne(action.payload.slug, { ...state });
+      return adapter.removeOne(action.payload.slug, { ...state, loadingData: null });
     }
     
     default: {
-      return state;
+      return { 
+        ...state,
+        loadingData: null
+      };
     }
   }
 }
 
 export const allTeamsLoaded = (state: State) => state.allTeamsLoaded;
+export const loading = (state: State) => state.loadingData;
+
 
 export const {
   selectAll,

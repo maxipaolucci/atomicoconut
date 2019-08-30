@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { LoadingData } from '../../../../models/loadingData';
 
 @Component({
   selector: 'progress-bar-dialog',
@@ -8,9 +9,17 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 })
 export class ProgressBarDialogComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<ProgressBarDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  color: string = 'primary';
+  message: string = '';
+  extraClasses: string = '';
+
+  constructor(public dialogRef: MatDialogRef<ProgressBarDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: LoadingData) { }
   
-  ngOnInit() { }
+  ngOnInit() {
+    this.color = this.data.color ? this.data.color : this.color;
+    this.message = this.data.message ? this.data.message : this.message;
+    this.extraClasses = this.data.extraClasses ? this.data.extraClasses : this.extraClasses;
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
