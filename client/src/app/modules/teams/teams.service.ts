@@ -7,12 +7,11 @@ import { User } from '../users/models/user';
 import { Observable } from 'rxjs';
 import { Response } from '../../models/response';
 import { of } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
-import { map, catchError, flatMap } from 'rxjs/operators';
+import { map, flatMap } from 'rxjs/operators';
 
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class TeamsService {
 

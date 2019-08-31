@@ -26,3 +26,5 @@ export const COINCAP_CRYPTO_TYPES = {
 }
 
 export const DEFAULT_CURRENCY = 'USD'
+
+export const DEFAULT_LOADING_DIALOG_WIDTH = '250px'

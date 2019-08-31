@@ -9,7 +9,7 @@ export const teamsSelector = () => createSelector(
   fromTeam.selectAll
 );
 
-export const allTeamsLoaded = () => createSelector(
+export const allTeamsLoadedSelector = () => createSelector(
   selectTeamsState,
   fromTeam.allTeamsLoaded
 );
@@ -17,4 +17,9 @@ export const allTeamsLoaded = () => createSelector(
 export const loadingSelector = () => createSelector(
   selectTeamsState,
   fromTeam.loading
+);
+
+export const teamBySlugSelector = (slug: string) => createSelector(
+  selectTeamsState,
+  teamsState => teamsState.entities[slug]
 );

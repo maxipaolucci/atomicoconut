@@ -35,7 +35,7 @@ export function reducer(state = initialState, action: TeamActions): State {
       };
     }
 
-    case TeamActionTypes.RequestTeams: {
+    case TeamActionTypes.RequestAll: {
       return {
         ...state,
         loadingData: {
@@ -45,7 +45,17 @@ export function reducer(state = initialState, action: TeamActions): State {
       }
     }
 
-    case TeamActionTypes.LoadTeams: {
+    case TeamActionTypes.RequestOne: {
+      return {
+        ...state,
+        loadingData: {
+          message: 'Fetching team...',
+          color: 'primary'
+        }
+      }
+    }
+
+    case TeamActionTypes.AddAll: {
       return adapter.addAll(action.payload.teams, { 
         ...state, 
         allTeamsLoaded: action.payload.serverError ? false : true, 
@@ -53,7 +63,14 @@ export function reducer(state = initialState, action: TeamActions): State {
       });
     }
 
-    case TeamActionTypes.RequestDeleteTeam: {
+    case TeamActionTypes.AddOne: {
+      return adapter.addOne(action.payload.team, { 
+        ...state,  
+        loadingData: null 
+      });
+    }
+
+    case TeamActionTypes.RequestDelete: {
       return {
         ...state,
         loadingData: {
@@ -63,7 +80,7 @@ export function reducer(state = initialState, action: TeamActions): State {
       }
     }
 
-    case TeamActionTypes.DeleteTeam: {
+    case TeamActionTypes.Delete: {
       return adapter.removeOne(action.payload.slug, { 
         ...state, 
         loadingData: null 

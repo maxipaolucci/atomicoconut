@@ -590,13 +590,16 @@ exports.getMyTeamBySlug = async (req, res) => {
 
         return;
     }
-
-    res.json({
-        status : 'success', 
-        codeno : 200,
-        msg : getMessage('message', 1036, null, false, 1, 'Team(s)'),
-        data : result
-    });
+    setTimeout(function() {
+        res.json({
+            status : 'success', 
+            codeno : 200,
+            msg : getMessage('message', 1036, null, false, 1, 'Team(s)'),
+            data : result
+        });
+        
+    }, 3000);
+    
 };
 
 exports.delete = async (req, res) => {

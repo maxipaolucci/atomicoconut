@@ -24,7 +24,8 @@ import {
           if (result.error.codeno === 471) {
             this.appService.showResults(result.error.msg, 'error', 7000);
           } else {
-            this.appService.showResults(`There was an error in the server while performing a request to [${request.url}], please try again in a few minutes.`, 'error');  
+            this.appService.showResults(result.error.msg, 'error');
+            //this.appService.showResults(`There was an error in the server while performing a request to [${request.url}], please try again in a few minutes.`, 'error');  
           }
           
           throw null; //to the next catchError

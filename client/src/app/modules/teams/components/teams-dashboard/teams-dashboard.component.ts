@@ -11,13 +11,14 @@ import { Subscription, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
-import { LoadTeams, RequestDeleteTeam } from '../../team.actions';
+import { AddAll, RequestDelete } from '../../team.actions';
 import { ProgressBarDialogComponent } from '../../../shared/components/progress-bar-dialog/progress-bar-dialog.component';
 import { UsersService } from 'src/app/modules/users/users.service';
-import { RequestTeams } from '../../team.actions';
+import { RequestAll } from '../../team.actions';
 import { teamsSelector, loadingSelector } from '../../team.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
 import { loading } from '../../team.reducer';
+import { DEFAULT_LOADING_DIALOG_WIDTH } from 'src/app/constants';
 
 @Component({
   selector: 'app-teams-dashboard',
@@ -55,7 +56,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
     //this.getTeamsServiceRunning = true;
     this.user = this.usersService.getUser();
-    this.store.dispatch(new RequestTeams({ userEmail: this.user.email, forceServerRequest: false }));
+    this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: false }));
     this.teams$ = this.store.pipe(
       select(teamsSelector())
     );
@@ -195,7 +196,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
    * Refetch silently the teams from the server, and update the team data in the background
    */
   fetchTeamsSilently() {
-    this.store.dispatch(new RequestTeams({ userEmail: this.user.email, forceServerRequest: true }));
+    this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: true }));
     // this.fetchTeams$();
   }
 
@@ -229,7 +230,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
     
     return this.dialog.open(ProgressBarDialogComponent, {
-      width: '250px',
+      width: DEFAULT_LOADING_DIALOG_WIDTH,
       disableClose: true,
       data: loadingData
     });
@@ -269,7 +270,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
     //this.teamActionRunning[index] = true;
 
-    this.store.dispatch(new RequestDeleteTeam({ userEmail: this.user.email, slug: team.slug }));
+    this.store.dispatch(new RequestDelete({ userEmail: this.user.email, slug: team.slug }));
 
     // const newSubscription = this.teamsService.delete$(team.slug, this.user.email).subscribe(
     //   (data: any) => {

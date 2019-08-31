@@ -9,6 +9,7 @@ import { AppService } from '../../../../app.service';
 import { Team } from '../../models/team';
 import { Subscription, of, Observable } from 'rxjs';
 import { map, combineLatest, switchMap } from 'rxjs/operators';
+import { UsersService } from '../../../users/users.service';
 
 @Component({
   selector: 'app-teams-edit',
@@ -20,6 +21,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   editMode = false;
   user: User = null;
   team: Team = null;
+  team$: Observable<Team>;
   editTeamServiceRunning = false;
   getTeamServiceRunning = false;
   model: any = {
@@ -32,7 +34,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
 
   constructor(private route: ActivatedRoute, private mainNavigatorService: MainNavigatorService, private teamsService: TeamsService,
-      private appService: AppService, private router: Router, public dialog: MatDialog) { }
+      private appService: AppService, private usersService: UsersService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
@@ -42,71 +44,81 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
       { displayName: 'Teams', url: '/teams', selected: false }
     ]);
 
-    // generates a user source object from authUser from resolver
-    const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
+    this.user = this.usersService.getUser();
+    //from resolver
+    this.team$ = this.route.data.pipe(
+      map((data: { team: Team }) => data.team)
+    );
+
+    let newSubscription = this.team$.subscribe(
+      (team: Team) => {
+        console.log(team);
+
+      }
+    );
     
     // generates an investment id source from id parameter in url
-    const slug$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('slug')));
+    // const slug$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('slug')));
 
     // combine user$ and id$ sources into one object and start listen to it for changes
-    const newSubscription: Subscription = user$.pipe(
-      combineLatest(slug$, (user, slug) => { 
-        return { user, teamSlug : slug }; 
-      }), 
-      switchMap((data: any) => {
-        this.user = data.user;
-        this.model.email = data.user.email;
+    // newSubscription: Subscription = user$.pipe(
+    //   combineLatest(slug$, (user, slug) => { 
+    //     return { user, teamSlug : slug }; 
+    //   }), 
+    //   switchMap((data: any) => {
+    //     this.user = data.user;
+    //     this.model.email = data.user.email;
 
-        this.editTeamServiceRunning = false;
-        this.getTeamServiceRunning = false;
+    //     this.editTeamServiceRunning = false;
+    //     this.getTeamServiceRunning = false;
         
-        if (!data.teamSlug) {
-          // we are creating a new team
-          this.slug = null;
-          this.editMode = false;
-          this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
-          return of(null);
-        } else {
-          if (this.slug) {
-            // if this is true means the user updated the name and we refresh the page to update the slug in the url
-            // in this case we don't want to append the edit team link to the navigation component because it is already there.
-          } else {
-            this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
-          }
-          // we are editing an existing investment
-          this.slug = data.teamSlug; // the new slug
-          this.editMode = true;
+    //     if (!data.teamSlug) {
+    //       // we are creating a new team
+    //       this.slug = null;
+    //       this.editMode = false;
+    //       this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
+    //       return of(null);
+    //     } else {
+    //       if (this.slug) {
+    //         // if this is true means the user updated the name and we refresh the page to update the slug in the url
+    //         // in this case we don't want to append the edit team link to the navigation component because it is already there.
+    //       } else {
+    //         this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
+    //       }
+    //       // we are editing an existing investment
+    //       this.slug = data.teamSlug; // the new slug
+    //       this.editMode = true;
           
-          return this.getTeam$(data.teamSlug); // get data
-        }
-      })
-    ).subscribe((team: Team) => {
-      if (team) {
-        // we are editing a team
-        this.team = team;
-        // populate the model
-        this.model.name = this.team.name;
-        this.model.description = this.team.description;  
-      } else {
-        // we are creating a team, do nothing
-      }
+    //       return this.getTeam$(data.teamSlug); // get data
+    //     }
+    //   })
+    // ).subscribe((team: Team) => {
+    //   if (team) {
+    //     // we are editing a team
+    //     this.team = team;
+    //     // populate the model
+    //     this.model.name = this.team.name;
+    //     this.model.description = this.team.description;  
+    //   } else {
+    //     // we are creating a team, do nothing
+    //   }
       
-      this.getTeamServiceRunning = false;
-    },
-    (error: any) => {
-      this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-      if (error.codeno === 400) {
-        this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-      } else if (error.codeno === 461 || error.codeno === 462) {
-        this.appService.showResults(error.msg, 'error');
-        this.router.navigate(['/welcome']);
-      } else {
-        this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-      }
+    //   this.getTeamServiceRunning = false;
+    // },
+    // (error: any) => {
+    //   this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+    //   if (error.codeno === 400) {
+    //     this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+    //   } else if (error.codeno === 461 || error.codeno === 462) {
+    //     this.appService.showResults(error.msg, 'error');
+    //     this.router.navigate(['/welcome']);
+    //   } else {
+    //     this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+    //   }
 
-      this.getTeamServiceRunning = false;
-    });
-    this.subscription.add(newSubscription);
+    //   this.getTeamServiceRunning = false;
+    // });
+    // this.subscription.add(newSubscription);
   }
 
   /**

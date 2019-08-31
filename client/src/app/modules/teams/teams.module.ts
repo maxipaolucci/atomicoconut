@@ -13,7 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import * as fromTeam from './team.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { TeamEffects } from './team.effects';
-import { TeamsResolver } from './teams-resolver.service';
+import { TeamResolver } from './team-resolver.service';
 
 @NgModule({
   imports: [
@@ -34,6 +34,6 @@ import { TeamsResolver } from './teams-resolver.service';
   entryComponents: [
     AddPersonToTeamDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
   ],
-  providers : [ TeamsService, TeamsResolver ]
+  providers : [ TeamsService, TeamResolver ]
 })
 export class TeamsModule { }
