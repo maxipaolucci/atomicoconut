@@ -13,6 +13,10 @@ import { AccountComponent } from './components/account/account.component';
 import { AccountFinanceInfoComponent } from './components/account-finance-info/account-finance-info.component';
 import { AccountPersonalInfoComponent } from './components/account-personal-info/account-personal-info.component';
 import { AccountUserInfoComponent } from './components/account-user-info/account-user-info.component';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from './user.effects';
+import { StoreModule } from '@ngrx/store';
+import * as fromUser from './user.reducer';
 
 @NgModule({
   imports: [
@@ -21,7 +25,9 @@ import { AccountUserInfoComponent } from './components/account-user-info/account
     FormsModule,
     FlexLayoutModule,
     CustomMaterialDesignModule,
-    SharedModule
+    SharedModule,
+    EffectsModule.forFeature([UserEffects]),
+    StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer)
   ],
   declarations: [
     RegisterComponent,

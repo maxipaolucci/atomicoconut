@@ -6,6 +6,15 @@ import { AppService } from '../../../../app.service';
 import {User} from '../../models/user';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { Subscription } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { AppState } from 'src/app/reducers';
+import { Login, RequestLogin } from '../../user.actions';
+import { LoginModel } from '../../models/login-model';
+import { userSelector, loadingSelector } from '../../user.selectors';
+import { LoadingData } from 'src/app/models/loadingData';
+import { DEFAULT_DIALOG_WIDTH_DESKTOP } from 'src/app/constants';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { ProgressBarDialogComponent } from 'src/app/modules/shared/components/progress-bar-dialog/progress-bar-dialog.component';
 
 @Component({
   selector: 'users-login',
@@ -14,15 +23,23 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  model: any = {email : '', password : ''};
+  model: LoginModel = { email : '', password : '' };
   forgotModel: any = { email : '', forgot : false };
   loginServiceRunning = false;
   forgotServiceRunning = false;
   showPassword = false;
   subscription: Subscription = new Subscription();
+  progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
 
-  constructor(private usersService: UsersService, private appService: AppService,  
-    private mainNavigatorService: MainNavigatorService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private usersService: UsersService, 
+    private appService: AppService,  
+    private mainNavigatorService: MainNavigatorService, 
+    private router: Router, 
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+    private store: Store<AppState>
+  ) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
@@ -31,12 +48,36 @@ export class LoginComponent implements OnInit, OnDestroy {
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Login', url: null, selected: true }]);
 
-    this.route.paramMap.pipe(map((params: ParamMap) => params.get('state')))
-        .subscribe(state => {
-          if (state === 'reset-password-token-expired') {
-            this.appService.showResults('Reset password token has expired or is invalid. Click on "Forgot my password" again to create a new one.', 'error', 10000);
-          }
-        });
+    this.route.paramMap.pipe(map((params: ParamMap) => params.get('state'))).subscribe(state => {
+      if (state === 'reset-password-token-expired') {
+        this.appService.showResults('Reset password token has expired or is invalid. Click on "Forgot my password" again to create a new one.', 'error', 10000);
+      }
+    });
+
+    const user$ = this.store.pipe(
+      select(userSelector())
+    );
+    let newSubscription: Subscription = user$.subscribe((user: User) => {
+      if (user) {
+        const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
+        this.usersService.routerRedirectUrl = null;
+        this.router.navigate([redirectUrl]);
+      }
+    });
+    this.subscription.add(newSubscription);
+
+    const loading$ = this.store.pipe(
+      select(loadingSelector())
+    );
+
+    newSubscription = loading$.subscribe((loadingData: LoadingData) => {
+      if (loadingData) {
+        this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
+      } else if(this.progressBarDialogRef) {
+        this.progressBarDialogRef.close();
+      }
+    });
+    this.subscription.add(newSubscription);
   }
 
   ngOnDestroy() {
@@ -46,10 +87,25 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  onSubmit() {
+    const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
+    this.store.dispatch(new RequestLogin(this.model));
+  }
+
+  openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
+    const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
+    
+    return this.dialog.open(ProgressBarDialogComponent, {
+      width: DEFAULT_DIALOG_WIDTH_DESKTOP,
+      disableClose: true,
+      data: loadingData
+    });
+  }
+
   /**
    * When user submits the login form
    */
-  onSubmit() { 
+  onSubmitFake() { 
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
     this.loginServiceRunning = true;
