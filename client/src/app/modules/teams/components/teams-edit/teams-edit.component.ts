@@ -9,7 +9,8 @@ import { AppService } from '../../../../app.service';
 import { Team } from '../../models/team';
 import { Subscription, of, Observable } from 'rxjs';
 import { map, combineLatest, switchMap } from 'rxjs/operators';
-import { UsersService } from '../../../users/users.service';
+import { UsersService } from '../../../../modules/users/users.service';
+import _ from 'lodash';
 
 @Component({
   selector: 'app-teams-edit',
@@ -21,20 +22,26 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   editMode = false;
   user: User = null;
   team: Team = null;
-  team$: Observable<Team>;
+  team$: Observable<Team> = null;
   editTeamServiceRunning = false;
   getTeamServiceRunning = false;
   model: any = {
     name : null,
     description : null,
     email : null, // user email for api check
-    members : []
+    members : [] //this is a list of member email, not User objects
   };
   slug: string = null;
   subscription: Subscription = new Subscription();
 
-  constructor(private route: ActivatedRoute, private mainNavigatorService: MainNavigatorService, private teamsService: TeamsService,
-      private appService: AppService, private usersService: UsersService, private router: Router, public dialog: MatDialog) { }
+  constructor(
+      private route: ActivatedRoute, 
+      private mainNavigatorService: MainNavigatorService, 
+      private teamsService: TeamsService,
+      private appService: AppService,
+      private usersService: UsersService, 
+      private router: Router, 
+      public dialog: MatDialog) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
@@ -45,6 +52,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     ]);
 
     this.user = this.usersService.getUser();
+    this.model.email = this.user.email;
     //from resolver
     this.team$ = this.route.data.pipe(
       map((data: { team: Team }) => data.team)
@@ -52,16 +60,40 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
 
     let newSubscription = this.team$.subscribe(
       (team: Team) => {
-        console.log(team);
-
+        this.team = _.cloneDeep(team); //need a non inmutable copy
+        
+        if (!team) {
+          // we are creating a new team
+          this.slug = null;
+          this.editMode = false;
+          this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
+        } else {
+          if (this.slug) {
+            console.log('esto pasoooooo??? q significa')
+            // if this is true means the user updated the name and we refresh the page to update the slug in the url
+            // in this case we don't want to append the edit team link to the navigation component because it is already there.
+          } else {
+            this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
+          }
+          // we are editing an existing investment
+          this.editMode = true;
+          
+          // populate the model
+          this.slug = team.slug; // the new slug
+          this.model.name = team.name;
+          this.model.description = team.description;  
+        }
       }
     );
+
+    // // generates a user source object from authUser from resolver
+    // const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
     
-    // generates an investment id source from id parameter in url
+    // // generates an investment id source from id parameter in url
     // const slug$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('slug')));
 
-    // combine user$ and id$ sources into one object and start listen to it for changes
-    // newSubscription: Subscription = user$.pipe(
+    // // combine user$ and id$ sources into one object and start listen to it for changes
+    // newSubscription = user$.pipe(
     //   combineLatest(slug$, (user, slug) => { 
     //     return { user, teamSlug : slug }; 
     //   }), 
@@ -118,28 +150,28 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
 
     //   this.getTeamServiceRunning = false;
     // });
-    // this.subscription.add(newSubscription);
+    this.subscription.add(newSubscription);
   }
 
-  /**
-   * Get a team observable from server based on the slug provided
-   * @param {string} slug 
-   * 
-   * @return {Observable<Team>} teams source
-   */
-  getTeam$(slug: string): Observable<Team> {
-    const methodTrace = `${this.constructor.name} > getTeam$() > `; // for debugging
+  // /**
+  //  * Get a team observable from server based on the slug provided
+  //  * @param {string} slug 
+  //  * 
+  //  * @return {Observable<Team>} teams source
+  //  */
+  // getTeam$(slug: string): Observable<Team> {
+  //   const methodTrace = `${this.constructor.name} > getTeam$() > `; // for debugging
 
-    if (!slug) {
-      this.appService.showResults(`Invalid team ID`, 'error');
-      this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
-      return of(null);
-    }
+  //   if (!slug) {
+  //     this.appService.showResults(`Invalid team ID`, 'error');
+  //     this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
+  //     return of(null);
+  //   }
 
-    this.getTeamServiceRunning = true;
+  //   this.getTeamServiceRunning = true;
 
-    return this.teamsService.getMyTeamBySlug$(this.user.email, slug);
-  }
+  //   return this.teamsService.getMyTeamBySlug$(this.user.email, slug);
+  // }
 
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
@@ -240,6 +272,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   }
 
   removeMember(index: number) {
+    console.log(this.team);
     this.team.members.splice(index, 1);
   }
 }

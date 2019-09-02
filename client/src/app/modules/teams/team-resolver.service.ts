@@ -12,7 +12,7 @@ import { Team } from './models/team';
 import { teamBySlugSelector, loadingSelector } from './team.selectors';
 import { RequestOne } from './team.actions';
 import { LoadingData } from 'src/app/models/loadingData';
-import { DEFAULT_LOADING_DIALOG_WIDTH } from 'src/app/constants';
+import { DEFAULT_DIALOG_WIDTH_DESKTOP } from 'src/app/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +61,7 @@ export class TeamResolver implements Resolve<Team> {
     const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
     
     return this.dialog.open(ProgressBarDialogComponent, {
-      width: DEFAULT_LOADING_DIALOG_WIDTH,
+      width: DEFAULT_DIALOG_WIDTH_DESKTOP,
       disableClose: true,
       data: loadingData
     });

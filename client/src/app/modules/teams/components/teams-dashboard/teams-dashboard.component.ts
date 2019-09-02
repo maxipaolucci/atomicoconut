@@ -1,24 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TeamsService } from '../../teams.service';
 import { AppService } from '../../../../app.service';
 import { Team } from '../../models/team';
 import { User } from '../../../users/models/user';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { Subscription, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
-import { AddAll, RequestDelete } from '../../team.actions';
+import { RequestDelete } from '../../team.actions';
 import { ProgressBarDialogComponent } from '../../../shared/components/progress-bar-dialog/progress-bar-dialog.component';
 import { UsersService } from 'src/app/modules/users/users.service';
 import { RequestAll } from '../../team.actions';
 import { teamsSelector, loadingSelector } from '../../team.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
-import { loading } from '../../team.reducer';
-import { DEFAULT_LOADING_DIALOG_WIDTH } from 'src/app/constants';
+import { DEFAULT_DIALOG_WIDTH_DESKTOP } from 'src/app/constants';
 
 @Component({
   selector: 'app-teams-dashboard',
@@ -38,10 +34,8 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
 
   constructor(
-    private route: ActivatedRoute, 
     private mainNavigatorService: MainNavigatorService, 
-    private teamsService: TeamsService,
-    private appService: AppService,  
+    private appService: AppService,
     private usersService: UsersService,  
     public dialog: MatDialog,
     private store: Store<AppState>) {}
@@ -230,7 +224,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
     
     return this.dialog.open(ProgressBarDialogComponent, {
-      width: DEFAULT_LOADING_DIALOG_WIDTH,
+      width: DEFAULT_DIALOG_WIDTH_DESKTOP,
       disableClose: true,
       data: loadingData
     });
