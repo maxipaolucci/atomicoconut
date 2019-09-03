@@ -1,11 +1,11 @@
 import { User } from './models/user';
 import { LoadingData } from 'src/app/models/loadingData';
 import { UserActionTypes, UserActions } from './user.actions';
-
+import * as fromRoot from '../../reducers'
 
 export const userFeatureKey = 'user';
 
-export interface UserState {
+export interface UserState extends fromRoot.AppState {
   loggedIn: boolean,
   user: User,
   loadingData: LoadingData;
@@ -44,6 +44,24 @@ export function reducer(state: UserState = initialState, action: UserActions): U
         loggedIn: true,
         loadingData: null,
         user: action.payload.user
+      }
+    }
+
+    case UserActionTypes.RequestLogout: {
+      return {
+        ...state,
+        loadingData: {
+          message: 'Logout user...'
+        }
+      };
+    }
+
+    case UserActionTypes.Logout: {
+      return {
+        ...state,
+        loggedIn: false,
+        loadingData: null,
+        user: null
       }
     }
 

@@ -294,7 +294,7 @@ export class UsersService {
    * 
    * @return { Observable<null>}
    */
-  logout$(): Observable<any> {
+  logout$(): Observable<null> {
     const methodTrace = `${this.constructor.name} > logout$() > `; // for debugging
 
     return this.http.get<Response>(`${this.serverHost}/logout`).pipe(

@@ -8,7 +8,7 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 import { Subscription } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
-import { Login, RequestLogin } from '../../user.actions';
+import { RequestLogin } from '../../user.actions';
 import { LoginModel } from '../../models/login-model';
 import { userSelector, loadingSelector } from '../../user.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
@@ -54,23 +54,23 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     });
 
-    const user$ = this.store.pipe(
-      select(userSelector())
-    );
-    let newSubscription: Subscription = user$.subscribe((user: User) => {
-      if (user) {
-        const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
-        this.usersService.routerRedirectUrl = null;
-        this.router.navigate([redirectUrl]);
-      }
-    });
-    this.subscription.add(newSubscription);
+    // const user$ = this.store.pipe(
+    //   select(userSelector())
+    // );
+    // let newSubscription: Subscription = user$.subscribe((user: User) => {
+    //   if (user) {
+    //     const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
+    //     this.usersService.routerRedirectUrl = null;
+    //     this.router.navigate([redirectUrl]);
+    //   }
+    // });
+    // this.subscription.add(newSubscription);
 
     const loading$ = this.store.pipe(
       select(loadingSelector())
     );
 
-    newSubscription = loading$.subscribe((loadingData: LoadingData) => {
+    let newSubscription = loading$.subscribe((loadingData: LoadingData) => {
       if (loadingData) {
         this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
       } else if(this.progressBarDialogRef) {
@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   /**
    * When user submits the login form
    */
-  onSubmitFake() { 
+  onSubmitOld() { 
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
     this.loginServiceRunning = true;
