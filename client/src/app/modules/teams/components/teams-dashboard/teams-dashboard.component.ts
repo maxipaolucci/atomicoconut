@@ -10,11 +10,11 @@ import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
 import { RequestDelete } from '../../team.actions';
 import { ProgressBarDialogComponent } from '../../../shared/components/progress-bar-dialog/progress-bar-dialog.component';
-import { UsersService } from 'src/app/modules/users/users.service';
 import { RequestAll } from '../../team.actions';
 import { teamsSelector, loadingSelector } from '../../team.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
 import { DEFAULT_DIALOG_WIDTH_DESKTOP } from 'src/app/constants';
+import { userSelector } from 'src/app/modules/users/user.selectors';
 
 @Component({
   selector: 'app-teams-dashboard',
@@ -23,6 +23,7 @@ import { DEFAULT_DIALOG_WIDTH_DESKTOP } from 'src/app/constants';
 })
 export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
+  user$: Observable<User> = null;
   user: User = null;
   //getTeamsServiceRunning = false;
   //teamActionRunning: boolean[] = [];
@@ -36,9 +37,9 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   constructor(
     private mainNavigatorService: MainNavigatorService, 
     private appService: AppService,
-    private usersService: UsersService,  
     public dialog: MatDialog,
-    private store: Store<AppState>) {}
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
@@ -49,7 +50,11 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     ]);
 
     //this.getTeamsServiceRunning = true;
-    this.user = this.usersService.getUser();
+    //get user
+    this.user$ = this.store.select(userSelector());
+    this.subscription.add(this.user$.subscribe((user: User) => this.user = user));
+    
+    // this.user = this.usersService.getUser();
     this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: false }));
     this.teams$ = this.store.pipe(
       select(teamsSelector())

@@ -11,6 +11,9 @@ import { Subscription, of, Observable } from 'rxjs';
 import { map, combineLatest, switchMap } from 'rxjs/operators';
 import { UsersService } from '../../../../modules/users/users.service';
 import _ from 'lodash';
+import { Store, select } from '@ngrx/store';
+import { AppState } from 'src/app/reducers';
+import { userSelector } from 'src/app/modules/users/user.selectors';
 
 @Component({
   selector: 'app-teams-edit',
@@ -41,7 +44,9 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
       private appService: AppService,
       private usersService: UsersService, 
       private router: Router, 
-      public dialog: MatDialog) { }
+      public dialog: MatDialog,
+      private store: Store<AppState>
+    ) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
@@ -51,8 +56,11 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
       { displayName: 'Teams', url: '/teams', selected: false }
     ]);
 
-    this.user = this.usersService.getUser();
-    this.model.email = this.user.email;
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => {
+      this.user = user;
+      this.model.email = user.email;
+    }));
+
     //from resolver
     this.team$ = this.route.data.pipe(
       map((data: { team: Team }) => data.team)
@@ -272,7 +280,6 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   }
 
   removeMember(index: number) {
-    console.log(this.team);
     this.team.members.splice(index, 1);
   }
 }

@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
-import { RequestLogin, UserActionTypes, CancelRequest, Login, UserActions, RequestLogout, Logout } from './user.actions';
-import { mergeMap, map, withLatestFrom, filter, catchError, tap, switchMap } from 'rxjs/operators';
-import { LoginModel } from './models/login-model';
+import { RequestLogin, UserActionTypes, CancelRequest, Login, RequestLogout, Logout } from './user.actions';
+import { mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { of, defer } from 'rxjs';
 import { User } from './models/user';
 
@@ -85,8 +84,6 @@ export class UserEffects {
       this.router.navigate(['/']);
     })
   );
-
-
 
   constructor(private actions$: Actions, private usersService: UsersService, private router: Router) {}
 }

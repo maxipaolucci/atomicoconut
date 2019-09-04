@@ -33,7 +33,7 @@
           </div>
         </section>
 
-        <section *ngIf="team.admin.email === user.email" class="card__actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
+        <section *ngIf="(user$ | async) && team.admin.email === (user$ | async).email" class="card__actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
           <button *ngIf="!(loading$ | async)" mat-mini-fab routerLink="/teams/edit/{{team.slug}}" color="primary">
             <mat-icon aria-label="Edit team">edit</mat-icon>
           </button>
