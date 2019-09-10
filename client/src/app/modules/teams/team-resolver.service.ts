@@ -52,8 +52,7 @@ export class TeamResolver implements Resolve<Team> {
           this.store.dispatch(new RequestOne({ userEmail: user.email, slug: teamSlug }));
         }
       }),
-      filter((team: Team) => !!team),
-      first()
+      first((team: Team) => !!team)
     );
   }
 

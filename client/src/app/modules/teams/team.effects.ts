@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { TeamActionTypes, RequestAll, AddAll, RequestDelete, Delete, CancelRequest, RequestOne, AddOne } from './team.actions';
+import { Update } from '@ngrx/entity';
+import { TeamActionTypes, RequestAll, AddAll, RequestDelete, Delete, CancelRequest, RequestOne, AddOne, RequestUpdate, Update_, UseAndResetLastUpdatedTeamSlug, RequestCreate } from './team.actions';
 import { TeamsService } from './teams.service';
-import { mergeMap, map, withLatestFrom, filter, catchError } from 'rxjs/operators';
+import { mergeMap, tap, map, withLatestFrom, filter, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Team } from './models/team';
 import { allTeamsLoadedSelector } from './team.selectors';
 import { AppState } from '../../reducers';
 import { Store, select } from '@ngrx/store';
 import { AppService } from 'src/app/app.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class TeamEffects {
@@ -23,7 +25,7 @@ export class TeamEffects {
         return true;
       } else {
         // teams are in the store 
-        this.store.dispatch(new CancelRequest());
+        this.store.dispatch(new CancelRequest(null));
         return false;
       }
     }),
@@ -56,8 +58,8 @@ export class TeamEffects {
         return new AddOne({ team });
       }
 
-      // if here, means http error in the request. 
-      return new CancelRequest(); //we don't want to do anything in this case, stop the loadingData flag
+      // if here, means http error in the response. 
+      return new CancelRequest({ redirectData: ['/teams'] }); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );
   
@@ -79,15 +81,74 @@ export class TeamEffects {
         } 
       }
       
-      return new CancelRequest(); //we don't want to do anything in this case, stop the loadingData flag
+      return new CancelRequest(null); //we don't want to do anything in this case, stop the loadingData flag
     })
   );
+
+  @Effect()
+  requestUpdate$ = this.actions$.pipe(
+    ofType<RequestUpdate>(TeamActionTypes.RequestUpdate),
+    mergeMap(({ payload }) => this.teamsService.update$(payload.model).pipe(
+      mergeMap((team: Team) => {
+        return of({ team, originalSlug: payload.originalSlug } ) 
+      }),
+      catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+    )),
+    map((data: { team: Team, originalSlug: string }) => {
+      if (data.team) {
+        const teamChanges: Update<Team> = {
+          id: data.originalSlug,
+          changes: data.team
+        }
+        return new Update_({ teamChanges });
+      }
+      return new CancelRequest(null);
+    })
+  );
+
+  @Effect()
+  requestCreate$ = this.actions$.pipe(
+    ofType<RequestCreate>(TeamActionTypes.RequestCreate),
+    mergeMap(({ payload }) => this.teamsService.create$(payload.model).pipe(
+      catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+    )),
+    map((team: Team) => {
+      if (team) {
+        this.router.navigate(['/teams/edit', team.slug]);
+        //dispatch the action to save the value in the store
+        return new AddOne({ team });
+      }
+
+      // if here, means http error in the response. 
+      return new CancelRequest({ redirectData: ['/teams'] }); //we don't want to do anything in this case, stop the loadingData flag
+    })
+  );
+
+  @Effect({ dispatch: false })
+  UseAndResetLastUpdatedTeamSlug$ = this.actions$.pipe(
+    ofType<UseAndResetLastUpdatedTeamSlug>(TeamActionTypes.UseAndResetLastUpdatedTeamSlug),
+    tap(({ payload }) => window.location.replace(`/teams/edit/${payload.lastUpdatedTeamSlug}`)) // redirect to new slug. We do this way because the router.navigate does not reload the component and some stuff does not work with redux store 
+  )
+  
+  @Effect({ dispatch: false })
+  cancelRequest$ = this.actions$.pipe(
+    ofType<CancelRequest>(TeamActionTypes.CancelRequest),
+    tap(({ payload }) => {
+      if (payload && payload.redirectData && payload.redirectData.length) {
+        return this.router.navigate(payload.redirectData);
+      }
+
+      return; // do nothing here
+    }) // redirect to new slug)
+    // tap(({ payload }) => this.router.navigate(['/teams/edit', payload.lastUpdatedTeamSlug])) // redirect to new slug)
+  )
 
   constructor(
       private actions$: Actions, 
       private teamsService: TeamsService,
       private appService: AppService, 
-      private store: Store<AppState>
+      private store: Store<AppState>,
+      private router: Router
   ) {}
 
 }

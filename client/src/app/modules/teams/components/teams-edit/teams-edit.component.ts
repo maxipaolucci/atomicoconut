@@ -2,18 +2,19 @@ import { Component, OnInit, OnDestroy} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { AddPersonToTeamDialogComponent } from '../../components/add-person-to-team-dialog/add-person-to-team-dialog.component';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../users/models/user';
-import { TeamsService } from '../../teams.service';
 import { AppService } from '../../../../app.service';
 import { Team } from '../../models/team';
-import { Subscription, of, Observable } from 'rxjs';
-import { map, combineLatest, switchMap } from 'rxjs/operators';
-import { UsersService } from '../../../../modules/users/users.service';
+import { Subscription } from 'rxjs';
+import { map, combineLatest, withLatestFrom } from 'rxjs/operators';
 import _ from 'lodash';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
 import { userSelector } from 'src/app/modules/users/user.selectors';
+import { RequestUpdate, UseAndResetLastUpdatedTeamSlug, RequestCreate } from '../../team.actions';
+import { TeamEditModel } from '../../models/team-edit-model';
+import { teamBySlugSelector, lastUpdatedTeamSlugSelector } from '../../team.selectors';
 
 @Component({
   selector: 'app-teams-edit',
@@ -25,10 +26,9 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   editMode = false;
   user: User = null;
   team: Team = null;
-  team$: Observable<Team> = null;
   editTeamServiceRunning = false;
   getTeamServiceRunning = false;
-  model: any = {
+  model: TeamEditModel = {
     name : null,
     description : null,
     email : null, // user email for api check
@@ -40,10 +40,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   constructor(
       private route: ActivatedRoute, 
       private mainNavigatorService: MainNavigatorService, 
-      private teamsService: TeamsService,
       private appService: AppService,
-      private usersService: UsersService, 
-      private router: Router, 
       public dialog: MatDialog,
       private store: Store<AppState>
     ) { }
@@ -61,125 +58,49 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
       this.model.email = user.email;
     }));
 
-    //from resolver
-    this.team$ = this.route.data.pipe(
-      map((data: { team: Team }) => data.team)
-    );
+    let newSubscription = this.store
+      .pipe(
+        select(teamBySlugSelector(this.route.snapshot.params.slug)), // this is undefined when the user updates the team name. When save to db, it comes back with a different slug
+        combineLatest(this.route.data.pipe(map((data: { team: Team }) => data.team)), (teamBySlug, teamFromResolver) => {
+          if (!teamBySlug && teamFromResolver) {
+            // this could happend when updating the team name.
+            return teamFromResolver;
+          } else if (teamBySlug) {
+            return teamBySlug;
+          } 
 
-    let newSubscription = this.team$.subscribe(
-      (team: Team) => {
-        this.team = _.cloneDeep(team); //need a non inmutable copy
+          return null;
+        }),
+        withLatestFrom(this.store.select(lastUpdatedTeamSlugSelector()))
+      ).subscribe(([team, lastUpdatedTeamSlug]) => {
+        if (lastUpdatedTeamSlug) {
+          // this means the user updated the team.name to a different one, then the store was updated and the team with the old id/slug move in the 
+          return this.store.dispatch(new UseAndResetLastUpdatedTeamSlug({ lastUpdatedTeamSlug }));
+        }
         
-        if (!team) {
+        this.team = _.cloneDeep(team); //need a non inmutable copy
+        if (!team && !this.slug) {
           // we are creating a new team
           this.slug = null;
           this.editMode = false;
           this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
         } else {
-          if (this.slug) {
-            console.log('esto pasoooooo??? q significa')
-            // if this is true means the user updated the name and we refresh the page to update the slug in the url
-            // in this case we don't want to append the edit team link to the navigation component because it is already there.
-          } else {
+          if (!this.slug) {
             this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
           }
+          
           // we are editing an existing investment
           this.editMode = true;
           
           // populate the model
           this.slug = team.slug; // the new slug
           this.model.name = team.name;
-          this.model.description = team.description;  
+          this.model.description = team.description;
         }
-      }
-    );
+      });
 
-    // // generates a user source object from authUser from resolver
-    // const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
-    
-    // // generates an investment id source from id parameter in url
-    // const slug$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('slug')));
-
-    // // combine user$ and id$ sources into one object and start listen to it for changes
-    // newSubscription = user$.pipe(
-    //   combineLatest(slug$, (user, slug) => { 
-    //     return { user, teamSlug : slug }; 
-    //   }), 
-    //   switchMap((data: any) => {
-    //     this.user = data.user;
-    //     this.model.email = data.user.email;
-
-    //     this.editTeamServiceRunning = false;
-    //     this.getTeamServiceRunning = false;
-        
-    //     if (!data.teamSlug) {
-    //       // we are creating a new team
-    //       this.slug = null;
-    //       this.editMode = false;
-    //       this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
-    //       return of(null);
-    //     } else {
-    //       if (this.slug) {
-    //         // if this is true means the user updated the name and we refresh the page to update the slug in the url
-    //         // in this case we don't want to append the edit team link to the navigation component because it is already there.
-    //       } else {
-    //         this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
-    //       }
-    //       // we are editing an existing investment
-    //       this.slug = data.teamSlug; // the new slug
-    //       this.editMode = true;
-          
-    //       return this.getTeam$(data.teamSlug); // get data
-    //     }
-    //   })
-    // ).subscribe((team: Team) => {
-    //   if (team) {
-    //     // we are editing a team
-    //     this.team = team;
-    //     // populate the model
-    //     this.model.name = this.team.name;
-    //     this.model.description = this.team.description;  
-    //   } else {
-    //     // we are creating a team, do nothing
-    //   }
-      
-    //   this.getTeamServiceRunning = false;
-    // },
-    // (error: any) => {
-    //   this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-    //   if (error.codeno === 400) {
-    //     this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-    //   } else if (error.codeno === 461 || error.codeno === 462) {
-    //     this.appService.showResults(error.msg, 'error');
-    //     this.router.navigate(['/welcome']);
-    //   } else {
-    //     this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-    //   }
-
-    //   this.getTeamServiceRunning = false;
-    // });
     this.subscription.add(newSubscription);
   }
-
-  // /**
-  //  * Get a team observable from server based on the slug provided
-  //  * @param {string} slug 
-  //  * 
-  //  * @return {Observable<Team>} teams source
-  //  */
-  // getTeam$(slug: string): Observable<Team> {
-  //   const methodTrace = `${this.constructor.name} > getTeam$() > `; // for debugging
-
-  //   if (!slug) {
-  //     this.appService.showResults(`Invalid team ID`, 'error');
-  //     this.appService.consoleLog('error', `${methodTrace} Slug parameter must be provided, but was: `, slug);
-  //     return of(null);
-  //   }
-
-  //   this.getTeamServiceRunning = true;
-
-  //   return this.teamsService.getMyTeamBySlug$(this.user.email, slug);
-  // }
 
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
@@ -191,74 +112,21 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   onSubmit() {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
-    this.editTeamServiceRunning = true;
-    // call the team create service
-    const newSubscription = this.teamsService.create$(this.model).subscribe(
-      (newTeam: Team) => {
-        if (newTeam && newTeam.slug) {
-          this.appService.showResults(`Team ${newTeam.name} successfully created!`, 'success');
-          this.router.navigate(['/teams/edit', newTeam.slug]);
-        } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-          this.editTeamServiceRunning = false;
-        }
-      },
-      (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit team service.`, error);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error with the team services, please try again in a few minutes.`, 'error');
-        }
-
-        this.editTeamServiceRunning = false;
-      }
-    );
-
-    this.subscription.add(newSubscription);
+    const model = _.cloneDeep(this.model); //for some reason this get readonly state too affter using it for the requestupdate action
+    this.store.dispatch(new RequestCreate({ model }));
   }
 
   onUpdate() {
     const methodTrace = `${this.constructor.name} > onUpdate() > `; // for debugging
-    
-    this.editTeamServiceRunning = true;
 
     // add slug and members to service payload
-    this.model.slug = this.slug;
-    this.model.members = []; // reset the members array
-    for (const member of this.team.members) {
-      this.model.members.push(member.email);
-    }
-
+    this.model.slug = this.team.slug;
+    this.model.members = this.team.members.map((member: User) => member.email);
+    //to prevent receiving notification of actions performed by current user
+    this.model.pusherSocketID = this.appService.pusherSocketID;
+    const model = _.cloneDeep(this.model); //for some reason this get readonly state too affter using it for the requestupdate action
     // TODO check the new members are not duplicated, especially the admin
-
-    // call the team update service
-    const newSubscription = this.teamsService.update$(this.model).subscribe(
-      (team: Team) => {
-          
-        if (this.slug !== team.slug) {
-          // this means that the team name was update and therefore the slug too
-          this.router.navigate(['/teams/edit', team.slug]); // go home 
-        } else {
-          // create team
-          this.team = team;
-          // populate the model
-          this.model.name = this.team.name;
-          this.model.description = this.team.description;
-          this.editTeamServiceRunning = false;  
-        }
-      },
-      (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-        }
-
-        this.editTeamServiceRunning = false;
-      }
-    );
-
-    this.subscription.add(newSubscription);
+    this.store.dispatch(new RequestUpdate({ originalSlug: this.slug, model }));
   }
 
   openAddPersonDialog() {

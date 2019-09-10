@@ -9,6 +9,7 @@ export interface State extends EntityState<Team> {
   // additional entities state properties
   allTeamsLoaded: boolean;
   loadingData: LoadingData;
+  lastUpdatedTeamSlug: string;
 }
 
 export const adapter: EntityAdapter<Team> = createEntityAdapter<Team>(
@@ -20,7 +21,8 @@ export const adapter: EntityAdapter<Team> = createEntityAdapter<Team>(
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
   allTeamsLoaded: false,
-  loadingData: null
+  loadingData: null,
+  lastUpdatedTeamSlug: null
 });
 
 export function reducer(state = initialState, action: TeamActions): State {
@@ -36,12 +38,16 @@ export function reducer(state = initialState, action: TeamActions): State {
     }
 
     case TeamActionTypes.RequestAll: {
+      let loadingData = null;
+      if (!action.payload.silently) {
+        loadingData = {
+          message: 'Fetching teams...'
+        }; 
+      }
+      
       return {
         ...state,
-        loadingData: {
-          message: 'Fetching teams...',
-          color: 'primary'
-        }
+        loadingData 
       }
     }
 
@@ -49,8 +55,7 @@ export function reducer(state = initialState, action: TeamActions): State {
       return {
         ...state,
         loadingData: {
-          message: 'Fetching team...',
-          color: 'primary'
+          message: 'Fetching team...'
         }
       }
     }
@@ -86,6 +91,34 @@ export function reducer(state = initialState, action: TeamActions): State {
         loadingData: null 
       });
     }
+
+    case TeamActionTypes.RequestUpdate: {
+      return {
+        ...state,
+        loadingData: {
+          message: 'Updating team...',
+          color: 'accent'
+        },
+        lastUpdatedTeamSlug: null
+      }
+    }
+
+    case TeamActionTypes.Update_: {
+      const changes = action.payload.teamChanges;
+      
+      return adapter.updateOne(changes, { 
+        ...state, 
+        loadingData: null,
+        lastUpdatedTeamSlug: changes.changes.slug != changes.id ? changes.changes.slug : null
+      });
+    }
+
+    case TeamActionTypes.UseAndResetLastUpdatedTeamSlug: {
+      return {
+        ...state,
+        lastUpdatedTeamSlug: null
+      }
+    }
     
     default: {
       return { 
@@ -95,10 +128,6 @@ export function reducer(state = initialState, action: TeamActions): State {
     }
   }
 }
-
-export const allTeamsLoaded = (state: State) => state.allTeamsLoaded;
-export const loading = (state: State) => state.loadingData;
-
 
 export const {
   selectAll,

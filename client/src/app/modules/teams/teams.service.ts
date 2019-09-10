@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { Response } from '../../models/response';
 import { of } from 'rxjs';
 import { map, flatMap } from 'rxjs/operators';
+import { TeamEditModel } from './models/team-edit-model';
 
 
 @Injectable({
@@ -39,15 +40,15 @@ export class TeamsService {
   
   /**
    * Server call to Update a team in the system 
-   * @param postData
+   * @param { TeamEditModel } postData
    * 
    * @return { Observable<Team> } 
    */
-  update$(postData: any = {}): Observable<Team> {
+  update$(postData: TeamEditModel): Observable<Team> {
     const methodTrace = `${this.constructor.name} > update$() > `; // for debugging
 
-    //to prevent receiving notification of actions performed by current user
-    postData.pusherSocketID = this.appService.pusherSocketID;
+    // //to prevent receiving notification of actions performed by current user
+    // postData.pusherSocketID = this.appService.pusherSocketID;
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),

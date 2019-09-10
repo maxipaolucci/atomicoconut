@@ -1,5 +1,7 @@
 import { Action } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
 import { Team } from './models/team';
+import { TeamEditModel } from './models/team-edit-model';
 
 export enum TeamActionTypes {
   CancelRequest = '[Team] Cancel request from Server',
@@ -8,11 +10,17 @@ export enum TeamActionTypes {
   Delete = '[Team] Delete from Store',
   RequestDelete = '[Team] Request delete from Server',
   RequestOne = '[Team] Request one from Server',
-  AddOne = '[Team] Add one to Store'
+  AddOne = '[Team] Add one to Store',
+  RequestUpdate = '[Team] Request update on Server',
+  Update_ = '[Team] Update in Store',
+  UseAndResetLastUpdatedTeamSlug = '[Team] Use and reset lastUpdatedTeamSlug flag',
+  RequestCreate = '[Team] Request create a new team on Server'
 }
 
 export class CancelRequest implements Action {
   readonly type = TeamActionTypes.CancelRequest;
+
+  constructor(public payload: { redirectData: any[] }) {}
 }
 
 export class AddAll implements Action {
@@ -24,7 +32,7 @@ export class AddAll implements Action {
 export class RequestAll implements Action {
   readonly type = TeamActionTypes.RequestAll;
 
-  constructor(public payload: { userEmail: string, forceServerRequest: boolean }) {}
+  constructor(public payload: { userEmail: string, forceServerRequest: boolean, silently?: boolean }) {}
 }
 
 export class RequestDelete implements Action {
@@ -51,7 +59,33 @@ export class AddOne implements Action {
   constructor(public payload: { team: Team }) {}
 }
 
-export type TeamActions = CancelRequest | 
+export class Update_ implements Action {
+  readonly type = TeamActionTypes.Update_;
+
+  constructor(public payload: { teamChanges: Update<Team> }) {}
+}
+
+export class RequestUpdate implements Action {
+  readonly type = TeamActionTypes.RequestUpdate;
+
+  constructor(public payload: { originalSlug: string, model: TeamEditModel }) {}
+}
+
+export class RequestCreate implements Action {
+  readonly type = TeamActionTypes.RequestCreate;
+
+  constructor(public payload: { model: TeamEditModel }) {}
+}
+
+export class UseAndResetLastUpdatedTeamSlug implements Action {
+  readonly type = TeamActionTypes.UseAndResetLastUpdatedTeamSlug;
+
+  constructor(public payload: { lastUpdatedTeamSlug: string }) {}
+}
+
+export type TeamActions = CancelRequest | UseAndResetLastUpdatedTeamSlug |  
     AddAll | RequestAll | 
     Delete | RequestDelete | 
-    RequestOne | AddOne;
+    RequestOne | AddOne | 
+    RequestUpdate | Update_ | 
+    RequestCreate;
