@@ -12,14 +12,14 @@ export class UserEffects {
   
   @Effect()
   init$ = defer(() => {
-    let userData: any = localStorage.getItem("user");
+    let userData: string = localStorage.getItem("user");
     if (userData) {
-      userData = JSON.parse(userData);
-      let params = {
-        financialInfo: userData.financialInfo ? true : false,
-        personalInfo: userData.personalInfo ? true : false
-      };
-      return this.usersService.getAuthenticatedUser$(params).pipe(
+      // userData = JSON.parse(userData);
+      // let params = {
+      //   financialInfo: userData.financialInfo ? true : false,
+      //   personalInfo: userData.personalInfo ? true : false
+      // };
+      return this.usersService.getAuthenticatedUser$().pipe(
         mergeMap((user: User) => {
           if (user) {
             return of(new Login({ user }));  
@@ -45,7 +45,8 @@ export class UserEffects {
     ),
     map((user: User) => {
       if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
+        // localStorage.setItem("user", user);
+        localStorage.setItem("user", user.email);
         //dispatch the action to save the value in the store
         return new Login({ user });
       }

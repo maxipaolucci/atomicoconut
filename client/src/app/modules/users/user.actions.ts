@@ -7,7 +7,8 @@ export enum UserActionTypes {
   Login = '[User] Login user',
   RequestLogin = '[User] Request login',
   RequestLogout = '[User] Request logout',
-  Logout = '[User] Logout user'
+  Logout = '[User] Logout user',
+  // RequestForgot
 }
 
 export class CancelRequest implements Action {

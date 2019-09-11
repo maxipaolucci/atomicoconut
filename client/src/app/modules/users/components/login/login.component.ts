@@ -54,18 +54,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     });
 
-    // const user$ = this.store.pipe(
-    //   select(userSelector())
-    // );
-    // let newSubscription: Subscription = user$.subscribe((user: User) => {
-    //   if (user) {
-    //     const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
-    //     this.usersService.routerRedirectUrl = null;
-    //     this.router.navigate([redirectUrl]);
-    //   }
-    // });
-    // this.subscription.add(newSubscription);
-
     const loading$ = this.store.pipe(
       select(loadingSelector())
     );
@@ -100,41 +88,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       disableClose: true,
       data: loadingData
     });
-  }
-
-  /**
-   * When user submits the login form
-   */
-  onSubmitOld() { 
-    const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
-
-    this.loginServiceRunning = true;
-    
-    // call the register service
-    const newSubscription: Subscription = this.usersService.login$(this.model).subscribe(
-      (user: User) => {
-        if (user) {
-          const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
-          this.usersService.routerRedirectUrl = null;
-          this.router.navigate([redirectUrl]);
-        }
-
-        this.loginServiceRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-        } else if (error.codeno === 451) {
-          this.appService.showResults(error.msg, 'error');
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-        }
-
-        this.loginServiceRunning = false;
-      }
-    );
-    this.subscription.add(newSubscription);
   }
 
   /**
