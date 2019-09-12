@@ -1,20 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { Subscription } from 'rxjs';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
-import { RequestLogin } from '../../user.actions';
+import { RequestLogin, RequestForgot } from '../../user.actions';
 import { LoginModel } from '../../models/login-model';
 import { loadingSelector, forgotFormVisibilitySelector } from '../../user.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
 import { DEFAULT_DIALOG_WIDTH_DESKTOP } from 'src/app/constants';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ProgressBarDialogComponent } from 'src/app/modules/shared/components/progress-bar-dialog/progress-bar-dialog.component';
-import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'users-login',
@@ -24,13 +23,11 @@ import { Observable } from 'rxjs';
 export class LoginComponent implements OnInit, OnDestroy {
 
   model: LoginModel = { email : '', password : '' };
-  forgotModel: any = { email : '', forgot : false };
-  loginServiceRunning = false;
-  forgotServiceRunning = false;
+  forgotModel: any = { email : '' };
   showPassword = false;
   subscription: Subscription = new Subscription();
   progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
-  forgotFormVisibility$: Observable<boolean>;
+  forgotFormVisibility: boolean = false;
 
   constructor(
     private appService: AppService,  
@@ -53,20 +50,17 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     });
 
-    const loading$ = this.store.pipe(
-      select(loadingSelector())
-    );
-
-    this.forgotFormVisibility$ = this.store.pipe(
-      select(forgotFormVisibilitySelector())
-    );
-
-    let newSubscription = loading$.subscribe((loadingData: LoadingData) => {
+    let newSubscription = this.store.select(loadingSelector()).subscribe((loadingData: LoadingData) => {
       if (loadingData) {
         this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
       } else if(this.progressBarDialogRef) {
         this.progressBarDialogRef.close();
       }
+    });
+    this.subscription.add(newSubscription);
+
+    newSubscription = this.store.select(forgotFormVisibilitySelector()).subscribe((visibility: boolean) => {
+      this.forgotFormVisibility = visibility
     });
     this.subscription.add(newSubscription);
   }
@@ -99,34 +93,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   onForgotSubmit() { 
     const methodTrace = `${this.constructor.name} > onForgotSubmit() > `; // for debugging
 
-    // this.forgotServiceRunning = true;
-    
-    this.store.dispatch(new RequestLogin(this.forgotModel));
-    // // call the register service
-    // const newSubscription: Subscription = this.usersService.forgot$(this.forgotModel).subscribe(
-    //   (data: any) => {
-    //     if (data && data.email && data.expires) {
-    //       this.appService.showResults(`We sent an email to ${data.email} with a password reset link that will expire in ${data.expires}.`, 'info');
-    //     } else {
-    //       this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-    //     }
-        
-    //     this.forgotServiceRunning = false;
-    //   },
-    //   (error: any) => {
-    //     this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-    //     if (error.codeno === 400) {
-    //       this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-    //     } else if (error.codeno === 455) {
-    //       // invalid email
-    //       this.appService.showResults(error.msg, 'error');
-    //     } else {
-    //       this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-    //     }
-    //     this.forgotServiceRunning = false;
-    //   }
-    // );
-    // this.subscription.add(newSubscription);
+    this.store.dispatch(new RequestForgot(this.forgotModel));
   }
 
   

@@ -279,8 +279,8 @@ exports.update = async (req, res, next) => {
                     memberState[memberEmail] = 'email-sent';
                     
                     console.log(`${methodTrace} ${getMessage('message', 1040, user.email, true, memberEmail)}`);
-                    const registerURL = `http://${req.headers.host}/app/users/register`;
-                    mail.send({
+                    const registerURL = `${req.headers.origin}/users/register`;
+                    await mail.send({
                         toEmail : memberEmail,
                         subject : `AtomiCoconut - ${team.name} team invitation to join`,
                         registerURL,

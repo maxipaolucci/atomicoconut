@@ -1,6 +1,6 @@
 <div class="container__login" fxLayout="column" fxLayoutAlign="none none" fxLayoutAlign.gt-xs="none center" fxLayoutGap="10px">
   <form class="form__container form__login" #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate fxLayout="column" fxLayoutGap="10px" >
-    <section fxLayout="column" fxLayoutGap="10px" class="form__fields" *ngIf="!(forgotFormVisibility$ | async)">      
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields" *ngIf="!forgotFormVisibility">      
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Email -->
@@ -37,9 +37,9 @@
 
     <section class="form__actions form__actions--login"
         fxLayout="row" fxFlexAlign="center"
-        fxLayoutGap="10px" *ngIf="!(forgotFormVisibility$ | async)">
+        fxLayoutGap="10px" *ngIf="!forgotFormVisibility">
         
-      <button mat-fab *ngIf="!loginServiceRunning" 
+      <button mat-fab 
           class="fab mat-elevation-z10 form__action" 
           color="accent" 
           type="submit"
@@ -47,27 +47,20 @@
           [disabled]="!loginForm.form.valid">
         <mat-icon aria-label="Login">arrow_forward</mat-icon>
       </button>
-      
-      <mat-progress-spinner *ngIf="loginServiceRunning"
-          class="progress-spinner progress-spinner--login"
-          color="accent"
-          [diameter]="55" [strokeWidth]="10"
-          mode="indeterminate">
-      </mat-progress-spinner>
     </section>
 
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">      
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign="none center" fxLayoutAlign.gt-xs="center none" class="form__fields__row">
           <!-- Forgot my password checkbox  -->
-          <mat-checkbox [(ngModel)]="(forgotFormVisibility$ | async)" name="forgot" id="forgot">Forgot my password</mat-checkbox>
+          <mat-checkbox [(ngModel)]="forgotFormVisibility" name="forgot" id="forgot">Forgot my password</mat-checkbox>
         </div>
       </div>
     </section>
   </form>
 
   <!-- Forgot password form -->
-  <form *ngIf="(forgotFormVisibility$ | async)" class="form__container form__forgot" #forgotForm="ngForm" (ngSubmit)="onForgotSubmit()" novalidate fxLayout="column" fxLayoutGap="10px">
+  <form *ngIf="forgotFormVisibility" class="form__container form__forgot" #forgotForm="ngForm" (ngSubmit)="onForgotSubmit()" novalidate fxLayout="column" fxLayoutGap="10px">
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">      
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <div fxLayout="row" fxLayoutAlign="none none" fxLayoutGap="10px" class="form__fields__row">
@@ -83,7 +76,7 @@
             <mat-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.email">Email must be a valid email address</mat-error>
           </mat-form-field>
 
-          <button mat-mini-fab *ngIf="!forgotServiceRunning" 
+          <button mat-mini-fab 
               class="fab mat-elevation-z10 form__action" 
               color="primary" 
               type="submit"
@@ -91,13 +84,6 @@
               [disabled]="!forgotForm.form.valid">
             <mat-icon aria-label="Send">arrow_forward</mat-icon>
           </button>
-
-          <mat-progress-spinner *ngIf="forgotServiceRunning"
-              class="progress-spinner progress-spinner--forgot"
-              color="accent"
-              [diameter]="40" [strokeWidth]="7"
-              mode="indeterminate">
-          </mat-progress-spinner>
         </div>
       </div>
     </section>

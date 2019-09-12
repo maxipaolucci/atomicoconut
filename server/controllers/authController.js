@@ -191,7 +191,7 @@ exports.forgot = async (req, res) => {
     await user.save();
     //3 send them email with the token
     console.log(`${methodTrace} ${getMessage('message', 1008, email, true, email)}`);
-    const resetURL = `http://${req.headers.host}/app/users/account/reset/${user.resetPasswordToken}`;
+    const resetURL = `${req.headers.origin}/users/account/reset/${user.resetPasswordToken}`;
     await mail.send({
         toEmail : user.email,
         subject : 'AtomiCoconut - Password reset',
