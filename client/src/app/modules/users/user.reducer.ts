@@ -8,13 +8,15 @@ export const userFeatureKey = 'user';
 export interface UserState extends fromRoot.AppState {
   loggedIn: boolean,
   user: User,
-  loadingData: LoadingData;
+  loadingData: LoadingData,
+  forgotFormVisibility: boolean
 }
 
 export const initialState: UserState = {
   loggedIn: false,
   user: null,
-  loadingData: null
+  loadingData: null,
+  forgotFormVisibility: false
 };
 
 export function reducer(state: UserState = initialState, action: UserActions): UserState {
@@ -65,9 +67,25 @@ export function reducer(state: UserState = initialState, action: UserActions): U
       }
     }
 
+    case UserActionTypes.Forgot: {
+      return {
+        ...state,
+        loadingData: null,
+        forgotFormVisibility: false
+      }
+    }
+
+    case UserActionTypes.RequestForgot: {
+      return {
+        ...state,
+        loadingData: {
+          message: 'Requesting password change...'
+        },
+        forgotFormVisibility: true
+      }
+    }
+
     default:
       return state;
   }
 }
-
-export const loading = (state: UserState) => state.loadingData;

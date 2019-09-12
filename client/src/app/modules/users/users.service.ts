@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, of, interval } from 'rxjs';
-import { map, catchError, flatMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AppService } from '../../app.service';
 import { User } from './models/user';
@@ -51,7 +51,7 @@ export class UsersService {
     this.setUser(null);
     return this.http.post<Response>(`${this.serverHost}/register`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      flatMap((data: any): Observable<User> => {
+      mergeMap((data: any): Observable<User> => {
         let user: User = null;
         if (data && data.email) {
           user = new User(data.name, data.email, data.avatar, null, null, data.currency);
@@ -76,7 +76,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/account`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      flatMap((data: any): Observable<User> => {
+      mergeMap((data: any): Observable<User> => {
         const user: User = this.getUser();
 
         if (data && data.email) {
@@ -105,7 +105,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/accountPersonalInfo`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      flatMap((data: any): Observable<User> => {
+      mergeMap((data: any): Observable<User> => {
         const user = this.getUser();
 
         if (data.personalInfo.birthday) {
@@ -131,7 +131,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/accountFinancialInfo`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      flatMap((data: any): Observable<User> => {
+      mergeMap((data: any): Observable<User> => {
         const user = this.getUser();
 
         if (data.financialInfo.savingsUnit) {  
@@ -166,7 +166,7 @@ export class UsersService {
     
     return this.http.get<Response>(`${this.serverHost}/getUser`, { params }).pipe(
       map(this.appService.extractData),
-      flatMap((data: any): Observable<User> => {
+      mergeMap((data: any): Observable<User> => {
         let user: User = null;
 
         if (data && data.email) {
@@ -206,7 +206,7 @@ export class UsersService {
     const methodTrace = `${this.constructor.name} > updateSessionState() > `; // for debugging
     
     interval(time).pipe(
-      flatMap((checkNumber: number) => {
+      mergeMap((checkNumber: number) => {
         console.log(methodTrace, checkNumber);
         const user: User = this.getUser();
         const params = {
@@ -232,7 +232,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/login`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      flatMap((data: any): Observable<User> => {
+      mergeMap((data: any): Observable<User> => {
         let user: User = null;
 
         if (data && data.email) {
@@ -251,14 +251,24 @@ export class UsersService {
   /**
    * Server call to forgot with the provided user email.
    * 
-   * @return { Observable<any>}
+   * @return { Observable<boolean>}
    */
-  forgot$(postData: any = {}): Observable<any> {
+  forgot$(postData: any = {}): Observable<boolean> {
     const methodTrace = `${this.constructor.name} > forgot$() > `; // for debugging
 
-    return this.http.post<Response>(`${this.serverHost}/account/forgot`, postData, { headers : this.headers }).pipe(
-      map(this.appService.extractData)
-    );
+    return this.http.post<Response>(`${this.serverHost}/account/forgot`, postData, { headers : this.headers })
+      .pipe(
+        map(this.appService.extractData),
+        map((data: any) => {
+          if (data && data.email && data.expires) {
+            this.appService.showResults(`We sent an email to ${data.email} with a password reset link that will expire in ${data.expires}.`, 'info');
+            return true;
+          }
+          
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          return false;
+        })
+      );
   }
 
   /**
@@ -273,7 +283,7 @@ export class UsersService {
     return this.http.post<Response>(`${this.serverHost}/account/reset/${token}`, postData, { headers : this.headers })
         .pipe(
           map(this.appService.extractData),
-          flatMap((data: any): Observable<User> => {
+          mergeMap((data: any): Observable<User> => {
             let user: User = null;
 
             if (data && data.email) {
@@ -299,7 +309,7 @@ export class UsersService {
 
     return this.http.get<Response>(`${this.serverHost}/logout`).pipe(
       map(this.appService.extractData),
-      flatMap((data: any): Observable<null> => {
+      mergeMap((data: any): Observable<null> => {
         this.setUser(null);
         return of(null);
       })

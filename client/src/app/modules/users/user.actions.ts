@@ -8,7 +8,8 @@ export enum UserActionTypes {
   RequestLogin = '[User] Request login',
   RequestLogout = '[User] Request logout',
   Logout = '[User] Logout user',
-  // RequestForgot
+  RequestForgot = '[User] Request Forgot password to Server',
+  Forgot = '[User] Set Forgot password state in Store'
 }
 
 export class CancelRequest implements Action {
@@ -27,6 +28,16 @@ export class RequestLogin implements Action {
   constructor(public payload: LoginModel) {}
 }
 
+export class RequestForgot implements Action {
+  readonly type = UserActionTypes.RequestForgot;
+
+  constructor(public payload: { email: string }) {}
+}
+
+export class Forgot implements Action {
+  readonly type = UserActionTypes.Forgot;
+}
+
 export class Logout implements Action {
   readonly type = UserActionTypes.Logout;
 }
@@ -38,4 +49,5 @@ export class RequestLogout implements Action {
 
 export type UserActions = CancelRequest   
     | Login | RequestLogin
-    | Logout | RequestLogout;
+    | Logout | RequestLogout
+    | Forgot | RequestForgot;

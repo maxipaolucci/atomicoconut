@@ -1,6 +1,6 @@
 <div class="container__login" fxLayout="column" fxLayoutAlign="none none" fxLayoutAlign.gt-xs="none center" fxLayoutGap="10px">
   <form class="form__container form__login" #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate fxLayout="column" fxLayoutGap="10px" >
-    <section fxLayout="column" fxLayoutGap="10px" class="form__fields" *ngIf="!forgotModel.forgot">      
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields" *ngIf="!(forgotFormVisibility$ | async)">      
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
           <!-- Email -->
@@ -37,7 +37,7 @@
 
     <section class="form__actions form__actions--login"
         fxLayout="row" fxFlexAlign="center"
-        fxLayoutGap="10px" *ngIf="!forgotModel.forgot">
+        fxLayoutGap="10px" *ngIf="!(forgotFormVisibility$ | async)">
         
       <button mat-fab *ngIf="!loginServiceRunning" 
           class="fab mat-elevation-z10 form__action" 
@@ -60,14 +60,14 @@
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign="none center" fxLayoutAlign.gt-xs="center none" class="form__fields__row">
           <!-- Forgot my password checkbox  -->
-          <mat-checkbox [(ngModel)]="forgotModel.forgot" name="forgot" id="forgot">Forgot my password</mat-checkbox>
+          <mat-checkbox [(ngModel)]="(forgotFormVisibility$ | async)" name="forgot" id="forgot">Forgot my password</mat-checkbox>
         </div>
       </div>
     </section>
   </form>
 
   <!-- Forgot password form -->
-  <form class="form__container form__forgot" #forgotForm="ngForm" (ngSubmit)="onForgotSubmit()" novalidate fxLayout="column" fxLayoutGap="10px" *ngIf="forgotModel.forgot">
+  <form *ngIf="(forgotFormVisibility$ | async)" class="form__container form__forgot" #forgotForm="ngForm" (ngSubmit)="onForgotSubmit()" novalidate fxLayout="column" fxLayoutGap="10px">
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">      
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <div fxLayout="row" fxLayoutAlign="none none" fxLayoutGap="10px" class="form__fields__row">

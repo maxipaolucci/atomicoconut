@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
-import { RequestLogin, UserActionTypes, CancelRequest, Login, RequestLogout, Logout } from './user.actions';
+import { RequestLogin, UserActionTypes, CancelRequest, Login, RequestLogout, Logout, RequestForgot, Forgot } from './user.actions';
 import { mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { of, defer } from 'rxjs';
 import { User } from './models/user';
@@ -84,6 +84,24 @@ export class UserEffects {
       localStorage.removeItem("user");
       this.router.navigate(['/']);
     })
+  );
+
+  @Effect()
+  requestForgot$ = this.actions$.pipe(
+    ofType<RequestForgot>(UserActionTypes.RequestForgot),
+    mergeMap(({ payload }) => this.usersService.forgot$(payload)
+      .pipe(
+        catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+      )
+    ),
+    map((result: boolean) => {
+      if (result) {
+        return new Forgot();
+      }
+
+      // if here, means http error in the response. 
+      return new CancelRequest(); //we don't want to do anything in this case, stop the loadingData flag
+    }) 
   );
 
   constructor(private actions$: Actions, private usersService: UsersService, private router: Router) {}

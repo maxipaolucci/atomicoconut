@@ -6,15 +6,20 @@ export const selectUserState = createFeatureSelector<fromUser.UserState>("user")
 
 export const userSelector = () => createSelector(
   selectUserState,
-  (userState: fromUser.UserState) => userState.user
+  (state: fromUser.UserState) => state.user
 );
 
 export const loggedInSelector = () => createSelector(
   selectUserState,
-  (userState: fromUser.UserState) => userState.loggedIn
+  (state: fromUser.UserState) => state.loggedIn
 );
 
 export const loadingSelector = () => createSelector(
   selectUserState,
-  fromUser.loading
+  (state: fromUser.UserState) => state.loadingData
+);
+
+export const forgotFormVisibilitySelector = () => createSelector(
+  selectUserState,
+  (state: fromUser.UserState) => state.forgotFormVisibility
 );
