@@ -10,11 +10,9 @@ import { RequestLogin, RequestForgot } from '../../user.actions';
 import { LoginModel } from '../../models/login-model';
 import { forgotFormVisibilitySelector } from '../../user.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
-import { DEFAULT_DIALOG_WIDTH_DESKTOP, SnackbarNotificationTypes } from 'src/app/constants';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { ProgressBarDialogComponent } from 'src/app/modules/shared/components/progress-bar-dialog/progress-bar-dialog.component';
+import { SnackbarNotificationTypes } from 'src/app/constants';
 import { loadingSelector } from 'src/app/app.selectors';
-
+import _ from 'lodash';
 
 @Component({
   selector: 'users-login',
@@ -27,7 +25,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   forgotModel: any = { email : '' };
   showPassword = false;
   subscription: Subscription = new Subscription();
-  progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
   forgotFormVisibility: boolean = false;
   loadingData$: Observable<LoadingData> = null;
 
@@ -35,7 +32,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     private appService: AppService,  
     private mainNavigatorService: MainNavigatorService,  
     private route: ActivatedRoute,
-    public dialog: MatDialog,
     private store: Store<State>
   ) { }
 
@@ -53,14 +49,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     this.loadingData$ = this.store.select(loadingSelector());
-    // let newSubscription = this.store.select(loadingSelector()).subscribe((loadingData: LoadingData) => {
-    //   if (loadingData) {
-    //     this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
-    //   } else if(this.progressBarDialogRef) {
-    //     this.progressBarDialogRef.close();
-    //   }
-    // });
-    // this.subscription.add(newSubscription);
 
     let newSubscription = this.store.select(forgotFormVisibilitySelector()).subscribe((visibility: boolean) => {
       this.forgotFormVisibility = visibility
@@ -77,18 +65,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
-    this.store.dispatch(new RequestLogin(this.model));
-  }
-
-  openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
-    const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
-    console.log(methodTrace, 'this should not happen on login');
-
-    return this.dialog.open(ProgressBarDialogComponent, {
-      width: DEFAULT_DIALOG_WIDTH_DESKTOP,
-      disableClose: true,
-      data: loadingData
-    });
+    this.store.dispatch(new RequestLogin(_.cloneDeep(this.model)));
   }
 
   /**
@@ -97,8 +74,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   onForgotSubmit() { 
     const methodTrace = `${this.constructor.name} > onForgotSubmit() > `; // for debugging
 
-    this.store.dispatch(new RequestForgot(this.forgotModel));
+    this.store.dispatch(new RequestForgot(_.cloneDeep(this.forgotModel)));
   }
-
-  
 }

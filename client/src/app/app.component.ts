@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppService } from './app.service';
 import { UsersService } from './modules/users/users.service';
 import { User } from './modules/users/models/user';
-import { Router } from '@angular/router';
 import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
 import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
 import { UtilService } from './util.service';
@@ -36,7 +35,6 @@ export class AppComponent implements OnInit, OnDestroy {
   loadingData: LoadingData = null;
 
   constructor(
-      private router: Router, 
       private appService: AppService, 
       private teamsService: TeamsService, 
       public usersService: UsersService, 
@@ -64,6 +62,15 @@ export class AppComponent implements OnInit, OnDestroy {
       this.loadingData = loadingData;
     });
     this.subscription.add(newSubscription);
+
+    // let newSubscription = this.store.select(loadingSelector()).subscribe((loadingData: LoadingData) => {
+    //   if (loadingData) {
+    //     this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
+    //   } else if(this.progressBarDialogRef) {
+    //     this.progressBarDialogRef.close();
+    //   }
+    // });
+    // this.subscription.add(newSubscription);
 
     // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
     newSubscription = this.usersService.user$.pipe(
@@ -106,15 +113,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.getCryptoRates('XMR');
   }
 
-  // openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
-  //   const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
+  openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
+    const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
     
-  //   return this.dialog.open(ProgressBarDialogComponent, {
-  //     width: DEFAULT_DIALOG_WIDTH_DESKTOP,
-  //     disableClose: true,
-  //     data: loadingData
-  //   });
-  // }
+    return this.dialog.open(ProgressBarDialogComponent, {
+      width: DEFAULT_DIALOG_WIDTH_DESKTOP,
+      disableClose: true,
+      data: loadingData
+    });
+  }
 
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
@@ -145,21 +152,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(new RequestLogout());
   }
-  // logout(): void {
-  //   const methodTrace = `${this.constructor.name} > logout() > `; // for debugging
-
-  //   const newSubscription: Subscription = this.usersService.logout$().subscribe(
-  //     (result: any) => {
-  //       this.user = result;
-  //       this.unbindToPushNotificationEvents();
-  //       this.router.navigate(['/']);
-  //     },
-  //     (error: any) =>  {
-  //       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the logout service.`, error);
-  //     }
-  //   );
-  //   this.subscription.add(newSubscription);
-  // }
 
   /**
    * Start listening to Pusher notifications comming from server

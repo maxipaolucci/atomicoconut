@@ -14,11 +14,6 @@ export const loggedInSelector = () => createSelector(
   (state: fromUser.UserState) => state.loggedIn
 );
 
-export const loadingSelector = () => createSelector(
-  selectUserState,
-  (state: fromUser.UserState) => state.loadingData
-);
-
 export const forgotFormVisibilitySelector = () => createSelector(
   selectUserState,
   (state: fromUser.UserState) => state.forgotFormVisibility

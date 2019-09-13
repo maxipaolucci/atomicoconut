@@ -3,17 +3,15 @@ import { Router, ActivatedRoute, ParamMap  } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { AppService } from '../../../../app.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ResetPasswordModel } from '../../models/reset-password-model';
 import { LoadingData } from 'src/app/models/loadingData';
-import { DEFAULT_DIALOG_WIDTH_DESKTOP, SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { ProgressBarDialogComponent } from 'src/app/modules/shared/components/progress-bar-dialog/progress-bar-dialog.component';
+import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
 import { State } from 'src/app/main.reducer';
 import { Store } from '@ngrx/store';
-import { loadingSelector } from '../../user.selectors';
 import { RequestReset } from '../../user.actions';
-
+import _ from 'lodash';
+import { loadingSelector } from 'src/app/app.selectors';
 
 @Component({
   selector: 'users-reset-password',
@@ -26,14 +24,13 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
   private token = '';
   showPassword = false;
   subscription: Subscription = new Subscription();
-  progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
+  loadingData$: Observable<LoadingData> = null;
 
   constructor(
     private appService: AppService, 
     private router: Router, 
     private route: ActivatedRoute,
     private mainNavigatorService: MainNavigatorService,
-    public dialog: MatDialog,
     private store: Store<State>
   ) { }
 
@@ -55,15 +52,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         }
       });
 
-    let newSubscription = this.store.select(loadingSelector())
-      .subscribe((loadingData: LoadingData) => {
-        if (loadingData) {
-          this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
-        } else if(this.progressBarDialogRef) {
-          this.progressBarDialogRef.close();
-        }
-      });
-    this.subscription.add(newSubscription);
+    this.loadingData$ = this.store.select(loadingSelector());
   }
 
   ngOnDestroy() {
@@ -71,16 +60,6 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
     // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
-  }
-
-  openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
-    const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
-    
-    return this.dialog.open(ProgressBarDialogComponent, {
-      width: DEFAULT_DIALOG_WIDTH_DESKTOP,
-      disableClose: true,
-      data: loadingData
-    });
   }
 
   onSubmit() { 
@@ -92,7 +71,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    this.store.dispatch(new RequestReset({ token: this.token, model: this.model }));
+    this.store.dispatch(new RequestReset({ token: this.token, model: _.cloneDeep(this.model) }));
   }
 
 }

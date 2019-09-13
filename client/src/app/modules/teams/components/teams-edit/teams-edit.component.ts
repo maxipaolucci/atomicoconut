@@ -112,8 +112,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   onSubmit() {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
-    const model = _.cloneDeep(this.model); //for some reason this get readonly state too affter using it for the requestupdate action
-    this.store.dispatch(new RequestCreate({ model }));
+    this.store.dispatch(new RequestCreate({ model: _.cloneDeep(this.model) }));
   }
 
   onUpdate() {
@@ -124,9 +123,9 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     this.model.members = this.team.members.map((member: User) => member.email);
     //to prevent receiving notification of actions performed by current user
     this.model.pusherSocketID = this.appService.pusherSocketID;
-    const model = _.cloneDeep(this.model); //for some reason this get readonly state too affter using it for the requestupdate action
+    
     // TODO check the new members are not duplicated, especially the admin
-    this.store.dispatch(new RequestUpdate({ originalSlug: this.slug, model }));
+    this.store.dispatch(new RequestUpdate({ originalSlug: this.slug, model: _.cloneDeep(this.model) }));
   }
 
   openAddPersonDialog() {

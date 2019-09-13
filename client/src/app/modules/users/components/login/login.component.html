@@ -76,7 +76,7 @@
             <mat-error *ngIf="emailForgot.invalid && (emailForgot.dirty || emailForgot.touched) && emailForgot.errors.email">Email must be a valid email address</mat-error>
           </mat-form-field>
 
-          <button mat-mini-fab 
+          <button mat-mini-fab *ngIf="!(loadingData$ | async)"
               class="fab mat-elevation-z10 form__action" 
               color="primary" 
               type="submit"

@@ -44,7 +44,6 @@ export class UserEffects {
     tap((action) => {
       this.store.dispatch(new ShowProgressBar({ message: 'Authenticating...' }));  
     }),
-    delay(10000),
     mergeMap(({ payload }) => this.usersService.login$(payload)
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
@@ -77,6 +76,9 @@ export class UserEffects {
   @Effect()
   requestLogout$ = this.actions$.pipe(
     ofType<RequestLogout>(UserActionTypes.RequestLogout),
+    tap((action) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Logging out user...' }));  
+    }),
     mergeMap(() => this.usersService.logout$()
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
@@ -90,6 +92,7 @@ export class UserEffects {
     ofType<Logout>(UserActionTypes.Logout),
     tap(() => {
       localStorage.removeItem("user");
+      this.store.dispatch(new HideProgressBar());
       this.router.navigate(['/']);
     })
   );
@@ -97,6 +100,9 @@ export class UserEffects {
   @Effect()
   requestForgot$ = this.actions$.pipe(
     ofType<RequestForgot>(UserActionTypes.RequestForgot),
+    tap((action) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Requesting password change...' }));  
+    }),
     mergeMap(({ payload }) => this.usersService.forgot$(payload)
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
@@ -112,11 +118,23 @@ export class UserEffects {
     }) 
   );
 
+  
+  @Effect({ dispatch: false })
+  forgot$ = this.actions$.pipe(
+    ofType<Forgot>(UserActionTypes.Forgot),
+    tap((action) => {
+      this.store.dispatch(new HideProgressBar());
+    })
+  );
+
   @Effect()
   requestReset$ = this.actions$.pipe(
     ofType<RequestReset>(UserActionTypes.RequestReset),
+    tap((action) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Requesting password reset...', color: 'accent' }));  
+    }),
     exhaustMap(({ payload }) => this.usersService.reset$(payload.token, payload.model)  //exhaustMap because we want to ignore multiple request till the first is complete. 
-                                                                    // Weird to happen because of the loading screen disables the button
+                                                                                        // Weird to happen because of the loading screen disables the button
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
@@ -130,6 +148,7 @@ export class UserEffects {
   cancelRequest$ = this.actions$.pipe(
     ofType<CancelRequest>(UserActionTypes.CancelRequest),
     tap(({ payload }) => {
+      this.store.dispatch(new HideProgressBar());
       if (payload && payload.redirectData && payload.redirectData.length) {
         return this.router.navigate(payload.redirectData);
       }
