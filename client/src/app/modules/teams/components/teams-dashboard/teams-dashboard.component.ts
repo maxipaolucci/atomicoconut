@@ -7,13 +7,13 @@ import { User } from '../../../users/models/user';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { Subscription, Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { AppState } from 'src/app/reducers';
+import { State } from 'src/app/main.reducer';
 import { RequestDelete } from '../../team.actions';
 import { ProgressBarDialogComponent } from '../../../shared/components/progress-bar-dialog/progress-bar-dialog.component';
 import { RequestAll } from '../../team.actions';
 import { teamsSelector, loadingSelector } from '../../team.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
-import { DEFAULT_DIALOG_WIDTH_DESKTOP } from 'src/app/constants';
+import { DEFAULT_DIALOG_WIDTH_DESKTOP, ConsoleNotificationTypes } from 'src/app/constants';
 import { userSelector } from 'src/app/modules/users/user.selectors';
 
 @Component({
@@ -36,7 +36,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     private mainNavigatorService: MainNavigatorService, 
     private appService: AppService,
     public dialog: MatDialog,
-    private store: Store<AppState>
+    private store: Store<State>
   ) {}
 
   ngOnInit() {
@@ -142,7 +142,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > openDeleteTeamDialog() > `; // for debugging
     
     if (!team) {
-      this.appService.consoleLog('error', `${methodTrace} Team is required to delete.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Team is required to delete.`);
       return false;
     }
 

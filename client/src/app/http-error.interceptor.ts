@@ -9,6 +9,7 @@ import {
  import { AppService } from './app.service';
  import { Observable, of } from 'rxjs';
  import { retry, catchError, map } from 'rxjs/operators';
+import { SnackbarNotificationTypes, ConsoleNotificationTypes } from './constants';
  
  export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(private appService: AppService) {}
@@ -20,12 +21,12 @@ import {
       .pipe(
         retry(1),
         catchError((result: HttpErrorResponse, caught: Observable<any>) => { 
-          this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing a request to: ${request.url}`, result.error);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing a request to: ${request.url}`, result.error);
           if (result.error.codeno === 471) {
-            this.appService.showResults(result.error.msg, 'error', 7000);
+            this.appService.showResults(result.error.msg, SnackbarNotificationTypes.ERROR, 7000);
           } else {
-            this.appService.showResults(result.error.msg, 'error');
-            //this.appService.showResults(`There was an error in the server while performing a request to [${request.url}], please try again in a few minutes.`, 'error');  
+            this.appService.showResults(result.error.msg, SnackbarNotificationTypes.ERROR);
+            //this.appService.showResults(`There was an error in the server while performing a request to [${request.url}], please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);  
           }
           
           throw null; //to the next catchError

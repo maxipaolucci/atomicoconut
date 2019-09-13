@@ -49,7 +49,7 @@ const messageCodes = {
   1010 : 'Mail successfully sent to {{param}}.',
   1011 : 'Checking for User with token {{param}} not expired...',
   1012 : 'User found, saving new password...',
-  1013 : 'Nice! Password has been reset! You are now logged in.',
+  1013 : 'Password for {{param}} was successfully reset and user is now logged in.',
   1014 : 'User with token provided found.',
   1015 : 'Validating register form fields...',
   1016 : 'Register form fields are OK.',
@@ -88,8 +88,10 @@ const messageCodes = {
   1049 : 'Getting latest data from {{param}}',
   1050 : '{{param}} record(s) successfully removed from {{param}}',
   1051 : 'Searching all {{param}} records with {{param}}...',
-  1052 : 'Sending alert by email for {{param}} to {{param}}...',
-  1053 : 'Email sent to {{param}}.'
+  1052 : 'Checking that password and password-confirm values are equal...',
+  1053 : 'Check done and was successful.',
+  1054 : 'Sending alert by email for {{param}} to {{param}}...',
+  1055 : 'Email sent to {{param}}.'
 };
 
 /**

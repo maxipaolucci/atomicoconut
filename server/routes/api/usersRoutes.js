@@ -42,7 +42,7 @@ router.route('/account/forgot').post(catchErrors(authController.forgot));
 
 router.route('/account/reset/:token').post(
   authController.confirmedPasswords,
-  catchErrors(authController.update)
+  catchErrors(authController.reset)
 );
 
 

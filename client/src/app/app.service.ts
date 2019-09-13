@@ -6,6 +6,7 @@ import { Response } from './models/response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import Pusher from 'pusher-js';
+import { ConsoleNotificationTypes, SnackbarNotificationTypes, ServerResponseStatus } from './constants';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +37,7 @@ export class AppService {
    * @param res
    */
   public extractData(res: Response): any {
-    if (res.codeno === 200 && res.status === 'success') {
+    if (res.codeno === 200 && res.status === ServerResponseStatus.SUCCESS) {
       return res.data;
     } else {
       throw res;
@@ -45,13 +46,13 @@ export class AppService {
 
   /**
    * Shows messages in snackbar component
-   * @param message . The text to show
-   * @param duration . The duration in milliseconds . Optional
-   * @param actionName . An action name to close the message on click. Optional
+   * @param {string} message . The text to show
+   * @param {SnackbarNotificationTypes} type
+   * @param {number} duration . The duration in milliseconds . Optional
    * 
    * @return {MatSnackBar} . The snackbar ref
    */
-  showResults(message: string, type: string = 'info', duration: number = 5000): any {
+  showResults(message: string, type: SnackbarNotificationTypes = SnackbarNotificationTypes.INFO, duration: number = 5000): any {
     const snackBarRef = this.snackBar.openFromComponent(SnackbarSimpleComponent, {
       data : {
         type,
@@ -86,11 +87,11 @@ export class AppService {
 
   /**
    * Show logs in the console if enabled in the current environment
-   * @param type . Error type
-   * @param message . The message to show
-   * @param params . Any extra parameters to list in the log.
+   * @param {ConsoleNotificationTypes} type . Notification type
+   * @param {string} message . The message to show
+   * @param {any} params . Any extra parameters to list in the log.
    */
-  consoleLog(type: 'log' | 'debug' | 'warn' | 'info' | 'error', message: string, ...params) {
+  consoleLog(type: ConsoleNotificationTypes, message: string, ...params) {
     if (environment.showLogs) {
       console[type](message, params);
     }

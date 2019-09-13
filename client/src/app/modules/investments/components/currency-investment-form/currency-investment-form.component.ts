@@ -42,7 +42,7 @@ export class CurrencyInvestmentFormComponent implements OnInit, OnDestroy, After
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
     
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 

@@ -6,7 +6,7 @@ import { User } from '../users/models/user';
 import { UsersService } from '../users/users.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ProgressBarDialogComponent } from '../shared/components/progress-bar-dialog/progress-bar-dialog.component';
-import { AppState } from '../../reducers';
+import { State } from '../../main.reducer';
 import { Store, select } from '@ngrx/store';
 import { Team } from './models/team';
 import { teamBySlugSelector, loadingSelector } from './team.selectors';
@@ -22,7 +22,7 @@ export class TeamResolver implements Resolve<Team> {
   constructor(
       private usersService: UsersService, 
       public dialog: MatDialog,
-      private store: Store<AppState>
+      private store: Store<State>
   ) {}
   
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<never> | Observable<Team> {

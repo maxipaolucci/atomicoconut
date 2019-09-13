@@ -5,6 +5,7 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { User } from './modules/users/models/user';
 import { UsersService } from './modules/users/users.service';
 import { AppService } from './app.service';
+import { ConsoleNotificationTypes } from './constants';
 
 
 @Injectable()
@@ -32,13 +33,13 @@ export class AuthResolver implements Resolve<User> {
           if (updatedUser) {
             return updatedUser;
           } else {
-            this.appService.consoleLog('warn', `${methodTrace} There was something wrong with the getAuthenticatedUser service and the expected data did not come back`)
+            this.appService.consoleLog(ConsoleNotificationTypes.WARN, `${methodTrace} There was something wrong with the getAuthenticatedUser service and the expected data did not come back`)
             return user;
           }
         }),
         retry(1),
         catchError((error: any): Observable<User> => {
-          this.appService.consoleLog('error', `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the getAuthenticatedUser service.`, error);
           return of(user);
         })
       );

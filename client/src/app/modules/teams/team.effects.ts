@@ -7,10 +7,11 @@ import { mergeMap, tap, map, withLatestFrom, filter, catchError } from 'rxjs/ope
 import { of } from 'rxjs';
 import { Team } from './models/team';
 import { allTeamsLoadedSelector } from './team.selectors';
-import { AppState } from '../../reducers';
+import { State } from '../../main.reducer';
 import { Store, select } from '@ngrx/store';
 import { AppService } from 'src/app/app.service';
 import { Router } from '@angular/router';
+import { SnackbarNotificationTypes } from 'src/app/constants';
 
 @Injectable()
 export class TeamEffects {
@@ -74,10 +75,10 @@ export class TeamEffects {
     map((data: any) => {
       if (data) {
         if (data.removed > 0) {
-          this.appService.showResults(`Team "${data.team.name}" successfully removed!`, 'success');
+          this.appService.showResults(`Team "${data.team.name}" successfully removed!`, SnackbarNotificationTypes.SUCCESS);
           return new Delete({ slug: data.team.slug });
         } else {
-          this.appService.showResults(`Team "${data.team.name}" could not be removed, please try again.`, 'error');
+          this.appService.showResults(`Team "${data.team.name}" could not be removed, please try again.`, SnackbarNotificationTypes.ERROR);
         } 
       }
       
@@ -139,15 +140,14 @@ export class TeamEffects {
       }
 
       return; // do nothing here
-    }) // redirect to new slug)
-    // tap(({ payload }) => this.router.navigate(['/teams/edit', payload.lastUpdatedTeamSlug])) // redirect to new slug)
+    })
   )
 
   constructor(
       private actions$: Actions, 
       private teamsService: TeamsService,
       private appService: AppService, 
-      private store: Store<AppState>,
+      private store: Store<State>,
       private router: Router
   ) {}
 

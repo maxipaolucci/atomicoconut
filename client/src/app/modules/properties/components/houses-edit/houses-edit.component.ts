@@ -64,7 +64,7 @@ export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
     
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 

@@ -5,7 +5,7 @@ import { AccountFinance } from '../../models/account-finance';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import { Subscription } from 'rxjs';
-import { DEFAULT_CURRENCY } from 'src/app/constants';
+import { DEFAULT_CURRENCY, SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
 
 @Component({
   selector: 'account-finance-info',
@@ -49,7 +49,7 @@ export class AccountFinanceInfoComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
@@ -70,17 +70,17 @@ export class AccountFinanceInfoComponent implements OnInit, OnDestroy {
     const newSubscription: Subscription = this.usersService.updateFinancialInfo$(this.model).subscribe(
       (user: User) => {
         if (user) {
-          this.appService.showResults(`Your financial information was successfully updated!.`, 'success');
+          this.appService.showResults(`Your financial information was successfully updated!.`, SnackbarNotificationTypes.SUCCESS);
         }
 
         this.accountFinanceServiceRunning = false;
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.accountFinanceServiceRunning = false;

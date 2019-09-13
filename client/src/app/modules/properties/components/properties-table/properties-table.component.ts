@@ -8,6 +8,7 @@ import { PropertiesService } from '../../properties.service';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { SelectionModel, SelectionChange } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
+import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
 
 @Component({
   selector: 'properties-table',
@@ -106,7 +107,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
 
       this.getProperties(); //reload my properties and table datasource
       const unit = data.originalProperty.unit && data.originalProperty.unit != 'null' ? `${data.originalProperty.unit}/` : '';
-      this.appService.showResults(`The property ${unit}${data.originalProperty.address} was just update by ${data.name}.`, 'info', 8000);
+      this.appService.showResults(`The property ${unit}${data.originalProperty.address} was just update by ${data.name}.`, SnackbarNotificationTypes.INFO, 8000);
     });
 
     // if a property shared with me was deleted by another person then remove it from this table
@@ -117,7 +118,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
         this.properties.splice(propertyIndex, 1);
         this.propertiesDataSource.data = this.properties;
         const unit = data.unit && data.unit != 'null' ? `${data.unit}/` : '';
-        this.appService.showResults(`The property ${unit}${data.address} was just delete by its admin ${data.name}.`, 'info', 8000);
+        this.appService.showResults(`The property ${unit}${data.address} was just delete by its admin ${data.name}.`, SnackbarNotificationTypes.INFO, 8000);
       }
     });
   }
@@ -133,7 +134,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
     this.unbindToPushNotificationEvents();
   }
@@ -160,11 +161,11 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
         this.onPropertiesLoad.emit(properties.length);
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.getPropertiesServiceRunning = false;
@@ -184,7 +185,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     const methodTrace = `${this.constructor.name} > openDeleteTeamDialog() > `; // for debugging
     
     if (!property) {
-      this.appService.consoleLog('error', `${methodTrace} Property is required to delete.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Property is required to delete.`);
       return false;
     }
 
@@ -242,24 +243,24 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
           }
           
           this.propertiesDataSource.data = this.properties;
-          this.appService.showResults(`Property successfully removed!`, 'success');
+          this.appService.showResults(`Property successfully removed!`, SnackbarNotificationTypes.SUCCESS);
         } else {
-          this.appService.showResults(`Property could not be removed, please try again.`, 'error');
+          this.appService.showResults(`Property could not be removed, please try again.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.propertyTableActionRunning = false;
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         } else if (error.codeno === 475) {
           // property associated to an investment
-          this.appService.showResults(error.msg, 'error', 7000);
+          this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR, 7000);
         } else if (error.codeno === 462) {
-          this.appService.showResults(`You cannot delete this property because you are not the creator of it. Ask ${error.data.creator.name} to do it.`, 'error');
+          this.appService.showResults(`You cannot delete this property because you are not the creator of it. Ask ${error.data.creator.name} to do it.`, SnackbarNotificationTypes.ERROR);
         } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.propertyTableActionRunning = false;

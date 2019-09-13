@@ -10,6 +10,8 @@ import { Response } from '../../models/response';
 import { AccountPersonal } from './models/account-personal';
 import { AccountFinance } from './models/account-finance';
 import _ from 'lodash';
+import { ResetPasswordModel } from './models/reset-password-model';
+import { ConsoleNotificationTypes, SnackbarNotificationTypes } from 'src/app/constants';
 
 @Injectable()
 export class UsersService {
@@ -57,7 +59,7 @@ export class UsersService {
           user = new User(data.name, data.email, data.avatar, null, null, data.currency);
           this.setUser(user);
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`, data);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`, data);
         }
 
         return of(user);
@@ -86,7 +88,7 @@ export class UsersService {
 
           this.setUser(user);
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
 
         return of(user);
@@ -112,7 +114,7 @@ export class UsersService {
           user.personalInfo = new AccountPersonal(data.personalInfo.birthday);
           this.setUser(user);
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
 
         return of(user);
@@ -140,7 +142,7 @@ export class UsersService {
           
           this.setUser(user);
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
 
         return of(user);
@@ -183,11 +185,11 @@ export class UsersService {
           
           user = new User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
         } else {
-          this.appService.consoleLog('info', `${methodTrace} User not logged in.`, data);
+          this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} User not logged in.`, data);
         }
 
         if (!_.isEqual(user, this.getUser())) {
-          this.appService.consoleLog('info', `${methodTrace} User info updated.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} User info updated.`);
           this.setUser(user);
         }
 
@@ -239,7 +241,7 @@ export class UsersService {
           user = new User(data.name, data.email, data.avatar, null, null, data.currency);
           this.setUser(user);
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
           this.setUser(null);
         }
 
@@ -261,11 +263,11 @@ export class UsersService {
         map(this.appService.extractData),
         map((data: any) => {
           if (data && data.email && data.expires) {
-            this.appService.showResults(`We sent an email to ${data.email} with a password reset link that will expire in ${data.expires}.`, 'info');
+            this.appService.showResults(`We sent an email to ${data.email} with a password reset link that will expire in ${data.expires}.`, SnackbarNotificationTypes.INFO);
             return true;
           }
           
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
           return false;
         })
       );
@@ -274,27 +276,28 @@ export class UsersService {
   /**
    * Server call to reset password api with the provided new password.
    * 
-   * @return { Observable<User> }
+   * @return { Observable<boolean> }
    */
-  reset$(token: string, postData: any = {}): Observable<User> {
+  reset$(token: string, postData: ResetPasswordModel): Observable<boolean> {
     const methodTrace = `${this.constructor.name} > reset$() > `; // for debugging
 
     this.setUser(null);
     return this.http.post<Response>(`${this.serverHost}/account/reset/${token}`, postData, { headers : this.headers })
         .pipe(
           map(this.appService.extractData),
-          mergeMap((data: any): Observable<User> => {
+          map((data: any): boolean => {
             let user: User = null;
 
             if (data && data.email) {
+              this.appService.showResults('Your password was successfully updated!', SnackbarNotificationTypes.SUCCESS);
               user = new User(data.name, data.email, data.avatar, null, null, data.currency);
               this.setUser(user);
-            } else {
-              this.setUser(null);
-              this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+              return true;
             }
-    
-            return of(user);
+
+            this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+            this.setUser(null);
+            return false;
           })
         );
   }

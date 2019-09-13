@@ -4,7 +4,7 @@ import { debounceTime } from 'rxjs/operators';
 import { DateAdapter, NativeDateAdapter, MatSelectChange, MatDialog } from '@angular/material';
 import { AppService } from '../../../../app.service';
 import { UtilService } from '../../../../util.service';
-import { INVESTMENTS_TYPES, DEFAULT_CURRENCY } from '../../../../constants';
+import { INVESTMENTS_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../../../constants';
 import { PropertiesService } from '../../../properties/properties.service';
 import { Property } from '../../../properties/models/property';
 import { Router } from '@angular/router';
@@ -58,7 +58,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
     
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
@@ -96,8 +96,8 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     const methodTrace = `${this.constructor.name} > getProperty() > `; // for debugging
     
     if (!id) {
-      this.appService.showResults(`Invalid property ID`, 'error');
-      this.appService.consoleLog('error', `${methodTrace} ID parameter must be provided, but was: `, id);
+      this.appService.showResults(`Invalid property ID`, SnackbarNotificationTypes.ERROR);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} ID parameter must be provided, but was: `, id);
       this.router.navigate(['/properties']);
     }
 
@@ -108,13 +108,13 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
         this.setProperty(property);
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > `, error);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > `, error);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         } else if (error.codeno === 461 || error.codeno === 462) {
-          this.appService.showResults(error.msg, 'error');
+          this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR);
         } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.router.navigate(['/properties']);
@@ -128,7 +128,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
   setProperty(property: Property) {
     if (property.createdBy.email !== this.user.email) {
       // we cannot create an investment of a property not created by me
-      this.appService.showResults(`Only the property creator (${property.createdBy.name}) is allowed to create an investment with this property.`, 'error');
+      this.appService.showResults(`Only the property creator (${property.createdBy.name}) is allowed to create an investment with this property.`, SnackbarNotificationTypes.ERROR);
       return this.router.navigate(['/properties']);
     } else {
       this.model.property = property;

@@ -39,7 +39,7 @@
         fxLayout="row" fxFlexAlign="center"
         fxLayoutGap="10px" *ngIf="!forgotFormVisibility">
         
-      <button mat-fab 
+      <button mat-fab *ngIf="!(loadingData$ | async)"
           class="fab mat-elevation-z10 form__action" 
           color="accent" 
           type="submit"
@@ -89,7 +89,7 @@
     </section>
   </form>
 
-  <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center none" class="container__new-account">
+  <div *ngIf="!forgotFormVisibility" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center none" class="container__new-account">
     <p>I don't have an account yet</p>
     <button mat-raised-button type="button" color="primary" class="color__almost-white" routerLink="/users/register">Create new account</button>
   </div>

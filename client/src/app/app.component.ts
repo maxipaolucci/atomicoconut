@@ -12,12 +12,13 @@ import { Team } from './modules/teams/models/team';
 import { TeamsService } from './modules/teams/teams.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ProgressBarDialogComponent } from 'src/app/modules/shared/components/progress-bar-dialog/progress-bar-dialog.component';
-import { Store, select } from '@ngrx/store';
-import { AppState } from 'src/app/reducers';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
 import { RequestLogout } from './modules/users/user.actions';
-import { loggedInSelector, loadingSelector } from './modules/users/user.selectors';
+import { loggedInSelector } from './modules/users/user.selectors';
 import { LoadingData } from './models/loadingData';
-import { DEFAULT_DIALOG_WIDTH_DESKTOP } from './constants';
+import { DEFAULT_DIALOG_WIDTH_DESKTOP, SnackbarNotificationTypes, ConsoleNotificationTypes } from './constants';
+import { loadingSelector } from './app.selectors';
 
 @Component({
   selector: 'app-root',
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
   todayUserPrefRate: number = null;
   subscription: Subscription = new Subscription();
   progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
+  loadingData: LoadingData = null;
 
   constructor(
       private router: Router, 
@@ -41,33 +43,25 @@ export class AppComponent implements OnInit, OnDestroy {
       public currencyExchangeService: CurrencyExchangeService,
       private utilService: UtilService,
       public dialog: MatDialog,
-      private store: Store<AppState>
+      private store: Store<State>
   ) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
-    const loggedIn$ = this.store.pipe(
-      select(loggedInSelector())
-    );
-    let newSubscription: Subscription = loggedIn$.subscribe((loggedIn: boolean) => {
-      if (!loggedIn) {
-        this.user = null;
-        this.unbindToPushNotificationEvents();
-      }
-    });
+    let newSubscription: Subscription = this.store.select(loggedInSelector())
+      .subscribe((loggedIn: boolean) => {
+        if (!loggedIn) {
+          this.user = null;
+          this.unbindToPushNotificationEvents();
+        }
+      });
     this.subscription.add(newSubscription);
 
-    const loading$ = this.store.pipe(
-      select(loadingSelector())
-    );
-
+    //Show or hide progress bar for loading...
+    const loading$ = this.store.select(loadingSelector());
     newSubscription = loading$.subscribe((loadingData: LoadingData) => {
-      if (loadingData) {
-        this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
-      } else if(this.progressBarDialogRef) {
-        this.progressBarDialogRef.close();
-      }
+      this.loadingData = loadingData;
     });
     this.subscription.add(newSubscription);
 
@@ -97,11 +91,11 @@ export class AppComponent implements OnInit, OnDestroy {
       }
 
       this.todayUserPrefRate = currencyRates[this.utilService.formatToday()][`USD${this.user.currency}`];
-      this.appService.consoleLog('info', `${methodTrace} Currency exchange rates successfully loaded!`);
+      this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
     },
     (error: any) => {
-      this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > ${error}`);
-      this.appService.showResults(`There was an error trying to get currency rates data.`, 'error');
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to get currency rates data > ${error}`);
+      this.appService.showResults(`There was an error trying to get currency rates data.`, SnackbarNotificationTypes.ERROR);
     }); // start listening the source of user
     this.subscription.add(newSubscription);
 
@@ -112,20 +106,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this.getCryptoRates('XMR');
   }
 
-  openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
-    const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
+  // openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
+  //   const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
     
-    return this.dialog.open(ProgressBarDialogComponent, {
-      width: DEFAULT_DIALOG_WIDTH_DESKTOP,
-      disableClose: true,
-      data: loadingData
-    });
-  }
+  //   return this.dialog.open(ProgressBarDialogComponent, {
+  //     width: DEFAULT_DIALOG_WIDTH_DESKTOP,
+  //     disableClose: true,
+  //     data: loadingData
+  //   });
+  // }
 
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
 
     this.unbindToPushNotificationEvents();
@@ -136,11 +130,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
     const newSubscription: Subscription = this.currencyExchangeService.getCryptoRates$(crypto).subscribe(
       (data: any) => {
-        this.appService.consoleLog('info', `${methodTrace} ${crypto} exchange rate successfully loaded!`);
+        this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} ${crypto} exchange rate successfully loaded!`);
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error trying to get ${crypto} rates data > ${error}`);
-        this.appService.showResults(`There was an error trying to get ${crypto} rates data, please try again in a few minutes.`, 'warn');
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to get ${crypto} rates data > ${error}`);
+        this.appService.showResults(`There was an error trying to get ${crypto} rates data, please try again in a few minutes.`, SnackbarNotificationTypes.WARN);
       }
     );
     this.subscription.add(newSubscription);
@@ -161,7 +155,7 @@ export class AppComponent implements OnInit, OnDestroy {
   //       this.router.navigate(['/']);
   //     },
   //     (error: any) =>  {
-  //       this.appService.consoleLog('error', `${methodTrace} There was an error with the logout service.`, error);
+  //       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the logout service.`, error);
   //     }
   //   );
   //   this.subscription.add(newSubscription);
@@ -191,17 +185,17 @@ export class AppComponent implements OnInit, OnDestroy {
         const currentUserState = data.team.memberState[this.user.email];
         switch(currentUserState) {
           case 'add': {
-            this.appService.showResults(`${data.name} added you to the team ${data.team.name}.`, 'info', 8000);
+            this.appService.showResults(`${data.name} added you to the team ${data.team.name}.`, SnackbarNotificationTypes.INFO, 8000);
             break;
           }
 
           case 'keep': {
-            this.appService.showResults(`${data.name} updated the team ${data.team.name}.`, 'info', 8000);
+            this.appService.showResults(`${data.name} updated the team ${data.team.name}.`, SnackbarNotificationTypes.INFO, 8000);
             break;
           }
 
           case 'remove': {
-            this.appService.showResults(`${data.name} removed you from the team ${data.team.name}.`, 'info', 8000);
+            this.appService.showResults(`${data.name} removed you from the team ${data.team.name}.`, SnackbarNotificationTypes.INFO, 8000);
             break;
           }
 
@@ -216,7 +210,7 @@ export class AppComponent implements OnInit, OnDestroy {
       if (data && data.team) {
         const isMember = data.team.members.some((member: any) => member.email == this.user.email);
         if (isMember) {
-          this.appService.showResults(`${data.name} deleted the team ${data.team.name} you was member of.`, 'info', 8000);
+          this.appService.showResults(`${data.name} deleted the team ${data.team.name} you was member of.`, SnackbarNotificationTypes.INFO, 8000);
         }
       }
     });
@@ -239,7 +233,7 @@ export class AppComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.appService.showResults(`${data.name} has ${action} an investment associated with your team ${myTeam.name}.`, 'info', 8000);
+    this.appService.showResults(`${data.name} has ${action} an investment associated with your team ${myTeam.name}.`, SnackbarNotificationTypes.INFO, 8000);
   }
 
   /**

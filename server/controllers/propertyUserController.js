@@ -217,7 +217,7 @@ exports.updatePropertyUsers = async(propertyId, emails, userEmail, hostname) => 
     for (const email of emailsNotRegistered) {
         console.log(`${methodTrace} ${getMessage('message', 1040, userEmail, true, email)}`);
         const registerURL = `${hostname}/users/register`;
-        await mail.send({
+        mail.send({
             toEmail : email,
             subject : `AtomiCoconut - Join the investment platform`,
             registerURL,

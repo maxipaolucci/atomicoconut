@@ -108,7 +108,7 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
             const alert = ratio > 0.0090 ? '[URGENT]': '';
             const toEmail = 'maxipaolucci@gmail.com';
             
-            console.log(`${methodTrace} ${getMessage('message', 1052, ANONYMOUS_USER, true, 'Crypto ratio', toEmail)}`); 
+            console.log(`${methodTrace} ${getMessage('message', 1054, ANONYMOUS_USER, true, 'Crypto ratio', toEmail)}`); 
             mail.send({
                 toEmail,
                 fromEmail: 'alert@atomicoconut.com',
@@ -120,7 +120,7 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
                 toCrypto,
                 filename : 'alert-crypto-ratio' //this is going to be the mail template file
             });
-            console.log(`${methodTrace} ${getMessage('message', 1053, ANONYMOUS_USER, true, toEmail)}`);
+            console.log(`${methodTrace} ${getMessage('message', 1055, ANONYMOUS_USER, true, toEmail)}`);
         } else {
             throw new Error(getMessage('error', 478, ANONYMOUS_USER, true, 'Coincap Service API'))
         }

@@ -15,7 +15,7 @@ import { Observable, Subscription, of } from 'rxjs';
 import { map, switchMap, flatMap } from 'rxjs/operators';
 import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { INVESTMENTS_TYPES } from '../../../../constants';
+import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
 import { PropertyInvestment } from '../../models/propertyInvestment';
 
@@ -70,11 +70,11 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         this.getInvestmentsServiceRunning = false;
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.getInvestmentsServiceRunning = false;
@@ -87,7 +87,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
     this.unbindToPushNotificationEvents();
   }
@@ -240,11 +240,11 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         this.getTeamsServiceRunning = false;
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.getTeamsServiceRunning = false;

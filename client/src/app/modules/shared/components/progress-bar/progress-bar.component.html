@@ -1,7 +1,8 @@
-<div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start center" [ngClass]="extraClasses" class="progress-bar">
+<div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start center" [ngClass]="extraClasses" 
+    class="progress-bar" [matTooltip]="tooltipMessage && message.length ? message : ''">
   <mat-progress-bar 
       [color]="color"
       mode="indeterminate">
   </mat-progress-bar>
-  <p *ngIf="message">{{ message }}</p>
+  <p *ngIf="message && !tooltipMessage">{{ message }}</p>
 </div>

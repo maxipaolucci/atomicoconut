@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { User } from './models/user';
 import { LoginModel } from './models/login-model';
+import { ResetPasswordModel } from './models/reset-password-model';
 
 export enum UserActionTypes {
   CancelRequest = '[User] Cancel request from Server',
@@ -9,11 +10,14 @@ export enum UserActionTypes {
   RequestLogout = '[User] Request logout',
   Logout = '[User] Logout user',
   RequestForgot = '[User] Request Forgot password to Server',
-  Forgot = '[User] Set Forgot password state in Store'
+  Forgot = '[User] Set Forgot password state in Store',
+  RequestReset = '[User] Request reset password in Server' 
 }
 
 export class CancelRequest implements Action {
   readonly type = UserActionTypes.CancelRequest;
+
+  constructor(public payload: { redirectData: any[] } = null) {}
 }
 
 export class Login implements Action {
@@ -26,6 +30,12 @@ export class RequestLogin implements Action {
   readonly type = UserActionTypes.RequestLogin;
 
   constructor(public payload: LoginModel) {}
+}
+
+export class RequestReset implements Action {
+  readonly type = UserActionTypes.RequestReset;
+
+  constructor(public payload: { token: string, model: ResetPasswordModel }) {}
 }
 
 export class RequestForgot implements Action {
@@ -50,4 +60,5 @@ export class RequestLogout implements Action {
 export type UserActions = CancelRequest   
     | Login | RequestLogin
     | Logout | RequestLogout
-    | Forgot | RequestForgot;
+    | Forgot | RequestForgot
+    | RequestReset;

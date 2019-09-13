@@ -6,6 +6,7 @@ import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import { UtilService } from '../../../../util.service';
 import { Subscription } from 'rxjs';
+import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
 
 @Component({
   selector: 'account-personal-info',
@@ -40,7 +41,7 @@ export class AccountPersonalInfoComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
@@ -52,17 +53,17 @@ export class AccountPersonalInfoComponent implements OnInit, OnDestroy {
     const newSubscription = this.usersService.updatePersonalInfo$(this.model).subscribe(
       (user: User) => {
         if (user) {
-          this.appService.showResults(`Your personal information was successfully updated!.`, 'success');
+          this.appService.showResults(`Your personal information was successfully updated!.`, SnackbarNotificationTypes.SUCCESS);
         }
 
         this.accountPersonalServiceRunning = false;
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.accountPersonalServiceRunning = false;

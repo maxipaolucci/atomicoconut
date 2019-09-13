@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
-import { RequestLogin, UserActionTypes, CancelRequest, Login, RequestLogout, Logout, RequestForgot, Forgot } from './user.actions';
-import { mergeMap, map, catchError, tap } from 'rxjs/operators';
+import { RequestLogin, UserActionTypes, CancelRequest, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset } from './user.actions';
+import { mergeMap, exhaustMap, map, catchError, tap, delay } from 'rxjs/operators';
 import { of, defer } from 'rxjs';
 import { User } from './models/user';
+import { State } from 'src/app/main.reducer';
+import { Store } from '@ngrx/store';
+import { ShowProgressBar, HideProgressBar } from 'src/app/app.actions';
 
 @Injectable()
 export class UserEffects {
@@ -38,6 +41,10 @@ export class UserEffects {
   @Effect()
   requestlogin$ = this.actions$.pipe(
     ofType<RequestLogin>(UserActionTypes.RequestLogin),
+    tap((action) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Authenticating...' }));  
+    }),
+    delay(10000),
     mergeMap(({ payload }) => this.usersService.login$(payload)
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
@@ -62,6 +69,7 @@ export class UserEffects {
     tap(() => {
       const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
       this.usersService.routerRedirectUrl = null;
+      this.store.dispatch(new HideProgressBar());
       this.router.navigate([redirectUrl]);
     })
   );
@@ -104,5 +112,36 @@ export class UserEffects {
     }) 
   );
 
-  constructor(private actions$: Actions, private usersService: UsersService, private router: Router) {}
+  @Effect()
+  requestReset$ = this.actions$.pipe(
+    ofType<RequestReset>(UserActionTypes.RequestReset),
+    exhaustMap(({ payload }) => this.usersService.reset$(payload.token, payload.model)  //exhaustMap because we want to ignore multiple request till the first is complete. 
+                                                                    // Weird to happen because of the loading screen disables the button
+      .pipe(
+        catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+      )
+    ),
+    map((result: boolean) => {
+      return new CancelRequest({ redirectData: ['/'] }); //we don't want to do anything in this case, stop the loadingData flag
+    }) 
+  );
+
+  @Effect({ dispatch: false })
+  cancelRequest$ = this.actions$.pipe(
+    ofType<CancelRequest>(UserActionTypes.CancelRequest),
+    tap(({ payload }) => {
+      if (payload && payload.redirectData && payload.redirectData.length) {
+        return this.router.navigate(payload.redirectData);
+      }
+
+      return; // do nothing here
+    })
+  )
+
+  constructor(
+    private actions$: Actions, 
+    private usersService: UsersService, 
+    private router: Router,
+    private store: Store<State>,
+  ) {}
 }

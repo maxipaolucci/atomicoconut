@@ -9,7 +9,7 @@ import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
 import { Subscription, of, from, Observable } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
-import { INVESTMENTS_TYPES } from '../../constants';
+import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../constants';
 import { UtilService } from '../../util.service';
 import { PropertyInvestment } from '../../modules/investments/models/propertyInvestment';
 
@@ -43,7 +43,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
@@ -92,7 +92,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
               })
             );
           } else {
-            this.appService.consoleLog('error', `${methodTrace} Currency Investment type not recognized by this component: ${investment.type}`);
+            this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Currency Investment type not recognized by this component: ${investment.type}`);
             return of(null); // should never happen
           }
         } else if (investmentAndCurrencyRates.investment instanceof PropertyInvestment) {
@@ -103,7 +103,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           this.calculateProgressBarWealthValue();
           return of(null);
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Investment type not recognized by this component: ${investmentAndCurrencyRates.investment.type}`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Investment type not recognized by this component: ${investmentAndCurrencyRates.investment.type}`);
           return of(null); // should never happen
         }
         
@@ -119,8 +119,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       
     },
     (error: any) => {
-      this.appService.consoleLog('error', `${methodTrace} There was an error trying to get required data > `, error);
-      this.appService.showResults(`There was an error trying to get required data, please try again in a few minutes.`, 'error');
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to get required data > `, error);
+      this.appService.showResults(`There was an error trying to get required data, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
     });
     this.subscription.add(newSubscription);
   }

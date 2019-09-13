@@ -280,7 +280,7 @@ exports.update = async (req, res, next) => {
                     
                     console.log(`${methodTrace} ${getMessage('message', 1040, user.email, true, memberEmail)}`);
                     const registerURL = `${req.headers.origin}/users/register`;
-                    await mail.send({
+                    mail.send({
                         toEmail : memberEmail,
                         subject : `AtomiCoconut - ${team.name} team invitation to join`,
                         registerURL,

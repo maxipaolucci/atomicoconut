@@ -9,6 +9,7 @@ import { Response } from '../../models/response';
 import { of } from 'rxjs';
 import { map, flatMap } from 'rxjs/operators';
 import { TeamEditModel } from './models/team-edit-model';
+import { ConsoleNotificationTypes } from 'src/app/constants';
 
 
 @Injectable({
@@ -81,7 +82,7 @@ export class TeamsService {
           this.appService.showManyResults(messages);
           return of(this.populate(data.team));
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
 
         return of(null);
@@ -99,7 +100,7 @@ export class TeamsService {
     const methodTrace = `${this.constructor.name} > getMyTeamBySlug$() > `; // for debugging
 
     if (!email || !slug) {
-      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return of(null);
     }
 
@@ -125,7 +126,7 @@ export class TeamsService {
     const methodTrace = `${this.constructor.name} > getTeams$() > `; // for debugging
 
     if (!email) {
-      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return of([]);
     }
 
@@ -141,7 +142,7 @@ export class TeamsService {
             teams.push(this.populate(item));
           }
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
 
         return of(teams);
@@ -170,7 +171,7 @@ export class TeamsService {
       // create team
       return new Team(teamData.name, teamData.description || null, teamData.slug, admin, members);
     } else {
-      this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
     }
 
     return null;
@@ -187,7 +188,7 @@ export class TeamsService {
     const methodTrace = `${this.constructor.name} > delete$() > `; // for debugging
 
     if (!slug || !email) {
-      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return Observable.throw(null);
     }
 

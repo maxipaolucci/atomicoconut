@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { Response } from '../../models/response';
 import { environment } from '../../../environments/environment';
 import { UtilService } from '../../util.service';
-import { COINCAP_CRYPTO_TYPES } from '../../constants';
+import { COINCAP_CRYPTO_TYPES, ConsoleNotificationTypes, SnackbarNotificationTypes } from '../../constants';
 
 @Injectable()
 export class CurrencyExchangeService {
@@ -49,7 +49,7 @@ export class CurrencyExchangeService {
           // merge results
           Object.assign(this.currencyRates, data);
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
 
         return this.currencyRates;
@@ -71,7 +71,7 @@ export class CurrencyExchangeService {
         if (rates) {
           this.cryptoRates[crypto.toUpperCase()] = rates;
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
         
         return of(this.cryptoRates[crypto.toUpperCase()]);
@@ -91,7 +91,7 @@ export class CurrencyExchangeService {
       if (this.currencyRates[today]) {
         return amount / this.currencyRates[today][`USD${unit}`];
       } else {
-        this.appService.showResults('Currency rates data was not loaded yet. Figures are shown as USD', 'error');
+        this.appService.showResults('Currency rates data was not loaded yet. Figures are shown as USD', SnackbarNotificationTypes.ERROR);
       }
     } 
 

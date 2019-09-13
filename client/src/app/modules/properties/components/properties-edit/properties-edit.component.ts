@@ -6,7 +6,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AppService } from '../../../../app.service';
 import { PropertiesService } from '../../properties.service';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
-import { PROPERTY_TYPES, DEFAULT_CURRENCY } from '../../../../constants';
+import { PROPERTY_TYPES, DEFAULT_CURRENCY, ConsoleNotificationTypes, SnackbarNotificationTypes } from '../../../../constants';
 import { House } from '../../models/house';
 import { MatSelectChange, DateAdapter, NativeDateAdapter, MatDialog } from '@angular/material';
 import { UtilService } from '../../../../util.service';
@@ -155,14 +155,14 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       this.getPropertyServiceRunning = false;
     },
     (error: any) => {
-      this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > `, error);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > `, error);
       if (error.codeno === 400) {
-        this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+        this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
       } else if (error.codeno === 461 || error.codeno === 462) {
-        this.appService.showResults(error.msg, 'error');
+        this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR);
         this.router.navigate(['/welcome']);
       } else {
-        this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+        this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
       }
 
       this.getPropertyServiceRunning = false;
@@ -172,7 +172,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     // get TYPE parameter
     this.route.paramMap.pipe(map((params: ParamMap) => params.get('type'))).subscribe(type => {
       if (![PROPERTY_TYPES.HOUSE].includes(type)) {
-        this.appService.showResults('You must provide a valid property type to continue.', 'error');
+        this.appService.showResults('You must provide a valid property type to continue.', SnackbarNotificationTypes.ERROR);
         this.router.navigate(['welcome']);
       } else {
         this.type = type;
@@ -188,14 +188,14 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   bindToPushNotificationEvents() {
     this.appService.pusherChannel.bind('property-updated', data => {
       if (this.property.id == data.property.id) {
-        this.appService.showResults(`This property was just updated by ${data.name}`, 'info');
+        this.appService.showResults(`This property was just updated by ${data.name}`, SnackbarNotificationTypes.INFO);
       }
     });
 
     this.appService.pusherChannel.bind('property-deleted', data => {
       if (this.property.id == data.id) {
         const unit = data.unit && data.unit != 'null' ? `${data.unit}/` : '';
-        this.appService.showResults(`The property ${unit}${data.address} was just deleted by its admin ${data.name}.`, 'info', 20000);
+        this.appService.showResults(`The property ${unit}${data.address} was just deleted by its admin ${data.name}.`, SnackbarNotificationTypes.INFO, 20000);
         this.router.navigate(['/properties']);
       }
     });
@@ -303,17 +303,17 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     const newSubscription = this.propertiesService.create$(this.model).subscribe(
       (data: any) => {
         if (data && data.id && data.type) {
-          this.appService.showResults(`Property successfully created!`, 'success');
+          this.appService.showResults(`Property successfully created!`, SnackbarNotificationTypes.SUCCESS);
           this.router.navigate(['/properties/', data.type, 'edit', data.id]);
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
           this.editPropertyServiceRunning = false;
         }
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit property service.`, error);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit property service.`, error);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.editPropertyServiceRunning = false;
@@ -374,15 +374,15 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
           this.appService.showManyResults(messages);
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
 
         this.editPropertyServiceRunning = false;
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit property service.`, error);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit property service.`, error);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.editPropertyServiceRunning = false;

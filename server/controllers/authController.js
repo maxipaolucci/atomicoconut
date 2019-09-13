@@ -192,7 +192,7 @@ exports.forgot = async (req, res) => {
     //3 send them email with the token
     console.log(`${methodTrace} ${getMessage('message', 1008, email, true, email)}`);
     const resetURL = `${req.headers.origin}/users/account/reset/${user.resetPasswordToken}`;
-    await mail.send({
+    mail.send({
         toEmail : user.email,
         subject : 'AtomiCoconut - Password reset',
         resetURL,
@@ -210,7 +210,11 @@ exports.forgot = async (req, res) => {
 };
 
 exports.confirmedPasswords = (req, res, next) => {
+    const methodTrace = `${errorTrace} confirmedPasswords() >`;
+
+    console.log(`${methodTrace} ${getMessage('message', 1052, null, true)}`);
     if (req.body.password === req.body['password-confirm']) {
+        console.log(`${methodTrace} ${getMessage('message', 1053, null, true)}`);
         next();
         return;
     }
@@ -224,10 +228,10 @@ exports.confirmedPasswords = (req, res, next) => {
 };
 
 /**
- * Update user password when follows the forgot proccess
+ * Reset user password when follows the forgot proccess
  */
-exports.update = async (req, res) => {
-    const methodTrace = `${errorTrace} update() >`;
+exports.reset = async (req, res) => {
+    const methodTrace = `${errorTrace} reset() >`;
     
     const userEmail = req.user ? req.user.email : null;
     console.log(`${methodTrace} ${getMessage('message', 1011, userEmail, true, req.params.token)}`);
@@ -246,6 +250,7 @@ exports.update = async (req, res) => {
             msg : getMessage('error', 457, null, false),
             data : null
         });
+
         return;
     }
     console.log(`${methodTrace} ${getMessage('message', 1012, user.email, true)}`);
@@ -257,41 +262,43 @@ exports.update = async (req, res) => {
     const updatedUser = await user.save(); //here is when we save in the database the deleted values before 
     await req.login(updatedUser); //this comes from passport js
     
-    if (req.user) {
-        console.log(`${methodTrace} ${getMessage('message', 1013, user.email, true)}`);
-        res.json({
-            status : 'success', 
-            codeno : 200,
-            msg : getMessage('message', 1013, null, false),
-            data : await getUserObject(req.user.email)
+    if (!req.user) {
+        res.status(401).json({
+            status : "error", 
+            codeno : 452,
+            msg : getMessage('error', 452, null, false),
+            data : null
         });
+
+        return;
     }
 
-    res.status(401).json({
-        status : "error", 
-        codeno : 452,
-        msg : getMessage('error', 452, null, false),
-        data : null
+    console.log(`${methodTrace} ${getMessage('message', 1013, user.email, true, user.email)}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1013, null, false),
+        data : await getUserObject(req.user.email)
     });
 };
 
-exports.reset = async (req, res) => {
-    const methodTrace = `${errorTrace} reset() >`;
+// exports.reset = async (req, res) => {
+//     const methodTrace = `${errorTrace} reset() >`;
     
-    const userEmail = req.user ? req.user.email : null;
-    console.log(`${methodTrace} ${getMessage('message', 1011, userEmail, true, req.params.token)}`);
-    const user = await User.findOne({
-        $and : [
-            { resetPasswordToken : req.params.token },
-            { resetPasswordExpires : { $gt : Date.now() } }
-        ]
-    });
+//     const userEmail = req.user ? req.user.email : null;
+//     console.log(`${methodTrace} ${getMessage('message', 1011, userEmail, true, req.params.token)}`);
+//     const user = await User.findOne({
+//         $and : [
+//             { resetPasswordToken : req.params.token },
+//             { resetPasswordExpires : { $gt : Date.now() } }
+//         ]
+//     });
     
-    if (!user) {
-        console.log(`${methodTrace} ${getMessage('error', 457, userEmail, true)}`);
-        return res.redirect('/app/users/account/reset/expired');
-    }
+//     if (!user) {
+//         console.log(`${methodTrace} ${getMessage('error', 457, userEmail, true)}`);
+//         return res.redirect('/app/users/account/reset/expired');
+//     }
 
-    console.log(`${methodTrace} ${getMessage('message', 1014, user.email, true)}`);
-    res.render('home', {title: 'Reset password'});
-};
+//     console.log(`${methodTrace} ${getMessage('message', 1014, user.email, true)}`);
+//     res.render('home', {title: 'Reset password'});
+// };

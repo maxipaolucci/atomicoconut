@@ -10,6 +10,7 @@ export class ProgressBarComponent implements OnInit {
   @Input() message = '';
   @Input() color = 'primary';
   @Input() extraClasses = '';
+  @Input() tooltipMessage = false;
 
   constructor() { }
 

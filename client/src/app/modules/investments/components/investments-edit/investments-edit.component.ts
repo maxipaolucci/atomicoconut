@@ -12,7 +12,7 @@ import { MatSelectChange, MatRadioChange } from '@angular/material';
 import { InvestmentsService } from '../../investments.service';
 import { Investment } from '../../models/investment';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { INVESTMENTS_TYPES, DEFAULT_CURRENCY } from '../../../../constants';
+import { INVESTMENTS_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../../../constants';
 import { BehaviorSubject } from 'rxjs';
 import { PropertyInvestment } from '../../models/propertyInvestment';
 
@@ -77,7 +77,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       const type: string = params.get('type');
 
       if (![INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO, INVESTMENTS_TYPES.PROPERTY].includes(type)) {
-        this.appService.showResults('You must provide a valid investment type to continue.', 'error');
+        this.appService.showResults('You must provide a valid investment type to continue.', SnackbarNotificationTypes.ERROR);
         this.router.navigate(['welcome']);
       } else {
         this.type = type;
@@ -125,14 +125,14 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         }
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         } else if (error.codeno === 461 || error.codeno === 462) {
-          this.appService.showResults(error.msg, 'error');
+          this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR);
           this.router.navigate(['/welcome']);
         } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.getInvestmentServiceRunning = false;
@@ -236,10 +236,10 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
           const newValue = Number(DecimalPipe.prototype.transform(this.model.membersPercentage[lastMember.email] - diff, '1.0-2', 'en'));
           if (newValue < 0) {
             this.setDefaultInvestmentPercentages();
-            this.appService.showResults(`The sum of percentages must not exceed 100%, we reset the values to make it valid.`, 'warn');
+            this.appService.showResults(`The sum of percentages must not exceed 100%, we reset the values to make it valid.`, SnackbarNotificationTypes.WARN);
           } else {
             this.model.membersPercentage[lastMember.email] = newValue <= 100 ? newValue : 0;
-            this.appService.showResults(`The sum of percentages must not exceed 100%, we reset the last values to make it valid.`, 'warn');
+            this.appService.showResults(`The sum of percentages must not exceed 100%, we reset the last values to make it valid.`, SnackbarNotificationTypes.WARN);
           }
         }
       }
@@ -294,17 +294,17 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     const newSubscription = this.investmentsService.create$(this.model).subscribe(
       (data: any) => {
         if (data && data.id && data.type) {
-          this.appService.showResults(`Investment successfully created!`, 'success');
+          this.appService.showResults(`Investment successfully created!`, SnackbarNotificationTypes.SUCCESS);
           this.router.navigate(['/investments/', data.type, 'edit', data.id]);
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
           this.editInvestmentServiceRunning = false;
         }
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit investment service.`, error);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit investment service.`, error);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.editInvestmentServiceRunning = false;
@@ -325,17 +325,17 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     const newSubscription = this.investmentsService.update$(this.model).subscribe(
       (data: any) => {
         if (data && data.id && data.type) {
-          this.appService.showResults(`Investment successfully updated!`, 'success');
+          this.appService.showResults(`Investment successfully updated!`, SnackbarNotificationTypes.SUCCESS);
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
 
         this.editInvestmentServiceRunning = false;
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the create/edit investment service.`, error);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit investment service.`, error);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.editInvestmentServiceRunning = false;
@@ -362,11 +362,11 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         this.setSelectedTeam();
       },
       (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
         if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
         }
 
         this.getTeamsServiceRunning = false;
@@ -419,8 +419,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     const methodTrace = `${this.constructor.name} > getInvestment$() > `; // for debugging
     
     if (!id) {
-      this.appService.showResults(`Invalid investment ID`, 'error');
-      this.appService.consoleLog('error', `${methodTrace} ID parameter must be provided, but was: `, id);
+      this.appService.showResults(`Invalid investment ID`, SnackbarNotificationTypes.ERROR);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} ID parameter must be provided, but was: `, id);
       return of(null);
     }
 

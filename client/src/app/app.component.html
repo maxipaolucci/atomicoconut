@@ -42,6 +42,13 @@
     <span>1 USD = {{todayUserPrefRate | number : '1.0-3' }} {{user.currency}}</span>
   </mat-toolbar>
 
+  <progress-bar *ngIf="loadingData" class="progress-bar"
+      color="{{loadingData.color}}"
+      message="{{loadingData.message}}"
+      extraClasses="progress-bar__tooltip-message {{loadingData.extraClasses}}"
+      tooltipMessage="true">
+  </progress-bar>
+
   <!-- Main navigator (chips) -->
   <main-navigator></main-navigator>
 

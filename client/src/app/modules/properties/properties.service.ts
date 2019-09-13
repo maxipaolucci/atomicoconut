@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { Property } from './models/property';
 import { Response } from '../../models/response';
 import { User } from '../users/models/user';
-import { PROPERTY_TYPES } from '../../constants';
+import { PROPERTY_TYPES, ConsoleNotificationTypes } from '../../constants';
 import { House } from './models/house';
 import { Address } from './models/address';
 import { map, catchError, switchMap, flatMap } from 'rxjs/operators';
@@ -76,7 +76,7 @@ export class PropertiesService {
     const methodTrace = `${this.constructor.name} > getPropertyById() > `; // for debugging
 
     if (!id || !email) {
-      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return of(null);
     }
 
@@ -125,7 +125,7 @@ export class PropertiesService {
             data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
       }
     } else {
-      this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
     }
 
     return null;
@@ -144,7 +144,7 @@ export class PropertiesService {
     const methodTrace = `${this.constructor.name} > getProperties() > `; // for debugging
 
     if (!email) {
-      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return of([]);
     }
 
@@ -160,7 +160,7 @@ export class PropertiesService {
             properties.push(this.populate(data));
           }
         } else {
-          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
   
         return of(properties);
@@ -180,7 +180,7 @@ export class PropertiesService {
     const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
 
     if (!id || !email) {
-      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return Observable.throw(null);
     }
 

@@ -1,11 +1,11 @@
 import { User } from './models/user';
 import { LoadingData } from 'src/app/models/loadingData';
 import { UserActionTypes, UserActions } from './user.actions';
-import * as fromRoot from '../../reducers'
+import * as fromRoot from '../../main.reducer'
 
 export const userFeatureKey = 'user';
 
-export interface UserState extends fromRoot.AppState {
+export interface UserState {
   loggedIn: boolean,
   user: User,
   loadingData: LoadingData,
@@ -33,10 +33,10 @@ export function reducer(state: UserState = initialState, action: UserActions): U
 
     case UserActionTypes.RequestLogin: {
       return {
-        ...state,
-        loadingData: {
-          message: 'Authenticating...'
-        }
+        ...state
+        // loadingData: {
+        //   message: 'Authenticating...'
+        // }
       };
     }
 
@@ -44,7 +44,7 @@ export function reducer(state: UserState = initialState, action: UserActions): U
       return {
         ...state,
         loggedIn: true,
-        loadingData: null,
+        // loadingData: null,
         user: action.payload.user
       }
     }
@@ -82,6 +82,16 @@ export function reducer(state: UserState = initialState, action: UserActions): U
           message: 'Requesting password change...'
         },
         forgotFormVisibility: true
+      }
+    }
+
+    case UserActionTypes.RequestReset: {
+      return {
+        ...state,
+        loadingData: {
+          message: 'Requesting password reset...',
+          color: 'accent'
+        }
       }
     }
 

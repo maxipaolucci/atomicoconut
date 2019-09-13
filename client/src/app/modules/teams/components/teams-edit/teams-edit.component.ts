@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 import { map, combineLatest, withLatestFrom } from 'rxjs/operators';
 import _ from 'lodash';
 import { Store, select } from '@ngrx/store';
-import { AppState } from 'src/app/reducers';
+import { State } from 'src/app/main.reducer';
 import { userSelector } from 'src/app/modules/users/user.selectors';
 import { RequestUpdate, UseAndResetLastUpdatedTeamSlug, RequestCreate } from '../../team.actions';
 import { TeamEditModel } from '../../models/team-edit-model';
@@ -42,7 +42,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
       private mainNavigatorService: MainNavigatorService, 
       private appService: AppService,
       public dialog: MatDialog,
-      private store: Store<AppState>
+      private store: Store<State>
     ) { }
 
   ngOnInit() {
@@ -105,7 +105,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 

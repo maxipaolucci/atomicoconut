@@ -11,7 +11,7 @@ import { Team } from '../teams/models/team';
 import { Response } from '../../models/response';
 import { of, from } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
-import { INVESTMENTS_TYPES, PROPERTY_TYPES } from '../../constants';
+import { INVESTMENTS_TYPES, PROPERTY_TYPES, ConsoleNotificationTypes } from '../../constants';
 import { House } from '../properties/models/house';
 import { Address } from '../properties/models/address';
 
@@ -70,7 +70,7 @@ export class InvestmentsService {
     const methodTrace = `${this.constructor.name} > getInvestmentById$() > `; // for debugging
 
     if (!id || !email) {
-      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return of(null);
     }
 
@@ -135,7 +135,7 @@ export class InvestmentsService {
             investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
         }
       } else {
-        this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
       }
 
       return of(result);
@@ -152,7 +152,7 @@ export class InvestmentsService {
     const methodTrace = `${this.constructor.name} > getInvestments$() > `; // for debugging
 
     if (!email) {
-      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return of([]);
     }
 
@@ -202,7 +202,7 @@ export class InvestmentsService {
           }
         }
       } else {
-        this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
       }
 
       return of(investments);
@@ -220,7 +220,7 @@ export class InvestmentsService {
     const methodTrace = `${this.constructor.name} > delete$() > `; // for debugging
 
     if (!id || !email) {
-      this.appService.consoleLog('error', `${methodTrace} Required parameters missing.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return Observable.throw(null);
     }
 

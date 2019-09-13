@@ -3,16 +3,17 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { AppService } from '../../../../app.service';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/reducers';
+import { State } from 'src/app/main.reducer';
 import { RequestLogin, RequestForgot } from '../../user.actions';
 import { LoginModel } from '../../models/login-model';
-import { loadingSelector, forgotFormVisibilitySelector } from '../../user.selectors';
+import { forgotFormVisibilitySelector } from '../../user.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
-import { DEFAULT_DIALOG_WIDTH_DESKTOP } from 'src/app/constants';
+import { DEFAULT_DIALOG_WIDTH_DESKTOP, SnackbarNotificationTypes } from 'src/app/constants';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ProgressBarDialogComponent } from 'src/app/modules/shared/components/progress-bar-dialog/progress-bar-dialog.component';
+import { loadingSelector } from 'src/app/app.selectors';
 
 
 @Component({
@@ -28,13 +29,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
   forgotFormVisibility: boolean = false;
+  loadingData$: Observable<LoadingData> = null;
 
   constructor(
     private appService: AppService,  
     private mainNavigatorService: MainNavigatorService,  
     private route: ActivatedRoute,
     public dialog: MatDialog,
-    private store: Store<AppState>
+    private store: Store<State>
   ) { }
 
   ngOnInit() {
@@ -46,20 +48,21 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.route.paramMap.pipe(map((params: ParamMap) => params.get('state'))).subscribe(state => {
       if (state === 'reset-password-token-expired') {
-        this.appService.showResults('Reset password token has expired or is invalid. Click on "Forgot my password" again to create a new one.', 'error', 10000);
+        this.appService.showResults('Reset password token has expired or is invalid. Click on "Forgot my password" again to create a new one.', SnackbarNotificationTypes.INFO, 10000);
       }
     });
 
-    let newSubscription = this.store.select(loadingSelector()).subscribe((loadingData: LoadingData) => {
-      if (loadingData) {
-        this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
-      } else if(this.progressBarDialogRef) {
-        this.progressBarDialogRef.close();
-      }
-    });
-    this.subscription.add(newSubscription);
+    this.loadingData$ = this.store.select(loadingSelector());
+    // let newSubscription = this.store.select(loadingSelector()).subscribe((loadingData: LoadingData) => {
+    //   if (loadingData) {
+    //     this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
+    //   } else if(this.progressBarDialogRef) {
+    //     this.progressBarDialogRef.close();
+    //   }
+    // });
+    // this.subscription.add(newSubscription);
 
-    newSubscription = this.store.select(forgotFormVisibilitySelector()).subscribe((visibility: boolean) => {
+    let newSubscription = this.store.select(forgotFormVisibilitySelector()).subscribe((visibility: boolean) => {
       this.forgotFormVisibility = visibility
     });
     this.subscription.add(newSubscription);
@@ -68,7 +71,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
@@ -79,7 +82,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
     const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
-    
+    console.log(methodTrace, 'this should not happen on login');
+
     return this.dialog.open(ProgressBarDialogComponent, {
       width: DEFAULT_DIALOG_WIDTH_DESKTOP,
       disableClose: true,

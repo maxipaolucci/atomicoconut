@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { House } from '../../../properties/models/house';
 import { UtilService } from '../../../../util.service';
+import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
 
 @Component({
   selector: 'property-investment',
@@ -84,8 +85,8 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
       this.setInvestmentTeamData(teams);
     },
     (error: any) => {
-      this.appService.consoleLog('error', `${methodTrace} There was an error trying to generate investment data > `, error);
-      this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, 'error');
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to generate investment data > `, error);
+      this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
     });
 
     this.subscription.add(newSubscription);
@@ -94,7 +95,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
 
-    // this.appService.consoleLog('info', `${methodTrace} Component destroyed.`);
+    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
     this.subscription.unsubscribe();
   }
 
@@ -139,7 +140,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > openDeleteDialog() > `; // for debugging
     
     if (!this.investment.id) {
-      this.appService.consoleLog('error', `${methodTrace} Investment ID is required to delete.`);
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Investment ID is required to delete.`);
       return false;
     }
 
@@ -172,19 +173,19 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
       const newSubscription = this.investmentsService.delete$(this.investment.id, this.user.email).subscribe(
         (data: any) => {
           if (data && data.removed > 0) {
-            this.appService.showResults(`Investment successfully removed!`, 'success');
+            this.appService.showResults(`Investment successfully removed!`, SnackbarNotificationTypes.SUCCESS);
             this.deletedInvestment.emit({ investment : this.investment, investmentReturn : this.investmentReturn, investmentAmount : this.investmentAmount });
           } else {
-            this.appService.showResults(`Investment could not be removed, please try again.`, 'error');
+            this.appService.showResults(`Investment could not be removed, please try again.`, SnackbarNotificationTypes.ERROR);
             this.actionRunning = false;
           }
         },
         (error: any) => {
-          this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
           if (error.codeno === 400) {
-            this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
+            this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
           } else {
-            this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
+            this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
           }
   
           this.actionRunning = false;
@@ -193,7 +194,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
 
       this.subscription.add(newSubscription);
     } else {
-      this.appService.showResults(`You are not logged into AtomiCoconut, you must login first.`, 'error');
+      this.appService.showResults(`You are not logged into AtomiCoconut, you must login first.`, SnackbarNotificationTypes.ERROR);
       this.router.navigate(['/users/login']);
     }
   }
