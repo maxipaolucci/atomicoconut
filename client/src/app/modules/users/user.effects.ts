@@ -3,7 +3,7 @@ import { Actions, ofType, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
 import { RequestLogin, UserActionTypes, CancelRequest, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset } from './user.actions';
-import { mergeMap, exhaustMap, map, catchError, tap, delay } from 'rxjs/operators';
+import { mergeMap, switchMap, exhaustMap, map, catchError, tap, delay } from 'rxjs/operators';
 import { of, defer } from 'rxjs';
 import { User } from './models/user';
 import { State } from 'src/app/main.reducer';
@@ -44,7 +44,7 @@ export class UserEffects {
     tap((action) => {
       this.store.dispatch(new ShowProgressBar({ message: 'Authenticating...' }));  
     }),
-    mergeMap(({ payload }) => this.usersService.login$(payload)
+    switchMap(({ payload }) => this.usersService.login$(payload)
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
@@ -139,7 +139,12 @@ export class UserEffects {
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
     ),
-    map((result: boolean) => {
+    map((user: User) => {
+      if (user) {
+        localStorage.setItem("user", user.email);
+        //dispatch the action to save the value in the store
+        return new Login({ user });
+      }
       return new CancelRequest({ redirectData: ['/'] }); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, of, interval } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AppService } from '../../app.service';
 import { User } from './models/user';
@@ -53,7 +53,7 @@ export class UsersService {
     this.setUser(null);
     return this.http.post<Response>(`${this.serverHost}/register`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      mergeMap((data: any): Observable<User> => {
+      map((data: any): User => {
         let user: User = null;
         if (data && data.email) {
           user = new User(data.name, data.email, data.avatar, null, null, data.currency);
@@ -62,7 +62,7 @@ export class UsersService {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`, data);
         }
 
-        return of(user);
+        return user;
       })
     );
   }
@@ -168,7 +168,7 @@ export class UsersService {
     
     return this.http.get<Response>(`${this.serverHost}/getUser`, { params }).pipe(
       map(this.appService.extractData),
-      mergeMap((data: any): Observable<User> => {
+      map((data: any): User => {
         let user: User = null;
 
         if (data && data.email) {
@@ -193,7 +193,7 @@ export class UsersService {
           this.setUser(user);
         }
 
-        return of(user);
+        return user;
       })
     );
   }
@@ -234,7 +234,7 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/login`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      mergeMap((data: any): Observable<User> => {
+      map((data: any): User => {
         let user: User = null;
 
         if (data && data.email) {
@@ -245,7 +245,7 @@ export class UsersService {
           this.setUser(null);
         }
 
-        return of(user);
+        return user;
       })
     );
   }
@@ -261,7 +261,7 @@ export class UsersService {
     return this.http.post<Response>(`${this.serverHost}/account/forgot`, postData, { headers : this.headers })
       .pipe(
         map(this.appService.extractData),
-        map((data: any) => {
+        map((data: any): boolean => {
           if (data && data.email && data.expires) {
             this.appService.showResults(`We sent an email to ${data.email} with a password reset link that will expire in ${data.expires}.`, SnackbarNotificationTypes.INFO);
             return true;
@@ -276,30 +276,30 @@ export class UsersService {
   /**
    * Server call to reset password api with the provided new password.
    * 
-   * @return { Observable<boolean> }
+   * @return { Observable<User> }
    */
-  reset$(token: string, postData: ResetPasswordModel): Observable<boolean> {
+  reset$(token: string, postData: ResetPasswordModel): Observable<User> {
     const methodTrace = `${this.constructor.name} > reset$() > `; // for debugging
 
     this.setUser(null);
     return this.http.post<Response>(`${this.serverHost}/account/reset/${token}`, postData, { headers : this.headers })
-        .pipe(
-          map(this.appService.extractData),
-          map((data: any): boolean => {
-            let user: User = null;
+      .pipe(
+        map(this.appService.extractData),
+        map((data: any): User => {
+          let user: User = null;
 
-            if (data && data.email) {
-              this.appService.showResults('Your password was successfully updated!', SnackbarNotificationTypes.SUCCESS);
-              user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-              this.setUser(user);
-              return true;
-            }
+          if (data && data.email) {
+            this.appService.showResults('Your password was successfully updated!', SnackbarNotificationTypes.SUCCESS);
+            user = new User(data.name, data.email, data.avatar, null, null, data.currency);
+            this.setUser(user);
+            return user;
+          }
 
-            this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-            this.setUser(null);
-            return false;
-          })
-        );
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+          this.setUser(null);
+          return user;
+        })
+      );
   }
 
   /**
@@ -312,9 +312,9 @@ export class UsersService {
 
     return this.http.get<Response>(`${this.serverHost}/logout`).pipe(
       map(this.appService.extractData),
-      mergeMap((data: any): Observable<null> => {
+      map((data: any): null => {
         this.setUser(null);
-        return of(null);
+        return null;
       })
     );
   }
