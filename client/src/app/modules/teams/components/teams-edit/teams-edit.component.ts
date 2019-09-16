@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../users/models/user';
 import { AppService } from '../../../../app.service';
 import { Team } from '../../models/team';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { map, combineLatest, withLatestFrom } from 'rxjs/operators';
 import _ from 'lodash';
 import { Store, select } from '@ngrx/store';
@@ -15,6 +15,8 @@ import { userSelector } from 'src/app/modules/users/user.selectors';
 import { RequestUpdate, UseAndResetLastUpdatedTeamSlug, RequestCreate } from '../../team.actions';
 import { TeamEditModel } from '../../models/team-edit-model';
 import { teamBySlugSelector, lastUpdatedTeamSlugSelector } from '../../team.selectors';
+import { LoadingData } from 'src/app/models/loadingData';
+import { loadingSelector } from 'src/app/app.selectors';
 
 @Component({
   selector: 'app-teams-edit',
@@ -36,6 +38,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   };
   slug: string = null;
   subscription: Subscription = new Subscription();
+  loading$: Observable<LoadingData>;
 
   constructor(
       private route: ActivatedRoute, 
@@ -57,6 +60,8 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
       this.user = user;
       this.model.email = user.email;
     }));
+
+    this.loading$ = this.store.select(loadingSelector());
 
     let newSubscription = this.store
       .pipe(

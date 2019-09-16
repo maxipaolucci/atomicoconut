@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
-import { RequestLogin, UserActionTypes, CancelRequest, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset } from './user.actions';
+import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset } from './user.actions';
 import { mergeMap, switchMap, exhaustMap, map, catchError, tap, delay } from 'rxjs/operators';
 import { of, defer } from 'rxjs';
 import { User } from './models/user';
 import { State } from 'src/app/main.reducer';
 import { Store } from '@ngrx/store';
-import { ShowProgressBar, HideProgressBar } from 'src/app/app.actions';
+import { ShowProgressBar, HideProgressBar, FinalizeOperation } from 'src/app/app.actions';
 
 @Injectable()
 export class UserEffects {
@@ -58,7 +58,7 @@ export class UserEffects {
       }
 
       // if here, means http error in the request. 
-      return new CancelRequest(); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation(); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );
 
@@ -114,7 +114,7 @@ export class UserEffects {
       }
 
       // if here, means http error in the response. 
-      return new CancelRequest(); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation(); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );
 
@@ -145,22 +145,9 @@ export class UserEffects {
         //dispatch the action to save the value in the store
         return new Login({ user });
       }
-      return new CancelRequest({ redirectData: ['/'] }); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation({ redirectData: ['/'] }); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );
-
-  @Effect({ dispatch: false })
-  cancelRequest$ = this.actions$.pipe(
-    ofType<CancelRequest>(UserActionTypes.CancelRequest),
-    tap(({ payload }) => {
-      this.store.dispatch(new HideProgressBar());
-      if (payload && payload.redirectData && payload.redirectData.length) {
-        return this.router.navigate(payload.redirectData);
-      }
-
-      return; // do nothing here
-    })
-  )
 
   constructor(
     private actions$: Actions, 

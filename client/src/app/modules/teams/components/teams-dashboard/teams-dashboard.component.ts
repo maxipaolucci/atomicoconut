@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { AppService } from '../../../../app.service';
 import { Team } from '../../models/team';
@@ -9,12 +9,12 @@ import { Subscription, Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { RequestDelete } from '../../team.actions';
-import { ProgressBarDialogComponent } from '../../../shared/components/progress-bar-dialog/progress-bar-dialog.component';
 import { RequestAll } from '../../team.actions';
-import { teamsSelector, loadingSelector } from '../../team.selectors';
+import { teamsSelector } from '../../team.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
-import { DEFAULT_DIALOG_WIDTH_DESKTOP, ConsoleNotificationTypes } from 'src/app/constants';
+import { ConsoleNotificationTypes } from 'src/app/constants';
 import { userSelector } from 'src/app/modules/users/user.selectors';
+import { loadingSelector } from 'src/app/app.selectors';
 
 @Component({
   selector: 'app-teams-dashboard',
@@ -30,13 +30,12 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   bindedToPushNotifications: boolean = false;
   loading$: Observable<LoadingData>;
-  progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
-
+  
   constructor(
     private mainNavigatorService: MainNavigatorService, 
     private appService: AppService,
-    public dialog: MatDialog,
-    private store: Store<State>
+    private store: Store<State>,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -66,18 +65,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     });
     this.subscription.add(newSubscription);
 
-    this.loading$ = this.store.pipe(
-      select(loadingSelector())
-    );
-
-    newSubscription = this.loading$.subscribe((loadingData: LoadingData) => {
-      if (loadingData) {
-        this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
-      } else if(this.progressBarDialogRef) {
-        this.progressBarDialogRef.close();
-      }
-    });
-    this.subscription.add(newSubscription);
+    this.loading$ = this.store.select(loadingSelector());
   }
 
   ngOnDestroy() {
@@ -126,16 +114,6 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   unbindToPushNotificationEvents() {
     this.appService.pusherChannel.unbind('team-deleted');
     this.appService.pusherChannel.unbind('team-updated');
-  }
-
-  openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
-    const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
-    
-    return this.dialog.open(ProgressBarDialogComponent, {
-      width: DEFAULT_DIALOG_WIDTH_DESKTOP,
-      disableClose: true,
-      data: loadingData
-    });
   }
 
   openDeleteTeamDialog(index: number, team: Team = null) {

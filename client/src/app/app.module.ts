@@ -28,6 +28,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './modules/shared/custom-router-serializer';
 import { HttpErrorInterceptor } from './http-error.interceptor';
+import { AppEffects } from './app.effects';
 
 @NgModule({
   imports: [
@@ -51,7 +52,7 @@ import { HttpErrorInterceptor } from './http-error.interceptor';
       }
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AppEffects]),
     StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer })
   ],
   declarations: [

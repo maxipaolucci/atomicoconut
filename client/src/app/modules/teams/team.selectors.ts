@@ -14,17 +14,10 @@ export const allTeamsLoadedSelector = () => createSelector(
   teamsState => teamsState.allTeamsLoaded
 );
 
-export const loadingSelector = () => createSelector(
-  selectTeamsState,
-  teamsState => teamsState.loadingData
-);
-
 export const teamBySlugSelector = (slug: string) => {
   return createSelector(
       selectTeamsState,
       teamsState => {
-        console.log('team by slug selector:', slug);
-        console.log(teamsState.entities);
         return teamsState.entities[slug]
       }
   )

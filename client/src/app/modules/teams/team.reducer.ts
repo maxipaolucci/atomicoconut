@@ -1,14 +1,12 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { Team } from './models/team';
 import { TeamActions, TeamActionTypes } from './team.actions';
-import { LoadingData } from '../../models/loadingData'
 
 export const teamsFeatureKey = 'teams';
 
 export interface State extends EntityState<Team> {
   // additional entities state properties
   allTeamsLoaded: boolean;
-  loadingData: LoadingData;
   lastUpdatedTeamSlug: string;
 }
 
@@ -21,7 +19,6 @@ export const adapter: EntityAdapter<Team> = createEntityAdapter<Team>(
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
   allTeamsLoaded: false,
-  loadingData: null,
   lastUpdatedTeamSlug: null
 });
 
@@ -30,75 +27,24 @@ export function reducer(state = initialState, action: TeamActions): State {
 
   switch (action.type) { 
 
-    case TeamActionTypes.CancelRequest: {
-      return {
-        ...state,
-        loadingData: null
-      };
-    }
-
-    case TeamActionTypes.RequestAll: {
-      let loadingData = null;
-      if (!action.payload.silently) {
-        loadingData = {
-          message: 'Fetching teams...'
-        }; 
-      }
-      
-      return {
-        ...state,
-        loadingData 
-      }
-    }
-
-    case TeamActionTypes.RequestOne: {
-      return {
-        ...state,
-        loadingData: {
-          message: 'Fetching team...'
-        }
-      }
-    }
-
     case TeamActionTypes.AddAll: {
       return adapter.addAll(action.payload.teams, { 
         ...state, 
-        allTeamsLoaded: action.payload.serverError ? false : true, 
-        loadingData: null 
+        allTeamsLoaded: action.payload.serverError ? false : true
       });
     }
 
     case TeamActionTypes.AddOne: {
-      return adapter.addOne(action.payload.team, { 
-        ...state,  
-        loadingData: null 
-      });
-    }
-
-    case TeamActionTypes.RequestDelete: {
-      return {
-        ...state,
-        loadingData: {
-          message: 'Removing team...',
-          color: 'warn'
-        }
-      }
+      return adapter.addOne(action.payload.team, state);
     }
 
     case TeamActionTypes.Delete: {
-      return adapter.removeOne(action.payload.slug, { 
-        ...state, 
-        loadingData: null 
-      });
+      return adapter.removeOne(action.payload.slug, state);
     }
 
     case TeamActionTypes.RequestUpdate: {
       return {
         ...state,
-        loadingData: {
-          message: 'Updating team...',
-          color: 'accent'
-        },
         lastUpdatedTeamSlug: null
       }
     }
@@ -108,7 +54,6 @@ export function reducer(state = initialState, action: TeamActions): State {
       
       return adapter.updateOne(changes, { 
         ...state, 
-        loadingData: null,
         lastUpdatedTeamSlug: changes.changes.slug != changes.id ? changes.changes.slug : null
       });
     }
@@ -120,11 +65,11 @@ export function reducer(state = initialState, action: TeamActions): State {
       }
     }
     
+    case TeamActionTypes.RequestOne:
+    case TeamActionTypes.RequestDelete:
+    case TeamActionTypes.RequestAll:
     default: {
-      return { 
-        ...state,
-        loadingData: null
-      };
+      return state;
     }
   }
 }

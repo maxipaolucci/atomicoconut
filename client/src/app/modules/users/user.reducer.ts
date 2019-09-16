@@ -50,7 +50,6 @@ export function reducer(state: UserState = initialState, action: UserActions): U
       }
     }
 
-    case UserActionTypes.CancelRequest:
     case UserActionTypes.RequestLogin:
     case UserActionTypes.RequestLogout:
     case UserActionTypes.RequestReset:

@@ -5,7 +5,7 @@ import { User } from './modules/users/models/user';
 import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
 import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
 import { UtilService } from './util.service';
-import { of, Subscription, interval } from 'rxjs';
+import { of, Subscription, interval, Observable } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { Team } from './modules/teams/models/team';
 import { TeamsService } from './modules/teams/teams.service';
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   todayUserPrefRate: number = null;
   subscription: Subscription = new Subscription();
   progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
-  loadingData: LoadingData = null;
+  loading$: Observable<LoadingData> = null;
 
   constructor(
       private appService: AppService, 
@@ -57,12 +57,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription.add(newSubscription);
 
     //Show or hide progress bar for loading...
-    const loading$ = this.store.select(loadingSelector());
-    newSubscription = loading$.subscribe((loadingData: LoadingData) => {
-      this.loadingData = loadingData;
-    });
-    this.subscription.add(newSubscription);
-
+    this.loading$ = this.store.select(loadingSelector());
+    
     // let newSubscription = this.store.select(loadingSelector()).subscribe((loadingData: LoadingData) => {
     //   if (loadingData) {
     //     this.progressBarDialogRef = this.openProgressBarDialog(loadingData)

@@ -437,6 +437,16 @@ exports.getAllTeams = async (req, res) => {
         result.push(teamsObj[teamId]);
     }
     
+    
+    // console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
+    // res.status(401).json({ 
+    //         status : "error", 
+    //         codeno : 465,
+    //         msg : getMessage('error', 465, null, false),
+    //         data : null
+    //     });
+    // return;
+
     //5 - Return teams info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
     res.json({

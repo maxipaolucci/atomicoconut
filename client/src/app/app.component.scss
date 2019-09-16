@@ -26,6 +26,14 @@
   }
 }
 
+.progress-bar__app {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
 .toolbar__primary__spacer {
   height: 54px;
 }
@@ -44,6 +52,10 @@
 
 @media screen and (min-width: $screenGtXs) {
   
+  .progress-bar__app {
+    top: 65px;
+  }
+
   .toolbar__primary__spacer {
     height: 62px;
   }
