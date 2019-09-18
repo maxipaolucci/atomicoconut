@@ -20,6 +20,13 @@ export function reducer(state: UserState = initialState, action: UserActions): U
 
   switch (action.type) {
 
+    case UserActionTypes.AuthenticatedUser: {
+      return {
+        ...state,
+        user: action.payload.user
+      }
+    }
+
     case UserActionTypes.Login: {
       return {
         ...state,
@@ -50,9 +57,6 @@ export function reducer(state: UserState = initialState, action: UserActions): U
       }
     }
 
-    case UserActionTypes.RequestLogin:
-    case UserActionTypes.RequestLogout:
-    case UserActionTypes.RequestReset:
     default: {
       return state;
     }

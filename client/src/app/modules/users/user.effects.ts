@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
-import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset } from './user.actions';
+import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset, RequestAuthenticatedUser, AuthenticatedUser } from './user.actions';
 import { mergeMap, switchMap, exhaustMap, map, catchError, tap, delay } from 'rxjs/operators';
 import { of, defer } from 'rxjs';
 import { User } from './models/user';
@@ -22,20 +22,39 @@ export class UserEffects {
       //   financialInfo: userData.financialInfo ? true : false,
       //   personalInfo: userData.personalInfo ? true : false
       // };
-      return this.usersService.getAuthenticatedUser$().pipe(
-        mergeMap((user: User) => {
-          if (user) {
-            return of(new Login({ user }));  
-          }
-          
-          // if not authenticated then remove store data of the user
-          return of(new Logout());
-        })
+      return this.usersService.getAuthenticatedUser$()
+        .pipe(
+          catchError((error: any) => of(null)), //http errors are properly handle in http-error.interceptor, just send null to the next method
+          mergeMap((user: User) => {
+            if (user) {
+              return of(new Login({ user }));  
+            }
+            
+            // if not authenticated then remove store data of the user
+            return of(new Logout());
+          })
       );
     } else {
       // if no userData then call Logout action as the effect is expecting to return and obesrvable action
       return of(new Logout());
     }
+  });
+
+  @Effect()
+  requestAuthenticatedUser$ = defer(() => {
+    ofType<RequestAuthenticatedUser>(UserActionTypes.RequestAuthenticatedUser),
+    mergeMap(({ payload }) => this.usersService.getAuthenticatedUser$(payload)
+      .pipe(
+        catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+      )
+    ),
+    map((user: User) => {
+      if (user) {
+        return new AuthenticatedUser({ user });
+      }
+      
+      return new Logout();
+    })
   });
 
   @Effect()

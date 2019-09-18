@@ -9,7 +9,6 @@ import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { UtilService } from './util.service';
-import { AuthResolver } from './auth-resolver.service';
 import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
 import { CustomMaterialDesignModule } from './modules/shared/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
@@ -64,7 +63,6 @@ import { AppEffects } from './app.effects';
     AppService, 
     UtilService, 
     CurrencyExchangeService, 
-    AuthResolver,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,

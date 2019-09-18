@@ -22,6 +22,7 @@ export class AccountComponent implements OnInit {
     
     // get authUser from resolver
     this.route.data.subscribe((data: { authUser: User }) => {
+      console.log(data.authUser);
       this.user = data.authUser;
     });
   }

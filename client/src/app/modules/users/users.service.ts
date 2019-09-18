@@ -12,6 +12,7 @@ import { AccountFinance } from './models/account-finance';
 import _ from 'lodash';
 import { ResetPasswordModel } from './models/reset-password-model';
 import { ConsoleNotificationTypes, SnackbarNotificationTypes } from 'src/app/constants';
+import { UserAdditionalInfo } from './models/user-additional-info';
 
 @Injectable()
 export class UsersService {
@@ -156,14 +157,12 @@ export class UsersService {
    * 
    * @return { Observable<User> }
    */
-  getAuthenticatedUser$(parameters: any = null): Observable<User> {
+  getAuthenticatedUser$(parameters: UserAdditionalInfo = null): Observable<User> {
     const methodTrace = `${this.constructor.name} > getAuthenticatedUser() > `; // for debugging
 
     let params = new HttpParams();
     if (parameters && Object.keys(parameters).length) {
-      for (const key of Object.keys(parameters)) {
-        params = params.set(key, parameters[key] + '');
-      }
+      Object.keys(parameters).map(key => params = params.set(key, parameters[key] + ''))
     }
     
     return this.http.get<Response>(`${this.serverHost}/getUser`, { params }).pipe(

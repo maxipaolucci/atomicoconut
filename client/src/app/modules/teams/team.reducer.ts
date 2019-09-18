@@ -65,9 +65,6 @@ export function reducer(state = initialState, action: TeamActions): State {
       }
     }
     
-    case TeamActionTypes.RequestOne:
-    case TeamActionTypes.RequestDelete:
-    case TeamActionTypes.RequestAll:
     default: {
       return state;
     }

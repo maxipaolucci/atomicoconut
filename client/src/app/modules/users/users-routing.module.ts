@@ -4,7 +4,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AccountComponent } from './components/account/account.component';
-import { AuthResolver } from '../../auth-resolver.service';
+import { UserResolver } from './user-resolver.service';
 import { AuthGuard } from '../../auth.guard';
 
 const routes: Routes = [
@@ -19,7 +19,7 @@ const routes: Routes = [
         component : AccountComponent,
         canActivate: [ AuthGuard ],
         resolve : {
-          authUser : AuthResolver
+          authUser : UserResolver
         }
       },
       { 

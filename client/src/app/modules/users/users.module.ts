@@ -17,6 +17,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './user.effects';
 import { StoreModule } from '@ngrx/store';
 import * as fromUser from './user.reducer';
+import { UserResolver } from './user-resolver.service';
 
 @NgModule({
   imports: [
@@ -38,6 +39,9 @@ import * as fromUser from './user.reducer';
     AccountPersonalInfoComponent,
     AccountUserInfoComponent
   ],
-  providers: [ UsersService ]
+  providers: [ 
+    UsersService,
+    UserResolver,
+  ]
 })
 export class UsersModule {}
