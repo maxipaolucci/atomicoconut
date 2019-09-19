@@ -19,7 +19,7 @@ const routes: Routes = [
         component : AccountComponent,
         canActivate: [ AuthGuard ],
         resolve : {
-          authUser : UserResolver
+          inflatedUser : UserResolver
         }
       },
       { 

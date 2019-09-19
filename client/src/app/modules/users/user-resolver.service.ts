@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map, catchError, tap, switchMap } from 'rxjs/operators';
+import { map, catchError, tap, switchMap, first } from 'rxjs/operators';
 import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { User } from './models/user';
 import { UsersService } from './users.service';
@@ -27,10 +27,11 @@ export class UserResolver implements Resolve<User> {
     
     const urlsForCompleteUserData: Array<string> = ['/investments', '/users/account'];
         
-    this.store.select(userSelector())
-      .subscribe((user: User) => {
+    return this.store.pipe(
+      select(userSelector()),
+
+      switchMap((user: User): Observable<User> => {
         if (user.personalInfo && user.financialInfo) {
-          console.log(123, user);
           return of(user);
         }
         
@@ -38,26 +39,23 @@ export class UserResolver implements Resolve<User> {
         if (urlsForCompleteUserData.includes(state.url)) {
           params = { personalInfo : true, financialInfo : true };
 
-          // this.store.dispatch(new RequestAuthenticatedUser(params));
+          // call the service instead of RequestAuthenticatedUser ngrx action because we need to return a user from this method
           return this.usersService.getAuthenticatedUser$(params)
             .pipe(
-              map((updatedUser: User) => {
-                this.store.dispatch(new AuthenticatedUser({ user: updatedUser }));
-                return updatedUser
-              }),
               catchError((error: any) => {
                 this.appService.consoleLog(ConsoleNotificationTypes.WARN, `${methodTrace} There was something wrong with the getAuthenticatedUser service and the expected data did not come back`, error)
                 return of(user); //return the current user with no additional info
-              }), //http errors are properly handle in http-error.interceptor, just send null to the next method
+              }),
+              map((inflatedUser: User) => {
+                this.store.dispatch(new AuthenticatedUser({ user: inflatedUser }));
+                return inflatedUser;
+              })
           );
         }
 
         return of(user);
-      });
-      // switchMap((user: User): Observable<User> => {
-        
-      // }),
-      // map((user: User) => {console.log(1234, user); return user})
-    // );
+      }),
+      first() //we need to complete the to make it work
+    );
   }
 }

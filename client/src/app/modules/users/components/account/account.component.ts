@@ -21,9 +21,8 @@ export class AccountComponent implements OnInit {
       { displayName: 'My account', url: null, selected: true }]);
     
     // get authUser from resolver
-    this.route.data.subscribe((data: { authUser: User }) => {
-      console.log(data.authUser);
-      this.user = data.authUser;
+    this.route.data.subscribe((data: { inflatedUser: User }) => {
+      this.user = data.inflatedUser;
     });
   }
 
