@@ -16,6 +16,7 @@ const teamsRoutes = require('./routes/api/teamsRoutes');
 const investmentsRoutes = require('./routes/api/investmentsRoutes');
 const propertiesRoutes = require('./routes/api/propertiesRoutes');
 const currencyRatesRoutes = require('./routes/api/currencyRatesRoutes');
+const cryptoRatesRoutes = require('./routes/api/cryptoRatesRoutes');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
 const cors = require('cors');
@@ -105,6 +106,7 @@ app.use('/api/teams', teamsRoutes);
 app.use('/api/investments', investmentsRoutes);
 app.use('/api/properties', propertiesRoutes);
 app.use('/api/currencyRates', currencyRatesRoutes);
+app.use('/api/cryptoRates', cryptoRatesRoutes);
 app.use('/', routes); //this one at the end cause it contains the wildcard if the requested route does not match any route declared before
 
 // If that above routes didnt work, we 404 them and forward to error handler

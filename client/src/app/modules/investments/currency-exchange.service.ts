@@ -14,7 +14,8 @@ export class CurrencyExchangeService {
   private cryptoExchangeServerUrl = 'https://api.coincap.io/v2/assets/';
   cryptoRates: any = {};
   currencyRates: any = {};
-  private serverHost: string = environment.apiHost + '/api/currencyRates';
+  private currencyRatesHost: string = environment.apiHost + '/api/currencyRates';
+  private cryptoRatesHost: string = environment.apiHost + '/api/cryptoRates';
 
   constructor(private http: HttpClient, private appService: AppService, private utilService: UtilService) { }
 
@@ -40,7 +41,7 @@ export class CurrencyExchangeService {
     // if here then we need to retrieve some dates from the server
     const params = new HttpParams().set('dates', `${dates}`);
 
-    return this.http.get<Response>(`${this.serverHost}/getByDates/${base}`, { params }).pipe(
+    return this.http.get<Response>(`${this.currencyRatesHost}/getByDates/${base}`, { params }).pipe(
       map((res: Response) => {
         const data = this.appService.extractData(res);
 
@@ -64,8 +65,8 @@ export class CurrencyExchangeService {
       return of(this.cryptoRates[crypto.toUpperCase()]);
     }
     
-    return this.http.get<Response>(`${this.cryptoExchangeServerUrl}${COINCAP_CRYPTO_TYPES[crypto.toUpperCase()]}`).pipe(
-      map((res: Response) => this.extractCryptoExchangeData(crypto, res)),
+    return this.http.get<Response>(`${this.cryptoRatesHost}/getTodayRates/${COINCAP_CRYPTO_TYPES[crypto.toUpperCase()]}`).pipe(
+      map(this.appService.extractData),
       switchMap((rates: Object) => {
         if (rates) {
           this.cryptoRates[crypto.toUpperCase()] = rates;
@@ -76,14 +77,6 @@ export class CurrencyExchangeService {
         return of(this.cryptoRates[crypto.toUpperCase()]);
       }) 
     );
-  }
-
-  private extractCryptoExchangeData(crypto: string, res: Object): any {
-    if (res['data']['id'] === COINCAP_CRYPTO_TYPES[crypto.toUpperCase()]) {
-      return res['data'];
-    } else {
-      throw res;
-    }
   }
 
   /**

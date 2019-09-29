@@ -86,7 +86,9 @@ const messageCodes = {
   1048 : 'Data from {{param}} successfully retrieved.',
   1049 : 'Getting latest data from {{param}}',
   1050 : '{{param}} record(s) successfully removed from {{param}}',
-  1051 : 'Searching all {{param}} records with {{param}}...'
+  1051 : 'Searching all {{param}} records with {{param}}...',
+  1052 : 'Sending alert by email for {{param}} to {{param}}...',
+  1053 : 'Email sent to {{param}}.'
 };
 
 /**
@@ -183,7 +185,7 @@ exports.notFound = (req, res, next) => {
 */
 exports.developmentErrors = (err, req, res, next) => {
   const methodTrace = `${errorTrace} developmentErrors() >`;
-
+  
   console.log(`${methodTrace} ${getMessage('error', 467, req.user ? req.user.email : null, true)} ${err.message}`);
   err.stack = err.stack || '';
   //console.log(err);

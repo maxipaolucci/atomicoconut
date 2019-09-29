@@ -3,7 +3,7 @@ const router = express.Router();
 const userController = require('../../controllers/userController');
 const teamController = require('../../controllers/teamController');
 const authController = require('../../controllers/authController');
-const { catchErrors, catchApiErrors } = require('../../handlers/errorHandlers');
+const { catchErrors } = require('../../handlers/errorHandlers');
 
 
 //*************************************************************************** */
