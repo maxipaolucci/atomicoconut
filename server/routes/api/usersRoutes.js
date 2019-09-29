@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../../controllers/userController');
 const authController = require('../../controllers/authController');
-const { catchErrors, catchApiErrors } = require('../../handlers/errorHandlers');
+const { catchErrors } = require('../../handlers/errorHandlers');
 
 
 //*************************************************************************** */

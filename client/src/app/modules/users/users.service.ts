@@ -61,8 +61,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -91,8 +90,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -118,8 +116,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -147,8 +144,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -196,8 +192,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -209,9 +204,10 @@ export class UsersService {
    */
   updateSessionState(time: number = 600000) {
     const methodTrace = `${this.constructor.name} > updateSessionState() > `; // for debugging
-
+    
     interval(time).pipe(
       flatMap((checkNumber: number) => {
+        console.log(methodTrace, checkNumber);
         const user: User = this.getUser();
         const params = {
           financialInfo: user && user.financialInfo ? true : false,
@@ -248,8 +244,7 @@ export class UsersService {
         }
 
         return of(user);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 
@@ -262,8 +257,7 @@ export class UsersService {
     const methodTrace = `${this.constructor.name} > forgot$() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/account/forgot`, postData, { headers : this.headers }).pipe(
-      map(this.appService.extractData),
-      catchError(this.appService.handleError)
+      map(this.appService.extractData)
     );
   }
 
@@ -291,8 +285,7 @@ export class UsersService {
             }
     
             return of(user);
-          }),
-          catchError(this.appService.handleError)
+          })
         );
   }
 
@@ -301,7 +294,7 @@ export class UsersService {
    * 
    * @return { Observable<null>}
    */
-  logout$(): Observable<any> {
+  logout$(): Observable<null> {
     const methodTrace = `${this.constructor.name} > logout$() > `; // for debugging
 
     return this.http.get<Response>(`${this.serverHost}/logout`).pipe(
@@ -309,8 +302,7 @@ export class UsersService {
       flatMap((data: any): Observable<null> => {
         this.setUser(null);
         return of(null);
-      }),
-      catchError(this.appService.handleError)
+      })
     );
   }
 }

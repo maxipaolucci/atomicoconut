@@ -4,9 +4,9 @@
       fxLayoutGap="10px" fxLayoutGap.gt-xs="none" 
       fxLayoutAlign="none none" fxLayoutAlign.gt-xs="space-around center">
     
-    <div *ngIf="!teams.length && !getTeamsServiceRunning" fxFlexAlign="center">You are not member of any team yet.</div>
+    <div *ngIf="!(teams$ | async).length && !(loading$ | async)" fxFlexAlign="center">You are not member of any team yet.</div>
     <!-- Team Cards -->
-    <mat-expansion-panel *ngFor="let team of teams; index as teamIndex"
+    <mat-expansion-panel *ngFor="let team of (teams$ | async); index as teamIndex"
         fxFlex="none" fxFlex.sm="45" fxFlex.gt-sm="30" 
         class="team-card">
       <mat-expansion-panel-header>
@@ -33,32 +33,20 @@
           </div>
         </section>
 
-        <section *ngIf="team.admin.email === user.email" class="card__actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
-          <button *ngIf="!teamActionRunning[teamIndex]" mat-mini-fab routerLink="/teams/edit/{{team.slug}}" color="primary" (click)="teamActionRunning[teamIndex] = true">
+        <section *ngIf="(user$ | async) && team.admin.email === (user$ | async).email" class="card__actions" fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
+          <button *ngIf="!(loading$ | async)" mat-mini-fab routerLink="/teams/edit/{{team.slug}}" color="primary">
             <mat-icon aria-label="Edit team">edit</mat-icon>
           </button>
 
-          <button *ngIf="!teamActionRunning[teamIndex]" mat-mini-fab color="warn" (click)="openDeleteTeamDialog(teamIndex, team)">
+          <button *ngIf="!(loading$ | async)" mat-mini-fab color="warn" (click)="openDeleteTeamDialog(teamIndex, team)">
             <mat-icon aria-label="Delete team">delete</mat-icon>
           </button>
-
-          <mat-progress-spinner *ngIf="teamActionRunning[teamIndex]"
-            class="progress-spinner progress-spinner--delete-team"
-            color="warn"
-            [diameter]="40" [strokeWidth]="7"
-            mode="indeterminate">
-          </mat-progress-spinner>
         </section>
       </div>
       
     </mat-expansion-panel>
     <!-- EOF Team Cards -->
   </section>
-
-  <progress-bar fxFlexAlign="center" class="progress-bar--get-teams" *ngIf="getTeamsServiceRunning"
-      color="primary"
-      message="Loading your teams...">
-  </progress-bar>
 
   <section fxLayout="column" fxLayoutAlign="start end" class="actions">
     <button mat-fab routerLink="create" color="primary" class="fab mat-elevation-z10" matTooltip="Create team" matTooltipPosition="left">

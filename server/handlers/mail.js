@@ -29,7 +29,7 @@ const sendMtMail = async (options) => {
   const html = generateHTML(options.filename, options);
   const text = htmlToText.fromString(html); 
   const mailOptions = {
-    from: 'support@atomiCoconut.com',
+    from: options.fromEmail ? options.fromEmail : 'support@atomiCoconut.com',
     to : options.toEmail,
     subject : options.subject,
     html,
@@ -47,7 +47,7 @@ const sendSgMail = async (options) => {
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const mailOptions = {
     to: options.toEmail,
-    from: 'support@atomiCoconut.com',
+    from: options.fromEmail ? options.fromEmail : 'support@atomiCoconut.com',
     subject: options.subject,
     text,
     html

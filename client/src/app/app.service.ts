@@ -4,10 +4,12 @@ import { environment } from '../environments/environment';
 import { SnackbarSimpleComponent } from './modules/shared/components/snackbar-simple/snackbar-simple.component';
 import { Response } from './models/response';
 import { HttpErrorResponse } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import Pusher from 'pusher-js';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AppService {
 
   pusher: any;
@@ -39,15 +41,6 @@ export class AppService {
     } else {
       throw res;
     }
-  }
-
-  /**
-   * Handle server service errors and parse the result in an object
-   * @param operation (string). The operation performed
-   * @param result (T). Optional, a result to handle the fail. 
-   */
-  public handleError(result: HttpErrorResponse) {
-    return throwError(result.error);
   }
 
   /**

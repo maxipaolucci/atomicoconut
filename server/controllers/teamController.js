@@ -49,19 +49,7 @@ exports.create = async (req, res, next) => {
         admin : user._id
     })).save();
 
-    if (team) {
-        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Team')}`);
-        
-        await addMemberToTeam(user, team, user.email);
-
-        console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Team')}`);
-        res.json({
-            status : 'success', 
-            codeno : 200,
-            msg : getMessage('message', 1033, null, false, 'Team'),
-            data : getTeamDataObject(team)
-        });
-    } else {
+    if (!team) {
         console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'Team')}`);
         res.status(401).json({ 
             status : "error", 
@@ -69,7 +57,20 @@ exports.create = async (req, res, next) => {
             msg : getMessage('error', 459, null, false, 'Team'),
             data : null
         });
+
+        return;
     }
+    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Team')}`); 
+    await addMemberToTeam(user, team, user.email);
+
+    const result = await getTeamBySlugObject(team.slug, user.email, { withId : false });
+    console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Team')}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1033, null, false, 'Team'),
+        data : result
+    });
 };
 
 /**
@@ -435,7 +436,7 @@ exports.getAllTeams = async (req, res) => {
     for (let teamId of Object.keys(teamsObj)) {
         result.push(teamsObj[teamId]);
     }
-
+    
     //5 - Return teams info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
     res.json({
@@ -590,7 +591,7 @@ exports.getMyTeamBySlug = async (req, res) => {
 
         return;
     }
-
+    
     res.json({
         status : 'success', 
         codeno : 200,
@@ -613,6 +614,8 @@ exports.delete = async (req, res) => {
             msg : getMessage('error', 461, null, false, 'Team'),
             data : null
         });
+
+        return;
     }
 
     if (team && team.admin && team.admin.email !== req.query.email) {
@@ -681,7 +684,13 @@ exports.delete = async (req, res) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1039, null, false, 'Team'),
-        data : { removed : writeResult.n }
+        data : { 
+            removed: writeResult.n, 
+            team: {
+                slug: team.slug,
+                name: team.name
+            }
+        }
     });
 };
 

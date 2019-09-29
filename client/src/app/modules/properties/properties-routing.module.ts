@@ -3,10 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { PropertiesEditComponent } from './components/properties-edit/properties-edit.component';
 import { AuthResolver } from '../../auth-resolver.service';
 import { PropertiesDashboardComponent } from './components/properties-dashboard/properties-dashboard.component';
+import { AuthGuard } from '../../auth.guard';
 
 const routes: Routes = [
   {
     path : 'properties',
+    canActivate: [ AuthGuard ],
     children : [
       { 
         path : ':type/create', 

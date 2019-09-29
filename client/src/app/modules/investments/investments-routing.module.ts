@@ -4,10 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { InvestmentsDashboardComponent } from './components/investments-dashboard/investments-dashboard.component';
 import { InvestmentsEditComponent } from './components/investments-edit/investments-edit.component';
 import { AuthResolver } from '../../auth-resolver.service';
+import { AuthGuard } from '../../auth.guard';
 
 const routes: Routes = [
   {
     path : 'investments',
+    canActivate: [ AuthGuard ],
     children : [
       { 
         path : ':type/create', 

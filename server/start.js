@@ -34,7 +34,18 @@ require('./models/Property_User');
 
 // Start our app!
 const app = require('./app');
+const cron = require("node-cron");
+const cryptoRatesController = require('./controllers/cryptoRatesController');
+const { CRYPTO_CURRENCIES } = require('./constants/constants');
+
+
 app.set('port', process.env.PORT);
+
+cron.schedule("10 * * * * *", () => {
+  console.log("running a task every minute");
+  cryptoRatesController.alertCryptoRatio(CRYPTO_CURRENCIES.MONERO, CRYPTO_CURRENCIES.BITCOIN);
+});
+
 const server = app.listen(app.get('port'), () => {
   console.log(`Express running → PORT ${server.address().port}`);
 });

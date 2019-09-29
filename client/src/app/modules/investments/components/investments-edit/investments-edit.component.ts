@@ -12,7 +12,7 @@ import { MatSelectChange, MatRadioChange } from '@angular/material';
 import { InvestmentsService } from '../../investments.service';
 import { Investment } from '../../models/investment';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { INVESTMENTS_TYPES } from '../../../../constants';
+import { INVESTMENTS_TYPES, DEFAULT_CURRENCY } from '../../../../constants';
 import { BehaviorSubject } from 'rxjs';
 import { PropertyInvestment } from '../../models/propertyInvestment';
 
@@ -150,8 +150,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.getTeams(); // don't need to wait for this
     
     this.model.email = user.email;
-    this.model.investmentAmountUnit = user.currency;
-    this.model.loanAmountUnit = user.currency;
+    this.model.investmentAmountUnit = user.currency || DEFAULT_CURRENCY;
+    this.model.loanAmountUnit = user.currency || DEFAULT_CURRENCY;
     this.model.id = investmentId;
     if (propertyId) {
       this.model.investmentData.propertyId = propertyId;

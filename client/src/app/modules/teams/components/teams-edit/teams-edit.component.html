@@ -39,8 +39,8 @@
           <p class="mat-caption">Add or remove members. If a member(email) is not active on the platform we are going to send him/her an invitation to join AtomiCoconut</p>
         </h3>
         
-        <div class="members" fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutAlign.gt-xs="start center" fxLayoutGap="10px">
-          <mat-card fxFlex fxFlex.gt-xs="none"  *ngFor="let member of team.members; index as memberIndex" class="member" [class.not-saved-yet]="!member.name && !member.avatar">
+        <div *ngIf="team" class="members" fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutAlign.gt-xs="start center" fxLayoutGap="10px">
+          <mat-card fxFlex fxFlex.gt-xs="none" *ngFor="let member of team.members; index as memberIndex" class="member" [class.not-saved-yet]="!member.name && !member.avatar">
             <mat-card-content fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="none center">
               
               <img *ngIf="member.avatar" class="member__avatar" [src]="member.avatar"/>
@@ -90,10 +90,5 @@
     </section>
     
   </form>
-
-  <progress-bar class="progress-bar--get-team" *ngIf="getTeamServiceRunning"
-      color="primary"
-      message="Loading team info...">
-  </progress-bar>
   
 </div>

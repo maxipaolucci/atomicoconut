@@ -23,7 +23,7 @@ const userSchema = new Schema({
   },
   currency: {
     type: String,
-    default : 'USD',
+    default : null,
     trim: true
   },
   resetPasswordToken : String,

@@ -4,7 +4,7 @@ import { debounceTime } from 'rxjs/operators';
 import { DateAdapter, NativeDateAdapter, MatSelectChange, MatDialog } from '@angular/material';
 import { AppService } from '../../../../app.service';
 import { UtilService } from '../../../../util.service';
-import { INVESTMENTS_TYPES } from '../../../../constants';
+import { INVESTMENTS_TYPES, DEFAULT_CURRENCY } from '../../../../constants';
 import { PropertiesService } from '../../../properties/properties.service';
 import { Property } from '../../../properties/models/property';
 import { Router } from '@angular/router';
@@ -43,7 +43,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
   ngOnInit() {
     this.model.type = INVESTMENTS_TYPES.PROPERTY;
     this.model.buyingDate = new Date(Date.now());
-    this.model.buyingPriceUnit = this.user.currency;
+    this.model.buyingPriceUnit = this.user.currency || DEFAULT_CURRENCY;
     Object.assign(this.model, this.defaultValues);
     
     if (this.model.propertyId) {
@@ -151,7 +151,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
       }
       
       this.model.buyingPrice = buyingPrice;
-      this.model.buyingPriceUnit = buyingPriceUnit || this.user.currency;
+      this.model.buyingPriceUnit = buyingPriceUnit || this.user.currency || DEFAULT_CURRENCY;
 
       this.getPropertyServiceRunning = false;
     }

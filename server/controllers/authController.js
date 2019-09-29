@@ -25,7 +25,7 @@ const getUserObject = async (email, fieldsToPopulate = {}) => {
             name : user.name, 
             email : user.email, 
             avatar : user.gravatar, 
-            currency : user.currency || 'USD'
+            currency : user.currency
         };
       
         for (let key of Object.keys(fieldsToPopulate)) {

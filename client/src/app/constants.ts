@@ -24,3 +24,7 @@ export const COINCAP_CRYPTO_TYPES = {
   BTC: 'bitcoin',
   XMR: 'monero'
 }
+
+export const DEFAULT_CURRENCY = 'USD'
+
+export const DEFAULT_DIALOG_WIDTH_DESKTOP = '250px'

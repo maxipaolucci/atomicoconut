@@ -9,6 +9,11 @@ import { TeamsEditComponent } from './components/teams-edit/teams-edit.component
 import { TeamsService } from './teams.service';
 import { AddPersonToTeamDialogComponent } from './components/add-person-to-team-dialog/add-person-to-team-dialog.component';
 import { SharedModule } from '../shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import * as fromTeam from './team.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { TeamEffects } from './team.effects';
+import { TeamResolver } from './team-resolver.service';
 
 @NgModule({
   imports: [
@@ -17,7 +22,9 @@ import { SharedModule } from '../shared/shared.module';
     CustomMaterialDesignModule,
     FormsModule,
     FlexLayoutModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature(fromTeam.teamsFeatureKey, fromTeam.reducer),
+    EffectsModule.forFeature([TeamEffects])
   ],
   declarations: [
     TeamsDashboardComponent, 
@@ -27,6 +34,6 @@ import { SharedModule } from '../shared/shared.module';
   entryComponents: [
     AddPersonToTeamDialogComponent //added as material doc suggest to allow AOT on this on the fly created class
   ],
-  providers : [ TeamsService ]
+  providers : [ TeamsService, TeamResolver ]
 })
 export class TeamsModule { }

@@ -5,6 +5,7 @@ import { AccountFinance } from '../../models/account-finance';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import { Subscription } from 'rxjs';
+import { DEFAULT_CURRENCY } from 'src/app/constants';
 
 @Component({
   selector: 'account-finance-info',
@@ -31,8 +32,8 @@ export class AccountFinanceInfoComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
     this.model.email = this.user.email;
-    this.model.annualIncomeUnit = this.user.currency;
-    this.model.savingsUnit = this.user.currency;
+    this.model.annualIncomeUnit = this.user.currency || DEFAULT_CURRENCY;
+    this.model.savingsUnit = this.user.currency || DEFAULT_CURRENCY;
 
     if (this.user.financialInfo) {
       Object.assign(this.model, {

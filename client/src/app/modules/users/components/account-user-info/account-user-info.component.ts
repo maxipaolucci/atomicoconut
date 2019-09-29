@@ -4,6 +4,7 @@ import {User} from '../../models/user';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
 import { Subscription } from 'rxjs';
+import { DEFAULT_CURRENCY } from 'src/app/constants';
 
 @Component({
   selector: 'account-user-info',
@@ -21,7 +22,11 @@ export class AccountUserInfoComponent implements OnInit, OnDestroy {
   constructor(private usersService: UsersService, private appService: AppService) {}
 
   ngOnInit() {
-    this.model = { name : this.user.name, email : this.user.email, currency : this.user.currency };
+    this.model = { 
+      name : this.user.name, 
+      email : this.user.email, 
+      currency : this.user.currency || DEFAULT_CURRENCY
+    };
   }
 
   ngOnDestroy() {

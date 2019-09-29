@@ -7,10 +7,13 @@ import { User } from '../users/models/user';
 import { Observable } from 'rxjs';
 import { Response } from '../../models/response';
 import { of } from 'rxjs';
-import { map, catchError, flatMap } from 'rxjs/operators';
+import { map, flatMap } from 'rxjs/operators';
+import { TeamEditModel } from './models/team-edit-model';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class TeamsService {
 
   private serverHost: string = environment.apiHost + '/api/teams';
@@ -29,7 +32,6 @@ export class TeamsService {
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      catchError(this.appService.handleError),
       flatMap((data: any): Observable<Team> => {
         return of(this.populate(data));
       })
@@ -38,19 +40,18 @@ export class TeamsService {
   
   /**
    * Server call to Update a team in the system 
-   * @param postData
+   * @param { TeamEditModel } postData
    * 
    * @return { Observable<Team> } 
    */
-  update$(postData: any = {}): Observable<Team> {
+  update$(postData: TeamEditModel): Observable<Team> {
     const methodTrace = `${this.constructor.name} > update$() > `; // for debugging
 
-    //to prevent receiving notification of actions performed by current user
-    postData.pusherSocketID = this.appService.pusherSocketID;
+    // //to prevent receiving notification of actions performed by current user
+    // postData.pusherSocketID = this.appService.pusherSocketID;
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      catchError(this.appService.handleError),
       flatMap((data: any): Observable<Team> => {
         if (data && data.team && data.team.slug) {
           const messages: any[] = [
@@ -108,7 +109,6 @@ export class TeamsService {
 
     return this.http.get<Response>(`${this.serverHost}/getMyTeamBySlug`, { params }).pipe(
       map(this.appService.extractData),
-      catchError(this.appService.handleError),
       flatMap((data: any): Observable<Team> => {
         return of(this.populate(data));
       })
@@ -131,25 +131,22 @@ export class TeamsService {
 
     const params = new HttpParams().set('email', email);
 
-    const teamsData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
-        .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
-        );
-    
-    return teamsData$.pipe(flatMap((teamsData): Observable<Team[]> => {
-      const teams: Team[] = [];
+    return this.http.get<Response>(`${this.serverHost}/getAll`, { params }).pipe(
+      map(this.appService.extractData),
+      flatMap((teamsData): Observable<Team[]> => {
+        const teams: Team[] = [];
 
-      if (teamsData && teamsData instanceof Array) {
-        for (const item of teamsData) {
-          teams.push(this.populate(item));
+        if (teamsData && teamsData instanceof Array) {
+          for (const item of teamsData) {
+            teams.push(this.populate(item));
+          }
+        } else {
+          this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
         }
-      } else {
-        this.appService.consoleLog('error', `${methodTrace} Unexpected data format.`);
-      }
 
-      return of(teams);
-    }));
+        return of(teams);
+      })
+    );
   }
 
   /**
@@ -200,8 +197,7 @@ export class TeamsService {
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${slug}`, {headers : this.headers, params } )
         .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
+          map(this.appService.extractData)
         );
   }
 }

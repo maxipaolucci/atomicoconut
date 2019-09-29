@@ -38,8 +38,7 @@ export class InvestmentsService {
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
+          map(this.appService.extractData)
         );
   } 
   
@@ -57,8 +56,7 @@ export class InvestmentsService {
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
+          map(this.appService.extractData)
         );
   } 
 
@@ -82,8 +80,7 @@ export class InvestmentsService {
 
     const investment$ = this.http.get<Response>(`${this.serverHost}/getbyId`, { params })
         .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
+          map(this.appService.extractData)
         );
 
     return investment$.pipe(switchMap((investment) => {
@@ -163,8 +160,7 @@ export class InvestmentsService {
 
     const investmentsData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
         .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
+          map(this.appService.extractData)
         );
     
     return investmentsData$.pipe(switchMap((investmentsData) => {
@@ -234,8 +230,7 @@ export class InvestmentsService {
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } )
         .pipe(
-          map(this.appService.extractData),
-          catchError(this.appService.handleError)
+          map(this.appService.extractData)
         );
   }
 }

@@ -2,33 +2,29 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { TeamsDashboardComponent } from './components/teams-dashboard/teams-dashboard.component';
 import { TeamsEditComponent } from './components/teams-edit/teams-edit.component';
-import { AuthResolver } from '../../auth-resolver.service';
+import { AuthGuard } from '../../auth.guard';
+import { TeamResolver } from './team-resolver.service';
 
 const routes: Routes = [
   {
     path : 'teams',
+    canActivate: [ AuthGuard ],
     children : [
       { 
         path : 'create', 
-        component : TeamsEditComponent,
-        resolve : {
-          authUser : AuthResolver
-        } 
+        component : TeamsEditComponent
       },
       { 
         path : 'edit/:slug', 
         component : TeamsEditComponent,
         resolve : {
-          authUser : AuthResolver
+          team : TeamResolver
         } 
       },
       { 
         path : '', 
         pathMatch : 'full',
-        component : TeamsDashboardComponent,
-        resolve : {
-          authUser : AuthResolver
-        }
+        component : TeamsDashboardComponent
       }
     ]
   }

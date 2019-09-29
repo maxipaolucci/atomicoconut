@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { catchErrors, catchApiErrors } = require('../../handlers/errorHandlers');
+const { catchErrors } = require('../../handlers/errorHandlers');
 const currencyRatesController = require('../../controllers/currencyRatesController');
 
 //*************************************************************************** */

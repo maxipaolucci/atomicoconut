@@ -1,14 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TeamsService } from '../../teams.service';
 import { AppService } from '../../../../app.service';
 import { Team } from '../../models/team';
 import { User } from '../../../users/models/user';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
-import { Subscription, Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Subscription, Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { AppState } from 'src/app/reducers';
+import { RequestDelete } from '../../team.actions';
+import { ProgressBarDialogComponent } from '../../../shared/components/progress-bar-dialog/progress-bar-dialog.component';
+import { RequestAll } from '../../team.actions';
+import { teamsSelector, loadingSelector } from '../../team.selectors';
+import { LoadingData } from 'src/app/models/loadingData';
+import { DEFAULT_DIALOG_WIDTH_DESKTOP } from 'src/app/constants';
+import { userSelector } from 'src/app/modules/users/user.selectors';
 
 @Component({
   selector: 'app-teams-dashboard',
@@ -17,58 +23,60 @@ import { map, switchMap } from 'rxjs/operators';
 })
 export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
+  user$: Observable<User> = null;
   user: User = null;
-  getTeamsServiceRunning = false;
-  teamActionRunning: boolean[] = [];
   teams: Team[] = [];
+  teams$: Observable<any> = null;
   subscription: Subscription = new Subscription();
+  bindedToPushNotifications: boolean = false;
+  loading$: Observable<LoadingData>;
+  progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
 
-  constructor(private route: ActivatedRoute, private mainNavigatorService: MainNavigatorService, private teamsService: TeamsService,
-    private appService: AppService, private router: Router, public dialog: MatDialog) { }
+  constructor(
+    private mainNavigatorService: MainNavigatorService, 
+    private appService: AppService,
+    public dialog: MatDialog,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
-    
+
     this.mainNavigatorService.setLinks([
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Teams', url: null, selected: true }
     ]);
 
-    // get authUser from resolver
-    this.route.data.subscribe((data: { authUser: User }) => {
-      this.user = data.authUser;
-    });
-    // generates a user source object from authUser from resolver
-    const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
-    const newSubscription = user$.pipe(
-      switchMap((user: User): Observable<any> => {
-        this.user = user;
-        this.bindToPushNotificationEvents();
+    //get user
+    this.user$ = this.store.select(userSelector());
+    this.subscription.add(this.user$.subscribe((user: User) => this.user = user));
 
-        if (!this.teams.length) {
-          return this.getTeams$();
-        } else {
-          return of(this.teams);
-        }
-      })
-    ).subscribe(
-      (teams: Team[]) => {
-        this.teams = teams;
-        this.teamActionRunning = new Array(teams.length).fill(false);
-        this.getTeamsServiceRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-        }
-
-        this.getTeamsServiceRunning = false;
-      }
+    this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: false }));
+    this.teams$ = this.store.pipe(
+      select(teamsSelector())
     );
-    
+
+    let newSubscription = this.teams$.subscribe((teams: Team[]) => {
+      this.teams = teams;
+      if (!this.bindedToPushNotifications) {
+        this.bindToPushNotificationEvents();
+      }
+    }, (error: any) => {
+      this.teams = [];
+    });
+    this.subscription.add(newSubscription);
+
+    this.loading$ = this.store.pipe(
+      select(loadingSelector())
+    );
+
+    newSubscription = this.loading$.subscribe((loadingData: LoadingData) => {
+      if (loadingData) {
+        this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
+      } else if(this.progressBarDialogRef) {
+        this.progressBarDialogRef.close();
+      }
+    });
     this.subscription.add(newSubscription);
   }
 
@@ -83,6 +91,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
    * Start listening to Pusher notifications comming from server
    */
   bindToPushNotificationEvents() {
+    const methodTrace = `${this.constructor.name} > bindToPushNotificationEvents$() > `; // for debugging
     // when a user updates a team
     this.appService.pusherChannel.bind('team-updated', data => {
       let reloadData = this.teams.some((team : Team) => team.slug == data.team.slug);
@@ -95,7 +104,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.fetchTeamsSilently();
+      this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: true, silently: true }));
     });
 
     // when a user removes a team
@@ -105,8 +114,10 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.fetchTeamsSilently();
+      this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: true, silently: true }));
     });
+
+    this.bindedToPushNotifications = true;
   }
 
   /**
@@ -117,37 +128,14 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     this.appService.pusherChannel.unbind('team-updated');
   }
 
-  /**
-   * Refetch silently the teams from the server, and update the team data in the background
-   */
-  fetchTeamsSilently() {
-    const newSubscription = this.fetchTeams$().subscribe((teams : Team[]) => this.teams = teams);
-    this.subscription.add(newSubscription);
-  }
-
-  /**
-   * Make and explicit request for user teams to the server and returns a teams observable
-   * 
-   * @return { Observable<Team[]> }
-   */
-  getTeams$(): Observable<Team[]> {
-    const methodTrace = `${this.constructor.name} > getTeams$() > `; // for debugging
-
-    this.teams = [];
-    this.getTeamsServiceRunning = true;
-
-    return  this.fetchTeams$();
-  }
-
-  /**
-   * Get a teams observable from server
-   * 
-   * @return { Observable<Team[]> }
-   */
-  fetchTeams$(): Observable<Team[]> {
-    const methodTrace = `${this.constructor.name} > fetchTeams$() > `; // for debugging
-
-    return  this.teamsService.getTeams$(this.user.email);
+  openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
+    const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
+    
+    return this.dialog.open(ProgressBarDialogComponent, {
+      width: DEFAULT_DIALOG_WIDTH_DESKTOP,
+      disableClose: true,
+      data: loadingData
+    });
   }
 
   openDeleteTeamDialog(index: number, team: Team = null) {
@@ -158,7 +146,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    this.teamActionRunning[index] = true;
+    //this.teamActionRunning[index] = true;
     const yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
       width: '250px',
       data: {
@@ -171,7 +159,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
       if (result === 'yes') {
         this.delete(index, team);
       } else {
-        this.teamActionRunning[index] = false;
+        //this.teamActionRunning[index] = false;
       }
     });
     this.subscription.add(newSubscription);
@@ -182,35 +170,6 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   delete(index: number, team: Team = null) {
     const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
 
-    this.teamActionRunning[index] = true;
-
-    const newSubscription = this.teamsService.delete$(team.slug, this.user.email).subscribe(
-      (data: any) => {
-        if (data && data.removed > 0) {
-          this.teams.splice(index, 1);
-          this.teamActionRunning.splice(index, 1);
-          this.appService.showResults(`Team "${team.name}" successfully removed!`, 'success');
-        } else {
-          this.appService.showResults(`Team "${team.name}" could not be removed, please try again.`, 'error');
-        }
-
-        this.teamActionRunning[index] = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog('error', `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, 'error');
-        } else if (error.codeno === 471) {
-          this.appService.showResults(error.msg, 'error', 7000);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, 'error');
-        }
-
-        this.teamActionRunning[index] = false;
-      }
-    );
-
-    this.subscription.add(newSubscription);
+    this.store.dispatch(new RequestDelete({ userEmail: this.user.email, slug: team.slug }));
   }
-
 }

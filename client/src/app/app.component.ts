@@ -10,6 +10,15 @@ import { of, Subscription, interval } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 import { Team } from './modules/teams/models/team';
 import { TeamsService } from './modules/teams/teams.service';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { ProgressBarDialogComponent } from 'src/app/modules/shared/components/progress-bar-dialog/progress-bar-dialog.component';
+import { Store, select } from '@ngrx/store';
+import { AppState } from 'src/app/reducers';
+import { RequestLogout } from './modules/users/user.actions';
+import { loggedInSelector, loadingSelector } from './modules/users/user.selectors';
+import { LoadingData } from './models/loadingData';
+import { DEFAULT_DIALOG_WIDTH_DESKTOP } from './constants';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,15 +31,48 @@ export class AppComponent implements OnInit, OnDestroy {
   user: User = null;
   todayUserPrefRate: number = null;
   subscription: Subscription = new Subscription();
+  progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
 
-  constructor(private router: Router, private appService: AppService, private teamsService: TeamsService, public usersService: UsersService, public currencyExchangeService: CurrencyExchangeService,
-      private utilService: UtilService) { }
+  constructor(
+      private router: Router, 
+      private appService: AppService, 
+      private teamsService: TeamsService, 
+      public usersService: UsersService, 
+      public currencyExchangeService: CurrencyExchangeService,
+      private utilService: UtilService,
+      public dialog: MatDialog,
+      private store: Store<AppState>
+  ) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
+    const loggedIn$ = this.store.pipe(
+      select(loggedInSelector())
+    );
+    let newSubscription: Subscription = loggedIn$.subscribe((loggedIn: boolean) => {
+      if (!loggedIn) {
+        this.user = null;
+        this.unbindToPushNotificationEvents();
+      }
+    });
+    this.subscription.add(newSubscription);
+
+    const loading$ = this.store.pipe(
+      select(loadingSelector())
+    );
+
+    newSubscription = loading$.subscribe((loadingData: LoadingData) => {
+      if (loadingData) {
+        this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
+      } else if(this.progressBarDialogRef) {
+        this.progressBarDialogRef.close();
+      }
+    });
+    this.subscription.add(newSubscription);
+
     // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
-    const newSubcription: Subscription = this.usersService.user$.pipe(
+    newSubscription = this.usersService.user$.pipe(
       flatMap((user: User) => {
         if (!user) {
           this.todayUserPrefRate = null;
@@ -61,13 +103,23 @@ export class AppComponent implements OnInit, OnDestroy {
       this.appService.consoleLog('error', `${methodTrace} There was an error trying to get currency rates data > ${error}`);
       this.appService.showResults(`There was an error trying to get currency rates data.`, 'error');
     }); // start listening the source of user
-    this.subscription.add(newSubcription);
+    this.subscription.add(newSubscription);
 
-    // start tracking user changes every 10min (600000ms)
-    this.usersService.updateSessionState(600000);
+    // start tracking user changes every
+    this.usersService.updateSessionState();
 
     this.getCryptoRates('BTC');
     this.getCryptoRates('XMR');
+  }
+
+  openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
+    const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
+    
+    return this.dialog.open(ProgressBarDialogComponent, {
+      width: DEFAULT_DIALOG_WIDTH_DESKTOP,
+      disableClose: true,
+      data: loadingData
+    });
   }
 
   ngOnDestroy() {
@@ -97,18 +149,23 @@ export class AppComponent implements OnInit, OnDestroy {
   logout(): void {
     const methodTrace = `${this.constructor.name} > logout() > `; // for debugging
 
-    const newSubscription: Subscription = this.usersService.logout$().subscribe(
-      (result: any) => {
-        this.user = result;
-        this.unbindToPushNotificationEvents();
-        this.router.navigate(['/']);
-      },
-      (error: any) =>  {
-        this.appService.consoleLog('error', `${methodTrace} There was an error with the logout service.`, error);
-      }
-    );
-    this.subscription.add(newSubscription);
+    this.store.dispatch(new RequestLogout());
   }
+  // logout(): void {
+  //   const methodTrace = `${this.constructor.name} > logout() > `; // for debugging
+
+  //   const newSubscription: Subscription = this.usersService.logout$().subscribe(
+  //     (result: any) => {
+  //       this.user = result;
+  //       this.unbindToPushNotificationEvents();
+  //       this.router.navigate(['/']);
+  //     },
+  //     (error: any) =>  {
+  //       this.appService.consoleLog('error', `${methodTrace} There was an error with the logout service.`, error);
+  //     }
+  //   );
+  //   this.subscription.add(newSubscription);
+  // }
 
   /**
    * Start listening to Pusher notifications comming from server

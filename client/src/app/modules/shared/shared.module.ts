@@ -17,6 +17,7 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from '../../../environments/environment';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { FilesUploaderComponent } from './components/files-uploader/files-uploader.component';
+import { ProgressBarDialogComponent } from './components/progress-bar-dialog/progress-bar-dialog.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { FilesUploaderComponent } from './components/files-uploader/files-upload
     AddressAutocompleteComponent,
     DynamicMapComponent,
     ProgressBarComponent,
-    FilesUploaderComponent
+    FilesUploaderComponent,
+    ProgressBarDialogComponent
   ],
   exports: [ 
     MainNavigatorComponent, 
@@ -54,11 +56,13 @@ import { FilesUploaderComponent } from './components/files-uploader/files-upload
     AddressAutocompleteComponent,
     DynamicMapComponent,
     ProgressBarComponent,
-    FilesUploaderComponent
+    FilesUploaderComponent,
+    ProgressBarDialogComponent
   ],
   entryComponents: [
     YesNoDialogComponent, // added as material doc suggest to allow AOT on this on the fly created class
-    SnackbarSimpleComponent
+    SnackbarSimpleComponent,
+    ProgressBarDialogComponent
   ]
 })
 export class SharedModule { }

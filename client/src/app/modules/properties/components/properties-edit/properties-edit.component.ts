@@ -6,7 +6,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AppService } from '../../../../app.service';
 import { PropertiesService } from '../../properties.service';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
-import { PROPERTY_TYPES } from '../../../../constants';
+import { PROPERTY_TYPES, DEFAULT_CURRENCY } from '../../../../constants';
 import { House } from '../../models/house';
 import { MatSelectChange, DateAdapter, NativeDateAdapter, MatDialog } from '@angular/material';
 import { UtilService } from '../../../../util.service';
@@ -125,7 +125,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
         this.model.email = data.user.email;
         this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit =
             this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit =
-            this.model.maintenanceCostUnit = this.model.otherCostUnit = this.user.currency;
+            this.model.maintenanceCostUnit = this.model.otherCostUnit = (this.user.currency || DEFAULT_CURRENCY);
         this.model.id = data.propertyId || null;
   
         this.editPropertyServiceRunning = false;
