@@ -115,6 +115,8 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
                 subject : `AtomiCoconut - ${alert} Ratio ${fromCrypto}/${toCrypto}: ${ratio}`,
                 ratio,
                 fromCrypto,
+                fromCyptoPriceUsd : fromCryptoData.priceUsd,
+                toCyptoPriceUsd : toCryptoData.priceUsd,
                 toCrypto,
                 filename : 'alert-crypto-ratio' //this is going to be the mail template file
             });
