@@ -88,14 +88,17 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
     const fromCryptoData = await getTodayRatesFromWebservice(fromCrypto, ANONYMOUS_USER);
     const toCryptoData = await getTodayRatesFromWebservice(toCrypto, ANONYMOUS_USER);
 
-    const ratio = toCryptoData.priceUsd / fromCryptoData.priceUsd;
+    const ratio = fromCryptoData.priceUsd / toCryptoData.priceUsd;
+    const alert = ratio > 0.0090 ? '[URGENT]': '';
+
     const toEmail = 'maxipaolucci@gmail.com';
 
     console.log(ratio);
     console.log(`${methodTrace} ${getMessage('message', 1052, ANONYMOUS_USER, true, 'Crypto ratio', toEmail)}`); 
     mail.send({
         toEmail,
-        subject : `AtomiCoconut - Ratio ${fromCrypto}/${toCrypto}: ${ratio}`,
+        fromEmail: 'alert@atomicoconut.com',
+        subject : `AtomiCoconut - ${alert} Ratio ${fromCrypto}/${toCrypto}: ${ratio}`,
         ratio,
         fromCrypto,
         toCrypto,

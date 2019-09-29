@@ -41,9 +41,9 @@ const { CRYPTO_CURRENCIES } = require('./constants/constants');
 
 app.set('port', process.env.PORT);
 
-cron.schedule("30 * * * *", () => {
+cron.schedule("10 * * * * *", () => {
   console.log("running a task every minute");
-  //cryptoRatesController.alertCryptoRatio(CRYPTO_CURRENCIES.MONERO, CRYPTO_CURRENCIES.BITCOIN);
+  cryptoRatesController.alertCryptoRatio(CRYPTO_CURRENCIES.MONERO, CRYPTO_CURRENCIES.BITCOIN);
 });
 
 const server = app.listen(app.get('port'), () => {
