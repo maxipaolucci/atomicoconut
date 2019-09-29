@@ -70,40 +70,61 @@ const getTodayRatesFromWebservice = async (source = CRYPTO_CURRENCIES.BITCOIN, u
     const methodTrace = `${errorTrace} getTodayRatesFromWebservice() >`;
     
     console.log(`${methodTrace} ${getMessage('message', 1047, userEmail, true, 'Coincap Service API', 'crypto', source)}`); 
-    
     const url = `${CRYPTO_RATES_SERVER_URL}${source}`;
-    let response = await axios.get(url);
-    if (response && response.status === 200 && response.data 
-            && response.data.data && response.data.data.id === source) {
-        return response.data.data;
-    } 
+    let response = null;
 
-    console.log(`${methodTrace} ${getMessage('error', 477, userEmail, true, 'Coincap Service API', 'crypto', source)}`);
-    return null;
+    try {
+        response = await axios.get(url);
+        if (response && response.status === 200 && response.data 
+                && response.data.data && response.data.data.id === source) {
+            return response.data.data;
+        } 
+
+        throw new Error(getMessage('error', 477, userEmail, true, 'Coincap Service API', 'crypto', source))
+    } catch(err) {
+        console.log(`${methodTrace} ${err.toString()}`);
+        return null;
+    }
 };
 
+/**
+ * Sends an email with the crypto ratio between two crypto currencies
+ * 
+ * @param {string} fromCrypto
+ * @param {string} toCrypto 
+ */
 const alertCryptoRatio = async(fromCrypto, toCrypto) => {
     const methodTrace = `${errorTrace} alertCryptoRatio() >`;
 
-    const fromCryptoData = await getTodayRatesFromWebservice(fromCrypto, ANONYMOUS_USER);
-    const toCryptoData = await getTodayRatesFromWebservice(toCrypto, ANONYMOUS_USER);
-
-    const ratio = fromCryptoData.priceUsd / toCryptoData.priceUsd;
-    const alert = ratio > 0.0090 ? '[URGENT]': '';
-
-    const toEmail = 'maxipaolucci@gmail.com';
-
-    console.log(ratio);
-    console.log(`${methodTrace} ${getMessage('message', 1052, ANONYMOUS_USER, true, 'Crypto ratio', toEmail)}`); 
-    mail.send({
-        toEmail,
-        fromEmail: 'alert@atomicoconut.com',
-        subject : `AtomiCoconut - ${alert} Ratio ${fromCrypto}/${toCrypto}: ${ratio}`,
-        ratio,
-        fromCrypto,
-        toCrypto,
-        filename : 'alert-crypto-ratio' //this is going to be the mail template file
-    });
-    console.log(`${methodTrace} ${getMessage('message', 1053, ANONYMOUS_USER, true, toEmail)}`); 
+    let fromCryptoData = null;
+    let toCryptoData = null;
+    
+    try {
+        fromCryptoData = await getTodayRatesFromWebservice(fromCrypto, ANONYMOUS_USER);
+        toCryptoData = await getTodayRatesFromWebservice(toCrypto, ANONYMOUS_USER);
+        
+        if (fromCryptoData && toCryptoData) {
+            const ratio = fromCryptoData.priceUsd / toCryptoData.priceUsd;
+            const alert = ratio > 0.0090 ? '[URGENT]': '';
+            const toEmail = 'maxipaolucci@gmail.com';
+            
+            console.log(`${methodTrace} ${getMessage('message', 1052, ANONYMOUS_USER, true, 'Crypto ratio', toEmail)}`); 
+            mail.send({
+                toEmail,
+                fromEmail: 'alert@atomicoconut.com',
+                subject : `AtomiCoconut - ${alert} Ratio ${fromCrypto}/${toCrypto}: ${ratio}`,
+                ratio,
+                fromCrypto,
+                toCrypto,
+                filename : 'alert-crypto-ratio' //this is going to be the mail template file
+            });
+            console.log(`${methodTrace} ${getMessage('message', 1053, ANONYMOUS_USER, true, toEmail)}`);
+        } else {
+            throw new Error(getMessage('error', 478, ANONYMOUS_USER, true, 'Coincap Service API'))
+        }
+        
+    } catch(err) {
+        console.log(`${methodTrace} ${err.toString()}`);
+    } 
 };
 exports.alertCryptoRatio = alertCryptoRatio;

@@ -31,7 +31,8 @@ const errorCodes = {
   474 : 'The investment type provided "{{param}}" does not match any of the invesment types supported by the platform.',
   475 : 'Sorry, this {{param}} has {{param}} associated to it. We cannot delete it until all the related data is removed.',
   476 : 'Sorry, you cannot create a {{param}} with a {{param}} not created by you.',
-  477 : 'Error trying to retrieve data from {{param}} with {{param}} = {{param}}.'
+  477 : 'Error trying to retrieve data from {{param}} with {{param}} = {{param}}.',
+  478 : 'Error trying to retrieve data from {{param}}.'
 };
 
 const messageCodes = {
