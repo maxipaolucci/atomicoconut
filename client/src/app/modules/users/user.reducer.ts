@@ -57,6 +57,13 @@ export function reducer(state: UserState = initialState, action: UserActions): U
       }
     }
 
+    case UserActionTypes.UpdateAccountInfo: {
+      return {
+        ...state,
+        user: action.payload.user
+      }
+    }
+
     default: {
       return state;
     }

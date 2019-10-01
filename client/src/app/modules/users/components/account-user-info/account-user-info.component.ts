@@ -1,10 +1,19 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MatSelectChange } from '@angular/material';
-import {User} from '../../models/user';
+import { User } from '../../models/user';
 import { UsersService } from '../../users.service';
 import { AppService } from '../../../../app.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
+import { userSelector } from 'src/app/modules/users/user.selectors';
 import { DEFAULT_CURRENCY, SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
+import { AccountUserInfoModel } from '../../models/account-user-info-model';
+import { RequestUpdateAccountInfo } from '../../user.actions';
+import _ from 'lodash';
+import { LoadingData } from 'src/app/models/loadingData';
+import { loadingSelector } from 'src/app/app.selectors';
+
 
 @Component({
   selector: 'account-user-info',
@@ -13,20 +22,33 @@ import { DEFAULT_CURRENCY, SnackbarNotificationTypes, ConsoleNotificationTypes }
 })
 export class AccountUserInfoComponent implements OnInit, OnDestroy {
 
-  @Input() user: User = null;
-  public model: any = {name : '', email : '', currency : ''};
-  public updateAccountServiceRunning = false;
+  user: User = null;
+  model: AccountUserInfoModel = {
+    name : null, 
+    email : null, 
+    currency : null
+  };
   subscription: Subscription = new Subscription();
+  loading$: Observable<LoadingData>;
 
   
-  constructor(private usersService: UsersService, private appService: AppService) {}
+  constructor(
+    private usersService: UsersService, 
+    private appService: AppService,
+    private store: Store<State>
+  ) {}
 
   ngOnInit() {
-    this.model = { 
-      name : this.user.name, 
-      email : this.user.email, 
-      currency : this.user.currency || DEFAULT_CURRENCY
-    };
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => {
+      this.user = user;
+      this.model = { 
+        name : this.user.name, 
+        email : this.user.email, 
+        currency : this.user.currency || DEFAULT_CURRENCY
+      };
+    }));
+
+    this.loading$ = this.store.select(loadingSelector());
   }
 
   ngOnDestroy() {
@@ -49,29 +71,8 @@ export class AccountUserInfoComponent implements OnInit, OnDestroy {
    */
   onSubmit() { 
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
-    this.updateAccountServiceRunning = true;
     
-    // call the account service
-    const newSubscription = this.usersService.updateAccount$(this.model).subscribe(
-      (user: User) => {
-        if (user) {
-          this.appService.showResults(`Your profile was successfully updated!.`, SnackbarNotificationTypes.SUCCESS);
-        }
-
-        this.updateAccountServiceRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-        }
-
-        this.updateAccountServiceRunning = false;
-      }
-    );
-    this.subscription.add(newSubscription);
+    this.store.dispatch(new RequestUpdateAccountInfo(_.cloneDeep(this.model)));
   }
 
 }

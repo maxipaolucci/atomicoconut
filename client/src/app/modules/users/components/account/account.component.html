@@ -1,7 +1,7 @@
 <!-- SM and higher view -->
 <mat-tab-group *ngIf="utilService.isGtXs()">
   <mat-tab label="Account info">
-    <account-user-info [user]="user"></account-user-info>
+    <account-user-info></account-user-info>
   </mat-tab>
   <mat-tab label="Personal info">
     <account-personal-info [user]="user"></account-personal-info>
@@ -18,7 +18,7 @@
       Account info
     </mat-expansion-panel-header>
 
-    <account-user-info [user]="user"></account-user-info>
+    <account-user-info></account-user-info>
   </mat-expansion-panel>
 
   <mat-expansion-panel>

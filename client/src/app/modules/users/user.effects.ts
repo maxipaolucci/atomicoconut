@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
-import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset, RequestAuthenticatedUser, AuthenticatedUser } from './user.actions';
+import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset, RequestAuthenticatedUser, AuthenticatedUser, RequestUpdateAccountInfo, UpdateAccountInfo } from './user.actions';
 import { mergeMap, switchMap, exhaustMap, map, catchError, tap, delay } from 'rxjs/operators';
 import { of, defer } from 'rxjs';
 import { User } from './models/user';
@@ -166,6 +166,32 @@ export class UserEffects {
       }
       return new FinalizeOperation({ redirectData: ['/'] }); //we don't want to do anything in this case, stop the loadingData flag
     }) 
+  );
+
+  @Effect()
+  requestUpdateAccountInfo$ = this.actions$.pipe(
+    ofType<RequestUpdateAccountInfo>(UserActionTypes.RequestUpdateAccountInfo),
+    tap(({ payload }) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Updating account user info...', color: 'accent' }));
+    }),
+    mergeMap(({ payload }) => this.usersService.updateAccount$(payload).pipe(
+      catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+    )),
+    map((user: User) => {
+      if (user) {
+        return new UpdateAccountInfo({ user });
+      }
+
+      return new FinalizeOperation();
+    })
+  );
+
+  @Effect({ dispatch: false })
+  updateAccountInfo$ = this.actions$.pipe(
+    ofType<UpdateAccountInfo>(UserActionTypes.UpdateAccountInfo),
+    tap(() => {
+      this.store.dispatch(new HideProgressBar());
+    })
   );
 
   constructor(

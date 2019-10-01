@@ -29,7 +29,6 @@ export class UserResolver implements Resolve<User> {
         
     return this.store.pipe(
       select(userSelector()),
-
       switchMap((user: User): Observable<User> => {
         if (user.personalInfo && user.financialInfo) {
           return of(user);

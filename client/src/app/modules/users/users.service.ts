@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, of, interval } from 'rxjs';
-import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AppService } from '../../app.service';
 import { User } from './models/user';
@@ -10,9 +10,12 @@ import { Response } from '../../models/response';
 import { AccountPersonal } from './models/account-personal';
 import { AccountFinance } from './models/account-finance';
 import _ from 'lodash';
+import { Store, select } from '@ngrx/store';
 import { ResetPasswordModel } from './models/reset-password-model';
 import { ConsoleNotificationTypes, SnackbarNotificationTypes } from 'src/app/constants';
 import { UserAdditionalInfo } from './models/user-additional-info';
+import { State } from 'src/app/main.reducer';
+import { userSelector } from './user.selectors';
 
 @Injectable()
 export class UsersService {
@@ -24,7 +27,11 @@ export class UsersService {
   user$: BehaviorSubject<User>; // Observable user stream
   routerRedirectUrl: string = null; // a route to redirect the user to when login is successfull
 
-  constructor(private http: HttpClient, private appService: AppService) {
+  constructor(
+    private http: HttpClient, 
+    private appService: AppService,
+    private store: Store<State>
+  ) {
     this.user$ = new BehaviorSubject<User>(null);
   }
 
@@ -79,20 +86,23 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/account`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      mergeMap((data: any): Observable<User> => {
-        const user: User = this.getUser();
+      withLatestFrom(this.store.select(userSelector())), //check this in web
+      map(([data, user]: [any, User]): User => {
+        //const user: User = this.getUser();
 
         if (data && data.email) {
+          user = _.cloneDeep(user);
           user.name = data.name;
           user.email = data.email;
           user.currency = data.currency;
 
-          this.setUser(user);
+          this.setUser(user); //delete this
+          this.appService.showResults(`Your profile was successfully updated.`, SnackbarNotificationTypes.SUCCESS);
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
-
-        return of(user);
+        
+        return user;
       })
     );
   }
