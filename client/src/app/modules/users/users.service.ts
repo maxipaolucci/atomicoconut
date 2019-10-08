@@ -118,17 +118,20 @@ export class UsersService {
 
     return this.http.post<Response>(`${this.serverHost}/accountPersonalInfo`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      mergeMap((data: any): Observable<User> => {
-        const user = this.getUser();
+      withLatestFrom(this.store.select(userSelector())), //check this in web
+      map(([data, user]: [any, User]): User => {
+        // const user = this.getUser();
 
         if (data.personalInfo.birthday) {
+          user = _.cloneDeep(user);
           user.personalInfo = new AccountPersonal(data.personalInfo.birthday);
           this.setUser(user);
+          this.appService.showResults(`Your personal information was successfully updated.`, SnackbarNotificationTypes.SUCCESS);
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
 
-        return of(user);
+        return user;
       })
     );
   }

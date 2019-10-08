@@ -1,13 +1,11 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSelectChange } from '@angular/material';
 import { User } from '../../models/user';
-import { UsersService } from '../../users.service';
-import { AppService } from '../../../../app.service';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { userSelector } from 'src/app/modules/users/user.selectors';
-import { DEFAULT_CURRENCY, SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
+import { DEFAULT_CURRENCY } from 'src/app/constants';
 import { AccountUserInfoModel } from '../../models/account-user-info-model';
 import { RequestUpdateAccountInfo } from '../../user.actions';
 import _ from 'lodash';
@@ -33,8 +31,6 @@ export class AccountUserInfoComponent implements OnInit, OnDestroy {
 
   
   constructor(
-    private usersService: UsersService, 
-    private appService: AppService,
     private store: Store<State>
   ) {}
 

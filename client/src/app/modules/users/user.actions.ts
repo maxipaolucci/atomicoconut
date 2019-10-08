@@ -4,6 +4,7 @@ import { LoginModel } from './models/login-model';
 import { ResetPasswordModel } from './models/reset-password-model';
 import { UserAdditionalInfo } from './models/user-additional-info';
 import { AccountUserInfoModel } from './models/account-user-info-model';
+import { AccountPersonalInfoModel } from './models/account-personal-info-model';
 
 export enum UserActionTypes {
   CancelRequest = '[User] Cancel request from Server',
@@ -17,7 +18,9 @@ export enum UserActionTypes {
   RequestAuthenticatedUser = '[User] Request authenticated user from Server',
   AuthenticatedUser = '[User] Set authenticated user in Store',
   RequestUpdateAccountInfo = '[User] Request update account user info to Server',
-  UpdateAccountInfo = '[User] Set updated account user info to Store'
+  UpdateAccountInfo = '[User] Set updated account user info to Store',
+  RequestUpdateAccountPersonalInfo = '[User] Request update account user personal info to Server',
+  UpdateAccountPersonalInfo = '[User] Set updated account user personal info to Store'
 }
 
 export class CancelRequest implements Action {
@@ -86,6 +89,18 @@ export class UpdateAccountInfo implements Action {
   constructor(public payload: { user: User }) {}
 }
 
+export class RequestUpdateAccountPersonalInfo implements Action {
+  readonly type = UserActionTypes.RequestUpdateAccountPersonalInfo;
+
+  constructor(public payload: AccountPersonalInfoModel) {}
+}
+
+export class UpdateAccountPersonalInfo implements Action {
+  readonly type = UserActionTypes.UpdateAccountPersonalInfo;
+
+  constructor(public payload: { user: User }) {}
+}
+
 
 export type UserActions = CancelRequest   
     | Login | RequestLogin
@@ -93,4 +108,5 @@ export type UserActions = CancelRequest
     | Forgot | RequestForgot
     | RequestReset | RequestAuthenticatedUser
     | AuthenticatedUser | UpdateAccountInfo
-    | RequestUpdateAccountInfo;
+    | RequestUpdateAccountInfo | RequestUpdateAccountPersonalInfo
+    | UpdateAccountPersonalInfo;

@@ -20,6 +20,8 @@ export function reducer(state: UserState = initialState, action: UserActions): U
 
   switch (action.type) {
 
+    case UserActionTypes.UpdateAccountInfo:
+    case UserActionTypes.UpdateAccountPersonalInfo:
     case UserActionTypes.AuthenticatedUser: {
       return {
         ...state,
@@ -54,13 +56,6 @@ export function reducer(state: UserState = initialState, action: UserActions): U
       return {
         ...state, 
         forgotFormVisibility: true
-      }
-    }
-
-    case UserActionTypes.UpdateAccountInfo: {
-      return {
-        ...state,
-        user: action.payload.user
       }
     }
 

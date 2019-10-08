@@ -1,12 +1,17 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DateAdapter, NativeDateAdapter } from '@angular/material';
 import {User} from '../../models/user';
-import {AccountPersonal} from '../../models/account-personal';
-import { UsersService } from '../../users.service';
-import { AppService } from '../../../../app.service';
 import { UtilService } from '../../../../util.service';
-import { Subscription } from 'rxjs';
-import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
+import { Subscription, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
+import { userSelector } from 'src/app/modules/users/user.selectors';
+import _ from 'lodash';
+import { LoadingData } from 'src/app/models/loadingData';
+import { loadingSelector } from 'src/app/app.selectors';
+import { AccountPersonalInfoModel } from '../../models/account-personal-info-model';
+import { RequestUpdateAccountPersonalInfo } from '../../user.actions';
+
 
 @Component({
   selector: 'account-personal-info',
@@ -15,27 +20,35 @@ import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/con
 })
 export class AccountPersonalInfoComponent implements OnInit, OnDestroy {
 
-  @Input() user: User;
-  model: any = { birthday : null, email : null };
+  user: User;
+  model: AccountPersonalInfoModel = { birthday : null, email : null };
   startAt: Date = new Date(1990, 0, 1);
-  accountPersonalServiceRunning = false;
   subscription: Subscription = new Subscription();
+  loading$: Observable<LoadingData>;
 
-  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private usersService: UsersService, private appService: AppService, 
-        public utilService: UtilService) {
+  constructor(
+      private dateAdapter: DateAdapter<NativeDateAdapter>,
+      public utilService: UtilService,
+      private store: Store<State>) {
+    
     this.dateAdapter.setLocale('en-GB');
   }
 
   ngOnInit() {
-    this.model.email = this.user.email;
-    
-    if (this.user.personalInfo) {
-      this.model.birthday = this.user.personalInfo.birthday;
-      
-      if (this.user.personalInfo.birthday) {
-        this.startAt = this.user.personalInfo.birthday;
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => {
+      this.user = user;
+      this.model.email = this.user.email;
+
+      if (this.user.personalInfo) {
+        this.model.birthday = this.user.personalInfo.birthday;
+        
+        if (this.user.personalInfo.birthday) {
+          this.startAt = this.user.personalInfo.birthday;
+        }
       }
-    }
+    }));
+
+    this.loading$ = this.store.select(loadingSelector());
   }
 
   ngOnDestroy() {
@@ -48,28 +61,7 @@ export class AccountPersonalInfoComponent implements OnInit, OnDestroy {
   onSubmit() {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
-    this.accountPersonalServiceRunning = true;
-    // call the account service
-    const newSubscription = this.usersService.updatePersonalInfo$(this.model).subscribe(
-      (user: User) => {
-        if (user) {
-          this.appService.showResults(`Your personal information was successfully updated!.`, SnackbarNotificationTypes.SUCCESS);
-        }
-
-        this.accountPersonalServiceRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-        }
-
-        this.accountPersonalServiceRunning = false;
-      }
-    );
-    this.subscription.add(newSubscription);
+    this.store.dispatch(new RequestUpdateAccountPersonalInfo(_.cloneDeep(this.model)));
   }
 
 }

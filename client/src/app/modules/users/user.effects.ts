@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
-import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset, RequestAuthenticatedUser, AuthenticatedUser, RequestUpdateAccountInfo, UpdateAccountInfo } from './user.actions';
+import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset, RequestAuthenticatedUser, AuthenticatedUser, RequestUpdateAccountInfo, UpdateAccountInfo, RequestUpdateAccountPersonalInfo, UpdateAccountPersonalInfo } from './user.actions';
 import { mergeMap, switchMap, exhaustMap, map, catchError, tap, delay } from 'rxjs/operators';
 import { of, defer } from 'rxjs';
 import { User } from './models/user';
@@ -189,6 +189,32 @@ export class UserEffects {
   @Effect({ dispatch: false })
   updateAccountInfo$ = this.actions$.pipe(
     ofType<UpdateAccountInfo>(UserActionTypes.UpdateAccountInfo),
+    tap(() => {
+      this.store.dispatch(new HideProgressBar());
+    })
+  );
+  
+  @Effect()
+  requestUpdateAccountPersonalInfo$ = this.actions$.pipe(
+    ofType<RequestUpdateAccountPersonalInfo>(UserActionTypes.RequestUpdateAccountPersonalInfo),
+    tap(({ payload }) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Updating account user personal info...', color: 'accent' }));
+    }),
+    mergeMap(({ payload }) => this.usersService.updatePersonalInfo$(payload).pipe(
+      catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+    )),
+    map((user: User) => {
+      if (user) {
+        return new UpdateAccountPersonalInfo({ user });
+      }
+
+      return new FinalizeOperation();
+    })
+  );
+
+  @Effect({ dispatch: false })
+  updateAccountPersonalInfo$ = this.actions$.pipe(
+    ofType<UpdateAccountPersonalInfo>(UserActionTypes.UpdateAccountPersonalInfo),
     tap(() => {
       this.store.dispatch(new HideProgressBar());
     })
