@@ -27,10 +27,7 @@ const routes: Routes = [
       { 
         path : '', 
         pathMatch : 'full',
-        component : PropertiesDashboardComponent,
-        resolve : {
-          authUser : UserResolver
-        }
+        component : PropertiesDashboardComponent
       }
     ]
   }

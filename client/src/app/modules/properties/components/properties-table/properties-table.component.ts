@@ -2,7 +2,13 @@ import { Component, OnInit, OnDestroy, ViewChild, Input, Output, EventEmitter, A
 import { User } from '../../../users/models/user';
 import { Property } from '../../models/property';
 import { MatTable, MatPaginator, MatTableDataSource, MatDialog, MatSort } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
+import { userSelector } from 'src/app/modules/users/user.selectors';
+import _ from 'lodash';
+import { LoadingData } from 'src/app/models/loadingData';
+import { loadingSelector } from 'src/app/app.selectors';
 import { AppService } from '../../../../app.service';
 import { PropertiesService } from '../../properties.service';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
@@ -17,7 +23,6 @@ import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/con
 })
 export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewInit {
   
-  @Input() user: User = null;
   @Input() showActions = true; // if false we hide FAB buttons
   @Input() allowEdition = true; // if false we don't redirect to property edit component when click on adrdresss
   @Input() loadJustUserProperties = false; // if false when it get properties loads current user properties plus properties of investments where the user has a portion of it.
@@ -28,6 +33,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   @ViewChild('propertiesPaginator', {static: false}) propertiesTablePaginator: MatPaginator;
   @ViewChild(MatSort, {static: false}) propertiesSort: MatSort;
   
+  user: User = null;
   properties: Property[] = [];
   propertiesDataSource: MatTableDataSource<Property> = new MatTableDataSource([]);
   selection = new SelectionModel<Property>(false, []);
@@ -36,8 +42,14 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   getPropertiesServiceRunning = false;
   propertyTableActionRunning = false;
   displayedColumns: string[] = [];
+  loading$: Observable<LoadingData>;
 
-  constructor(private appService: AppService, public propertiesService: PropertiesService, public dialog: MatDialog, private router: Router) { }
+  constructor(
+      private appService: AppService, 
+      public propertiesService: PropertiesService, 
+      public dialog: MatDialog, 
+      private router: Router,
+      private store: Store<State>) { }
 
 
   ngOnInit() {
@@ -52,10 +64,14 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     }
 
     // get the properties
-    this.getProperties();
+    let newSubcription: Subscription = this.store.select(userSelector()).subscribe((user: User) => {
+      this.user = user;
+      this.getProperties();
+    });
+    this.subscription.add(newSubcription);
 
     // selection changed
-    const newSubcription: Subscription = this.selection.onChange.subscribe((selectionChange: SelectionChange<Property>) => {
+    newSubcription = this.selection.onChange.subscribe((selectionChange: SelectionChange<Property>) => {
         this.selectedProperty.emit(this.selection.selected[0]);
     });
     this.subscription.add(newSubcription);

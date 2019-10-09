@@ -1,9 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
-import { AppService } from '../../../../app.service';
-import { User } from '../../../users/models/user';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'properties-dashboard',
@@ -12,11 +8,9 @@ import { Subscription } from 'rxjs';
 })
 export class PropertiesDashboardComponent implements OnInit, OnDestroy {
   
-  user: User = null;
-  subscription: Subscription = new Subscription();
-  
-  constructor(private route: ActivatedRoute, private mainNavigatorService: MainNavigatorService, 
-      private appService: AppService ) { }
+  constructor(
+      private mainNavigatorService: MainNavigatorService
+  ) { }
 
 
   ngOnInit() {
@@ -28,18 +22,10 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
       { displayName: 'Properties', url: null, selected: true },
       { displayName: 'Calculators', url: '/calculators', selected: false }
     ]);
-
-    // get authUser from resolver
-    this.route.data.subscribe((data: { authUser: User }) => {
-      this.user = data.authUser;
-    });
   }
 
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
-
-    // this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Component destroyed.`);
-    this.subscription.unsubscribe();
   }
 
 }

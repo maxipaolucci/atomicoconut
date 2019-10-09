@@ -162,8 +162,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     
     const propertySelectorDialogRef = this.dialog.open(PropertySelectorDialogComponent, {
       data: {
-        title : 'Select a property',
-        user : this.user
+        title : 'Select a property'
       }
     });
 
