@@ -4,7 +4,6 @@ import { Team } from './models/team';
 import { TeamEditModel } from './models/team-edit-model';
 
 export enum TeamActionTypes {
-  CancelRequest = '[Team] Cancel request from Server',
   AddAll = '[Team] Add all to Store',
   RequestAll = '[Team] Request all from Server',
   Delete = '[Team] Delete from Store',
@@ -15,12 +14,6 @@ export enum TeamActionTypes {
   Update_ = '[Team] Update in Store',
   UseAndResetLastUpdatedTeamSlug = '[Team] Use and reset lastUpdatedTeamSlug flag',
   RequestCreate = '[Team] Request create a new team on Server'
-}
-
-export class CancelRequest implements Action {
-  readonly type = TeamActionTypes.CancelRequest;
-
-  constructor(public payload: { redirectData: any[] }) {}
 }
 
 export class AddAll implements Action {
@@ -83,7 +76,7 @@ export class UseAndResetLastUpdatedTeamSlug implements Action {
   constructor(public payload: { lastUpdatedTeamSlug: string }) {}
 }
 
-export type TeamActions = CancelRequest | UseAndResetLastUpdatedTeamSlug |  
+export type TeamActions = UseAndResetLastUpdatedTeamSlug |  
     AddAll | RequestAll | 
     Delete | RequestDelete | 
     RequestOne | AddOne | 

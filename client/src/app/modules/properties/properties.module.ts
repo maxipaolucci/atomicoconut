@@ -15,6 +15,10 @@ import { CalculatorsModule } from '../calculators/calculators.module';
 import { HouseFiguresDialogComponent } from './components/house-figures-dialog/house-figures-dialog.component';
 import { PropertyYieldsDialogComponent } from './components/property-yields-dialog/property-yields-dialog.component';
 import { ShareWithDialogComponent } from './components/share-with-dialog/share-with-dialog.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromProperty from './property.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { PropertyEffects } from './property.effects';
 
 @NgModule({
   imports: [
@@ -24,7 +28,9 @@ import { ShareWithDialogComponent } from './components/share-with-dialog/share-w
     FlexLayoutModule,
     CustomMaterialDesignModule,
     SharedModule,
-    CalculatorsModule
+    CalculatorsModule,
+    StoreModule.forFeature(fromProperty.propertiesFeatureKey, fromProperty.reducer),
+    EffectsModule.forFeature([PropertyEffects])
   ],
   declarations: [ 
     PropertiesDashboardComponent, 

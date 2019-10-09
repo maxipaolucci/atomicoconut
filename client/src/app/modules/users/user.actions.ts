@@ -8,7 +8,6 @@ import { AccountPersonalInfoModel } from './models/account-personal-info-model';
 import { AccountFinancialInfoModel } from './models/account-financial-info-model';
 
 export enum UserActionTypes {
-  CancelRequest = '[User] Cancel request from Server',
   Login = '[User] Login user',
   RequestLogin = '[User] Request login',
   RequestLogout = '[User] Request logout',
@@ -24,12 +23,6 @@ export enum UserActionTypes {
   UpdateAccountPersonalInfo = '[User] Set updated account user personal info to Store',
   RequestUpdateAccountFinancialInfo = '[User] Request update account user financial info to Server',
   UpdateAccountFinancialInfo = '[User] Set updated account user financial info to Store'
-}
-
-export class CancelRequest implements Action {
-  readonly type = UserActionTypes.CancelRequest;
-
-  constructor(public payload: { redirectData: any[] } = null) {}
 }
 
 export class Login implements Action {
@@ -117,8 +110,7 @@ export class UpdateAccountFinancialInfo implements Action {
 }
 
 
-export type UserActions = CancelRequest   
-    | Login | RequestLogin
+export type UserActions = Login | RequestLogin
     | Logout | RequestLogout
     | Forgot | RequestForgot
     | RequestReset | RequestAuthenticatedUser

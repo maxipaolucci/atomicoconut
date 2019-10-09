@@ -45,11 +45,12 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   loading$: Observable<LoadingData>;
 
   constructor(
-      private appService: AppService, 
-      public propertiesService: PropertiesService, 
-      public dialog: MatDialog, 
-      private router: Router,
-      private store: Store<State>) { }
+    private appService: AppService, 
+    public propertiesService: PropertiesService, 
+    public dialog: MatDialog, 
+    private router: Router,
+    private store: Store<State>
+  ) { }
 
 
   ngOnInit() {
