@@ -22,6 +22,7 @@ export function reducer(state: UserState = initialState, action: UserActions): U
 
     case UserActionTypes.UpdateAccountInfo:
     case UserActionTypes.UpdateAccountPersonalInfo:
+    case UserActionTypes.UpdateAccountFinancialInfo:
     case UserActionTypes.AuthenticatedUser: {
       return {
         ...state,

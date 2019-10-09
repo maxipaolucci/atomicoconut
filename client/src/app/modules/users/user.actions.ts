@@ -5,6 +5,7 @@ import { ResetPasswordModel } from './models/reset-password-model';
 import { UserAdditionalInfo } from './models/user-additional-info';
 import { AccountUserInfoModel } from './models/account-user-info-model';
 import { AccountPersonalInfoModel } from './models/account-personal-info-model';
+import { AccountFinancialInfoModel } from './models/account-financial-info-model';
 
 export enum UserActionTypes {
   CancelRequest = '[User] Cancel request from Server',
@@ -20,7 +21,9 @@ export enum UserActionTypes {
   RequestUpdateAccountInfo = '[User] Request update account user info to Server',
   UpdateAccountInfo = '[User] Set updated account user info to Store',
   RequestUpdateAccountPersonalInfo = '[User] Request update account user personal info to Server',
-  UpdateAccountPersonalInfo = '[User] Set updated account user personal info to Store'
+  UpdateAccountPersonalInfo = '[User] Set updated account user personal info to Store',
+  RequestUpdateAccountFinancialInfo = '[User] Request update account user financial info to Server',
+  UpdateAccountFinancialInfo = '[User] Set updated account user financial info to Store'
 }
 
 export class CancelRequest implements Action {
@@ -101,6 +104,18 @@ export class UpdateAccountPersonalInfo implements Action {
   constructor(public payload: { user: User }) {}
 }
 
+export class RequestUpdateAccountFinancialInfo implements Action {
+  readonly type = UserActionTypes.RequestUpdateAccountFinancialInfo;
+
+  constructor(public payload: AccountFinancialInfoModel) {}
+}
+
+export class UpdateAccountFinancialInfo implements Action {
+  readonly type = UserActionTypes.UpdateAccountFinancialInfo;
+
+  constructor(public payload: { user: User }) {}
+}
+
 
 export type UserActions = CancelRequest   
     | Login | RequestLogin
@@ -109,4 +124,5 @@ export type UserActions = CancelRequest
     | RequestReset | RequestAuthenticatedUser
     | AuthenticatedUser | UpdateAccountInfo
     | RequestUpdateAccountInfo | RequestUpdateAccountPersonalInfo
-    | UpdateAccountPersonalInfo;
+    | UpdateAccountPersonalInfo | RequestUpdateAccountFinancialInfo
+    | UpdateAccountFinancialInfo;

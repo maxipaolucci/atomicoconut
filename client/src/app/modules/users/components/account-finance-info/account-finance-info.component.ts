@@ -1,11 +1,16 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSelectChange } from '@angular/material';
 import { User } from '../../models/user';
-import { AccountFinance } from '../../models/account-finance';
-import { UsersService } from '../../users.service';
-import { AppService } from '../../../../app.service';
-import { Subscription } from 'rxjs';
-import { DEFAULT_CURRENCY, SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
+import { Subscription, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
+import { userSelector } from 'src/app/modules/users/user.selectors';
+import _ from 'lodash';
+import { LoadingData } from 'src/app/models/loadingData';
+import { loadingSelector } from 'src/app/app.selectors';
+import { DEFAULT_CURRENCY } from 'src/app/constants';
+import { AccountFinancialInfoModel } from '../../models/account-financial-info-model';
+import { RequestUpdateAccountFinancialInfo } from '../../user.actions';
 
 @Component({
   selector: 'account-finance-info',
@@ -14,8 +19,8 @@ import { DEFAULT_CURRENCY, SnackbarNotificationTypes, ConsoleNotificationTypes }
 })
 export class AccountFinanceInfoComponent implements OnInit, OnDestroy {
 
-  @Input() user: User;
-  model: any = { 
+  user: User;
+  model: AccountFinancialInfoModel = { 
     email : null, 
     annualIncome : null,
     annualIncomeUnit : null,
@@ -23,27 +28,32 @@ export class AccountFinanceInfoComponent implements OnInit, OnDestroy {
     savings : null,
     savingsUnit : null
   };
-  accountFinanceServiceRunning = false;
   subscription: Subscription = new Subscription();
+  loading$: Observable<LoadingData>;
   
-  constructor(private usersService: UsersService, private appService: AppService) {}
+  constructor(private store: Store<State>) {}
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
-    this.model.email = this.user.email;
-    this.model.annualIncomeUnit = this.user.currency || DEFAULT_CURRENCY;
-    this.model.savingsUnit = this.user.currency || DEFAULT_CURRENCY;
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => {
+      this.user = user;
+      this.model.email = this.user.email;
+      this.model.annualIncomeUnit = this.user.currency || DEFAULT_CURRENCY;
+      this.model.savingsUnit = this.user.currency || DEFAULT_CURRENCY;
 
-    if (this.user.financialInfo) {
-      Object.assign(this.model, {
-        annualIncome : this.user.financialInfo.annualIncome,
-        annualIncomeUnit : this.user.financialInfo.annualIncomeUnit,
-        incomeTaxRate : this.user.financialInfo.incomeTaxRate,
-        savings : this.user.financialInfo.savings,
-        savingsUnit : this.user.financialInfo.savingsUnit
-      });
-    }
+      if (this.user.financialInfo) {
+        Object.assign(this.model, {
+          annualIncome : this.user.financialInfo.annualIncome,
+          annualIncomeUnit : this.user.financialInfo.annualIncomeUnit,
+          incomeTaxRate : this.user.financialInfo.incomeTaxRate,
+          savings : this.user.financialInfo.savings,
+          savingsUnit : this.user.financialInfo.savingsUnit
+        });
+      }
+    }));
+
+    this.loading$ = this.store.select(loadingSelector());
   }
 
   ngOnDestroy() {
@@ -64,28 +74,6 @@ export class AccountFinanceInfoComponent implements OnInit, OnDestroy {
   onSubmit() {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
-    this.accountFinanceServiceRunning = true;
-
-    // call the account service
-    const newSubscription: Subscription = this.usersService.updateFinancialInfo$(this.model).subscribe(
-      (user: User) => {
-        if (user) {
-          this.appService.showResults(`Your financial information was successfully updated!.`, SnackbarNotificationTypes.SUCCESS);
-        }
-
-        this.accountFinanceServiceRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-        }
-
-        this.accountFinanceServiceRunning = false;
-      }
-    );
-    this.subscription.add(newSubscription);
+    this.store.dispatch(new RequestUpdateAccountFinancialInfo(_.cloneDeep(this.model)));
   }
 }
