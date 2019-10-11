@@ -37,7 +37,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   
   user: User = null;
   properties: Property[] = [];
-  properties$: Observable<Property> = null;
+  properties$: Observable<Property[]> = null;
   propertiesDataSource: MatTableDataSource<Property> = new MatTableDataSource([]);
   selection = new SelectionModel<Property>(false, []);
 
