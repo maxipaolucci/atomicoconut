@@ -7,7 +7,7 @@ import { User } from '../users/models/user';
 import { Observable } from 'rxjs';
 import { Response } from '../../models/response';
 import { of } from 'rxjs';
-import { map, flatMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { TeamEditModel } from './models/team-edit-model';
 import { ConsoleNotificationTypes } from 'src/app/constants';
 
@@ -33,7 +33,7 @@ export class TeamsService {
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      flatMap((data: any): Observable<Team> => {
+      mergeMap((data: any): Observable<Team> => {
         return of(this.populate(data));
       })
     );
@@ -53,7 +53,7 @@ export class TeamsService {
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      flatMap((data: any): Observable<Team> => {
+      mergeMap((data: any): Observable<Team> => {
         if (data && data.team && data.team.slug) {
           const messages: any[] = [
             {
@@ -110,7 +110,7 @@ export class TeamsService {
 
     return this.http.get<Response>(`${this.serverHost}/getMyTeamBySlug`, { params }).pipe(
       map(this.appService.extractData),
-      flatMap((data: any): Observable<Team> => {
+      mergeMap((data: any): Observable<Team> => {
         return of(this.populate(data));
       })
     );
@@ -134,7 +134,7 @@ export class TeamsService {
 
     return this.http.get<Response>(`${this.serverHost}/getAll`, { params }).pipe(
       map(this.appService.extractData),
-      flatMap((teamsData): Observable<Team[]> => {
+      mergeMap((teamsData): Observable<Team[]> => {
         const teams: Team[] = [];
 
         if (teamsData && teamsData instanceof Array) {

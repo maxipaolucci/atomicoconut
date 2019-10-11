@@ -15,6 +15,8 @@ import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/y
 import { SelectionModel, SelectionChange } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
+import { RequestAll } from '../../property.actions';
+import { propertiesSelector } from '../../property.selectors';
 
 @Component({
   selector: 'properties-table',
@@ -35,6 +37,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   
   user: User = null;
   properties: Property[] = [];
+  properties$: Observable<Property> = null;
   propertiesDataSource: MatTableDataSource<Property> = new MatTableDataSource([]);
   selection = new SelectionModel<Property>(false, []);
 
@@ -168,27 +171,43 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
 
     this.getPropertiesServiceRunning = true;
     
-    const newSubscription = this.propertiesService.getProperties$(this.user.email, this.loadJustUserProperties).subscribe(
-      (properties: Property[]) => {
+    this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: false }));
+    this.properties$ = this.store.select(propertiesSelector());
+    let newSubscription = this.properties$.subscribe((properties: Property[]) => {
         this.properties = properties;
         this.propertiesDataSource.data = properties;
         this.propertiesDataSource.paginator = this.propertiesTablePaginator;
 
         this.getPropertiesServiceRunning = false;
         this.onPropertiesLoad.emit(properties.length);
-      },
+      }, 
       (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-        }
-
-        this.getPropertiesServiceRunning = false;
+        this.properties = [];
       }
     );
     this.subscription.add(newSubscription);
+
+    // newSubscription = this.propertiesService.getProperties$(this.user.email, this.loadJustUserProperties).subscribe(
+    //   (properties: Property[]) => {
+    //     this.properties = properties;
+    //     this.propertiesDataSource.data = properties;
+    //     this.propertiesDataSource.paginator = this.propertiesTablePaginator;
+
+    //     this.getPropertiesServiceRunning = false;
+    //     this.onPropertiesLoad.emit(properties.length);
+    //   },
+    //   (error: any) => {
+    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
+    //     if (error.codeno === 400) {
+    //       this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
+    //     } else {
+    //       this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
+    //     }
+
+    //     this.getPropertiesServiceRunning = false;
+    //   }
+    // );
+    // this.subscription.add(newSubscription);
   }
 
   goToPropertyEdit(property: Property) {

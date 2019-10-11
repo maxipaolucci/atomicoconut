@@ -1,5 +1,5 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Property } from './property.model';
+import { Property } from './models/property';
 import { PropertyActions, PropertyActionTypes } from './property.actions';
 
 export const propertiesFeatureKey = 'properties';

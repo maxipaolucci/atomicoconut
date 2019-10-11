@@ -9,6 +9,7 @@ import { RequestAll, PropertyActionTypes, AddAll } from './property.actions';
 import { delay, mergeMap, tap, map, withLatestFrom, filter, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Property } from './models/property';
+import { allPropertiesLoadedSelector } from './property.selectors';
 
 
 @Injectable()
@@ -22,7 +23,7 @@ export class PropertyEffects {
         this.store.dispatch(new ShowProgressBar({ message: 'Fetching properties...' }));
       } 
     }),
-    withLatestFrom(this.store.pipe(select(allEntitiesLoadedSelector()))),
+    withLatestFrom(this.store.pipe(select(allPropertiesLoadedSelector()))),
     filter(([{ payload }, allEntitiesLoaded]) => {
       if (!allEntitiesLoaded || payload.forceServerRequest) {
         // properties are not in the store or we want to push a fetch from the server

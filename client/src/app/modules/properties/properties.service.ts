@@ -9,7 +9,7 @@ import { User } from '../users/models/user';
 import { PROPERTY_TYPES, ConsoleNotificationTypes } from '../../constants';
 import { House } from './models/house';
 import { Address } from './models/address';
-import { map, catchError, switchMap, flatMap } from 'rxjs/operators';
+import { map, catchError, switchMap, mergeMap } from 'rxjs/operators';
 import obj2fd from 'obj2fd';
 
 @Injectable()
@@ -84,7 +84,7 @@ export class PropertiesService {
 
     return this.http.get<Response>(`${this.serverHost}/${id}`, { params }).pipe(
       map(this.appService.extractData),
-      flatMap((data) => {
+      mergeMap((data) => {
         return of(this.populate(data));
       })
     );
@@ -152,7 +152,7 @@ export class PropertiesService {
 
     return this.http.get<Response>(`${this.serverHost}/getAll`, { params }).pipe(
       map(this.appService.extractData),
-      flatMap((responseData) => {
+      mergeMap((responseData) => {
         const properties: Property[] = [];
   
         if (responseData && responseData instanceof Array) {
