@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__properties-table">
-  <section class="table__container" [fxShow]="!getPropertiesServiceRunning && properties.length > 0" fxLayout="column" fxLayoutGap="10px">
+  <section class="table__container" [fxShow]="!(loading$ | async) && (properties$ | async).length > 0" fxLayout="column" fxLayoutGap="10px">
     <div class="table__overlay" *ngIf="propertyTableActionRunning">
         <mat-spinner color="warn"></mat-spinner>
     </div>
@@ -47,7 +47,7 @@
               [disabled]="!user || user.email !== element.createdBy.email"
               [matTooltip]="(!user || user.email !== element.createdBy.email) ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''"
               matTooltipPosition="left"
-              (click)="openDeleteTeamDialog(propertyIndex, element)">
+              (click)="openDeleteDialog(propertyIndex, element)">
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </mat-cell>
@@ -59,13 +59,13 @@
           ></mat-row>
     </mat-table>
   </section>
-  <mat-paginator [fxShow]="!getPropertiesServiceRunning && properties.length > 0" #propertiesPaginator 
+  <mat-paginator [fxShow]="!(loading$ | async) && (properties$ | async).length > 0" #propertiesPaginator 
       [pageSize]="25" 
       [showFirstLastButtons]="true"
       [pageSizeOptions]="[25, 50, 100]">
   </mat-paginator>
   
-  <section *ngIf="!getPropertiesServiceRunning && properties.length == 0" fxLayout="column" fxLayoutGap="10px">
+  <section *ngIf="!(loading$ | async) && !(properties$ | async).length" fxLayout="column" fxLayoutGap="10px">
     <mat-card fxFlex class="no-properties__card">
       <mat-card-content fxLayout="column" fxLayoutGap="10px"
           fxLayoutAlign="space-around center">
@@ -75,9 +75,9 @@
     
   </section>
   
-  <progress-bar fxFlexAlign="center" class="progress-bar--get-properties" *ngIf="getPropertiesServiceRunning"
+  <!-- <progress-bar fxFlexAlign="center" class="progress-bar--get-properties" *ngIf="getPropertiesServiceRunning"
       color="primary"
       message="Loading properties...">
-  </progress-bar>
+  </progress-bar> -->
   
 </div>

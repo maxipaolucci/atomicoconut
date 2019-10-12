@@ -15,7 +15,7 @@ import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/y
 import { SelectionModel, SelectionChange } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
-import { RequestAll } from '../../property.actions';
+import { RequestAll, RequestDelete } from '../../property.actions';
 import { propertiesSelector } from '../../property.selectors';
 
 @Component({
@@ -32,8 +32,8 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   @Output() selectedProperty: EventEmitter<Property> = new EventEmitter();
   @Output() onPropertiesLoad: EventEmitter<number> = new EventEmitter();
   
-  @ViewChild('propertiesPaginator', {static: false}) propertiesTablePaginator: MatPaginator;
-  @ViewChild(MatSort, {static: false}) propertiesSort: MatSort;
+  @ViewChild('propertiesPaginator', { static: false }) propertiesTablePaginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) propertiesSort: MatSort;
   
   user: User = null;
   properties: Property[] = [];
@@ -42,7 +42,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   selection = new SelectionModel<Property>(false, []);
 
   subscription: Subscription = new Subscription();
-  getPropertiesServiceRunning = false;
+  // getPropertiesServiceRunning = false;
   propertyTableActionRunning = false;
   displayedColumns: string[] = [];
   loading$: Observable<LoadingData>;
@@ -59,26 +59,25 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
-    //start listening to Pusher notifications related to this component
-    this.bindToPushNotificationEvents();
+    this.loading$ = this.store.select(loadingSelector());
 
     this.displayedColumns = ['unit','address'];
     if (this.showActions) {
       this.displayedColumns = this.displayedColumns.concat(['invest', 'delete']);
     }
 
-    // get the properties
-    let newSubcription: Subscription = this.store.select(userSelector()).subscribe((user: User) => {
-      this.user = user;
-      this.getProperties();
-    });
-    this.subscription.add(newSubcription);
+    // get the user (this is fast)
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
+
+    //start listening to Pusher notifications related to this component
+    this.bindToPushNotificationEvents();
+    this.getProperties();
 
     // selection changed
-    newSubcription = this.selection.onChange.subscribe((selectionChange: SelectionChange<Property>) => {
+    const newSubscription: Subscription = this.selection.onChange.subscribe((selectionChange: SelectionChange<Property>) => {
         this.selectedProperty.emit(this.selection.selected[0]);
     });
-    this.subscription.add(newSubcription);
+    this.subscription.add(newSubscription);
 
     // set filter predicate function to look just in the address field
     this.propertiesDataSource.filterPredicate = (data: Property, filter: string) => {
@@ -169,45 +168,21 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     this.propertiesDataSource.data = [];
     this.propertiesDataSource.paginator = this.propertiesTablePaginator;
 
-    this.getPropertiesServiceRunning = true;
-    
     this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: false }));
     this.properties$ = this.store.select(propertiesSelector());
-    let newSubscription = this.properties$.subscribe((properties: Property[]) => {
-        this.properties = properties;
-        this.propertiesDataSource.data = properties;
-        this.propertiesDataSource.paginator = this.propertiesTablePaginator;
+    const newSubscription: Subscription = this.properties$.subscribe((properties: Property[]) => {
+      console.log(methodTrace, properties);
+      this.properties = properties;
+      this.propertiesDataSource.data = properties;
+      this.propertiesDataSource.paginator = this.propertiesTablePaginator;
 
-        this.getPropertiesServiceRunning = false;
-        this.onPropertiesLoad.emit(properties.length);
-      }, 
-      (error: any) => {
-        this.properties = [];
-      }
-    );
+      // this.getPropertiesServiceRunning = false;
+      this.onPropertiesLoad.emit(properties.length);
+    }, 
+    (error: any) => {
+      this.properties = [];
+    });
     this.subscription.add(newSubscription);
-
-    // newSubscription = this.propertiesService.getProperties$(this.user.email, this.loadJustUserProperties).subscribe(
-    //   (properties: Property[]) => {
-    //     this.properties = properties;
-    //     this.propertiesDataSource.data = properties;
-    //     this.propertiesDataSource.paginator = this.propertiesTablePaginator;
-
-    //     this.getPropertiesServiceRunning = false;
-    //     this.onPropertiesLoad.emit(properties.length);
-    //   },
-    //   (error: any) => {
-    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
-    //     if (error.codeno === 400) {
-    //       this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-    //     } else {
-    //       this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-    //     }
-
-    //     this.getPropertiesServiceRunning = false;
-    //   }
-    // );
-    // this.subscription.add(newSubscription);
   }
 
   goToPropertyEdit(property: Property) {
@@ -217,8 +192,8 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     }
   }
 
-  openDeleteTeamDialog(indexInPage: number, property: Property = null) {
-    const methodTrace = `${this.constructor.name} > openDeleteTeamDialog() > `; // for debugging
+  openDeleteDialog(indexInPage: number, property: Property = null) {
+    const methodTrace = `${this.constructor.name} > openDeleteDialog() > `; // for debugging
     
     if (!property) {
       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Property is required to delete.`);
@@ -232,7 +207,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     }
 
 
-    this.propertyTableActionRunning = true;
+    // this.propertyTableActionRunning = true;
     const yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
       width: '250px',
       data: {
@@ -245,7 +220,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
       if (result === 'yes') {
         this.delete(index, property);
       } else {
-        this.propertyTableActionRunning = false;
+        // this.propertyTableActionRunning = false;
       }
     });
     this.subscription.add(newSubscription);
@@ -256,53 +231,67 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   delete(index: number, propertyToDelete: Property = null) {
     const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
 
-    this.propertyTableActionRunning = true;
+    this.store.dispatch(new RequestDelete({ userEmail: this.user.email, id: propertyToDelete.id }));
+    // const newSubscription: Subscription = this.properties$.subscribe((properties: Property[]) => {
+    //   console.log(methodTrace, properties);
+    //   // this.properties = properties;
+    //   // this.propertiesDataSource.data = properties;
+    //   // this.propertiesDataSource.paginator = this.propertiesTablePaginator;
 
-    const newSuscription = this.propertiesService.delete$(propertyToDelete.id, this.user.email).subscribe(
-      (data: any) => {
-        if (data && data.removed > 0) {
-          if (!this.propertiesDataSource.filter.length) {
-            // data is not filtered, proceed with the easy way
-            this.properties.splice(index, 1);
-          } else {
-            // filtered data, we need to search for the property in order to removeit from the view
-            let propertyIndex = 0;
-            for (const property of this.properties) {
-              if (property.id === propertyToDelete.id) {
-                break;
-              }
+    //   // this.getPropertiesServiceRunning = false;
+    //   // this.onPropertiesLoad.emit(properties.length);
+    // }, 
+    // (error: any) => {
+    //   this.properties = [];
+    // });
+    // this.subscription.add(newSubscription);
+    // this.propertyTableActionRunning = true;
 
-              propertyIndex += 1;
-            }
+    // const newSuscription = this.propertiesService.delete$(propertyToDelete.id, this.user.email).subscribe(
+    //   (data: any) => {
+    //     if (data && data.removed > 0) {
+    //       if (!this.propertiesDataSource.filter.length) {
+    //         // data is not filtered, proceed with the easy way
+    //         this.properties.splice(index, 1);
+    //       } else {
+    //         // filtered data, we need to search for the property in order to removeit from the view
+    //         let propertyIndex = 0;
+    //         for (const property of this.properties) {
+    //           if (property.id === propertyToDelete.id) {
+    //             break;
+    //           }
 
-            this.properties.splice(propertyIndex, 1);
-          }
+    //           propertyIndex += 1;
+    //         }
+
+    //         this.properties.splice(propertyIndex, 1);
+    //       }
           
-          this.propertiesDataSource.data = this.properties;
-          this.appService.showResults(`Property successfully removed!`, SnackbarNotificationTypes.SUCCESS);
-        } else {
-          this.appService.showResults(`Property could not be removed, please try again.`, SnackbarNotificationTypes.ERROR);
-        }
+    //       this.propertiesDataSource.data = this.properties;
+    //       this.appService.showResults(`Property successfully removed!`, SnackbarNotificationTypes.SUCCESS);
+    //     } else {
+    //       this.appService.showResults(`Property could not be removed, please try again.`, SnackbarNotificationTypes.ERROR);
+    //     }
 
-        this.propertyTableActionRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        } else if (error.codeno === 475) {
-          // property associated to an investment
-          this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR, 7000);
-        } else if (error.codeno === 462) {
-          this.appService.showResults(`You cannot delete this property because you are not the creator of it. Ask ${error.data.creator.name} to do it.`, SnackbarNotificationTypes.ERROR);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-        }
+    //     this.propertyTableActionRunning = false;
+    //   },
+    //   (error: any) => {
+    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
+    //     if (error.codeno === 400) {
+    //       this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
+    //     } else if (error.codeno === 475) {
+    //       // property associated to an investment
+    //       this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR, 7000);
+    //     } else if (error.codeno === 462) {
+    //       this.appService.showResults(`You cannot delete this property because you are not the creator of it. Ask ${error.data.creator.name} to do it.`, SnackbarNotificationTypes.ERROR);
+    //     } else {
+    //       this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
+    //     }
 
-        this.propertyTableActionRunning = false;
-      }
-    );
-    this.subscription.add(newSuscription);
+    //     this.propertyTableActionRunning = false;
+    //   }
+    // );
+    // this.subscription.add(newSuscription);
   }
 
   applyFilter(filterValue: string) {

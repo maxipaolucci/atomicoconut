@@ -35,14 +35,14 @@ export class AccountUserInfoComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => {
-      this.user = user;
-      this.model = { 
-        name : this.user.name, 
-        email : this.user.email, 
-        currency : this.user.currency || DEFAULT_CURRENCY
-      };
-    }));
+    // get the user (this is fast)
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
+
+    this.model = { 
+      name : this.user.name, 
+      email : this.user.email, 
+      currency : this.user.currency || DEFAULT_CURRENCY
+    };
 
     this.loading$ = this.store.select(loadingSelector());
   }

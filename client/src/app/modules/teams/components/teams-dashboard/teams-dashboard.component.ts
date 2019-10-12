@@ -124,7 +124,6 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    //this.teamActionRunning[index] = true;
     const yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
       width: '250px',
       data: {
@@ -136,8 +135,6 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     const newSubscription = yesNoDialogRef.afterClosed().subscribe(result => {
       if (result === 'yes') {
         this.delete(index, team);
-      } else {
-        //this.teamActionRunning[index] = false;
       }
     });
     this.subscription.add(newSubscription);

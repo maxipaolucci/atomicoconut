@@ -35,19 +35,18 @@ export class AccountPersonalInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => {
-      this.user = user;
-      this.model.email = this.user.email;
-
-      if (this.user.personalInfo) {
-        this.model.birthday = this.user.personalInfo.birthday;
-        
-        if (this.user.personalInfo.birthday) {
-          this.startAt = this.user.personalInfo.birthday;
-        }
+    // get the user (this is fast)
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
+    
+    this.model.email = this.user.email;
+    if (this.user.personalInfo) {
+      this.model.birthday = this.user.personalInfo.birthday;
+      
+      if (this.user.personalInfo.birthday) {
+        this.startAt = this.user.personalInfo.birthday;
       }
-    }));
-
+    }
+    
     this.loading$ = this.store.select(loadingSelector());
   }
 

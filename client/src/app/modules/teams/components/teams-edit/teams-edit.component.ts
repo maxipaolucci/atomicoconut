@@ -56,11 +56,11 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
       { displayName: 'Teams', url: '/teams', selected: false }
     ]);
 
-    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => {
-      this.user = user;
-      this.model.email = user.email;
-    }));
+    // get the user (this is fast)
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
 
+    this.model.email = this.user.email;
+    
     this.loading$ = this.store.select(loadingSelector());
 
     let newSubscription = this.store

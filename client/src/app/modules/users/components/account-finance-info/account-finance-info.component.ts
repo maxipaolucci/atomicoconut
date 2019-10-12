@@ -36,23 +36,23 @@ export class AccountFinanceInfoComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
-    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => {
-      this.user = user;
-      this.model.email = this.user.email;
-      this.model.annualIncomeUnit = this.user.currency || DEFAULT_CURRENCY;
-      this.model.savingsUnit = this.user.currency || DEFAULT_CURRENCY;
+    // get the user (this is fast)
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
 
-      if (this.user.financialInfo) {
-        Object.assign(this.model, {
-          annualIncome : this.user.financialInfo.annualIncome,
-          annualIncomeUnit : this.user.financialInfo.annualIncomeUnit,
-          incomeTaxRate : this.user.financialInfo.incomeTaxRate,
-          savings : this.user.financialInfo.savings,
-          savingsUnit : this.user.financialInfo.savingsUnit
-        });
-      }
-    }));
+    this.model.email = this.user.email;
+    this.model.annualIncomeUnit = this.user.currency || DEFAULT_CURRENCY;
+    this.model.savingsUnit = this.user.currency || DEFAULT_CURRENCY;
 
+    if (this.user.financialInfo) {
+      Object.assign(this.model, {
+        annualIncome : this.user.financialInfo.annualIncome,
+        annualIncomeUnit : this.user.financialInfo.annualIncomeUnit,
+        incomeTaxRate : this.user.financialInfo.incomeTaxRate,
+        savings : this.user.financialInfo.savings,
+        savingsUnit : this.user.financialInfo.savingsUnit
+      });
+    }
+    
     this.loading$ = this.store.select(loadingSelector());
   }
 

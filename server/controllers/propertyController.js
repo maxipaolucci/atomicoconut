@@ -572,7 +572,12 @@ exports.delete = async (req, res) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1039, null, false, 'Property'),
-        data : { removed : writeResult.n }
+        data : { 
+            removed : writeResult.n,
+            property: {
+                _id: property._id
+            } 
+        }
     });
 };
 
