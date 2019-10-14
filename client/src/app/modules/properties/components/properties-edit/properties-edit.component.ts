@@ -18,6 +18,8 @@ import { ShareWithDialogComponent } from '../share-with-dialog/share-with-dialog
 import { userSelector } from 'src/app/modules/users/user.selectors';
 import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
+import { LoadingData } from 'src/app/models/loadingData';
+import { loadingSelector } from 'src/app/app.selectors';
 
 @Component({
   selector: 'properties-edit',
@@ -36,6 +38,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   propertyTypeDataValid = false; // this value is set when property type data form is updated
   addressValid = false;
   propertyPhotos: File[] = [];
+  loading$: Observable<LoadingData>;
 
   // services flags
   editPropertyServiceRunning = false;
@@ -116,70 +119,93 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       { displayName: 'Properties', url: '/properties', selected: false }
     ]);
 
+    this.loading$ = this.store.select(loadingSelector());
+
     //start listening to Pusher notifications related to this component
     this.bindToPushNotificationEvents();
 
-    // generates a user source object from authUser from resolver
-    // const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
-    const user$ = this.store.select(userSelector());
-    this.route.data.pipe(map((data: { property: Property }) => data.property)).subscribe(p => console.log(p));
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
+    this.model.email = this.user.email;
+    this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit =
+      this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit =
+      this.model.maintenanceCostUnit = this.model.otherCostUnit = (this.user.currency || DEFAULT_CURRENCY);
 
-    // generates a property id source from id parameter in url
-    const id$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('id')));
-
-    // combine user$ and id$ sources into one object and start listen to it for changes
-    const newSubscription = user$.pipe(
-      combineLatest(id$, (user, id) => {
-        this.user = user;
-        return { user, propertyId : id };
-      }),
-      flatMap((data: any): Observable<Property> => {
-        this.model.email = data.user.email;
-        this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit =
-            this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit =
-            this.model.maintenanceCostUnit = this.model.otherCostUnit = (this.user.currency || DEFAULT_CURRENCY);
-        this.model.id = data.propertyId || null;
-  
-        this.editPropertyServiceRunning = false;
-        this.getPropertyServiceRunning = false;
-  
-        if (!data.propertyId) {
+    // get property from resolver
+    const newSubscription = this.route.data
+      .pipe(
+        map((data: { property: Property }) => data.property)
+      ).subscribe((property: Property) => {
+        if (!property) {
           // we are creating a new property
-          this.id = null;
+          this.id = this.model.id = null;
           this.editMode = false;
           this.mainNavigatorService.appendLink({ displayName: 'Create Property', url: '', selected : true });
-          return of(null);
         } else {
-          this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected : true });
           // we are editing an existing property
-          this.id = data.propertyId;
+          this.id = this.model.id = property.id;
+          this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected : true });
           this.editMode = true;
-          
-          this.getPropertyServiceRunning = true;
-          return this.propertiesService.getPropertyById$(this.user.email, data.propertyId);
+          this.populateModel(property);
         }
-      })
-    ).subscribe((property: Property) => {
-      if (property) {
-        this.populateModel(property);
-      }
-      
-      this.getPropertyServiceRunning = false;
-    },
-    (error: any) => {
-      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > `, error);
-      if (error.codeno === 400) {
-        this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-      } else if (error.codeno === 461 || error.codeno === 462) {
-        this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR);
-        this.router.navigate(['/welcome']);
-      } else {
-        this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-      }
-
-      this.getPropertyServiceRunning = false;
-    });
+      });
     this.subscription.add(newSubscription);
+
+    // // generates a property id source from id parameter in url
+    // const id$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('id')));
+
+    // // combine user$ and id$ sources into one object and start listen to it for changes
+    // newSubscription = user$.pipe(
+    //   combineLatest(id$, (user, id) => {
+    //     this.user = user;
+    //     return { user, propertyId : id };
+    //   }),
+    //   flatMap((data: any): Observable<Property> => {
+        
+    //     this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit =
+    //         this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit =
+    //         this.model.maintenanceCostUnit = this.model.otherCostUnit = (this.user.currency || DEFAULT_CURRENCY);
+    //     this.model.id = data.propertyId || null;
+  
+    //     this.editPropertyServiceRunning = false;
+    //     this.getPropertyServiceRunning = false;
+  
+    //     if (!data.propertyId) {
+    //       // we are creating a new property
+    //       this.id = null;
+    //       this.editMode = false;
+    //       this.mainNavigatorService.appendLink({ displayName: 'Create Property', url: '', selected : true });
+    //       return of(null);
+    //     } else {
+    //       this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected : true });
+    //       // we are editing an existing property
+    //       this.id = data.propertyId;
+    //       this.editMode = true;
+          
+    //       this.getPropertyServiceRunning = true;
+    //       return this.propertiesService.getPropertyById$(this.user.email, data.propertyId);
+    //     }
+    //   })
+    // ).subscribe((property: Property) => {
+    //   if (property) {
+    //     this.populateModel(property);
+    //   }
+      
+    //   this.getPropertyServiceRunning = false;
+    // },
+    // (error: any) => {
+    //   this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > `, error);
+    //   if (error.codeno === 400) {
+    //     this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
+    //   } else if (error.codeno === 461 || error.codeno === 462) {
+    //     this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR);
+    //     this.router.navigate(['/welcome']);
+    //   } else {
+    //     this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
+    //   }
+
+    //   this.getPropertyServiceRunning = false;
+    // });
+    // this.subscription.add(newSubscription);
 
     // get TYPE parameter
     this.route.paramMap.pipe(map((params: ParamMap) => params.get('type'))).subscribe(type => {
