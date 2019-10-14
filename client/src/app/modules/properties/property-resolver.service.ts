@@ -5,35 +5,35 @@ import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/r
 import { User } from '../users/models/user';
 import { State } from '../../main.reducer';
 import { Store, select } from '@ngrx/store';
-import { Team } from './models/team';
-import { teamBySlugSelector } from './team.selectors';
-import { RequestOne } from './team.actions';
+import { Property } from './models/property';
 import { userSelector } from '../users/user.selectors';
+import { propertyByIdSelector } from './property.selectors';
+import { RequestOne } from './property.actions';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TeamResolver implements Resolve<Team> {
+export class PropertyResolver implements Resolve<Property> {
   private user: User = null;
 
   constructor(
-    private store: Store<State>
+      private store: Store<State>
   ) {}
   
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<never> | Observable<Team> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<never> | Observable<Property> {
     const methodTrace = `${this.constructor.name} > resolve() > `; // for debugging  
     
-    const teamSlug = route.paramMap.get('slug');
+    const propertyId = route.paramMap.get('id');
     this.store.select(userSelector()).subscribe((user: User) => this.user = user); 
     
     return this.store.pipe(
-      select(teamBySlugSelector(teamSlug)),
-      tap((team: Team) => {
-        if (!team) {
-          this.store.dispatch(new RequestOne({ userEmail: this.user.email, slug: teamSlug }));
+      select(propertyByIdSelector(propertyId)),
+      tap((property: Property) => {
+        if (!property) {
+          this.store.dispatch(new RequestOne({ userEmail: this.user.email, id: propertyId }));
         }
       }),
-      first((team: Team) => !!team)
+      first((property: Property) => !!property)
     );
   }
 }

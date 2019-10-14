@@ -13,3 +13,12 @@ export const allPropertiesLoadedSelector = () => createSelector(
   selectPropertiesState,
   propertiesState => propertiesState.allEntitiesLoaded
 );
+
+export const propertyByIdSelector = (id: string) => {
+  return createSelector(
+      selectPropertiesState,
+      propertiesState => {
+        return propertiesState.entities[id]
+      }
+  )
+};

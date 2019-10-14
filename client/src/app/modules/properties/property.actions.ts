@@ -7,6 +7,8 @@ export enum PropertyActionTypes {
   RequestAll = '[Property] Request all from Server',
   Delete = '[Property] Delete from Store',
   RequestDelete = '[Property] Request delete from Server',
+  RequestOne = '[Property] Request one from Server',
+  AddOne = '[Property] Add one to Store'
 }
 
 export class AddAll implements Action {
@@ -33,6 +35,19 @@ export class Delete implements Action {
   constructor(public payload: { id: string }) {}
 }
 
+export class RequestOne implements Action {
+  readonly type = PropertyActionTypes.RequestOne;
+
+  constructor(public payload: { userEmail: string, id: string }) {}
+}
+
+export class AddOne implements Action {
+  readonly type = PropertyActionTypes.AddOne;
+
+  constructor(public payload: { property: Property }) {}
+}
+
 export type PropertyActions = AddAll
     | RequestAll | RequestDelete
-    | Delete;
+    | Delete | RequestOne
+    | AddOne;

@@ -4,6 +4,7 @@ import { PropertiesEditComponent } from './components/properties-edit/properties
 import { UserResolver } from '../users/user-resolver.service';
 import { PropertiesDashboardComponent } from './components/properties-dashboard/properties-dashboard.component';
 import { AuthGuard } from '../../auth.guard';
+import { PropertyResolver } from './property-resolver.service';
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
         path : ':type/edit/:id', 
         component : PropertiesEditComponent,
         resolve : {
-          authUser : UserResolver
+          property : PropertyResolver
         } 
       },
       { 

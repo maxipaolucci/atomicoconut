@@ -31,6 +31,10 @@ export function reducer(state = initialState, action: PropertyActions): State {
       return adapter.removeOne(action.payload.id, state);
     }
 
+    case PropertyActionTypes.AddOne: {
+      return adapter.addOne(action.payload.property, state);
+    }
+
     default: {
       return state;
     }

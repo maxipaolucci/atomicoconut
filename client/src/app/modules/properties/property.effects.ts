@@ -5,7 +5,7 @@ import { PropertiesService } from './properties.service';
 import { AppService } from 'src/app/app.service';
 import { State } from '../../main.reducer';
 import { Store, select } from '@ngrx/store';
-import { RequestAll, PropertyActionTypes, AddAll, RequestDelete, Delete } from './property.actions';
+import { RequestAll, PropertyActionTypes, AddAll, RequestDelete, Delete, RequestOne, AddOne } from './property.actions';
 import { delay, mergeMap, tap, map, withLatestFrom, filter, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Property } from './models/property';
@@ -92,6 +92,37 @@ export class PropertyEffects {
       this.store.dispatch(new HideProgressBar());
     })
   );
+
+  @Effect()
+  requestOne$ = this.actions$.pipe(
+    ofType<RequestOne>(PropertyActionTypes.RequestOne),
+    tap(({payload}) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Fetching property...' }));
+    }),
+    mergeMap(({ payload }) => this.propertiesService.getPropertyById$(payload.userEmail, payload.id)
+      .pipe(
+        catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+      )
+    ),
+    map((property: Property) => {
+      if (property) {
+        //dispatch the action to save the value in the store
+        return new AddOne({ property });
+      }
+
+      // if here, means http error in the response. 
+      return new FinalizeOperation({ redirectData: ['/properties'] }); //we don't want to do anything in this case, stop the loadingData flag
+    }) 
+  );
+
+  @Effect({ dispatch: false })
+  addOne$ = this.actions$.pipe(
+    ofType<AddOne>(PropertyActionTypes.AddOne),
+    tap(() => {
+      this.store.dispatch(new HideProgressBar());
+    })
+  );
+  
 
   constructor(
     private actions$: Actions,

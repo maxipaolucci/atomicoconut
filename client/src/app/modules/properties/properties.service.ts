@@ -84,8 +84,8 @@ export class PropertiesService {
 
     return this.http.get<Response>(`${this.serverHost}/${id}`, { params }).pipe(
       map(this.appService.extractData),
-      mergeMap((data) => {
-        return of(this.populate(data));
+      map((data): Property => {
+        return this.populate(data);
       })
     );
   }
@@ -152,7 +152,7 @@ export class PropertiesService {
 
     return this.http.get<Response>(`${this.serverHost}/getAll`, { params }).pipe(
       map(this.appService.extractData),
-      mergeMap((responseData) => {
+      map((responseData): Property[] => {
         const properties: Property[] = [];
   
         if (responseData && responseData instanceof Array) {
@@ -163,7 +163,7 @@ export class PropertiesService {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
   
-        return of(properties);
+        return properties;
       })
     );
   }

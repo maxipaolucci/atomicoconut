@@ -15,6 +15,9 @@ import { PropertyYieldsDialogComponent } from '../property-yields-dialog/propert
 import { map, combineLatest, flatMap } from 'rxjs/operators';
 import { FilesUploaderChange } from '../../../../modules/shared/components/files-uploader/models/filesUploaderChange';
 import { ShareWithDialogComponent } from '../share-with-dialog/share-with-dialog.component';
+import { userSelector } from 'src/app/modules/users/user.selectors';
+import { Store, select } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
 
 @Component({
   selector: 'properties-edit',
@@ -89,9 +92,16 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     paymentFrecuency : '26',
   };
 
-  constructor(private route: ActivatedRoute, private mainNavigatorService: MainNavigatorService, private propertiesService: PropertiesService,
-      private appService: AppService, private router: Router, public utilService: UtilService, private dateAdapter: DateAdapter<NativeDateAdapter>,
-      public dialog: MatDialog) {
+  constructor(
+      private route: ActivatedRoute, 
+      private mainNavigatorService: MainNavigatorService, 
+      private propertiesService: PropertiesService,
+      private appService: AppService, 
+      private router: Router, 
+      public utilService: UtilService, 
+      private dateAdapter: DateAdapter<NativeDateAdapter>,
+      public dialog: MatDialog,
+      private store: Store<State>) {
 
     this.dateAdapter.setLocale('en-GB');
     this.propertyTypes = PROPERTY_TYPES;
@@ -110,7 +120,9 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.bindToPushNotificationEvents();
 
     // generates a user source object from authUser from resolver
-    const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
+    // const user$ = this.route.data.pipe(map((data: { authUser: User }) => data.authUser));
+    const user$ = this.store.select(userSelector());
+    this.route.data.pipe(map((data: { property: Property }) => data.property)).subscribe(p => console.log(p));
 
     // generates a property id source from id parameter in url
     const id$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('id')));

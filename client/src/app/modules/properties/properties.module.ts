@@ -19,6 +19,7 @@ import { StoreModule } from '@ngrx/store';
 import * as fromProperty from './property.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { PropertyEffects } from './property.effects';
+import { PropertyResolver } from './property-resolver.service';
 
 @NgModule({
   imports: [
@@ -42,7 +43,7 @@ import { PropertyEffects } from './property.effects';
     PropertyYieldsDialogComponent,
     ShareWithDialogComponent
   ],
-  providers: [ PropertiesService ],
+  providers: [ PropertiesService, PropertyResolver ],
   entryComponents: [
     PropertySelectorDialogComponent, // added as material doc suggest to allow AOT on this on the fly created class
     HouseFiguresDialogComponent,
