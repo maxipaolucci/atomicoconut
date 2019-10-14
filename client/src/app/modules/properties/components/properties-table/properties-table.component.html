@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__properties-table">
-  <section class="table__container" [fxShow]="!(loading$ | async) && (properties$ | async).length > 0" fxLayout="column" fxLayoutGap="10px">
+  <section class="table__container" [fxShow]="(properties$ | async).length > 0" fxLayout="column" fxLayoutGap="10px">
     <div class="table__overlay" *ngIf="propertyTableActionRunning">
         <mat-spinner color="warn"></mat-spinner>
     </div>
@@ -31,10 +31,9 @@
         <mat-cell *matCellDef="let element">
           <button mat-mini-fab color="primary" 
               routerLink="/investments/property/create/{{element.id}}" 
-              [disabled]="!user || user.email !== element.createdBy.email"
+              [disabled]="!user || user.email !== element.createdBy.email || (loading$ | async)"
               [matTooltip]="(!user || user.email !== element.createdBy.email) ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''"
-              matTooltipPosition="left"
-              (click)="propertyTableActionRunning = true">
+              matTooltipPosition="left">
             <mat-icon aria-label="Create investment">trending_up</mat-icon>
           </button>
         </mat-cell>
@@ -44,7 +43,7 @@
         <mat-header-cell *matHeaderCellDef>Delete</mat-header-cell>
         <mat-cell *matCellDef="let element; let propertyIndex = index;">
           <button mat-mini-fab color="warn" 
-              [disabled]="!user || user.email !== element.createdBy.email"
+              [disabled]="!user || user.email !== element.createdBy.email || (loading$ | async)"
               [matTooltip]="(!user || user.email !== element.createdBy.email) ? 'Only the creator (' + element.createdBy.name + ') can perform this action' : ''"
               matTooltipPosition="left"
               (click)="openDeleteDialog(propertyIndex, element)">
@@ -59,7 +58,7 @@
           ></mat-row>
     </mat-table>
   </section>
-  <mat-paginator [fxShow]="!(loading$ | async) && (properties$ | async).length > 0" #propertiesPaginator 
+  <mat-paginator [fxShow]="(properties$ | async).length" #propertiesPaginator 
       [pageSize]="25" 
       [showFirstLastButtons]="true"
       [pageSizeOptions]="[25, 50, 100]">
@@ -72,7 +71,6 @@
         <p>You do not have any property yet.</p>
       </mat-card-content>
     </mat-card>
-    
   </section>
   
   <!-- <progress-bar fxFlexAlign="center" class="progress-bar--get-properties" *ngIf="getPropertiesServiceRunning"

@@ -65,7 +65,7 @@ export class PropertyEffects {
     tap(({payload}) => {
       this.store.dispatch(new ShowProgressBar({ message: 'Removing property...', color: 'warn' }));
     }),
-    delay(4000),
+    // delay(4000),
     mergeMap(({ payload }) => this.propertiesService.delete$(payload.id, payload.userEmail).
       pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
