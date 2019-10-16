@@ -40,6 +40,18 @@ export class PropertiesService {
    * 
    * @return { Observable<Property> }
    */
+  // update$(postData: any = {}): Observable<any> {
+  //   const methodTrace = `${this.constructor.name} > update() > `; // for debugging
+    
+  //   //to prevent receiving notification of actions performed by current user
+  //   postData.pusherSocketID = this.appService.pusherSocketID;
+
+  //   postData = this.generateFormData(postData);
+
+  //   return this.http.post<Response>(`${this.serverHost}/update`, postData).pipe(
+  //     map(this.appService.extractData)
+  //   );
+  // }
   update$(postData: any = {}): Observable<any> {
     const methodTrace = `${this.constructor.name} > update() > `; // for debugging
     
@@ -49,7 +61,41 @@ export class PropertiesService {
     postData = this.generateFormData(postData);
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData).pipe(
-      map(this.appService.extractData)
+      map(this.appService.extractData),
+      map((data: any): Property => {
+        if (data && data.id && data.type) {
+          const messages: any[] = [
+            {
+              message : `Property successfully updated!`,
+              type : 'success'
+            }
+          ];
+
+          if (data.propertyUsersUpdateResult && data.propertyUsersUpdateResult.emailsNotRegistered.length) {
+            // handle not registered users
+            const message = {
+              message : `The following emails added to the team are not registered users in AtomiCoconut: `,
+              duration : 8000
+            };
+            
+            for (const email of data.propertyUsersUpdateResult.emailsNotRegistered) {
+              message.message += `"${email}", `;
+            }
+
+            message.message = message.message.slice(0, -2); // remove last comma char
+            message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
+
+            messages.push(message);
+          }
+
+          this.appService.showManyResults(messages);
+          return this.populate(data.property);
+        } else {
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+        }
+
+        return null;
+      })
     );
   }
 

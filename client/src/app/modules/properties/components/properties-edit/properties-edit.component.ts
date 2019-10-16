@@ -20,6 +20,8 @@ import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
+import { RequestUpdate } from '../../property.actions';
+import _ from 'lodash';
 
 @Component({
   selector: 'properties-edit',
@@ -364,17 +366,24 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   onUpdate() {
     const methodTrace = `${this.constructor.name} > onUpdate() > `; // for debugging
 
-    this.editPropertyServiceRunning = true;
+    //this.editPropertyServiceRunning = true;
 
     this.model.updatedOn = new Date(Date.now());
-
     this.model.sharedWith = []; // reset the sharedWith array
     for (const member of this.property.sharedWith) {
       this.model.sharedWith.push(member.email);
     }
-
     this.model.propertyPhotos = this.propertyPhotos;
+    // to prevent receiving notification of actions performed by current user
+    this.model.pusherSocketID = this.appService.pusherSocketID;
     
+    this.store.dispatch(new RequestUpdate({ model: _.cloneDeep(this.model) }));
+
+
+    // check if what happened inside the subscription is already migrated
+
+
+
     // call the property update service
     const newSubscription = this.propertiesService.update$(this.model).subscribe(
       (data: any) => {

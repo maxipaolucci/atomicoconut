@@ -385,7 +385,7 @@ exports.update = async (req, res, next) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1042, null, false, 'Property'),
-        data : { type : property.propertyType, id : property._id, propertyUsersUpdateResult }
+        data : { property, type : property.propertyType, id : property._id, propertyUsersUpdateResult }
     });
 };
 

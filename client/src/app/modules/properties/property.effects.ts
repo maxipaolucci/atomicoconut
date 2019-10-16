@@ -5,12 +5,13 @@ import { PropertiesService } from './properties.service';
 import { AppService } from 'src/app/app.service';
 import { State } from '../../main.reducer';
 import { Store, select } from '@ngrx/store';
-import { RequestAll, PropertyActionTypes, AddAll, RequestDelete, Delete, RequestOne, AddOne } from './property.actions';
+import { RequestAll, PropertyActionTypes, AddAll, RequestDelete, Delete, RequestOne, AddOne, RequestUpdate, Update_ } from './property.actions';
 import { delay, mergeMap, tap, map, withLatestFrom, filter, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Property } from './models/property';
 import { allPropertiesLoadedSelector } from './property.selectors';
 import { SnackbarNotificationTypes } from 'src/app/constants';
+import { Update } from '@ngrx/entity';
 
 
 @Injectable()
@@ -123,6 +124,34 @@ export class PropertyEffects {
     })
   );
   
+  @Effect()
+  requestUpdate$ = this.actions$.pipe(
+    ofType<RequestUpdate>(PropertyActionTypes.RequestUpdate),
+    tap(({payload}) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Updating property...', color: 'accent' }));
+    }),
+    mergeMap(({ payload }) => this.propertiesService.update$(payload.model).pipe(
+      catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+    )),
+    map((property: Property) => {
+      if (property) {
+        const entityChanges: Update<Property> = {
+          id: property.id,
+          changes: property
+        }
+        return new Update_({ entityChanges });
+      }
+      return new FinalizeOperation();
+    })
+  );
+
+  @Effect({ dispatch: false })
+  update$ = this.actions$.pipe(
+    ofType<Update_>(PropertyActionTypes.Update_),
+    tap(() => {
+      this.store.dispatch(new HideProgressBar());
+    })
+  );
 
   constructor(
     private actions$: Actions,

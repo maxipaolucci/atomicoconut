@@ -35,6 +35,12 @@ export function reducer(state = initialState, action: PropertyActions): State {
       return adapter.addOne(action.payload.property, state);
     }
 
+    case PropertyActionTypes.Update_: {
+      const changes = action.payload.entityChanges;
+      
+      return adapter.updateOne(changes, state);
+    }
+
     default: {
       return state;
     }

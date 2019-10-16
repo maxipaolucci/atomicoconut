@@ -126,7 +126,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     // add slug and members to service payload
     this.model.slug = this.team.slug;
     this.model.members = this.team.members.map((member: User) => member.email);
-    //to prevent receiving notification of actions performed by current user
+    // to prevent receiving notification of actions performed by current user
     this.model.pusherSocketID = this.appService.pusherSocketID;
     
     // TODO check the new members are not duplicated, especially the admin

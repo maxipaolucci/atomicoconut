@@ -53,7 +53,7 @@ export class TeamsService {
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      mergeMap((data: any): Observable<Team> => {
+      mergeMap((data: any): Observable<Team> => { //guess I don't need a mergeMap for this, it could be simply a map returning a Team object
         if (data && data.team && data.team.slug) {
           const messages: any[] = [
             {
