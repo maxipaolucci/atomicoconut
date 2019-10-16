@@ -1,7 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { Property } from './models/property';
-import { PropertyEditModel } from './models/property-edit-model';
 
 export enum PropertyActionTypes {
   AddAll = '[Property] Add all to Store',

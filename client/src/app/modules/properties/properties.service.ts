@@ -54,9 +54,6 @@ export class PropertiesService {
   // }
   update$(postData: any = {}): Observable<any> {
     const methodTrace = `${this.constructor.name} > update() > `; // for debugging
-    
-    //to prevent receiving notification of actions performed by current user
-    postData.pusherSocketID = this.appService.pusherSocketID;
 
     postData = this.generateFormData(postData);
 

@@ -1,6 +1,6 @@
 <div class="container__edit-property" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
   <!-- Form  -->
-  <form *ngIf="!getPropertyServiceRunning" class="form__container form__edit-property" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editPropertyForm="ngForm" 
+  <form class="form__container form__edit-property" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editPropertyForm="ngForm" 
       novalidate fxLayout="column" fxLayoutGap="10px">
     
     <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
@@ -380,7 +380,7 @@
         fxLayout="column" fxLayout.gt-sm="row"  
         fxLayoutGap="10px">
       
-      <button mat-fab *ngIf="!editPropertyServiceRunning" 
+      <button mat-fab *ngIf="!(loading$ | async)" 
           class="fab mat-elevation-z10 form__action" 
           color="accent" 
           type="submit"
@@ -388,18 +388,11 @@
           [disabled]="!(editPropertyForm.form.valid && includedFormsValid())">
         <mat-icon aria-label="Save changes">save</mat-icon>
       </button>
-      
-      <mat-progress-spinner *ngIf="editPropertyServiceRunning"
-          class="progress-spinner progress-spinner--edit-property"
-          color="accent"
-          [diameter]="55" [strokeWidth]="10"
-          mode="indeterminate">
-      </mat-progress-spinner>
     </section>
   </form>
 
   <!-- Figures -->
-  <section *ngIf="!getPropertyServiceRunning" fxHide.lt-md="true" fxLayout="column" fxLayoutGap="10px" fxFlex="300px" class="house-figures-results">
+  <section fxHide.lt-md="true" fxLayout="column" fxLayoutGap="10px" fxFlex="300px" class="house-figures-results">
     <mat-card>
       <mat-card-content>
         <!-- Missing required data from -->
@@ -508,16 +501,7 @@
   </section>
   <!-- <pre>{{model | json}}</pre> -->
 
-  <progress-bar class="progress-bar--get-property" *ngIf="getPropertyServiceRunning"
-      color="primary"
-      message="Loading property info...">
-  </progress-bar>
-
-  <section *ngIf="!getPropertyServiceRunning" 
-      fxLayout="column" 
-      fxHide.gt-sm="true" 
-      class="actions">
-    
+  <section fxLayout="column" fxHide.gt-sm="true" class="actions">
     <button mat-mini-fab class="mini-fab mat-elevation-z10" color="primary" *ngIf="!showPropertyFiguresDialogSpinner"
         matTooltip="Show figures" matTooltipPosition="left" 
         (click)="showPropertyFiguresDialogSpinner = true; openHouseResultsFiguresDialog()">

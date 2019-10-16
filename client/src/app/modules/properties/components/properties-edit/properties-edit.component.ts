@@ -22,6 +22,7 @@ import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
 import { RequestUpdate } from '../../property.actions';
 import _ from 'lodash';
+import { propertyByIdSelector } from '../../property.selectors';
 
 @Component({
   selector: 'properties-edit',
@@ -43,8 +44,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   loading$: Observable<LoadingData>;
 
   // services flags
-  editPropertyServiceRunning = false;
-  getPropertyServiceRunning = false;
   showPropertyFiguresDialogSpinner = false;
   showPropertyYieldsDialogSpinner = false;
 
@@ -133,19 +132,20 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       this.model.maintenanceCostUnit = this.model.otherCostUnit = (this.user.currency || DEFAULT_CURRENCY);
 
     // get property from resolver
-    const newSubscription = this.route.data
-      .pipe(
-        map((data: { property: Property }) => data.property)
-      ).subscribe((property: Property) => {
+    const newSubscription = this.store.select(propertyByIdSelector(this.route.snapshot.params.id)) // I read this one instead from resolver because this has always the latest information when we update the property
+      .subscribe((property: Property) => {
         if (!property) {
           // we are creating a new property
           this.id = this.model.id = null;
           this.editMode = false;
           this.mainNavigatorService.appendLink({ displayName: 'Create Property', url: '', selected : true });
         } else {
+          if (!this.editMode) {
+            this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected : true });
+          }
+          
           // we are editing an existing property
           this.id = this.model.id = property.id;
-          this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected : true });
           this.editMode = true;
           this.populateModel(property);
         }
@@ -261,7 +261,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   populateModel(property: Property) {
     const methodTrace = `${this.constructor.name} > populateModel() > `; // for debugging
 
-    this.property = property;
+    this.property = _.cloneDeep(property);
     // populate the model
     this.model.address = property.address;
     this.model.askingPrice = property.askingPrice;
@@ -335,8 +335,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   onSubmit() {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
-    this.editPropertyServiceRunning = true;
-
     this.model.createdOn = new Date(Date.now());
     this.model.updatedOn = new Date(Date.now());
     // call the investment create service
@@ -347,7 +345,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
           this.router.navigate(['/properties/', data.type, 'edit', data.id]);
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-          this.editPropertyServiceRunning = false;
         }
       },
       (error: any) => {
@@ -355,8 +352,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
         if (error.codeno === 400) {
           this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
         }
-
-        this.editPropertyServiceRunning = false;
       }
     );
 
@@ -376,7 +371,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.model.propertyPhotos = this.propertyPhotos;
     // to prevent receiving notification of actions performed by current user
     this.model.pusherSocketID = this.appService.pusherSocketID;
-    
     this.store.dispatch(new RequestUpdate({ model: _.cloneDeep(this.model) }));
 
 
@@ -385,58 +379,58 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
 
     // call the property update service
-    const newSubscription = this.propertiesService.update$(this.model).subscribe(
-      (data: any) => {
-        if (data && data.id && data.type) {
-          const messages: any[] = [
-            {
-              message : `Property successfully updated!`,
-              type : 'success'
-            }
-          ];
+    // const newSubscription = this.propertiesService.update$(this.model).subscribe(
+    //   (data: any) => {
+    //     if (data && data.id && data.type) {
+    //       const messages: any[] = [
+    //         {
+    //           message : `Property successfully updated!`,
+    //           type : 'success'
+    //         }
+    //       ];
 
-          if (data.propertyUsersUpdateResult && data.propertyUsersUpdateResult.emailsNotRegistered.length) {
-            // handle not registered users
-            const message = {
-              message : `The following emails added to the team are not registered users in AtomiCoconut: `,
-              duration : 8000
-            };
+    //       if (data.propertyUsersUpdateResult && data.propertyUsersUpdateResult.emailsNotRegistered.length) {
+    //         // handle not registered users
+    //         const message = {
+    //           message : `The following emails added to the team are not registered users in AtomiCoconut: `,
+    //           duration : 8000
+    //         };
             
-            for (const email of data.propertyUsersUpdateResult.emailsNotRegistered) {
-              message.message += `"${email}", `;
-            }
+    //         for (const email of data.propertyUsersUpdateResult.emailsNotRegistered) {
+    //           message.message += `"${email}", `;
+    //         }
 
-            message.message = message.message.slice(0, -2); // remove last comma char
-            message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
+    //         message.message = message.message.slice(0, -2); // remove last comma char
+    //         message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
 
-            messages.push(message);
-          }
+    //         messages.push(message);
+    //       }
 
-          if (data.propertyUsersUpdateResult && data.propertyUsersUpdateResult.updatedList) {
-            this.property.sharedWith = [];
-            for (const member of data.propertyUsersUpdateResult.updatedList) {
-              this.property.sharedWith.push(new User(member.name, member.email, member.gravatar));
-            }
-          }
+    //       if (data.propertyUsersUpdateResult && data.propertyUsersUpdateResult.updatedList) {
+    //         this.property.sharedWith = [];
+    //         for (const member of data.propertyUsersUpdateResult.updatedList) {
+    //           this.property.sharedWith.push(new User(member.name, member.email, member.gravatar));
+    //         }
+    //       }
 
-          this.appService.showManyResults(messages);
-        } else {
-          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-        }
+    //       this.appService.showManyResults(messages);
+    //     } else {
+    //       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+    //     }
 
-        this.editPropertyServiceRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit property service.`, error);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        }
+    //     this.editPropertyServiceRunning = false;
+    //   },
+    //   (error: any) => {
+    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit property service.`, error);
+    //     if (error.codeno === 400) {
+    //       this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
+    //     }
 
-        this.editPropertyServiceRunning = false;
-      }
-    );
+    //     this.editPropertyServiceRunning = false;
+    //   }
+    // );
 
-    this.subscription.add(newSubscription);
+    // this.subscription.add(newSubscription);
   }
 
   onCurrencyUnitChange($event: MatSelectChange) {
