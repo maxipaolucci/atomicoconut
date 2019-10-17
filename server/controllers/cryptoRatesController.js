@@ -112,7 +112,7 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
             mail.send({
                 toEmail,
                 fromEmail: 'alert@atomicoconut.com',
-                subject : `AtomiCoconut - ${alert} Ratio ${fromCrypto}/${toCrypto}: ${ratio}`,
+                subject : `${alert} Ratio ${fromCrypto}/${toCrypto}: ${ratio}`,
                 ratio,
                 fromCrypto,
                 fromCyptoPriceUsd : fromCryptoData.priceUsd,
