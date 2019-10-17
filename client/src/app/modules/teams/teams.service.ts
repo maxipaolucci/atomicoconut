@@ -33,8 +33,8 @@ export class TeamsService {
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      mergeMap((data: any): Observable<Team> => {
-        return of(this.populate(data));
+      map((data: any): Team => {
+        return this.populate(data);
       })
     );
   } 
@@ -53,7 +53,7 @@ export class TeamsService {
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      mergeMap((data: any): Observable<Team> => { //guess I don't need a mergeMap for this, it could be simply a map returning a Team object
+      map((data: any): Team => { //guess I don't need a mergeMap for this, it could be simply a map returning a Team object
         if (data && data.team && data.team.slug) {
           const messages: any[] = [
             {
@@ -80,12 +80,12 @@ export class TeamsService {
           }
 
           this.appService.showManyResults(messages);
-          return of(this.populate(data.team));
+          return this.populate(data.team);
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
 
-        return of(null);
+        return null;
       })
     );
   }

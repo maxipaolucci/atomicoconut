@@ -199,12 +199,17 @@ exports.create = async (req, res, next) => {
         return;
     }
 
+    // get a complete property object
+    property = await getByIdObject(property.id, user.email, {
+        propertyTypeDataId : true
+    });
+
     console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Property')}`);
     res.json({
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1033, null, false, 'Property'),
-        data : { type : property.propertyType, id : property._id }
+        data : property
     });       
 };
 

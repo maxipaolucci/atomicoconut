@@ -5,13 +5,14 @@ import { PropertiesService } from './properties.service';
 import { AppService } from 'src/app/app.service';
 import { State } from '../../main.reducer';
 import { Store, select } from '@ngrx/store';
-import { RequestAll, PropertyActionTypes, AddAll, RequestDelete, Delete, RequestOne, AddOne, RequestUpdate, Update_ } from './property.actions';
+import { RequestAll, PropertyActionTypes, AddAll, RequestDelete, Delete, RequestOne, AddOne, RequestUpdate, Update_, RequestCreate } from './property.actions';
 import { delay, mergeMap, tap, map, withLatestFrom, filter, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Property } from './models/property';
 import { allPropertiesLoadedSelector } from './property.selectors';
 import { SnackbarNotificationTypes } from 'src/app/constants';
 import { Update } from '@ngrx/entity';
+import { Router } from '@angular/router';
 
 
 @Injectable()
@@ -153,11 +154,34 @@ export class PropertyEffects {
     })
   );
 
+  @Effect()
+  requestCreate$ = this.actions$.pipe(
+    ofType<RequestCreate>(PropertyActionTypes.RequestCreate),
+    tap(({payload}) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Creating team...', color: 'accent' }));
+    }),
+    delay(5000),
+    mergeMap(({ payload }) => this.propertiesService.create$(payload.model).pipe(
+      catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+    )),
+    map((property: Property) => {
+      if (property && property.type && property.id) {
+        this.router.navigate(['/properties/', property.type, 'edit', property.id]);
+        //dispatch the action to save the value in the store
+        return new AddOne({ property });
+      }
+
+      // if here, means http error in the response. 
+      return new FinalizeOperation({ redirectData: ['/properties'] }); //we don't want to do anything in this case, stop the loadingData flag
+    })
+  );
+
   constructor(
     private actions$: Actions,
     private appService: AppService, 
     private store: Store<State>,
-    private propertiesService: PropertiesService
+    private propertiesService: PropertiesService,
+    private router: Router
   ) {}
 
 }

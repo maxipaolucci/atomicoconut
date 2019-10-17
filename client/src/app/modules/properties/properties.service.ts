@@ -24,13 +24,16 @@ export class PropertiesService {
    * Server call to Create a new property in the system 
    * @param postData 
    * 
-   * @return { Observable<any> }
+   * @return { Observable<Property> }
    */
-  create$(postData: any = {}): Observable<any> {
+  create$(postData: any = {}): Observable<Property> {
     const methodTrace = `${this.constructor.name} > create() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers }).pipe(
-      map(this.appService.extractData)
+      map(this.appService.extractData),
+      map((data: any): Property => {
+        return this.populate(data);
+      })
     );
   } 
   
@@ -40,19 +43,7 @@ export class PropertiesService {
    * 
    * @return { Observable<Property> }
    */
-  // update$(postData: any = {}): Observable<any> {
-  //   const methodTrace = `${this.constructor.name} > update() > `; // for debugging
-    
-  //   //to prevent receiving notification of actions performed by current user
-  //   postData.pusherSocketID = this.appService.pusherSocketID;
-
-  //   postData = this.generateFormData(postData);
-
-  //   return this.http.post<Response>(`${this.serverHost}/update`, postData).pipe(
-  //     map(this.appService.extractData)
-  //   );
-  // }
-  update$(postData: any = {}): Observable<any> {
+  update$(postData: any = {}): Observable<Property> {
     const methodTrace = `${this.constructor.name} > update() > `; // for debugging
 
     postData = this.generateFormData(postData);

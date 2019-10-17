@@ -13,7 +13,7 @@ export enum TeamActionTypes {
   RequestUpdate = '[Team] Request update on Server',
   Update_ = '[Team] Update in Store',
   UseAndResetLastUpdatedTeamSlug = '[Team] Use and reset lastUpdatedTeamSlug flag',
-  RequestCreate = '[Team] Request create a new team on Server'
+  RequestCreate = '[Team] Request create on Server'
 }
 
 export class AddAll implements Action {

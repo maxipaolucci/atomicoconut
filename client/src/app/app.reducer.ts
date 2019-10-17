@@ -33,11 +33,6 @@ export function reducer(state: AppState = initialState, action: AppActions): App
       }
     }
 
-    case AppActionTypes.FinalizeOperation: {
-      console.log(methodTrace, state);
-      return state;
-    }
-
     default: {
       return state;
     }

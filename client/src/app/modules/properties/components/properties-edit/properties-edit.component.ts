@@ -1,26 +1,25 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, of, Observable } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { User } from '../../../users/models/user';
 import { Property } from '../../models/property';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AppService } from '../../../../app.service';
-import { PropertiesService } from '../../properties.service';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
-import { PROPERTY_TYPES, DEFAULT_CURRENCY, ConsoleNotificationTypes, SnackbarNotificationTypes } from '../../../../constants';
+import { PROPERTY_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes } from '../../../../constants';
 import { House } from '../../models/house';
 import { MatSelectChange, DateAdapter, NativeDateAdapter, MatDialog } from '@angular/material';
 import { UtilService } from '../../../../util.service';
 import { HouseFiguresDialogComponent } from '../house-figures-dialog/house-figures-dialog.component';
 import { PropertyYieldsDialogComponent } from '../property-yields-dialog/property-yields-dialog.component';
-import { map, combineLatest, flatMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { FilesUploaderChange } from '../../../../modules/shared/components/files-uploader/models/filesUploaderChange';
 import { ShareWithDialogComponent } from '../share-with-dialog/share-with-dialog.component';
 import { userSelector } from 'src/app/modules/users/user.selectors';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
-import { RequestUpdate } from '../../property.actions';
+import { RequestUpdate, RequestCreate } from '../../property.actions';
 import _ from 'lodash';
 import { propertyByIdSelector } from '../../property.selectors';
 
@@ -99,7 +98,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   constructor(
       private route: ActivatedRoute, 
       private mainNavigatorService: MainNavigatorService, 
-      private propertiesService: PropertiesService,
       private appService: AppService, 
       private router: Router, 
       public utilService: UtilService, 
@@ -151,63 +149,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
         }
       });
     this.subscription.add(newSubscription);
-
-    // // generates a property id source from id parameter in url
-    // const id$ = this.route.paramMap.pipe(map((params: ParamMap) => params.get('id')));
-
-    // // combine user$ and id$ sources into one object and start listen to it for changes
-    // newSubscription = user$.pipe(
-    //   combineLatest(id$, (user, id) => {
-    //     this.user = user;
-    //     return { user, propertyId : id };
-    //   }),
-    //   flatMap((data: any): Observable<Property> => {
-        
-    //     this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit =
-    //         this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit =
-    //         this.model.maintenanceCostUnit = this.model.otherCostUnit = (this.user.currency || DEFAULT_CURRENCY);
-    //     this.model.id = data.propertyId || null;
-  
-    //     this.editPropertyServiceRunning = false;
-    //     this.getPropertyServiceRunning = false;
-  
-    //     if (!data.propertyId) {
-    //       // we are creating a new property
-    //       this.id = null;
-    //       this.editMode = false;
-    //       this.mainNavigatorService.appendLink({ displayName: 'Create Property', url: '', selected : true });
-    //       return of(null);
-    //     } else {
-    //       this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected : true });
-    //       // we are editing an existing property
-    //       this.id = data.propertyId;
-    //       this.editMode = true;
-          
-    //       this.getPropertyServiceRunning = true;
-    //       return this.propertiesService.getPropertyById$(this.user.email, data.propertyId);
-    //     }
-    //   })
-    // ).subscribe((property: Property) => {
-    //   if (property) {
-    //     this.populateModel(property);
-    //   }
-      
-    //   this.getPropertyServiceRunning = false;
-    // },
-    // (error: any) => {
-    //   this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > `, error);
-    //   if (error.codeno === 400) {
-    //     this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-    //   } else if (error.codeno === 461 || error.codeno === 462) {
-    //     this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR);
-    //     this.router.navigate(['/welcome']);
-    //   } else {
-    //     this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-    //   }
-
-    //   this.getPropertyServiceRunning = false;
-    // });
-    // this.subscription.add(newSubscription);
 
     // get TYPE parameter
     this.route.paramMap.pipe(map((params: ParamMap) => params.get('type'))).subscribe(type => {
@@ -337,25 +278,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
     this.model.createdOn = new Date(Date.now());
     this.model.updatedOn = new Date(Date.now());
-    // call the investment create service
-    const newSubscription = this.propertiesService.create$(this.model).subscribe(
-      (data: any) => {
-        if (data && data.id && data.type) {
-          this.appService.showResults(`Property successfully created!`, SnackbarNotificationTypes.SUCCESS);
-          this.router.navigate(['/properties/', data.type, 'edit', data.id]);
-        } else {
-          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-        }
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit property service.`, error);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        }
-      }
-    );
 
-    this.subscription.add(newSubscription);
+    this.store.dispatch(new RequestCreate({ model: _.cloneDeep(this.model) }));
   }
 
   onUpdate() {
@@ -371,66 +295,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.model.propertyPhotos = this.propertyPhotos;
     // to prevent receiving notification of actions performed by current user
     this.model.pusherSocketID = this.appService.pusherSocketID;
+
     this.store.dispatch(new RequestUpdate({ model: _.cloneDeep(this.model) }));
-
-
-    // check if what happened inside the subscription is already migrated
-
-
-
-    // call the property update service
-    // const newSubscription = this.propertiesService.update$(this.model).subscribe(
-    //   (data: any) => {
-    //     if (data && data.id && data.type) {
-    //       const messages: any[] = [
-    //         {
-    //           message : `Property successfully updated!`,
-    //           type : 'success'
-    //         }
-    //       ];
-
-    //       if (data.propertyUsersUpdateResult && data.propertyUsersUpdateResult.emailsNotRegistered.length) {
-    //         // handle not registered users
-    //         const message = {
-    //           message : `The following emails added to the team are not registered users in AtomiCoconut: `,
-    //           duration : 8000
-    //         };
-            
-    //         for (const email of data.propertyUsersUpdateResult.emailsNotRegistered) {
-    //           message.message += `"${email}", `;
-    //         }
-
-    //         message.message = message.message.slice(0, -2); // remove last comma char
-    //         message.message += '. We sent them an email to create an account. Once they do it try to add them again.';
-
-    //         messages.push(message);
-    //       }
-
-    //       if (data.propertyUsersUpdateResult && data.propertyUsersUpdateResult.updatedList) {
-    //         this.property.sharedWith = [];
-    //         for (const member of data.propertyUsersUpdateResult.updatedList) {
-    //           this.property.sharedWith.push(new User(member.name, member.email, member.gravatar));
-    //         }
-    //       }
-
-    //       this.appService.showManyResults(messages);
-    //     } else {
-    //       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-    //     }
-
-    //     this.editPropertyServiceRunning = false;
-    //   },
-    //   (error: any) => {
-    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit property service.`, error);
-    //     if (error.codeno === 400) {
-    //       this.appService.showResults(`There was an error with the property services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-    //     }
-
-    //     this.editPropertyServiceRunning = false;
-    //   }
-    // );
-
-    // this.subscription.add(newSubscription);
   }
 
   onCurrencyUnitChange($event: MatSelectChange) {

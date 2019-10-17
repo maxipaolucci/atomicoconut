@@ -10,7 +10,8 @@ export enum PropertyActionTypes {
   RequestOne = '[Property] Request one from Server',
   AddOne = '[Property] Add one to Store',
   RequestUpdate = '[Property] Request update on Server',
-  Update_ = '[Property] Update in Store'
+  Update_ = '[Property] Update in Store',
+  RequestCreate = '[Property] Request create on Server'
 }
 
 export class AddAll implements Action {
@@ -61,8 +62,14 @@ export class RequestUpdate implements Action {
   constructor(public payload: { model: any }) {}
 }
 
+export class RequestCreate implements Action {
+  readonly type = PropertyActionTypes.RequestCreate;
+
+  constructor(public payload: { model: any }) {}
+}
+
 export type PropertyActions = AddAll
     | RequestAll | RequestDelete
     | Delete | RequestOne
     | AddOne | RequestUpdate
-    | Update_;
+    | Update_| RequestCreate;
