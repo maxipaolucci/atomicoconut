@@ -41,9 +41,12 @@ const { CRYPTO_CURRENCIES } = require('./constants/constants');
 
 app.set('port', process.env.PORT);
 
-cron.schedule("1 * * * *", () => {
-  cryptoRatesController.alertCryptoRatio(CRYPTO_CURRENCIES.MONERO, CRYPTO_CURRENCIES.BITCOIN);
-});
+// cron job for xmr/btc ratio just in prod to avoid using mailtrap free data
+if (process.env.NODE_ENV === 'production') {
+  cron.schedule("1 * * * *", () => {
+    cryptoRatesController.alertCryptoRatio(CRYPTO_CURRENCIES.MONERO, CRYPTO_CURRENCIES.BITCOIN);
+  });
+}
 
 const server = app.listen(app.get('port'), () => {
   console.log(`Express running → PORT ${server.address().port}`);
