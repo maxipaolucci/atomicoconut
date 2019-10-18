@@ -15,7 +15,7 @@ import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/y
 import { SelectionModel, SelectionChange } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
-import { RequestAll, RequestDelete } from '../../property.actions';
+import { RequestAll, RequestDelete, ResetAllEntitiesLoaded } from '../../property.actions';
 import { propertiesSelector } from '../../property.selectors';
 
 @Component({
@@ -122,7 +122,8 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
         // nothing to update nor notify
         return;
       }
-
+      
+      this.store.dispatch(new ResetAllEntitiesLoaded()); // to force to reload from server
       this.getProperties(); //reload my properties and table datasource
       const unit = data.originalProperty.unit && data.originalProperty.unit != 'null' ? `${data.originalProperty.unit}/` : '';
       this.appService.showResults(`The property ${unit}${data.originalProperty.address} was just update by ${data.name}.`, SnackbarNotificationTypes.INFO, 8000);

@@ -41,6 +41,13 @@ export function reducer(state = initialState, action: PropertyActions): State {
       return adapter.updateOne(changes, state);
     }
 
+    case PropertyActionTypes.ResetAllEntitiesLoaded: {
+      return {
+        ...state,
+        allEntitiesLoaded: false
+      };
+    }
+
     default: {
       return state;
     }

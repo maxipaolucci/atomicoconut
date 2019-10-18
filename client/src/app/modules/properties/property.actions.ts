@@ -11,7 +11,12 @@ export enum PropertyActionTypes {
   AddOne = '[Property] Add one to Store',
   RequestUpdate = '[Property] Request update on Server',
   Update_ = '[Property] Update in Store',
-  RequestCreate = '[Property] Request create on Server'
+  RequestCreate = '[Property] Request create on Server',
+  ResetAllEntitiesLoaded = '[Property] Reset allEntitiesLoaded in Store'
+}
+
+export class ResetAllEntitiesLoaded implements Action {
+  readonly type = PropertyActionTypes.ResetAllEntitiesLoaded;
 }
 
 export class AddAll implements Action {
@@ -72,4 +77,5 @@ export type PropertyActions = AddAll
     | RequestAll | RequestDelete
     | Delete | RequestOne
     | AddOne | RequestUpdate
-    | Update_| RequestCreate;
+    | Update_| RequestCreate
+    | ResetAllEntitiesLoaded;
