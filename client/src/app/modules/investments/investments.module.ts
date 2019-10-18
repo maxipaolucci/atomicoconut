@@ -15,6 +15,10 @@ import { CurrencyInvestmentFormComponent } from './components/currency-investmen
 import { InvestmentsService } from './investments.service';
 import { PropertyInvestmentFormComponent } from './components/property-investment-form/property-investment-form.component';
 import { PropertyInvestmentComponent } from './components/property-investment/property-investment.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromInvestment from './investment.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { InvestmentEffects } from './investment.effects';
 
 @NgModule({
   imports: [
@@ -23,7 +27,9 @@ import { PropertyInvestmentComponent } from './components/property-investment/pr
     FormsModule,
     FlexLayoutModule,
     CustomMaterialDesignModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forFeature(fromInvestment.investmentsFeatureKey, fromInvestment.reducer),
+    EffectsModule.forFeature([InvestmentEffects])
   ],
   declarations: [
     CurrencyInvestmentComponent,
