@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-import { Investment } from './investment.model';
+import { Investment } from './models/investment';
 
 export enum InvestmentActionTypes {
   ResetAllEntitiesLoaded = '[Property] Reset allEntitiesLoaded in Store',

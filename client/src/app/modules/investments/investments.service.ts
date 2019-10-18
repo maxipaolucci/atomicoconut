@@ -9,8 +9,8 @@ import { CurrencyInvestment } from './models/currencyInvestment';
 import { PropertyInvestment } from './models/propertyInvestment';
 import { Team } from '../teams/models/team';
 import { Response } from '../../models/response';
-import { of, from } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { INVESTMENTS_TYPES, PROPERTY_TYPES, ConsoleNotificationTypes } from '../../constants';
 import { House } from '../properties/models/house';
 import { Address } from '../properties/models/address';
@@ -78,68 +78,20 @@ export class InvestmentsService {
         .set('id', id)
         .set('email', email);
 
-    const investment$ = this.http.get<Response>(`${this.serverHost}/getbyId`, { params })
-        .pipe(
-          map(this.appService.extractData)
-        );
-
-    return investment$.pipe(switchMap((investment) => {
-      let result: Investment = null;
-      if (investment && investment._id) {
-        const createdBy = new User(investment.createdBy.name, investment.createdBy.email, investment.createdBy.gravatar);
-        
-        let team: Team = null;
-        if (investment.team) {
-          // fill team members
-          let admin: User = null;
-          const members: User[] = [];
-          for (const member of investment.team.members) {
-            const newMember = new User(member.name, member.email, member.gravatar);
-            members.push(newMember);
-            if (member.isAdmin) {
-              admin = newMember;
-            }
+    return this.http.get<Response>(`${this.serverHost}/getbyId`, { params })
+      .pipe(
+        map(this.appService.extractData),
+        map((investment): Investment => {
+          let result: Investment = null;
+          if (investment && investment._id) {
+            result = this.populate(investment);
+          } else {
+            this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
           }
-          team = new Team(investment.team.name, investment.team.description, investment.team.slug, admin, members);
-        }
-        
-
-        if (investment.investmentType === INVESTMENTS_TYPES.CURRENCY || investment.investmentType === INVESTMENTS_TYPES.CRYPTO) {
-          result = new CurrencyInvestment(investment._id, investment.amount, investment.amountUnit, createdBy, team, 
-              investment.investmentDistribution, investment.investmentData.amountUnit, investment.investmentData.amount, 
-              investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, 
-              investment.investmentData.buyingDate, investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
-        } else if (investment.investmentType === INVESTMENTS_TYPES.PROPERTY) {
-          let property = null;
-          const propertyData = investment.investmentData.property;
-          let address = new Address();
-          if (propertyData.location) {
-            address = new Address(propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
-          }
-
-          if (propertyData.propertyType === PROPERTY_TYPES.HOUSE) {
-            // we share the createdBy of the investment because we know is the same
-            property = new House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
-                propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit,
-                propertyData.purchasePrice2, propertyData.purchasePrice2Unit, propertyData.purchasePrice3, propertyData.purchasePrice3Unit, propertyData.purchasePrice4, propertyData.purchasePrice4Unit,
-                propertyData.purchasePrice5, propertyData.purchasePrice5Unit, propertyData.dateListed, 
-                propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit,
-                propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, 
-                propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.photos, propertyData.unit, propertyData.status, propertyData.statusDetail, [], propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces,
-                propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate,
-                propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
-          }  
-
-          result = new PropertyInvestment(investment._id, investment.amount, investment.amountUnit, createdBy, team, investment.investmentDistribution, 
-            property, investment.investmentData.buyingPrice, investment.investmentData.buyingPriceUnit, investment.investmentData.buyingDate, 
-            investment.investmentType, investment.loanAmount, investment.loanAmountUnit);
-        }
-      } else {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-      }
-
-      return of(result);
-    }));
+    
+          return result;
+        })
+      );
   }
 
   /**
@@ -158,55 +110,89 @@ export class InvestmentsService {
 
     const params = new HttpParams().set('email', email);
 
-    const investmentsData$ = this.http.get<Response>(`${this.serverHost}/getAll`, { params })
-        .pipe(
-          map(this.appService.extractData)
-        );
+    return this.http.get<Response>(`${this.serverHost}/getAll`, { params })
+      .pipe(
+        map(this.appService.extractData),
+        map((investmentsData): Investment[] => {
+          const investments: Investment[] = [];
     
-    return investmentsData$.pipe(switchMap((investmentsData) => {
-      const investments: Investment[] = [];
-
-      if (investmentsData && investmentsData instanceof Array) {
-        for (const item of investmentsData) {
-          const createdBy = new User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
-          const team = item.team ? new Team(item.team.name, item.team.description, item.team.slug) : null;
-
-          if (item.investmentType === INVESTMENTS_TYPES.CURRENCY || item.investmentType === INVESTMENTS_TYPES.CRYPTO) {
-            investments.push(new CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.investmentData.amountUnit, 
-                item.investmentData.amount, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType,
-                item.loanAmount, item.loanAmountUnit));
-          } else if (item.investmentType === INVESTMENTS_TYPES.PROPERTY) {
-            let property = null;
-            const propertyData = item.investmentData.property;
-            let address = new Address();
-            if (propertyData.location) {
-              address = new Address(propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
+          if (investmentsData && investmentsData instanceof Array) {
+            for (const item of investmentsData) {
+              investments.push(this.populate(item));
             }
+          } else {
+            this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+            return null;
+          }
+    
+          return investments;
+        })
+      );
+  }
 
-            if (propertyData.propertyType === PROPERTY_TYPES.HOUSE) {
-              // we share the createdBy of the investment because we know is the same
-              property = new House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
-                  propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit,
-                  propertyData.purchasePrice2, propertyData.purchasePrice2Unit, propertyData.purchasePrice3, propertyData.purchasePrice3Unit, propertyData.purchasePrice4, propertyData.purchasePrice4Unit,
-                  propertyData.purchasePrice5, propertyData.purchasePrice5Unit, propertyData.dateListed, 
-                  propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit,
-                  propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, 
-                  propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.photos, propertyData.unit, propertyData.status, propertyData.statusDetail, [], propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces,
-                  propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate,
-                  propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
-            }  
+  /**
+   * Populates an investment from an object from server
+   * @param { any } data
+   * 
+   * @return { Investment } 
+   */
+  private populate(data: any): Investment {
+    const methodTrace = `${this.constructor.name} > populate() > `; // for debugging
 
-            investments.push(new PropertyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, 
-                property, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, 
-                item.investmentType, item.loanAmount, item.loanAmountUnit));
+    const item = data;
+    if (item && item._id) {
+      const createdBy = new User(item.createdBy.name, item.createdBy.email, item.createdBy.gravatar);
+      let team = item.team ? new Team(item.team.name, item.team.description, item.team.slug) : null;
+      if (item.team && item.team.members && item.team.members.length) {
+        // fill team members
+        let admin: User = null;
+        const members: User[] = [];
+        for (const member of item.team.members) {
+          const newMember = new User(member.name, member.email, member.gravatar);
+          members.push(newMember);
+          if (member.isAdmin) {
+            admin = newMember;
           }
         }
-      } else {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+
+        team.members = members;
+        team.admin = admin;
       }
 
-      return of(investments);
-    }));
+      if (item.investmentType === INVESTMENTS_TYPES.CURRENCY || item.investmentType === INVESTMENTS_TYPES.CRYPTO) {
+        return new CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.investmentData.amountUnit, 
+            item.investmentData.amount, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType,
+            item.loanAmount, item.loanAmountUnit);
+      } else if (item.investmentType === INVESTMENTS_TYPES.PROPERTY) {
+        let property = null;
+        const propertyData = item.investmentData.property;
+        let address = new Address();
+        if (propertyData.location) {
+          address = new Address(propertyData.location.address, propertyData.location.coordinates[1], propertyData.location.coordinates[0], propertyData.location.mapsPlaceId);
+        }
+
+        if (propertyData.propertyType === PROPERTY_TYPES.HOUSE) {
+          // we share the createdBy of the investment because we know is the same
+          property = new House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
+              propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit,
+              propertyData.purchasePrice2, propertyData.purchasePrice2Unit, propertyData.purchasePrice3, propertyData.purchasePrice3Unit, propertyData.purchasePrice4, propertyData.purchasePrice4Unit,
+              propertyData.purchasePrice5, propertyData.purchasePrice5Unit, propertyData.dateListed, 
+              propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit,
+              propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, 
+              propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.photos, propertyData.unit, propertyData.status, propertyData.statusDetail, [], propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces,
+              propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate,
+              propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
+        }  
+
+        return new PropertyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, 
+            property, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, 
+            item.investmentType, item.loanAmount, item.loanAmountUnit);
+      }
+    } else {
+      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+    }
+
+    return null;
   }
 
   /**

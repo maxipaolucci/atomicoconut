@@ -131,7 +131,7 @@ export class PropertiesService {
    * @return { Property } 
    */
   private populate(data: any): Property {
-    const methodTrace = `${this.constructor.name} > populateTeam() > `; // for debugging
+    const methodTrace = `${this.constructor.name} > populate() > `; // for debugging
 
     if (data && data._id) {
       const createdBy = new User(data.createdBy.name, data.createdBy.email, data.createdBy.gravatar);
@@ -195,6 +195,7 @@ export class PropertiesService {
           }
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+          return null;
         }
   
         return properties;
