@@ -1,6 +1,6 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Investment } from './investment.model';
 import { InvestmentActions, InvestmentActionTypes } from './investment.actions';
+import { Investment } from './models/investment';
 
 export const investmentsFeatureKey = 'investments';
 
