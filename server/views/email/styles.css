@@ -58,7 +58,9 @@ table {
 .main {
   background: #fff;
   border-top:20px solid #7b1fa2;
-  width: 100%; }
+  width: 100%;
+  background-image: url("coconunt.png"); 
+}
 
 .wrapper {
   box-sizing: border-box;
