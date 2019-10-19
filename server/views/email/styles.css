@@ -55,11 +55,18 @@ table {
 /* -------------------------------------
     HEADER, FOOTER, MAIN
 ------------------------------------- */
+.logo__container {
+  text-align: center;
+  background-color: #7b1fa2;
+  padding-top: 5px;
+}
+.logo {
+  width: 50px;
+}
 .main {
   background: #fff;
-  border-top:20px solid #7b1fa2;
+  /* border-top:20px solid #7b1fa2; */
   width: 100%;
-  background-image: url("coconunt.png"); 
 }
 
 .wrapper {

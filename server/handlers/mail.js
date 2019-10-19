@@ -33,7 +33,12 @@ const sendMtMail = async (options) => {
     to : options.toEmail,
     subject : options.subject,
     html,
-    text
+    text,
+    attachments: [{
+      filename: 'coconut.png',
+      path: __dirname +'/images/coconut.png',
+      cid: 'logo' //my mistake was putting "cid:logo@cid" here! 
+    }]
   }
 
   const sendMail = promisify(transportMailTrap.sendMail, transportMailTrap);
