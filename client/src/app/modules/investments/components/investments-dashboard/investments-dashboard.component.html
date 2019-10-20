@@ -5,14 +5,14 @@
       <div *ngFor="let investment of row" fxFlex fxFlex.gt-xs="50">
         <currency-investment *ngIf="investment.type === INVESTMENTS_TYPES.CURRENCY || investment.type === INVESTMENTS_TYPES.CRYPTO"
           [investment]="investment"
-          [teams]="teams"
+          [teams]="(teams$ | async)"
           (totalReturns)="setTotals($event)"
           (deletedInvestment)="removeInvestment($event)">
         </currency-investment>
 
         <property-investment *ngIf="investment.type === INVESTMENTS_TYPES.PROPERTY"
           [investment]="investment"
-          [teams]="teams"
+          [teams]="(teams$ | async)"
           (totalReturns)="setTotals($event)"
           (deletedInvestment)="removeInvestment($event)">
         </property-investment>

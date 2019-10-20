@@ -25,6 +25,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   @Input() investment: CurrencyInvestment;
   @Input()
   set teams(teams: Team[]) {
+    console.log(teams);
     this.teams$.next(teams);
   }
   get teams(): Team[] {

@@ -26,8 +26,8 @@ export class TeamEffects {
       } 
     }),
     withLatestFrom(this.store.pipe(select(allTeamsLoadedSelector()))),
-    filter(([{ payload }, allTeamsLoaded]) => {
-      if (!allTeamsLoaded || payload.forceServerRequest) {
+    filter(([{ payload }, allEntitiesLoaded]) => {
+      if (!allEntitiesLoaded || payload.forceServerRequest) {
         // teams are not in the store or we want to push a fetch from the server
         return true;
       } else {
@@ -36,7 +36,7 @@ export class TeamEffects {
         return false;
       }
     }),
-    mergeMap(([{ payload }, allTeamsLoaded]) => this.teamsService.getTeams$(payload.userEmail)
+    mergeMap(([{ payload }, allEntitiesLoaded]) => this.teamsService.getTeams$(payload.userEmail)
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
@@ -47,7 +47,7 @@ export class TeamEffects {
         return new AddAll({ teams });
       }
 
-      return new AddAll({ teams: [], serverError: true }); //avoid set allTeamsLoaded flag to true
+      return new AddAll({ teams: [], serverError: true }); //avoid set allEntitiesLoaded flag to true
     }) 
   );
 

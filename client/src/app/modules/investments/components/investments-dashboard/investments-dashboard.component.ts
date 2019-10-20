@@ -23,7 +23,7 @@ import _ from 'lodash';
 import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
 import { RequestAll } from '../../investment.actions';
-import { RequestAll as ReqeustAllTeams } from '../../../teams/team.actions';
+import { RequestAll as RequestAllTeams, ResetAllEntitiesLoaded as ResetAllTeamsLoaded } from '../../../teams/team.actions';
 import { investmentsSelector } from '../../investment.selectors';
 import { teamsSelector } from 'src/app/modules/teams/team.selectors';
 
@@ -45,13 +45,12 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   INVESTMENTS_TYPES: any = INVESTMENTS_TYPES; // make it available in the view
   loading$: Observable<LoadingData>;
+  teams$: Observable<Team[]>;
 
   constructor(
-    private route: ActivatedRoute, 
     private mainNavigatorService: MainNavigatorService, 
     public dialog: MatDialog,
     private appService: AppService, 
-    private teamsService: TeamsService, 
     private investmentsService: InvestmentsService, 
     private currencyExchangeService: CurrencyExchangeService,
     private utilService: UtilService,
@@ -69,8 +68,23 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
 
     this.loading$ = this.store.select(loadingSelector());
 
-    // get the user (this is fast)
+    // subscribe to the user
     this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
+    
+    // subscribe to teams
+    this.teams$ = this.store.select(teamsSelector());
+    // this.subscription.add(this.store.select(teamsSelector()).subscribe((teams: Team[]) => {
+    //   console.log(teams);
+    //   this.teams = teams;
+    // }, (error: any) => {
+    //   this.teams = [];
+    // }));
+
+    // subscribe to investments
+    this.subscription.add(this.store.select(investmentsSelector()).subscribe((investments: Investment[]) => {
+      this.organizeInvestmentsData(investments);
+    }));
+
     this.bindToPushNotificationEvents();
     this.getInvestments();
     this.getTeams();
@@ -125,14 +139,14 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
 
     // when a user updates a team
     this.appService.pusherChannel.bind('team-updated', data => {
+      // if I am related to this team the reload the team data
       let reloadData = data.team && data.team.memberState[this.user.email];
       
       if (!reloadData) {
         return;
       }
-
-      this.fetchTeamsSilently();
-      this.fetchInvestmentsSilently();
+      this.store.dispatch(new ResetAllTeamsLoaded()); // to force to reload from server
+      this.getTeams();
     });
   }
 
@@ -200,10 +214,6 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
 
     this.investments = [];
     this.store.dispatch(new RequestAll({ userEmail: this.user.email }));
-    const newSubscription: Subscription = this.store.select(investmentsSelector()).subscribe((investments: Investment[]) => {
-      this.organizeInvestmentsData(investments);
-    });
-    this.subscription.add(newSubscription);
   }
 
   /**
@@ -223,37 +233,29 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   getTeams() {
     const methodTrace = `${this.constructor.name} > getTeams() > `; // for debugging
 
-    this.teams = [];
-
-    this.store.dispatch(new ReqeustAllTeams({ userEmail: this.user.email, forceServerRequest: false }));
-    const newSubscription = this.store.select(teamsSelector()).subscribe((teams: Team[]) => {
-      this.teams = teams;
-    }, (error: any) => {
-      this.teams = [];
-    });
-    this.subscription.add(newSubscription);
+    this.store.dispatch(new RequestAllTeams({ userEmail: this.user.email, forceServerRequest: false }));
   }
 
-  /**
-   * Refetch silently the user teams from the server, and update the teams data in the background
-   */
-  fetchTeamsSilently() {
-    const methodTrace = `${this.constructor.name} > fetchTeamsSilently$() > `; // for debugging
+  // /**
+  //  * Refetch silently the user teams from the server, and update the teams data in the background
+  //  */
+  // fetchTeamsSilently() {
+  //   const methodTrace = `${this.constructor.name} > fetchTeamsSilently$() > `; // for debugging
 
-    const newSubscription = this.fetchTeams$().subscribe((teams : Team[]) => this.teams = teams);
-    this.subscription.add(newSubscription);
-  }
+  //   const newSubscription = this.fetchTeams$().subscribe((teams : Team[]) => this.teams = teams);
+  //   this.subscription.add(newSubscription);
+  // }
 
-  /**
-   * Get a teams observable from server
-   * 
-   * @return { Observable<Team[]> }
-   */
-  fetchTeams$(): Observable<Team[]> {
-    const methodTrace = `${this.constructor.name} > fetchTeams$() > `; // for debugging
+  // /**
+  //  * Get a teams observable from server
+  //  * 
+  //  * @return { Observable<Team[]> }
+  //  */
+  // fetchTeams$(): Observable<Team[]> {
+  //   const methodTrace = `${this.constructor.name} > fetchTeams$() > `; // for debugging
     
-    return this.teamsService.getTeams$(this.user.email);
-  }
+  //   return this.teamsService.getTeams$(this.user.email);
+  // }
 
   setTotals(totalReturns: any): void {
     // update the total that matches the id

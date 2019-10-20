@@ -13,7 +13,12 @@ export enum TeamActionTypes {
   RequestUpdate = '[Team] Request update on Server',
   Update_ = '[Team] Update in Store',
   UseAndResetLastUpdatedTeamSlug = '[Team] Use and reset lastUpdatedTeamSlug flag',
-  RequestCreate = '[Team] Request create on Server'
+  RequestCreate = '[Team] Request create on Server',
+  ResetAllEntitiesLoaded = '[Team] Reset allEntitiesLoaded in Store'
+}
+
+export class ResetAllEntitiesLoaded implements Action {
+  readonly type = TeamActionTypes.ResetAllEntitiesLoaded;
 }
 
 export class AddAll implements Action {
@@ -81,4 +86,4 @@ export type TeamActions = UseAndResetLastUpdatedTeamSlug |
     Delete | RequestDelete | 
     RequestOne | AddOne | 
     RequestUpdate | Update_ | 
-    RequestCreate;
+    RequestCreate | ResetAllEntitiesLoaded;

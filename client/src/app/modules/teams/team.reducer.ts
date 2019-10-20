@@ -6,7 +6,7 @@ export const teamsFeatureKey = 'teams';
 
 export interface State extends EntityState<Team> {
   // additional entities state properties
-  allTeamsLoaded: boolean;
+  allEntitiesLoaded: boolean;
   lastUpdatedTeamSlug: string;
 }
 
@@ -18,7 +18,7 @@ export const adapter: EntityAdapter<Team> = createEntityAdapter<Team>(
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties
-  allTeamsLoaded: false,
+  allEntitiesLoaded: false,
   lastUpdatedTeamSlug: null
 });
 
@@ -27,10 +27,17 @@ export function reducer(state = initialState, action: TeamActions): State {
 
   switch (action.type) { 
 
+    case TeamActionTypes.ResetAllEntitiesLoaded: {
+      return {
+        ...state,
+        allEntitiesLoaded: false
+      };
+    }
+
     case TeamActionTypes.AddAll: {
       return adapter.addAll(action.payload.teams, { 
         ...state, 
-        allTeamsLoaded: action.payload.serverError ? false : true
+        allEntitiesLoaded: action.payload.serverError ? false : true
       });
     }
 

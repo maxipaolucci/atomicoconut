@@ -11,7 +11,7 @@ export const teamsSelector = () => createSelector(
 
 export const allTeamsLoadedSelector = () => createSelector(
   selectTeamsState,
-  teamsState => teamsState.allTeamsLoaded
+  teamsState => teamsState.allEntitiesLoaded
 );
 
 export const teamBySlugSelector = (slug: string) => {
