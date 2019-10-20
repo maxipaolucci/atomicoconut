@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__investments">
-  <section *ngIf="!getInvestmentsServiceRunning && investments.length > 0" fxLayout="column" fxLayoutGap="10px">
+  <section *ngIf="!(loading$ | async) && investments.length" fxLayout="column" fxLayoutGap="10px">
     
     <div *ngFor="let row of investmentsUI" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
       <div *ngFor="let investment of row" fxFlex fxFlex.gt-xs="50">
@@ -49,20 +49,14 @@
 
   </section>
 
-  <section *ngIf="!getInvestmentsServiceRunning && investments.length == 0" fxLayout="column" fxLayoutGap="10px">
+  <section *ngIf="!(loading$ | async) && !investments.length" fxLayout="column" fxLayoutGap="10px">
     <mat-card fxFlex class="no-investments__card">
       <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
           fxLayoutAlign="space-around center">
         <p> You do not have investments yet.</p>
       </mat-card-content>
     </mat-card>
-    
   </section>
-
-  <progress-bar fxFlexAlign="center" class="progress-bar--get-investments" *ngIf="getInvestmentsServiceRunning"
-      color="primary"
-      message="Loading your investments...">
-  </progress-bar>
 
   <section fxLayout="column" fxLayoutAlign="start end" class="actions">
     <button mat-fab class="fab mat-elevation-z10" color="primary" matTooltip="Create new investment" matTooltipPosition="left" (click)="openNewInvestmentDialog()">

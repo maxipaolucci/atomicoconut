@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
-
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { User } from '../../../users/models/user';
-import { UsersService } from '../../../users/users.service';
 import { InvestmentSelectorDialogComponent } from '../investment-selector-dialog/investment-selector-dialog.component';
 import { Investment } from '../../models/investment';
 import { AppService } from '../../../../app.service';
@@ -18,6 +16,16 @@ import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
 import { PropertyInvestment } from '../../models/propertyInvestment';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
+import { userSelector } from 'src/app/modules/users/user.selectors';
+import _ from 'lodash';
+import { LoadingData } from 'src/app/models/loadingData';
+import { loadingSelector } from 'src/app/app.selectors';
+import { RequestAll } from '../../investment.actions';
+import { RequestAll as ReqeustAllTeams } from '../../../teams/team.actions';
+import { investmentsSelector } from '../../investment.selectors';
+import { teamsSelector } from 'src/app/modules/teams/team.selectors';
 
 @Component({
   selector: 'investments-dashboard',
@@ -35,13 +43,20 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   totals: any = {};
   user: User = null;
   subscription: Subscription = new Subscription();
-  getInvestmentsServiceRunning = false;
-  getTeamsServiceRunning = false;
   INVESTMENTS_TYPES: any = INVESTMENTS_TYPES; // make it available in the view
+  loading$: Observable<LoadingData>;
 
-  constructor(private route: ActivatedRoute, private mainNavigatorService: MainNavigatorService, private usersService: UsersService, public dialog: MatDialog,
-      private appService: AppService, private teamsService: TeamsService, private investmentsService: InvestmentsService, private currencyExchangeService: CurrencyExchangeService,
-      private utilService: UtilService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private mainNavigatorService: MainNavigatorService, 
+    public dialog: MatDialog,
+    private appService: AppService, 
+    private teamsService: TeamsService, 
+    private investmentsService: InvestmentsService, 
+    private currencyExchangeService: CurrencyExchangeService,
+    private utilService: UtilService,
+    private store: Store<State>
+  ) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
@@ -52,36 +67,13 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
       { displayName: 'Properties', url: '/properties', selected: false }
     ]);
 
-    // get authUser from resolver
-    const newSubscription = this.route.data.pipe(
-      map((data: { authUser: User }): User =>  {
-        this.user = data.authUser;
-        this.bindToPushNotificationEvents();
+    this.loading$ = this.store.select(loadingSelector());
 
-        return data.authUser;
-      }), 
-      flatMap((user: User): Observable<Investment[]> => {
-        this.getTeams(); // I don't care when this come back
-        return this.getInvestments$();
-      })
-    ).subscribe(
-      (investments: Investment[]) => {
-        this.organizeInvestmentsData(investments);
-        this.getInvestmentsServiceRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-        }
-
-        this.getInvestmentsServiceRunning = false;
-      }
-    );
-
-    this.subscription.add(newSubscription);
+    // get the user (this is fast)
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
+    this.bindToPushNotificationEvents();
+    this.getInvestments();
+    this.getTeams();
   }
 
   ngOnDestroy() {
@@ -201,17 +193,17 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Make and explicit request for user investments to the server and returns an investments observable
-   * 
-   * @return { Observable<Investment[]> }
+   * Make and explicit request for user investments to the server
    */
-  getInvestments$(): Observable<Investment[]>  {
+  getInvestments()  {
     const methodTrace = `${this.constructor.name} > getInvestments$() > `; // for debugging
 
     this.investments = [];
-    this.getInvestmentsServiceRunning = true;
-
-    return this.fetchInvestments$();
+    this.store.dispatch(new RequestAll({ userEmail: this.user.email }));
+    const newSubscription: Subscription = this.store.select(investmentsSelector()).subscribe((investments: Investment[]) => {
+      this.organizeInvestmentsData(investments);
+    });
+    this.subscription.add(newSubscription);
   }
 
   /**
@@ -232,25 +224,13 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > getTeams() > `; // for debugging
 
     this.teams = [];
-    this.getTeamsServiceRunning = true;
 
-    const newSubscription = this.fetchTeams$().subscribe(
-      (teams: Team[]) => {
-        this.teams = teams;
-        this.getTeamsServiceRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-        }
-
-        this.getTeamsServiceRunning = false;
-      }
-    );
-
+    this.store.dispatch(new ReqeustAllTeams({ userEmail: this.user.email, forceServerRequest: false }));
+    const newSubscription = this.store.select(teamsSelector()).subscribe((teams: Team[]) => {
+      this.teams = teams;
+    }, (error: any) => {
+      this.teams = [];
+    });
     this.subscription.add(newSubscription);
   }
 

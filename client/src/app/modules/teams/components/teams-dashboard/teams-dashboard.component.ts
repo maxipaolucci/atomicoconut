@@ -51,10 +51,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     this.subscription.add(this.user$.subscribe((user: User) => this.user = user));
 
     this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: false }));
-    this.teams$ = this.store.pipe(
-      select(teamsSelector())
-    );
-
+    this.teams$ = this.store.select(teamsSelector());
     let newSubscription = this.teams$.subscribe((teams: Team[]) => {
       this.teams = teams;
       if (!this.bindedToPushNotifications) {

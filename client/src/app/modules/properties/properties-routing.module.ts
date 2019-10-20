@@ -13,10 +13,7 @@ const routes: Routes = [
     children : [
       { 
         path : ':type/create', 
-        component : PropertiesEditComponent,
-        resolve : {
-          authUser : UserResolver
-        } 
+        component : PropertiesEditComponent
       },
       { 
         path : ':type/edit/:id', 
