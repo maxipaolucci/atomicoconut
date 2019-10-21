@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
-
 import { AppService } from '../../../../app.service';
 import { InvestmentsService } from '../../investments.service';
 import { User } from '../../../users/models/user';
@@ -9,11 +8,14 @@ import { UsersService } from '../../../users/users.service';
 import { Router } from '@angular/router';
 import { CurrencyExchangeService } from '../../currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { combineLatest, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Subscription, combineLatest, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Team } from '../../../teams/models/team';
 import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
+import { userSelector } from 'src/app/modules/users/user.selectors';
 
 @Component({
   selector: 'currency-investment',
@@ -47,79 +49,117 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
 
 
-  constructor(private currencyExchangeService: CurrencyExchangeService, private appService: AppService, private usersService: UsersService, private investmentsService: InvestmentsService, 
-    public dialog: MatDialog, private router: Router, private utilService: UtilService) {}
+  constructor(
+    private currencyExchangeService: CurrencyExchangeService, 
+    private appService: AppService, 
+    private usersService: UsersService, 
+    private investmentsService: InvestmentsService, 
+    public dialog: MatDialog, 
+    private router: Router, 
+    private utilService: UtilService,
+    private store: Store<State>
+  ) {}
 
   ngOnInit(): void {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
+    
+    // subscribe to the user
+    const combineLatest$ = combineLatest(
+      this.store.select(userSelector()),
+      this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]),
+      this.teams$,
+      this.investment.type === INVESTMENTS_TYPES.CRYPTO ? this.currencyExchangeService.getCryptoRates$(this.investment.unit) : of(null)
+    );
+    combineLatest$.subscribe(([user, currencyRates, teams, cryptoRates]: [User, any, Team[], any]) => {
+      console.log([user, currencyRates, teams, cryptoRates]);
+      if (cryptoRates) {
+        this.currentPrice = Number(cryptoRates.priceUsd);
+      } else {
+        this.currentPrice = 1 / (currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1);
+      }
+
+      // the investment amount was paid on the date of the investment so we need to convert using that day rates
+      this.investmentAmount = this.investment.investmentAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
+      // the loan amount was requested on the date of the investment so we need to convert using that day rates
+      this.loanAmount = this.investment.loanAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
+      // the buying price that was paid on the date of the investment so we need to convert using that day rates
+      this.buyingPrice = this.investment.buyingPrice / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
+      this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
+      this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
+      
+      this.setInvestmentTeamData(teams);
+    });
+
+    // this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
+    
 
     // get the team of the investmetn if exists
-    let newSubscription = null;
-    const currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
-    const currencyRatesAndUser$ = this.usersService.user$.pipe(
-      combineLatest(currencyRates$, (user, currencyRates) => {
-        this.user = user;
-        return { user, currencyRates};
-      })
-    ); // (currency rates and user) source
+    // let newSubscription = null;
+    // const currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
+    // const currencyRatesAndUser$ = this.usersService.user$.pipe(
+    //   combineLatest(currencyRates$, (user, currencyRates) => {
+    //     this.user = user;
+    //     return { user, currencyRates};
+    //   })
+    // ); // (currency rates and user) source
     
-    if (this.investment.type === INVESTMENTS_TYPES.CRYPTO) {
-      // crypto investment
-      const cryptoRates$ = this.currencyExchangeService.getCryptoRates$(this.investment.unit); // get crypto rates observable source
+    // if (this.investment.type === INVESTMENTS_TYPES.CRYPTO) {
+    //   // crypto investment
+    //   const cryptoRates$ = this.currencyExchangeService.getCryptoRates$(this.investment.unit); // get crypto rates observable source
       
-      newSubscription = cryptoRates$.pipe(
-        combineLatest(currencyRatesAndUser$, (cryptoRates, currencyRatesAndUser) => { 
-          return  {
-            currencyRates : currencyRatesAndUser.currencyRates,
-            user : currencyRatesAndUser.user, 
-            cryptoRates 
-          }; 
-        }),
-        switchMap((data) => {
-          this.currentPrice = Number(data.cryptoRates.priceUsd);
-          // the investment amount was paid on the date of the investment so we need to convert using that day rates
-          this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
-          // the loan amount was requested on the date of the investment so we need to convert using that day rates
-          this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
-          // the buying price (of the crypto) was paid on the date of the investment so we need to convert using that day rates
-          this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
-          this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
-          this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
+    //   newSubscription = cryptoRates$.pipe(
+    //     combineLatest(currencyRatesAndUser$, (cryptoRates, currencyRatesAndUser) => { 
+    //       return  {
+    //         currencyRates : currencyRatesAndUser.currencyRates,
+    //         user : currencyRatesAndUser.user, 
+    //         cryptoRates 
+    //       }; 
+    //     }),
+    //     switchMap((data) => {
+    //       this.currentPrice = Number(data.cryptoRates.priceUsd);
+    //       // the investment amount was paid on the date of the investment so we need to convert using that day rates
+    //       this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
+    //       // the loan amount was requested on the date of the investment so we need to convert using that day rates
+    //       this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
+    //       // the buying price (of the crypto) was paid on the date of the investment so we need to convert using that day rates
+    //       this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
+    //       this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
+    //       this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
 
-          return this.teams$;
-        })
-      ).subscribe((teams: Team[]) => {
-        this.setInvestmentTeamData(teams);
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to generate investment data > `, error);
-        this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-      });
-    } else {
-      // currency exchange
-      newSubscription = currencyRatesAndUser$.pipe(switchMap(
-        (data) => {
-          this.currentPrice = 1 / (data.currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1);
-          // the investment amount was paid on the date of the investment so we need to convert using that day rates
-          this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
-          // the loan amount was requested on the date of the investment so we need to convert using that day rates
-          this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
-          // the buying price (of the currency) was paid on the date of the investment so we need to convert using that day rates
-          this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
-          this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
-          this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
+    //       return this.teams$;
+    //     })
+    //   ).subscribe((teams: Team[]) => {
+    //     this.setInvestmentTeamData(teams);
+    //   },
+    //   (error: any) => {
+    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to generate investment data > `, error);
+    //     this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
+    //   });
+    // } else {
+    //   // currency exchange
+    //   newSubscription = currencyRatesAndUser$.pipe(switchMap(
+    //     (data) => {
+    //       this.currentPrice = 1 / (data.currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1);
+    //       // the investment amount was paid on the date of the investment so we need to convert using that day rates
+    //       this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
+    //       // the loan amount was requested on the date of the investment so we need to convert using that day rates
+    //       this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
+    //       // the buying price (of the currency) was paid on the date of the investment so we need to convert using that day rates
+    //       this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
+    //       this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
+    //       this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
 
-          return this.teams$;
-        }
-      )).subscribe((teams: Team[]) => {
-        this.setInvestmentTeamData(teams);
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to generate investment data > `, error);
-        this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-      });
-    }
-    this.subscription.add(newSubscription);
+    //       return this.teams$;
+    //     }
+    //   )).subscribe((teams: Team[]) => {
+    //     this.setInvestmentTeamData(teams);
+    //   },
+    //   (error: any) => {
+    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to generate investment data > `, error);
+    //     this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
+    //   });
+    // }
+    // this.subscription.add(newSubscription);
   }
 
   ngOnDestroy() {

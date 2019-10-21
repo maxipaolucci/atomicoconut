@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, catchError, retry, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AppService } from '../../app.service';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -11,7 +11,6 @@ import { COINCAP_CRYPTO_TYPES, ConsoleNotificationTypes, SnackbarNotificationTyp
 @Injectable()
 export class CurrencyExchangeService {
 
-  private cryptoExchangeServerUrl = 'https://api.coincap.io/v2/assets/';
   cryptoRates: any = {};
   currencyRates: any = {};
   private currencyRatesHost: string = environment.apiHost + '/api/currencyRates';
@@ -67,14 +66,14 @@ export class CurrencyExchangeService {
     
     return this.http.get<Response>(`${this.cryptoRatesHost}/getTodayRates/${COINCAP_CRYPTO_TYPES[crypto.toUpperCase()]}`).pipe(
       map(this.appService.extractData),
-      switchMap((rates: Object) => {
+      map((rates: Object): Observable<any> => {
         if (rates) {
           this.cryptoRates[crypto.toUpperCase()] = rates;
-        } else {
-          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+          return rates;
         }
         
-        return of(this.cryptoRates[crypto.toUpperCase()]);
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+        return null;
       }) 
     );
   }
