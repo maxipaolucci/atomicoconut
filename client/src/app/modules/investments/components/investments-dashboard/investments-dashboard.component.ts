@@ -11,7 +11,7 @@ import { Team } from '../../../teams/models/team';
 import { TeamsService } from '../../../teams/teams.service';
 import { Observable, Subscription, of } from 'rxjs';
 import { map, switchMap, flatMap } from 'rxjs/operators';
-import { CurrencyExchangeService } from '../../currency-exchange.service';
+import { CurrencyExchangeService } from '../../../currency-exchange/currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../../../constants';
 import { UtilService } from '../../../../util.service';

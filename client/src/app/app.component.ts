@@ -3,7 +3,7 @@ import { AppService } from './app.service';
 import { UsersService } from './modules/users/users.service';
 import { User } from './modules/users/models/user';
 import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
-import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
+import { CurrencyExchangeService } from './modules/currency-exchange/currency-exchange.service';
 import { UtilService } from './util.service';
 import { of, Subscription, interval, Observable } from 'rxjs';
 import { flatMap } from 'rxjs/operators';

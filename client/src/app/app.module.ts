@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { UtilService } from './util.service';
-import { CurrencyExchangeService } from './modules/investments/currency-exchange.service';
+import { CurrencyExchangeService } from './modules/currency-exchange/currency-exchange.service';
 import { CustomMaterialDesignModule } from './modules/shared/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
 import { TeamsModule } from './modules/teams/teams.module'; 
@@ -28,6 +28,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { CustomSerializer } from './modules/shared/custom-router-serializer';
 import { HttpErrorInterceptor } from './http-error.interceptor';
 import { AppEffects } from './app.effects';
+import { CurrencyExchangeModule } from './modules/currency-exchange/currency-exchange.module';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { AppEffects } from './app.effects';
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
-    StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer })
+    StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer }),
+    CurrencyExchangeModule
   ],
   declarations: [
     AppComponent,

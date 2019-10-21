@@ -6,7 +6,7 @@ import { InvestmentsService } from '../../investments.service';
 import { User } from '../../../users/models/user';
 import { UsersService } from '../../../users/users.service';
 import { Router } from '@angular/router';
-import { CurrencyExchangeService } from '../../currency-exchange.service';
+import { CurrencyExchangeService } from '../../../currency-exchange/currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { BehaviorSubject, Subscription, combineLatest, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -16,6 +16,7 @@ import { UtilService } from '../../../../util.service';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { userSelector } from 'src/app/modules/users/user.selectors';
+import { RequestOne } from 'src/app/modules/currency-exchange/crypto-rate.actions';
 
 @Component({
   selector: 'currency-investment',
@@ -62,6 +63,10 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
+    
+    if (this.investment.type === INVESTMENTS_TYPES.CRYPTO) {
+      this.store.dispatch(new RequestOne({ crypto: this.investment.unit }));
+    }
     
     // subscribe to the user
     const combineLatest$ = combineLatest(

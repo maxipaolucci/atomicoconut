@@ -4,7 +4,7 @@ import { UsersService } from '../../modules/users/users.service';
 import { AppService } from '../../app.service';
 import { User } from '../../modules/users/models/user';
 import { InvestmentsService } from '../../modules/investments/investments.service';
-import { CurrencyExchangeService } from '../../modules/investments/currency-exchange.service';
+import { CurrencyExchangeService } from '../../modules/currency-exchange/currency-exchange.service';
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
 import { Subscription, of, from, Observable } from 'rxjs';

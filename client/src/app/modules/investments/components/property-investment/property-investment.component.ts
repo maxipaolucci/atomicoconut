@@ -4,7 +4,7 @@ import { Team } from '../../../teams/models/team';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { combineLatest, switchMap } from 'rxjs/operators';
 import { User } from '../../../users/models/user';
-import { CurrencyExchangeService } from '../../currency-exchange.service';
+import { CurrencyExchangeService } from '../../../currency-exchange/currency-exchange.service';
 import { AppService } from '../../../../app.service';
 import { UsersService } from '../../../users/users.service';
 import { InvestmentsService } from '../../investments.service';
