@@ -19,6 +19,8 @@ import { userSelector } from 'src/app/modules/users/user.selectors';
 import { RequestOne } from 'src/app/modules/currency-exchange/crypto-rate.actions';
 import { cryptoRateByIdSelector } from 'src/app/modules/currency-exchange/crypto-rate.selectors';
 import { CryptoRate } from 'src/app/modules/currency-exchange/models/crypto-rate';
+import { currencyRateByIdsSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
+import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-rate';
 
 @Component({
   selector: 'currency-investment',
@@ -68,25 +70,29 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     // subscribe to the user
     const combineLatest$ = combineLatest(
       this.store.select(userSelector()),
-      this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]),
+      this.store.select(currencyRateByIdsSelector([this.utilService.formatToday(), this.utilService.formatDate(this.investment.buyingDate)])),
+      //this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]),
       this.teams$,
       this.investment.type === INVESTMENTS_TYPES.CRYPTO ? this.store.select(cryptoRateByIdSelector(COINCAP_CRYPTO_TYPES[this.investment.unit])) : of(null)
     );
-    combineLatest$.subscribe(([user, currencyRates, teams, cryptoRates]: [User, any, Team[], any]) => {
-      if (cryptoRates) {
-        this.currentPrice = Number(cryptoRates.priceUsd);
-      } else {
-        this.currentPrice = 1 / (currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1);
+    combineLatest$.subscribe(([user, currencyRates, teams, cryptoRates]: [User, { string: CurrencyRate }, Team[], CryptoRate]) => {
+      // for all this info I need to be sure currencyRates are here
+      if (currencyRates && Object.keys(currencyRates).length == 2) {
+        if (this.investment.type === INVESTMENTS_TYPES.CRYPTO  && cryptoRates) {
+          this.currentPrice = Number(cryptoRates.priceUsd);
+        } else if (this.investment.type === INVESTMENTS_TYPES.CURRENCY) {
+          this.currentPrice = 1 / (currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1);
+        }
+  
+        // the investment amount was paid on the date of the investment so we need to convert using that day rates
+        this.investmentAmount = this.investment.investmentAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
+        // the loan amount was requested on the date of the investment so we need to convert using that day rates
+        this.loanAmount = this.investment.loanAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
+        // the buying price that was paid on the date of the investment so we need to convert using that day rates
+        this.buyingPrice = this.investment.buyingPrice / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
+        this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
+        this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
       }
-
-      // the investment amount was paid on the date of the investment so we need to convert using that day rates
-      this.investmentAmount = this.investment.investmentAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
-      // the loan amount was requested on the date of the investment so we need to convert using that day rates
-      this.loanAmount = this.investment.loanAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
-      // the buying price that was paid on the date of the investment so we need to convert using that day rates
-      this.buyingPrice = this.investment.buyingPrice / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
-      this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
-      this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
       
       this.setInvestmentTeamData(teams);
     });

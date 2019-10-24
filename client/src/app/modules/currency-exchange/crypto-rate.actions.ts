@@ -3,7 +3,7 @@ import { CryptoRate } from './models/crypto-rate';
 
 export enum CryptoRateActionTypes {
   RequestOne = '[Crypto Rate] Request one from Server',
-  AddOne = '[Crypto Rate] Add one to Store',
+  AddOne = '[Crypto Rate] Add one to Store'
 }
 
 export class RequestOne implements Action {

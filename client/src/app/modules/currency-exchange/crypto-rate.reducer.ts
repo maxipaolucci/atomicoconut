@@ -8,11 +8,7 @@ export interface State extends EntityState<CryptoRate> {
   // additional entities state properties
 }
 
-export const adapter: EntityAdapter<CryptoRate> = createEntityAdapter<CryptoRate>(
-  // {
-  //   selectId: cryptoRate => cryptoRate.id
-  // }
-);
+export const adapter: EntityAdapter<CryptoRate> = createEntityAdapter<CryptoRate>();
 
 export const initialState: State = adapter.getInitialState({
   // additional entity state properties

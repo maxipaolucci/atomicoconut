@@ -8,6 +8,8 @@ import { environment } from '../../../environments/environment';
 import { UtilService } from '../../util.service';
 import { COINCAP_CRYPTO_TYPES, ConsoleNotificationTypes, SnackbarNotificationTypes } from '../../constants';
 import { CryptoRate } from './models/crypto-rate';
+import { CurrencyRate } from './models/currency-rate';
+import _ from 'lodash';
 
 
 @Injectable()
@@ -20,50 +22,38 @@ export class CurrencyExchangeService {
 
   constructor(private http: HttpClient, private appService: AppService, private utilService: UtilService) { }
 
-  getCurrencyRates$(dates: string[] = [], base: string = 'USD'): Observable<any> {
+  getCurrencyRates$(dates: string[] = [], base: string = 'USD'): Observable<CurrencyRate[]> {
     const methodTrace = `${this.constructor.name} > getCurrencyRates$() > `; // for debugging
-
-    dates.push(this.utilService.formatToday('YYYY-MM-DD')); // adds today to the array
     
-    // check if all the required dates are already cached in this service
-    let found = true;
-    for (const date of dates) {
-      if (!this.currencyRates[date]) {
-        found = false;
-        break;
-      }
-    }
-
-    if (found) {
-      // all dates cached then return this object
-      return of(this.currencyRates);
-    }
-
-    // if here then we need to retrieve some dates from the server
     const params = new HttpParams().set('dates', `${dates}`);
 
     return this.http.get<Response>(`${this.currencyRatesHost}/getByDates/${base}`, { params }).pipe(
-      map((res: Response) => {
-        const data = this.appService.extractData(res);
+      map(this.appService.extractData),
+      map((rates: any): CurrencyRate[] => {
+        let result: CurrencyRate[] = [];
+        if (rates) {
+          for (let [key, value] of Object.entries(rates)) {
+            let currencyRate: CurrencyRate = {
+              id: key,
+              USDAUD: value['USDAUD'],
+              USDUSD: value['USDUSD'],
+              USDNZD: value['USDNZD'],
+              USDEUR: value['USDEUR']
+            };
 
-        if (data) {
-          // merge results
-          Object.assign(this.currencyRates, data);
+            result.push(currencyRate);
+          }
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
 
-        return this.currencyRates;
+        return result;
       })
     );
   }
 
   getCryptoRates$(crypto: string = 'BTC'): Observable<CryptoRate> {
     const methodTrace = `${this.constructor.name} > getCryptoRates$() > `; // for debugging
-
-    // if (this.cryptoRates[crypto.toUpperCase()]) {
-    //   return of(this.cryptoRates[crypto.toUpperCase()]);
-    // }
     
     return this.http.get<Response>(`${this.cryptoRatesHost}/getTodayRates/${COINCAP_CRYPTO_TYPES[crypto.toUpperCase()]}`).pipe(
       map(this.appService.extractData),
@@ -75,7 +65,7 @@ export class CurrencyExchangeService {
             symbol: rates.symbol,
             name: rates.name
           };
-          //this.cryptoRates[crypto.toUpperCase()] = rates;
+          
           return cryptoRate;
         }
         

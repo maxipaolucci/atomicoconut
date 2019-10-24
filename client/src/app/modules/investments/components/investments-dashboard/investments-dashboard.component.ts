@@ -29,6 +29,10 @@ import { teamsSelector } from 'src/app/modules/teams/team.selectors';
 import { cryptoRateByIdSelector } from 'src/app/modules/currency-exchange/crypto-rate.selectors';
 import { CryptoRate } from 'src/app/modules/currency-exchange/models/crypto-rate';
 import { RequestOne as RequestOneCryptoRate } from 'src/app/modules/currency-exchange/crypto-rate.actions';
+import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-rate';
+import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
+import { allCurrencyRateByIdsLoadedSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
+
 
 @Component({
   selector: 'investments-dashboard',
@@ -78,19 +82,19 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     this.teams$ = this.store.select(teamsSelector());
     
     // get investments and crypto rates for each crypto investment of the user
-    this.store.select(investmentsSelector()).pipe(
+    let newSubscription: Subscription = this.store.select(investmentsSelector()).pipe(
       switchMap((investments: Investment[]) => {
         this.organizeInvestmentsData(investments);
-        let cryptoUnits = {};
         
+        let cryptoUnits: string[] = [];
         investments.map((investment: Investment) => {
           if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
-            cryptoUnits[(<CurrencyInvestment>investment).unit] = true;
-            
+            cryptoUnits.push((<CurrencyInvestment>investment).unit);
           }
-        })
+        });
+        cryptoUnits = [...new Set(cryptoUnits)]; //remove duplicates
 
-        return from(Object.keys(cryptoUnits));
+        return from(cryptoUnits);
       }),
       mergeMap((cryptoUnit: string) => combineLatest(this.store.select(cryptoRateByIdSelector(COINCAP_CRYPTO_TYPES[cryptoUnit])), of(cryptoUnit)))
     ).subscribe(([cryptoRate, cryptoUnit]: [CryptoRate, string]) => {
@@ -98,6 +102,34 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         this.store.dispatch(new RequestOneCryptoRate({ crypto: cryptoUnit }));
       }
     });
+    this.subscription.add(newSubscription);
+    
+    // get investments buying dates
+    newSubscription = this.store.select(investmentsSelector()).pipe(
+      switchMap((investments: Investment[]) => {
+        let dates: string[] = [];
+        investments.map((investment: Investment) => {
+          if (investment instanceof CurrencyInvestment) {
+            dates.push(this.utilService.formatDate((<CurrencyInvestment>investment).buyingDate, 'YYYY-MM-DD'));
+          } else if (investment instanceof PropertyInvestment) {
+            dates.push(this.utilService.formatDate((<PropertyInvestment>investment).buyingDate, 'YYYY-MM-DD'));
+          }
+        });
+        if (investments.length) {
+          // to avoid call the service if no investments available yet
+          dates.push(this.utilService.formatToday());
+        }
+        dates = [...new Set(dates)]; //remove duplicates
+
+        return of(dates);
+      }),
+      switchMap((dates: string[]) => combineLatest(this.store.select(allCurrencyRateByIdsLoadedSelector(dates)), of(dates)))
+    ).subscribe(([allCurrencyRatesByIdsLoaded, dates]: [boolean, string[]]) => {
+      if (!allCurrencyRatesByIdsLoaded) {
+        this.store.dispatch(new RequestManyCurrencyRates({ dates, base: 'USD' }));
+      }
+    });
+    this.subscription.add(newSubscription);
 
     this.bindToPushNotificationEvents();
     this.getInvestments();

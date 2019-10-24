@@ -42,24 +42,24 @@ exports.getByDates = async (req, res) => {
     //1 - get rates for the provided dates
     const results = await getByDatesObjects(req.query.dates.split(','), req.params.base, userEmail);
     
-    if (results && Object.keys(results).length) {
-        res.json({
-            status : 'success', 
-            codeno : 200,
-            msg : getMessage('message', 1036, null, false, Object.keys(results).length, 'CurrencyRate(s)'),
-            data : results
+    if (!results || !Object.keys(results).length) {
+        //Nothing found for that date
+        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, 'CurrencyRate')}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 461,
+            msg : getMessage('error', 461, null, false, 'CurrencyRate'),
+            data : null
         });
 
         return;
     }
 
-    //Nothing found for that date
-    console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, 'CurrencyRate')}`);
-    res.status(401).json({ 
-        status : "error", 
-        codeno : 461,
-        msg : getMessage('error', 461, null, false, 'CurrencyRate'),
-        data : null
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1036, null, false, Object.keys(results).length, 'CurrencyRate(s)'),
+        data : results
     });
 };
 
