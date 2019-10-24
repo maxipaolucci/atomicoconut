@@ -9,6 +9,7 @@ import { Store, select } from '@ngrx/store';
 import { AppService } from 'src/app/app.service';
 import { CurrencyExchangeService } from './currency-exchange.service';
 import { CryptoRate } from './models/crypto-rate';
+import { cryptoRateByIdSelector } from './crypto-rate.selectors';
 
 @Injectable()
 export class CryptoRateEffects {
@@ -19,7 +20,7 @@ export class CryptoRateEffects {
     tap(({payload}) => {
       this.store.dispatch(new ShowProgressBar({ message: 'Fetching crypto rate...' }));
     }),
-    exhaustMap(({ payload }) => this.currencyExchangeService.getCryptoRates$(payload.crypto)
+    mergeMap(({ payload }) => this.currencyExchangeService.getCryptoRates$(payload.crypto)
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )

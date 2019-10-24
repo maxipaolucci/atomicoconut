@@ -11,12 +11,14 @@ import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { BehaviorSubject, Subscription, combineLatest, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Team } from '../../../teams/models/team';
-import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../../../constants';
+import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes, COINCAP_CRYPTO_TYPES } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { userSelector } from 'src/app/modules/users/user.selectors';
 import { RequestOne } from 'src/app/modules/currency-exchange/crypto-rate.actions';
+import { cryptoRateByIdSelector } from 'src/app/modules/currency-exchange/crypto-rate.selectors';
+import { CryptoRate } from 'src/app/modules/currency-exchange/models/crypto-rate';
 
 @Component({
   selector: 'currency-investment',
@@ -28,7 +30,6 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   @Input() investment: CurrencyInvestment;
   @Input()
   set teams(teams: Team[]) {
-    console.log(teams);
     this.teams$.next(teams);
   }
   get teams(): Team[] {
@@ -64,19 +65,14 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
-    if (this.investment.type === INVESTMENTS_TYPES.CRYPTO) {
-      this.store.dispatch(new RequestOne({ crypto: this.investment.unit }));
-    }
-    
     // subscribe to the user
     const combineLatest$ = combineLatest(
       this.store.select(userSelector()),
       this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]),
       this.teams$,
-      this.investment.type === INVESTMENTS_TYPES.CRYPTO ? this.currencyExchangeService.getCryptoRates$(this.investment.unit) : of(null)
+      this.investment.type === INVESTMENTS_TYPES.CRYPTO ? this.store.select(cryptoRateByIdSelector(COINCAP_CRYPTO_TYPES[this.investment.unit])) : of(null)
     );
     combineLatest$.subscribe(([user, currencyRates, teams, cryptoRates]: [User, any, Team[], any]) => {
-      console.log([user, currencyRates, teams, cryptoRates]);
       if (cryptoRates) {
         this.currentPrice = Number(cryptoRates.priceUsd);
       } else {

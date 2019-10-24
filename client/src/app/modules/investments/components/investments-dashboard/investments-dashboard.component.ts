@@ -9,11 +9,11 @@ import { AppService } from '../../../../app.service';
 import { InvestmentsService } from '../../investments.service';
 import { Team } from '../../../teams/models/team';
 import { TeamsService } from '../../../teams/teams.service';
-import { Observable, Subscription, of } from 'rxjs';
-import { map, switchMap, flatMap } from 'rxjs/operators';
+import { Observable, Subscription, from, of, combineLatest } from 'rxjs';
+import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { CurrencyExchangeService } from '../../../currency-exchange/currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../../../constants';
+import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes, COINCAP_CRYPTO_TYPES } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
 import { PropertyInvestment } from '../../models/propertyInvestment';
 import { Store } from '@ngrx/store';
@@ -26,6 +26,9 @@ import { RequestAll } from '../../investment.actions';
 import { RequestAll as RequestAllTeams, ResetAllEntitiesLoaded as ResetAllTeamsLoaded } from '../../../teams/team.actions';
 import { investmentsSelector } from '../../investment.selectors';
 import { teamsSelector } from 'src/app/modules/teams/team.selectors';
+import { cryptoRateByIdSelector } from 'src/app/modules/currency-exchange/crypto-rate.selectors';
+import { CryptoRate } from 'src/app/modules/currency-exchange/models/crypto-rate';
+import { RequestOne as RequestOneCryptoRate } from 'src/app/modules/currency-exchange/crypto-rate.actions';
 
 @Component({
   selector: 'investments-dashboard',
@@ -73,17 +76,28 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     
     // subscribe to teams
     this.teams$ = this.store.select(teamsSelector());
-    // this.subscription.add(this.store.select(teamsSelector()).subscribe((teams: Team[]) => {
-    //   console.log(teams);
-    //   this.teams = teams;
-    // }, (error: any) => {
-    //   this.teams = [];
-    // }));
+    
+    // get investments and crypto rates for each crypto investment of the user
+    this.store.select(investmentsSelector()).pipe(
+      switchMap((investments: Investment[]) => {
+        this.organizeInvestmentsData(investments);
+        let cryptoUnits = {};
+        
+        investments.map((investment: Investment) => {
+          if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
+            cryptoUnits[(<CurrencyInvestment>investment).unit] = true;
+            
+          }
+        })
 
-    // subscribe to investments
-    this.subscription.add(this.store.select(investmentsSelector()).subscribe((investments: Investment[]) => {
-      this.organizeInvestmentsData(investments);
-    }));
+        return from(Object.keys(cryptoUnits));
+      }),
+      mergeMap((cryptoUnit: string) => combineLatest(this.store.select(cryptoRateByIdSelector(COINCAP_CRYPTO_TYPES[cryptoUnit])), of(cryptoUnit)))
+    ).subscribe(([cryptoRate, cryptoUnit]: [CryptoRate, string]) => {
+      if (!cryptoRate) {
+        this.store.dispatch(new RequestOneCryptoRate({ crypto: cryptoUnit }));
+      }
+    });
 
     this.bindToPushNotificationEvents();
     this.getInvestments();
