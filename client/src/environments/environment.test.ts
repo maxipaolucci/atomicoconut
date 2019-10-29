@@ -9,7 +9,7 @@ export const environment = {
   showLogs : false,
   mapsApiKey : 'AIzaSyBVl8QaQnQGBw6IyvlQ5K3XepPj6Z9nHt0',
   pusher: {
-    key: '270a7732c2107a9c36ba',
+    key: '27cd80ad4160d1834d8b',
     cluster: 'ap4',
     channel: 'pusher-events-channel'
   }
