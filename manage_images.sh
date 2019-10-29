@@ -6,7 +6,7 @@ if [ "$TRAVIS_BRANCH" != "master" ]; then
   IMAGE_TAG=$TRAVIS_BRANCH
 
   if [[ "$TRAVIS_BRANCH" == "testing" ]]; then
-    DOCKERFILE_CLIENT = 'Dockerfile.testing'
+    DOCKERFILE_CLIENT='Dockerfile.testing'
   fi
 fi
 
