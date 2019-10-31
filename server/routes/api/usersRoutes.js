@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../../controllers/userController');
 const authController = require('../../controllers/authController');
 const { catchErrors } = require('../../handlers/errorHandlers');
+const { check, sanitizeBody } = require('express-validator');
 
 
 //*************************************************************************** */
@@ -11,10 +12,18 @@ const { catchErrors } = require('../../handlers/errorHandlers');
 
 router.route('/login').post(authController.login);
 
-router.route('/register').post( 
-    userController.validateRegister,
-    catchErrors(userController.register),
-    authController.login
+router.route('/register').post(
+  [
+    sanitizeBody('name'),
+    check('name', 'A name is required.').not().isEmpty(),
+    check('email', 'The email provided is invalid').isEmail(),
+    sanitizeBody('email'),
+    check('password', 'Password is required').not().isEmpty(),
+    check('password-confirm', 'Password confirmation is required').not().isEmpty()
+    //check('password', 'Password confirmation must match the password').equals('password-confirm')
+  ],
+  catchErrors(userController.register),
+  authController.login
 );
 
 router.route('/getUser').get(catchErrors(authController.getUser));

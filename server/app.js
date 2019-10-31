@@ -7,9 +7,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const multer = require('multer'); 
 const passport = require('passport');
-const promisify = require('es6-promisify');
+const { promisify } = require('es6-promisify');
 const flash = require('connect-flash');
-const expressValidator = require('express-validator');
 const routes = require('./routes/index');
 const usersRoutes = require('./routes/api/usersRoutes');
 const teamsRoutes = require('./routes/api/teamsRoutes');
@@ -53,9 +52,6 @@ const multerOptions = {
   }
 };
 app.use(multer(multerOptions).array('files'));
-
-// Exposes a bunch of methods for validating data. Used heavily on userController.validateRegister
-app.use(expressValidator());
 
 // populates req.cookies with any cookies that came along with the request
 app.use(cookieParser());

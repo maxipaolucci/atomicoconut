@@ -2,11 +2,13 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const PersonalInfo = mongoose.model('PersonalInfo');
 const FinancialInfo = mongoose.model('FinancialInfo');
-const promisify = require('es6-promisify');
+const { promisify } = require('es6-promisify');
 const { getMessage } = require('../handlers/errorHandlers');
 const { getUserObject } = require('./authController');
+const { validationResult } = require('express-validator');
 
 const errorTrace = 'userController >';
+
 
 exports.validateRegister = (req, res, next) => {
     const methodTrace = `${errorTrace} validateRegister() >`;
@@ -44,13 +46,24 @@ exports.validateRegister = (req, res, next) => {
 
 exports.register = async (req, res, next) => {
     const methodTrace = `${errorTrace} register() >`;
-
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(`${methodTrace} ${getMessage('error', 458, null, true, errors.array())}`);
+        return res.status(400).json({ 
+            status : "error", 
+            codeno : 458,
+            msg : getMessage('error', 458, null, true, ''),
+            data: errors.array()
+        }); 
+    }
     const user = new User({ email : req.body.email, name : req.body.name });
     const register = promisify(User.register, User); //with promisify if the method is in an object then we pass athe object as 2nd param. 
                                                     //this User.register function was added to model by passportLocalMongoose plugin in the user schema. 
-
+    console.log(register + '');
     console.log(`${methodTrace} ${getMessage('message', 1017, user.email, true, user.email)}`);
     await register(user, req.body.password); //this stores a hash of the password in database (thanks to the plugin) 
+    console.log(123);
     console.log(`${methodTrace} ${getMessage('message', 1018, user.email, true, user.email)}`);
     next(); //call next middleware
 };
