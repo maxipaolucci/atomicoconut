@@ -4,7 +4,7 @@ const userController = require('../../controllers/userController');
 const teamController = require('../../controllers/teamController');
 const authController = require('../../controllers/authController');
 const { catchErrors } = require('../../handlers/errorHandlers');
-
+const { check, sanitizeBody } = require('express-validator');
 
 //*************************************************************************** */
 //****************************** TEAM API *********************************** */
@@ -23,16 +23,24 @@ router.route('/getAll').get(
 );
 
 router.route('/create').post(
+  [
+    sanitizeBody('name'),
+    check('name', 'A name is required.').not().isEmpty()
+  ],  
   authController.isLogggedIn, 
   catchErrors(userController.checkLoggedInUserWithEmail),
-  teamController.validateRegister,
+  teamController.validateData,
   catchErrors(teamController.create)
 );
 
 router.route('/update').post(
+  [
+    sanitizeBody('name'),
+    check('name', 'A name is required.').not().isEmpty()
+  ],
   authController.isLogggedIn, 
   catchErrors(userController.checkLoggedInUserWithEmail),
-  teamController.validateRegister,
+  teamController.validateData,
   catchErrors(teamController.update)
 );
 

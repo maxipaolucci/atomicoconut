@@ -22,6 +22,7 @@ router.route('/register').post(
     check('password-confirm', 'Password confirmation is required').not().isEmpty()
     //check('password', 'Password confirmation must match the password').equals('password-confirm')
   ],
+  userController.validateData,
   catchErrors(userController.register),
   authController.login
 );

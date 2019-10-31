@@ -7,14 +7,6 @@ const currencyRatesController = require('../../controllers/currencyRatesControll
 //************************** CURRENCY RATES API ***************************** */
 //*************************************************************************** */
 
-// router.route('/add').post(
-//   currencyRatesController.validateRegister,
-//   catchErrors(currencyRatesController.add)
-// );
-
-// router.route('/:date').get(
-//   catchErrors(currencyRatesController.getByDate)
-// );
 
 router.route('/getByDates/:base').get(
   catchErrors(currencyRatesController.getByDates)

@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
-const md5 = require('md5');
-const promisify = require('es6-promisify');
 const { getMessage } = require('../handlers/errorHandlers');
 const CurrencyRate = mongoose.model('CurrencyRate');
 const { ANONYMOUS_USER } = require('../constants/constants');
@@ -9,27 +6,6 @@ const axios = require('axios');
 
 const errorTrace = 'currencyRatesController >';
 
-exports.validateRegister = (req, res, next) => {
-    const methodTrace = `${errorTrace} validateRegister() >`;
-
-    const userEmail = req.user ? req.user.email : ANONYMOUS_USER; //it is not required to be logged in to access this controller
-
-    const errors = req.validationErrors();
-    if (errors) {
-        const errorsArr = errors.map(err => err.msg);
-        console.log(`${methodTrace} ${getMessage('error', 458, userEmail, true, errorsArr)}`);
-        res.status(400).json({ 
-            status : "error", 
-            codeno : 400,
-            msg : errorsArr
-        });
-        return; //stop from running
-    }
-
-    
-    console.log(`${methodTrace} ${getMessage('message', 1016, userEmail, true)}`);
-    next(); //call next middleware
-};
 
 /**
  * This method stores a rate into our currencyRate table in DB.

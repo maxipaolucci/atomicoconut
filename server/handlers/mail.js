@@ -2,7 +2,6 @@ const nodemailer = require('nodemailer');
 const pug = require('pug');
 const juice = require('juice'); //inline css for email clients
 const htmlToText = require('html-to-text'); //convert html to text format
-const promisify = require('es6-promisify');
 const sgMail = require('@sendgrid/mail'); //to send emails using SendGrid
 const { getMessage } = require('./errorHandlers');
 
@@ -41,8 +40,7 @@ const sendMtMail = async (options) => {
     }]
   }
 
-  const sendMail = promisify(transportMailTrap.sendMail, transportMailTrap);
-  return sendMail(mailOptions);
+  return transportMailTrap.sendMail(mailOptions);
 };
 
 //Sends emails using SendGrid platform

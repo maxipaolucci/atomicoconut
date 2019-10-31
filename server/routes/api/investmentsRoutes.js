@@ -13,7 +13,7 @@ const { catchErrors } = require('../../handlers/errorHandlers');
 router.route('/create').post(
   authController.isLogggedIn, 
   catchErrors(userController.checkLoggedInUserWithEmail),
-  investmentController.validateRegister,
+  investmentController.validateData,
   catchErrors(investmentController.create)
 );
 
@@ -32,7 +32,7 @@ router.route('/getById').get(
 router.route('/update').post(
   authController.isLogggedIn, 
   catchErrors(userController.checkLoggedInUserWithEmail),
-  investmentController.validateRegister,
+  investmentController.validateData,
   catchErrors(investmentController.update)
 );
 

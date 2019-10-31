@@ -2,7 +2,6 @@ const passport = require('passport'); //it is a library to login people in the a
 const crypto = require('crypto'); //get crytographic strings
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-const promisify = require('es6-promisify');
 const mail = require('../handlers/mail');
 const { getMessage } = require('../handlers/errorHandlers');
 
@@ -254,9 +253,7 @@ exports.reset = async (req, res) => {
         return;
     }
     console.log(`${methodTrace} ${getMessage('message', 1012, user.email, true)}`);
-    const setPassword = promisify(user.setPassword, user); //this User.setPassword function was added to model by passportLocalMongoose plugin in the user schema. 
-                                                            // User.setPassword is a callback based method as register in userController so with promisify we convert it into a promise based method.
-    await setPassword(req.body.password); // set the new password to the user in MongoDB
+    await user.setPassword(req.body.password);
     user.resetPasswordToken = undefined; //the way to remove fields from mongo is set to undefined
     user.resetPasswordExpires = undefined;
     const updatedUser = await user.save(); //here is when we save in the database the deleted values before 

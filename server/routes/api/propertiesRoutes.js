@@ -18,7 +18,7 @@ router.route('/getAll').get(
 router.route('/create').post(
   authController.isLogggedIn, 
   catchErrors(userController.checkLoggedInUserWithEmail),
-  propertyController.validateRegister,
+  propertyController.validateData,
   catchErrors(propertyController.storePhotos),
   catchErrors(propertyController.create)
 );
@@ -26,7 +26,7 @@ router.route('/create').post(
 router.route('/update').post(
   authController.isLogggedIn, 
   catchErrors(userController.checkLoggedInUserWithEmail),
-  propertyController.validateRegister,
+  propertyController.validateData,
   catchErrors(propertyController.storePhotos),
   catchErrors(propertyController.update)
 );

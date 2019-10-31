@@ -5,27 +5,6 @@ const mail = require('../handlers/mail');
 
 const errorTrace = 'cryptoRatesController >';
 
-exports.validateRegister = (req, res, next) => {
-    const methodTrace = `${errorTrace} validateRegister() >`;
-
-    const userEmail = req.user ? req.user.email : ANONYMOUS_USER; //it is not required to be logged in to access this controller
-
-    const errors = req.validationErrors();
-    if (errors) {
-        const errorsArr = errors.map(err => err.msg);
-        console.log(`${methodTrace} ${getMessage('error', 458, userEmail, true, errorsArr)}`);
-        res.status(400).json({ 
-            status : "error", 
-            codeno : 400,
-            msg : errorsArr
-        });
-        return; //stop from running
-    }
-
-    
-    console.log(`${methodTrace} ${getMessage('message', 1016, userEmail, true)}`);
-    next(); //call next middleware
-};
 
 /**
  * Get today rates . 
