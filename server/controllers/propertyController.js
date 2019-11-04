@@ -358,7 +358,7 @@ exports.update = async (req, res, next) => {
     // if user is the admin of the property then update property_users, this are the users sharing this property
     let propertyUsersUpdateResult = null;
     if (user.email == originalProperty.createdBy.email) {
-        propertyUsersUpdateResult = await(propertyUserController.updatePropertyUsers(originalProperty._id, sharedWithEmails, user.email, req.headers.host));
+        propertyUsersUpdateResult = await(propertyUserController.updatePropertyUsers(originalProperty._id, sharedWithEmails, user.email, req.headers.origin));
     }
     
     //get the new property object with sharedWith info to know if a client must be updated with a new property shared with him
