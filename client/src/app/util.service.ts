@@ -62,7 +62,7 @@ export class UtilService {
    * 
    * @return {string} . The date provided in the desired format.
    */
-  formatDate(date : Date, formatStr : string = 'YYYY-MM-DD') {
+  formatDate(date : Date, formatStr : string = 'YYYY-MM-DD'): string {
     return moment(date).format(formatStr); 
   }
 

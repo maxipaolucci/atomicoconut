@@ -6,7 +6,7 @@ import { MainNavigatorService } from './modules/shared/components/main-navigator
 import { CurrencyExchangeService } from './modules/currency-exchange/currency-exchange.service';
 import { UtilService } from './util.service';
 import { of, Subscription, interval, Observable } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { flatMap, switchMap } from 'rxjs/operators';
 import { Team } from './modules/teams/models/team';
 import { TeamsService } from './modules/teams/teams.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
@@ -14,10 +14,15 @@ import { ProgressBarDialogComponent } from 'src/app/modules/shared/components/pr
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { RequestLogout } from './modules/users/user.actions';
-import { loggedInSelector } from './modules/users/user.selectors';
+import { loggedInSelector, userSelector } from './modules/users/user.selectors';
 import { LoadingData } from './models/loadingData';
 import { DEFAULT_DIALOG_WIDTH_DESKTOP, SnackbarNotificationTypes, ConsoleNotificationTypes } from './constants';
 import { loadingSelector } from './app.selectors';
+import { allCurrencyRateByIdsLoadedSelector, currencyRateByIdSelector } from './modules/currency-exchange/currency-rate.selectors';
+import { CurrencyRate } from './modules/currency-exchange/models/currency-rate';
+import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
+import { RequestAll as RequestAllTeams } from './modules/teams/team.actions';
+import { teamsSelector } from './modules/teams/team.selectors';
 
 @Component({
   selector: 'app-root',
@@ -31,93 +36,98 @@ export class AppComponent implements OnInit, OnDestroy {
   user: User = null;
   todayUserPrefRate: number = null;
   subscription: Subscription = new Subscription();
-  progressBarDialogRef: MatDialogRef<ProgressBarDialogComponent> = null;
   loading$: Observable<LoadingData> = null;
+  teams: Team[] = [];
 
   constructor(
-      private appService: AppService, 
-      private teamsService: TeamsService, 
+      private appService: AppService,
       public usersService: UsersService, 
-      public currencyExchangeService: CurrencyExchangeService,
+      // public currencyExchangeService: CurrencyExchangeService,
       private utilService: UtilService,
-      public dialog: MatDialog,
+      // public dialog: MatDialog,
       private store: Store<State>
   ) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
+    //Show or hide progress bar for loading...
+    this.loading$ = this.store.select(loadingSelector());
+
     let newSubscription: Subscription = this.store.select(loggedInSelector())
       .subscribe((loggedIn: boolean) => {
         if (!loggedIn) {
-          this.user = null;
-          this.unbindToPushNotificationEvents();
+          
         }
       });
     this.subscription.add(newSubscription);
 
-    //Show or hide progress bar for loading...
-    this.loading$ = this.store.select(loadingSelector());
-    
-    // let newSubscription = this.store.select(loadingSelector()).subscribe((loadingData: LoadingData) => {
-    //   if (loadingData) {
-    //     this.progressBarDialogRef = this.openProgressBarDialog(loadingData)
-    //   } else if(this.progressBarDialogRef) {
-    //     this.progressBarDialogRef.close();
-    //   }
-    // });
-    // this.subscription.add(newSubscription);
+    // subscribe to teams
+    this.subscription.add(this.store.select(teamsSelector()).subscribe((teams: Team[]) => this.teams = teams));
 
     // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
-    newSubscription = this.usersService.user$.pipe(
-      flatMap((user: User) => {
-        if (!user) {
-          this.todayUserPrefRate = null;
-        }
-  
+    // subscribe to the user
+    newSubscription = this.store.select(userSelector()).pipe(
+      switchMap((user: User) => {
         this.user = user;
-
+        
         if (this.user) {
+          //get the teams, will need them for the pusher notifications
+          this.store.dispatch(new RequestAllTeams({ userEmail: this.user.email, forceServerRequest: false }));
           this.bindToPushNotificationEvents();
-        }
 
-        if (this.user && this.user.currency && this.user.currency !== 'USD') {
-          return this.currencyExchangeService.getCurrencyRates$();
+          if (this.user.currency && this.user.currency !== 'USD') {
+            return this.store.select(currencyRateByIdSelector(this.utilService.formatToday()));
+          }
+        } else {
+          this.user = null;
+          this.todayUserPrefRate = null;
+          this.unbindToPushNotificationEvents();
         }
 
         return of(null); // is the user had not configure a preferred currency then we don't need to show the currency toolbar
       })
-    ).subscribe((currencyRates: any) => {
-      if (currencyRates === null) {
-        this.todayUserPrefRate = null;
+    ).subscribe((currencyRate: CurrencyRate) => {
+      if (!this.user) {
         return;
       }
 
-      this.todayUserPrefRate = currencyRates[this.utilService.formatToday()][`USD${this.user.currency}`];
-      this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
-    },
-    (error: any) => {
-      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to get currency rates data > ${error}`);
-      this.appService.showResults(`There was an error trying to get currency rates data.`, SnackbarNotificationTypes.ERROR);
-    }); // start listening the source of user
+      if (!currencyRate && this.user.currency && this.user.currency !== 'USD') {
+        this.store.dispatch(new RequestManyCurrencyRates({ dates: [this.utilService.formatToday()], base: 'USD' }));
+        return;
+      }
+
+      if (!this.todayUserPrefRate) {
+        this.todayUserPrefRate = currencyRate[`USD${this.user.currency}`];
+        this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
+      }
+    });
+    this.subscription.add(newSubscription);
+
+    newSubscription = this.store.select(currencyRateByIdSelector(this.utilService.formatToday())).subscribe((currencyRate: CurrencyRate) => {
+      if (currencyRate && this.user && this.user.currency !== 'USD' && !this.todayUserPrefRate) {
+        this.todayUserPrefRate = currencyRate[`USD${this.user.currency}`];
+        this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
+      }
+    });
     this.subscription.add(newSubscription);
 
     // start tracking user changes every
     this.usersService.updateSessionState();
 
-    this.getCryptoRates('BTC');
-    this.getCryptoRates('XMR');
+    // this.getCryptoRates('BTC');
+    // this.getCryptoRates('XMR');
   }
 
-  openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
-    const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
+  // openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
+  //   const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
     
-    return this.dialog.open(ProgressBarDialogComponent, {
-      width: DEFAULT_DIALOG_WIDTH_DESKTOP,
-      disableClose: true,
-      data: loadingData
-    });
-  }
+  //   return this.dialog.open(ProgressBarDialogComponent, {
+  //     width: DEFAULT_DIALOG_WIDTH_DESKTOP,
+  //     disableClose: true,
+  //     data: loadingData
+  //   });
+  // }
 
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
@@ -128,20 +138,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unbindToPushNotificationEvents();
   }
 
-  getCryptoRates(crypto: string = 'BTC') {
-    const methodTrace = `${this.constructor.name} > getCryptoRates() > `; // for debugging
+  // getCryptoRates(crypto: string = 'BTC') {
+  //   const methodTrace = `${this.constructor.name} > getCryptoRates() > `; // for debugging
 
-    const newSubscription: Subscription = this.currencyExchangeService.getCryptoRates$(crypto).subscribe(
-      (data: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} ${crypto} exchange rate successfully loaded!`);
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to get ${crypto} rates data > ${error}`);
-        this.appService.showResults(`There was an error trying to get ${crypto} rates data, please try again in a few minutes.`, SnackbarNotificationTypes.WARN);
-      }
-    );
-    this.subscription.add(newSubscription);
-  }
+  //   const newSubscription: Subscription = this.currencyExchangeService.getCryptoRates$(crypto).subscribe(
+  //     (data: any) => {
+  //       this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} ${crypto} exchange rate successfully loaded!`);
+  //     },
+  //     (error: any) => {
+  //       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to get ${crypto} rates data > ${error}`);
+  //       this.appService.showResults(`There was an error trying to get ${crypto} rates data, please try again in a few minutes.`, SnackbarNotificationTypes.WARN);
+  //     }
+  //   );
+  //   this.subscription.add(newSubscription);
+  // }
 
   logout(): void {
     const methodTrace = `${this.constructor.name} > logout() > `; // for debugging
@@ -154,18 +164,15 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   bindToPushNotificationEvents() {
     this.appService.pusherChannel.bind('investment-created', data => {
-      const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe((teams: Team[]) => this.showInvestmentNotification('created', data, teams));
-      this.subscription.add(newSubscription);
+      this.showInvestmentNotification('created', data, this.teams);
     });
 
     this.appService.pusherChannel.bind('investment-updated', (data: any) => {
-      const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe((teams: Team[]) => this.showInvestmentNotification('updated', data, teams));
-      this.subscription.add(newSubscription);
+      this.showInvestmentNotification('updated', data, this.teams);
     });
 
     this.appService.pusherChannel.bind('investment-deleted', (data: any) => {
-      const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe((teams: Team[]) => this.showInvestmentNotification('deleted', data, teams));
-      this.subscription.add(newSubscription);
+      this.showInvestmentNotification('deleted', data, this.teams);
     });
 
     this.appService.pusherChannel.bind('team-updated', (data: any) => {
