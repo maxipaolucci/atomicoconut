@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { PropertyInvestment } from '../../models/propertyInvestment';
 import { Team } from '../../../teams/models/team';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { combineLatest, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Subscription, combineLatest } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { User } from '../../../users/models/user';
 import { CurrencyExchangeService } from '../../../currency-exchange/currency-exchange.service';
 import { AppService } from '../../../../app.service';
@@ -14,6 +14,12 @@ import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/y
 import { House } from '../../../properties/models/house';
 import { UtilService } from '../../../../util.service';
 import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
+import { Store, select } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
+import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-rate';
+import { userSelector } from 'src/app/modules/users/user.selectors';
+import { currencyRateByIdsSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
+
 
 @Component({
   selector: 'property-investment',
@@ -47,8 +53,15 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
 
 
-  constructor(private currencyExchangeService: CurrencyExchangeService, private appService: AppService, private usersService: UsersService, private investmentsService: InvestmentsService, 
-    public dialog: MatDialog, private router: Router, private utilService: UtilService) {}
+  constructor(
+    private currencyExchangeService: CurrencyExchangeService, 
+    private appService: AppService, 
+    private usersService: UsersService, 
+    private investmentsService: InvestmentsService, 
+    public dialog: MatDialog, 
+    private router: Router, 
+    private utilService: UtilService,
+    private store: Store<State>) {}
 
   ngOnInit(): void {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
@@ -57,38 +70,30 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
       this.investmentTitle = this.utilService.capitalizeFirstLetter((<House>this.investment.property).buildingType);
     }
 
-    // get the team of the investmetn if exists
     let newSubscription = null;
-    const currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
-    const currencyRatesAndUser$ = this.usersService.user$.pipe(
-      combineLatest(currencyRates$, (user, currencyRates) => { 
-        this.user = user;
-        return { user, currencyRates }; 
-      })
-    ); // (currency rates and user) source
-    
-    newSubscription = currencyRatesAndUser$.pipe(switchMap(
-      (data) => {
+    const combineLatest$ = combineLatest(
+      this.store.select(userSelector()),
+      this.store.select(currencyRateByIdsSelector([this.utilService.formatToday(), this.utilService.formatDate(this.investment.buyingDate)])),
+      this.teams$
+    );
+
+    newSubscription = combineLatest$.subscribe(([user, currencyRates, teams]: [User, { string: CurrencyRate }, Team[]]) => {
+      this.user = user;
+      // for all this info I need to be sure currencyRates are here
+      if (currencyRates && Object.keys(currencyRates).length == 2) {
         // market value should be always up to date so no rate conversion is required
         this.currentPrice = this.currencyExchangeService.getUsdValueOf(this.investment.property.marketValue, this.investment.property.marketValueUnit);
         // the investment amount was paid on the date of the investment so we need to convert using that day rates
-        this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
+        this.investmentAmount = this.investment.investmentAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
         // the loan amount was requested on the date of the investment so we need to convert using that day rates
-        this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
+        this.loanAmount = this.investment.loanAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
         // the buying price (of the property) was requested on the date of the investment so we need to convert using that day rates
-        this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
+        this.buyingPrice = this.investment.buyingPrice / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
         this.investmentReturn = this.currentPrice;
-
-        return this.teams$;
       }
-    )).subscribe((teams: Team[]) => {
-      this.setInvestmentTeamData(teams);
-    },
-    (error: any) => {
-      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to generate investment data > `, error);
-      this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-    });
 
+      this.setInvestmentTeamData(teams);
+    });
     this.subscription.add(newSubscription);
   }
 

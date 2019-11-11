@@ -4,19 +4,15 @@ import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/y
 import { AppService } from '../../../../app.service';
 import { InvestmentsService } from '../../investments.service';
 import { User } from '../../../users/models/user';
-import { UsersService } from '../../../users/users.service';
 import { Router } from '@angular/router';
-import { CurrencyExchangeService } from '../../../currency-exchange/currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { BehaviorSubject, Subscription, combineLatest, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { Team } from '../../../teams/models/team';
 import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes, COINCAP_CRYPTO_TYPES } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { userSelector } from 'src/app/modules/users/user.selectors';
-import { RequestOne } from 'src/app/modules/currency-exchange/crypto-rate.actions';
 import { cryptoRateByIdSelector } from 'src/app/modules/currency-exchange/crypto-rate.selectors';
 import { CryptoRate } from 'src/app/modules/currency-exchange/models/crypto-rate';
 import { currencyRateByIdsSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
@@ -54,9 +50,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private currencyExchangeService: CurrencyExchangeService, 
     private appService: AppService, 
-    private usersService: UsersService, 
     private investmentsService: InvestmentsService, 
     public dialog: MatDialog, 
     private router: Router, 
@@ -67,15 +61,15 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
-    // subscribe to the user
+    let newSubscription = null;
     const combineLatest$ = combineLatest(
       this.store.select(userSelector()),
       this.store.select(currencyRateByIdsSelector([this.utilService.formatToday(), this.utilService.formatDate(this.investment.buyingDate)])),
-      //this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]),
       this.teams$,
       this.investment.type === INVESTMENTS_TYPES.CRYPTO ? this.store.select(cryptoRateByIdSelector(COINCAP_CRYPTO_TYPES[this.investment.unit])) : of(null)
     );
-    combineLatest$.subscribe(([user, currencyRates, teams, cryptoRates]: [User, { string: CurrencyRate }, Team[], CryptoRate]) => {
+    newSubscription = combineLatest$.subscribe(([user, currencyRates, teams, cryptoRates]: [User, { string: CurrencyRate }, Team[], CryptoRate]) => {
+      this.user = user;
       // for all this info I need to be sure currencyRates are here
       if (currencyRates && Object.keys(currencyRates).length == 2) {
         if (this.investment.type === INVESTMENTS_TYPES.CRYPTO  && cryptoRates) {
@@ -96,77 +90,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       
       this.setInvestmentTeamData(teams);
     });
-
-    // this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
-    
-
-    // get the team of the investmetn if exists
-    // let newSubscription = null;
-    // const currencyRates$ = this.currencyExchangeService.getCurrencyRates$([this.utilService.formatDate(this.investment.buyingDate)]); // get currency rates observable source
-    // const currencyRatesAndUser$ = this.usersService.user$.pipe(
-    //   combineLatest(currencyRates$, (user, currencyRates) => {
-    //     this.user = user;
-    //     return { user, currencyRates};
-    //   })
-    // ); // (currency rates and user) source
-    
-    // if (this.investment.type === INVESTMENTS_TYPES.CRYPTO) {
-    //   // crypto investment
-    //   const cryptoRates$ = this.currencyExchangeService.getCryptoRates$(this.investment.unit); // get crypto rates observable source
-      
-    //   newSubscription = cryptoRates$.pipe(
-    //     combineLatest(currencyRatesAndUser$, (cryptoRates, currencyRatesAndUser) => { 
-    //       return  {
-    //         currencyRates : currencyRatesAndUser.currencyRates,
-    //         user : currencyRatesAndUser.user, 
-    //         cryptoRates 
-    //       }; 
-    //     }),
-    //     switchMap((data) => {
-    //       this.currentPrice = Number(data.cryptoRates.priceUsd);
-    //       // the investment amount was paid on the date of the investment so we need to convert using that day rates
-    //       this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
-    //       // the loan amount was requested on the date of the investment so we need to convert using that day rates
-    //       this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
-    //       // the buying price (of the crypto) was paid on the date of the investment so we need to convert using that day rates
-    //       this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
-    //       this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
-    //       this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
-
-    //       return this.teams$;
-    //     })
-    //   ).subscribe((teams: Team[]) => {
-    //     this.setInvestmentTeamData(teams);
-    //   },
-    //   (error: any) => {
-    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to generate investment data > `, error);
-    //     this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-    //   });
-    // } else {
-    //   // currency exchange
-    //   newSubscription = currencyRatesAndUser$.pipe(switchMap(
-    //     (data) => {
-    //       this.currentPrice = 1 / (data.currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1);
-    //       // the investment amount was paid on the date of the investment so we need to convert using that day rates
-    //       this.investmentAmount = this.investment.investmentAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
-    //       // the loan amount was requested on the date of the investment so we need to convert using that day rates
-    //       this.loanAmount = this.investment.loanAmount / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
-    //       // the buying price (of the currency) was paid on the date of the investment so we need to convert using that day rates
-    //       this.buyingPrice = this.investment.buyingPrice / (data.currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
-    //       this.investmentValueWhenBought = this.buyingPrice * this.investment.amount;
-    //       this.investmentReturn = this.currentPrice * this.investment.amount - this.loanAmount;
-
-    //       return this.teams$;
-    //     }
-    //   )).subscribe((teams: Team[]) => {
-    //     this.setInvestmentTeamData(teams);
-    //   },
-    //   (error: any) => {
-    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to generate investment data > `, error);
-    //     this.appService.showResults(`There was an error trying to generate investment data, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-    //   });
-    // }
-    // this.subscription.add(newSubscription);
+    this.subscription.add(newSubscription);
   }
 
   ngOnDestroy() {
