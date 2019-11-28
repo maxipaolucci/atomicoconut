@@ -14,7 +14,7 @@ import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/y
 import { House } from '../../../properties/models/house';
 import { UtilService } from '../../../../util.service';
 import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-rate';
 import { userSelector } from 'src/app/modules/users/user.selectors';
@@ -56,12 +56,12 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
   constructor(
     private currencyExchangeService: CurrencyExchangeService, 
     private appService: AppService, 
-    private usersService: UsersService, 
     private investmentsService: InvestmentsService, 
     public dialog: MatDialog, 
     private router: Router, 
     private utilService: UtilService,
-    private store: Store<State>) {}
+    private store: Store<State>
+  ) {}
 
   ngOnInit(): void {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
@@ -82,7 +82,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
       // for all this info I need to be sure currencyRates are here
       if (currencyRates && Object.keys(currencyRates).length == 2) {
         // market value should be always up to date so no rate conversion is required
-        this.currentPrice = this.currencyExchangeService.getUsdValueOf(this.investment.property.marketValue, this.investment.property.marketValueUnit);
+        this.currentPrice = this.currencyExchangeService.getUsdValueOf(this.investment.property.marketValue, this.investment.property.marketValueUnit, currencyRates);
         // the investment amount was paid on the date of the investment so we need to convert using that day rates
         this.investmentAmount = this.investment.investmentAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
         // the loan amount was requested on the date of the investment so we need to convert using that day rates

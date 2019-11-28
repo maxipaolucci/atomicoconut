@@ -35,7 +35,10 @@ const routes: Routes = [
       { 
         path : '', 
         pathMatch : 'full',
-        component : InvestmentsDashboardComponent
+        component : InvestmentsDashboardComponent,
+        resolve : {
+          authUser : UserResolver
+        }
       }
     ]
   }

@@ -110,9 +110,9 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         let dates: string[] = [];
         investments.map((investment: Investment) => {
           if (investment instanceof CurrencyInvestment) {
-            dates.push(this.utilService.formatDate((<CurrencyInvestment>investment).buyingDate, 'YYYY-MM-DD'));
+            dates.push(this.utilService.formatDate((<CurrencyInvestment>investment).buyingDate));
           } else if (investment instanceof PropertyInvestment) {
-            dates.push(this.utilService.formatDate((<PropertyInvestment>investment).buyingDate, 'YYYY-MM-DD'));
+            dates.push(this.utilService.formatDate((<PropertyInvestment>investment).buyingDate));
           }
         });
         if (investments.length) {

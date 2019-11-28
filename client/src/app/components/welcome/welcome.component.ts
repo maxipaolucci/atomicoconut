@@ -7,11 +7,22 @@ import { InvestmentsService } from '../../modules/investments/investments.servic
 import { CurrencyExchangeService } from '../../modules/currency-exchange/currency-exchange.service';
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
-import { Subscription, of, from, Observable } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import { Subscription, of, from, Observable, combineLatest } from 'rxjs';
+import { switchMap, map, filter } from 'rxjs/operators';
 import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../constants';
 import { UtilService } from '../../util.service';
 import { PropertyInvestment } from '../../modules/investments/models/propertyInvestment';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
+import { userSelector } from 'src/app/modules/users/user.selectors';
+import { RequestAuthenticatedUser } from 'src/app/modules/users/user.actions';
+import { RequestAll as RequestAllInvestments } from 'src/app/modules/investments/investment.actions';
+import { investmentsSelector } from 'src/app/modules/investments/investment.selectors';
+import { allCurrencyRateByIdsLoadedSelector, currencyRateByIdsSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
+import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
+import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-rate';
+import _ from 'lodash';
+
 
 @Component({
   selector: 'welcome',
@@ -26,8 +37,15 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   progressBarWealthValue = 0;
   subscription: Subscription = new Subscription();
 
-  constructor(private mainNavigatorService: MainNavigatorService, private usersService: UsersService, private appService: AppService, 
-      private investmentsService: InvestmentsService, private currencyExchangeService: CurrencyExchangeService, private utilService: UtilService) { }
+  constructor(
+    private mainNavigatorService: MainNavigatorService, 
+    private usersService: UsersService, 
+    private appService: AppService, 
+    private investmentsService: InvestmentsService, 
+    private currencyExchangeService: CurrencyExchangeService, 
+    private utilService: UtilService,
+    private store: Store<State>
+  ) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
@@ -38,7 +56,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       { displayName: 'Properties', url: '/properties', selected: false },
       { displayName: 'Calculators', url: '/calculators', selected: false }
     ]);
-    
+
     this.generateWealthComponentInfo();
   }
 
@@ -50,30 +68,128 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   generateWealthComponentInfo() {
     const methodTrace = `${this.constructor.name} > generateWealthComponentInfo() > `; // for debugging
 
+    let todayRatesLoaded: boolean = false;
     let currentUserInvestments: Investment[] = [];
-    const newSubscription: Subscription = this.setUserAndGetInvestments$().pipe(
-      flatMap((userInvestments: Investment[]) => {
-        currentUserInvestments = userInvestments;
-        const investmentsDates: string[] = userInvestments.map((investment: Investment) => {
+    let currentUserInvestmentsDates: string[] = [];
+
+    let newSubscription: Subscription = combineLatest(
+      this.store.select(userSelector()),
+      this.store.select(currencyRateByIdsSelector([this.utilService.formatToday()])) //request is trigger by app component
+    ).pipe(
+      filter(([user, todayRates]: [User, { string: CurrencyRate }]) =>{
+        if (todayRatesLoaded && this.user && _.isEqual(user, this.user)) {
+          // this means the observer was trigger again with data no new data. Block it
+          return false;
+        }
+
+        if (!Object.keys(todayRates).length) {
+          // no rates for today yet
+          return false;
+        }
+
+        if (!user || !user.personalInfo || !user.financialInfo) {
+          // no complete user data yet
+          this.store.dispatch(new RequestAuthenticatedUser({ personalInfo: true, financialInfo: true }));
+          return false;
+        }
+
+        return true;
+      })
+    ).subscribe(([user, todayRates]: [User, { string: CurrencyRate }]) => {
+      this.user = user;
+      todayRatesLoaded = true;
+      // reset all values to recalculate for this user 
+      this.wealthAmount = 0;
+      this.expectedWealth = 0;
+      this.progressBarWealthValue = 0;
+      currentUserInvestmentsDates = [];
+      currentUserInvestments = [];
+      
+      this.wealthAmount += this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit, todayRates);
+      if (user.personalInfo.age) {
+        this.expectedWealth = this.currencyExchangeService.getUsdValueOf(user.financialInfo.annualIncome || 0, user.financialInfo.annualIncomeUnit, todayRates) * user.personalInfo.age / 10;
+      } else {
+        this.expectedWealth = 0;
+      }
+      
+      this.calculateProgressBarWealthValue();
+      this.store.dispatch(new RequestAllInvestments({ userEmail: this.user.email }));
+    });
+    this.subscription.add(newSubscription);
+
+    // get investments and currency rates from investments
+    newSubscription = this.store.select(investmentsSelector()).pipe(
+      filter((investments: Investment[]) => !!investments.length),
+      switchMap((investments: Investment[]) => {
+        currentUserInvestments = investments;
+        let investmentsDates: string[] = investments.map((investment: Investment) => {
           if (investment instanceof CurrencyInvestment) {  
             return this.utilService.formatDate((<CurrencyInvestment>investment).buyingDate);
           } else if (investment instanceof PropertyInvestment) {
             return this.utilService.formatDate((<PropertyInvestment>investment).buyingDate);
           }
-
+          
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Invalid investment instance type.`);
           return this.utilService.formatToday(); // this should never happen. BuyingDate is required in investments
         });
         
-        return this.currencyExchangeService.getCurrencyRates$(investmentsDates);
+        if (investments.length) {
+          // to avoid call the service if no investments available yet
+          investmentsDates.push(this.utilService.formatToday());
+        }
+        investmentsDates = [...new Set(investmentsDates)]; //remove duplicates
+        currentUserInvestmentsDates = investmentsDates;
+
+        return of(investmentsDates);
       }),
-      flatMap((currencyRates: any): Observable<any> => {
+      switchMap((investmentsDates: string[]) => combineLatest(
+        this.store.select(allCurrencyRateByIdsLoadedSelector(investmentsDates)), 
+        of(investmentsDates)
+      )),
+      filter(([allCurrencyRatesByIdsLoaded, investmentsDates]: [boolean, string[]]) => {
+        if (!allCurrencyRatesByIdsLoaded) {
+          this.store.dispatch(new RequestManyCurrencyRates({ dates: investmentsDates, base: 'USD' }));
+          return false;
+        }
+
+        return true;
+      })
+    ).subscribe(([allCurrencyRatesByIdsLoaded, investmentsDates]: [boolean, string[]]) => {
+      this.combineInvestmentsWithCurrencyRates(currentUserInvestments, currentUserInvestmentsDates);
+
+    });
+    this.subscription.add(newSubscription);
+    
+    
+  }
+
+  /**
+   * This method make pair of { Investment, CurrencyRate (on investment buying date) ) to calculate the invesment numbers based on currency
+   * 
+   * @param { Investment[] } currentUserInvestments . The user investments 
+   * @param { string[] } currentUserInvestmentsDates . The dates of the investment buying date
+   */
+  combineInvestmentsWithCurrencyRates(currentUserInvestments: Investment[], currentUserInvestmentsDates: string[]) {
+    const methodTrace = `${this.constructor.name} > combineInvestmentsWithCurrencyRates() > `; // for debugging
+    
+    const newSubscription = this.store.select(currencyRateByIdsSelector(currentUserInvestmentsDates)).pipe(
+      filter((currencyRates: {string: CurrencyRate}) => {
+        const currencyRatesLength = Object.keys(currencyRates).length;
+
+        if (!(currencyRatesLength && currentUserInvestmentsDates.length) || currencyRatesLength !== currentUserInvestmentsDates.length) {
+          return false;
+        }
+        
+        return true;
+      }),
+      switchMap((currencyRates: {string: CurrencyRate}) => {
         const investmentsAndCurrencyRates: any[] = currentUserInvestments.map((investment: Investment) => {
           return { currencyRates, investment };
         });
 
         return from(investmentsAndCurrencyRates);
       }),
-      flatMap((investmentAndCurrencyRates: any): Observable<any> => {
+      switchMap((investmentAndCurrencyRates: any): Observable<any> => {
         const myPercentage = (investmentAndCurrencyRates.investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
 
         if (investmentAndCurrencyRates.investment instanceof CurrencyInvestment) {
@@ -97,7 +213,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           }
         } else if (investmentAndCurrencyRates.investment instanceof PropertyInvestment) {
           const investment: PropertyInvestment = <PropertyInvestment>investmentAndCurrencyRates.investment;
-          this.wealthAmount += (this.currencyExchangeService.getUsdValueOf(investment.property.marketValue, investment.property.marketValueUnit)
+          this.wealthAmount += (this.currencyExchangeService.getUsdValueOf(investment.property.marketValue, investment.property.marketValueUnit, investmentAndCurrencyRates['currencyRates'])
               - (investment.loanAmount / (investmentAndCurrencyRates['currencyRates'][this.utilService.formatDate(investment.buyingDate)][`USD${investment.loanAmountUnit}`] || 1)))
               * myPercentage / 100;
           this.calculateProgressBarWealthValue();
@@ -117,59 +233,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         this.calculateProgressBarWealthValue();
       }
       
-    },
-    (error: any) => {
-      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to get required data > `, error);
-      this.appService.showResults(`There was an error trying to get required data, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
     });
     this.subscription.add(newSubscription);
-  }
-
-  /**
-   * Sets the user property with the current user or null if nobody logged in yet.
-   * 
-   * @return { Observable<Investment[]> } . An observable with array of the logged in user investments or [] if nobody is logged in yet
-   */
-  setUserAndGetInvestments$(): Observable<Investment[]> {
-    const methodTrace = `${this.constructor.name} > setUserAndGetInvestments$() > `; // for debugging
-
-    return this.usersService.user$.pipe(
-      flatMap((user: User) => {
-        // reset all values to recalculate for this user 
-        this.wealthAmount = 0;
-        this.expectedWealth = 0;
-        this.progressBarWealthValue = 0;
-        if (!user) {
-          return of(null);
-        } else if (!user.personalInfo || !user.financialInfo) {
-          return this.usersService.getAuthenticatedUser$({ personalInfo: true, financialInfo: true });
-        } else {
-          return of(user);
-        }
-      }),
-      flatMap((user: User) => {
-        this.user = user;
-
-        if (user) {
-          if (user.financialInfo) {
-            this.wealthAmount += this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit);
-            
-            if (user.personalInfo && user.personalInfo.age) {
-              this.expectedWealth = this.currencyExchangeService.getUsdValueOf(user.financialInfo.annualIncome || 0, user.financialInfo.annualIncomeUnit) * user.personalInfo.age / 10;
-            } else {
-              this.expectedWealth = 0;
-            }
-            
-            this.calculateProgressBarWealthValue();
-          }
-  
-          return this.investmentsService.getInvestments$(user.email);
-        }
-        
-        return of([]);
-      })
-    );
-    
   }
 
   calculateProgressBarWealthValue() {

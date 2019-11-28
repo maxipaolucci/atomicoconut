@@ -30,6 +30,7 @@ import { HttpErrorInterceptor } from './http-error.interceptor';
 import { AppEffects } from './app.effects';
 import { CurrencyExchangeModule } from './modules/currency-exchange/currency-exchange.module';
 
+
 @NgModule({
   imports: [
     BrowserModule,

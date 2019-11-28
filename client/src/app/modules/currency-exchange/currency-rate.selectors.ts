@@ -29,7 +29,7 @@ export const currencyRateByIdsSelector = (dates: string[]) => {
             currencyRates[date] = currencyRatesState.entities[date];
           }
         });
-
+        
         return currencyRates;
       }
   )
@@ -37,10 +37,11 @@ export const currencyRateByIdsSelector = (dates: string[]) => {
 
 export const allCurrencyRateByIdsLoadedSelector = (dates: string[]) => {
   const baseSelector = currencyRateByIdsSelector(dates);
+  
   return createSelector(
     baseSelector,
     currencyRatesState => {
-      return Object.keys(currencyRatesState).length === dates.length
+      return Object.keys(currencyRatesState).length === dates.length;
     }
   )
 };

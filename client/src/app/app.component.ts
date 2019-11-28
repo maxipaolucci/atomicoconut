@@ -6,7 +6,7 @@ import { MainNavigatorService } from './modules/shared/components/main-navigator
 import { CurrencyExchangeService } from './modules/currency-exchange/currency-exchange.service';
 import { UtilService } from './util.service';
 import { of, Subscription, interval, Observable } from 'rxjs';
-import { flatMap, switchMap } from 'rxjs/operators';
+import { flatMap, switchMap, filter } from 'rxjs/operators';
 import { Team } from './modules/teams/models/team';
 import { TeamsService } from './modules/teams/teams.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
@@ -23,6 +23,8 @@ import { CurrencyRate } from './modules/currency-exchange/models/currency-rate';
 import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
 import { RequestAll as RequestAllTeams } from './modules/teams/team.actions';
 import { teamsSelector } from './modules/teams/team.selectors';
+import _ from 'lodash';
+
 
 @Component({
   selector: 'app-root',
@@ -54,44 +56,36 @@ export class AppComponent implements OnInit, OnDestroy {
     //Show or hide progress bar for loading...
     this.loading$ = this.store.select(loadingSelector());
 
-    let newSubscription: Subscription = this.store.select(loggedInSelector())
-      .subscribe((loggedIn: boolean) => {
-        if (!loggedIn) {
-          
-        }
-      });
-    this.subscription.add(newSubscription);
-
     // subscribe to teams
     this.subscription.add(this.store.select(teamsSelector()).subscribe((teams: Team[]) => this.teams = teams));
 
     // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
     // subscribe to the user
-    newSubscription = this.store.select(userSelector()).pipe(
+    let newSubscription: Subscription = this.store.select(userSelector()).pipe(
       switchMap((user: User) => {
-        this.user = user;
-        
-        if (this.user) {
-          //get the teams, will need them for the pusher notifications
-          this.store.dispatch(new RequestAllTeams({ userEmail: this.user.email, forceServerRequest: false }));
-          this.bindToPushNotificationEvents();
-
-          if (this.user.currency && this.user.currency !== 'USD') {
-            return this.store.select(currencyRateByIdSelector(this.utilService.formatToday()));
-          }
-        } else {
+        if (!user) {
           this.user = null;
           this.todayUserPrefRate = null;
           this.unbindToPushNotificationEvents();
+          
+          return of(null);
         }
 
+        if (!_.isEqual(user, this.user)) {
+          this.user = user;
+          //get the teams, will need them for the pusher notifications
+          this.store.dispatch(new RequestAllTeams({ userEmail: this.user.email, forceServerRequest: false }));
+          this.bindToPushNotificationEvents();
+        }
+        
+        if (this.user.currency && this.user.currency !== 'USD') {
+          return this.store.select(currencyRateByIdSelector(this.utilService.formatToday()));
+        }
+        
         return of(null); // is the user had not configure a preferred currency then we don't need to show the currency toolbar
-      })
+      }),
+      filter((currencyRate: CurrencyRate) => !!this.user)
     ).subscribe((currencyRate: CurrencyRate) => {
-      if (!this.user) {
-        return;
-      }
-
       if (!currencyRate && this.user.currency && this.user.currency !== 'USD') {
         this.store.dispatch(new RequestManyCurrencyRates({ dates: [this.utilService.formatToday()], base: 'USD' }));
         return;
@@ -104,16 +98,16 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     this.subscription.add(newSubscription);
 
-    newSubscription = this.store.select(currencyRateByIdSelector(this.utilService.formatToday())).subscribe((currencyRate: CurrencyRate) => {
-      if (currencyRate && this.user && this.user.currency !== 'USD' && !this.todayUserPrefRate) {
-        this.todayUserPrefRate = currencyRate[`USD${this.user.currency}`];
-        this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
-      }
+    newSubscription = this.store.select(currencyRateByIdSelector(this.utilService.formatToday())).pipe(
+      filter((currencyRates: CurrencyRate) => currencyRates && this.user && this.user.currency !== 'USD' && !this.todayUserPrefRate)
+    ).subscribe((currencyRates: CurrencyRate) => {
+      this.todayUserPrefRate = currencyRates[`USD${this.user.currency}`];
+      this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
     });
     this.subscription.add(newSubscription);
 
     // start tracking user changes every
-    this.usersService.updateSessionState();
+    // this.usersService.updateSessionState();
 
     // this.getCryptoRates('BTC');
     // this.getCryptoRates('XMR');

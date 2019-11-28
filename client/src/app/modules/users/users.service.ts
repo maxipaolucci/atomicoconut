@@ -218,24 +218,24 @@ export class UsersService {
    * 
    * @param { number } time. The amount of time in ms between each session state check. Default to 10min
    */
-  updateSessionState(time: number = 600000) {
-    const methodTrace = `${this.constructor.name} > updateSessionState() > `; // for debugging
+  // updateSessionState(time: number = 600000) {
+  //   const methodTrace = `${this.constructor.name} > updateSessionState() > `; // for debugging
     
-    interval(time).pipe(
-      mergeMap((checkNumber: number) => {
-        console.log(methodTrace, checkNumber);
-        const user: User = this.getUser();
-        const params = {
-          financialInfo: user && user.financialInfo ? true : false,
-          personalInfo: user && user.personalInfo ? true : false
-        };
+  //   interval(time).pipe(
+  //     mergeMap((checkNumber: number) => {
+  //       console.log(methodTrace, checkNumber);
+  //       const user: User = this.getUser();
+  //       const params = {
+  //         financialInfo: user && user.financialInfo ? true : false,
+  //         personalInfo: user && user.personalInfo ? true : false
+  //       };
         
-        return this.getAuthenticatedUser$(params);
-      })
-    ).subscribe((user: User) => {
-      // do nothing
-    });
-  }
+  //       return this.getAuthenticatedUser$(params);
+  //     })
+  //   ).subscribe((user: User) => {
+  //     // do nothing
+  //   });
+  // }
 
   /**
    * Server call to login the provided user email and pass.

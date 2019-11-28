@@ -41,7 +41,7 @@ export class UserEffects {
   });
 
   @Effect()
-  requestAuthenticatedUser$ = defer(() => {
+  requestAuthenticatedUser$ = this.actions$.pipe(
     ofType<RequestAuthenticatedUser>(UserActionTypes.RequestAuthenticatedUser),
     mergeMap(({ payload }) => this.usersService.getAuthenticatedUser$(payload)
       .pipe(
@@ -55,7 +55,7 @@ export class UserEffects {
       
       return new Logout();
     })
-  });
+  );
 
   @Effect()
   requestlogin$ = this.actions$.pipe(
