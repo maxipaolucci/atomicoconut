@@ -1,15 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MainNavigatorService } from '../../modules/shared/components/main-navigator/main-navigator.service';
-import { UsersService } from '../../modules/users/users.service';
 import { AppService } from '../../app.service';
 import { User } from '../../modules/users/models/user';
-import { InvestmentsService } from '../../modules/investments/investments.service';
 import { CurrencyExchangeService } from '../../modules/currency-exchange/currency-exchange.service';
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
 import { Subscription, of, from, Observable, combineLatest } from 'rxjs';
 import { switchMap, map, filter } from 'rxjs/operators';
-import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../constants';
+import { INVESTMENTS_TYPES, ConsoleNotificationTypes } from '../../constants';
 import { UtilService } from '../../util.service';
 import { PropertyInvestment } from '../../modules/investments/models/propertyInvestment';
 import { Store } from '@ngrx/store';
@@ -38,10 +36,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
 
   constructor(
-    private mainNavigatorService: MainNavigatorService, 
-    private usersService: UsersService, 
+    private mainNavigatorService: MainNavigatorService,
     private appService: AppService, 
-    private investmentsService: InvestmentsService, 
     private currencyExchangeService: CurrencyExchangeService, 
     private utilService: UtilService,
     private store: Store<State>

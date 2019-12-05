@@ -1,24 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppService } from './app.service';
-import { UsersService } from './modules/users/users.service';
 import { User } from './modules/users/models/user';
 import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
-import { CurrencyExchangeService } from './modules/currency-exchange/currency-exchange.service';
 import { UtilService } from './util.service';
-import { of, Subscription, interval, Observable } from 'rxjs';
-import { flatMap, switchMap, filter } from 'rxjs/operators';
+import { of, Subscription, Observable } from 'rxjs';
+import { switchMap, filter } from 'rxjs/operators';
 import { Team } from './modules/teams/models/team';
-import { TeamsService } from './modules/teams/teams.service';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { ProgressBarDialogComponent } from 'src/app/modules/shared/components/progress-bar-dialog/progress-bar-dialog.component';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { RequestLogout } from './modules/users/user.actions';
-import { loggedInSelector, userSelector } from './modules/users/user.selectors';
+import { userSelector } from './modules/users/user.selectors';
 import { LoadingData } from './models/loadingData';
-import { DEFAULT_DIALOG_WIDTH_DESKTOP, SnackbarNotificationTypes, ConsoleNotificationTypes } from './constants';
+import { SnackbarNotificationTypes, ConsoleNotificationTypes } from './constants';
 import { loadingSelector } from './app.selectors';
-import { allCurrencyRateByIdsLoadedSelector, currencyRateByIdSelector } from './modules/currency-exchange/currency-rate.selectors';
+import { currencyRateByIdSelector } from './modules/currency-exchange/currency-rate.selectors';
 import { CurrencyRate } from './modules/currency-exchange/models/currency-rate';
 import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
 import { RequestAll as RequestAllTeams } from './modules/teams/team.actions';
@@ -43,10 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
       private appService: AppService,
-      public usersService: UsersService, 
-      // public currencyExchangeService: CurrencyExchangeService,
       private utilService: UtilService,
-      // public dialog: MatDialog,
       private store: Store<State>
   ) { }
 
@@ -105,23 +97,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
     });
     this.subscription.add(newSubscription);
-
-    // start tracking user changes every
-    // this.usersService.updateSessionState();
-
-    // this.getCryptoRates('BTC');
-    // this.getCryptoRates('XMR');
   }
-
-  // openProgressBarDialog(loadingData: LoadingData): MatDialogRef<ProgressBarDialogComponent> {
-  //   const methodTrace = `${this.constructor.name} > openProgressBarDialog() > `; // for debugging
-    
-  //   return this.dialog.open(ProgressBarDialogComponent, {
-  //     width: DEFAULT_DIALOG_WIDTH_DESKTOP,
-  //     disableClose: true,
-  //     data: loadingData
-  //   });
-  // }
 
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
@@ -131,21 +107,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.unbindToPushNotificationEvents();
   }
-
-  // getCryptoRates(crypto: string = 'BTC') {
-  //   const methodTrace = `${this.constructor.name} > getCryptoRates() > `; // for debugging
-
-  //   const newSubscription: Subscription = this.currencyExchangeService.getCryptoRates$(crypto).subscribe(
-  //     (data: any) => {
-  //       this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} ${crypto} exchange rate successfully loaded!`);
-  //     },
-  //     (error: any) => {
-  //       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error trying to get ${crypto} rates data > ${error}`);
-  //       this.appService.showResults(`There was an error trying to get ${crypto} rates data, please try again in a few minutes.`, SnackbarNotificationTypes.WARN);
-  //     }
-  //   );
-  //   this.subscription.add(newSubscription);
-  // }
 
   logout(): void {
     const methodTrace = `${this.constructor.name} > logout() > `; // for debugging
