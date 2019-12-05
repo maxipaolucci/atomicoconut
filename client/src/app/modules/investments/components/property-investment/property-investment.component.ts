@@ -1,24 +1,23 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { PropertyInvestment } from '../../models/propertyInvestment';
 import { Team } from '../../../teams/models/team';
-import { BehaviorSubject, Subscription, combineLatest } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable, BehaviorSubject, Subscription, combineLatest } from 'rxjs';
 import { User } from '../../../users/models/user';
 import { CurrencyExchangeService } from '../../../currency-exchange/currency-exchange.service';
 import { AppService } from '../../../../app.service';
-import { UsersService } from '../../../users/users.service';
-import { InvestmentsService } from '../../investments.service';
 import { MatDialog } from '@angular/material';
-import { Router } from '@angular/router';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { House } from '../../../properties/models/house';
 import { UtilService } from '../../../../util.service';
-import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
+import { ConsoleNotificationTypes } from 'src/app/constants';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-rate';
 import { userSelector } from 'src/app/modules/users/user.selectors';
 import { currencyRateByIdsSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
+import { RequestDelete } from '../../investment.actions';
+import { loadingSelector } from 'src/app/app.selectors';
+import { LoadingData } from 'src/app/models/loadingData';
 
 
 @Component({
@@ -37,7 +36,6 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
     return this.teams$.getValue();
   }
   @Output() totalReturns: EventEmitter<any> = new EventEmitter();
-  @Output() deletedInvestment: EventEmitter<any> = new EventEmitter();
   private teams$ = new BehaviorSubject<Team[]>([]);
   investmentAmount = 0;
   buyingPrice = 0;
@@ -46,25 +44,25 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
   currentPrice = 0;
   loanAmount = 0;
   investmentTitle: string = null;
-  actionRunning = false;
   user: User = null;
   team: Team = null; // if the investment has a tema this will be populated with the full info of the team
   investmentDistribution: any[] = [];
   subscription: Subscription = new Subscription();
-
+  loading$: Observable<LoadingData>;
+  
 
   constructor(
     private currencyExchangeService: CurrencyExchangeService, 
     private appService: AppService, 
-    private investmentsService: InvestmentsService, 
     public dialog: MatDialog, 
-    private router: Router, 
     private utilService: UtilService,
     private store: Store<State>
   ) {}
 
   ngOnInit(): void {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
+    
+    this.loading$ = this.store.select(loadingSelector());
     
     if (this.investment.property instanceof House) {
       this.investmentTitle = this.utilService.capitalizeFirstLetter((<House>this.investment.property).buildingType);
@@ -149,7 +147,6 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    this.actionRunning = true;
     const yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
       width: '250px',
       data: { 
@@ -161,8 +158,6 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
     const newSubscription = yesNoDialogRef.afterClosed().subscribe(result => {
       if (result === 'yes') {
         this.delete();
-      } else {
-        this.actionRunning = false;
       }
     });
     this.subscription.add(newSubscription);
@@ -172,36 +167,8 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
 
   delete() {
     const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
-    if (this.user) {
-      this.actionRunning = true;
-      
-      const newSubscription = this.investmentsService.delete$(this.investment.id, this.user.email).subscribe(
-        (data: any) => {
-          if (data && data.removed > 0) {
-            this.appService.showResults(`Investment successfully removed!`, SnackbarNotificationTypes.SUCCESS);
-            this.deletedInvestment.emit({ investment : this.investment, investmentReturn : this.investmentReturn, investmentAmount : this.investmentAmount });
-          } else {
-            this.appService.showResults(`Investment could not be removed, please try again.`, SnackbarNotificationTypes.ERROR);
-            this.actionRunning = false;
-          }
-        },
-        (error: any) => {
-          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
-          if (error.codeno === 400) {
-            this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-          } else {
-            this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-          }
-  
-          this.actionRunning = false;
-        }
-      );
 
-      this.subscription.add(newSubscription);
-    } else {
-      this.appService.showResults(`You are not logged into AtomiCoconut, you must login first.`, SnackbarNotificationTypes.ERROR);
-      this.router.navigate(['/users/login']);
-    }
+    this.store.dispatch(new RequestDelete({ userEmail: this.user.email, id: this.investment.id }));
   }
 
 }

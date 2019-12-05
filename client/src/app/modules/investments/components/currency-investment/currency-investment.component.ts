@@ -4,7 +4,7 @@ import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/y
 import { AppService } from '../../../../app.service';
 import { User } from '../../../users/models/user';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { BehaviorSubject, Subscription, combineLatest, of } from 'rxjs';
+import { Observable, BehaviorSubject, Subscription, combineLatest, of } from 'rxjs';
 import { Team } from '../../../teams/models/team';
 import { INVESTMENTS_TYPES, ConsoleNotificationTypes, COINCAP_CRYPTO_TYPES } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
@@ -16,6 +16,8 @@ import { CryptoRate } from 'src/app/modules/currency-exchange/models/crypto-rate
 import { currencyRateByIdsSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
 import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-rate';
 import { RequestDelete } from '../../investment.actions';
+import { LoadingData } from 'src/app/models/loadingData';
+import { loadingSelector } from 'src/app/app.selectors';
 
 @Component({
   selector: 'currency-investment',
@@ -33,7 +35,6 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     return this.teams$.getValue();
   }
   @Output() totalReturns: EventEmitter<any> = new EventEmitter();
-  @Output() deletedInvestment: EventEmitter<any> = new EventEmitter();
   private teams$ = new BehaviorSubject<Team[]>([]);
   investmentAmount = 0;
   buyingPrice = 0;
@@ -41,11 +42,11 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
   investmentValueWhenBought = 0;
   currentPrice = 0;
   loanAmount = 0;
-  actionRunning = false;
   user: User = null;
   team: Team = null; // if the investment has a tema this will be populated with the full info of the team
   investmentDistribution: any[] = [];
   subscription: Subscription = new Subscription();
+  loading$: Observable<LoadingData>;
 
 
   constructor(
@@ -57,6 +58,8 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
+    
+    this.loading$ = this.store.select(loadingSelector());
     
     let newSubscription = null;
     const combineLatest$ = combineLatest(
@@ -142,7 +145,6 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    this.actionRunning = true;
     const yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
       width: '250px',
       data: { 
@@ -154,8 +156,6 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     const newSubscription: Subscription = yesNoDialogRef.afterClosed().subscribe(result => {
       if (result === 'yes') {
         this.delete();
-      } else {
-        this.actionRunning = false;
       }
     });
     this.subscription.add(newSubscription);

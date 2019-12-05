@@ -12,8 +12,7 @@
         <property-investment *ngIf="investment.type === INVESTMENTS_TYPES.PROPERTY"
           [investment]="investment"
           [teams]="(teams$ | async)"
-          (totalReturns)="setTotals($event)"
-          (deletedInvestment)="removeInvestment($event)">
+          (totalReturns)="setTotals($event)">
         </property-investment>
       </div>
     </div>
