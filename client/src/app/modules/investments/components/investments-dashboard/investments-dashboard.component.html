@@ -6,8 +6,7 @@
         <currency-investment *ngIf="investment.type === INVESTMENTS_TYPES.CURRENCY || investment.type === INVESTMENTS_TYPES.CRYPTO"
           [investment]="investment"
           [teams]="(teams$ | async)"
-          (totalReturns)="setTotals($event)"
-          (deletedInvestment)="removeInvestment($event)">
+          (totalReturns)="setTotals($event)">
         </currency-investment>
 
         <property-investment *ngIf="investment.type === INVESTMENTS_TYPES.PROPERTY"

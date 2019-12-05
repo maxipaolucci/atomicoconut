@@ -35,6 +35,10 @@ export function reducer(state = initialState, action: InvestmentActions): State 
       });
     }
 
+    case InvestmentActionTypes.Delete: {
+      return adapter.removeOne(action.payload.id, state);
+    }
+
     default: {
       return state;
     }

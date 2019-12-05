@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { User } from '../../../users/models/user';
@@ -8,12 +7,11 @@ import { Investment } from '../../models/investment';
 import { AppService } from '../../../../app.service';
 import { InvestmentsService } from '../../investments.service';
 import { Team } from '../../../teams/models/team';
-import { TeamsService } from '../../../teams/teams.service';
 import { Observable, Subscription, from, of, combineLatest } from 'rxjs';
-import { map, switchMap, mergeMap } from 'rxjs/operators';
+import { switchMap, mergeMap } from 'rxjs/operators';
 import { CurrencyExchangeService } from '../../../currency-exchange/currency-exchange.service';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { INVESTMENTS_TYPES, SnackbarNotificationTypes, ConsoleNotificationTypes, COINCAP_CRYPTO_TYPES } from '../../../../constants';
+import { INVESTMENTS_TYPES, COINCAP_CRYPTO_TYPES } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
 import { PropertyInvestment } from '../../models/propertyInvestment';
 import { Store } from '@ngrx/store';
@@ -29,7 +27,6 @@ import { teamsSelector } from 'src/app/modules/teams/team.selectors';
 import { cryptoRateByIdSelector } from 'src/app/modules/currency-exchange/crypto-rate.selectors';
 import { CryptoRate } from 'src/app/modules/currency-exchange/models/crypto-rate';
 import { RequestOne as RequestOneCryptoRate } from 'src/app/modules/currency-exchange/crypto-rate.actions';
-import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-rate';
 import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
 import { allCurrencyRateByIdsLoadedSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
 
@@ -84,7 +81,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     // get investments and crypto rates for each crypto investment of the user
     let newSubscription: Subscription = this.store.select(investmentsSelector()).pipe(
       switchMap((investments: Investment[]) => {
-        this.organizeInvestmentsData(investments);
+        this.organizeInvestmentsData(investments); //here we save investments in our local component array
         
         let cryptoUnits: string[] = [];
         investments.map((investment: Investment) => {
@@ -325,64 +322,64 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   /**
    * Removes the investment from the investments array and from the investmentUI array used in view. Also reduces the totals in the inveestment amount
    */
-  removeInvestment(investmentData: any): void {
-    const methodTrace = `${this.constructor.name} > removeInvestment() > `; // for debugging
+  // removeInvestment(investmentData: any): void {
+  //   const methodTrace = `${this.constructor.name} > removeInvestment() > `; // for debugging
 
-    const investment = investmentData.investment;
-    if (investment) {
-      // get my portion in the investment
-      let myPortion = 0;
-      for (const portion of investment.investmentDistribution) {
-        if (this.user.email === portion.email) {
-          myPortion = portion.percentage;
-          break;
-        }
-      }
+  //   const investment = investmentData.investment;
+  //   if (investment) {
+  //     // get my portion in the investment
+  //     let myPortion = 0;
+  //     for (const portion of investment.investmentDistribution) {
+  //       if (this.user.email === portion.email) {
+  //         myPortion = portion.percentage;
+  //         break;
+  //       }
+  //     }
 
-      // update totals row
-      const investmentReturn = investmentData.investmentReturn;
-      const investmentAmount = investmentData.investmentAmount;
-      this.totalReturn -= investmentReturn;
-      this.totalInvestment -= investmentAmount;
-      this.myTotalReturn -= investmentReturn * myPortion / 100;
-      this.myTotalInvestment -= investmentAmount * myPortion / 100;
+  //     // update totals row
+  //     const investmentReturn = investmentData.investmentReturn;
+  //     const investmentAmount = investmentData.investmentAmount;
+  //     this.totalReturn -= investmentReturn;
+  //     this.totalInvestment -= investmentAmount;
+  //     this.myTotalReturn -= investmentReturn * myPortion / 100;
+  //     this.myTotalInvestment -= investmentAmount * myPortion / 100;
 
-      // remove investment from array
-      let index = 0;
-      for (const investmentToDelete of this.investments) {
-        if (investment.id === investmentToDelete.id) {
-          break;
-        }
+  //     // remove investment from array
+  //     let index = 0;
+  //     for (const investmentToDelete of this.investments) {
+  //       if (investment.id === investmentToDelete.id) {
+  //         break;
+  //       }
 
-        index += 1;
-      }
-      this.investments.splice(index, 1);
+  //       index += 1;
+  //     }
+  //     this.investments.splice(index, 1);
 
-      // update ui array
-      let row = 0;
-      let offset = 0;
-      let found = false;
-      for (let i = 0; i < this.investmentsUI.length; i++) {
-        for (let j = 0; j < this.investmentsUI[i].length; j++) {
-          if (this.investmentsUI[i][j].id === investment.id) {
-            row = i;
-            offset = j;
-            found = true;
-            break;
-          }
-        }
+  //     // update ui array
+  //     let row = 0;
+  //     let offset = 0;
+  //     let found = false;
+  //     for (let i = 0; i < this.investmentsUI.length; i++) {
+  //       for (let j = 0; j < this.investmentsUI[i].length; j++) {
+  //         if (this.investmentsUI[i][j].id === investment.id) {
+  //           row = i;
+  //           offset = j;
+  //           found = true;
+  //           break;
+  //         }
+  //       }
 
-        if (found) {
-          break;
-        }
-      }
+  //       if (found) {
+  //         break;
+  //       }
+  //     }
 
-      this.investmentsUI[row].splice(offset, 1);
-      if (!this.investmentsUI[row].length) {
-        this.investmentsUI.splice(row, 1);
-      }
-    }
-  }
+  //     this.investmentsUI[row].splice(offset, 1);
+  //     if (!this.investmentsUI[row].length) {
+  //       this.investmentsUI.splice(row, 1);
+  //     }
+  //   }
+  // }
 
   openNewInvestmentDialog() {
     const addPersonDialogRef = this.dialog.open(InvestmentSelectorDialogComponent, {});

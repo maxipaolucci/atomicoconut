@@ -5,7 +5,9 @@ import { Investment } from './models/investment';
 export enum InvestmentActionTypes {
   ResetAllEntitiesLoaded = '[Property] Reset allEntitiesLoaded in Store',
   AddAll = '[Investment] Add all to Store',
-  RequestAll = '[Investment] Request all from Server'
+  RequestAll = '[Investment] Request all from Server',
+  Delete = '[Investment] Delete from Store',
+  RequestDelete = '[Investment] Request delete from Server',
 }
 
 export class ResetAllEntitiesLoaded implements Action {
@@ -24,5 +26,18 @@ export class RequestAll implements Action {
   constructor(public payload: { userEmail: string }) {}
 }
 
+export class RequestDelete implements Action {
+  readonly type = InvestmentActionTypes.RequestDelete;
+
+  constructor(public payload: { userEmail: string, id: string }) {}
+}
+
+export class Delete implements Action {
+  readonly type = InvestmentActionTypes.Delete;
+
+  constructor(public payload: { id: string }) {}
+}
+
 export type InvestmentActions = AddAll
- | RequestAll | ResetAllEntitiesLoaded;
+ | RequestAll | ResetAllEntitiesLoaded
+ | RequestDelete | Delete;
