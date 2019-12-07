@@ -39,6 +39,16 @@ export function reducer(state = initialState, action: InvestmentActions): State 
       return adapter.removeOne(action.payload.id, state);
     }
 
+    case InvestmentActionTypes.AddOne: {
+      return adapter.addOne(action.payload.investment, state);
+    }
+
+    case InvestmentActionTypes.Update_: {
+      const changes = action.payload.entityChanges;
+      
+      return adapter.updateOne(changes, state);
+    }
+
     default: {
       return state;
     }

@@ -5,6 +5,7 @@ import { InvestmentsDashboardComponent } from './components/investments-dashboar
 import { InvestmentsEditComponent } from './components/investments-edit/investments-edit.component';
 import { UserResolver } from '../users/user-resolver.service';
 import { AuthGuard } from '../../auth.guard';
+import { InvestmentResolver } from './investment-resolver.service';
 
 const routes: Routes = [
   {
@@ -13,24 +14,21 @@ const routes: Routes = [
     children : [
       { 
         path : ':type/create', 
-        component : InvestmentsEditComponent,
-        resolve : {
-          authUser : UserResolver
-        } 
+        component : InvestmentsEditComponent 
       },
       { 
         path : ':type/create/:id', // this happens just with properties
         component : InvestmentsEditComponent,
         resolve : {
-          authUser : UserResolver
-        } 
+          investment : InvestmentResolver
+        }
       },
       { 
         path : ':type/edit/:id', 
         component : InvestmentsEditComponent,
         resolve : {
-          authUser : UserResolver
-        } 
+          investment : InvestmentResolver
+        }
       },
       { 
         path : '', 

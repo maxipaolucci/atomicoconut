@@ -158,9 +158,9 @@ export class PropertyEffects {
   requestCreate$ = this.actions$.pipe(
     ofType<RequestCreate>(PropertyActionTypes.RequestCreate),
     tap(({payload}) => {
-      this.store.dispatch(new ShowProgressBar({ message: 'Creating team...', color: 'accent' }));
+      this.store.dispatch(new ShowProgressBar({ message: 'Creating property...', color: 'accent' }));
     }),
-    delay(5000),
+    // delay(5000),
     mergeMap(({ payload }) => this.propertiesService.create$(payload.model).pipe(
       catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
     )),

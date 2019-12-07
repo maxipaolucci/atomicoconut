@@ -7,11 +7,12 @@ import { State } from '../../main.reducer';
 import { Store, select } from '@ngrx/store';
 import { delay, mergeMap, tap, map, withLatestFrom, filter, catchError } from 'rxjs/operators';
 import { ShowProgressBar, FinalizeOperation, HideProgressBar } from 'src/app/app.actions';
-import { RequestAll, InvestmentActionTypes, AddAll, RequestDelete, Delete } from './investment.actions';
+import { RequestAll, InvestmentActionTypes, AddAll, RequestDelete, Delete, RequestOne, AddOne, RequestUpdate, Update_, RequestCreate } from './investment.actions';
 import { allInvestmentsLoadedSelector } from './investment.selectors';
 import { of } from 'rxjs';
 import { Investment } from './models/investment';
 import { SnackbarNotificationTypes } from 'src/app/constants';
+import { Update } from '@ngrx/entity';
 
 
 @Injectable()
@@ -89,6 +90,86 @@ export class InvestmentEffects {
     ofType<Delete>(InvestmentActionTypes.Delete),
     tap(() => {
       this.store.dispatch(new HideProgressBar());
+    })
+  );
+
+  @Effect()
+  requestOne$ = this.actions$.pipe(
+    ofType<RequestOne>(InvestmentActionTypes.RequestOne),
+    tap(({payload}) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Fetching investment...' }));
+    }),
+    mergeMap(({ payload }) => this.investmentsService.getInvestmentById$(payload.userEmail, payload.id)
+      .pipe(
+        catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+      )
+    ),
+    map((investment: Investment) => {
+      if (investment) {
+        //dispatch the action to save the value in the store
+        return new AddOne({ investment });
+      }
+
+      // if here, means http error in the response. 
+      return new FinalizeOperation({ redirectData: ['/properties'] }); //we don't want to do anything in this case, stop the loadingData flag
+    }) 
+  );
+
+  @Effect({ dispatch: false })
+  addOne$ = this.actions$.pipe(
+    ofType<AddOne>(InvestmentActionTypes.AddOne),
+    tap(() => {
+      this.store.dispatch(new HideProgressBar());
+    })
+  );
+  
+  @Effect()
+  requestUpdate$ = this.actions$.pipe(
+    ofType<RequestUpdate>(InvestmentActionTypes.RequestUpdate),
+    tap(({payload}) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Updating investment...', color: 'accent' }));
+    }),
+    mergeMap(({ payload }) => this.investmentsService.update$(payload.model).pipe(
+      catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+    )),
+    map((investment: Investment) => {
+      if (investment) {
+        const entityChanges: Update<Investment> = {
+          id: investment.id,
+          changes: investment
+        }
+        return new Update_({ entityChanges });
+      }
+      return new FinalizeOperation();
+    })
+  );
+
+  @Effect({ dispatch: false })
+  update$ = this.actions$.pipe(
+    ofType<Update_>(InvestmentActionTypes.Update_),
+    tap(() => {
+      this.store.dispatch(new HideProgressBar());
+    })
+  );
+
+  @Effect()
+  requestCreate$ = this.actions$.pipe(
+    ofType<RequestCreate>(InvestmentActionTypes.RequestCreate),
+    tap(({payload}) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Creating investment...', color: 'accent' }));
+    }),
+    mergeMap(({ payload }) => this.investmentsService.create$(payload.model).pipe(
+      catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+    )),
+    map((investment: Investment) => {
+      if (investment && investment.type && investment.id) {
+        this.router.navigate(['/investments/', investment.type, 'edit', investment.id]);
+        //dispatch the action to save the value in the store
+        return new AddOne({ investment });
+      }
+
+      // if here, means http error in the response. 
+      return new FinalizeOperation({ redirectData: ['/investments'] }); //we don't want to do anything in this case, stop the loadingData flag
     })
   );
 

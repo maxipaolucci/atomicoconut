@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PropertiesEditComponent } from './components/properties-edit/properties-edit.component';
-import { UserResolver } from '../users/user-resolver.service';
 import { PropertiesDashboardComponent } from './components/properties-dashboard/properties-dashboard.component';
 import { AuthGuard } from '../../auth.guard';
 import { PropertyResolver } from './property-resolver.service';

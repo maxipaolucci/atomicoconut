@@ -145,7 +145,7 @@ exports.create = async (req, res, next) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1033, null, false, 'Investment'),
-        data : { type : investment.investmentType, id : investment._id }
+        data : { investment, type : investment.investmentType, id : investment._id }
     });
 };
 
@@ -340,7 +340,7 @@ exports.update = async (req, res, next) => {
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1042, null, false, 'Investment'),
-        data : { type : investment.investmentType, id : investment._id }
+        data : { investment, type : investment.investmentType, id : investment._id }
     });    
 };
 

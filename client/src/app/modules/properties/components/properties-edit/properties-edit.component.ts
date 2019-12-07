@@ -123,12 +123,14 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     //start listening to Pusher notifications related to this component
     this.bindToPushNotificationEvents();
 
-    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
-    this.model.email = this.user.email;
-    this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit =
-      this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit =
-      this.model.maintenanceCostUnit = this.model.otherCostUnit = (this.user.currency || DEFAULT_CURRENCY);
-
+    this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => {
+      this.user = user
+      this.model.email = this.user.email;
+      this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit =
+          this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit =
+          this.model.maintenanceCostUnit = this.model.otherCostUnit = (this.user.currency || DEFAULT_CURRENCY);
+    }));
+    
     // get property from resolver
     const newSubscription = this.store.select(propertyByIdSelector(this.route.snapshot.params.id)) // I read this one instead from resolver because this has always the latest information when we update the property
       .subscribe((property: Property) => {

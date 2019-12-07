@@ -6,15 +6,20 @@ import { User } from '../../../users/models/user';
 import { TeamsService } from '../../../teams/teams.service';
 import { AppService } from '../../../../app.service';
 import { Team } from '../../../teams/models/team';
-import { Subscription, Observable, of } from 'rxjs';
+import { Subscription, Observable, of, BehaviorSubject } from 'rxjs';
 import { map, combineLatest, debounceTime, flatMap } from 'rxjs/operators';
 import { MatSelectChange, MatRadioChange } from '@angular/material';
 import { InvestmentsService } from '../../investments.service';
 import { Investment } from '../../models/investment';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../../../constants';
-import { BehaviorSubject } from 'rxjs';
 import { PropertyInvestment } from '../../models/propertyInvestment';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
+import { LoadingData } from 'src/app/models/loadingData';
+import { loadingSelector } from 'src/app/app.selectors';
+import { RequestUpdate, RequestCreate, ResetAllEntitiesLoaded } from '../../investment.actions';
+import _ from 'lodash';
 
 @Component({
   selector: 'investments-edit',
@@ -53,10 +58,17 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   formChangesSubscription: any = null;
   investmentDataValid = false; // this value is set when investment data form is updated
   INVESTMENT_TYPES: any = INVESTMENTS_TYPES;
-
+  loading$: Observable<LoadingData>;
   
-  constructor(private route: ActivatedRoute, private mainNavigatorService: MainNavigatorService, private investmentsService: InvestmentsService,
-      private teamsService: TeamsService, private appService: AppService, private router: Router) { }
+  constructor(
+      private route: ActivatedRoute, 
+      private mainNavigatorService: MainNavigatorService, 
+      private investmentsService: InvestmentsService,
+      private teamsService: TeamsService, 
+      private appService: AppService, 
+      private router: Router,
+      private store: Store<State>
+  ) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
@@ -66,6 +78,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       { displayName: 'Investments', url: '/investments', selected: false }
     ]);
 
+    this.loading$ = this.store.select(loadingSelector());
+
     //start listening to Pusher notifications related to this component
     this.bindToPushNotificationEvents();
     
@@ -73,20 +87,22 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     const user$ = this.route.data.pipe(map((data: { authUser: User }): User => data.authUser));
 
     // creates a params source from parameters in url useful for the rest of the code
-    const params$ = this.route.paramMap.pipe(map((params: ParamMap): any => { 
-      const type: string = params.get('type');
+    const params$ = this.route.paramMap.pipe(
+      map((params: ParamMap): any => { 
+        const type: string = params.get('type');
 
-      if (![INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO, INVESTMENTS_TYPES.PROPERTY].includes(type)) {
-        this.appService.showResults('You must provide a valid investment type to continue.', SnackbarNotificationTypes.ERROR);
-        this.router.navigate(['welcome']);
-      } else {
-        this.type = type;
-        this.model.type = type;
-        this.model.investmentData.type = type;
-      }
+        if (![INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO, INVESTMENTS_TYPES.PROPERTY].includes(type)) {
+          this.appService.showResults('You must provide a valid investment type to continue.', SnackbarNotificationTypes.ERROR);
+          this.router.navigate(['welcome']);
+        } else {
+          this.type = type;
+          this.model.type = type;
+          this.model.investmentData.type = type;
+        }
 
-      return { id : params.get('id') }; 
-    }));
+        return { id : params.get('id') }; 
+      })
+    );
     
     // combine user$ and id$ sources into one object and start listen to it for changes
     const newSubscription = user$.pipe(

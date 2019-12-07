@@ -11,7 +11,7 @@ import { Team } from '../teams/models/team';
 import { Response } from '../../models/response';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { INVESTMENTS_TYPES, PROPERTY_TYPES, ConsoleNotificationTypes } from '../../constants';
+import { INVESTMENTS_TYPES, PROPERTY_TYPES, ConsoleNotificationTypes, SnackbarNotificationTypes } from '../../constants';
 import { House } from '../properties/models/house';
 import { Address } from '../properties/models/address';
 
@@ -28,9 +28,9 @@ export class InvestmentsService {
    * Server call to Create a new investment in the system 
    * @param postData
    * 
-   * @return { Observable<any> } 
+   * @return { Observable<Investment> } 
    */
-  create$(postData: any = {}): Observable<any> {
+  create$(postData: any = {}): Observable<Investment> {
     const methodTrace = `${this.constructor.name} > create$() > `; // for debugging
 
     //to prevent receiving notification of actions performed by current user
@@ -38,7 +38,17 @@ export class InvestmentsService {
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers })
         .pipe(
-          map(this.appService.extractData)
+          map(this.appService.extractData),
+          map((data: any): Investment => {
+            if (data && data.id && data.type) {
+              this.appService.showResults(`Investment successfully created!`, SnackbarNotificationTypes.SUCCESS);
+              return this.populate(data.investment);
+            } else {
+              this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+            }
+
+            return null;
+          })
         );
   } 
   
@@ -46,9 +56,9 @@ export class InvestmentsService {
    * Server call to Update an investment in the system 
    * @param postData 
    * 
-   * @return { Observable<any> }
+   * @return { Observable<Investment> }
    */
-  update$(postData: any = {}): Observable<any> {
+  update$(postData: any = {}): Observable<Investment> {
     const methodTrace = `${this.constructor.name} > update$() > `; // for debugging
 
     //to prevent receiving notification of actions performed by current user
@@ -56,7 +66,17 @@ export class InvestmentsService {
 
     return this.http.post<Response>(`${this.serverHost}/update`, postData, { headers : this.headers })
         .pipe(
-          map(this.appService.extractData)
+          map(this.appService.extractData),
+          map((data: any): Investment => {
+            if (data && data.id && data.type) {
+              this.appService.showResults(`Investment successfully updated!`, SnackbarNotificationTypes.SUCCESS);
+              return this.populate(data.investment)
+            } else {
+              this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+            }
+
+            return null;
+          })
         );
   } 
 
