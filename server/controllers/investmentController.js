@@ -123,6 +123,12 @@ exports.create = async (req, res, next) => {
     
     console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'CurrencyInvestment')}`);
     
+    //send back a well formated invetment object
+    investment = await getByIdObject(investment._id, user.email, {
+        investmentDataId : false,
+        teamMembers : true
+    });
+    
     // Send notification to team members 
     if (team && investment.team) {
         // send push notification to client
@@ -312,6 +318,11 @@ exports.update = async (req, res, next) => {
     //success
     console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, modelName)}`);
     
+    //send back a well formated invetment object
+    investment = await getByIdObject(investment._id, user.email, {
+        investmentDataId : false,
+        teamMembers : true
+    });
 
     let pusherData = {
         email: user.email,

@@ -1,180 +1,166 @@
 <div class="container__edit-investment" fxLayout="column" fxLayoutAlign="none none" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="center none" fxLayoutGap="10px">
   <form class="form__container form__edit-investment" (ngSubmit)="editMode ? onUpdate() : onSubmit()" #editInvestmentForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
-    <div *ngIf="!getInvestmentServiceRunning">
-      <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
+    <section fxLayout="column" fxLayoutGap="10px" class="form__fields">
 
-        <progress-bar class="progress-bar--get-teams" *ngIf="getTeamsServiceRunning"
-          color="primary"
-          message="Loading your teams...">
-        </progress-bar>
+      <progress-bar class="progress-bar--get-teams" *ngIf="getTeamsServiceRunning"
+        color="primary"
+        message="Loading your teams...">
+      </progress-bar>
 
-        <div *ngIf="teams.length && !getTeamsServiceRunning" fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
-          <h3 class="title">
-            <p class="header">Owner</p>
-            <p class="mat-caption">Specify the owner of this investment</p>
-          </h3>
-          
-          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
-            <mat-radio-group fxFlex fxFlex.gt-xs="230px" class="form__field radiogroup__owner"
-                [(ngModel)]="model.owner" 
-                name="owner" 
-                id="owner" 
-                #owner="ngModel"
-                (change)="onRadioChange($event)">
-              <mat-radio-button class="owner__option" value="me">Just me</mat-radio-button>
-              <mat-radio-button class="owner__option" value="team">My team</mat-radio-button>
-            </mat-radio-group>
+      <div *ngIf="teams.length && !getTeamsServiceRunning" fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          <p class="header">Owner</p>
+          <p class="mat-caption">Specify the owner of this investment</p>
+        </h3>
+        
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <mat-radio-group fxFlex fxFlex.gt-xs="230px" class="form__field radiogroup__owner"
+              [(ngModel)]="model.owner" 
+              name="owner" 
+              id="owner" 
+              #owner="ngModel"
+              (change)="onRadioChange($event)">
+            <mat-radio-button class="owner__option" value="me">Just me</mat-radio-button>
+            <mat-radio-button class="owner__option" value="team">My team</mat-radio-button>
+          </mat-radio-group>
+  
+          <mat-form-field *ngIf="teams.length && model.owner === 'team'" fxFlex fxFlex.gt-xs="350px" class="form__field">
+            <mat-select [(ngModel)]="model.team"
+                name="team" 
+                id="team" 
+                #team="ngModel" 
+                placeholder="Select a team"
+                (selectionChange)="onSelectChange($event)"
+                required>
+              <mat-option *ngFor="let team of teams" [value]="team">
+                {{team.name}}
+              </mat-option>
+            </mat-select>
+
+            <mat-icon matPrefix>group</mat-icon>
+            <mat-error *ngIf="team.invalid && (team.dirty || team.touched) && team.errors.required">Please choose a team</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      
+      <div *ngIf="model.team" fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title">
+          <p class="header">Split between team members</p>
+          <p class="mat-caption">Specify how to split the returns setting a percentage of the total investment amount to each member</p>
+        </h3>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <div fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutGap="20px" class="team-members">
+            <div *ngFor="let member of model.team.members; index as memberIndex" fxFlex="none" fxFlex.gt-xs="250px" fxLayout="column" fxLayoutGap="10px" class="member">
+              <div class="member-details" fxLayout="row" fxLayoutGap="10px">
+                <img class="member__avatar" [src]="member.avatar"/>
+                <div class="member__info" fxLayout="column" [matTooltip]="member.email === model.team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
+                  <p class="member__name">{{member.name}} <mat-icon *ngIf="member.email === model.team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
+                  <p class="member__email">{{member.email}}</p>
+                </div>
+              </div>
     
-            <mat-form-field *ngIf="teams.length && model.owner === 'team'" fxFlex fxFlex.gt-xs="350px" class="form__field">
-              <mat-select [(ngModel)]="model.team"
-                  name="team" 
-                  id="team" 
-                  #team="ngModel" 
-                  placeholder="Select a team"
-                  (selectionChange)="onSelectChange($event)"
-                  required>
-                <mat-option *ngFor="let team of teams" [value]="team">
-                  {{team.name}}
-                </mat-option>
-              </mat-select>
+              <div class="member-percentage">
+                <mat-form-field class="form__field">
+                  <input matInput type="number" id="memberPercentage_{{member.email}}" name="memberPercentage_{{member.email}}" placeholder="Percentage of investment"
+                      [(ngModel)]="model.membersPercentage[member.email]" 
+                      [value]="model.membersPercentage[member.email]"
+                      numberValidator='{"min": 0, "max": 100}'
+                      required
+                      #memberPercentage="ngModel">
 
-              <mat-icon matPrefix>group</mat-icon>
-              <mat-error *ngIf="team.invalid && (team.dirty || team.touched) && team.errors.required">Please choose a team</mat-error>
+                  <span matSuffix>%</span>
+                  <mat-hint>Investment portion for {{member.name}}.</mat-hint>
+                  <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.required">Percentage of investment is required.</mat-error>
+                  <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+                  <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
+                  <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <h3 class="title title__investment-amount">
+          <p class="header">Investment details</p>
+        </h3>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Investment amount -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'investmentAmountUnit'" 
+                [value]="model.investmentAmountUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="investmentAmount" name="investmentAmount" placeholder="Investment amount"
+                  [(ngModel)]="model.investmentAmount" 
+                  [value]="model.investmentAmount"
+                  numberValidator 
+                  required
+                  #investmentAmount="ngModel">
+              <mat-hint>Set the amount of money invested (excluding loan amount)</mat-hint>
+              <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required">Investment amount is required.</mat-error>
+              <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Loan amount -->
+          <div fxLayout="row" fxLayoutGap="10px">
+            <currency-unit fxFlex="50px"
+                [id]="'loanAmountUnit'" 
+                [value]="model.loanAmountUnit"
+                [view]="'narrow'"
+                (newValue)="onCurrencyUnitChange($event)">
+            </currency-unit>
+            
+            <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
+              <input matInput type="number" id="loanAmount" name="loanAmount" placeholder="Loan amount"
+                  [(ngModel)]="model.loanAmount" 
+                  [value]="model.loanAmount"
+                  numberValidator 
+                  #loanAmount="ngModel">
+              <mat-hint>Set the amount of money borrowed</mat-hint>
+              <mat-error *ngIf="loanAmount.invalid && (loanAmount.dirty || loanAmount.touched) && loanAmount.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
             </mat-form-field>
           </div>
         </div>
+      </div>
+
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <currency-investment-form *ngIf="type === INVESTMENT_TYPES.CRYPTO || type === INVESTMENT_TYPES.CURRENCY" [defaultValues]="model.investmentData"
+            (values)="onInvestmentDataChange($event)">
+        </currency-investment-form>
+
+        <property-investment-form *ngIf="type === INVESTMENT_TYPES.PROPERTY" [defaultValues]="model.investmentData"
+            [user]="user"
+            (values)="onInvestmentDataChange($event)">
+        </property-investment-form>
+      </div>
+    </section>
+
+    
+    <section class="form__actions form__actions--edit-investment"
+        fxLayout="column" fxLayout.gt-sm="row" 
+        fxLayoutAlign="none start" fxLayoutAlign.gt-sm="center start" 
+        fxLayoutGap="10px">
         
-        <div *ngIf="model.team" fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
-          <h3 class="title">
-            <p class="header">Split between team members</p>
-            <p class="mat-caption">Specify how to split the returns setting a percentage of the total investment amount to each member</p>
-          </h3>
-  
-          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
-            <div fxLayout="column" fxLayout.gt-xs="row wrap" fxLayoutGap="20px" class="team-members">
-              <div *ngFor="let member of model.team.members; index as memberIndex" fxFlex="none" fxFlex.gt-xs="250px" fxLayout="column" fxLayoutGap="10px" class="member">
-                <div class="member-details" fxLayout="row" fxLayoutGap="10px">
-                  <img class="member__avatar" [src]="member.avatar"/>
-                  <div class="member__info" fxLayout="column" [matTooltip]="member.email === model.team.admin.email ? 'Administrator' : ''" matTooltipPosition="right">
-                    <p class="member__name">{{member.name}} <mat-icon *ngIf="member.email === model.team.admin.email" class="admin-icon" aria-label="Admin" >lock</mat-icon></p>
-                    <p class="member__email">{{member.email}}</p>
-                  </div>
-                </div>
-      
-                <div class="member-percentage">
-                  <mat-form-field class="form__field">
-                    <input matInput type="number" id="memberPercentage_{{member.email}}" name="memberPercentage_{{member.email}}" placeholder="Percentage of investment"
-                        [(ngModel)]="model.membersPercentage[member.email]" 
-                        [value]="model.membersPercentage[member.email]"
-                        numberValidator='{"min": 0, "max": 100}'
-                        required
-                        #memberPercentage="ngModel">
-
-                    <span matSuffix>%</span>
-                    <mat-hint>Investment portion for {{member.name}}.</mat-hint>
-                    <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.required">Percentage of investment is required.</mat-error>
-                    <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-                    <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMin">Min value must be greater or equal than 0</mat-error>
-                    <mat-error *ngIf="memberPercentage.invalid && (memberPercentage.dirty || memberPercentage.touched) && memberPercentage.errors.numberValidatorMax">Max value must be less or equal than 100</mat-error>
-                  </mat-form-field>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-        </div>
-  
-        <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
-          <h3 class="title title__investment-amount">
-            <p class="header">Investment details</p>
-          </h3>
-  
-          <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
-            <!-- Investment amount -->
-            <div fxLayout="row" fxLayoutGap="10px">
-              <currency-unit fxFlex="50px"
-                  [id]="'investmentAmountUnit'" 
-                  [value]="model.investmentAmountUnit"
-                  [view]="'narrow'"
-                  (newValue)="onCurrencyUnitChange($event)">
-              </currency-unit>
-              
-              <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
-                <input matInput type="number" id="investmentAmount" name="investmentAmount" placeholder="Investment amount"
-                    [(ngModel)]="model.investmentAmount" 
-                    [value]="model.investmentAmount"
-                    numberValidator 
-                    required
-                    #investmentAmount="ngModel">
-                <mat-hint>Set the amount of money invested (excluding loan amount)</mat-hint>
-                <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.required">Investment amount is required.</mat-error>
-                <mat-error *ngIf="investmentAmount.invalid && (investmentAmount.dirty || investmentAmount.touched) && investmentAmount.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-              </mat-form-field>
-            </div>
-
-            <!-- Loan amount -->
-            <div fxLayout="row" fxLayoutGap="10px">
-              <currency-unit fxFlex="50px"
-                  [id]="'loanAmountUnit'" 
-                  [value]="model.loanAmountUnit"
-                  [view]="'narrow'"
-                  (newValue)="onCurrencyUnitChange($event)">
-              </currency-unit>
-              
-              <mat-form-field fxFlex fxFlex.sm="120px" fxFlex.gt-sm="200px" class="form__field">
-                <input matInput type="number" id="loanAmount" name="loanAmount" placeholder="Loan amount"
-                    [(ngModel)]="model.loanAmount" 
-                    [value]="model.loanAmount"
-                    numberValidator 
-                    #loanAmount="ngModel">
-                <mat-hint>Set the amount of money borrowed</mat-hint>
-                <mat-error *ngIf="loanAmount.invalid && (loanAmount.dirty || loanAmount.touched) && loanAmount.errors.numberValidator">Value must be numeric, with no more than two decimal digits</mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-        </div>
-  
-        <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
-          <currency-investment-form *ngIf="type === INVESTMENT_TYPES.CRYPTO || type === INVESTMENT_TYPES.CURRENCY" [defaultValues]="model.investmentData"
-              (values)="onInvestmentDataChange($event)">
-          </currency-investment-form>
-
-          <property-investment-form *ngIf="type === INVESTMENT_TYPES.PROPERTY" [defaultValues]="model.investmentData"
-              [user]="user"
-              (values)="onInvestmentDataChange($event)">
-          </property-investment-form>
-        </div>
-      </section>
-  
-      
-      <section class="form__actions form__actions--edit-investment"
-          fxLayout="column" fxLayout.gt-sm="row" 
-          fxLayoutAlign="none start" fxLayoutAlign.gt-sm="center start" 
-          fxLayoutGap="10px">
-          
-        <button mat-fab *ngIf="!editInvestmentServiceRunning" 
-            class="fab mat-elevation-z10 form__action" 
-            color="accent" 
-            type="submit"
-            matTooltip="Save changes" matTooltipPosition="left" 
-            [disabled]="!editInvestmentForm.form.valid || !investmentDataValid">
-          <mat-icon aria-label="Save changes">save</mat-icon>
-        </button>
-        
-        <mat-progress-spinner *ngIf="editInvestmentServiceRunning"
-            class="progress-spinner progress-spinner--edit-investment"
-            color="accent"
-            [diameter]="55" [strokeWidth]="10"
-            mode="indeterminate">
-        </mat-progress-spinner>
-      </section>
-    </div>
+      <button mat-fab *ngIf="!(loading$ | async)" 
+          class="fab mat-elevation-z10 form__action" 
+          color="accent" 
+          type="submit"
+          matTooltip="Save changes" matTooltipPosition="left" 
+          [disabled]="!editInvestmentForm.form.valid || !investmentDataValid">
+        <mat-icon aria-label="Save changes">save</mat-icon>
+      </button>
+    </section>
     
     <!-- <pre>{{model | json}}</pre> -->
   </form>
-
-  <progress-bar class="progress-bar--get-investment" *ngIf="getInvestmentServiceRunning"
-      color="primary"
-      message="Loading investment info...">
-  </progress-bar>
 </div>

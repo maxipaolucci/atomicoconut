@@ -7,7 +7,7 @@ import { TeamsService } from '../../../teams/teams.service';
 import { AppService } from '../../../../app.service';
 import { Team } from '../../../teams/models/team';
 import { Subscription, Observable, of, BehaviorSubject } from 'rxjs';
-import { map, combineLatest, debounceTime, flatMap } from 'rxjs/operators';
+import { map, combineLatest, debounceTime, switchMap } from 'rxjs/operators';
 import { MatSelectChange, MatRadioChange } from '@angular/material';
 import { InvestmentsService } from '../../investments.service';
 import { Investment } from '../../models/investment';
@@ -20,6 +20,10 @@ import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
 import { RequestUpdate, RequestCreate, ResetAllEntitiesLoaded } from '../../investment.actions';
 import _ from 'lodash';
+import { userSelector } from 'src/app/modules/users/user.selectors';
+import { investmentByIdSelector } from '../../investment.selectors';
+import { teamsSelector } from 'src/app/modules/teams/team.selectors';
+import { RequestAll as RequestAllTeams } from 'src/app/modules/teams/team.actions';
 
 @Component({
   selector: 'investments-edit',
@@ -51,8 +55,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   id: string = null; // investment id
   type: string = null; // investment type
   // services flags
-  editInvestmentServiceRunning = false;
-  getInvestmentServiceRunning = false;
+  // editInvestmentServiceRunning = false;
+  // getInvestmentServiceRunning = false;
   getTeamsServiceRunning = false;
   subscription: Subscription = new Subscription();
   formChangesSubscription: any = null;
@@ -62,9 +66,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   
   constructor(
       private route: ActivatedRoute, 
-      private mainNavigatorService: MainNavigatorService, 
-      private investmentsService: InvestmentsService,
-      private teamsService: TeamsService, 
+      private mainNavigatorService: MainNavigatorService,
       private appService: AppService, 
       private router: Router,
       private store: Store<State>
@@ -84,7 +86,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.bindToPushNotificationEvents();
     
     // generates a user source object from authUser from resolver
-    const user$ = this.route.data.pipe(map((data: { authUser: User }): User => data.authUser));
+    const user$ = this.store.select(userSelector());
 
     // creates a params source from parameters in url useful for the rest of the code
     const params$ = this.route.paramMap.pipe(
@@ -120,39 +122,47 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
 
         this.populateRequiredData(user, investmentId, propertyId);
 
+        if (!investmentId) {
+          this.editMode = false;
+          this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected : true });
+        } else {
+          this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected : true });
+          this.editMode = true;
+        }
+
         return investmentId; 
       }),
-      flatMap((investmentId: string): Observable<Investment> => {
+      switchMap((investmentId: string): Observable<Investment> => {
         if (investmentId) {
-          return this.getInvestment$(investmentId);
+          // I read this one instead from resolver because this has always the latest information when we update the object
+          return this.store.select(investmentByIdSelector(investmentId)); //this info is already in the store thanks to the resolver
         }
         
         return of(null);
       })
-    ).subscribe(
-      (investment: Investment) => {
-        if (investment) {
-          this.populateInvestmentData(investment);
-          this.getInvestmentServiceRunning = false;
+    ).subscribe((investment: Investment) => {
+      if (investment) {
+        this.populateInvestmentData(investment);
+        // this.getInvestmentServiceRunning = false;
 
-          if (this.form && !this.formChangesSubscription) {
-            this.subscribeFormValueChanges();
-          }
+        if (this.form && !this.formChangesSubscription) {
+          this.subscribeFormValueChanges();
         }
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        } else if (error.codeno === 461 || error.codeno === 462) {
-          this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR);
-          this.router.navigate(['/welcome']);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-        }
-
-        this.getInvestmentServiceRunning = false;
       }
+    }
+    // ,(error: any) => {
+    //   this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
+    //   if (error.codeno === 400) {
+    //     this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
+    //   } else if (error.codeno === 461 || error.codeno === 462) {
+    //     this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR);
+    //     this.router.navigate(['/welcome']);
+    //   } else {
+    //     this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
+    //   }
+
+    //   this.getInvestmentServiceRunning = false;
+    // }
     );
 
     this.subscription.add(newSubscription);
@@ -176,13 +186,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     if (!investmentId) {
       // we are creating a new investment
       this.id = null;
-      this.editMode = false;
-      this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected : true });
     } else {
-      this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected : true });
       // we are editing an existing investment
-      this.id = investmentId; // the new slug
-      this.editMode = true;
+      this.id = investmentId;
     }
   }
 
@@ -191,7 +197,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    * @param { Investment } investment 
    */
   populateInvestmentData(investment: Investment) {
-    this.investment = investment;
+    const methodTrace = `${this.constructor.name} > populateInvestmentData() > `; // for debugging
+
+    this.investment = _.cloneDeep(investment);
           
     // populate the model
     this.model.owner = investment.team ? 'team' : 'me';
@@ -288,6 +296,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    */
   unbindToPushNotificationEvents() {
     this.appService.pusherChannel.unbind('investment-deleted');
+    this.appService.pusherChannel.unbind('team-updated');
   }
 
   ngOnDestroy() {
@@ -300,65 +309,70 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   onSubmit() {
     const methodTrace = `${this.constructor.name} > onSubmit() > `; // for debugging
 
-    this.editInvestmentServiceRunning = true;
-
     this.model.investmentDistribution = this.populateInvestmentDistributionArray();
     this.model.createdOn = new Date(Date.now());
     this.model.updatedOn = new Date(Date.now());
 
+    //to prevent receiving notification of actions performed by current user
+    this.model.pusherSocketID = this.appService.pusherSocketID;
+
+    this.store.dispatch(new RequestCreate({ model: _.cloneDeep(this.model) }));
     // call the investment create service
-    const newSubscription = this.investmentsService.create$(this.model).subscribe(
-      (data: any) => {
-        if (data && data.id && data.type) {
-          this.appService.showResults(`Investment successfully created!`, SnackbarNotificationTypes.SUCCESS);
-          this.router.navigate(['/investments/', data.type, 'edit', data.id]);
-        } else {
-          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-          this.editInvestmentServiceRunning = false;
-        }
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit investment service.`, error);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        }
+    // const newSubscription = this.investmentsService.create$(this.model).subscribe(
+    //   (data: any) => {
+    //     if (data && data.id && data.type) {
+    //       this.appService.showResults(`Investment successfully created!`, SnackbarNotificationTypes.SUCCESS);
+    //       this.router.navigate(['/investments/', data.type, 'edit', data.id]);
+    //     } else {
+    //       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+    //       this.editInvestmentServiceRunning = false;
+    //     }
+    //   },
+    //   (error: any) => {
+    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit investment service.`, error);
+    //     if (error.codeno === 400) {
+    //       this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
+    //     }
 
-        this.editInvestmentServiceRunning = false;
-      }
-    );
+    //     this.editInvestmentServiceRunning = false;
+    //   }
+    // );
 
-    this.subscription.add(newSubscription);
+    // this.subscription.add(newSubscription);
   }
 
   onUpdate() {
     const methodTrace = `${this.constructor.name} > onUpdate() > `; // for debugging
 
-    this.editInvestmentServiceRunning = true;
-
     this.model.investmentDistribution = this.populateInvestmentDistributionArray();
     this.model.updatedOn = new Date(Date.now());
+    //to prevent receiving notification of actions performed by current user
+    this.model.pusherSocketID = this.appService.pusherSocketID;
+
+
+    this.store.dispatch(new RequestUpdate({ model: _.cloneDeep(this.model) }));
     // call the investment create service
-    const newSubscription = this.investmentsService.update$(this.model).subscribe(
-      (data: any) => {
-        if (data && data.id && data.type) {
-          this.appService.showResults(`Investment successfully updated!`, SnackbarNotificationTypes.SUCCESS);
-        } else {
-          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-        }
+    // const newSubscription = this.investmentsService.update$(this.model).subscribe(
+    //   (data: any) => {
+    //     if (data && data.id && data.type) {
+    //       this.appService.showResults(`Investment successfully updated!`, SnackbarNotificationTypes.SUCCESS);
+    //     } else {
+    //       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+    //     }
 
-        this.editInvestmentServiceRunning = false;
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit investment service.`, error);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        }
+    //     this.editInvestmentServiceRunning = false;
+    //   },
+    //   (error: any) => {
+    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error with the create/edit investment service.`, error);
+    //     if (error.codeno === 400) {
+    //       this.appService.showResults(`There was an error with the investment services, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
+    //     }
 
-        this.editInvestmentServiceRunning = false;
-      }
-    );
+    //     this.editInvestmentServiceRunning = false;
+    //   }
+    // );
 
-    this.subscription.add(newSubscription);
+    // this.subscription.add(newSubscription);
   }
 
   /**
@@ -370,24 +384,33 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.teams = [];
     this.getTeamsServiceRunning = true;
 
-    const newSubscription = this.teamsService.getTeams$(this.user.email).subscribe(
-      (teams: Team[]) => {
-        this.teams = teams;
-        this.getTeamsServiceRunning = false;
+    this.store.dispatch(new RequestAllTeams({ userEmail: this.user.email, forceServerRequest: false }));
+    const newSubscription = this.store.select(teamsSelector()).subscribe((teams: Team[]) => {
+      this.teams = teams;
+      this.setSelectedTeam();
+      this.getTeamsServiceRunning = false;
+    }, (error: any) => {
+      this.getTeamsServiceRunning = false;
+    });
+    
+    // this.teamsService.getTeams$(this.user.email).subscribe(
+    //   (teams: Team[]) => {
+    //     this.teams = teams;
+    //     this.getTeamsServiceRunning = false;
         
-        this.setSelectedTeam();
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-        }
+    //     this.setSelectedTeam();
+    //   },
+    //   (error: any) => {
+    //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > ${error}`);
+    //     if (error.codeno === 400) {
+    //       this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
+    //     } else {
+    //       this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
+    //     }
 
-        this.getTeamsServiceRunning = false;
-      }
-    );
+    //     this.getTeamsServiceRunning = false;
+    //   }
+    // );
 
     this.subscription.add(newSubscription);
   }
@@ -397,12 +420,17 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    */
   setSelectedTeam() {
     if (this.teams && this.teams.length && this.investment && this.investment.team) {
-      for (const team of this.teams) {
-        if (this.investment.team.slug === team.slug) {
-          this.model.team = team;
-          break;
-        }
+      const investmentTeam = this.teams.find((team: Team) => this.investment.team.slug === team.slug);
+      
+      if (investmentTeam) {
+        this.model.team = investmentTeam;
       }
+      // for (const team of this.teams) {
+      //   if (this.investment.team.slug === team.slug) {
+      //     this.model.team = team;
+      //     break;
+      //   }
+      // }
     }
   }
 
@@ -425,25 +453,25 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     return result;
   }
 
-  /**
-   * Get an investment source from server based on the id provided
-   * @param {string} id 
-   * 
-   * @return { Observable<Investment> }
-   */
-  getInvestment$(id: string): Observable<Investment> {
-    const methodTrace = `${this.constructor.name} > getInvestment$() > `; // for debugging
+  // /**
+  //  * Get an investment source from server based on the id provided
+  //  * @param {string} id 
+  //  * 
+  //  * @return { Observable<Investment> }
+  //  */
+  // getInvestment$(id: string): Observable<Investment> {
+  //   const methodTrace = `${this.constructor.name} > getInvestment$() > `; // for debugging
     
-    if (!id) {
-      this.appService.showResults(`Invalid investment ID`, SnackbarNotificationTypes.ERROR);
-      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} ID parameter must be provided, but was: `, id);
-      return of(null);
-    }
+  //   if (!id) {
+  //     this.appService.showResults(`Invalid investment ID`, SnackbarNotificationTypes.ERROR);
+  //     this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} ID parameter must be provided, but was: `, id);
+  //     return of(null);
+  //   }
 
-    this.getInvestmentServiceRunning = true;
+  //   this.getInvestmentServiceRunning = true;
 
-    return this.investmentsService.getInvestmentById$(this.user.email, id);
-  }
+  //   return this.investmentsService.getInvestmentById$(this.user.email, id);
+  // }
 
   onSelectChange(matSelectChange: MatSelectChange) {
     this.model.teamSlug = matSelectChange.value.slug;
