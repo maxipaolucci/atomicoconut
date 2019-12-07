@@ -4,10 +4,9 @@ import { debounceTime } from 'rxjs/operators';
 import { DateAdapter, NativeDateAdapter, MatSelectChange, MatDialog } from '@angular/material';
 import { AppService } from '../../../../app.service';
 import { UtilService } from '../../../../util.service';
-import { INVESTMENTS_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes, ConsoleNotificationTypes } from '../../../../constants';
-import { PropertiesService } from '../../../properties/properties.service';
+import { INVESTMENTS_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes } from '../../../../constants';
 import { Property } from '../../../properties/models/property';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../../../users/models/user';
 import { PropertySelectorDialogComponent } from '../../../properties/components/property-selector-dialog/property-selector-dialog.component';
 
@@ -32,10 +31,14 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     buyingDate : null
   };
   subscription: Subscription = new Subscription();
-  getPropertyServiceRunning = false;
 
-  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private appService: AppService, public dialog: MatDialog,
-      public utilService: UtilService, private propertiesService: PropertiesService, private router: Router) {
+  constructor(
+      private dateAdapter: DateAdapter<NativeDateAdapter>, 
+      private appService: AppService, 
+      public dialog: MatDialog,
+      public utilService: UtilService,
+      private router: Router,
+      private route: ActivatedRoute) {
     
     this.dateAdapter.setLocale('en-GB');
   }
@@ -48,7 +51,8 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     
     if (this.model.propertyId) {
       // when creating from the property "invest action" or some component that shows properties an allow the creation of an investment of it
-      this.getProperty(this.model.propertyId);
+      this.getProperty();
+
     } else if (this.model.property) {
       // when editing a property investment
       this.model.address = this.model.property.address.description; 
@@ -89,40 +93,15 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
   }
 
   /**
-   * Get a property from server based on the id provided
-   * @param {string} id 
+   * Get a property from property resolver
    */
-  getProperty(id: string) {
+  getProperty() {
     const methodTrace = `${this.constructor.name} > getProperty() > `; // for debugging
-    
-    if (!id) {
-      this.appService.showResults(`Invalid property ID`, SnackbarNotificationTypes.ERROR);
-      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} ID parameter must be provided, but was: `, id);
-      this.router.navigate(['/properties']);
-    }
 
-    this.getPropertyServiceRunning = true;
-
-    const newSubscription = this.propertiesService.getPropertyById$(this.user.email, id).subscribe(
-      (property: Property) => {
-        this.setProperty(property);
-      },
-      (error: any) => {
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing this action > `, error);
-        if (error.codeno === 400) {
-          this.appService.showResults(`There was an error in the server while performing this action, please try again in a few minutes.`, SnackbarNotificationTypes.ERROR);
-        } else if (error.codeno === 461 || error.codeno === 462) {
-          this.appService.showResults(error.msg, SnackbarNotificationTypes.ERROR);
-        } else {
-          this.appService.showResults(`There was an error with this service and the information provided.`, SnackbarNotificationTypes.ERROR);
-        }
-
-        this.router.navigate(['/properties']);
-        this.getPropertyServiceRunning = false;
-      }
-    );
-
-    this.subscription.add(newSubscription);
+    // get property from resolver
+    this.route.data.subscribe((data: { property: Property }) => {
+      this.setProperty(data.property);
+    });
   }
 
   setProperty(property: Property) {
@@ -152,8 +131,6 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
       
       this.model.buyingPrice = buyingPrice;
       this.model.buyingPriceUnit = buyingPriceUnit || this.user.currency || DEFAULT_CURRENCY;
-
-      this.getPropertyServiceRunning = false;
     }
   }
 

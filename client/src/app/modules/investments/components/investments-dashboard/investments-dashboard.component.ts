@@ -279,27 +279,6 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     this.store.dispatch(new RequestAllTeams({ userEmail: this.user.email, forceServerRequest: false }));
   }
 
-  // /**
-  //  * Refetch silently the user teams from the server, and update the teams data in the background
-  //  */
-  // fetchTeamsSilently() {
-  //   const methodTrace = `${this.constructor.name} > fetchTeamsSilently$() > `; // for debugging
-
-  //   const newSubscription = this.fetchTeams$().subscribe((teams : Team[]) => this.teams = teams);
-  //   this.subscription.add(newSubscription);
-  // }
-
-  // /**
-  //  * Get a teams observable from server
-  //  * 
-  //  * @return { Observable<Team[]> }
-  //  */
-  // fetchTeams$(): Observable<Team[]> {
-  //   const methodTrace = `${this.constructor.name} > fetchTeams$() > `; // for debugging
-    
-  //   return this.teamsService.getTeams$(this.user.email);
-  // }
-
   setTotals(totalReturns: any): void {
     // update the total that matches the id
     this.totals[totalReturns.investmentId] = totalReturns;
@@ -320,7 +299,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   }
 
   openNewInvestmentDialog() {
-    const addPersonDialogRef = this.dialog.open(InvestmentSelectorDialogComponent, {});
+    this.dialog.open(InvestmentSelectorDialogComponent, {});
     return false;
   }
 }

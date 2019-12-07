@@ -3,7 +3,6 @@ import { DateAdapter, NativeDateAdapter } from '@angular/material';
 import { MatSelectChange } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { UtilService } from '../../../../util.service';
-import { AppService } from '../../../../app.service';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -26,7 +25,8 @@ export class CurrencyInvestmentFormComponent implements OnInit, OnDestroy, After
   };
   subscription: Subscription = new Subscription();
 
-  constructor(private dateAdapter: DateAdapter<NativeDateAdapter>, private appService: AppService, 
+  constructor(
+      private dateAdapter: DateAdapter<NativeDateAdapter>, 
       public utilService: UtilService) {
     
     this.dateAdapter.setLocale('en-GB');

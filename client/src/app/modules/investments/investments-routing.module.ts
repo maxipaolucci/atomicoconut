@@ -6,6 +6,7 @@ import { InvestmentsEditComponent } from './components/investments-edit/investme
 import { UserResolver } from '../users/user-resolver.service';
 import { AuthGuard } from '../../auth.guard';
 import { InvestmentResolver } from './investment-resolver.service';
+import { PropertyResolver } from '../properties/property-resolver.service';
 
 const routes: Routes = [
   {
@@ -17,10 +18,11 @@ const routes: Routes = [
         component : InvestmentsEditComponent 
       },
       { 
-        path : ':type/create/:id', // this happens just with properties
+        // this happens just when creating a new property investment from the properties dashboard
+        path : ':type/create/:id',
         component : InvestmentsEditComponent,
         resolve : {
-          investment : InvestmentResolver
+          property : PropertyResolver
         }
       },
       { 

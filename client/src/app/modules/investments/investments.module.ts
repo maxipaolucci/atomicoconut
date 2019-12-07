@@ -20,6 +20,7 @@ import * as fromInvestment from './investment.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { InvestmentEffects } from './investment.effects';
 import { InvestmentResolver } from './investment-resolver.service';
+import { PropertyResolver } from '../properties/property-resolver.service';
 
 @NgModule({
   imports: [
@@ -44,6 +45,6 @@ import { InvestmentResolver } from './investment-resolver.service';
   entryComponents: [
     InvestmentSelectorDialogComponent // added as material doc suggest to allow AOT on this on the fly created class
   ],
-  providers: [ InvestmentsService, InvestmentResolver ]
+  providers: [ InvestmentsService, InvestmentResolver, PropertyResolver ]
 })
 export class InvestmentsModule {}
