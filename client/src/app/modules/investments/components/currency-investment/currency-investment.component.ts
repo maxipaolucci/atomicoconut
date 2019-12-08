@@ -5,6 +5,7 @@ import { AppService } from '../../../../app.service';
 import { User } from '../../../users/models/user';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { Observable, BehaviorSubject, Subscription, combineLatest, of } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { Team } from '../../../teams/models/team';
 import { INVESTMENTS_TYPES, ConsoleNotificationTypes, COINCAP_CRYPTO_TYPES } from '../../../../constants';
 import { UtilService } from '../../../../util.service';
@@ -68,16 +69,28 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       this.teams$,
       this.investment.type === INVESTMENTS_TYPES.CRYPTO ? this.store.select(cryptoRateByIdSelector(COINCAP_CRYPTO_TYPES[this.investment.unit])) : of(null)
     );
-    newSubscription = combineLatest$.subscribe(([user, currencyRates, teams, cryptoRates]: [User, { string: CurrencyRate }, Team[], CryptoRate]) => {
+    newSubscription = combineLatest$.pipe(
+      filter(([user, currencyRates, teams, cryptoRates]: [User, { string: CurrencyRate }, Team[], CryptoRate]) => {
+        if (this.investment.type === INVESTMENTS_TYPES.CRYPTO && !cryptoRates) {
+          return false;
+        }
+
+        if (!currencyRates || !currencyRates[this.utilService.formatToday()] || !currencyRates[this.utilService.formatDate(this.investment.buyingDate)]) {
+          return false;
+        }
+
+        return true;
+      })
+    ).subscribe(([user, currencyRates, teams, cryptoRates]: [User, { string: CurrencyRate }, Team[], CryptoRate]) => {
       this.user = user;
       // for all this info I need to be sure currencyRates are here
-      if (currencyRates && Object.keys(currencyRates).length == 2) {
+      if (currencyRates && Object.keys(currencyRates).length) {
         if (this.investment.type === INVESTMENTS_TYPES.CRYPTO  && cryptoRates) {
           this.currentPrice = Number(cryptoRates.priceUsd);
         } else if (this.investment.type === INVESTMENTS_TYPES.CURRENCY) {
           this.currentPrice = 1 / (currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1);
         }
-  
+        
         // the investment amount was paid on the date of the investment so we need to convert using that day rates
         this.investmentAmount = this.investment.investmentAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
         // the loan amount was requested on the date of the investment so we need to convert using that day rates

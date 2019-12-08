@@ -25,7 +25,7 @@ export class UserResolver implements Resolve<User> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> {
     const methodTrace = `${this.constructor.name} > resolve() > `; // for debugging  
     
-    const urlsForCompleteUserData: Array<string> = ['/investments', '/users/account'];
+    const urlsForCompleteUserData: Array<string> = ['/users/account'];
         
     return this.store.pipe(
       select(userSelector()),

@@ -20,7 +20,7 @@ import { userSelector } from 'src/app/modules/users/user.selectors';
 import _ from 'lodash';
 import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
-import { RequestAll } from '../../investment.actions';
+import { RequestAll, ResetAllEntitiesLoaded } from '../../investment.actions';
 import { RequestAll as RequestAllTeams, ResetAllEntitiesLoaded as ResetAllTeamsLoaded } from '../../../teams/team.actions';
 import { investmentsSelector } from '../../investment.selectors';
 import { teamsSelector } from 'src/app/modules/teams/team.selectors';
@@ -157,7 +157,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.fetchInvestmentsSilently();
+      this.store.dispatch(new ResetAllEntitiesLoaded()); // to force to reload from server
+      this.getInvestments();
     });
 
     // when a user removes an investment
@@ -167,7 +168,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.fetchInvestmentsSilently();
+      this.store.dispatch(new ResetAllEntitiesLoaded()); // to force to reload from server
+      this.getInvestments();
     });
 
     // when a user creates an investment
@@ -177,7 +179,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.fetchInvestmentsSilently();
+      this.store.dispatch(new ResetAllEntitiesLoaded()); // to force to reload from server
+      this.getInvestments();
     });
 
     // when a user updates a team
@@ -210,10 +213,8 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
    */
   organizeInvestmentsData(investments : Investment[]) {
     const methodTrace = `${this.constructor.name} > organizeInvestmentsData$() > `; // for debugging
-
+    
     let investmentsRow: any[] = [];
-    const investmentsDates: string[] = [];
-
     this.totals = {}; //empty totals object to be refilled with the set of investments
     this.investmentsUI = [];
     for (const item of investments) {
@@ -223,30 +224,13 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         this.investmentsUI.push(investmentsRow);
         investmentsRow = [item];
       }
-
-      if (item instanceof CurrencyInvestment) {
-        investmentsDates.push(this.utilService.formatDate((<CurrencyInvestment>item).buyingDate, 'YYYY-MM-DD'));
-      } else if (item instanceof PropertyInvestment) {
-        investmentsDates.push(this.utilService.formatDate((<PropertyInvestment>item).buyingDate, 'YYYY-MM-DD'));
-      }
     }
 
     if (investmentsRow.length) {
       this.investmentsUI.push(investmentsRow);
     }
-
-    this.currencyExchangeService.getCurrencyRates$(investmentsDates); // lets retrieve investment dates for future usage in each investment
+    
     this.investments = investments;
-  }
-
-  /**
-   * Refetch silently the user investments from the server, and update the investment data in the background
-   */
-  fetchInvestmentsSilently() {
-    const methodTrace = `${this.constructor.name} > fetchInvestmentsSilently$() > `; // for debugging
-
-    const newSubscription = this.fetchInvestments$().subscribe((investments : Investment[]) => this.organizeInvestmentsData(investments));
-    this.subscription.add(newSubscription);
   }
 
   /**
@@ -255,19 +239,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   getInvestments()  {
     const methodTrace = `${this.constructor.name} > getInvestments$() > `; // for debugging
 
-    this.investments = [];
     this.store.dispatch(new RequestAll({ userEmail: this.user.email }));
-  }
-
-  /**
-   * Get a investments observable from server
-   * 
-   * @return { Observable<Investment[]> }
-   */
-  fetchInvestments$(): Observable<Investment[]> {
-    const methodTrace = `${this.constructor.name} > fetchInvestments$() > `; // for debugging
-
-    return this.investmentsService.getInvestments$(this.user.email);
   }
 
   /**
