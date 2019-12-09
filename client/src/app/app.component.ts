@@ -54,15 +54,18 @@ export class AppComponent implements OnInit, OnDestroy {
     // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
     // subscribe to the user
     let newSubscription: Subscription = this.store.select(userSelector()).pipe(
-      switchMap((user: User) => {
+      filter((user: User) => {
         if (!user) {
           this.user = null;
           this.todayUserPrefRate = null;
           this.unbindToPushNotificationEvents();
           
-          return of(null);
+          return false;
         }
 
+        return true;
+      }),
+      switchMap((user: User) => {
         if (!_.isEqual(user, this.user)) {
           this.user = user;
           //get the teams, will need them for the pusher notifications
@@ -75,10 +78,9 @@ export class AppComponent implements OnInit, OnDestroy {
         }
         
         return of(null); // is the user had not configure a preferred currency then we don't need to show the currency toolbar
-      }),
-      filter((currencyRate: CurrencyRate) => !!this.user)
+      }),filter((currencyRate: CurrencyRate) => this.user.currency && this.user.currency !== 'USD')
     ).subscribe((currencyRate: CurrencyRate) => {
-      if (!currencyRate && this.user.currency && this.user.currency !== 'USD') {
+      if (!currencyRate) {
         this.store.dispatch(new RequestManyCurrencyRates({ dates: [this.utilService.formatToday()], base: 'USD' }));
         return;
       }
@@ -90,13 +92,14 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     this.subscription.add(newSubscription);
 
-    newSubscription = this.store.select(currencyRateByIdSelector(this.utilService.formatToday())).pipe(
-      filter((currencyRates: CurrencyRate) => currencyRates && this.user && this.user.currency !== 'USD' && !this.todayUserPrefRate)
-    ).subscribe((currencyRates: CurrencyRate) => {
-      this.todayUserPrefRate = currencyRates[`USD${this.user.currency}`];
-      this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
-    });
-    this.subscription.add(newSubscription);
+    // newSubscription = this.store.select(currencyRateByIdSelector(this.utilService.formatToday())).pipe(
+    //   filter((currencyRates: CurrencyRate) => currencyRates && this.user && this.user.currency !== 'USD' && !this.todayUserPrefRate)
+    // ).subscribe((currencyRates: CurrencyRate) => {
+    //   console.log(44);
+    //   this.todayUserPrefRate = currencyRates[`USD${this.user.currency}`];
+    //   this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
+    // });
+    // this.subscription.add(newSubscription);
   }
 
   ngOnDestroy() {
