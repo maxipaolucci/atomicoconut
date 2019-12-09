@@ -78,7 +78,8 @@ export class AppComponent implements OnInit, OnDestroy {
         }
         
         return of(null); // is the user had not configure a preferred currency then we don't need to show the currency toolbar
-      }),filter((currencyRate: CurrencyRate) => this.user.currency && this.user.currency !== 'USD')
+      }),
+      filter((currencyRate: CurrencyRate) => this.user && this.user.currency && this.user.currency !== 'USD')
     ).subscribe((currencyRate: CurrencyRate) => {
       if (!currencyRate) {
         this.store.dispatch(new RequestManyCurrencyRates({ dates: [this.utilService.formatToday()], base: 'USD' }));

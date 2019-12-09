@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, interval } from 'rxjs';
-import { map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { map, withLatestFrom } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AppService } from '../../app.service';
 import { User } from './models/user';
@@ -22,32 +21,13 @@ export class UsersService {
 
   private serverHost: string = environment.apiHost + '/api/users';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-  
-  user$: BehaviorSubject<User>; // Observable user stream
   routerRedirectUrl: string = null; // a route to redirect the user to when login is successfull
 
   constructor(
     private http: HttpClient, 
     private appService: AppService,
     private store: Store<State>
-  ) {
-    this.user$ = new BehaviorSubject<User>(null);
-  }
-
-  /**
-   * user source feeder
-   */
-  setUser(user: User = null) {
-    this.user$.next(user);
-  }
-
-  /**
-   * get the current user from the source
-   */
-  getUser(): User {
-    return this.user$.getValue();
-  }
+  ) { }
 
   /**
    * Server call to Register a new user in the system 
@@ -58,14 +38,12 @@ export class UsersService {
   register$(postData: any = {}): Observable<User> {
     const methodTrace = `${this.constructor.name} > register$() > `; // for debugging
 
-    this.setUser(null);
     return this.http.post<Response>(`${this.serverHost}/register`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
       map((data: any): User => {
         let user: User = null;
         if (data && data.email) {
           user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-          this.setUser(user); //delete this
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`, data);
         }
@@ -88,15 +66,12 @@ export class UsersService {
       map(this.appService.extractData),
       withLatestFrom(this.store.select(userSelector())), //check this in web
       map(([data, user]: [any, User]): User => {
-        //const user: User = this.getUser();
-
         if (data && data.email) {
           user = _.cloneDeep(user);
           user.name = data.name;
           user.email = data.email;
           user.currency = data.currency;
 
-          this.setUser(user); //delete this
           this.appService.showResults(`Your profile was successfully updated.`, SnackbarNotificationTypes.SUCCESS);
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
@@ -120,12 +95,9 @@ export class UsersService {
       map(this.appService.extractData),
       withLatestFrom(this.store.select(userSelector())), //check this in web
       map(([data, user]: [any, User]): User => {
-        // const user = this.getUser();
-
         if (data.personalInfo.birthday) {
           user = _.cloneDeep(user);
           user.personalInfo = new AccountPersonal(data.personalInfo.birthday);
-          this.setUser(user); //delete this
           this.appService.showResults(`Your personal information was successfully updated.`, SnackbarNotificationTypes.SUCCESS);
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
@@ -149,13 +121,10 @@ export class UsersService {
       map(this.appService.extractData),
       withLatestFrom(this.store.select(userSelector())), //check this in web
       map(([data, user]: [any, User]): User => {
-        //const user = this.getUser();
-
         if (data.financialInfo.savingsUnit) {
           user = _.cloneDeep(user);
           user.financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
               data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
-          this.setUser(user); //delete this
           this.appService.showResults(`Your financial information was successfully updated.`, SnackbarNotificationTypes.SUCCESS);
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
@@ -183,59 +152,26 @@ export class UsersService {
     return this.http.get<Response>(`${this.serverHost}/getUser`, { params }).pipe(
       map(this.appService.extractData),
       map((data: any): User => {
-        let user: User = null;
-
-        if (data && data.email) {
-          let personalInfo = null;
-          if (data.personalInfo && data.personalInfo.birthday) {
-            personalInfo = new AccountPersonal(data.personalInfo.birthday);
-          }
-  
-          let financialInfo = null;
-          if (data.financialInfo && data.financialInfo.savingsUnit) {
-            financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
-                data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
-          }
-          
-          user = new User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
-        } else {
+        if (!(data && data.email)) {
           this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} User not logged in.`, data);
+          return null;
+        } 
+
+        let personalInfo = null;
+        if (data.personalInfo && data.personalInfo.birthday) {
+          personalInfo = new AccountPersonal(data.personalInfo.birthday);
         }
 
-        if (!_.isEqual(user, this.getUser())) {
-          this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} User info updated.`);
-          this.setUser(user);
+        let financialInfo = null;
+        if (data.financialInfo && data.financialInfo.savingsUnit) {
+          financialInfo = new AccountFinance(data.financialInfo.annualIncome, data.financialInfo.annualIncomeUnit, 
+              data.financialInfo.savings, data.financialInfo.savingsUnit, data.financialInfo.incomeTaxRate);
         }
-
-        return user;
+        
+        return new User(data.name, data.email, data.avatar, financialInfo, personalInfo, data.currency);
       })
     );
   }
-
-  /**
-   * Checks for the authenticated user state every certain amount of time. This will make the user$ variable to update its value and
-   * each component observing it is going the refresh their state base on the new value
-   * 
-   * @param { number } time. The amount of time in ms between each session state check. Default to 10min
-   */
-  // updateSessionState(time: number = 600000) {
-  //   const methodTrace = `${this.constructor.name} > updateSessionState() > `; // for debugging
-    
-  //   interval(time).pipe(
-  //     mergeMap((checkNumber: number) => {
-  //       console.log(methodTrace, checkNumber);
-  //       const user: User = this.getUser();
-  //       const params = {
-  //         financialInfo: user && user.financialInfo ? true : false,
-  //         personalInfo: user && user.personalInfo ? true : false
-  //       };
-        
-  //       return this.getAuthenticatedUser$(params);
-  //     })
-  //   ).subscribe((user: User) => {
-  //     // do nothing
-  //   });
-  // }
 
   /**
    * Server call to login the provided user email and pass.
@@ -244,22 +180,16 @@ export class UsersService {
    */
   login$(postData: any = {}): Observable<User> {
     const methodTrace = `${this.constructor.name} > login$() > `; // for debugging
-    this.setUser(null);
 
     return this.http.post<Response>(`${this.serverHost}/login`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
       map((data: any): User => {
-        let user: User = null;
-
-        if (data && data.email) {
-          user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-          this.setUser(user);
-        } else {
+        if (!(data && data.email)) {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-          this.setUser(null);
+          return null;
         }
 
-        return user;
+        return new User(data.name, data.email, data.avatar, null, null, data.currency);
       })
     );
   }
@@ -295,7 +225,7 @@ export class UsersService {
   reset$(token: string, postData: ResetPasswordModel): Observable<User> {
     const methodTrace = `${this.constructor.name} > reset$() > `; // for debugging
 
-    this.setUser(null);
+    // this.setUser(null);
     return this.http.post<Response>(`${this.serverHost}/account/reset/${token}`, postData, { headers : this.headers })
       .pipe(
         map(this.appService.extractData),
@@ -305,12 +235,11 @@ export class UsersService {
           if (data && data.email) {
             this.appService.showResults('Your password was successfully updated!', SnackbarNotificationTypes.SUCCESS);
             user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-            this.setUser(user);
+            
             return user;
           }
 
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-          this.setUser(null);
           return user;
         })
       );
@@ -326,10 +255,7 @@ export class UsersService {
 
     return this.http.get<Response>(`${this.serverHost}/logout`).pipe(
       map(this.appService.extractData),
-      map((data: any): null => {
-        this.setUser(null);
-        return null;
-      })
+      map((data: any): null => null)
     );
   }
 }

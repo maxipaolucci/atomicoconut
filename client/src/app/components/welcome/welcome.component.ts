@@ -64,7 +64,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   generateWealthComponentInfo() {
     const methodTrace = `${this.constructor.name} > generateWealthComponentInfo() > `; // for debugging
 
-    let todayRatesLoaded: boolean = false;
+    // let todayRatesLoaded: boolean = false;
+    let additionalUserDataRequested: boolean = false;
     let currentUserInvestments: Investment[] = [];
     let currentUserInvestmentsDates: string[] = [];
 
@@ -72,9 +73,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       this.store.select(userSelector()),
       this.store.select(currencyRateByIdsSelector([this.utilService.formatToday()])) //request is trigger by app component
     ).pipe(
-      filter(([user, todayRates]: [User, { string: CurrencyRate }]) =>{
-        if (todayRatesLoaded && this.user && _.isEqual(user, this.user)) {
-          // this means the observer was trigger again with data no new data. Block it
+      filter(([user, todayRates]: [User, { string: CurrencyRate }]) => {
+        if (!user) {
+          this.user = null;
+          additionalUserDataRequested = false;
           return false;
         }
 
@@ -83,8 +85,14 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           return false;
         }
 
-        if (!user || !user.personalInfo || !user.financialInfo) {
+        if (this.user && _.isEqual(user, this.user)) {
+          // this means the observer was trigger again with data no new data. Block it
+          return false;
+        }
+
+        if (!additionalUserDataRequested && !(user.personalInfo && user.financialInfo)) {
           // no complete user data yet
+          additionalUserDataRequested = true;
           this.store.dispatch(new RequestAuthenticatedUser({ personalInfo: true, financialInfo: true }));
           return false;
         }
@@ -93,7 +101,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       })
     ).subscribe(([user, todayRates]: [User, { string: CurrencyRate }]) => {
       this.user = user;
-      todayRatesLoaded = true;
+      // todayRatesLoaded = true;
       // reset all values to recalculate for this user 
       this.wealthAmount = 0;
       this.expectedWealth = 0;
@@ -170,6 +178,9 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     
     const newSubscription = this.store.select(currencyRateByIdsSelector(currentUserInvestmentsDates)).pipe(
       filter((currencyRates: {string: CurrencyRate}) => {
+        if (!this.user) {
+          return false;
+        }
         const currencyRatesLength = Object.keys(currencyRates).length;
 
         if (!(currencyRatesLength && currentUserInvestmentsDates.length) || currencyRatesLength !== currentUserInvestmentsDates.length) {
