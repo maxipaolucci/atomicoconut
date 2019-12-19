@@ -4,11 +4,17 @@ RUN node -v && npm -v
 
 WORKDIR /app
 
+# To handle 'not get uid/gid'
+RUN npm config set unsafe-perm true
+
 RUN npm install -g @angular/cli@~8.2.1
 
 COPY ./package.json ./
 
 RUN npm install
+
+# To undo the change before
+RUN npm config set unsafe-perm false
 
 COPY . .
 
