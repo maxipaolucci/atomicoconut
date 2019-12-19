@@ -76,9 +76,6 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     ]}));
 
     this.loading$ = this.store.select(loadingSelector());
-
-    //start listening to Pusher notifications related to this component
-    this.bindToPushNotificationEvents();
     
     // generates a user source object from authUser from resolver
     const user$ = this.store.select(userSelector());
@@ -117,6 +114,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
 
         this.populateRequiredData(user, investmentId, propertyId);
 
+        //With the user set start listening to Pusher notifications related to this component
+        this.bindToPushNotificationEvents();
+        
         if (!investmentId) {
           this.editMode = false;
           this.store.dispatch(new AppendLink({ link: { displayName: 'Create Investment', url: '', selected : true }}));
@@ -195,25 +195,27 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.model.investmentAmount = investment.investmentAmount;
     this.model.investmentAmountUnit = investment.investmentAmountUnit;
     this.model.type = investment.type;
-    if (investment instanceof CurrencyInvestment) {
+    
+    if ([ INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO ].includes(investment.type)) {
       this.model.investmentData = {
         type : investment.type,
-        unit : investment.unit,
-        amount : investment.amount,
-        buyingPrice : investment.buyingPrice,
-        buyingPriceUnit : investment.buyingPriceUnit,
-        buyingDate : investment.buyingDate
+        unit : (<CurrencyInvestment>investment).unit,
+        amount : (<CurrencyInvestment>investment).amount,
+        buyingPrice : (<CurrencyInvestment>investment).buyingPrice,
+        buyingPriceUnit : (<CurrencyInvestment>investment).buyingPriceUnit,
+        buyingDate : (<CurrencyInvestment>investment).buyingDate
       };
-    } else if (investment instanceof PropertyInvestment) {
+    } else if ([ INVESTMENTS_TYPES.PROPERTY ].includes(investment.type)) {
       this.model.investmentData = {
         type : investment.type,
-        property : investment.property,
-        address : investment.property.address,
-        buyingPrice : investment.buyingPrice,
-        buyingPriceUnit : investment.buyingPriceUnit,
-        buyingDate : investment.buyingDate
+        property : (<PropertyInvestment>investment).property,
+        address : (<PropertyInvestment>investment).property.address,
+        buyingPrice : (<PropertyInvestment>investment).buyingPrice,
+        buyingPriceUnit : (<PropertyInvestment>investment).buyingPriceUnit,
+        buyingDate : (<PropertyInvestment>investment).buyingDate
       };
     }
+
   }
 
   ngAfterViewInit(): void {

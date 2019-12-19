@@ -101,9 +101,9 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
       switchMap((investments: Investment[]) => {
         let dates: string[] = [];
         investments.map((investment: Investment) => {
-          if (investment instanceof CurrencyInvestment) {
+          if ([ INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO ].includes(investment.type)) {
             dates.push(this.utilService.formatDate((<CurrencyInvestment>investment).buyingDate));
-          } else if (investment instanceof PropertyInvestment) {
+          } else if ([ INVESTMENTS_TYPES.PROPERTY ].includes(investment.type)) {
             dates.push(this.utilService.formatDate((<PropertyInvestment>investment).buyingDate));
           }
         });

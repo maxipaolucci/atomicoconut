@@ -127,9 +127,9 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       switchMap((investments: Investment[]) => {
         currentUserInvestments = investments;
         let investmentsDates: string[] = investments.map((investment: Investment) => {
-          if (investment instanceof CurrencyInvestment) {  
+          if ([ INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO ].includes(investment.type)) {  
             return this.utilService.formatDate((<CurrencyInvestment>investment).buyingDate);
-          } else if (investment instanceof PropertyInvestment) {
+          } else if ([ INVESTMENTS_TYPES.PROPERTY ].includes(investment.type)) {
             return this.utilService.formatDate((<PropertyInvestment>investment).buyingDate);
           }
           
@@ -199,7 +199,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       switchMap((investmentAndCurrencyRates: any): Observable<any> => {
         const myPercentage = (investmentAndCurrencyRates.investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
 
-        if (investmentAndCurrencyRates.investment instanceof CurrencyInvestment) {
+        if ([ INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO ].includes(investmentAndCurrencyRates.investment.type)) {
           const investment: CurrencyInvestment = <CurrencyInvestment>investmentAndCurrencyRates.investment;
 
           if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
@@ -219,7 +219,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
             this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Currency Investment type not recognized by this component: ${investment.type}`);
             return of(null); // should never happen
           }
-        } else if (investmentAndCurrencyRates.investment instanceof PropertyInvestment) {
+        } else if ([ INVESTMENTS_TYPES.PROPERTY ].includes(investmentAndCurrencyRates.investment.type)) {
           const investment: PropertyInvestment = <PropertyInvestment>investmentAndCurrencyRates.investment;
           this.wealthAmount += (this.currencyExchangeService.getUsdValueOf(investment.property.marketValue, investment.property.marketValueUnit, investmentAndCurrencyRates['currencyRates'])
               - (investment.loanAmount / (investmentAndCurrencyRates['currencyRates'][this.utilService.formatDate(investment.buyingDate)][`USD${investment.loanAmountUnit}`] || 1)))

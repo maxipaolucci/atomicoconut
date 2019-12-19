@@ -213,6 +213,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > populateModel() > `; // for debugging
 
     this.property = _.cloneDeep(property);
+    
     // populate the model
     this.model.address = property.address;
     this.model.askingPrice = property.askingPrice;
@@ -249,36 +250,36 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.model.status = property.status;
     this.model.statusDetail = property.statusDetail;
 
-    if (property instanceof House) {
+    if ([ PROPERTY_TYPES.HOUSE ].includes(property.type)) {
       this.model.propertyTypeData = {
-        buildingType : property.buildingType,
-        titleType : property.titleType,
-        landArea : property.landArea,
-        floorArea : property.floorArea,
-        registeredValue : property.registeredValue,
-        registeredValueUnit : property.registeredValueUnit,
-        rates : property.rates,
-        ratesUnit : property.ratesUnit,
-        insurance : property.insurance,
-        insuranceUnit : property.insuranceUnit,
-        capitalGrowth : property.capitalGrowth,
-        bedrooms : property.bedrooms,
-        bathrooms : property.bathrooms,
-        parkingSpaces : property.parkingSpaces,
-        fenced : property.fenced,
-        rented : property.rented,
-        rentPrice : property.rentPrice,
-        rentPriceUnit : property.rentPriceUnit,
-        rentPricePeriod : property.rentPricePeriod,
-        rentAppraisalDone : property.rentAppraisalDone,
-        vacancy : property.vacancy,
-        bodyCorporate : property.bodyCorporate,
-        bodyCorporateUnit : property.bodyCorporateUnit,
-        utilitiesCost : property.utilitiesCost,
-        utilitiesCostUnit : property.utilitiesCostUnit,
-        managed : property.managed,
-        managerRate : property.managerRate,
-        agent : property.agent
+        buildingType : (<House>property).buildingType,
+        titleType : (<House>property).titleType,
+        landArea : (<House>property).landArea,
+        floorArea : (<House>property).floorArea,
+        registeredValue : (<House>property).registeredValue,
+        registeredValueUnit : (<House>property).registeredValueUnit,
+        rates : (<House>property).rates,
+        ratesUnit : (<House>property).ratesUnit,
+        insurance : (<House>property).insurance,
+        insuranceUnit : (<House>property).insuranceUnit,
+        capitalGrowth : (<House>property).capitalGrowth,
+        bedrooms : (<House>property).bedrooms,
+        bathrooms : (<House>property).bathrooms,
+        parkingSpaces : (<House>property).parkingSpaces,
+        fenced : (<House>property).fenced,
+        rented : (<House>property).rented,
+        rentPrice : (<House>property).rentPrice,
+        rentPriceUnit : (<House>property).rentPriceUnit,
+        rentPricePeriod : (<House>property).rentPricePeriod,
+        rentAppraisalDone : (<House>property).rentAppraisalDone,
+        vacancy : (<House>property).vacancy,
+        bodyCorporate : (<House>property).bodyCorporate,
+        bodyCorporateUnit : (<House>property).bodyCorporateUnit,
+        utilitiesCost : (<House>property).utilitiesCost,
+        utilitiesCostUnit : (<House>property).utilitiesCostUnit,
+        managed : (<House>property).managed,
+        managerRate : (<House>property).managerRate,
+        agent : (<House>property).agent
       };
     }
   }

@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { House } from '../../../properties/models/house';
 import { UtilService } from '../../../../util.service';
-import { ConsoleNotificationTypes } from 'src/app/constants';
+import { ConsoleNotificationTypes, PROPERTY_TYPES } from 'src/app/constants';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-rate';
@@ -64,7 +64,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
     
     this.loading$ = this.store.select(loadingSelector());
     
-    if (this.investment.property instanceof House) {
+    if ([ PROPERTY_TYPES.HOUSE ].includes(this.investment.property.type)) {
       this.investmentTitle = this.utilService.capitalizeFirstLetter((<House>this.investment.property).buildingType);
     }
 
