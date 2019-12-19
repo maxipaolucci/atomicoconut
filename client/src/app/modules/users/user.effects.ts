@@ -88,7 +88,7 @@ export class UserEffects {
     ofType<Login>(UserActionTypes.Login),
     switchMap(() => this.store.select(redirectUrlSelector()).pipe(
       first() //so I stop listening once this is retrieved
-                                                  // that way I will not be trigger again when set url to null below
+              // that way I will not be trigger again when set url to null below
     )),
     tap((redirectUrl: String) => {
       if (!redirectUrl) {
