@@ -4,7 +4,14 @@ import { LoadingData } from './models/loadingData';
 export enum AppActionTypes {
   ShowProgressBar = '[App] Show progress bar',
   HideProgressBar = '[App] Hide progress bar',
-  FinalizeOperation = '[App] Finalize last operation'
+  FinalizeOperation = '[App] Finalize last operation',
+  SetRedirectUrl = '[App] Set router redirect url to Store'
+}
+
+export class SetRedirectUrl implements Action {
+  readonly type = AppActionTypes.SetRedirectUrl;
+
+  constructor(public payload: { url: String }) {}
 }
 
 export class ShowProgressBar implements Action {
@@ -25,4 +32,5 @@ export class FinalizeOperation implements Action {
 
 
 export type AppActions = FinalizeOperation |  
-  ShowProgressBar | HideProgressBar;
+  ShowProgressBar | HideProgressBar |
+  SetRedirectUrl;

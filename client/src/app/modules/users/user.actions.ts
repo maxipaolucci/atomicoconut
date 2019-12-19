@@ -6,6 +6,7 @@ import { UserAdditionalInfo } from './models/user-additional-info';
 import { AccountUserInfoModel } from './models/account-user-info-model';
 import { AccountPersonalInfoModel } from './models/account-personal-info-model';
 import { AccountFinancialInfoModel } from './models/account-financial-info-model';
+import { RegisterUserModel } from './models/register-user-model';
 
 export enum UserActionTypes {
   Login = '[User] Login user',
@@ -22,7 +23,8 @@ export enum UserActionTypes {
   RequestUpdateAccountPersonalInfo = '[User] Request update account user personal info to Server',
   UpdateAccountPersonalInfo = '[User] Set updated account user personal info to Store',
   RequestUpdateAccountFinancialInfo = '[User] Request update account user financial info to Server',
-  UpdateAccountFinancialInfo = '[User] Set updated account user financial info to Store'
+  UpdateAccountFinancialInfo = '[User] Set updated account user financial info to Store',
+  RequestRegister = '[User] Request register new user in Server'
 }
 
 export class Login implements Action {
@@ -109,6 +111,11 @@ export class UpdateAccountFinancialInfo implements Action {
   constructor(public payload: { user: User }) {}
 }
 
+export class RequestRegister implements Action {
+  readonly type = UserActionTypes.RequestRegister;
+
+  constructor(public payload: RegisterUserModel) {}
+}
 
 export type UserActions = Login | RequestLogin
     | Logout | RequestLogout
@@ -117,4 +124,4 @@ export type UserActions = Login | RequestLogin
     | AuthenticatedUser | UpdateAccountInfo
     | RequestUpdateAccountInfo | RequestUpdateAccountPersonalInfo
     | UpdateAccountPersonalInfo | RequestUpdateAccountFinancialInfo
-    | UpdateAccountFinancialInfo;
+    | UpdateAccountFinancialInfo | RequestRegister;

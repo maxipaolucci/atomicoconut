@@ -18,6 +18,8 @@ import { environment } from '../../../environments/environment';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { FilesUploaderComponent } from './components/files-uploader/files-uploader.component';
 import { ProgressBarDialogComponent } from './components/progress-bar-dialog/progress-bar-dialog.component';
+import { StoreModule } from '@ngrx/store';
+import * as fromMainNavigator from './components/main-navigator/main-navigator.reducer';
 
 @NgModule({
   imports: [
@@ -30,6 +32,7 @@ import { ProgressBarDialogComponent } from './components/progress-bar-dialog/pro
       apiKey: environment.mapsApiKey,
       libraries: ['places']
     }),
+    StoreModule.forFeature(fromMainNavigator.mainNavigatorFeatureKey, fromMainNavigator.reducer),
   ],
   declarations: [ 
     MainNavigatorComponent, 

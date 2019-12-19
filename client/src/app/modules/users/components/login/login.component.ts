@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { AppService } from '../../../../app.service';
-import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
@@ -13,6 +12,7 @@ import { LoadingData } from 'src/app/models/loadingData';
 import { SnackbarNotificationTypes } from 'src/app/constants';
 import { loadingSelector } from 'src/app/app.selectors';
 import _ from 'lodash';
+import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 
 @Component({
   selector: 'users-login',
@@ -29,8 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loadingData$: Observable<LoadingData> = null;
 
   constructor(
-    private appService: AppService,  
-    private mainNavigatorService: MainNavigatorService,  
+    private appService: AppService,
     private route: ActivatedRoute,
     private store: Store<State>
   ) { }
@@ -38,9 +37,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
-    this.mainNavigatorService.setLinks([
+    this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Login', url: null, selected: true }]);
+      { displayName: 'Login', url: null, selected: true }
+    ]}));
 
     this.route.paramMap.pipe(map((params: ParamMap) => params.get('state'))).subscribe(state => {
       if (state === 'reset-password-token-expired') {

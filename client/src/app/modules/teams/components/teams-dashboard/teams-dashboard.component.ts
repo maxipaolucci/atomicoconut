@@ -1,12 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { AppService } from '../../../../app.service';
 import { Team } from '../../models/team';
 import { User } from '../../../users/models/user';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { Subscription, Observable } from 'rxjs';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { RequestDelete } from '../../team.actions';
 import { RequestAll } from '../../team.actions';
@@ -15,6 +14,7 @@ import { LoadingData } from 'src/app/models/loadingData';
 import { ConsoleNotificationTypes } from 'src/app/constants';
 import { userSelector } from 'src/app/modules/users/user.selectors';
 import { loadingSelector } from 'src/app/app.selectors';
+import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 
 @Component({
   selector: 'app-teams-dashboard',
@@ -32,7 +32,6 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   loading$: Observable<LoadingData>;
   
   constructor(
-    private mainNavigatorService: MainNavigatorService, 
     private appService: AppService,
     private store: Store<State>,
     public dialog: MatDialog
@@ -41,10 +40,10 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
-    this.mainNavigatorService.setLinks([
+    this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Teams', url: null, selected: true }
-    ]);
+    ]}));
 
     //get user
     this.user$ = this.store.select(userSelector());

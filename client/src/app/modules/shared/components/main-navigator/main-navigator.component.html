@@ -1,5 +1,5 @@
 <nav class="navigation--main">
   <mat-chip-list fxLayout="row wrap" fxLayoutGap="10px">
-    <mat-chip class="nav--item" *ngFor="let link of links" [routerLink]="link.url" [selected]="link.selected">{{link.displayName}}</mat-chip>
+    <mat-chip class="nav--item" *ngFor="let link of (links$ | async)" [routerLink]="link.url" [selected]="link.selected">{{link.displayName}}</mat-chip>
   </mat-chip-list>      
 </nav>

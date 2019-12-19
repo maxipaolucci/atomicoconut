@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { debounceTime } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
+
 
 @Component({
   selector: 'app-equity',
@@ -30,14 +33,15 @@ export class EquityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subscription: Subscription = new Subscription();
 
-  constructor(private mainNavigatorService: MainNavigatorService) { }
+  constructor(private store: Store<State>) { }
 
   ngOnInit() {
-    this.mainNavigatorService.setLinks([
+    this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Calculators', url: '/calculators', selected: false },
       { displayName: 'Equity', url: null, selected: true },
-      { displayName: 'House figures', url: '/calculators/house-figures', selected: false }]);
+      { displayName: 'House figures', url: '/calculators/house-figures', selected: false }
+    ]}));
   }
 
   ngOnDestroy() {

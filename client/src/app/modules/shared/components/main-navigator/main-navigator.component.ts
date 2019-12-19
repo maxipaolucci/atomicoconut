@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MainNavigatorService } from './main-navigator.service';
-import { Subscription } from 'rxjs';
-import { AppService } from '../../../../app.service';
+import { Observable } from 'rxjs';
+import { NavigatorLinkModel } from './models/navigator-link-model';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
+import { linksSelector } from './main-navigator.selectors';
 
 @Component({
   selector: 'main-navigator',
@@ -10,18 +12,19 @@ import { AppService } from '../../../../app.service';
 })
 export class MainNavigatorComponent implements OnInit, OnDestroy {
   
-  links: any;
-  subscription: Subscription = new Subscription();
+  links$: Observable<NavigatorLinkModel[]>;
+  //links: NavigatorLinkModel[];
+  // subscription: Subscription = new Subscription();
   
-  constructor(private mainNavigatorService: MainNavigatorService, private appService: AppService) { }
+  constructor(
+    private store: Store<State>
+  ) { }
 
   ngOnInit() {
-    this.subscription = this.mainNavigatorService.links$.subscribe((links: any[]) => this.links = links);
+    this.links$ = this.store.select(linksSelector());
   }
 
   ngOnDestroy() {
     const methodTrace = `${this.constructor.name} > ngOnDestroy() > `; // for debugging
-    
-    this.subscription.unsubscribe();
   }
 }

@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
-import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset, RequestAuthenticatedUser, AuthenticatedUser, RequestUpdateAccountInfo, UpdateAccountInfo, RequestUpdateAccountPersonalInfo, UpdateAccountPersonalInfo, RequestUpdateAccountFinancialInfo, UpdateAccountFinancialInfo } from './user.actions';
-import { mergeMap, switchMap, exhaustMap, map, catchError, tap, delay } from 'rxjs/operators';
+import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset, RequestAuthenticatedUser, AuthenticatedUser, RequestUpdateAccountInfo, UpdateAccountInfo, RequestUpdateAccountPersonalInfo, UpdateAccountPersonalInfo, RequestUpdateAccountFinancialInfo, UpdateAccountFinancialInfo, RequestRegister } from './user.actions';
+import { mergeMap, switchMap, exhaustMap, map, catchError, tap, delay, first } from 'rxjs/operators';
 import { of, defer } from 'rxjs';
 import { User } from './models/user';
 import { State } from 'src/app/main.reducer';
 import { Store } from '@ngrx/store';
-import { ShowProgressBar, HideProgressBar, FinalizeOperation } from 'src/app/app.actions';
+import { ShowProgressBar, HideProgressBar, FinalizeOperation, SetRedirectUrl } from 'src/app/app.actions';
+import { redirectUrlSelector } from 'src/app/app.selectors';
+import { AppService } from 'src/app/app.service';
+import { SnackbarNotificationTypes } from 'src/app/constants';
 
 @Injectable()
 export class UserEffects {
@@ -70,7 +73,6 @@ export class UserEffects {
     ),
     map((user: User) => {
       if (user) {
-        // localStorage.setItem("user", user);
         localStorage.setItem("user", user.email);
         //dispatch the action to save the value in the store
         return new Login({ user });
@@ -84,11 +86,18 @@ export class UserEffects {
   @Effect({ dispatch: false })
   login$ = this.actions$.pipe(
     ofType<Login>(UserActionTypes.Login),
-    tap(() => {
-      const redirectUrl = this.usersService.routerRedirectUrl ? this.usersService.routerRedirectUrl : '/';
-      this.usersService.routerRedirectUrl = null;
+    switchMap(() => this.store.select(redirectUrlSelector()).pipe(
+      first() //so I stop listening once this is retrieved
+                                                  // that way I will not be trigger again when set url to null below
+    )),
+    tap((redirectUrl: String) => {
+      if (!redirectUrl) {
+        redirectUrl = '/';
+      }
+      
+      this.store.dispatch(new SetRedirectUrl({ url: null}));
       this.store.dispatch(new HideProgressBar());
-      this.router.navigate([redirectUrl]);
+      this.router.navigate([redirectUrl]); 
     })
   );
 
@@ -164,6 +173,31 @@ export class UserEffects {
         //dispatch the action to save the value in the store
         return new Login({ user });
       }
+      return new FinalizeOperation({ redirectData: ['/'] }); //we don't want to do anything in this case, stop the loadingData flag
+    }) 
+  );
+
+  @Effect()
+  requestRegister$ = this.actions$.pipe(
+    ofType<RequestRegister>(UserActionTypes.RequestRegister),
+    tap((action) => {
+      this.store.dispatch(new ShowProgressBar({ message: 'Requesting register new user...', color: 'accent' }));  
+    }),
+    exhaustMap(({ payload }) => this.usersService.register$(payload)  //exhaustMap because we want to ignore multiple request till the first is complete. 
+                                                                                        // Weird to happen because of the loading screen disables the button
+      .pipe(
+        catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
+      )
+    ),
+    map((user: User) => {
+      if (user) {
+        this.router.navigate(['/']); // go home
+        this.appService.showResults(`${user.name} welcome to AtomiCoconut!`, SnackbarNotificationTypes.SUCCESS);
+        localStorage.setItem("user", user.email);
+
+        return new Login({ user });
+      }
+
       return new FinalizeOperation({ redirectData: ['/'] }); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );
@@ -251,5 +285,6 @@ export class UserEffects {
     private usersService: UsersService, 
     private router: Router,
     private store: Store<State>,
+    private appService: AppService
   ) {}
 }

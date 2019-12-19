@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
+import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
 
 @Component({
   selector: 'app-house-figures',
@@ -29,13 +31,14 @@ export class HouseFiguresComponent implements OnInit {
     managed : 10
   };
 
-  constructor(private mainNavigatorService: MainNavigatorService) { }
+  constructor(private store: Store<State>) { }
 
   ngOnInit() {
-    this.mainNavigatorService.setLinks([
+    this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Calculators', url: '/calculators', selected: false },
       { displayName: 'Equity', url: '/calculators/equity', selected: false },
-      { displayName: 'House figures', url: null, selected: true }]);
+      { displayName: 'House figures', url: null, selected: true }
+    ]}));
   }
 }

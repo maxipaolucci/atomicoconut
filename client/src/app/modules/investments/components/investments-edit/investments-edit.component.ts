@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { User } from '../../../users/models/user';
 import { AppService } from '../../../../app.service';
@@ -22,6 +21,7 @@ import { userSelector } from 'src/app/modules/users/user.selectors';
 import { investmentByIdSelector } from '../../investment.selectors';
 import { teamsSelector } from 'src/app/modules/teams/team.selectors';
 import { RequestAll as RequestAllTeams } from 'src/app/modules/teams/team.actions';
+import { SetLinks, AppendLink } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 
 @Component({
   selector: 'investments-edit',
@@ -61,8 +61,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   loading$: Observable<LoadingData>;
   
   constructor(
-      private route: ActivatedRoute, 
-      private mainNavigatorService: MainNavigatorService,
+      private route: ActivatedRoute,
       private appService: AppService, 
       private router: Router,
       private store: Store<State>
@@ -71,10 +70,10 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
-    this.mainNavigatorService.setLinks([
+    this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Investments', url: '/investments', selected: false }
-    ]);
+    ]}));
 
     this.loading$ = this.store.select(loadingSelector());
 
@@ -120,9 +119,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
 
         if (!investmentId) {
           this.editMode = false;
-          this.mainNavigatorService.appendLink({ displayName: 'Create Investment', url: '', selected : true });
+          this.store.dispatch(new AppendLink({ link: { displayName: 'Create Investment', url: '', selected : true }}));
         } else {
-          this.mainNavigatorService.appendLink({ displayName: 'Edit Investment', url: '', selected : true });
+          this.store.dispatch(new AppendLink({ link: { displayName: 'Edit Investment', url: '', selected : true }}));
           this.editMode = true;
         }
 

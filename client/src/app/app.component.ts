@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppService } from './app.service';
 import { User } from './modules/users/models/user';
-import { MainNavigatorService } from './modules/shared/components/main-navigator/main-navigator.service';
 import { UtilService } from './util.service';
 import { of, Subscription, Observable } from 'rxjs';
 import { switchMap, filter } from 'rxjs/operators';
@@ -24,8 +23,7 @@ import _ from 'lodash';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [ MainNavigatorService ]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
 

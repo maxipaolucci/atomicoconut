@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { AddPersonToTeamDialogComponent } from '../../components/add-person-to-team-dialog/add-person-to-team-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../users/models/user';
@@ -17,6 +16,7 @@ import { TeamEditModel } from '../../models/team-edit-model';
 import { teamBySlugSelector, lastUpdatedTeamSlugSelector } from '../../team.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
+import { SetLinks, AppendLink } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 
 @Component({
   selector: 'app-teams-edit',
@@ -41,8 +41,7 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   loading$: Observable<LoadingData>;
 
   constructor(
-      private route: ActivatedRoute, 
-      private mainNavigatorService: MainNavigatorService, 
+      private route: ActivatedRoute,
       private appService: AppService,
       public dialog: MatDialog,
       private store: Store<State>
@@ -51,10 +50,10 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
-    this.mainNavigatorService.setLinks([
+    this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Teams', url: '/teams', selected: false }
-    ]);
+    ]}));
 
     // get the user (this is fast)
     this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
@@ -88,10 +87,10 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
           // we are creating a new team
           this.slug = null;
           this.editMode = false;
-          this.mainNavigatorService.appendLink({ displayName: 'Create Team', url: '', selected : true });
+          this.store.dispatch(new AppendLink({ link: { displayName: 'Create Team', url: '', selected : true }}));
         } else {
           if (!this.slug) {
-            this.mainNavigatorService.appendLink({ displayName: 'Edit Team', url: '', selected : true });
+            this.store.dispatch(new AppendLink({ link: { displayName: 'Edit Team', url: '', selected : true }}));
           }
           
           // we are editing an existing investment

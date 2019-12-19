@@ -69,7 +69,7 @@
         fxLayoutAlign="none start" fxLayoutAlign.gt-sm="center start" 
         fxLayoutGap="10px">
         
-      <button mat-fab *ngIf="!registerServiceRunning" 
+      <button mat-fab *ngIf="!(loading$ | async)" 
           class="fab mat-elevation-z10 form__action" 
           color="accent" 
           type="submit"
@@ -77,13 +77,6 @@
           [disabled]="!registerForm.form.valid">
         <mat-icon aria-label="Save account">save</mat-icon>
       </button>
-      
-      <mat-progress-spinner *ngIf="registerServiceRunning"
-          class="progress-spinner progress-spinner--register"
-          color="accent"
-          [diameter]="55" [strokeWidth]="10"
-          mode="indeterminate">
-      </mat-progress-spinner>
     </section>
   </form>
 </div>

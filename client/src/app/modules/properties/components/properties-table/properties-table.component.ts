@@ -10,13 +10,13 @@ import _ from 'lodash';
 import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
 import { AppService } from '../../../../app.service';
-import { PropertiesService } from '../../properties.service';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { SelectionModel, SelectionChange } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
 import { RequestAll, RequestDelete, ResetAllEntitiesLoaded } from '../../property.actions';
 import { propertiesSelector } from '../../property.selectors';
+import { PropertiesService } from '../../properties.service';
 
 @Component({
   selector: 'properties-table',
@@ -47,11 +47,11 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   loading$: Observable<LoadingData>;
 
   constructor(
-    private appService: AppService, 
-    public propertiesService: PropertiesService, 
+    private appService: AppService,
     public dialog: MatDialog, 
     private router: Router,
-    private store: Store<State>
+    private store: Store<State>,
+    public propertiesService: PropertiesService
   ) { }
 
 

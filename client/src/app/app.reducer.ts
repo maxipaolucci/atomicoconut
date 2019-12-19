@@ -4,11 +4,13 @@ import { AppActions, AppActionTypes } from './app.actions';
 export const appFeatureKey = 'application';
 
 export interface AppState {
-  loadingData: LoadingData
+  loadingData: LoadingData,
+  redirectUrl: String
 }
 
 export const initialState: AppState = {
-  loadingData: null
+  loadingData: null,
+  redirectUrl: null
 };
 
 export function reducer(state: AppState = initialState, action: AppActions): AppState {
@@ -23,6 +25,13 @@ export function reducer(state: AppState = initialState, action: AppActions): App
           color: action.payload.color ? action.payload.color : 'primary',
           extraClasses: action.payload.extraClasses ? action.payload.extraClasses : ''
         }
+      }
+    }
+
+    case AppActionTypes.SetRedirectUrl: {
+      return {
+        ...state,
+        redirectUrl: action.payload.url
       }
     }
     

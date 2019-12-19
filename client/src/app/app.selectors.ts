@@ -4,6 +4,11 @@ import * as fromApp from './app.reducer';
 
 export const selectAppState = createFeatureSelector<fromApp.AppState>("application");
 
+export const redirectUrlSelector = () => createSelector(
+  selectAppState,
+  (state: fromApp.AppState) => state.redirectUrl
+);
+
 export const loadingSelector = () => createSelector(
   selectAppState,
   (state: fromApp.AppState) => state.loadingData

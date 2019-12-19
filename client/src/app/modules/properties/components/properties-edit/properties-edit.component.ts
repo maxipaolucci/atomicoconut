@@ -4,7 +4,6 @@ import { User } from '../../../users/models/user';
 import { Property } from '../../models/property';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AppService } from '../../../../app.service';
-import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { PROPERTY_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes } from '../../../../constants';
 import { House } from '../../models/house';
 import { MatSelectChange, DateAdapter, NativeDateAdapter, MatDialog } from '@angular/material';
@@ -22,6 +21,7 @@ import { loadingSelector } from 'src/app/app.selectors';
 import { RequestUpdate, RequestCreate, ResetAllEntitiesLoaded } from '../../property.actions';
 import _ from 'lodash';
 import { propertyByIdSelector } from '../../property.selectors';
+import { SetLinks, AppendLink } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 
 @Component({
   selector: 'properties-edit',
@@ -96,8 +96,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-      private route: ActivatedRoute, 
-      private mainNavigatorService: MainNavigatorService, 
+      private route: ActivatedRoute,
       private appService: AppService, 
       private router: Router, 
       public utilService: UtilService, 
@@ -112,12 +111,12 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
-    this.mainNavigatorService.setLinks([
+    this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Investments', url: '/investments', selected: false },
       { displayName: 'Properties', url: '/properties', selected: false }
-    ]);
-
+    ]}));
+    
     this.loading$ = this.store.select(loadingSelector());
 
     //start listening to Pusher notifications related to this component
@@ -138,10 +137,10 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
           // we are creating a new property
           this.id = this.model.id = null;
           this.editMode = false;
-          this.mainNavigatorService.appendLink({ displayName: 'Create Property', url: '', selected : true });
+          this.store.dispatch(new AppendLink({ link: { displayName: 'Create Property', url: '', selected : true }}));
         } else {
           if (!this.editMode) {
-            this.mainNavigatorService.appendLink({ displayName: 'Edit Property', url: '', selected : true });
+            this.store.dispatch(new AppendLink({ link: { displayName: 'Edit Property', url: '', selected : true }}));
           }
           
           // we are editing an existing property

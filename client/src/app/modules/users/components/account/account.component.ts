@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from '../../../../util.service';
-import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
+import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/main.reducer';
 
 @Component({
   selector: 'app-account',
@@ -10,15 +12,15 @@ import { MainNavigatorService } from '../../../shared/components/main-navigator/
 export class AccountComponent implements OnInit {
 
   constructor(
-      private mainNavigatorService: MainNavigatorService, 
-      public utilService: UtilService
+    private store: Store<State>,
+    public utilService: UtilService
   ) { }
 
   ngOnInit() {
-    this.mainNavigatorService.setLinks([
+    this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'My account', url: null, selected: true }
-    ]);
+    ]}));
   }
 
   

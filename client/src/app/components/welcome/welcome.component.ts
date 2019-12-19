@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MainNavigatorService } from '../../modules/shared/components/main-navigator/main-navigator.service';
 import { AppService } from '../../app.service';
 import { User } from '../../modules/users/models/user';
 import { CurrencyExchangeService } from '../../modules/currency-exchange/currency-exchange.service';
@@ -20,6 +19,8 @@ import { allCurrencyRateByIdsLoadedSelector, currencyRateByIdsSelector } from 's
 import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
 import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-rate';
 import _ from 'lodash';
+import { cryptoRateByIdSelector } from 'src/app/modules/currency-exchange/crypto-rate.selectors';
+import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 
 
 @Component({
@@ -36,7 +37,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
 
   constructor(
-    private mainNavigatorService: MainNavigatorService,
     private appService: AppService, 
     private currencyExchangeService: CurrencyExchangeService, 
     private utilService: UtilService,
@@ -46,12 +46,12 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
-    this.mainNavigatorService.setLinks([
+    this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: null, selected: true },
       { displayName: 'Investments', url: '/investments', selected: false },
       { displayName: 'Properties', url: '/properties', selected: false },
       { displayName: 'Calculators', url: '/calculators', selected: false }
-    ]);
+    ]}));
 
     this.generateWealthComponentInfo();
   }
@@ -209,7 +209,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
             this.calculateProgressBarWealthValue();
             return of(null);
           } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
-            return this.currencyExchangeService.getCryptoRates$(investment.unit).pipe(
+            return this.store.select(cryptoRateByIdSelector(investment.unit)).pipe(
+              filter(cryptoRates => !!cryptoRates),
               map((cryptoRates) => {
                 return { cryptoRates, myPercentage, investment, currencyRates: investmentAndCurrencyRates.currencyRates };
               })

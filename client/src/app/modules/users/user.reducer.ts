@@ -38,14 +38,6 @@ export function reducer(state: UserState = initialState, action: UserActions): U
       }
     }
 
-    // case UserActionTypes.Logout: {
-    //   return {
-    //     ...state,
-    //     loggedIn: false,
-    //     user: null
-    //   }
-    // }
-
     case UserActionTypes.Forgot: {
       return {
         ...state,

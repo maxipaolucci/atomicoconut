@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap  } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { MainNavigatorService } from '../../../shared/components/main-navigator/main-navigator.service';
 import { AppService } from '../../../../app.service';
 import { Subscription, Observable } from 'rxjs';
 import { ResetPasswordModel } from '../../models/reset-password-model';
@@ -12,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { RequestReset } from '../../user.actions';
 import _ from 'lodash';
 import { loadingSelector } from 'src/app/app.selectors';
+import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 
 @Component({
   selector: 'users-reset-password',
@@ -30,17 +30,17 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     private appService: AppService, 
     private router: Router, 
     private route: ActivatedRoute,
-    private mainNavigatorService: MainNavigatorService,
     private store: Store<State>
   ) { }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
-    this.mainNavigatorService.setLinks([
+    this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Login', url: '/users/login', selected: false },
-      { displayName: 'Reset password', url: null, selected: true }]);
+      { displayName: 'Reset password', url: null, selected: true }
+    ]}));
 
     this.route.paramMap.pipe(map((params: ParamMap) => params.get('token')))
       .subscribe(token => { 

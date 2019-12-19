@@ -2,14 +2,12 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { CryptoRateActionTypes, RequestOne, AddOne } from './crypto-rate.actions';
 import { HideProgressBar, FinalizeOperation, ShowProgressBar } from 'src/app/app.actions';
-import { delay, mergeMap, exhaustMap, tap, map, withLatestFrom, filter, catchError } from 'rxjs/operators';
+import { delay, mergeMap, tap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { State } from '../../main.reducer';
-import { Store, select } from '@ngrx/store';
-import { AppService } from 'src/app/app.service';
+import { Store } from '@ngrx/store';
 import { CurrencyExchangeService } from './currency-exchange.service';
 import { CryptoRate } from './models/crypto-rate';
-import { cryptoRateByIdSelector } from './crypto-rate.selectors';
 
 @Injectable()
 export class CryptoRateEffects {
