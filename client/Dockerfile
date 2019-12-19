@@ -4,11 +4,17 @@ RUN node -v && npm -v
 
 WORKDIR /app
 
+# To handle 'not get uid/gid' in Travis CI. Try to remove this in the future
+RUN npm config set unsafe-perm true
+
 RUN npm install -g @angular/cli@~8.2.1
 
 COPY ./package.json ./
 
 RUN npm install
+
+# To undo the change made above
+RUN npm config set unsafe-perm false
 
 COPY . .
 
