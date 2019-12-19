@@ -19,6 +19,7 @@ import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-
 import { RequestDelete } from '../../investment.actions';
 import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
+import { CurrencyExchangeService } from 'src/app/modules/currency-exchange/currency-exchange.service';
 
 @Component({
   selector: 'currency-investment',
@@ -54,7 +55,8 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
     private appService: AppService,
     public dialog: MatDialog,
     private utilService: UtilService,
-    private store: Store<State>
+    private store: Store<State>,
+    private currencyExchangeService: CurrencyExchangeService
   ) {}
 
   ngOnInit(): void {
@@ -68,8 +70,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       this.store.select(currencyRateByIdsSelector([this.utilService.formatToday(), this.utilService.formatDate(this.investment.buyingDate)])),
       this.teams$,
       this.investment.type === INVESTMENTS_TYPES.CRYPTO ? this.store.select(cryptoRateByIdSelector(COINCAP_CRYPTO_TYPES[this.investment.unit])) : of(null)
-    );
-    newSubscription = combineLatest$.pipe(
+    ).pipe(
       filter(([user, currencyRates, teams, cryptoRates]: [User, { string: CurrencyRate }, Team[], CryptoRate]) => {
         if (this.investment.type === INVESTMENTS_TYPES.CRYPTO && !cryptoRates) {
           return false;
@@ -81,14 +82,15 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
 
         return true;
       })
-    ).subscribe(([user, currencyRates, teams, cryptoRates]: [User, { string: CurrencyRate }, Team[], CryptoRate]) => {
+    );
+    newSubscription = combineLatest$.subscribe(([user, currencyRates, teams, cryptoRates]: [User, { string: CurrencyRate }, Team[], CryptoRate]) => {
       this.user = user;
       // for all this info I need to be sure currencyRates are here
       if (currencyRates && Object.keys(currencyRates).length) {
         if (this.investment.type === INVESTMENTS_TYPES.CRYPTO  && cryptoRates) {
           this.currentPrice = Number(cryptoRates.priceUsd);
         } else if (this.investment.type === INVESTMENTS_TYPES.CURRENCY) {
-          this.currentPrice = 1 / (currencyRates[this.utilService.formatToday()][`USD${this.investment.unit}`] || 1);
+          this.currentPrice = this.currencyExchangeService.getUsdValueOf(1, this.investment.unit, currencyRates);
         }
         
         // the investment amount was paid on the date of the investment so we need to convert using that day rates

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { PropertyInvestment } from '../../models/propertyInvestment';
 import { Team } from '../../../teams/models/team';
 import { Observable, BehaviorSubject, Subscription, combineLatest } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { User } from '../../../users/models/user';
 import { CurrencyExchangeService } from '../../../currency-exchange/currency-exchange.service';
 import { AppService } from '../../../../app.service';
@@ -18,6 +19,7 @@ import { currencyRateByIdsSelector } from 'src/app/modules/currency-exchange/cur
 import { RequestDelete } from '../../investment.actions';
 import { loadingSelector } from 'src/app/app.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
+import { Investment } from '../../models/investment';
 
 
 @Component({
@@ -63,7 +65,6 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
     this.loading$ = this.store.select(loadingSelector());
-    
     if ([ PROPERTY_TYPES.HOUSE ].includes(this.investment.property.type)) {
       this.investmentTitle = this.utilService.capitalizeFirstLetter((<House>this.investment.property).buildingType);
     }
@@ -73,16 +74,24 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
       this.store.select(userSelector()),
       this.store.select(currencyRateByIdsSelector([this.utilService.formatToday(), this.utilService.formatDate(this.investment.buyingDate)])),
       this.teams$
+    ).pipe(
+      filter(([ user, currencyRates, teams ]: [ User, { string: CurrencyRate }, Team[] ]) => {
+        if (!currencyRates || !currencyRates[this.utilService.formatToday()] || !currencyRates[this.utilService.formatDate(this.investment.buyingDate)]) {
+          return false;
+        }
+
+        return true;
+      })
     );
 
     newSubscription = combineLatest$.subscribe(([user, currencyRates, teams]: [User, { string: CurrencyRate }, Team[]]) => {
       this.user = user;
       // for all this info I need to be sure currencyRates are here
-      if (currencyRates && Object.keys(currencyRates).length == 2) {
+      if (currencyRates && Object.keys(currencyRates).length) {
         // market value should be always up to date so no rate conversion is required
         this.currentPrice = this.currencyExchangeService.getUsdValueOf(this.investment.property.marketValue, this.investment.property.marketValueUnit, currencyRates);
         // the investment amount was paid on the date of the investment so we need to convert using that day rates
-        this.investmentAmount = this.investment.investmentAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1);
+        this.investmentAmount = this.investment.investmentAmount / ( currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.investmentAmountUnit}`] || 1 );
         // the loan amount was requested on the date of the investment so we need to convert using that day rates
         this.loanAmount = this.investment.loanAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
         // the buying price (of the property) was requested on the date of the investment so we need to convert using that day rates

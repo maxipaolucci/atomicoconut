@@ -85,20 +85,11 @@ export class AppComponent implements OnInit, OnDestroy {
       }
 
       if (!this.todayUserPrefRate) {
-        this.todayUserPrefRate = currencyRate[`USD${this.user.currency}`];
+        this.todayUserPrefRate = 1 / currencyRate[`USD${this.user.currency}`];
         this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
       }
     });
     this.subscription.add(newSubscription);
-
-    // newSubscription = this.store.select(currencyRateByIdSelector(this.utilService.formatToday())).pipe(
-    //   filter((currencyRates: CurrencyRate) => currencyRates && this.user && this.user.currency !== 'USD' && !this.todayUserPrefRate)
-    // ).subscribe((currencyRates: CurrencyRate) => {
-    //   console.log(44);
-    //   this.todayUserPrefRate = currencyRates[`USD${this.user.currency}`];
-    //   this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
-    // });
-    // this.subscription.add(newSubscription);
   }
 
   ngOnDestroy() {
