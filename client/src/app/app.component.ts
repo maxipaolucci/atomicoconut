@@ -162,7 +162,7 @@ export class AppComponent implements OnInit, OnDestroy {
   showInvestmentNotification(action: string, data: any = {}, teams: Team[] = []) {
     let myTeam = null;
     if (data.oldInvestment && data.oldInvestment.team) {
-      // check if I as part of the original investment before the update
+      // check if I was part of the original investment before the update
       myTeam = teams.find((team: Team) => team.slug == data.oldInvestment.team.slug);
     }
 

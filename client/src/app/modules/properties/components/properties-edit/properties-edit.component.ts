@@ -170,11 +170,11 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   bindToPushNotificationEvents() {
     this.appService.pusherChannel.bind('property-updated', data => {
       if (this.property.id == data.property.id) {
+        this.store.dispatch(new ResetAllEntitiesLoaded());
         const sharedWithMe = data.property.sharedWith.some((member: User) => this.user.email === member.email);
         if (sharedWithMe) {
           this.appService.showResults(`This property was just updated by ${data.name}`, SnackbarNotificationTypes.INFO);
         } else {
-          this.store.dispatch(new ResetAllEntitiesLoaded());
           const unit = data.originalProperty.unit && data.originalProperty.unit != 'null' ? `${data.originalProperty.unit}/` : '';
           this.appService.showResults(`The admin ${data.name} is not sharing the property ${unit}${data.originalProperty.address} with you anymore.`, SnackbarNotificationTypes.INFO, 20000);
           this.router.navigate(['/properties']);

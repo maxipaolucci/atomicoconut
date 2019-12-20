@@ -15,7 +15,7 @@ import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
-import { RequestUpdate, RequestCreate } from '../../investment.actions';
+import { RequestUpdate, RequestCreate, ResetAllEntitiesLoaded } from '../../investment.actions';
 import _ from 'lodash';
 import { userSelector } from 'src/app/modules/users/user.selectors';
 import { investmentByIdSelector } from '../../investment.selectors';
@@ -258,8 +258,30 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    * Start listening to Pusher notifications comming from server
    */
   bindToPushNotificationEvents() {
+    this.appService.pusherChannel.bind('investment-updated', data => {
+      if (this.investment.id == data.investment.id) {
+        this.store.dispatch(new ResetAllEntitiesLoaded());
+
+        if (!data.investment.team) {
+          // If I am receiving the notification then I wasn't the updater. If the team is null then I cannot see this anymore  
+          this.router.navigate(['/investments']);
+          
+          return;
+        }
+
+        const isFromMyTeam = data.investment.team.members.some((member: any) => member.email == this.user.email);
+        if (!isFromMyTeam) {
+          // investment has a team but I am not a member of it
+          this.router.navigate(['/investments']);
+          
+          return;
+        }
+      }
+    });
+
     this.appService.pusherChannel.bind('investment-deleted', data => {
       if (this.investment.id == data.investment.id) {
+        this.store.dispatch(new ResetAllEntitiesLoaded());
         this.router.navigate(['/investments']);
       }
     });
@@ -268,6 +290,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.appService.pusherChannel.bind('team-updated', data => {
       if (data.team && data.team.slug == this.investment.team.slug && data.team.memberState[this.user.email] == 'remove') {
         // the user was removed from the investment team
+        this.store.dispatch(new ResetAllEntitiesLoaded());
         this.router.navigate(['/investments']);
       }
     });
