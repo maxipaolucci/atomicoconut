@@ -6,6 +6,8 @@ import { tap } from 'rxjs/operators';
 import { State } from 'src/app/main.reducer';
 import { Store } from '@ngrx/store';
 import { HideProgressBar } from 'src/app/app.actions';
+import { Logout, UserActionTypes } from './modules/users/user.actions';
+import { SetLinks } from './modules/shared/components/main-navigator/main-navigator.actions';
 
 
 
@@ -24,6 +26,22 @@ export class AppEffects {
       return; // do nothing here
     })
   )
+
+  @Effect({ dispatch: false })
+  logout$ = this.actions$.pipe(
+    ofType<Logout>(UserActionTypes.Logout),
+    tap(() => {
+      // we do this because the logout action previously set the global app state to undefined making it 
+      // re-initilize and leaving the navigator empty. So this side effect repopulates the navigator with 
+      // the welcome componennt options where we are going to be redirected
+      this.store.dispatch(new SetLinks({ links: [
+        { displayName: 'Welcome', url: null, selected: true },
+        { displayName: 'Investments', url: '/investments', selected: false },
+        { displayName: 'Properties', url: '/properties', selected: false },
+        { displayName: 'Calculators', url: '/calculators', selected: false }
+      ]}));
+    })
+  );
 
   constructor(
     private actions$: Actions, 

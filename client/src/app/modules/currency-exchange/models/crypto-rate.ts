@@ -1,6 +1,6 @@
 export interface CryptoRate {
   id: string,
-  priceUsd: string,
+  priceUsd: number,
   symbol: string,
   name: string
 }

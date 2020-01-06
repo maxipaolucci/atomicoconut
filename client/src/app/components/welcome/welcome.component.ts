@@ -5,8 +5,8 @@ import { CurrencyExchangeService } from '../../modules/currency-exchange/currenc
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
 import { Subscription, of, from, Observable, combineLatest } from 'rxjs';
-import { switchMap, map, filter } from 'rxjs/operators';
-import { INVESTMENTS_TYPES, ConsoleNotificationTypes } from '../../constants';
+import { switchMap, map, filter, first } from 'rxjs/operators';
+import { INVESTMENTS_TYPES, ConsoleNotificationTypes, COINCAP_CRYPTO_TYPES } from '../../constants';
 import { UtilService } from '../../util.service';
 import { PropertyInvestment } from '../../modules/investments/models/propertyInvestment';
 import { Store } from '@ngrx/store';
@@ -45,7 +45,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
-
+    
     this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: null, selected: true },
       { displayName: 'Investments', url: '/investments', selected: false },
@@ -67,7 +67,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     // let todayRatesLoaded: boolean = false;
     let additionalUserDataRequested: boolean = false;
     let currentUserInvestments: Investment[] = [];
-    let currentUserInvestmentsDates: string[] = [];
 
     let newSubscription: Subscription = combineLatest(
       this.store.select(userSelector()),
@@ -106,7 +105,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       this.wealthAmount = 0;
       this.expectedWealth = 0;
       this.progressBarWealthValue = 0;
-      currentUserInvestmentsDates = [];
       currentUserInvestments = [];
       
       this.wealthAmount += this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit, todayRates);
@@ -142,15 +140,17 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           investmentsDates.push(this.utilService.formatToday());
         }
         investmentsDates = [...new Set(investmentsDates)]; //remove duplicates
-        currentUserInvestmentsDates = investmentsDates;
-
+        
         return of(investmentsDates);
       }),
       switchMap((investmentsDates: string[]) => combineLatest(
         this.store.select(allCurrencyRateByIdsLoadedSelector(investmentsDates)), 
         of(investmentsDates)
       )),
-      filter(([allCurrencyRatesByIdsLoaded, investmentsDates]: [boolean, string[]]) => {
+      first(([allCurrencyRatesByIdsLoaded, investmentsDates]: [boolean, string[]]) => {
+        // with first I can be sure that once I allCurrencyRatesByIdsLoaded is true I will stop listening
+        // to all these selectors here so the subscribe method is not going to be called again when the 
+        // user is logged out and logged in again
         if (!allCurrencyRatesByIdsLoaded) {
           this.store.dispatch(new RequestManyCurrencyRates({ dates: investmentsDates, base: 'USD' }));
           return false;
@@ -159,12 +159,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         return true;
       })
     ).subscribe(([allCurrencyRatesByIdsLoaded, investmentsDates]: [boolean, string[]]) => {
-      this.combineInvestmentsWithCurrencyRates(currentUserInvestments, currentUserInvestmentsDates);
+      this.combineInvestmentsWithCurrencyRates(currentUserInvestments, investmentsDates);
 
     });
     this.subscription.add(newSubscription);
-    
-    
   }
 
   /**
@@ -178,9 +176,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     
     const newSubscription = this.store.select(currencyRateByIdsSelector(currentUserInvestmentsDates)).pipe(
       filter((currencyRates: {string: CurrencyRate}) => {
-        if (!this.user) {
-          return false;
-        }
         const currencyRatesLength = Object.keys(currencyRates).length;
 
         if (!(currencyRatesLength && currentUserInvestmentsDates.length) || currencyRatesLength !== currentUserInvestmentsDates.length) {
@@ -203,13 +198,13 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           const investment: CurrencyInvestment = <CurrencyInvestment>investmentAndCurrencyRates.investment;
 
           if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
-            this.wealthAmount += ((investment.amount * (investmentAndCurrencyRates['currencyRates'][this.utilService.formatToday()][`USD${investment.unit}`] || 1)) 
+            this.wealthAmount += ((investment.amount / (investmentAndCurrencyRates['currencyRates'][this.utilService.formatToday()][`USD${investment.unit}`] || 1)) 
                 - (investment.loanAmount / (investmentAndCurrencyRates['currencyRates'][this.utilService.formatDate(investment.buyingDate)][`USD${investment.loanAmountUnit}`] || 1)))
                 * myPercentage / 100;
             this.calculateProgressBarWealthValue();
             return of(null);
           } else if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
-            return this.store.select(cryptoRateByIdSelector(investment.unit)).pipe(
+            return this.store.select(cryptoRateByIdSelector(COINCAP_CRYPTO_TYPES[investment.unit])).pipe(
               filter(cryptoRates => !!cryptoRates),
               map((cryptoRates) => {
                 return { cryptoRates, myPercentage, investment, currencyRates: investmentAndCurrencyRates.currencyRates };
@@ -235,9 +230,10 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     ).subscribe((data) => {
       if (data) {
         // this is a crryptorate investment (all the others returns null)
-        this.wealthAmount += ((data.investment.amount * data.cryptoRates.price) 
+        this.wealthAmount += ((data.investment.amount * data.cryptoRates.priceUsd) 
             - (data.investment.loanAmount / (data['currencyRates'][this.utilService.formatDate(data.investment.buyingDate)][`USD${data.investment.loanAmountUnit}`] || 1)))
             * data.myPercentage / 100;
+        
         this.calculateProgressBarWealthValue();
       }
       

@@ -88,7 +88,7 @@ export class CurrencyInvestmentComponent implements OnInit, OnDestroy {
       // for all this info I need to be sure currencyRates are here
       if (currencyRates && Object.keys(currencyRates).length) {
         if (this.investment.type === INVESTMENTS_TYPES.CRYPTO  && cryptoRates) {
-          this.currentPrice = Number(cryptoRates.priceUsd);
+          this.currentPrice = cryptoRates.priceUsd;
         } else if (this.investment.type === INVESTMENTS_TYPES.CURRENCY) {
           this.currentPrice = this.currencyExchangeService.getUsdValueOf(1, this.investment.unit, currencyRates);
         }

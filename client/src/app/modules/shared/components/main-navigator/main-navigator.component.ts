@@ -13,8 +13,6 @@ import { linksSelector } from './main-navigator.selectors';
 export class MainNavigatorComponent implements OnInit, OnDestroy {
   
   links$: Observable<NavigatorLinkModel[]>;
-  //links: NavigatorLinkModel[];
-  // subscription: Subscription = new Subscription();
   
   constructor(
     private store: Store<State>

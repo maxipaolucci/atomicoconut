@@ -65,7 +65,7 @@ export class CurrencyExchangeService {
         if (rates) {
           let cryptoRate: CryptoRate = {
             id: rates.id,
-            priceUsd: rates.priceUsd,
+            priceUsd: Number(rates.priceUsd),
             symbol: rates.symbol,
             name: rates.name
           };
