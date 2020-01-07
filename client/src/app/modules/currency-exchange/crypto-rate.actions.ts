@@ -2,21 +2,21 @@ import { Action } from '@ngrx/store';
 import { CryptoRate } from './models/crypto-rate';
 
 export enum CryptoRateActionTypes {
-  RequestOne = '[Crypto Rate] Request one from Server',
-  AddOne = '[Crypto Rate] Add one to Store'
+  RequestMany = '[Crypto Rate] Request many from Server',
+  AddMany = '[Crypto Rate] Add many to Store'
 }
 
-export class RequestOne implements Action {
-  readonly type = CryptoRateActionTypes.RequestOne;
+export class RequestMany implements Action {
+  readonly type = CryptoRateActionTypes.RequestMany;
 
-  constructor(public payload: { crypto: string }) {}
+  constructor(public payload: { cryptos: string[] }) {}
 }
 
-export class AddOne implements Action {
-  readonly type = CryptoRateActionTypes.AddOne;
+export class AddMany implements Action {
+  readonly type = CryptoRateActionTypes.AddMany;
 
-  constructor(public payload: { cryptoRate: CryptoRate }) {}
+  constructor(public payload: { cryptoRates: CryptoRate[] }) {}
 }
 
-export type CryptoRateActions = RequestOne
-  | AddOne;
+export type CryptoRateActions = RequestMany
+  | AddMany;

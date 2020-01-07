@@ -7,17 +7,24 @@ const errorTrace = 'cryptoRatesController >';
 
 
 /**
- * Get today rates . 
+ * Get many today rates of and array of cryptos. 
  */
 exports.getTodayRates = async (req, res) => {
     const methodTrace = `${errorTrace} getTodayRates() >`;
 
     const userEmail = req.user ? req.user.email : ANONYMOUS_USER; //it is not required to be logged in to access this controller
 
-    //1 - get rates
-    const results = await getTodayRatesFromWebservice(req.params.base, userEmail);
-    
-    if (!results) {
+    const cryptos = req.query.cryptos.split(',');
+
+    let results = {};
+    for (let crypto of cryptos) {
+        //1 - get rates
+        const rates = await getTodayRatesFromWebservice(crypto, userEmail);
+        results[crypto] = rates;
+    }
+
+    const resultsAmount = Object.keys(results).length; 
+    if (!resultsAmount) {
         //Nothing found for that date
         console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, 'crypto rates')}`);
         res.status(401).json({ 
@@ -33,10 +40,12 @@ exports.getTodayRates = async (req, res) => {
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1036, null, false, 1, 'crypto rates object'),
+        msg : getMessage('message', 1036, null, false, resultsAmount, 'crypto rates object(s)'),
         data : results
     });
 };
+
+
 
 
 /**

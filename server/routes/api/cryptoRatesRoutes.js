@@ -7,7 +7,7 @@ const cryptoRatesController = require('../../controllers/cryptoRatesController')
 //************************** CRYPTO RATES API ***************************** */
 //*************************************************************************** */
 
-router.route('/getTodayRates/:base').get(
+router.route('/getTodayRates').get(
   catchErrors(cryptoRatesController.getTodayRates)
 );
 

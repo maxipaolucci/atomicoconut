@@ -37,7 +37,7 @@ export const currencyRateByIdsSelector = (dates: string[]) => {
 
 export const allCurrencyRateByIdsLoadedSelector = (dates: string[]) => {
   const baseSelector = currencyRateByIdsSelector(dates);
-  
+  console.log('currency rate selector called');
   return createSelector(
     baseSelector,
     currencyRatesState => {

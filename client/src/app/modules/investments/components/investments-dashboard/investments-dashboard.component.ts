@@ -21,9 +21,9 @@ import { RequestAll, ResetAllEntitiesLoaded } from '../../investment.actions';
 import { RequestAll as RequestAllTeams, ResetAllEntitiesLoaded as ResetAllTeamsLoaded } from '../../../teams/team.actions';
 import { investmentsSelector } from '../../investment.selectors';
 import { teamsSelector } from 'src/app/modules/teams/team.selectors';
-import { cryptoRateByIdSelector } from 'src/app/modules/currency-exchange/crypto-rate.selectors';
+import { cryptoRateByIdSelector, allCryptoRateByIdsLoadedSelector } from 'src/app/modules/currency-exchange/crypto-rate.selectors';
 import { CryptoRate } from 'src/app/modules/currency-exchange/models/crypto-rate';
-import { RequestOne as RequestOneCryptoRate } from 'src/app/modules/currency-exchange/crypto-rate.actions';
+import { RequestMany as RequestManyCryptoRate } from 'src/app/modules/currency-exchange/crypto-rate.actions';
 import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
 import { allCurrencyRateByIdsLoadedSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
@@ -86,12 +86,12 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         });
         cryptoUnits = [...new Set(cryptoUnits)]; //remove duplicates
 
-        return from(cryptoUnits);
+        return of(cryptoUnits);
       }),
-      mergeMap((cryptoUnit: string) => combineLatest(this.store.select(cryptoRateByIdSelector(COINCAP_CRYPTO_TYPES[cryptoUnit])), of(cryptoUnit)))
-    ).subscribe(([cryptoRate, cryptoUnit]: [CryptoRate, string]) => {
-      if (!cryptoRate) {
-        this.store.dispatch(new RequestOneCryptoRate({ crypto: cryptoUnit }));
+      switchMap((cryptoUnits: string[]) => combineLatest(this.store.select(allCryptoRateByIdsLoadedSelector(cryptoUnits)), of(cryptoUnits)))
+    ).subscribe(([allCryptoRatesByIdsLoaded, cryptoUnits]: [boolean, string[]]) => {
+      if (!allCryptoRatesByIdsLoaded) {
+        this.store.dispatch(new RequestManyCryptoRate({ cryptos: cryptoUnits }));
       }
     });
     this.subscription.add(newSubscription);

@@ -56,25 +56,32 @@ export class CurrencyExchangeService {
     );
   }
 
-  getCryptoRates$(crypto: string = 'BTC'): Observable<CryptoRate> {
+  getCryptoRates$(cryptos: string[] = []): Observable<CryptoRate[]> {
     const methodTrace = `${this.constructor.name} > getCryptoRates$() > `; // for debugging
     
-    return this.http.get<Response>(`${this.cryptoRatesHost}/getTodayRates/${COINCAP_CRYPTO_TYPES[crypto.toUpperCase()]}`).pipe(
+    cryptos = cryptos.map((crypto: string) => COINCAP_CRYPTO_TYPES[crypto.toUpperCase()]);
+    const params = new HttpParams().set('cryptos', `${cryptos}`);
+
+    return this.http.get<Response>(`${this.cryptoRatesHost}/getTodayRates`, { params }).pipe(
       map(this.appService.extractData),
-      map((rates: any): CryptoRate => {
+      map((rates: any): CryptoRate[] => {
+        let result: CryptoRate[] = [];
         if (rates) {
-          let cryptoRate: CryptoRate = {
-            id: rates.id,
-            priceUsd: Number(rates.priceUsd),
-            symbol: rates.symbol,
-            name: rates.name
-          };
-          
-          return cryptoRate;
+          for (let [key, value] of Object.entries(rates)) {
+            let cryptoRate: CryptoRate = {
+              id: key,
+              priceUsd: Number(value['priceUsd']),
+              symbol: value['symbol'],
+              name: value['name']
+            };
+
+            result.push(cryptoRate);
+          }
+        } else {
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
         }
         
-        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-        return null;
+        return result;
       }) 
     );
   }

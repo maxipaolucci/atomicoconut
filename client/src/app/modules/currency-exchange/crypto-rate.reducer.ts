@@ -17,8 +17,8 @@ export const initialState: State = adapter.getInitialState({
 export function reducer(state = initialState, action: CryptoRateActions): State {
   switch (action.type) {
     
-    case CryptoRateActionTypes.AddOne: {
-      return adapter.addOne(action.payload.cryptoRate, state);
+    case CryptoRateActionTypes.AddMany: {
+      return adapter.addMany(action.payload.cryptoRates, state);
     }
 
     default: {
