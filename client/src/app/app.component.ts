@@ -71,16 +71,18 @@ export class AppComponent implements OnInit, OnDestroy {
           this.bindToPushNotificationEvents();
         }
         
-        if (this.user.currency && this.user.currency !== 'USD') {
-          return this.store.select(currencyRateByIdSelector(this.utilService.formatToday()));
-        }
-        
-        return of(null); // is the user had not configure a preferred currency then we don't need to show the currency toolbar
+        return this.store.select(currencyRateByIdSelector(this.utilService.formatToday()));
       }),
-      filter((currencyRate: CurrencyRate) => this.user && this.user.currency && this.user.currency !== 'USD')
+      filter((currencyRate: CurrencyRate) => {
+        if (!currencyRate) {
+          this.store.dispatch(new RequestManyCurrencyRates({ dates: [this.utilService.formatToday()], base: 'USD' }));
+          return false;
+        }
+
+        return true;
+      })
     ).subscribe((currencyRate: CurrencyRate) => {
-      if (!currencyRate) {
-        this.store.dispatch(new RequestManyCurrencyRates({ dates: [this.utilService.formatToday()], base: 'USD' }));
+      if (!(this.user && this.user.currency && this.user.currency !== 'USD')) {
         return;
       }
 

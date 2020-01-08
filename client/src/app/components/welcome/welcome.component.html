@@ -1,6 +1,6 @@
 <div *ngIf="user" class="container__net-worth">
   <!-- Net Worth Card -->
-  <mat-card *ngIf="expectedWealth && user.personalInfo.age"
+  <mat-card *ngIf="expectedWealth && user.personalInfo && user.personalInfo.age"
       fxLayout="column" class="totals-card">
     <mat-card-content fxLayout="column" fxLayoutGap="10px">
       <div class="wealth__container" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign="none center" fxLayoutAlign.gt-xs="space-between none">
@@ -26,7 +26,7 @@
     <!-- EOF Net Worth Card -->
 
   <!-- Net Worth Card when Personal and Financial info is incomplete -->
-  <mat-card *ngIf="!user.financialInfo || !user.personalInfo"
+  <mat-card *ngIf="!(user.financialInfo && user.personalInfo)"
       fxFlex class="totals-card">
     <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
         fxLayoutAlign="space-around center">

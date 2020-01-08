@@ -74,6 +74,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       this.store.select(currencyRateByIdsSelector([this.utilService.formatToday()])) //request is trigger by app component
     ).pipe(
       filter(([user, todayRates]: [User, { string: CurrencyRate }]) => {
+        
         if (!user) {
           this.user = null;
           additionalUserDataRequested = false;
@@ -84,17 +85,19 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           // no rates for today yet
           return false;
         }
-
+        
         if (this.user && _.isEqual(user, this.user)) {
           // this means the observer was trigger again with data no new data. Block it
           return false;
         }
-
-        if (!additionalUserDataRequested && !(user.personalInfo && user.financialInfo)) {
-          // no complete user data yet
-          additionalUserDataRequested = true;
-          this.store.dispatch(new RequestAuthenticatedUser({ personalInfo: true, financialInfo: true }));
-          return false;
+        
+        if (!(user.personalInfo && user.financialInfo)) {
+          if (!additionalUserDataRequested) {
+            // no complete user data yet
+            additionalUserDataRequested = true;
+            this.store.dispatch(new RequestAuthenticatedUser({ personalInfo: true, financialInfo: true }));
+            return false;
+          }
         }
 
         return true;
@@ -107,16 +110,19 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       this.expectedWealth = 0;
       this.progressBarWealthValue = 0;
       
-      this.wealthAmount += this.currencyExchangeService.getUsdValueOf(this.user.financialInfo.savings || 0, this.user.financialInfo.savingsUnit, todayRates);
-      if (this.user.personalInfo.age) {
-        this.expectedWealth = this.currencyExchangeService.getUsdValueOf(this.user.financialInfo.annualIncome || 0, this.user.financialInfo.annualIncomeUnit, todayRates) * this.user.personalInfo.age / 10;
-      } else {
-        this.expectedWealth = 0;
+      if (this.user.personalInfo && this.user.financialInfo) {
+        this.wealthAmount += this.currencyExchangeService.getUsdValueOf(this.user.financialInfo.savings || 0, this.user.financialInfo.savingsUnit, todayRates);
+        
+        if (this.user.personalInfo.age) {
+          this.expectedWealth = this.currencyExchangeService.getUsdValueOf(this.user.financialInfo.annualIncome || 0, this.user.financialInfo.annualIncomeUnit, todayRates) * this.user.personalInfo.age / 10;
+        } else {
+          this.expectedWealth = 0;
+        }
+        
+        this.calculateProgressBarWealthValue();
+        this.store.dispatch(new RequestAllInvestments({ userEmail: this.user.email }));
+        this.getCurrencyRatesForUserInvestments();
       }
-      
-      this.calculateProgressBarWealthValue();
-      this.store.dispatch(new RequestAllInvestments({ userEmail: this.user.email }));
-      this.getCurrencyRatesForUserInvestments();
     });
     this.subscription.add(newSubscription);
   }
