@@ -11,6 +11,8 @@ import { Store, select } from '@ngrx/store';
 import { AuthenticatedUser } from './user.actions';
 import { UserAdditionalInfo } from './models/user-additional-info';
 import { State } from '../../main.reducer';
+import _ from 'lodash';
+
 
 @Injectable()
 export class UserResolver implements Resolve<User> {
@@ -46,8 +48,11 @@ export class UserResolver implements Resolve<User> {
                 return of(user); //return the current user with no additional info
               }),
               map((inflatedUser: User) => {
-                this.store.dispatch(new AuthenticatedUser({ user: inflatedUser }));
-                return inflatedUser;
+                if (inflatedUser && !_.isEqual(user, inflatedUser)) {
+                  this.store.dispatch(new AuthenticatedUser({ user: inflatedUser }));
+                }
+                
+                return user;
               })
           );
         }
