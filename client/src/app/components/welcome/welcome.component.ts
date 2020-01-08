@@ -68,8 +68,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     // let todayRatesLoaded: boolean = false;
     let additionalUserDataRequested: boolean = false;
     let currentUserInvestments: Investment[] = [];
-    let currenctUserInvestmentsDates: string[] = [];
-    let currentUserInvestmentsCryptoUnits: string[] = [];
 
     let newSubscription: Subscription = combineLatest(
       this.store.select(userSelector()),
@@ -103,24 +101,32 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       })
     ).subscribe(([user, todayRates]: [User, { string: CurrencyRate }]) => {
       this.user = user;
-      // todayRatesLoaded = true;
+      
       // reset all values to recalculate for this user 
       this.wealthAmount = 0;
       this.expectedWealth = 0;
       this.progressBarWealthValue = 0;
-      currentUserInvestments = [];
       
-      this.wealthAmount += this.currencyExchangeService.getUsdValueOf(user.financialInfo.savings || 0, user.financialInfo.savingsUnit, todayRates);
-      if (user.personalInfo.age) {
-        this.expectedWealth = this.currencyExchangeService.getUsdValueOf(user.financialInfo.annualIncome || 0, user.financialInfo.annualIncomeUnit, todayRates) * user.personalInfo.age / 10;
+      this.wealthAmount += this.currencyExchangeService.getUsdValueOf(this.user.financialInfo.savings || 0, this.user.financialInfo.savingsUnit, todayRates);
+      if (this.user.personalInfo.age) {
+        this.expectedWealth = this.currencyExchangeService.getUsdValueOf(this.user.financialInfo.annualIncome || 0, this.user.financialInfo.annualIncomeUnit, todayRates) * this.user.personalInfo.age / 10;
       } else {
         this.expectedWealth = 0;
       }
       
       this.calculateProgressBarWealthValue();
       this.store.dispatch(new RequestAllInvestments({ userEmail: this.user.email }));
+      this.getCurrencyRatesForUserInvestments();
     });
     this.subscription.add(newSubscription);
+  }
+
+  /**
+   * Get currency and crypto rates related to the user investments
+   */
+  getCurrencyRatesForUserInvestments() {
+    const methodTrace = `${this.constructor.name} > getCurrencyRatesForUserInvestments() > `; // for debugging
+    let currentUserInvestments = [];
 
     // create crypto rates from investments observable
     let cryptoRates$ = this.store.select(investmentsSelector()).pipe(
@@ -137,20 +143,18 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         return of(cryptoUnits.length ? cryptoUnits : null);
       }),
       switchMap((cryptoUnits: string[]) => combineLatest(
-          this.store.select(allCryptoRateByIdsLoadedSelector(cryptoUnits)), 
-          of(cryptoUnits)
-        ).pipe(
-          filter(([allCryptoRatesByIdsLoaded, cryptoUnits]: [boolean, string[]]) => {
-            if (!allCryptoRatesByIdsLoaded) {
-              this.store.dispatch(new RequestManyCryptoRates({ cryptos: cryptoUnits }));
-              return false;
-            }
+        this.store.select(allCryptoRateByIdsLoadedSelector(cryptoUnits)), 
+        of(cryptoUnits)
+      )),
+      filter(([allCryptoRatesByIdsLoaded, cryptoUnits]: [boolean, string[]]) => {
+        if (!allCryptoRatesByIdsLoaded) {
+          this.store.dispatch(new RequestManyCryptoRates({ cryptos: cryptoUnits }));
+          return false;
+        }
 
-            return true;
-          }),
-          first()
-        )
-      )
+        return true;
+      }),
+      first()
     );
     
     // create currency rates from investments observable
@@ -177,24 +181,24 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         return of(investmentsDates);
       }),
       switchMap((investmentsDates: string[]) => combineLatest(
-          this.store.select(allCurrencyRateByIdsLoadedSelector(investmentsDates)), 
-          of(investmentsDates)
-        ).pipe(
-          filter(([allCurrencyRatesByIdsLoaded, investmentsDates]: [boolean, string[]]) => {
-            if (!allCurrencyRatesByIdsLoaded) {
-              this.store.dispatch(new RequestManyCurrencyRates({ dates: investmentsDates, base: 'USD' }));
-              return false;
-            }
-    
-            return true;
-          }),
-          first()
-        )
-      )
+        this.store.select(allCurrencyRateByIdsLoadedSelector(investmentsDates)), 
+        of(investmentsDates)
+      )),
+      filter(([allCurrencyRatesByIdsLoaded, investmentsDates]: [boolean, string[]]) => {
+        if (!allCurrencyRatesByIdsLoaded) {
+          this.store.dispatch(new RequestManyCurrencyRates({ dates: investmentsDates, base: 'USD' }));
+          return false;
+        }
+
+        return true;
+      }),
+      first()
     );
 
     // subscribe to currency rates and crypto rates observables to get rates from user investments
-    newSubscription = combineLatest(currencyRates$, cryptoRates$).subscribe(([[allCurrencyRatesByIdsLoaded, investmentsDates], [allCryptoRatesByIdsLoaded, cryptoUnits]]: [[boolean, string[]], [boolean, string[]]]) => {
+    let newSubscription = combineLatest(currencyRates$, cryptoRates$).pipe(
+      filter(() => !!this.user)
+    ).subscribe(([[allCurrencyRatesByIdsLoaded, investmentsDates], [allCryptoRatesByIdsLoaded, cryptoUnits]]: [[boolean, string[]], [boolean, string[]]]) => {
       this.combineInvestmentsWithCurrencyRates(currentUserInvestments, investmentsDates);
     });
     this.subscription.add(newSubscription);
