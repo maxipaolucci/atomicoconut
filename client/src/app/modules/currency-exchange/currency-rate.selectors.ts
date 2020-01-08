@@ -1,6 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import * as fromCurrencyRate from  './currency-rate.reducer';
-import { CurrencyRate } from './models/currency-rate';
 
 
 export const selectCurrencyRatesState = createFeatureSelector<fromCurrencyRate.State>("currencyRates");
@@ -37,7 +36,7 @@ export const currencyRateByIdsSelector = (dates: string[]) => {
 
 export const allCurrencyRateByIdsLoadedSelector = (dates: string[]) => {
   const baseSelector = currencyRateByIdsSelector(dates);
-  console.log('currency rate selector called');
+  
   return createSelector(
     baseSelector,
     currencyRatesState => {

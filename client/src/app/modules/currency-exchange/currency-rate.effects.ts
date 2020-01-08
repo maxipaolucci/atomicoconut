@@ -26,7 +26,7 @@ export class CurrencyRateEffects {
       )
     ),
     map((currencyRates: CurrencyRate[]) => {
-      if (currencyRates.length) {
+      if (currencyRates && currencyRates.length) {
         //dispatch the action to save the value in the store
         return new AddMany({ currencyRates });
       }

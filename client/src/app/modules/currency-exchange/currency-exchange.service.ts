@@ -59,7 +59,6 @@ export class CurrencyExchangeService {
   getCryptoRates$(cryptos: string[] = []): Observable<CryptoRate[]> {
     const methodTrace = `${this.constructor.name} > getCryptoRates$() > `; // for debugging
     
-    cryptos = cryptos.map((crypto: string) => COINCAP_CRYPTO_TYPES[crypto.toUpperCase()]);
     const params = new HttpParams().set('cryptos', `${cryptos}`);
 
     return this.http.get<Response>(`${this.cryptoRatesHost}/getTodayRates`, { params }).pipe(

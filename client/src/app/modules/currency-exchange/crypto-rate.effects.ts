@@ -24,7 +24,7 @@ export class CryptoRateEffects {
       )
     ),
     map((cryptoRates: CryptoRate[]) => {
-      if (cryptoRates.length) {
+      if (cryptoRates && cryptoRates.length) {
         //dispatch the action to save the value in the store
         return new AddMany({ cryptoRates });
       }

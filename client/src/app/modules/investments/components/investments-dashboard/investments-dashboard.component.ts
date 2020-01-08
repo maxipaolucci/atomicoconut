@@ -81,7 +81,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
         let cryptoUnits: string[] = [];
         investments.map((investment: Investment) => {
           if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
-            cryptoUnits.push((<CurrencyInvestment>investment).unit);
+            cryptoUnits.push(COINCAP_CRYPTO_TYPES[(<CurrencyInvestment>investment).unit.toUpperCase()]);
           }
         });
         cryptoUnits = [...new Set(cryptoUnits)]; //remove duplicates

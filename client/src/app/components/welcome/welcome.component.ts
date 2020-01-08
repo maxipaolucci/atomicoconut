@@ -68,6 +68,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     // let todayRatesLoaded: boolean = false;
     let additionalUserDataRequested: boolean = false;
     let currentUserInvestments: Investment[] = [];
+    let currenctUserInvestmentsDates: string[] = [];
+    let currentUserInvestmentsCryptoUnits: string[] = [];
 
     let newSubscription: Subscription = combineLatest(
       this.store.select(userSelector()),
@@ -120,7 +122,38 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     });
     this.subscription.add(newSubscription);
 
-    // get investments and currency rates from investments
+    // create crypto rates from investments observable
+    let cryptoRates$ = this.store.select(investmentsSelector()).pipe(
+      filter((investments: Investment[]) => !!investments.length),
+      switchMap((investments: Investment[]) => {
+        let cryptoUnits: string[] = [];
+        investments.map((investment: Investment) => {
+          if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
+            cryptoUnits.push(COINCAP_CRYPTO_TYPES[(<CurrencyInvestment>investment).unit.toUpperCase()]);
+          }
+        });
+        cryptoUnits = [...new Set(cryptoUnits)]; //remove duplicates
+        
+        return of(cryptoUnits.length ? cryptoUnits : null);
+      }),
+      switchMap((cryptoUnits: string[]) => combineLatest(
+          this.store.select(allCryptoRateByIdsLoadedSelector(cryptoUnits)), 
+          of(cryptoUnits)
+        ).pipe(
+          filter(([allCryptoRatesByIdsLoaded, cryptoUnits]: [boolean, string[]]) => {
+            if (!allCryptoRatesByIdsLoaded) {
+              this.store.dispatch(new RequestManyCryptoRates({ cryptos: cryptoUnits }));
+              return false;
+            }
+
+            return true;
+          }),
+          first()
+        )
+      )
+    );
+    
+    // create currency rates from investments observable
     let currencyRates$ = this.store.select(investmentsSelector()).pipe(
       filter((investments: Investment[]) => !!investments.length),
       switchMap((investments: Investment[]) => {
@@ -141,67 +174,28 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           investmentsDates.push(this.utilService.formatToday());
         }
         investmentsDates = [...new Set(investmentsDates)]; //remove duplicates
-        
         return of(investmentsDates);
       }),
       switchMap((investmentsDates: string[]) => combineLatest(
-        this.store.select(allCurrencyRateByIdsLoadedSelector(investmentsDates)), 
-        of(investmentsDates)
-      ))
-      // ,first(([allCurrencyRatesByIdsLoaded, investmentsDates]: [boolean, string[]]) => {
-      //   // with first I can be sure that once I allCurrencyRatesByIdsLoaded is true I will stop listening
-      //   // to all these selectors here so the subscribe method is not going to be called again when the 
-      //   // user is logged out and logged in again
-      //   if (!allCurrencyRatesByIdsLoaded) {
-      //     this.store.dispatch(new RequestManyCurrencyRates({ dates: investmentsDates, base: 'USD' }));
-      //     return false;
-      //   }
-
-      //   return true;
-      // })
+          this.store.select(allCurrencyRateByIdsLoadedSelector(investmentsDates)), 
+          of(investmentsDates)
+        ).pipe(
+          filter(([allCurrencyRatesByIdsLoaded, investmentsDates]: [boolean, string[]]) => {
+            if (!allCurrencyRatesByIdsLoaded) {
+              this.store.dispatch(new RequestManyCurrencyRates({ dates: investmentsDates, base: 'USD' }));
+              return false;
+            }
+    
+            return true;
+          }),
+          first()
+        )
+      )
     );
 
-    
-    // get investments and currency rates from investments
-    let cryptoRates$ = this.store.select(investmentsSelector()).pipe(
-      filter((investments: Investment[]) => !!investments.length),
-      switchMap((investments: Investment[]) => {
-        let cryptoUnits: string[] = [];
-        investments.map((investment: Investment) => {
-          if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
-            cryptoUnits.push((<CurrencyInvestment>investment).unit);
-          }
-        });
-        cryptoUnits = [...new Set(cryptoUnits)]; //remove duplicates
-        
-        return of(cryptoUnits);
-      }),
-      switchMap((cryptoUnits: string[]) => combineLatest(
-        this.store.select(allCryptoRateByIdsLoadedSelector(cryptoUnits)), 
-        of(cryptoUnits)
-      ))
-    ); 
-    
-    newSubscription = combineLatest(currencyRates$, cryptoRates$).pipe(
-      filter(([[allCurrencyRatesByIdsLoaded, investmentsDates], [allCryptoRatesByIdsLoaded, cryptoUnits]]: [[boolean, string[]], [boolean, string[]]]) => {
-        // with first I can be sure that once I allCurrencyRatesByIdsLoaded is true I will stop listening
-        // to all these selectors here so the subscribe method is not going to be called again when the 
-        // user is logged out and logged in again
-        if (!allCurrencyRatesByIdsLoaded) {
-          this.store.dispatch(new RequestManyCurrencyRates({ dates: investmentsDates, base: 'USD' }));
-        }
-
-        if (!allCryptoRatesByIdsLoaded) {
-          this.store.dispatch(new RequestManyCryptoRates({ cryptos: cryptoUnits }));
-        }
-
-        console.log(1, allCurrencyRatesByIdsLoaded, investmentsDates, allCryptoRatesByIdsLoaded, cryptoUnits);
-        return allCryptoRatesByIdsLoaded && allCurrencyRatesByIdsLoaded;
-      })
-    ).subscribe(([[allCurrencyRatesByIdsLoaded, investmentsDates], [allCryptoRatesByIdsLoaded, cryptoUnits]]: [[boolean, string[]], [boolean, string[]]]) => {
-      console.log(2, allCurrencyRatesByIdsLoaded, investmentsDates, allCryptoRatesByIdsLoaded, cryptoUnits);
+    // subscribe to currency rates and crypto rates observables to get rates from user investments
+    newSubscription = combineLatest(currencyRates$, cryptoRates$).subscribe(([[allCurrencyRatesByIdsLoaded, investmentsDates], [allCryptoRatesByIdsLoaded, cryptoUnits]]: [[boolean, string[]], [boolean, string[]]]) => {
       this.combineInvestmentsWithCurrencyRates(currentUserInvestments, investmentsDates);
-
     });
     this.subscription.add(newSubscription);
   }
@@ -233,7 +227,6 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         return from(investmentsAndCurrencyRates);
       }),
       switchMap((investmentAndCurrencyRates: any): Observable<any> => {
-        console.log(this.user, investmentAndCurrencyRates.investment)
         const myPercentage = (investmentAndCurrencyRates.investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
 
         if ([ INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO ].includes(investmentAndCurrencyRates.investment.type)) {

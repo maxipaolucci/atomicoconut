@@ -34,7 +34,7 @@ export const cryptoRateByIdsSelector = (cryptos: string[]) => {
 
 export const allCryptoRateByIdsLoadedSelector = (cryptos: string[]) => {
   const baseSelector = cryptoRateByIdsSelector(cryptos);
-  console.log('crypto rate selector called');
+  
   return createSelector(
     baseSelector,
     cryptoRatesState => {
