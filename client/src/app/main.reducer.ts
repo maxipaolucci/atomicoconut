@@ -40,4 +40,4 @@ export function clearState(reducer) {
   };
 }
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [ storeFreeze, clearState ] : [];
+export const metaReducers: MetaReducer<State>[] = !environment.production ? [ storeFreeze, clearState ] : [ clearState ];
