@@ -40,4 +40,5 @@ export function clearState(reducer) {
   };
 }
 
+// storeFreeze is just needed in dev mode. We won't the penalty of execution in prod. With storefreeze we know that our logic it is not mutating the store
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [ storeFreeze, clearState ] : [ clearState ];
