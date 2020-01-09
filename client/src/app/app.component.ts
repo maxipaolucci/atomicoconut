@@ -86,10 +86,7 @@ export class AppComponent implements OnInit, OnDestroy {
         return;
       }
 
-      if (!this.todayUserPrefRate) {
-        this.todayUserPrefRate = 1 / currencyRate[`USD${this.user.currency}`];
-        this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Currency exchange rates successfully loaded!`);
-      }
+      this.todayUserPrefRate = 1 / currencyRate[`USD${this.user.currency}`];
     });
     this.subscription.add(newSubscription);
   }

@@ -5,7 +5,7 @@ import { CurrencyExchangeService } from '../../modules/currency-exchange/currenc
 import { Investment } from '../../modules/investments/models/investment';
 import { CurrencyInvestment } from '../../modules/investments/models/currencyInvestment';
 import { Subscription, of, from, Observable, combineLatest } from 'rxjs';
-import { switchMap, map, filter, first, take } from 'rxjs/operators';
+import { switchMap, map, filter, first } from 'rxjs/operators';
 import { INVESTMENTS_TYPES, ConsoleNotificationTypes, COINCAP_CRYPTO_TYPES } from '../../constants';
 import { UtilService } from '../../util.service';
 import { PropertyInvestment } from '../../modules/investments/models/propertyInvestment';
@@ -146,7 +146,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         });
         cryptoUnits = [...new Set(cryptoUnits)]; //remove duplicates
         
-        return of(cryptoUnits.length ? cryptoUnits : null);
+        return of(cryptoUnits);
       }),
       switchMap((cryptoUnits: string[]) => combineLatest(
         this.store.select(allCryptoRateByIdsLoadedSelector(cryptoUnits)), 
@@ -238,13 +238,14 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       }),
       switchMap((investmentAndCurrencyRates: any): Observable<any> => {
         const myPercentage = (investmentAndCurrencyRates.investment.investmentDistribution.filter(portion => portion.email === this.user.email)[0]).percentage;
+        const currencyRates: { string: CurrencyRate } = investmentAndCurrencyRates.currencyRates;
 
         if ([ INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO ].includes(investmentAndCurrencyRates.investment.type)) {
           const investment: CurrencyInvestment = <CurrencyInvestment>investmentAndCurrencyRates.investment;
 
           if (investment.type === INVESTMENTS_TYPES.CURRENCY) {
-            this.wealthAmount += ((investment.amount / (investmentAndCurrencyRates['currencyRates'][this.utilService.formatToday()][`USD${investment.unit}`] || 1)) 
-                - (investment.loanAmount / (investmentAndCurrencyRates['currencyRates'][this.utilService.formatDate(investment.buyingDate)][`USD${investment.loanAmountUnit}`] || 1)))
+            this.wealthAmount += ((investment.amount / (currencyRates[this.utilService.formatToday()][`USD${investment.unit}`] || 1)) 
+                - (investment.loanAmount / (currencyRates[this.utilService.formatDate(investment.buyingDate)][`USD${investment.loanAmountUnit}`] || 1)))
                 * myPercentage / 100;
             this.calculateProgressBarWealthValue();
             return of(null);
@@ -261,8 +262,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
           }
         } else if ([ INVESTMENTS_TYPES.PROPERTY ].includes(investmentAndCurrencyRates.investment.type)) {
           const investment: PropertyInvestment = <PropertyInvestment>investmentAndCurrencyRates.investment;
-          this.wealthAmount += (this.currencyExchangeService.getUsdValueOf(investment.property.marketValue, investment.property.marketValueUnit, investmentAndCurrencyRates['currencyRates'])
-              - (investment.loanAmount / (investmentAndCurrencyRates['currencyRates'][this.utilService.formatDate(investment.buyingDate)][`USD${investment.loanAmountUnit}`] || 1)))
+          this.wealthAmount += (this.currencyExchangeService.getUsdValueOf(investment.property.marketValue, investment.property.marketValueUnit, currencyRates)
+              - (investment.loanAmount / (currencyRates[this.utilService.formatDate(investment.buyingDate)][`USD${investment.loanAmountUnit}`] || 1)))
               * myPercentage / 100;
           this.calculateProgressBarWealthValue();
           return of(null);
