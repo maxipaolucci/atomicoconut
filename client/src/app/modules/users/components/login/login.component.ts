@@ -1,7 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { map } from 'rxjs/operators';
-import { AppService } from '../../../../app.service';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
@@ -9,7 +6,6 @@ import { RequestLogin, RequestForgot } from '../../user.actions';
 import { LoginModel } from '../../models/login-model';
 import { forgotFormVisibilitySelector } from '../../user.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
-import { SnackbarNotificationTypes } from 'src/app/constants';
 import { loadingSelector } from 'src/app/app.selectors';
 import _ from 'lodash';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
@@ -29,8 +25,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   loadingData$: Observable<LoadingData> = null;
 
   constructor(
-    private appService: AppService,
-    private route: ActivatedRoute,
     private store: Store<State>
   ) { }
 
@@ -41,12 +35,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Login', url: null, selected: true }
     ]}));
-
-    this.route.paramMap.pipe(map((params: ParamMap) => params.get('state'))).subscribe(state => {
-      if (state === 'reset-password-token-expired') {
-        this.appService.showResults('Reset password token has expired or is invalid. Click on "Forgot my password" again to create a new one.', SnackbarNotificationTypes.INFO, 10000);
-      }
-    });
 
     this.loadingData$ = this.store.select(loadingSelector());
 

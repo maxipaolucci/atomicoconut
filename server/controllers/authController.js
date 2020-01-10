@@ -212,18 +212,20 @@ exports.confirmedPasswords = (req, res, next) => {
     const methodTrace = `${errorTrace} confirmedPasswords() >`;
 
     console.log(`${methodTrace} ${getMessage('message', 1052, null, true)}`);
-    if (req.body.password === req.body['password-confirm']) {
-        console.log(`${methodTrace} ${getMessage('message', 1053, null, true)}`);
-        next();
+    if (req.body.password !== req.body['password-confirm']) {
+        console.log(`${methodTrace} ${getMessage('error', 456, null, true)}`);
+        res.status(401).json({
+            status : "error", 
+            codeno : 456,
+            msg : getMessage('error', 456, null, false),
+            data : null
+        });
+        
         return;
     }
 
-    res.status(401).json({
-        status : "error", 
-        codeno : 456,
-        msg : getMessage('error', 456, null, false),
-        data : null
-    });
+    console.log(`${methodTrace} ${getMessage('message', 1053, null, true)}`);
+    next();
 };
 
 /**
@@ -252,6 +254,7 @@ exports.reset = async (req, res) => {
 
         return;
     }
+
     console.log(`${methodTrace} ${getMessage('message', 1012, user.email, true)}`);
     await user.setPassword(req.body.password);
     user.resetPasswordToken = undefined; //the way to remove fields from mongo is set to undefined
@@ -278,24 +281,3 @@ exports.reset = async (req, res) => {
         data : await getUserObject(req.user.email)
     });
 };
-
-// exports.reset = async (req, res) => {
-//     const methodTrace = `${errorTrace} reset() >`;
-    
-//     const userEmail = req.user ? req.user.email : null;
-//     console.log(`${methodTrace} ${getMessage('message', 1011, userEmail, true, req.params.token)}`);
-//     const user = await User.findOne({
-//         $and : [
-//             { resetPasswordToken : req.params.token },
-//             { resetPasswordExpires : { $gt : Date.now() } }
-//         ]
-//     });
-    
-//     if (!user) {
-//         console.log(`${methodTrace} ${getMessage('error', 457, userEmail, true)}`);
-//         return res.redirect('/app/users/account/reset/expired');
-//     }
-
-//     console.log(`${methodTrace} ${getMessage('message', 1014, user.email, true)}`);
-//     res.render('home', {title: 'Reset password'});
-// };

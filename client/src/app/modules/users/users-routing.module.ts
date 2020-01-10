@@ -12,7 +12,6 @@ const routes: Routes = [
     path : 'users',
     children : [
       { path : 'register', component : RegisterComponent },
-      { path : 'login/:state', component : LoginComponent },
       { path : 'login', component : LoginComponent },
       { 
         path : 'account', 
@@ -21,11 +20,6 @@ const routes: Routes = [
         resolve : {
           inflatedUser : UserResolver
         }
-      },
-      { 
-        path : 'account/reset/expired',
-        redirectTo : 'login/reset-password-token-expired',
-        pathMatch : 'full'
       },
       { path : 'account/reset/:token', component : ResetPasswordComponent }
     ]
