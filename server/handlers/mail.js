@@ -53,7 +53,12 @@ const sendSgMail = async (options) => {
     from: options.fromEmail ? options.fromEmail : 'support@atomiCoconut.com',
     subject: options.subject,
     text,
-    html
+    html,
+    attachments: [{
+      filename: 'coconut.png',
+      path: __dirname +'/images/coconut.png',
+      cid: 'logo' //my mistake was putting "cid:logo@cid" here! 
+    }]
   };
   
   return sgMail.send(mailOptions);
