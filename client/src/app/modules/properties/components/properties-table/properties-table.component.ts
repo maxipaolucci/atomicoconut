@@ -1,7 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { User } from '../../../users/models/user';
 import { Property } from '../../models/property';
-import { MatTable, MatPaginator, MatTableDataSource, MatDialog, MatSort } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
@@ -73,7 +76,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     this.getProperties();
 
     // selection changed
-    const newSubscription: Subscription = this.selection.onChange.subscribe((selectionChange: SelectionChange<Property>) => {
+    const newSubscription: Subscription = this.selection.changed.subscribe((selectionChange: SelectionChange<Property>) => {
         this.selectedProperty.emit(this.selection.selected[0]);
     });
     this.subscription.add(newSubscription);

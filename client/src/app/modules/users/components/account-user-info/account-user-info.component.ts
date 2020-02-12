@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatSelectChange } from '@angular/material';
+import { MatSelectChange } from '@angular/material/select';
 import { User } from '../../models/user';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { User } from '../../../users/models/user';
 import { InvestmentSelectorDialogComponent } from '../investment-selector-dialog/investment-selector-dialog.component';
 import { Investment } from '../../models/investment';

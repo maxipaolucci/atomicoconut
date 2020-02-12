@@ -6,7 +6,7 @@ import { filter } from 'rxjs/operators';
 import { User } from '../../../users/models/user';
 import { CurrencyExchangeService } from '../../../currency-exchange/currency-exchange.service';
 import { AppService } from '../../../../app.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { House } from '../../../properties/models/house';
 import { UtilService } from '../../../../util.service';

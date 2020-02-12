@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, OnDestroy, AfterViewInit, ViewChild, EventEmitter } from '@angular/core';
-import { DateAdapter, NativeDateAdapter } from '@angular/material';
-import { MatSelectChange } from '@angular/material';
+import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
+import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 import { UtilService } from '../../../../util.service';
 import { debounceTime } from 'rxjs/operators';

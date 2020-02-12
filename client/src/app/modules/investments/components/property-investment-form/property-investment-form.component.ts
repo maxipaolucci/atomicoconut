@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { DateAdapter, NativeDateAdapter, MatSelectChange, MatDialog } from '@angular/material';
+import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 import { AppService } from '../../../../app.service';
 import { UtilService } from '../../../../util.service';
 import { INVESTMENTS_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes } from '../../../../constants';

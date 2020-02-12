@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy} from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { AddPersonToTeamDialogComponent } from '../../components/add-person-to-team-dialog/add-person-to-team-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../../../users/models/user';

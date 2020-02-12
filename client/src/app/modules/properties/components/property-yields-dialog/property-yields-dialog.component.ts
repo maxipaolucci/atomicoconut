@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSelectChange } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 import { PROPERTY_TYPES } from '../../../../constants';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';

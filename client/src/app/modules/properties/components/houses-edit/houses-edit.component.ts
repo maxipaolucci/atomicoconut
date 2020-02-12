@@ -3,7 +3,8 @@ import { UtilService } from '../../../../util.service';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { AppService } from '../../../../app.service';
-import { MatSelectChange, MatSlideToggleChange } from '@angular/material';
+import { MatSelectChange } from '@angular/material/select';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { HOUSE_BUILDING_TYPES } from '../../../../constants';
 
 @Component({

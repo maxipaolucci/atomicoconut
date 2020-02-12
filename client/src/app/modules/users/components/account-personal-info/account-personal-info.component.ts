@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DateAdapter, NativeDateAdapter } from '@angular/material';
+import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
 import {User} from '../../models/user';
 import { UtilService } from '../../../../util.service';
 import { Subscription, Observable } from 'rxjs';

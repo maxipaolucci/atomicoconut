@@ -1,6 +1,6 @@
 /// <reference types="@types/googlemaps" />
 import { Component, OnInit, EventEmitter, Input, Output, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MapsAPILoader } from '@agm/core';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
