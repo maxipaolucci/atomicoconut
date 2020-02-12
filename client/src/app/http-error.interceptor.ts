@@ -10,8 +10,10 @@ import {
  import { Observable, of } from 'rxjs';
  import { retry, catchError, map } from 'rxjs/operators';
 import { SnackbarNotificationTypes, ConsoleNotificationTypes } from './constants';
+import { Injectable } from "@angular/core";
  
- export class HttpErrorInterceptor implements HttpInterceptor {
+ @Injectable()
+export class HttpErrorInterceptor implements HttpInterceptor {
   constructor(private appService: AppService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

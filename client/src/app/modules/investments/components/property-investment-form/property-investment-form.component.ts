@@ -17,7 +17,7 @@ import { PropertySelectorDialogComponent } from '../../../properties/components/
 })
 export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('editPropertyInvestmentForm', {static: false}) form;
+  @ViewChild('editPropertyInvestmentForm') form;
   @Input() defaultValues: any = null; // the default values of the component model  
   @Input() user: User = null;
   @Output() values: EventEmitter<any> = new EventEmitter();

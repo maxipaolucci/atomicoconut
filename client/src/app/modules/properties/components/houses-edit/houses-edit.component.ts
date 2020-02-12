@@ -13,7 +13,7 @@ import { HOUSE_BUILDING_TYPES } from '../../../../constants';
 })
 export class HousesEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('editHouseForm', {static: false}) form;
+  @ViewChild('editHouseForm') form;
   @Input() defaultValues: any = null; // the default values of the component model
   @Input() defaultCurrencyUnit = 'USD'; // the default currency unit
   @Output() values: EventEmitter<any> = new EventEmitter();

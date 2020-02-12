@@ -12,7 +12,7 @@ import { State } from 'src/app/main.reducer';
   styleUrls: ['./equity.component.scss']
 })
 export class EquityComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('equityForm', {static: false}) form;
+  @ViewChild('equityForm') form;
 
   loanAmount = 0;
   discount = 0;

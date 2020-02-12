@@ -32,8 +32,8 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   @Output() selectedProperty: EventEmitter<Property> = new EventEmitter();
   @Output() onPropertiesLoad: EventEmitter<number> = new EventEmitter();
   
-  @ViewChild('propertiesPaginator', { static: false }) propertiesTablePaginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) propertiesSort: MatSort;
+  @ViewChild('propertiesPaginator') propertiesTablePaginator: MatPaginator;
+  @ViewChild(MatSort) propertiesSort: MatSort;
   
   user: User = null;
   properties: Property[] = [];

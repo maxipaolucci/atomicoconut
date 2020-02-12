@@ -30,7 +30,7 @@ import { SetLinks, AppendLink } from 'src/app/modules/shared/components/main-nav
 })
 export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('editInvestmentForm', {static: false}) form;
+  @ViewChild('editInvestmentForm') form;
   editMode = false;
   user: User = null;
   teams: Team[] = [];
