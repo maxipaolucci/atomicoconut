@@ -91,6 +91,7 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
         fromCryptoData = await getTodayRatesFromWebservice(fromCrypto, ANONYMOUS_USER);
         toCryptoData = await getTodayRatesFromWebservice(toCrypto, ANONYMOUS_USER);
         
+        
         if (fromCryptoData && toCryptoData) {
             const ratio = fromCryptoData.priceUsd / toCryptoData.priceUsd;
             const alert = (ratio > 0.01 || ratio < 0.007) ? '[URGENT]': '';
