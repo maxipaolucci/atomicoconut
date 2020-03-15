@@ -61,11 +61,6 @@ import * as fromMainNavigator from './components/main-navigator/main-navigator.r
     ProgressBarComponent,
     FilesUploaderComponent,
     ProgressBarDialogComponent
-  ],
-  entryComponents: [
-    YesNoDialogComponent, // added as material doc suggest to allow AOT on this on the fly created class
-    SnackbarSimpleComponent,
-    ProgressBarDialogComponent
   ]
 })
 export class SharedModule { }

@@ -42,9 +42,6 @@ import { PropertyResolver } from '../properties/property-resolver.service';
     PropertyInvestmentFormComponent,
     PropertyInvestmentComponent
   ],
-  entryComponents: [
-    InvestmentSelectorDialogComponent // added as material doc suggest to allow AOT on this on the fly created class
-  ],
   providers: [ InvestmentsService, InvestmentResolver, PropertyResolver ]
 })
 export class InvestmentsModule {}

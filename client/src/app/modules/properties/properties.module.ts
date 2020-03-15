@@ -43,12 +43,6 @@ import { PropertyResolver } from './property-resolver.service';
     PropertyYieldsDialogComponent,
     ShareWithDialogComponent
   ],
-  providers: [ PropertiesService, PropertyResolver ],
-  entryComponents: [
-    PropertySelectorDialogComponent, // added as material doc suggest to allow AOT on this on the fly created class
-    HouseFiguresDialogComponent,
-    PropertyYieldsDialogComponent,
-    ShareWithDialogComponent
-  ]
+  providers: [ PropertiesService, PropertyResolver ]
 })
 export class PropertiesModule { }
