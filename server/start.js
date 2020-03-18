@@ -40,6 +40,7 @@ require('./models/Property_User');
 const app = require('./app');
 const cron = require("node-cron");
 const cryptoRatesController = require('./controllers/cryptoRatesController');
+const userController = require('./controllers/userController');
 const { CRYPTO_CURRENCIES } = require('./constants/constants');
 
 
@@ -51,6 +52,10 @@ if (process.env.NODE_ENV === 'production') {
     cryptoRatesController.alertCryptoRatio(CRYPTO_CURRENCIES.MONERO, CRYPTO_CURRENCIES.BITCOIN);
   });
 }
+
+cron.schedule("* 1 * * *", () => {
+  userController.deleteExpiredInactiveAccounts();
+});
 
 const server = app.listen(app.get('port'), () => {
   console.log(`Express running → PORT ${server.address().port}`);

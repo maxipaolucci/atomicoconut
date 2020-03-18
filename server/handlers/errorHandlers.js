@@ -94,7 +94,7 @@ const messageCodes = {
   1054 : 'Sending alert by email for {{param}} to {{param}}...',
   1055 : 'Email sent to {{param}}.',
   1056 : 'User found, activating account...',
-  1057 : 'Account for {{param}} successfully activated and user is now logged in.',
+  1057 : 'Account for {{param}} successfully activated and user is now logged in.'
 };
 
 /**

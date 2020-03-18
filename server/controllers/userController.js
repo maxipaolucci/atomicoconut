@@ -7,6 +7,7 @@ const { getUserObject } = require('./authController');
 const { validationResult } = require('express-validator');
 const crypto = require('crypto'); //get crytographic strings
 const mail = require('../handlers/mail');
+const { ANONYMOUS_USER } = require('../constants/constants');
 
 const errorTrace = 'userController >';
 
@@ -159,6 +160,27 @@ exports.accountActivation = async (req, res) => {
     });
 };
 
+exports.deleteExpiredInactiveAccounts = async() => {
+    const methodTrace = `${errorTrace} deleteExpiredInactiveAccounts() >`;
+
+    console.log(`${methodTrace} ${getMessage('message', 1038, ANONYMOUS_USER, true, 'User', 'active', 'false')}`);
+    const writeResult = await User.deleteMany({
+        $and : [
+            { active: false },
+            { activationTokenExpires : { $lt : Date.now() } }
+        ]
+    });
+
+    if (!writeResult) {
+        // error
+        console.log(`${methodTrace} ${getMessage('error', 464, ANONYMOUS_USER, true, 'User', 'active', 'false')}`);
+
+        return;
+    }
+
+    //success
+    console.log(`${methodTrace} ${getMessage('message', 1050, ANONYMOUS_USER, true, writeResult.deletedCount, 'User')}`);
+};
 
 exports.updateAccount = async (req, res) => {
     const methodTrace = `${errorTrace} updateAccount() >`;
