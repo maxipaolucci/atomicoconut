@@ -24,7 +24,8 @@ export enum UserActionTypes {
   UpdateAccountPersonalInfo = '[User] Set updated account user personal info to Store',
   RequestUpdateAccountFinancialInfo = '[User] Request update account user financial info to Server',
   UpdateAccountFinancialInfo = '[User] Set updated account user financial info to Store',
-  RequestRegister = '[User] Request register new user in Server'
+  RequestRegister = '[User] Request register new user in Server',
+  RequestAccountActivation = '[User] Request account activation in Server'
 }
 
 export class Login implements Action {
@@ -115,6 +116,12 @@ export class RequestRegister implements Action {
   readonly type = UserActionTypes.RequestRegister;
 
   constructor(public payload: RegisterUserModel) {}
+}
+
+export class RequestAccountActivation implements Action {
+  readonly type = UserActionTypes.RequestAccountActivation;
+
+  constructor(public payload: { token: string }) {}
 }
 
 export type UserActions = Login | RequestLogin

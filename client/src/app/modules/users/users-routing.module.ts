@@ -6,6 +6,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { AccountComponent } from './components/account/account.component';
 import { UserResolver } from './user-resolver.service';
 import { AuthGuard } from '../../auth.guard';
+import { AccountActivationComponent } from './components/account-activation/account-activation.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
           inflatedUser : UserResolver
         }
       },
-      { path : 'account/reset/:token', component : ResetPasswordComponent }
+      { path : 'account/reset/:token', component : ResetPasswordComponent },
+      { path : 'account/activation/:token', component : AccountActivationComponent }
     ]
   }
 ];

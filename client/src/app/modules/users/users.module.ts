@@ -18,6 +18,7 @@ import { UserEffects } from './user.effects';
 import { StoreModule } from '@ngrx/store';
 import * as fromUser from './user.reducer';
 import { UserResolver } from './user-resolver.service';
+import { AccountActivationComponent } from './components/account-activation/account-activation.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { UserResolver } from './user-resolver.service';
     AccountComponent,
     AccountFinanceInfoComponent,
     AccountPersonalInfoComponent,
-    AccountUserInfoComponent
+    AccountUserInfoComponent,
+    AccountActivationComponent
   ],
   providers: [ 
     UsersService,

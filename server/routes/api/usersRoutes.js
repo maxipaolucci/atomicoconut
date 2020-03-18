@@ -24,7 +24,7 @@ router.route('/register').post(
   ],
   userController.validateData,
   catchErrors(userController.register),
-  authController.login
+  catchErrors(userController.sendActivationToken)
 );
 
 router.route('/getUser').get(catchErrors(authController.getUser));
@@ -54,6 +54,11 @@ router.route('/account/reset/:token').post(
   authController.confirmedPasswords,
   catchErrors(authController.reset)
 );
+
+router.route('/account/activation/:token').get(
+  catchErrors(userController.accountActivation)
+);
+
 
 
 module.exports = router;

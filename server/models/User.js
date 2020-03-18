@@ -21,6 +21,12 @@ const userSchema = new Schema({
     required: 'Please supply a name',
     trim: true
   },
+  active: {
+    type: Boolean,
+    default: false,
+  },
+  activationToken : String,
+  activationTokenExpires : Date, 
   currency: {
     type: String,
     default : null,

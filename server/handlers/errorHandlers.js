@@ -32,7 +32,8 @@ const errorCodes = {
   475 : 'Sorry, this {{param}} has {{param}} associated to it. We cannot delete it until all the related data is removed.',
   476 : 'Sorry, you cannot create a {{param}} with a {{param}} not created by you.',
   477 : 'Error trying to retrieve data from {{param}} with {{param}} = {{param}}.',
-  478 : 'Error trying to retrieve data from {{param}}.'
+  478 : 'Error trying to retrieve data from {{param}}.',
+  479 : 'User account for {{param}} was not activated. Please check in your email for an activation link.'
 };
 
 const messageCodes = {
@@ -44,8 +45,8 @@ const messageCodes = {
   1005 : 'Logged out user {{param}}.',
   1006 : 'Checking user with email {{param}}...',
   1007 : 'User {{param}} found, saving token in user Schema...',
-  1008 : 'Token saved for {{param}}, sending email to user with reset password url...',
-  1009 : 'You have been emailed a password reset link',
+  1008 : 'Token saved for {{param}}, sending email to user with {{param}} url...',
+  1009 : 'You have been emailed a {{param}} link',
   1010 : 'Mail successfully sent to {{param}}.',
   1011 : 'Checking for User with token {{param}} not expired...',
   1012 : 'User found, saving new password...',
@@ -91,7 +92,9 @@ const messageCodes = {
   1052 : 'Checking that password and password-confirm values are equal...',
   1053 : 'Check done and was successful.',
   1054 : 'Sending alert by email for {{param}} to {{param}}...',
-  1055 : 'Email sent to {{param}}.'
+  1055 : 'Email sent to {{param}}.',
+  1056 : 'User found, activating account...',
+  1057 : 'Account for {{param}} successfully activated and user is now logged in.',
 };
 
 /**

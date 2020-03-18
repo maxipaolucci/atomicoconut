@@ -5,6 +5,8 @@ const FinancialInfo = mongoose.model('FinancialInfo');
 const { getMessage } = require('../handlers/errorHandlers');
 const { getUserObject } = require('./authController');
 const { validationResult } = require('express-validator');
+const crypto = require('crypto'); //get crytographic strings
+const mail = require('../handlers/mail');
 
 const errorTrace = 'userController >';
 
@@ -37,6 +39,126 @@ exports.register = async (req, res, next) => {
     console.log(`${methodTrace} ${getMessage('message', 1018, user.email, true, user.email)}`);
     next(); //call next middleware
 };
+
+exports.sendActivationToken = async(req, res) => {
+    const methodTrace = `${errorTrace} sendActivationToken() >`;
+
+    const email = req.body.email;
+    console.log(`${methodTrace} ${getMessage('message', 1006, email, true, email)}`);
+    //1 see user with that email exists
+    const user = await User.findOne({ email });
+    if (!user) {
+        console.log(`${methodTrace} ${getMessage('error', 455, email, true, email)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 455,
+            msg : getMessage('error', 455, null, false, email),
+            data : null
+        });
+        return;
+    }
+    
+    //2 set reset tokens and expiry on their account
+    console.log(`${methodTrace} ${getMessage('message', 1007, email, true, email)}`);
+    user.activationToken = crypto.randomBytes(20).toString('hex');
+    user.activationTokenExpires = Date.now() + (3600000 * 24); //1 day from now
+    await user.save();
+    //3 send them email with the token
+    console.log(`${methodTrace} ${getMessage('message', 1008, email, true, email, 'account activation')}`);
+    const activationURL = `${req.headers.origin}/users/account/activation/${user.activationToken}`;
+    mail.send({
+        toEmail : user.email,
+        subject : 'AtomiCoconut - Account activation',
+        activationURL,
+        filename : 'account-activation' //this is going to be the mail template file
+    });
+
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1009, null, false, 'account activation'),
+        data : { email : user.email, expires : '1 day' }
+    });
+
+    console.log(`${methodTrace} ${getMessage('message', 1010, email, true, email)}`);
+};
+
+/**
+ * Activate the user account when follow the activation process
+ */
+exports.accountActivation = async (req, res) => {
+    const methodTrace = `${errorTrace} accountActivation() >`;
+    
+    const userEmail = req.user ? req.user.email : null;
+    console.log(`${methodTrace} ${getMessage('message', 1011, userEmail, true, req.params.token)}`);
+    const user = await User.findOne({
+        $and : [
+            { activationToken : req.params.token },
+            { activationTokenExpires : { $gt : Date.now() } }
+        ]
+    });
+
+    if (!user) {
+        console.log(`${methodTrace} ${getMessage('error', 457, userEmail, true)}`);
+        res.status(401).json({
+            status : "error", 
+            codeno : 457,
+            msg : getMessage('error', 457, null, false),
+            data : null
+        });
+
+        return;
+    }
+
+    console.log(`${methodTrace} ${getMessage('message', 1056, user.email, true)}`);
+    user.active = true; //activate the user
+    user.activationToken = undefined; //the way to remove fields from mongo is set to undefined
+    user.activationTokenExpires = undefined;
+    const updatedUser = await user.save(); //here is when we save in the database the deleted values before 
+    await req.logIn(updatedUser, async function(err) {
+        if (err) {
+            console.log(`${methodTrace}${getMessage('error', 452, updatedUser.email, true)}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 452,
+                msg : getMessage('error', 452, null, false),
+                data : null
+            });
+            return; //stop from running 
+        }
+
+        if (!updatedUser.active) {
+            console.log(`${methodTrace}${getMessage('error', 479, updatedUser.email, true, updatedUser.email)}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 479,
+                msg : getMessage('error', 479, null, false, updatedUser.email),
+                data : null
+            });
+            return; //stop from running 
+        }
+    });
+
+    if (!req.user) {
+        res.status(401).json({
+            status : "error", 
+            codeno : 452,
+            msg : getMessage('error', 452, null, false),
+            data : null
+        });
+
+        return;
+    }
+
+    console.log(`${methodTrace} ${getMessage('message', 1057, req.user.email, true, req.user.email)}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1057, null, false),
+        data : await getUserObject(req.user.email)
+    });
+};
+
 
 exports.updateAccount = async (req, res) => {
     const methodTrace = `${errorTrace} updateAccount() >`;

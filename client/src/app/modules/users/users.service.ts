@@ -33,22 +33,21 @@ export class UsersService {
    * Server call to Register a new user in the system 
    * @param postData
    * 
-   * @return { Observable<User> } 
+   * @return { Observable<boolean> } 
    */
-  register$(postData: any = {}): Observable<User> {
+  register$(postData: any = {}): Observable<boolean> {
     const methodTrace = `${this.constructor.name} > register$() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/register`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
-      map((data: any): User => {
-        let user: User = null;
-        if (data && data.email) {
-          user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-        } else {
-          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`, data);
+      map((data: any): boolean => {
+        if (data && data.email && data.expires) {
+          this.appService.showResults(`We sent an email to ${data.email} with an account activation link that will expire in ${data.expires}.`, SnackbarNotificationTypes.INFO);
+          return true;
         }
-
-        return user;
+        
+        this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+        return false;
       })
     );
   }
@@ -234,6 +233,34 @@ export class UsersService {
 
           if (data && data.email) {
             this.appService.showResults('Your password was successfully updated!', SnackbarNotificationTypes.SUCCESS);
+            user = new User(data.name, data.email, data.avatar, null, null, data.currency);
+            
+            return user;
+          }
+
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+          return user;
+        })
+      );
+  }
+
+  /**
+   * Server call to activate a user account api with the provided token.
+   * 
+   * @return { Observable<User> }
+   */
+  accountActivation$(token: string): Observable<User> {
+    const methodTrace = `${this.constructor.name} > accountActivation$() > `; // for debugging
+
+    // this.setUser(null);
+    return this.http.get<Response>(`${this.serverHost}/account/activation/${token}`)
+      .pipe(
+        map(this.appService.extractData),
+        map((data: any): User => {
+          let user: User = null;
+
+          if (data && data.email) {
+            this.appService.showResults('Your account was successfully activated!', SnackbarNotificationTypes.SUCCESS);
             user = new User(data.name, data.email, data.avatar, null, null, data.currency);
             
             return user;

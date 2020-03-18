@@ -1,0 +1,9 @@
+extends email-layout
+
+block content
+  h2 Account activation
+  p Welcome to AtomiCoconut. Please click the following button to activate your new user account. Please note this link is only valid for the next 24 hours.
+  +button(activationURL, 'Activate my account →')
+  p If you can't click the above button please visit #{activationURL}
+  br
+  p If you didn't request this email, please ignore it.

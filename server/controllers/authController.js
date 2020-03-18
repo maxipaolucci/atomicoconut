@@ -78,6 +78,17 @@ exports.login = (req, res, next) => {
                 });
                 return; //stop from running 
             }
+
+            if (!user.active) {
+                console.log(`${methodTrace}${getMessage('error', 479, user.email, true, user.email)}`);
+                res.status(401).json({ 
+                    status : "error", 
+                    codeno : 479,
+                    msg : getMessage('error', 479, null, false, user.email),
+                    data : null
+                });
+                return; //stop from running 
+            }
             
             console.log(`${methodTrace}${getMessage('message', 1000, user.email, true)}`);
             res.json({
@@ -189,7 +200,7 @@ exports.forgot = async (req, res) => {
     user.resetPasswordExpires = Date.now() + 3600000; //1 hour from now
     await user.save();
     //3 send them email with the token
-    console.log(`${methodTrace} ${getMessage('message', 1008, email, true, email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1008, email, true, email, 'reset password')}`);
     const resetURL = `${req.headers.origin}/users/account/reset/${user.resetPasswordToken}`;
     mail.send({
         toEmail : user.email,
@@ -201,7 +212,7 @@ exports.forgot = async (req, res) => {
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1009, null, false),
+        msg : getMessage('message', 1009, null, false, 'password reset'),
         data : { email : user.email, expires : '1 hour' }
     });
 
