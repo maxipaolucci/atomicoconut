@@ -34,8 +34,6 @@ export class AccountActivationComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Login', url: '/users/login', selected: false },
       { displayName: 'Acccount activation', url: null, selected: true }
     ]}));
 
