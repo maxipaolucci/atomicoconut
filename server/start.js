@@ -44,18 +44,24 @@ const userController = require('./controllers/userController');
 const { CRYPTO_CURRENCIES } = require('./constants/constants');
 
 
-app.set('port', process.env.PORT);
+// For cron job patterns look
+// https://www.ostechnix.com/a-beginners-guide-to-cron-jobs/
+// https://crontab.guru/every-day-8am
 
 // cron job for xmr/btc ratio just in prod to avoid using mailtrap free data
 if (process.env.NODE_ENV === 'production') {
+  // this job runs every hour at minute 1
   cron.schedule("1 * * * *", () => {
     cryptoRatesController.alertCryptoRatio(CRYPTO_CURRENCIES.MONERO, CRYPTO_CURRENCIES.BITCOIN);
   });
 }
 
-cron.schedule("* 1 * * *", () => {
+// this job runs every day at 8:00 am
+cron.schedule("0 8 * * *", () => {
   userController.deleteExpiredInactiveAccounts();
 });
+
+app.set('port', process.env.PORT);
 
 const server = app.listen(app.get('port'), () => {
   console.log(`Express running → PORT ${server.address().port}`);
