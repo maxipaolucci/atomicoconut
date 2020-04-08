@@ -2,11 +2,13 @@
 
 IMAGE_TAG='latest'
 DOCKERFILE_CLIENT='Dockerfile'
+DOCKERFILE_NGINX='Dockerfile'
 if [ "$TRAVIS_BRANCH" != "master" ]; then
   IMAGE_TAG=$TRAVIS_BRANCH
 
   if [[ "$TRAVIS_BRANCH" == "testing" ]]; then
     DOCKERFILE_CLIENT='Dockerfile.testing'
+    DOCKERFILE_NGINX='Dockerfile.testing'
   fi
 fi
 
@@ -15,7 +17,7 @@ echo "Current branch: $TRAVIS_BRANCH -- Images tag: $IMAGE_TAG -- Dockerfile cli
 echo
 
 docker build -t $DOCKER_ID/atomic-coconut-client:$IMAGE_TAG -f ./client/$DOCKERFILE_CLIENT ./client
-docker build -t $DOCKER_ID/atomic-coconut-nginx:$IMAGE_TAG ./nginx
+docker build -t $DOCKER_ID/atomic-coconut-nginx:$IMAGE_TAG -f ./nginx/$DOCKERFILE_NGINX ./nginx
 docker build -t $DOCKER_ID/atomic-coconut-server:$IMAGE_TAG ./server
 
 if [[ "$TRAVIS_BRANCH" == "master" || "$TRAVIS_BRANCH" == "testing" ]]; then

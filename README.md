@@ -1,7 +1,6 @@
 # atomiCoconut
 
-server/variables.env is not included in the repo. Ask for it
-.env is not inclueded in the repo. Ask for it
+./.env is not inclueded in the repo. Ask for it
 
 ## SERVER
 
@@ -60,7 +59,7 @@ Run:
 ## MONGO DB CONTAINER SETUP
 If it is the first time we create the mongo db container we need to create the database and a user for it.
 - Access the mongo container
-  >docker exec -ti [container id] sh
+  >docker exec -ti [container id] /bin/bash
 - Initialize mongo command line:
   >mongo --port 27017 -u [mongo_adming_user] -p [mongo_admin_pass] --authenticationDatabase admin
   
