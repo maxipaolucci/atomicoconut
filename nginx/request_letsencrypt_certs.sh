@@ -1,24 +1,24 @@
 #!/bin/bash
 
-domains=(atomicoconut.com www.atomicoconut.com testss.atomicoconut.com)
+staging=1 # Set to 1 if you're testing your setup to avoid hitting request limits
+if [[ ! -z "$1" ]]; then staging=$1; fi
+echo "### Staging: $staging"
+
+domains=(atomicoconut.com www.atomicoconut.com)
+if [[ "$2" == "testing"  ]]; then
+  domains=(testss.atomicoconut.com)
+fi
+
 rsa_key_size=4096
-data_path="./certbot"
+data_path="/home/ec2-user"
 email="maxipaolucci@gmail.com" # Adding a valid address is strongly recommended
-staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
-
-
-
-# echo "### Starting nginx ..."
-# docker-compose up --force-recreate -d nginx
-# echo
 
 echo "### Deleting dummy certificate for $domains ..."
-docker run --rm --entrypoint "\
+docker-compose run --rm --entrypoint "\
   rm -Rf /etc/letsencrypt/live/$domains && \
   rm -Rf /etc/letsencrypt/archive/$domains && \
   rm -Rf /etc/letsencrypt/renewal/$domains.conf" certbot
 echo
-
 
 echo "### Requesting Let's Encrypt certificate for $domains ..."
 #Join $domains to -d args
@@ -36,7 +36,8 @@ esac
 # Enable staging mode if needed
 if [ $staging != "0" ]; then staging_arg="--staging"; fi
 
-docker run --rm --entrypoint "\
+
+docker-compose run --rm --entrypoint "\
   certbot certonly --webroot -w /var/www/certbot \
     $staging_arg \
     $email_arg \
@@ -46,5 +47,8 @@ docker run --rm --entrypoint "\
     --force-renewal" certbot
 echo
 
-# echo "### Reloading nginx ..."
-# docker exec nginx nginx -s reload
+echo "### Reloading nginx ..."
+nginx_container_name=$(docker ps | grep atomic-coconut-nginx:testing | awk '{print $NF}')
+echo "NGINX container name: $nginx_container_name"
+
+docker exec $nginx_container_name nginx -s reload
