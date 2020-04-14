@@ -8,6 +8,9 @@ RUN apt update && apt install -y telnet curl iputils-ping traceroute htop net-to
 RUN sed -i 's?CipherString = DEFAULT@SECLEVEL=2?CipherString = DEFAULT@SECLEVEL=1?g' /etc/ssl/openssl.cnf
 
 COPY ./prod.conf /etc/nginx/conf.d/default.conf
+COPY ./start_nginx.sh /start_nginx.sh
 
 EXPOSE 80
 EXPOSE 443
+
+CMD ["/bin/bash", "/start_nginx.sh"]
