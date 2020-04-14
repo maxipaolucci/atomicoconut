@@ -12,5 +12,3 @@ COPY ./start_nginx.sh /start_nginx.sh
 
 EXPOSE 80
 EXPOSE 443
-
-CMD ["/bin/bash", "/start_nginx.sh"]

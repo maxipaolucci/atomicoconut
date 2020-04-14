@@ -5,8 +5,11 @@ if [[ ! -z "$1" ]]; then staging=$1; fi
 echo "### Staging: $staging"
 
 domains=(atomicoconut.com www.atomicoconut.com)
+#this is used to restart the container
+nginxImageTag="latest"
 if [[ "$2" == "testing"  ]]; then
   domains=(testss.atomicoconut.com)
+  nginxImageTag="testing"
 fi
 
 rsa_key_size=4096
@@ -48,7 +51,7 @@ docker-compose run --rm --entrypoint "\
 echo
 
 echo "### Reloading nginx ..."
-nginx_container_name=$(docker ps | grep atomic-coconut-nginx:testing | awk '{print $NF}')
+nginx_container_name=$(docker ps | grep atomic-coconut-nginx:$nginxImageTag | awk '{print $NF}')
 echo "NGINX container name: $nginx_container_name"
 
 docker exec $nginx_container_name nginx -s reload

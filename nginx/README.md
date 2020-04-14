@@ -40,6 +40,7 @@ Edit EC2 cronjobs
 Write the following, save and quit (:wq)
 ### For backups every thursday at 00:00
 0 0 * * 4 sh backup_certbot_certs.sh [bucket_name] [environment]
+0 0/6 * * * sh reload_nginx.sh [environment]
 
 ### Param values:
 bucket_name: the bucket name in AWS S3
