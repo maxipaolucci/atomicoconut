@@ -29,7 +29,10 @@ router.route('/register').post(
 
 router.route('/getUser').get(catchErrors(authController.getUser));
 
-router.route('/logout').get(authController.logout);
+router.route('/logout').get(
+  authController.isLogggedIn, 
+  authController.logout
+);
 
 router.route('/accountPersonalInfo').post(
   authController.isLogggedIn, 

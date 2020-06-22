@@ -33,7 +33,8 @@ const errorCodes = {
   476 : 'Sorry, you cannot create a {{param}} with a {{param}} not created by you.',
   477 : 'Error trying to retrieve data from {{param}} with {{param}} = {{param}}.',
   478 : 'Error trying to retrieve data from {{param}}.',
-  479 : 'User account for {{param}} was not activated. Please check in your email for an activation link.'
+  479 : 'User account for {{param}} was not activated. Please check in your email for an activation link.',
+  480 : 'JWT provided is invalid for {{param}}'
 };
 
 const messageCodes = {
@@ -94,7 +95,9 @@ const messageCodes = {
   1054 : 'Sending alert by email for {{param}} to {{param}}...',
   1055 : 'Email sent to {{param}}.',
   1056 : 'User found, activating account...',
-  1057 : 'Account for {{param}} successfully activated and user is now logged in.'
+  1057 : 'Account for {{param}} successfully activated and user is now logged in.',
+  1058 : 'Checking provided JWT with current user token stored in server...',
+  1059 : 'JWT is valid for {{param}}'
 };
 
 /**

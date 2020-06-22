@@ -182,6 +182,21 @@ exports.deleteExpiredInactiveAccounts = async() => {
     console.log(`${methodTrace} ${getMessage('message', 1050, ANONYMOUS_USER, true, writeResult.deletedCount, 'User')}`);
 };
 
+const updateUserAccount = async (user, updates = {}, retrieveToken = false) => {
+    const methodTrace = `${errorTrace} updateUserAccount() >`;
+    
+    console.log(`${methodTrace} ${getMessage('message', 1019, user.email, true, user.email)}`);
+    user = await User.findOneAndUpdate(
+        { email : user.email },
+        { $set : updates },
+        { new : true, runValidators : true, context : 'query' }
+    );
+
+    console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, user.email)}`);
+    return await getUserObject(user.email, {}, retrieveToken);
+};
+exports.updateUserAccount = updateUserAccount;
+
 exports.updateAccount = async (req, res) => {
     const methodTrace = `${errorTrace} updateAccount() >`;
     const updates = {
@@ -190,19 +205,12 @@ exports.updateAccount = async (req, res) => {
         currency : req.body.currency
     };
     
-    console.log(`${methodTrace} ${getMessage('message', 1019, updates.email, true, updates.email)}`);
-    const user = await User.findOneAndUpdate(
-        { _id : req.user._id },
-        { $set : updates },
-        { new : true, runValidators : true, context : 'query' }
-    );
-
-    console.log(`${methodTrace} ${getMessage('message', 1020, updates.email, true, user.email)}`);
+    const user = await updateUserAccount(req.user, updates);
     res.json({
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1020, null, false, user.email),
-        data : await getUserObject(user.email)
+        data : user
     });
 };
 

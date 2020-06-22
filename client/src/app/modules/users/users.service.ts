@@ -4,7 +4,7 @@ import { map, withLatestFrom } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AppService } from '../../app.service';
 import { User } from './models/user';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Response } from '../../models/response';
 import { AccountPersonal } from './models/account-personal';
 import { AccountFinance } from './models/account-finance';
@@ -21,6 +21,7 @@ export class UsersService {
 
   private serverHost: string = environment.apiHost + '/api/users';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
+  private token: string = null;
   //routerRedirectUrl: string = null; // a route to redirect the user to when login is successfull
 
   constructor(
@@ -151,10 +152,12 @@ export class UsersService {
     return this.http.get<Response>(`${this.serverHost}/getUser`, { params }).pipe(
       map(this.appService.extractData),
       map((data: any): User => {
-        if (!(data && data.email)) {
+        if (!(data && data.email && data.token)) {
           this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} User not logged in.`, data);
           return null;
         } 
+
+        this.token = data.token;
 
         let personalInfo = null;
         if (data.personalInfo && data.personalInfo.birthday) {
@@ -183,10 +186,12 @@ export class UsersService {
     return this.http.post<Response>(`${this.serverHost}/login`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
       map((data: any): User => {
-        if (!(data && data.email)) {
+        if (!(data && data.email && data.token)) {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
           return null;
         }
+
+        this.token = data.token;
 
         return new User(data.name, data.email, data.avatar, null, null, data.currency);
       })
@@ -282,7 +287,15 @@ export class UsersService {
 
     return this.http.get<Response>(`${this.serverHost}/logout`).pipe(
       map(this.appService.extractData),
-      map((data: any): null => null)
+      map((data: any): null => {
+        this.token = null;
+
+        return null;
+      })
     );
+  }
+
+  getToken$(): Observable<string> {
+    return of(this.token);
   }
 }

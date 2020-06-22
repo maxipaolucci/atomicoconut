@@ -3,14 +3,17 @@ const crypto = require('crypto'); //get crytographic strings
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const mail = require('../handlers/mail');
+const userController = require('./userController');
 const { getMessage } = require('../handlers/errorHandlers');
+const { ANONYMOUS_USER } = require('../constants/constants');
+const authHandler = require('../handlers/authHandler');
 
 
 const errorTrace = 'authController >';
 
-const getUserObject = async (email, fieldsToPopulate = {}) => {
+const getUserObject = async (email, fieldsToPopulate = {}, withToken = false) => {
     const methodTrace = `${errorTrace} getUserObject() >`;
-
+    
     console.log(`${methodTrace} ${getMessage('message', 1006, email, true, email)}`);        
     let user = null;
     if (Object.keys(fieldsToPopulate).length) {
@@ -26,6 +29,12 @@ const getUserObject = async (email, fieldsToPopulate = {}) => {
             avatar : user.gravatar, 
             currency : user.currency
         };
+
+        
+        if (withToken) {
+            //add the token to the result
+            dto.token = user.token;
+        }
       
         for (let key of Object.keys(fieldsToPopulate)) {
             if (fieldsToPopulate[key] === 'true') {
@@ -89,13 +98,17 @@ exports.login = (req, res, next) => {
                 });
                 return; //stop from running 
             }
+
+            //save user token
+            const token = authHandler.createToken(user);
+            user = await userController.updateUserAccount(user, { token }, true);
             
             console.log(`${methodTrace}${getMessage('message', 1000, user.email, true)}`);
             res.json({
                 status : 'success', 
                 codeno : 200,
                 msg : getMessage('message', 1000, null, false),
-                data : await getUserObject(user.email)
+                data : user
             });
         });
     })(req, res, next);
@@ -103,13 +116,16 @@ exports.login = (req, res, next) => {
     //But we can put ther 'facebook' to use facebook. Check documentation. 
     //This uses the passport handler in handlers folder
 
-exports.logout = (req, res) => {
+exports.logout = async (req, res) => {
     const methodTrace = `${errorTrace} logout() >`;
     
-    const userEmail = req.user ? req.user.email : null;
+    const user = req.user;
+    const userEmail = user ? user.email : ANONYMOUS_USER;
     console.log(`${methodTrace} ${getMessage('message', 1005, userEmail, true, userEmail)}`);
     
     req.logout(); //this was added in passport
+    await userController.updateUserAccount(user, { token: null }); //removes the token from the user table
+
     res.json({
         status : 'success', 
         codeno : 200,
@@ -121,21 +137,23 @@ exports.logout = (req, res) => {
 exports.isLogggedIn = (req, res, next) => {
     const methodTrace = `${errorTrace} isLogggedIn() >`;
     
-    const userEmail = req.user ? req.user.email : null;
+    const userEmail = req.user ? req.user.email : ANONYMOUS_USER;
+    
     console.log(`${methodTrace}${getMessage('message', 1003, userEmail, true)}`);
-    if (req.isAuthenticated()) { //check in passport for authentication
-        console.log(`${methodTrace} ${getMessage('message', 1004, userEmail, true)}`);
-        next();
+    if (!req.isAuthenticated()) { //check in passport for authentication
+        console.log(`${methodTrace} ${getMessage('error', 453, userEmail, true)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 453,
+            msg : getMessage('error', 453, null, false),
+            data : null
+        });
+        
         return;
     }
 
-    console.log(`${methodTrace} ${getMessage('error', 453, userEmail, true)}`);
-    res.status(401).json({ 
-        status : "error", 
-        codeno : 453,
-        msg : getMessage('error', 453, null, false),
-        data : null
-    });
+    console.log(`${methodTrace} ${getMessage('message', 1004, userEmail, true)}`);
+    next();
 };
 
 exports.getUser = async (req, res, next) => {
@@ -145,7 +163,7 @@ exports.getUser = async (req, res, next) => {
         const email = req.user.email;
         console.log(`${methodTrace} ${getMessage('message', 1004, email, true)}`);
 
-        const user = await getUserObject(email, req.query);
+        const user = await getUserObject(email, req.query, true);
         
         if (!user) {
             console.log(`${methodTrace} ${getMessage('error', 455, email, true, email)}`);

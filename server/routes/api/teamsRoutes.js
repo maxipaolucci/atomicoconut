@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../../controllers/userController');
 const teamController = require('../../controllers/teamController');
 const authController = require('../../controllers/authController');
+const authHandler = require('../../handlers/authHandler');
 const { catchErrors } = require('../../handlers/errorHandlers');
 const { check, sanitizeBody } = require('express-validator');
 
@@ -18,7 +19,8 @@ router.route('/getMyTeamBySlug').get(
 
 router.route('/getAll').get(
   authController.isLogggedIn,
-  catchErrors(userController.checkLoggedInUserWithEmail),
+  authHandler.jwtCheck,
+  catchErrors(authHandler.checkDecodedJwtMatchUser),
   catchErrors(teamController.getAllTeams)
 );
 
