@@ -31,7 +31,7 @@ export class AppEffects {
   logout$ = this.actions$.pipe(
     ofType<Logout>(UserActionTypes.Logout),
     tap(() => {
-      // we do this because the logout action previously set the global app state to undefined making it 
+      // we do this because the logout action previously reseted the global app state making it 
       // re-initilize and leaving the navigator empty. So this side effect repopulates the navigator with 
       // the welcome componennt options where we are going to be redirected
       this.store.dispatch(new SetLinks({ links: [

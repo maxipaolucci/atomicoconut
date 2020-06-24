@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../../controllers/userController');
 const authController = require('../../controllers/authController');
+const authHandler = require('../../handlers/authHandler');
 const { catchErrors } = require('../../handlers/errorHandlers');
 const { check, sanitizeBody } = require('express-validator');
 
@@ -36,18 +37,22 @@ router.route('/logout').get(
 
 router.route('/accountPersonalInfo').post(
   authController.isLogggedIn, 
-  catchErrors(userController.checkLoggedInUserWithEmail),
+  authHandler.jwtCheck,
+  catchErrors(authHandler.checkDecodedJwtMatchUser),
   catchErrors(userController.updateAccountPersonalInfo)
 );
 
 router.route('/accountFinancialInfo').post(
   authController.isLogggedIn, 
-  catchErrors(userController.checkLoggedInUserWithEmail),
+  authHandler.jwtCheck,
+  catchErrors(authHandler.checkDecodedJwtMatchUser),
   catchErrors(userController.updateAccountFinancialInfo)
 );
 
 router.route('/account').post(
-  authController.isLogggedIn, 
+  authController.isLogggedIn,
+  authHandler.jwtCheck,
+  catchErrors(authHandler.checkDecodedJwtMatchUser),
   catchErrors(userController.updateAccount)
 );
 

@@ -45,7 +45,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             switch(result.error.codeno) { 
               case 401: { 
                 this.appService.showResults(result.error.msg, SnackbarNotificationTypes.ERROR);
-                this.store.dispatch(new RequestLogout());
+                if (result.error.code === 'invalid_token') {
+                  this.store.dispatch(new RequestLogout({ redirectUrl: '/users/login' }));
+                }
                 break; 
               } 
               case 471: { 

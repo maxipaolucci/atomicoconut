@@ -31,9 +31,19 @@ export const reducers: ActionReducerMap<State> = {
  */
 export function clearState(reducer) {
   return function (state, action) {
-
+    
     if (action.type === UserActionTypes.Logout) {
-      state = undefined;
+      //catch the last redirect url set by the RequestLogout action
+      const redirectUrl = state.application.redirectUrl;
+      
+      // reset the state to the basic/clean minimun state (we can make it "undefined" and the reducer 
+      // method below will create a similar state by default) but we'll lost the redirect url that is needed
+      state = {
+        application: {
+          loadingData: null,
+          redirectUrl: redirectUrl
+        }
+      };
     }
 
     return reducer(state, action);

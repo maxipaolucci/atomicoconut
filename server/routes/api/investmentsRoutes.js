@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../../controllers/userController');
 const authController = require('../../controllers/authController');
 const investmentController = require('../../controllers/investmentController');
+const authHandler = require('../../handlers/authHandler');
 const { catchErrors } = require('../../handlers/errorHandlers');
 
 
@@ -12,32 +13,38 @@ const { catchErrors } = require('../../handlers/errorHandlers');
 
 router.route('/create').post(
   authController.isLogggedIn, 
-  catchErrors(userController.checkLoggedInUserWithEmail),
+  authHandler.jwtCheck,
+  catchErrors(authHandler.checkDecodedJwtMatchUser),
   investmentController.validateData,
   catchErrors(investmentController.create)
 );
 
 router.route('/getAll').get(
   authController.isLogggedIn,
-  catchErrors(userController.checkLoggedInUserWithEmail),
+  authHandler.jwtCheck,
+  catchErrors(authHandler.checkDecodedJwtMatchUser),
   catchErrors(investmentController.getAllInvestments)
 );
 
 router.route('/getById').get(
   authController.isLogggedIn,
-  catchErrors(userController.checkLoggedInUserWithEmail),
+  authHandler.jwtCheck,
+  catchErrors(authHandler.checkDecodedJwtMatchUser),
   catchErrors(investmentController.getById)
 );
 
 router.route('/update').post(
   authController.isLogggedIn, 
-  catchErrors(userController.checkLoggedInUserWithEmail),
+  authHandler.jwtCheck,
+  catchErrors(authHandler.checkDecodedJwtMatchUser),
   investmentController.validateData,
   catchErrors(investmentController.update)
 );
 
 router.route('/delete/:id').delete( 
-  catchErrors(userController.checkLoggedInUserWithEmail),
+  authController.isLogggedIn, 
+  authHandler.jwtCheck,
+  catchErrors(authHandler.checkDecodedJwtMatchUser),
   catchErrors(investmentController.delete)
 );
 

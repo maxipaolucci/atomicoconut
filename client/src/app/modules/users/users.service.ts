@@ -264,15 +264,16 @@ export class UsersService {
         map((data: any): User => {
           let user: User = null;
 
-          if (data && data.email) {
+          if (data && data.email && data.token) {
             this.appService.showResults('Your account was successfully activated!', SnackbarNotificationTypes.SUCCESS);
             user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-            
+            this.token = data.token;
+
             return user;
           }
 
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
-          return user;
+          return null;
         })
       );
   }
@@ -280,17 +281,17 @@ export class UsersService {
   /**
    * Server call to login the provided user email and pass.
    * 
-   * @return { Observable<null>}
+   * @return { Observable<string>}
    */
-  logout$(): Observable<null> {
+  logout$(redirectUrl: string = '/'): Observable<string> {
     const methodTrace = `${this.constructor.name} > logout$() > `; // for debugging
-
+    
     return this.http.get<Response>(`${this.serverHost}/logout`).pipe(
       map(this.appService.extractData),
-      map((data: any): null => {
+      map((data: any): string => {
         this.token = null;
 
-        return null;
+        return redirectUrl;
       })
     );
   }

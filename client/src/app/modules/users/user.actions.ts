@@ -62,6 +62,8 @@ export class Logout implements Action {
 
 export class RequestLogout implements Action {
   readonly type = UserActionTypes.RequestLogout;
+
+  constructor(public payload?: { redirectUrl: string }) {}
 }
 
 export class RequestAuthenticatedUser implements Action {

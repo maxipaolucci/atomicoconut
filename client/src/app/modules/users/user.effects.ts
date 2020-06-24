@@ -110,21 +110,30 @@ export class UserEffects {
     tap((action) => {
       this.store.dispatch(new ShowProgressBar({ message: 'Logging out user...' }));  
     }),
-    mergeMap(() => this.usersService.logout$()
+    mergeMap(({ payload }) => this.usersService.logout$(payload?.redirectUrl)
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
     ),
-    map(() => new Logout()) //do not care of the resutl, just run logout. The backend does not care anyway 
+    map((redirectUrl: string) => {
+      this.store.dispatch(new SetRedirectUrl({ url: redirectUrl }));
+
+      return new Logout()
+    }) //do not care of the resutl, just run logout. The backend does not care anyway 
   );
 
   @Effect({ dispatch: false })
   logout$ = this.actions$.pipe(
     ofType<Logout>(UserActionTypes.Logout),
-    tap(() => {
+    switchMap(() => this.store.select(redirectUrlSelector()).pipe(
+      first() //so I stop listening once this is retrieved
+              // that way this will not be triggered again when set url to null below
+    )),
+    tap((redirectUrl: string) => {
       localStorage.removeItem("user");
+      this.store.dispatch(new SetRedirectUrl({ url: null}));
       this.store.dispatch(new HideProgressBar());
-      this.router.navigate(['/']);
+      this.router.navigate([redirectUrl]);
     })
   );
 

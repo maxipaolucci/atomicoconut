@@ -90,9 +90,9 @@ exports.sendActivationToken = async(req, res) => {
 exports.accountActivation = async (req, res) => {
     const methodTrace = `${errorTrace} accountActivation() >`;
     
-    const userEmail = req.user ? req.user.email : null;
+    const userEmail = req.user ? req.user.email : ANONYMOUS_USER;
     console.log(`${methodTrace} ${getMessage('message', 1011, userEmail, true, req.params.token)}`);
-    const user = await User.findOne({
+    let user = await User.findOne({
         $and : [
             { activationToken : req.params.token },
             { activationTokenExpires : { $gt : Date.now() } }
@@ -151,12 +151,17 @@ exports.accountActivation = async (req, res) => {
         return;
     }
 
-    console.log(`${methodTrace} ${getMessage('message', 1057, req.user.email, true, req.user.email)}`);
+    //save user token
+    user = req.user;
+    const token = authHandler.createToken(user);
+    user = await updateUserAccount(user, { token }, true);
+
+    console.log(`${methodTrace} ${getMessage('message', 1057, user.email, true, user.email)}`);
     res.json({
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1057, null, false),
-        data : await getUserObject(req.user.email)
+        data : user
     });
 };
 
@@ -287,27 +292,27 @@ exports.updateAccountPersonalInfo = async (req, res) => {
 /**
  * This methods double checks that the loggedin user in the session matches the user email provided by the client service call
  */
-exports.checkLoggedInUserWithEmail = async (req, res, next) => {
-    const methodTrace = `${errorTrace} checkLoggedInUserWithEmail() >`;
+// exports.checkLoggedInUserWithEmail = async (req, res, next) => {
+//     const methodTrace = `${errorTrace} checkLoggedInUserWithEmail() >`;
     
-    const email = req.body.email ? req.body.email : req.query.email;
-    //check for a user with the provided email
-    console.log(`${methodTrace} ${getMessage('message', 1029, email, true, email)}`);
-    let user = await User.findOne({ email });
-    if (!user || user.email !== req.user.email) {
-        console.log(`${methodTrace} ${getMessage('error', 460, email, true, email)}`);
-        res.status(401).json({ 
-            status : "error", 
-            codeno : 460,
-            msg : getMessage('error', 460, null, false, email),
-            data : null
-        });
-        return;
-    }
+//     const email = req.body.email ? req.body.email : req.query.email;
+//     //check for a user with the provided email
+//     console.log(`${methodTrace} ${getMessage('message', 1029, email, true, email)}`);
+//     let user = await User.findOne({ email });
+//     if (!user || user.email !== req.user.email) {
+//         console.log(`${methodTrace} ${getMessage('error', 460, email, true, email)}`);
+//         res.status(401).json({ 
+//             status : "error", 
+//             codeno : 460,
+//             msg : getMessage('error', 460, null, false, email),
+//             data : null
+//         });
+//         return;
+//     }
     
-    console.log(`${methodTrace} ${getMessage('message', 1030, user.email, true, user.email)}`);
-    next();
-};
+//     console.log(`${methodTrace} ${getMessage('message', 1030, user.email, true, user.email)}`);
+//     next();
+// };
 
 exports.updateAccountFinancialInfo = async (req, res) => {
     const methodTrace = `${errorTrace} updateAccountFinancialInfo() >`;

@@ -12,7 +12,7 @@ exports.createToken = (user) => {
       username: user.email
     }, 
     process.env.SECRET, 
-    { expiresIn: 30}
+    { expiresIn: 10}
     // { expiresIn: "3 hours"}
   );
 };
