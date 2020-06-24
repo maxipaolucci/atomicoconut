@@ -8,6 +8,7 @@ const { validationResult } = require('express-validator');
 const crypto = require('crypto'); //get crytographic strings
 const mail = require('../handlers/mail');
 const { ANONYMOUS_USER } = require('../constants/constants');
+const authHandler = require('../handlers/authHandler');
 
 const errorTrace = 'userController >';
 

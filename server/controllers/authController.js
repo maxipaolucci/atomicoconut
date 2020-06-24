@@ -265,7 +265,7 @@ exports.reset = async (req, res) => {
     
     const userEmail = req.user ? req.user.email : null;
     console.log(`${methodTrace} ${getMessage('message', 1011, userEmail, true, req.params.token)}`);
-    const user = await User.findOne({
+    let user = await User.findOne({
         $and : [
             { resetPasswordToken : req.params.token },
             { resetPasswordExpires : { $gt : Date.now() } }
@@ -302,11 +302,16 @@ exports.reset = async (req, res) => {
         return;
     }
 
+    //save user token
+    user = req.user;
+    const token = authHandler.createToken(user);
+    user = await userController.updateUserAccount(user, { token }, true);
+
     console.log(`${methodTrace} ${getMessage('message', 1013, user.email, true, user.email)}`);
     res.json({
         status : 'success', 
         codeno : 200,
         msg : getMessage('message', 1013, null, false),
-        data : await getUserObject(req.user.email)
+        data : user
     });
 };

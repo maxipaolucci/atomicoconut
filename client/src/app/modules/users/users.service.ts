@@ -236,10 +236,11 @@ export class UsersService {
         map((data: any): User => {
           let user: User = null;
 
-          if (data && data.email) {
+          if (data && data.email && data.token) {
             this.appService.showResults('Your password was successfully updated!', SnackbarNotificationTypes.SUCCESS);
             user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-            
+            this.token = data.token;
+
             return user;
           }
 

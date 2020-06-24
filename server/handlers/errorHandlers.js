@@ -150,8 +150,7 @@ exports.getMessage = getMessage;
 exports.catchErrors = (fn) => {
   const methodTrace = `${errorTrace} catchErrors() >`;
   
-  console.log(`${methodTrace} ${getMessage('error', 467, null, true)}`);
-  return function(req, res, next) {
+  return (req, res, next) => {
     return fn(req, res, next).catch(next);
   };
 };
