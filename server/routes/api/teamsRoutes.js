@@ -20,8 +20,8 @@ router.route('/getMyTeamBySlug').get(
 router.route('/getAll').get(
   authController.isLogggedIn,
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
-  catchErrors(teamController.getAllTeams)
+  //catchErrors(authHandler.checkDecodedJwtMatchUser),
+  //catchErrors(teamController.getAllTeams)
 );
 
 router.route('/create').post(

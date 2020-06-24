@@ -1,3 +1,9 @@
+exports.ENVIRONMENTS = {
+  TESTING: 'testing',
+  DEVELOPMENT: 'development',
+  PRODUCTION: 'production'
+}
+
 exports.INVESTMENTS_TYPES = {
   CURRENCY: 'currency',
   CRYPTO : 'crypto',

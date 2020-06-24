@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
-import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestForgot, Forgot, RequestReset, RequestAuthenticatedUser, AuthenticatedUser, RequestUpdateAccountInfo, UpdateAccountInfo, RequestUpdateAccountPersonalInfo, UpdateAccountPersonalInfo, RequestUpdateAccountFinancialInfo, UpdateAccountFinancialInfo, RequestRegister, RequestAccountActivation } from './user.actions';
+import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestForgot, Forgot, 
+  RequestReset, RequestAuthenticatedUser, AuthenticatedUser, RequestUpdateAccountInfo, 
+  UpdateAccountInfo, RequestUpdateAccountPersonalInfo, UpdateAccountPersonalInfo, 
+  RequestUpdateAccountFinancialInfo, UpdateAccountFinancialInfo, RequestRegister, 
+  RequestAccountActivation } from './user.actions';
 import { mergeMap, switchMap, exhaustMap, map, catchError, tap, delay, first } from 'rxjs/operators';
 import { of, defer } from 'rxjs';
 import { User } from './models/user';
@@ -11,7 +15,6 @@ import { Store } from '@ngrx/store';
 import { ShowProgressBar, HideProgressBar, FinalizeOperation, SetRedirectUrl } from 'src/app/app.actions';
 import { redirectUrlSelector } from 'src/app/app.selectors';
 import { AppService } from 'src/app/app.service';
-import { SnackbarNotificationTypes } from 'src/app/constants';
 
 @Injectable()
 export class UserEffects {
@@ -88,7 +91,7 @@ export class UserEffects {
     ofType<Login>(UserActionTypes.Login),
     switchMap(() => this.store.select(redirectUrlSelector()).pipe(
       first() //so I stop listening once this is retrieved
-              // that way I will not be trigger again when set url to null below
+              // that way this will not be triggered again when set url to null below
     )),
     tap((redirectUrl: String) => {
       if (!redirectUrl) {

@@ -1,4 +1,5 @@
 const moment = require('moment');
+const { ANONYMOUS_USER, ENVIRONMENTS } = require('../constants/constants');
 
 const errorTrace = 'errorHandlers >';
 
@@ -148,7 +149,7 @@ exports.getMessage = getMessage;
 
 exports.catchErrors = (fn) => {
   const methodTrace = `${errorTrace} catchErrors() >`;
-
+  
   console.log(`${methodTrace} ${getMessage('error', 467, null, true)}`);
   return function(req, res, next) {
     return fn(req, res, next).catch(next);
@@ -163,49 +164,48 @@ exports.catchErrors = (fn) => {
 exports.notFound = (req, res, next) => {
   const methodTrace = `${errorTrace} notFound() >`;
   
-  console.log(`${methodTrace} ${getMessage('error', 468, req.user ? req.user.email : null, true)}`);
+  console.log(`${methodTrace} ${getMessage('error', 468, req.user ? req.user.email : ANONYMOUS_USER, true)}`);
   const err = new Error('Not Found');
   err.status = 'error';
   err.codeno = 404;
-  err.message = 'Page not found';
+  err.message = getMessage('error', 468, null, false);
   
   next(err);
 };
 
 /*
-  MongoDB Validation Error Handler
-
-  Detect if there are mongodb validation errors that we can nicely show via flash messages
-*/
-
-// exports.flashValidationErrors = (err, req, res, next) => {
-//   if (!err.errors) return next(err);
-//   // validation errors look like
-//   const errorKeys = Object.keys(err.errors);
-//   errorKeys.forEach(key => req.flash('error', err.errors[key].message));
-//   res.redirect('back');
-// };
-
-
-/*
-  Development Error Hanlder
+  Custom Error Hanlder
 
   In development we show good error messages so if we hit a syntax error or any other previously un-handled error, we can show good info on what happened
 */
-exports.developmentErrors = (err, req, res, next) => {
-  const methodTrace = `${errorTrace} developmentErrors() >`;
+exports.customErrorHandler = (err, req, res, next) => {
+  const methodTrace = `${errorTrace} customErrorHandler() >`;
   
   console.log(`${methodTrace} ${getMessage('error', 467, req.user ? req.user.email : null, true)} ${err.message}`);
   err.stack = err.stack || '';
-  //console.log(err);
-  const errorDetails = {
-    msg: `${getMessage('error', 400, null, false)} ${err.message || err.msg}`,
-    status: 'error',
-    codeno: 400,
-    data: err
-  };
+  
+  let errorDetails = {};
+  if (err.codeno == 404) {
+    // it comes from notFound middleware
+    errorDetails = {
+      msg: err.message,
+      status: err.status,
+      codeno: err.codeno,
+      data: process.env.ENV !== ENVIRONMENTS.PRODUCTION ? err.stack : ''
+    };
+  } else {
+    // it comes from an exception thronw from another controller
+    errorDetails = {
+      msg: `${err.message || err.msg}`,
+      status: 'error',
+      codeno: err.codeno || err.status,
+      code: err.code || '',
+      data: process.env.ENV !== ENVIRONMENTS.PRODUCTION ? err.stack : ''
+    };
+  }
+  
 
-  res.status(err.status || 400);
+  res.status(errorDetails.codeno || 500);
   res.format({
     // Based on the `Accept` http header
     'text/html': () => {
@@ -214,24 +214,7 @@ exports.developmentErrors = (err, req, res, next) => {
       res.render('tests/error', errorDetails);
     }, // Form Submit, Reload the page
     'application/json': () => {
-      res.json(errorDetails) // Ajax call, send JSON back
+      res.json(errorDetails) // Send JSON back
     }
-  });
-};
-
-
-/*
-  Production Error Handler
-
-  No stacktraces are leaked to user
-*/
-exports.productionErrors = (err, req, res, next) => {
-  const methodTrace = `${errorTrace} productionErrors() >`;
-  
-  console.log(`${methodTrace} ${getMessage('error', 467, req.user ? req.user.email : null, true)} ${err.message}`);
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
   });
 };
