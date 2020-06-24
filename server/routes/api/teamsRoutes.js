@@ -14,14 +14,14 @@ const { check, sanitizeBody } = require('express-validator');
 router.route('/getMyTeamBySlug').get(
   authController.isLogggedIn,
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(teamController.getMyTeamBySlug)
 );
 
 router.route('/getAll').get(
   authController.isLogggedIn,
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(teamController.getAllTeams)
 );
 
@@ -32,7 +32,7 @@ router.route('/create').post(
   ],  
   authController.isLogggedIn, 
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   teamController.validateData,
   catchErrors(teamController.create)
 );
@@ -44,7 +44,7 @@ router.route('/update').post(
   ],
   authController.isLogggedIn, 
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   teamController.validateData,
   catchErrors(teamController.update)
 );
@@ -52,7 +52,7 @@ router.route('/update').post(
 router.route('/delete/:slug').delete(
   authController.isLogggedIn, 
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(teamController.delete)
 );
 

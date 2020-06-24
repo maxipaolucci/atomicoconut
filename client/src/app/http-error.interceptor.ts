@@ -44,9 +44,11 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing a request to: ${secureRequest.url}`, result.error);
             switch(result.error.codeno) { 
               case 401: { 
-                this.appService.showResults(result.error.msg, SnackbarNotificationTypes.ERROR);
                 if (result.error.code === 'invalid_token') {
+                  this.appService.showResults('User session expired, please login again.', SnackbarNotificationTypes.ERROR);
                   this.store.dispatch(new RequestLogout({ redirectUrl: '/users/login' }));
+                } else {
+                  this.appService.showResults(result.error.msg, SnackbarNotificationTypes.ERROR);
                 }
                 break; 
               } 

@@ -98,7 +98,9 @@ const messageCodes = {
   1056 : 'User found, activating account...',
   1057 : 'Account for {{param}} successfully activated and user is now logged in.',
   1058 : 'Checking provided JWT with current user token stored in server...',
-  1059 : 'JWT is valid for {{param}}'
+  1059 : 'JWT is valid for {{param}}',
+  1060 : 'Creating a new JWT for {{param}}..., it will expire in {{param}}.',
+  1061 : 'JWT created for {{param}}, expires in {{param}}.'
 };
 
 /**

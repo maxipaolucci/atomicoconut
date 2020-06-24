@@ -13,14 +13,14 @@ const { catchErrors } = require('../../handlers/errorHandlers');
 router.route('/getAll').get(
   authController.isLogggedIn,
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(propertyController.getAllProperties)
 );
 
 router.route('/create').post(
   authController.isLogggedIn, 
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   propertyController.validateData,
   catchErrors(propertyController.storePhotos),
   catchErrors(propertyController.create)
@@ -29,7 +29,7 @@ router.route('/create').post(
 router.route('/update').post(
   authController.isLogggedIn, 
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   propertyController.validateData,
   catchErrors(propertyController.storePhotos),
   catchErrors(propertyController.update)
@@ -38,7 +38,7 @@ router.route('/update').post(
 router.route('/delete/:id').delete( 
   authController.isLogggedIn, 
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(propertyController.deletePhotos),
   catchErrors(propertyController.delete)
 );
@@ -46,7 +46,7 @@ router.route('/delete/:id').delete(
 router.route('/:id').get(
   authController.isLogggedIn,
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(propertyController.getById)
 );
 

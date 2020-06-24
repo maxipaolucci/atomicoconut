@@ -38,21 +38,21 @@ router.route('/logout').get(
 router.route('/accountPersonalInfo').post(
   authController.isLogggedIn, 
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(userController.updateAccountPersonalInfo)
 );
 
 router.route('/accountFinancialInfo').post(
   authController.isLogggedIn, 
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(userController.updateAccountFinancialInfo)
 );
 
 router.route('/account').post(
   authController.isLogggedIn,
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(userController.updateAccount)
 );
 

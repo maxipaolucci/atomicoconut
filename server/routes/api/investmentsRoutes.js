@@ -14,7 +14,7 @@ const { catchErrors } = require('../../handlers/errorHandlers');
 router.route('/create').post(
   authController.isLogggedIn, 
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   investmentController.validateData,
   catchErrors(investmentController.create)
 );
@@ -22,21 +22,21 @@ router.route('/create').post(
 router.route('/getAll').get(
   authController.isLogggedIn,
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(investmentController.getAllInvestments)
 );
 
 router.route('/getById').get(
   authController.isLogggedIn,
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(investmentController.getById)
 );
 
 router.route('/update').post(
   authController.isLogggedIn, 
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   investmentController.validateData,
   catchErrors(investmentController.update)
 );
@@ -44,7 +44,7 @@ router.route('/update').post(
 router.route('/delete/:id').delete( 
   authController.isLogggedIn, 
   authHandler.jwtCheck,
-  catchErrors(authHandler.checkDecodedJwtMatchUser),
+  authHandler.checkDecodedJwtMatchUser,
   catchErrors(investmentController.delete)
 );
 
