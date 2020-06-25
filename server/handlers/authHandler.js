@@ -18,8 +18,7 @@ exports.createToken = (user) => {
       username: user.email
     }, 
     process.env.SESSION_SECRET, 
-    // { expiresIn: parseInt(process.env.SESSION_DURATION_SECONDS)}
-    { expiresIn: 30}
+    { expiresIn: parseInt(process.env.SESSION_DURATION_SECONDS) }
   );
 };
 
