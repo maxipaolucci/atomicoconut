@@ -294,8 +294,8 @@ exports.reset = async (req, res) => {
     user = req.user;
     const token = authHandler.createToken(user);
     user = await getUserObject(user.email);
-    user.token - token;
-
+    user.token = token;
+    
     console.log(`${methodTrace} ${getMessage('message', 1013, user.email, true, user.email)}`);
     res.json({
         status : 'success', 
