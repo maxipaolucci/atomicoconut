@@ -6,13 +6,15 @@ export const userFeatureKey = 'user';
 export interface UserState {
   loggedIn: boolean,
   user: User,
-  forgotFormVisibility: boolean
+  forgotFormVisibility: boolean,
+  apiSecurityToken: string
 }
 
 export const initialState: UserState = {
   loggedIn: false,
   user: null,
-  forgotFormVisibility: false
+  forgotFormVisibility: false,
+  apiSecurityToken: null
 };
 
 export function reducer(state: UserState = initialState, action: UserActions): UserState {
@@ -49,6 +51,13 @@ export function reducer(state: UserState = initialState, action: UserActions): U
       return {
         ...state, 
         forgotFormVisibility: true
+      }
+    }
+
+    case UserActionTypes.SaveApiSecurityToken: {
+      return {
+        ...state,
+        apiSecurityToken: action.payload.token
       }
     }
 

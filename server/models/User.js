@@ -51,12 +51,7 @@ const userSchema = new Schema({
   propertyUsers : [{
     type : mongoose.Schema.ObjectId,
     ref : 'PropertyUser'
-  }],
-  token: {
-    type: String,
-    default : null,
-    trim: true
-  }
+  }]
 });
 
 

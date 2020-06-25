@@ -18,3 +18,8 @@ export const forgotFormVisibilitySelector = () => createSelector(
   selectUserState,
   (state: fromUser.UserState) => state.forgotFormVisibility
 );
+
+export const apiSecurityTokenSelector = () => createSelector(
+  selectUserState,
+  (state: fromUser.UserState) => state.apiSecurityToken
+);

@@ -25,7 +25,8 @@ export enum UserActionTypes {
   RequestUpdateAccountFinancialInfo = '[User] Request update account user financial info to Server',
   UpdateAccountFinancialInfo = '[User] Set updated account user financial info to Store',
   RequestRegister = '[User] Request register new user in Server',
-  RequestAccountActivation = '[User] Request account activation in Server'
+  RequestAccountActivation = '[User] Request account activation in Server',
+  SaveApiSecurityToken = '[User] Save API security token into Store'
 }
 
 export class Login implements Action {
@@ -126,6 +127,12 @@ export class RequestAccountActivation implements Action {
   constructor(public payload: { token: string }) {}
 }
 
+export class SaveApiSecurityToken implements Action {
+  readonly type = UserActionTypes.SaveApiSecurityToken;
+
+  constructor(public payload: { token: string }) {}
+}
+
 export type UserActions = Login | RequestLogin
     | Logout | RequestLogout
     | Forgot | RequestForgot
@@ -133,4 +140,5 @@ export type UserActions = Login | RequestLogin
     | AuthenticatedUser | UpdateAccountInfo
     | RequestUpdateAccountInfo | RequestUpdateAccountPersonalInfo
     | UpdateAccountPersonalInfo | RequestUpdateAccountFinancialInfo
-    | UpdateAccountFinancialInfo | RequestRegister;
+    | UpdateAccountFinancialInfo | RequestRegister
+    | SaveApiSecurityToken;

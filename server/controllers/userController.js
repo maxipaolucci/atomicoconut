@@ -155,7 +155,8 @@ exports.accountActivation = async (req, res) => {
     //save user token
     user = req.user;
     const token = authHandler.createToken(user);
-    user = await updateUserAccount(user, { token }, true);
+    user = await getUserObject(user.email);
+    user.token = token;
 
     console.log(`${methodTrace} ${getMessage('message', 1057, user.email, true, user.email)}`);
     res.json({
@@ -188,7 +189,7 @@ exports.deleteExpiredInactiveAccounts = async() => {
     console.log(`${methodTrace} ${getMessage('message', 1050, ANONYMOUS_USER, true, writeResult.deletedCount, 'User')}`);
 };
 
-const updateUserAccount = async (user, updates = {}, retrieveToken = false) => {
+const updateUserAccount = async (user, updates = {}) => {
     const methodTrace = `${errorTrace} updateUserAccount() >`;
     
     console.log(`${methodTrace} ${getMessage('message', 1019, user.email, true, user.email)}`);
@@ -199,7 +200,7 @@ const updateUserAccount = async (user, updates = {}, retrieveToken = false) => {
     );
 
     console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, user.email)}`);
-    return await getUserObject(user.email, {}, retrieveToken);
+    return await getUserObject(user.email);
 };
 exports.updateUserAccount = updateUserAccount;
 
@@ -289,31 +290,6 @@ exports.updateAccountPersonalInfo = async (req, res) => {
         data : user
     });
 };
-
-/**
- * This methods double checks that the loggedin user in the session matches the user email provided by the client service call
- */
-// exports.checkLoggedInUserWithEmail = async (req, res, next) => {
-//     const methodTrace = `${errorTrace} checkLoggedInUserWithEmail() >`;
-    
-//     const email = req.body.email ? req.body.email : req.query.email;
-//     //check for a user with the provided email
-//     console.log(`${methodTrace} ${getMessage('message', 1029, email, true, email)}`);
-//     let user = await User.findOne({ email });
-//     if (!user || user.email !== req.user.email) {
-//         console.log(`${methodTrace} ${getMessage('error', 460, email, true, email)}`);
-//         res.status(401).json({ 
-//             status : "error", 
-//             codeno : 460,
-//             msg : getMessage('error', 460, null, false, email),
-//             data : null
-//         });
-//         return;
-//     }
-    
-//     console.log(`${methodTrace} ${getMessage('message', 1030, user.email, true, user.email)}`);
-//     next();
-// };
 
 exports.updateAccountFinancialInfo = async (req, res) => {
     const methodTrace = `${errorTrace} updateAccountFinancialInfo() >`;

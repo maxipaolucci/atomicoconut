@@ -15,15 +15,14 @@ import { ConsoleNotificationTypes, SnackbarNotificationTypes } from 'src/app/con
 import { UserAdditionalInfo } from './models/user-additional-info';
 import { State } from 'src/app/main.reducer';
 import { userSelector } from './user.selectors';
+import { SaveApiSecurityToken } from './user.actions';
 
 @Injectable()
 export class UsersService {
 
   private serverHost: string = environment.apiHost + '/api/users';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
-  private token: string = null;
-  //routerRedirectUrl: string = null; // a route to redirect the user to when login is successfull
-
+  
   constructor(
     private http: HttpClient, 
     private appService: AppService,
@@ -157,7 +156,7 @@ export class UsersService {
           return null;
         } 
 
-        this.token = data.token;
+        this.store.dispatch(new SaveApiSecurityToken({ token: data.token}));
 
         let personalInfo = null;
         if (data.personalInfo && data.personalInfo.birthday) {
@@ -191,8 +190,7 @@ export class UsersService {
           return null;
         }
 
-        this.token = data.token;
-
+        this.store.dispatch(new SaveApiSecurityToken({ token: data.token}));
         return new User(data.name, data.email, data.avatar, null, null, data.currency);
       })
     );
@@ -239,7 +237,7 @@ export class UsersService {
           if (data && data.email && data.token) {
             this.appService.showResults('Your password was successfully updated!', SnackbarNotificationTypes.SUCCESS);
             user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-            this.token = data.token;
+            this.store.dispatch(new SaveApiSecurityToken({ token: data.token}));
 
             return user;
           }
@@ -268,7 +266,7 @@ export class UsersService {
           if (data && data.email && data.token) {
             this.appService.showResults('Your account was successfully activated!', SnackbarNotificationTypes.SUCCESS);
             user = new User(data.name, data.email, data.avatar, null, null, data.currency);
-            this.token = data.token;
+            this.store.dispatch(new SaveApiSecurityToken({ token: data.token}));
 
             return user;
           }
@@ -290,14 +288,10 @@ export class UsersService {
     return this.http.get<Response>(`${this.serverHost}/logout`).pipe(
       map(this.appService.extractData),
       map((data: any): string => {
-        this.token = null;
+        this.store.dispatch(new SaveApiSecurityToken({ token: null}));
 
         return redirectUrl;
       })
     );
-  }
-
-  getToken$(): Observable<string> {
-    return of(this.token);
   }
 }

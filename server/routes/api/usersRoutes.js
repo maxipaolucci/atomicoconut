@@ -28,7 +28,12 @@ router.route('/register').post(
   catchErrors(userController.sendActivationToken)
 );
 
-router.route('/getUser').get(catchErrors(authController.getUser));
+router.route('/getUser').get(
+  authController.isLogggedIn,
+  authHandler.jwtCheck,
+  authHandler.checkDecodedJwtMatchUser,
+  catchErrors(authController.getUser)
+);
 
 router.route('/logout').get(
   authController.isLogggedIn, 

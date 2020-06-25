@@ -11,41 +11,37 @@ const authHandler = require('../handlers/authHandler');
 
 const errorTrace = 'authController >';
 
-const getUserObject = async (email, fieldsToPopulate = {}, withToken = false) => {
+const getUserObject = async (email, fieldsToPopulate = {}) => {
     const methodTrace = `${errorTrace} getUserObject() >`;
     
-    console.log(`${methodTrace} ${getMessage('message', 1006, email, true, email)}`);        
+    console.log(`${methodTrace} ${getMessage('message', 1006, email, true, email)}`);
     let user = null;
     if (Object.keys(fieldsToPopulate).length) {
-        user = await User.findOneAndPopulate({ email }, fieldsToPopulate);//await User.findOne({ email }).populate('personalInfo');
+        user = await User.findOneAndPopulate({ email }, fieldsToPopulate);
     } else {
         user = await User.findOne({ email });
     }
 
-    if (user) {
-        let dto = {
-            name : user.name, 
-            email : user.email, 
-            avatar : user.gravatar, 
-            currency : user.currency
-        };
-
-        
-        if (withToken) {
-            //add the token to the result
-            dto.token = user.token;
-        }
-      
-        for (let key of Object.keys(fieldsToPopulate)) {
-            if (fieldsToPopulate[key] === 'true') {
-                dto[key] = user[key] || null;
-            }
-        }
-        
-        return dto;
+    if (!user) {
+        console.log(`${methodTrace} ${getMessage('error', 455, email, true, email)}`);
+        return null;
     }
 
-    return null;
+    
+    let result = {
+        name : user.name, 
+        email : user.email, 
+        avatar : user.gravatar, 
+        currency : user.currency
+    };
+    
+    for (let key of Object.keys(fieldsToPopulate)) {
+        if (fieldsToPopulate[key] === 'true') {
+            result[key] = user[key] || null;
+        }
+    }
+    
+    return result;
 };
 exports.getUserObject = getUserObject;
 
@@ -101,7 +97,8 @@ exports.login = (req, res, next) => {
 
             //save user token
             const token = authHandler.createToken(user);
-            user = await userController.updateUserAccount(user, { token }, true);
+            user = await getUserObject(user.email);
+            user.token = token;
             
             console.log(`${methodTrace}${getMessage('message', 1000, user.email, true)}`);
             res.json({
@@ -124,7 +121,6 @@ exports.logout = async (req, res) => {
     console.log(`${methodTrace} ${getMessage('message', 1005, userEmail, true, userEmail)}`);
     
     req.logout(); //this was added in passport
-    await userController.updateUserAccount(user, { token: null }); //removes the token from the user table
 
     res.json({
         status : 'success', 
@@ -159,38 +155,30 @@ exports.isLogggedIn = (req, res, next) => {
 exports.getUser = async (req, res, next) => {
     const methodTrace = `${errorTrace} getUser() >`;
 
-    if (req.isAuthenticated()) { //check in passport for authentication
-        const email = req.user.email;
-        console.log(`${methodTrace} ${getMessage('message', 1004, email, true)}`);
+    const email = req.user.email;
+    console.log(`${methodTrace} ${getMessage('message', 1004, email, true)}`);
 
-        const user = await getUserObject(email, req.query, true);
-        
-        if (!user) {
-            console.log(`${methodTrace} ${getMessage('error', 455, email, true, email)}`);
-            res.status(401).json({ 
-                status : "error", 
-                codeno : 455,
-                msg : getMessage('error', 455, null, false, email),
-                data : null
-            });
-            return;
-        }
-
-        res.json({
-            status : 'success',
-            codeno : 200,
-            msg : getMessage('message', 1004, null, false),
-            data : user
+    let user = await getUserObject(email, req.query);
+    
+    if (!user) {
+        console.log(`${methodTrace} ${getMessage('error', 455, email, true, email)}`);
+        res.status(401).json({ 
+            status : "error", 
+            codeno : 455,
+            msg : getMessage('error', 455, null, false, email),
+            data : null
         });
         return;
     }
 
-    console.log(`${methodTrace} ${getMessage('error', 453, null, true)}`);
-    res.json({ 
-        status : "success", 
+    const token = authHandler.createToken(user);
+    user.token = token;
+
+    res.json({
+        status : 'success',
         codeno : 200,
-        msg : getMessage('error', 453, null, false),
-        data : null
+        msg : getMessage('message', 1004, null, false),
+        data : user
     });
 };
 
@@ -305,7 +293,8 @@ exports.reset = async (req, res) => {
     //save user token
     user = req.user;
     const token = authHandler.createToken(user);
-    user = await userController.updateUserAccount(user, { token }, true);
+    user = await getUserObject(user.email);
+    user.token - token;
 
     console.log(`${methodTrace} ${getMessage('message', 1013, user.email, true, user.email)}`);
     res.json({
