@@ -23,7 +23,7 @@ const errorCodes = {
   465 : 'Failed to update record from {{param}} with {{param}} = {{param}}',
   466 : '{{param}} already member of Team: {{param}}.',
   467 : 'Something went wrong.',
-  468 : 'Route not found.',
+  468 : 'Route not found: {{param}}',
   469 : 'Failed to remove {{param}} from {{param}}.',
   470 : 'Sorry, you are not allowed to update this {{param}}.',
   471 : 'Sorry, this {{param}} has {{param}} associated to it. We cannot delete it until all the related data is removed or associated to another entity.',
@@ -165,11 +165,11 @@ exports.catchErrors = (fn) => {
 exports.notFound = (req, res, next) => {
   const methodTrace = `${errorTrace} notFound() >`;
   
-  console.log(`${methodTrace} ${getMessage('error', 468, req.user ? req.user.email : ANONYMOUS_USER, true)}`);
+  console.log(`${methodTrace} ${getMessage('error', 468, req.user ? req.user.email : ANONYMOUS_USER, true, req.originalUrl)}`);
   const err = new Error('Not Found');
   err.status = 'error';
   err.codeno = 404;
-  err.message = getMessage('error', 468, null, false);
+  err.message = getMessage('error', 468, null, false, req.originalUrl);
   
   next(err);
 };
