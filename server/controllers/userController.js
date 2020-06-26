@@ -117,7 +117,7 @@ exports.accountActivation = async (req, res) => {
     user.activationToken = undefined; //the way to remove fields from mongo is set to undefined
     user.activationTokenExpires = undefined;
     const updatedUser = await user.save(); //here is when we save in the database the deleted values before 
-    await req.logIn(updatedUser, async function(err) {
+    await req.login(updatedUser, async function(err) {
         if (err) {
             console.log(`${methodTrace}${getMessage('error', 452, updatedUser.email, true)}`);
             res.status(401).json({ 

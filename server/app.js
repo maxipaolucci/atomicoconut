@@ -63,7 +63,8 @@ app.use(session({
   key: process.env.SESSION_KEY,
   resave: false,
   saveUninitialized: false,
-  store: new MongoStore({ mongooseConnection: mongoose.connection })
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  cookie : { maxAge: parseInt(process.env.SESSION_DURATION_SECONDS) * 1000 }
 }));
 
 // // Passport JS is what we use to handle our logins

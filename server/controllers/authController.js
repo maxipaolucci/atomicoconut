@@ -72,7 +72,7 @@ exports.login = (req, res, next) => {
         }
 
         console.log(`${methodTrace}${getMessage('message', 1002, user.email, true)}`);
-        req.logIn(user, async function(err) {
+        req.login(user, async function(err) {
             if (err) {
                 console.log(`${methodTrace}${getMessage('error', 452, user.email, true)}`);
                 res.status(401).json({ 

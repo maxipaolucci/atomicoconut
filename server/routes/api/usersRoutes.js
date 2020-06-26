@@ -30,8 +30,9 @@ router.route('/register').post(
 
 router.route('/getUser').get(
   authController.isLogggedIn,
-  authHandler.jwtCheck,
-  authHandler.checkDecodedJwtMatchUser,
+  // we don't want to check jwt token here because this method is needed to retrieve the current loggedin user
+  // and sometines without a token cause the customer just refreshed the page and loose the token (when refresh 
+  // the whole redux store is cleaned), only the email remains (stored in local browser storage) and is used in getUser to retrieve it).
   catchErrors(authController.getUser)
 );
 
@@ -61,7 +62,9 @@ router.route('/account').post(
   catchErrors(userController.updateAccount)
 );
 
-router.route('/account/forgot').post(catchErrors(authController.forgot));
+router.route('/account/forgot').post(
+  catchErrors(authController.forgot)
+);
 
 router.route('/account/reset/:token').post(
   authController.confirmedPasswords,
