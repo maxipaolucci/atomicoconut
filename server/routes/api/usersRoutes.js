@@ -37,7 +37,6 @@ router.route('/getUser').get(
 );
 
 router.route('/logout').get(
-  authController.isLogggedIn, 
   authController.logout
 );
 
