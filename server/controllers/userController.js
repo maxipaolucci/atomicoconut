@@ -117,30 +117,8 @@ exports.accountActivation = async (req, res) => {
     user.activationToken = undefined; //the way to remove fields from mongo is set to undefined
     user.activationTokenExpires = undefined;
     const updatedUser = await user.save(); //here is when we save in the database the deleted values before 
-    await req.login(updatedUser, async function(err) {
-        if (err) {
-            console.log(`${methodTrace}${getMessage('error', 452, updatedUser.email, true)}`);
-            res.status(401).json({ 
-                status : "error", 
-                codeno : 452,
-                msg : getMessage('error', 452, null, false),
-                data : null
-            });
-            return; //stop from running 
-        }
-
-        if (!updatedUser.active) {
-            console.log(`${methodTrace}${getMessage('error', 479, updatedUser.email, true, updatedUser.email)}`);
-            res.status(401).json({ 
-                status : "error", 
-                codeno : 479,
-                msg : getMessage('error', 479, null, false, updatedUser.email),
-                data : null
-            });
-            return; //stop from running 
-        }
-    });
-
+    await req.login(updatedUser); //this comes from passport js
+    
     if (!req.user) {
         res.status(401).json({
             status : "error", 
