@@ -1,0 +1,42 @@
+<div *ngIf="user" class="container__net-worth">
+  <!-- Net Worth Card -->
+  <mat-card *ngIf="expectedWealth && user.personalInfo && user.personalInfo.age"
+      fxLayout="column" class="totals-card">
+    <mat-card-content fxLayout="column" fxLayoutGap="10px">
+      <div class="wealth__container" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign="none center" fxLayoutAlign.gt-xs="space-between none">
+        <span [class.color__accent]="wealthAmount >= expectedWealth" 
+            [class.color__red]="wealthAmount < expectedWealth">
+          Current net worth is <strong>{{ wealthAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong>
+        </span>
+        <span class="accent">
+          Expected net worth at your age ({{user.personalInfo.age}}) is 
+          <strong>{{ expectedWealth | currency : 'USD' : 'code' : '1.2-2' }}</strong>
+        </span>
+      </div>
+      <div>
+        <mat-progress-bar 
+          class="progress-spinner progress-spinner--wealth"
+          [color]="wealthAmount < expectedWealth ? 'warn' : 'accent'"
+          [value]="progressBarWealthValue"
+          mode="determinate">
+        </mat-progress-bar>
+      </div>
+    </mat-card-content>
+  </mat-card>
+    <!-- EOF Net Worth Card -->
+
+  <!-- Net Worth Card when Personal and Financial info is incomplete -->
+  <mat-card *ngIf="!(user.financialInfo && user.personalInfo)"
+      fxFlex class="totals-card">
+    <mat-card-content fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px"
+        fxLayoutAlign="space-around center">
+      <p>
+        <a class="color__almost-white" routerLink="/users/account">
+          <mat-icon class="icon--arrow_forward">arrow_forward</mat-icon>
+          Go to your account and complete your Personal and Financial Info to see expected and current Net Worth
+        </a>
+      </p>
+    </mat-card-content>
+  </mat-card>
+  <!-- EOF Net Worth Card when Personal and Financial info is incomplete -->
+</div>

@@ -6,9 +6,19 @@ import { CalculatorsDashboardComponent } from './components/calculators-dashboar
 import { HouseFiguresComponent } from './components/house-figures/house-figures.component';
 
 const routes: Routes = [
-  { path : 'equity', component : EquityComponent },
-  { path : 'house-figures', component : HouseFiguresComponent },
-  { path : 'dashboard', component : CalculatorsDashboardComponent }
+  { 
+    path : 'equity', 
+    component : EquityComponent 
+  },
+  { 
+    path : 'house-figures', 
+    component : HouseFiguresComponent
+  },
+  { 
+    path : '',
+    pathMatch : 'full', 
+    component : CalculatorsDashboardComponent
+  }
 ];
 
 @NgModule({

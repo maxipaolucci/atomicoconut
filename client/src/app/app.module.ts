@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
 import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { AppService } from './app.service';
@@ -11,11 +10,9 @@ import { UtilService } from './util.service';
 import { CurrencyExchangeService } from './modules/currency-exchange/currency-exchange.service';
 import { CustomMaterialDesignModule } from './modules/shared/custom-material-design.module';
 import { UsersModule } from './modules/users/users.module';
-import { TeamsModule } from './modules/teams/teams.module'; 
-import { InvestmentsModule } from './modules/investments/investments.module';
+import { TeamsModule } from './modules/teams/teams.module';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SharedModule } from './modules/shared/shared.module';
-import { PropertiesModule } from './modules/properties/properties.module';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './main.reducer';
@@ -39,8 +36,6 @@ import { CurrencyExchangeModule } from './modules/currency-exchange/currency-exc
     SharedModule,
     UsersModule,
     TeamsModule,
-    InvestmentsModule,
-    PropertiesModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers, {
       metaReducers, 

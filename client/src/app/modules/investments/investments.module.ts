@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CustomMaterialDesignModule } from '../../modules/shared/custom-material-design.module';
 import { SharedModule } from '../../modules/shared/shared.module';
 import { InvestmentsDashboardComponent } from './components/investments-dashboard/investments-dashboard.component';
+import { NetWorthComponent } from './components/net-worth/net-worth.component';
 import { CurrencyInvestmentComponent } from './components/currency-investment/currency-investment.component';
 import { InvestmentSelectorDialogComponent } from './components/investment-selector-dialog/investment-selector-dialog.component';
 import { InvestmentsEditComponent } from './components/investments-edit/investments-edit.component';
@@ -19,6 +20,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { InvestmentEffects } from './investment.effects';
 import { InvestmentResolver } from './investment-resolver.service';
 import { PropertyResolver } from '../properties/property-resolver.service';
+import { PropertiesModule } from 'src/app//modules/properties/properties.module';
 
 @NgModule({
   imports: [
@@ -28,6 +30,7 @@ import { PropertyResolver } from '../properties/property-resolver.service';
     FlexLayoutModule,
     CustomMaterialDesignModule,
     SharedModule,
+    PropertiesModule,
     StoreModule.forFeature(fromInvestment.investmentsFeatureKey, fromInvestment.reducer),
     EffectsModule.forFeature([InvestmentEffects])
   ],
@@ -38,7 +41,8 @@ import { PropertyResolver } from '../properties/property-resolver.service';
     InvestmentsEditComponent,
     CurrencyInvestmentFormComponent,
     PropertyInvestmentFormComponent,
-    PropertyInvestmentComponent
+    PropertyInvestmentComponent,
+    NetWorthComponent
   ],
   providers: [ InvestmentsService, InvestmentResolver, PropertyResolver ]
 })
