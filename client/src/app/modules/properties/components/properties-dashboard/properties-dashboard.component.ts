@@ -21,7 +21,7 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
       { displayName: 'Welcome', url: '/welcome', selected: false },
       { displayName: 'Investments', url: '/investments', selected: false },
       { displayName: 'Properties', url: null, selected: true },
-      { displayName: 'Calculators', url: '/calculators', selected: false }
+      { displayName: 'Calculators', url: '/calculators/dashboard', selected: false }
     ]}));
   }
 

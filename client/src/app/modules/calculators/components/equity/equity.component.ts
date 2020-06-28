@@ -38,7 +38,7 @@ export class EquityComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Calculators', url: '/calculators', selected: false },
+      { displayName: 'Calculators', url: '/calculators/dashboard', selected: false },
       { displayName: 'Equity', url: null, selected: true },
       { displayName: 'House figures', url: '/calculators/house-figures', selected: false }
     ]}));

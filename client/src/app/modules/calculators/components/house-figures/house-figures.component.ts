@@ -36,7 +36,7 @@ export class HouseFiguresComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new SetLinks({ links: [
       { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Calculators', url: '/calculators', selected: false },
+      { displayName: 'Calculators', url: '/calculators/dashboard', selected: false },
       { displayName: 'Equity', url: '/calculators/equity', selected: false },
       { displayName: 'House figures', url: null, selected: true }
     ]}));

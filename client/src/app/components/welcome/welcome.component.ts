@@ -51,7 +51,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       { displayName: 'Welcome', url: null, selected: true },
       { displayName: 'Investments', url: '/investments', selected: false },
       { displayName: 'Properties', url: '/properties', selected: false },
-      { displayName: 'Calculators', url: '/calculators', selected: false }
+      { displayName: 'Calculators', url: '/calculators/dashboard', selected: false }
     ]}));
 
     this.generateWealthComponentInfo();

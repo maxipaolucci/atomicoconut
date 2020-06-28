@@ -5,14 +5,11 @@ import { EquityComponent } from './components/equity/equity.component';
 import { CalculatorsDashboardComponent } from './components/calculators-dashboard/calculators-dashboard.component';
 import { HouseFiguresComponent } from './components/house-figures/house-figures.component';
 
-const routes: Routes = [{
-  path : 'calculators',
-  children : [
-    { path : '', component : CalculatorsDashboardComponent },
-    { path : 'equity', component : EquityComponent },
-    { path : 'house-figures', component : HouseFiguresComponent }
-  ]
-}];
+const routes: Routes = [
+  { path : 'equity', component : EquityComponent },
+  { path : 'house-figures', component : HouseFiguresComponent },
+  { path : 'dashboard', component : CalculatorsDashboardComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

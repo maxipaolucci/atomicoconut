@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { HousesEditComponent } from './components/houses-edit/houses-edit.component';
 import { PropertiesTableComponent } from './components/properties-table/properties-table.component';
 import { PropertySelectorDialogComponent } from './components/property-selector-dialog/property-selector-dialog.component';
-import { CalculatorsModule } from '../calculators/calculators.module';
 import { HouseFiguresDialogComponent } from './components/house-figures-dialog/house-figures-dialog.component';
 import { PropertyYieldsDialogComponent } from './components/property-yields-dialog/property-yields-dialog.component';
 import { ShareWithDialogComponent } from './components/share-with-dialog/share-with-dialog.component';
@@ -21,6 +20,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { PropertyEffects } from './property.effects';
 import { PropertyResolver } from './property-resolver.service';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -29,7 +29,6 @@ import { PropertyResolver } from './property-resolver.service';
     FlexLayoutModule,
     CustomMaterialDesignModule,
     SharedModule,
-    CalculatorsModule,
     StoreModule.forFeature(fromProperty.propertiesFeatureKey, fromProperty.reducer),
     EffectsModule.forFeature([PropertyEffects])
   ],

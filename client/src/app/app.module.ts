@@ -13,7 +13,6 @@ import { CustomMaterialDesignModule } from './modules/shared/custom-material-des
 import { UsersModule } from './modules/users/users.module';
 import { TeamsModule } from './modules/teams/teams.module'; 
 import { InvestmentsModule } from './modules/investments/investments.module';
-import { CalculatorsModule } from './modules/calculators/calculators.module';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { PropertiesModule } from './modules/properties/properties.module';
@@ -41,7 +40,6 @@ import { CurrencyExchangeModule } from './modules/currency-exchange/currency-exc
     UsersModule,
     TeamsModule,
     InvestmentsModule,
-    CalculatorsModule,
     PropertiesModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers, {
