@@ -94,13 +94,11 @@ export class UserEffects {
               // that way this will not be triggered again when set url to null below
     )),
     tap((redirectUrl: String) => {
-      if (!redirectUrl) {
-        redirectUrl = '/';
-      }
-      
       this.store.dispatch(new SetRedirectUrl({ url: null}));
       this.store.dispatch(new HideProgressBar());
-      this.router.navigate([redirectUrl]); 
+      if (redirectUrl) {
+        this.router.navigate([redirectUrl]);
+      } 
     })
   );
 
