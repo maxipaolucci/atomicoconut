@@ -8,13 +8,14 @@ import { RequestLogin, UserActionTypes, Login, RequestLogout, Logout, RequestFor
   RequestUpdateAccountFinancialInfo, UpdateAccountFinancialInfo, RequestRegister, 
   RequestAccountActivation } from './user.actions';
 import { mergeMap, switchMap, exhaustMap, map, catchError, tap, delay, first } from 'rxjs/operators';
-import { of, defer } from 'rxjs';
+import { of, defer, combineLatest } from 'rxjs';
 import { User } from './models/user';
 import { State } from 'src/app/main.reducer';
 import { Store } from '@ngrx/store';
 import { ShowProgressBar, HideProgressBar, FinalizeOperation, SetRedirectUrl } from 'src/app/app.actions';
 import { redirectUrlSelector } from 'src/app/app.selectors';
 import { AppService } from 'src/app/app.service';
+import { routerSelector } from 'src/app/router.selectors';
 
 @Injectable()
 export class UserEffects {
@@ -89,16 +90,20 @@ export class UserEffects {
   @Effect({ dispatch: false })
   login$ = this.actions$.pipe(
     ofType<Login>(UserActionTypes.Login),
-    switchMap(() => this.store.select(redirectUrlSelector()).pipe(
-      first() //so I stop listening once this is retrieved
-              // that way this will not be triggered again when set url to null below
+    switchMap(() => combineLatest(this.store.select(redirectUrlSelector()), this.store.select(routerSelector())).pipe(
+      first()
     )),
-    tap((redirectUrl: String) => {
+    tap(([redirectUrl, routerState]) => {
       this.store.dispatch(new SetRedirectUrl({ url: null}));
       this.store.dispatch(new HideProgressBar());
       if (redirectUrl) {
+        // if redirectUrl was set it has precedence over the router current route 
         this.router.navigate([redirectUrl]);
-      } 
+      } else if (routerState && routerState["url"] === '/users/login') {
+        // if the current route is login we move to home
+        this.router.navigate(['/']);
+      }
+      // otherwise stay in current route
     })
   );
 

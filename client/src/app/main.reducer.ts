@@ -1,19 +1,11 @@
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer
-} from '@ngrx/store';
+import { ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { routerReducer } from '@ngrx/router-store';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { environment } from '../environments/environment';
 import { reducer } from './app.reducer';
-import { UserActionTypes, UserActions } from 'src/app/modules/users/user.actions';
+import { UserActionTypes } from 'src/app/modules/users/user.actions';
 
-export interface State {
-
-}
+export interface State {}
 
 export const reducers: ActionReducerMap<State> = {
   router: routerReducer,
