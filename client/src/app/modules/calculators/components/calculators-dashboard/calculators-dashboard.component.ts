@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 import { RoutingPaths } from 'src/app/constants';
+import { UtilService } from 'src/app/util.service';
 
 @Component({
   selector: 'app-calculators-dashboard',
@@ -11,7 +12,7 @@ import { RoutingPaths } from 'src/app/constants';
 })
 export class CalculatorsDashboardComponent implements OnInit {
 
-  constructor(private store: Store<State>) { }
+  constructor(private store: Store<State>, public utilService: UtilService) { }
 
   ngOnInit() {
     this.store.dispatch(new SetLinks({ links: [

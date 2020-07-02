@@ -1,0 +1,20 @@
+<div class="calculators__container" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
+  <mat-card matRipple class="calculator__card" fxFlex="1" fxFlex.gt-xs="50" 
+      [routerLink]="utilService.getRoutingPath('CALCULATORS') + '/house-figures'">
+    
+    <mat-card-header>
+      <mat-icon mat-card-avatar>house</mat-icon>
+      <mat-card-title>House figures</mat-card-title>
+      <mat-card-subtitle>Use this to calculate different house figures</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+
+  <mat-card matRipple class="calculator__card" fxFlex="1" fxFlex.gt-xs="50" 
+      [routerLink]="utilService.getRoutingPath('CALCULATORS') + '/equity'">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>monetization_on</mat-icon>
+      <mat-card-title>Equity</mat-card-title>
+      <mat-card-subtitle>Use this to check you equity status</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+</div>

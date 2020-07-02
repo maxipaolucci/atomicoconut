@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import * as moment from 'moment';
+import { RoutingPaths } from './constants';
 
 @Injectable()
 export class UtilService {
@@ -87,5 +88,9 @@ export class UtilService {
     if (environment.showLogs) {
       console[type](message, params);
     }
+  }
+
+  getRoutingPath(name: string) {
+    return RoutingPaths[name];
   }
 }

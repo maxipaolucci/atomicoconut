@@ -4,6 +4,7 @@ import { NavigatorLinkModel } from './models/navigator-link-model';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { linksSelector } from './main-navigator.selectors';
+import { UtilService } from 'src/app/util.service';
 
 @Component({
   selector: 'main-navigator',
@@ -15,7 +16,8 @@ export class MainNavigatorComponent implements OnInit, OnDestroy {
   links$: Observable<NavigatorLinkModel[]>;
   
   constructor(
-    private store: Store<State>
+    private store: Store<State>,
+    public utilService: UtilService
   ) { }
 
   ngOnInit() {

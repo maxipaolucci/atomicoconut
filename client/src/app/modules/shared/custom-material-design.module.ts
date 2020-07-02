@@ -28,6 +28,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -59,7 +60,8 @@ import { MatListModule } from '@angular/material/list';
     MatSortModule,
     MatAutocompleteModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatRippleModule
   ],
   exports: [
     MatButtonModule, 
@@ -90,7 +92,8 @@ import { MatListModule } from '@angular/material/list';
     MatSortModule,
     MatAutocompleteModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatRippleModule
   ]
 })
 export class CustomMaterialDesignModule { }
