@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { AppService } from '../../../../app.service';
 import { UtilService } from '../../../../util.service';
-import { INVESTMENTS_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes } from '../../../../constants';
+import { INVESTMENTS_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes, RoutingPaths } from 'src/app/constants';
 import { Property } from '../../../properties/models/property';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../../../users/models/user';
@@ -110,7 +110,7 @@ export class PropertyInvestmentFormComponent implements OnInit, OnDestroy, After
     if (property.createdBy.email !== this.user.email) {
       // we cannot create an investment of a property not created by me
       this.appService.showResults(`Only the property creator (${property.createdBy.name}) is allowed to create an investment with this property.`, SnackbarNotificationTypes.ERROR);
-      return this.router.navigate(['/properties']);
+      return this.router.navigate([RoutingPaths.PROPERTIES]);
     } else {
       this.model.property = property;
       this.model.address = property.address.description;

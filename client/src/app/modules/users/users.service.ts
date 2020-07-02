@@ -11,7 +11,7 @@ import { AccountFinance } from './models/account-finance';
 import _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { ResetPasswordModel } from './models/reset-password-model';
-import { ConsoleNotificationTypes, SnackbarNotificationTypes } from 'src/app/constants';
+import { ConsoleNotificationTypes, SnackbarNotificationTypes, RoutingPaths } from 'src/app/constants';
 import { UserAdditionalInfo } from './models/user-additional-info';
 import { State } from 'src/app/main.reducer';
 import { userSelector } from './user.selectors';
@@ -282,7 +282,7 @@ export class UsersService {
    * 
    * @return { Observable<string>}
    */
-  logout$(redirectUrl: string = '/'): Observable<string> {
+  logout$(redirectUrl: string = RoutingPaths.HOME): Observable<string> {
     const methodTrace = `${this.constructor.name} > logout$() > `; // for debugging
     
     return this.http.get<Response>(`${this.serverHost}/logout`).pipe(

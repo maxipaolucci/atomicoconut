@@ -9,6 +9,8 @@ import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
 import _ from 'lodash';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
+import { RoutingPaths } from 'src/app/constants'
+
 
 @Component({
   selector: 'users-login',
@@ -32,7 +34,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
       { displayName: 'Login', url: null, selected: true }
     ]}));
 

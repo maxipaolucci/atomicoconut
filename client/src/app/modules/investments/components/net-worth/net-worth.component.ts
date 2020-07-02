@@ -6,7 +6,7 @@ import { Investment } from 'src/app/modules/investments/models/investment';
 import { CurrencyInvestment } from 'src/app/modules/investments/models/currencyInvestment';
 import { Subscription, of, from, Observable, combineLatest } from 'rxjs';
 import { switchMap, map, filter, first } from 'rxjs/operators';
-import { INVESTMENTS_TYPES, ConsoleNotificationTypes, COINCAP_CRYPTO_TYPES } from 'src/app/constants';
+import { INVESTMENTS_TYPES, ConsoleNotificationTypes, COINCAP_CRYPTO_TYPES, RoutingPaths } from 'src/app/constants';
 import { UtilService } from 'src/app//util.service';
 import { PropertyInvestment } from 'src/app/modules/investments/models/propertyInvestment';
 import { Store } from '@ngrx/store';
@@ -48,9 +48,9 @@ export class NetWorthComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
       { displayName: 'Investments', url: null, selected: true },
-      { displayName: 'Properties', url: '/properties', selected: false }
+      { displayName: 'Properties', url: RoutingPaths.PROPERTIES, selected: false }
     ]}));
 
     this.generateWealthComponentInfo();

@@ -5,7 +5,7 @@ import { Router, Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@a
 import { User } from './models/user';
 import { UsersService } from './users.service';
 import { AppService } from '../../app.service';
-import { ConsoleNotificationTypes } from '../../constants';
+import { ConsoleNotificationTypes, RoutingPaths } from '../../constants';
 import { userSelector } from './user.selectors';
 import { Store, select } from '@ngrx/store';
 import { AuthenticatedUser } from './user.actions';
@@ -27,7 +27,7 @@ export class UserResolver implements Resolve<User> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> {
     const methodTrace = `${this.constructor.name} > resolve() > `; // for debugging  
     
-    const urlsForCompleteUserData: Array<string> = ['/users/account'];
+    const urlsForCompleteUserData: Array<string> = [`${RoutingPaths.USERS}/account`];
         
     return this.store.pipe(
       select(userSelector()),

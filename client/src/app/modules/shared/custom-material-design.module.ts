@@ -26,6 +26,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   imports: [
@@ -55,7 +57,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSidenavModule,
+    MatListModule
   ],
   exports: [
     MatButtonModule, 
@@ -84,7 +88,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSidenavModule,
+    MatListModule
   ]
 })
 export class CustomMaterialDesignModule { }

@@ -17,6 +17,8 @@ import { teamBySlugSelector, lastUpdatedTeamSlugSelector } from '../../team.sele
 import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
 import { SetLinks, AppendLink } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
+import { RoutingPaths } from 'src/app/constants';
+
 
 @Component({
   selector: 'app-teams-edit',
@@ -51,8 +53,8 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Teams', url: '/teams', selected: false }
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
+      { displayName: 'Teams', url: RoutingPaths.TEAMS, selected: false }
     ]}));
 
     // get the user (this is fast)

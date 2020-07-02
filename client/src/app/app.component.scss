@@ -8,11 +8,17 @@
   
   .toolbar__brand-name {
     text-decoration: none;
+
+    .logo {
+      cursor: pointer;
+      outline: none;
+    }
   }
 
   .toolbar__icon {
     padding: 0 10px;
     cursor: pointer;
+    outline: none;
   }
 
   .user__avatar {
@@ -26,38 +32,55 @@
   }
 }
 
-.progress-bar__app {
-  position: fixed;
-  top: 56px;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-}
-
 .toolbar__primary__spacer {
   height: 54px;
 }
 
-.toolbar__secondary {
-  margin-bottom: 10px;
-  background-color: $secondary;
-  font-size: 12px;
-  height: 30px;
-}
+.sidenav_container {
 
-/* Chip navigation */
-::ng-deep nav.navigation--main {
-  margin-bottom: 20px;
+  &.mat-drawer-container-has-open {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+
+  .side-nav-item__icon {
+    margin-right: 15px;
+  }
+
+  .progress-bar__app {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+  }
+  
+  
+  
+  .toolbar__secondary {
+    margin-bottom: 10px;
+    background-color: $secondary;
+    font-size: 12px;
+    height: 30px;
+  }
+  
+  /* Chip navigation */
+  ::ng-deep nav.navigation--main {
+    margin-bottom: 20px;
+  }
 }
 
 @media screen and (min-width: $screenGtXs) {
   
-  .progress-bar__app {
-    top: 65px;
-  }
-
   .toolbar__primary__spacer {
     height: 62px;
   }
   
+  .sidenav_container {
+    
+    .progress-bar__app {
+      top: 65px;
+    }
+  }
 }

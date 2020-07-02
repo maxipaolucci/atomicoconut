@@ -8,7 +8,7 @@ import { Team } from '../../../teams/models/team';
 import { Observable, Subscription, of, combineLatest } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { INVESTMENTS_TYPES, COINCAP_CRYPTO_TYPES } from '../../../../constants';
+import { INVESTMENTS_TYPES, COINCAP_CRYPTO_TYPES, RoutingPaths } from 'src/app/constants';
 import { UtilService } from '../../../../util.service';
 import { PropertyInvestment } from '../../models/propertyInvestment';
 import { Store } from '@ngrx/store';
@@ -59,9 +59,9 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
       { displayName: 'Investments', url: null, selected: true },
-      { displayName: 'Properties', url: '/properties', selected: false }
+      { displayName: 'Properties', url: RoutingPaths.PROPERTIES, selected: false }
     ]}));
 
     this.loading$ = this.store.select(loadingSelector());

@@ -16,7 +16,7 @@ import { AppService } from '../../../../app.service';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { SelectionModel, SelectionChange } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
-import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
+import { SnackbarNotificationTypes, ConsoleNotificationTypes, RoutingPaths } from 'src/app/constants';
 import { RequestAll, RequestDelete, ResetAllEntitiesLoaded } from '../../property.actions';
 import { propertiesSelector } from '../../property.selectors';
 import { PropertiesService } from '../../properties.service';
@@ -188,7 +188,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   goToPropertyEdit(property: Property) {
     if (this.allowEdition) {
       this.propertyTableActionRunning = true;
-      this.router.navigate(['/properties', property.type, 'edit', property.id]);
+      this.router.navigate([RoutingPaths.PROPERTIES, property.type, 'edit', property.id]);
     }
   }
 

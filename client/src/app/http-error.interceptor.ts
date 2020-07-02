@@ -9,7 +9,7 @@ import {
 import { AppService } from './app.service';
 import { Observable, of } from 'rxjs';
 import { retry, catchError, mergeMap } from 'rxjs/operators';
-import { SnackbarNotificationTypes, ConsoleNotificationTypes } from './constants';
+import { SnackbarNotificationTypes, ConsoleNotificationTypes, RoutingPaths } from './constants';
 import { Injectable } from "@angular/core";
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
@@ -51,7 +51,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 // JWT token invalid or expired
                 if (result.error.code === 'invalid_token') {
                   this.appService.showResults('User session expired, please login again.', SnackbarNotificationTypes.ERROR);
-                  this.store.dispatch(new RequestLogout({ redirectUrl: '/users/login' }));
+                  this.store.dispatch(new RequestLogout({ redirectUrl: `${RoutingPaths.USERS}/login` }));
                 } else {
                   this.appService.showResults(result.error.msg, SnackbarNotificationTypes.ERROR);
                 }
@@ -61,7 +61,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               case 453: {
                 // User session expired (this is the expressJS session)
                 this.appService.showResults(result.error.msg, SnackbarNotificationTypes.ERROR);
-                this.store.dispatch(new RequestLogout({ redirectUrl: '/users/login' }));
+                this.store.dispatch(new RequestLogout({ redirectUrl: `${RoutingPaths.USERS}/login` }));
                 break;
               }
 

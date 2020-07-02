@@ -10,7 +10,7 @@ import { MatRadioChange } from '@angular/material/radio';
 import { MatSelectChange } from '@angular/material/select';
 import { Investment } from '../../models/investment';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
-import { INVESTMENTS_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes } from '../../../../constants';
+import { INVESTMENTS_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes, RoutingPaths } from 'src/app/constants';
 import { PropertyInvestment } from '../../models/propertyInvestment';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
@@ -72,8 +72,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Investments', url: '/investments', selected: false }
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
+      { displayName: 'Investments', url: RoutingPaths.INVESTMENTS, selected: false }
     ]}));
 
     this.loading$ = this.store.select(loadingSelector());
@@ -265,7 +265,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
 
         if (!data.investment.team) {
           // If I am receiving the notification then I wasn't the updater. If the team is null then I cannot see this anymore  
-          this.router.navigate(['/investments']);
+          this.router.navigate([RoutingPaths.INVESTMENTS]);
           
           return;
         }
@@ -273,7 +273,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         const isFromMyTeam = data.investment.team.members.some((member: any) => member.email == this.user.email);
         if (!isFromMyTeam) {
           // investment has a team but I am not a member of it
-          this.router.navigate(['/investments']);
+          this.router.navigate([RoutingPaths.INVESTMENTS]);
           
           return;
         }
@@ -283,7 +283,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.appService.pusherChannel.bind('investment-deleted', data => {
       if (this.investment.id == data.investment.id) {
         this.store.dispatch(new ResetAllEntitiesLoaded());
-        this.router.navigate(['/investments']);
+        this.router.navigate([RoutingPaths.INVESTMENTS]);
       }
     });
 
@@ -292,7 +292,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
       if (data.team && data.team.slug == this.investment.team.slug && data.team.memberState[this.user.email] == 'remove') {
         // the user was removed from the investment team
         this.store.dispatch(new ResetAllEntitiesLoaded());
-        this.router.navigate(['/investments']);
+        this.router.navigate([RoutingPaths.INVESTMENTS]);
       }
     });
   }

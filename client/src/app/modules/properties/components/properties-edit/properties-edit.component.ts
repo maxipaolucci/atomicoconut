@@ -4,7 +4,7 @@ import { User } from '../../../users/models/user';
 import { Property } from '../../models/property';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AppService } from '../../../../app.service';
-import { PROPERTY_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes } from '../../../../constants';
+import { PROPERTY_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes, RoutingPaths } from 'src/app/constants';
 import { House } from '../../models/house';
 import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -114,9 +114,9 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Investments', url: '/investments', selected: false },
-      { displayName: 'Properties', url: '/properties', selected: false }
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
+      { displayName: 'Investments', url: RoutingPaths.INVESTMENTS, selected: false },
+      { displayName: 'Properties', url: RoutingPaths.PROPERTIES, selected: false }
     ]}));
     
     this.loading$ = this.store.select(loadingSelector());
@@ -179,7 +179,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
         } else {
           const unit = data.originalProperty.unit && data.originalProperty.unit != 'null' ? `${data.originalProperty.unit}/` : '';
           this.appService.showResults(`The admin ${data.name} is not sharing the property ${unit}${data.originalProperty.address} with you anymore.`, SnackbarNotificationTypes.INFO, 20000);
-          this.router.navigate(['/properties']);
+          this.router.navigate([RoutingPaths.PROPERTIES]);
         }
       }
     });
@@ -189,7 +189,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
         this.store.dispatch(new ResetAllEntitiesLoaded());
         const unit = data.unit && data.unit != 'null' ? `${data.unit}/` : '';
         this.appService.showResults(`The property ${unit}${data.address} was just deleted by its admin ${data.name}.`, SnackbarNotificationTypes.INFO, 20000);
-        this.router.navigate(['/properties']);
+        this.router.navigate([RoutingPaths.PROPERTIES]);
       }
     });
   }

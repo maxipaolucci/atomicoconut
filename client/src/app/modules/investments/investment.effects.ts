@@ -11,7 +11,7 @@ import { RequestAll, InvestmentActionTypes, AddAll, RequestDelete, Delete, Reque
 import { allInvestmentsLoadedSelector } from './investment.selectors';
 import { of } from 'rxjs';
 import { Investment } from './models/investment';
-import { SnackbarNotificationTypes } from 'src/app/constants';
+import { SnackbarNotificationTypes, RoutingPaths } from 'src/app/constants';
 import { Update } from '@ngrx/entity';
 
 
@@ -111,7 +111,7 @@ export class InvestmentEffects {
       }
 
       // if here, means http error in the response. 
-      return new FinalizeOperation({ redirectData: ['/properties'] }); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation({ redirectData: [RoutingPaths.PROPERTIES] }); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );
 
@@ -169,7 +169,7 @@ export class InvestmentEffects {
       }
 
       // if here, means http error in the response. 
-      return new FinalizeOperation({ redirectData: ['/investments'] }); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation({ redirectData: [RoutingPaths.INVESTMENTS] }); //we don't want to do anything in this case, stop the loadingData flag
     })
   );
 

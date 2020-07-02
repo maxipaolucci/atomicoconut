@@ -1,8 +1,8 @@
 <div class="inner mat-typography">  
   <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="toolbar__primary mat-elevation-z1" color="primary">
-    <a fxFlex fxLayoutAlign="center center" class="toolbar__brand-name color__almost-white" routerLink="/">
-      <!-- <span>AtomiCoconut</span> -->
-      <img matTooltip="atomiCoconut" [matTooltipPosition]="'left'" class="logo" fxFlexOffset="25px" fxFlex="55px" [src]="'/assets/images/coconut.png'" alt="AtomiCoconut" />
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>   
+    <a fxFlex fxLayoutAlign="center center" class="toolbar__brand-name color__almost-white">
+      <img routerLink="/" class="logo" fxFlexOffset="25px" fxFlex="55px" [src]="'/assets/images/coconut.png'" alt="AtomiCoconut" />
     </a>
     
     <span *ngIf="!user" fxLayoutAlign=" center">
@@ -35,23 +35,36 @@
       </mat-menu>
     </span>
   </mat-toolbar>
-
-  <progress-bar *ngIf="(loading$ | async)" class="progress-bar progress-bar__app"
-      color="{{(loading$ | async).color}}"
-      message="{{(loading$ | async).message}}"
-      extraClasses="progress-bar__tooltip-message {{(loading$ | async).extraClasses}}"
-      tooltipMessage="true">
-  </progress-bar>
-
+  
   <div class="toolbar__primary__spacer"><!-- This is a spacer with main toolbar height to avoid any content going behind the toolbar --></div>
 
-  <mat-toolbar *ngIf="user && todayUserPrefRate !== null" fxLayout="row" fxLayoutAlign="space-between center" class="toolbar__secondary">
-    <span>Preferred currency is <a class="color__almost-white" routerLink="/users/account" matTooltip="Change..."><strong>{{user.currency}}</strong></a></span>
-    <span>1 USD = {{todayUserPrefRate | number : '1.0-3' }} {{user.currency}}</span>
-  </mat-toolbar>
+  <mat-sidenav-container class="sidenav_container">
+    <mat-sidenav #snav mode="over">
+      <mat-nav-list>
+        <a mat-list-item (click)="snav.toggle()" *ngFor="let item of sideNavItems" [routerLink]="item.url">
+          <mat-icon class="side-nav-item__icon">{{item.icon}}</mat-icon>
+          <span>{{item.displayName}}</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <progress-bar *ngIf="(loading$ | async)" class="progress-bar progress-bar__app"
+          color="{{(loading$ | async).color}}"
+          message="{{(loading$ | async).message}}"
+          extraClasses="progress-bar__tooltip-message {{(loading$ | async).extraClasses}}"
+          tooltipMessage="true">
+      </progress-bar>
 
-  <!-- Main navigator (chips) -->
-  <main-navigator></main-navigator>
-
-  <router-outlet></router-outlet>
+      <mat-toolbar *ngIf="user && todayUserPrefRate !== null" fxLayout="row" fxLayoutAlign="space-between center" class="toolbar__secondary">
+        <span>Preferred currency is <a class="color__almost-white" routerLink="/users/account" matTooltip="Change..."><strong>{{user.currency}}</strong></a></span>
+        <span>1 USD = {{todayUserPrefRate | number : '1.0-3' }} {{user.currency}}</span>
+      </mat-toolbar>
+      <!-- Main navigator (chips) -->
+      <main-navigator></main-navigator>
+  
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
 </div>

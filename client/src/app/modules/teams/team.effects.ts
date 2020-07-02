@@ -11,7 +11,7 @@ import { State } from '../../main.reducer';
 import { Store, select } from '@ngrx/store';
 import { AppService } from 'src/app/app.service';
 import { Router } from '@angular/router';
-import { SnackbarNotificationTypes } from 'src/app/constants';
+import { SnackbarNotificationTypes, RoutingPaths } from 'src/app/constants';
 import { ShowProgressBar, HideProgressBar, FinalizeOperation } from 'src/app/app.actions';
 
 @Injectable()
@@ -77,7 +77,7 @@ export class TeamEffects {
       }
 
       // if here, means http error in the response. 
-      return new FinalizeOperation({ redirectData: ['/teams'] }); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation({ redirectData: [RoutingPaths.TEAMS] }); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );
 
@@ -178,7 +178,7 @@ export class TeamEffects {
       }
 
       // if here, means http error in the response. 
-      return new FinalizeOperation({ redirectData: ['/teams'] }); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation({ redirectData: [RoutingPaths.TEAMS] }); //we don't want to do anything in this case, stop the loadingData flag
     })
   );
 

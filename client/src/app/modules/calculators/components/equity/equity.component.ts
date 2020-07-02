@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
+import { RoutingPaths } from 'src/app/constants';
 
 
 @Component({
@@ -37,8 +38,8 @@ export class EquityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Calculators', url: '/calculators', selected: false },
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
+      { displayName: 'Calculators', url: RoutingPaths.CALCULATORS, selected: false },
       { displayName: 'Equity', url: null, selected: true },
       { displayName: 'House figures', url: '/calculators/house-figures', selected: false }
     ]}));

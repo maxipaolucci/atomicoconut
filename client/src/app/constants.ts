@@ -47,4 +47,14 @@ export enum ConsoleNotificationTypes {
 export enum ServerResponseStatus {
   SUCCESS = 'success',
   ERROR = 'error'
-}
+};
+
+export enum RoutingPaths {
+  HOME = '/',
+  INVESTMENTS = '/investments',
+  PROPERTIES = '/properties',
+  CALCULATORS = '/calculators',
+  WELCOME = '/welcome',
+  TEAMS = '/teams',
+  USERS = '/users'
+};

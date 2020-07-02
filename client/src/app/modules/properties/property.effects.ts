@@ -10,7 +10,7 @@ import { delay, mergeMap, tap, map, withLatestFrom, filter, catchError } from 'r
 import { of } from 'rxjs';
 import { Property } from './models/property';
 import { allPropertiesLoadedSelector } from './property.selectors';
-import { SnackbarNotificationTypes } from 'src/app/constants';
+import { SnackbarNotificationTypes, RoutingPaths } from 'src/app/constants';
 import { Update } from '@ngrx/entity';
 import { Router } from '@angular/router';
 
@@ -113,7 +113,7 @@ export class PropertyEffects {
       }
 
       // if here, means http error in the response. 
-      return new FinalizeOperation({ redirectData: ['/properties'] }); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation({ redirectData: [RoutingPaths.PROPERTIES] }); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );
 
@@ -172,7 +172,7 @@ export class PropertyEffects {
       }
 
       // if here, means http error in the response. 
-      return new FinalizeOperation({ redirectData: ['/properties'] }); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation({ redirectData: [RoutingPaths.PROPERTIES] }); //we don't want to do anything in this case, stop the loadingData flag
     })
   );
 

@@ -11,7 +11,7 @@ import { RequestDelete } from '../../team.actions';
 import { RequestAll } from '../../team.actions';
 import { teamsSelector } from '../../team.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
-import { ConsoleNotificationTypes } from 'src/app/constants';
+import { ConsoleNotificationTypes, RoutingPaths } from 'src/app/constants';
 import { userSelector } from 'src/app/modules/users/user.selectors';
 import { loadingSelector } from 'src/app/app.selectors';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
@@ -41,7 +41,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
       { displayName: 'Teams', url: null, selected: true }
     ]}));
 

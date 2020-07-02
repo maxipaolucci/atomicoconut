@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { HideProgressBar } from 'src/app/app.actions';
 import { Logout, UserActionTypes } from './modules/users/user.actions';
 import { SetLinks } from './modules/shared/components/main-navigator/main-navigator.actions';
-
+import { RoutingPaths } from 'src/app/constants';
 
 
 @Injectable()
@@ -36,9 +36,9 @@ export class AppEffects {
       // the welcome componennt options where we are going to be redirected
       this.store.dispatch(new SetLinks({ links: [
         { displayName: 'Welcome', url: null, selected: true },
-        { displayName: 'Investments', url: '/investments', selected: false },
-        { displayName: 'Properties', url: '/properties', selected: false },
-        { displayName: 'Calculators', url: '/calculators', selected: false }
+        { displayName: 'Investments', url: RoutingPaths.INVESTMENTS, selected: false },
+        { displayName: 'Properties', url: RoutingPaths.PROPERTIES, selected: false },
+        { displayName: 'Calculators', url: RoutingPaths.CALCULATORS, selected: false }
       ]}));
     })
   );

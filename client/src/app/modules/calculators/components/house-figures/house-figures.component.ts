@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
+import { RoutingPaths } from 'src/app/constants';
 
 @Component({
   selector: 'app-house-figures',
@@ -35,9 +36,9 @@ export class HouseFiguresComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Calculators', url: '/calculators', selected: false },
-      { displayName: 'Equity', url: '/calculators/equity', selected: false },
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
+      { displayName: 'Calculators', url: RoutingPaths.CALCULATORS, selected: false },
+      { displayName: 'Equity', url: `${RoutingPaths.CALCULATORS}/equity`, selected: false },
       { displayName: 'House figures', url: null, selected: true }
     ]}));
   }

@@ -6,6 +6,7 @@ import { Store, select } from '@ngrx/store';
 import { loggedInSelector } from './modules/users/user.selectors';
 import { tap } from 'rxjs/operators';
 import { SetRedirectUrl } from './app.actions';
+import { RoutingPaths } from 'src/app/constants'
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class AuthGuard implements CanActivate {
       tap((loggedIn: boolean) => {
         if (!loggedIn) {
           this.store.dispatch(new SetRedirectUrl({ url: state.url }));
-          this.router.navigate(['/users/login']);
+          this.router.navigate([`${RoutingPaths.USERS}/login`]);
         }
       })
     );

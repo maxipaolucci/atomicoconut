@@ -3,6 +3,7 @@ import { UtilService } from '../../../../util.service';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
+import { RoutingPaths } from 'src/app/constants'
 
 @Component({
   selector: 'app-account',
@@ -18,7 +19,7 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
       { displayName: 'My account', url: null, selected: true }
     ]}));
   }

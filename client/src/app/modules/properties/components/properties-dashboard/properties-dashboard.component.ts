@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
-
+import { RoutingPaths } from 'src/app/constants';
 
 @Component({
   selector: 'properties-dashboard',
@@ -18,10 +18,10 @@ export class PropertiesDashboardComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Investments', url: '/investments', selected: false },
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
+      { displayName: 'Investments', url: RoutingPaths.INVESTMENTS, selected: false },
       { displayName: 'Properties', url: null, selected: true },
-      { displayName: 'Calculators', url: '/calculators', selected: false }
+      { displayName: 'Calculators', url: RoutingPaths.CALCULATORS, selected: false }
     ]}));
   }
 

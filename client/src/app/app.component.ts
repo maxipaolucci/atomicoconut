@@ -10,7 +10,7 @@ import { State } from 'src/app/main.reducer';
 import { RequestLogout } from './modules/users/user.actions';
 import { userSelector } from './modules/users/user.selectors';
 import { LoadingData } from './models/loadingData';
-import { SnackbarNotificationTypes, ConsoleNotificationTypes } from './constants';
+import { SnackbarNotificationTypes, ConsoleNotificationTypes, RoutingPaths } from './constants';
 import { loadingSelector } from './app.selectors';
 import { currencyRateByIdSelector } from './modules/currency-exchange/currency-rate.selectors';
 import { CurrencyRate } from './modules/currency-exchange/models/currency-rate';
@@ -18,6 +18,7 @@ import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currenc
 import { RequestAll as RequestAllTeams } from './modules/teams/team.actions';
 import { teamsSelector } from './modules/teams/team.selectors';
 import _ from 'lodash';
+import { NavigatorLinkModel } from './modules/shared/components/main-navigator/models/navigator-link-model';
 
 
 @Component({
@@ -33,12 +34,22 @@ export class AppComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   loading$: Observable<LoadingData> = null;
   teams: Team[] = [];
+  sideNavItems: NavigatorLinkModel[] = [];
 
   constructor(
       private appService: AppService,
       private utilService: UtilService,
       private store: Store<State>
-  ) { }
+  ) {
+
+    //Populates the side navigator
+    this.sideNavItems.push(
+      { displayName: 'Home', url: RoutingPaths.WELCOME, icon: 'home' }, 
+      { displayName: 'Investments', url: RoutingPaths.INVESTMENTS, icon: 'trending_up'},
+      { displayName: 'Properties', url: RoutingPaths.PROPERTIES, icon: 'home_work'},
+      { displayName: 'Calculators', url: RoutingPaths.CALCULATORS, icon: 'calculate'}
+    );
+  }
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging

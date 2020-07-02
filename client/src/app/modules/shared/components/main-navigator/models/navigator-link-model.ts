@@ -1,5 +1,6 @@
 export interface NavigatorLinkModel {
   displayName: string,
   url: string,
-  selected: boolean
+  selected?: boolean,
+  icon?: string
 }

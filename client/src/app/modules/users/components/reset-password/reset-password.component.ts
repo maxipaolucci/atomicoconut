@@ -5,7 +5,7 @@ import { AppService } from '../../../../app.service';
 import { Subscription, Observable } from 'rxjs';
 import { ResetPasswordModel } from '../../models/reset-password-model';
 import { LoadingData } from 'src/app/models/loadingData';
-import { SnackbarNotificationTypes, ConsoleNotificationTypes } from 'src/app/constants';
+import { SnackbarNotificationTypes, ConsoleNotificationTypes, RoutingPaths } from 'src/app/constants';
 import { State } from 'src/app/main.reducer';
 import { Store } from '@ngrx/store';
 import { RequestReset } from '../../user.actions';
@@ -37,8 +37,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
     
     this.store.dispatch(new SetLinks({ links: [
-      { displayName: 'Welcome', url: '/welcome', selected: false },
-      { displayName: 'Login', url: '/users/login', selected: false },
+      { displayName: 'Welcome', url: RoutingPaths.WELCOME, selected: false },
+      { displayName: 'Login', url: `${RoutingPaths.USERS}/login`, selected: false },
       { displayName: 'Reset password', url: null, selected: true }
     ]}));
 
@@ -48,7 +48,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
           this.token = token;
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Token must be set to reset a password.`);
-          this.router.navigate(['/']);
+          this.router.navigate([RoutingPaths.HOME]);
         }
       });
 

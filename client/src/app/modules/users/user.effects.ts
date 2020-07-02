@@ -16,6 +16,8 @@ import { ShowProgressBar, HideProgressBar, FinalizeOperation, SetRedirectUrl } f
 import { redirectUrlSelector } from 'src/app/app.selectors';
 import { AppService } from 'src/app/app.service';
 import { routerSelector } from 'src/app/router.selectors';
+import { RoutingPaths } from 'src/app/constants'
+
 
 @Injectable()
 export class UserEffects {
@@ -99,9 +101,9 @@ export class UserEffects {
       if (redirectUrl) {
         // if redirectUrl was set it has precedence over the router current route 
         this.router.navigate([redirectUrl]);
-      } else if (routerState && routerState["url"] === '/users/login') {
+      } else if (routerState && routerState["url"] === `${RoutingPaths.USERS}/login`) {
         // if the current route is login we move to home
-        this.router.navigate(['/']);
+        this.router.navigate([RoutingPaths.HOME]);
       }
       // otherwise stay in current route
     })
@@ -188,7 +190,7 @@ export class UserEffects {
         //dispatch the action to save the value in the store
         return new Login({ user });
       }
-      return new FinalizeOperation({ redirectData: ['/'] }); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation({ redirectData: [RoutingPaths.HOME] }); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );
 
@@ -210,7 +212,7 @@ export class UserEffects {
         //dispatch the action to save the value in the store
         return new Login({ user });
       }
-      return new FinalizeOperation({ redirectData: ['/'] }); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation({ redirectData: [RoutingPaths.HOME] }); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );
 
@@ -227,7 +229,7 @@ export class UserEffects {
       )
     ),
     map((result: boolean) => {
-      return new FinalizeOperation({ redirectData: ['/'] }); //we don't want to do anything in this case, stop the loadingData flag
+      return new FinalizeOperation({ redirectData: [RoutingPaths.HOME] }); //we don't want to do anything in this case, stop the loadingData flag
     }) 
   );
 

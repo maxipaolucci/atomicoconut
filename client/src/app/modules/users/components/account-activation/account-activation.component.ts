@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { AppService } from '../../../../app.service';
 import { Subscription, Observable } from 'rxjs';
 import { LoadingData } from 'src/app/models/loadingData';
-import { ConsoleNotificationTypes } from 'src/app/constants';
+import { ConsoleNotificationTypes, RoutingPaths } from 'src/app/constants';
 import { State } from 'src/app/main.reducer';
 import { Store } from '@ngrx/store';
 import { RequestAccountActivation } from '../../user.actions';
@@ -43,7 +43,7 @@ export class AccountActivationComponent implements OnInit, OnDestroy {
           this.token = token;
         } else {
           this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Token must be set to activate your account.`);
-          this.router.navigate(['/']);
+          this.router.navigate([RoutingPaths.HOME]);
         }
       });
 
