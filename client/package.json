@@ -32,7 +32,7 @@
     "@ngrx/store": "~9.0.0",
     "@ngrx/store-devtools": "~9.0.0",
     "core-js": "~3.6.4",
-    "lodash": "~4.17.15",
+    "lodash": "~4.17.19",
     "moment": "~2.22.2",
     "obj2fd": "~1.0.6",
     "pusher-js": "~5.1.1",
