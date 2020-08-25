@@ -238,7 +238,7 @@ exports.update = async (req, res, next) => {
 
     //fields to update
     const originalProperty = property; //we save the "beautified" version of property to easily access data
-    const location = { address : req.body.address.description, coordinates : [req.body.address.longitude, req.body.address.latitude], mapsPlaceId : req.body.address.mapsPlaceId };
+    const location = { address : req.body.address.description, coordinates : [req.body.address.longitude || null, req.body.address.latitude || null], mapsPlaceId : req.body.address.mapsPlaceId || null };
     const sharedWithEmails = req.body.sharedWith; //array of emails
 
     const updates = {
