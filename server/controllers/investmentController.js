@@ -676,7 +676,7 @@ exports.delete = async (req, res) => {
 
     writeResult = null;
     console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Investment', '_id', investment._id)}`);
-    writeResult = await Investment.remove({ _id : investment._id });
+    writeResult = await Investment.deleteOne({ _id : investment._id });
     if (!(writeResult && writeResult.n > 0)) {
         //Failed to delete investment
         console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Investment', '_id', investment._id)}`);
@@ -733,7 +733,7 @@ const deleteCurrencyInvestment = async (id, userEmail) => {
     const methodTrace = `${errorTrace} deleteCurrencyInvestment() >`;
     
     console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'CurrencyInvestment', '_id', id)}`);
-    const writeResult = await CurrencyInvestment.remove({ _id : id });
+    const writeResult = await CurrencyInvestment.deleteOne({ _id : id });
     if (writeResult && writeResult.n > 0) {
         console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'CurrencyInvestment')}`);
     } else {
@@ -752,7 +752,7 @@ const deletePropertyInvestment = async (id, userEmail) => {
     const methodTrace = `${errorTrace} deletePropertyInvestment() >`;
     
     console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'PropertyInvestment', '_id', id)}`);
-    const writeResult = await PropertyInvestment.remove({ _id : id });
+    const writeResult = await PropertyInvestment.deleteOne({ _id : id });
     if (writeResult && writeResult.n > 0) {
         console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'PropertyInvestment')}`);
     } else {

@@ -202,7 +202,7 @@ const deleteMemberFromTeam = async (member, team, userEmail) => {
 
     //Remove the TeamUser record
     console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'TeamUser', '_id', teamUser._id)}`);
-    const writeResult = await TeamUser.remove({ _id : teamUser._id });
+    const writeResult = await TeamUser.deleteOne({ _id : teamUser._id });
     if (writeResult.n > 0) {
         console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'TeamUser')}`);
         return true;
@@ -662,7 +662,7 @@ exports.delete = async (req, res) => {
 
     //remove the team
     console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Team', '_id', team._id)}`);
-    const writeResult = await Team.remove({ _id : team._id });
+    const writeResult = await Team.deleteOne({ _id : team._id });
     if (!(writeResult && writeResult.n > 0)) {
         console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Team', '_id', team._id)}`);
         res.status(401).json({ 

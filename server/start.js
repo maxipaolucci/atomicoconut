@@ -14,7 +14,8 @@ if (major < 7 || (major === 7 && minor <= 5)) {
 mongoose.connect(process.env.DATABASE, { 
   useUnifiedTopology: true,
   useCreateIndex: true,
-  useNewUrlParser: true 
+  useNewUrlParser: true,
+  useFindAndModify: false 
 });
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 mongoose.connection.on('error', (err) => {

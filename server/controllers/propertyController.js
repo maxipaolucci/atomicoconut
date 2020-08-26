@@ -548,7 +548,7 @@ exports.delete = async (req, res) => {
     writeResult = null;
     console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Property', '_id', property._id)}`);
 
-    writeResult = await Property.remove({ _id : property._id });
+    writeResult = await Property.deleteOne({ _id : property._id });
     if (!(writeResult && writeResult.n > 0)) {
         //Failed to delete property
         console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Property', '_id', property._id)}`);
@@ -599,7 +599,7 @@ const deletePropertyTypeData = async (model, id, userEmail) => {
     
     let writeResult = null;
     if (model.toLowerCase() === PROPERTY_TYPES.HOUSE) {
-        writeResult = await House.remove({ _id : id });
+        writeResult = await House.deleteOne({ _id : id });
     }
 
     if (writeResult && writeResult.n > 0) {

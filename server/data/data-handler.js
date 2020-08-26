@@ -14,9 +14,19 @@ if (!environment) {
 console.log(`Environment: ${environment}`);
 const mongoose = require('mongoose');
 if (environment === 'dev'){
-  mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
+  mongoose.connect(process.env.DATABASE, { 
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useFindAndModify: false 
+  });
 } else {
-  mongoose.connect(process.env[`DATABASE_${environment.toUpperCase()}`], { useNewUrlParser: true });  
+  mongoose.connect(process.env[`DATABASE_${environment.toUpperCase()}`], { 
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useFindAndModify: false 
+  });  
 }
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 
@@ -39,29 +49,29 @@ async function deleteData() {
   console.log(`Started deleting data from ${environment.toUpperCase()}...`);
 
   try {
-    await FinancialInfo.remove();
+    await FinancialInfo.deleteMany({});
     console.log(`FinancialInfo table is empty.`);
-    await PersonalInfo.remove();
+    await PersonalInfo.deleteMany({});
     console.log(`PersonalInfo table is empty.`);
-    await TeamUser.remove();
+    await TeamUser.deleteMany({});
     console.log(`TeamUser table is empty.`);
-    await Team.remove();
+    await Team.deleteMany({});
     console.log(`Team table is empty.`);
-    await User.remove();
+    await User.deleteMany({});
     console.log(`User table is empty.`);
-    await Investment.remove();
+    await Investment.deleteMany({});
     console.log(`Investment table is empty.`);
-    await CurrencyInvestment.remove();
+    await CurrencyInvestment.deleteMany({});
     console.log(`CurrencyInvestment table is empty.`);
-    await PropertyInvestment.remove();
+    await PropertyInvestment.deleteMany({});
     console.log(`PropertyInvestment table is empty.`);
-    await Property.remove();
+    await Property.deleteMany({});
     console.log(`Property table is empty.`);
-    await House.remove();
+    await House.deleteMany({});
     console.log(`House table is empty.`);
-    await CurrencyRate.remove();
+    await CurrencyRate.deleteMany({});
     console.log(`CurrencyRate table is empty.`);
-    await PropertyUser.remove();
+    await PropertyUser.deleteMany({});
     console.log(`PropertyUser table is empty.`);
 
 

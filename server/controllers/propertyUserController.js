@@ -124,7 +124,7 @@ const deletePropertyUser = async (propertyId, userId, userEmail, force = false) 
 
     //Remove the PropertyUser record
     console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'PropertyUser', '_id', propertyUser._id)}`);
-    const writeResult = await PropertyUser.remove({ _id : propertyUser._id });
+    const writeResult = await PropertyUser.deleteOne({ _id : propertyUser._id });
     if (!(writeResult && writeResult.n > 0)) {
         console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, 'PropertyUser', '_id', propertyUser._id)}`);
         return false;    
