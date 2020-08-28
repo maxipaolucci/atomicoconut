@@ -21,7 +21,7 @@ phases:
       - git config --global user.email "aws.codebuild.atomicoconut@gmail.com"
       - git config --global user.name "AWS Codebuild atomiCoconut"
       - CURRENT_BRANCH=$(basename $CODEBUILD_WEBHOOK_TRIGGER)
-      - ./manage_images2.sh
+      - ./manage_images.sh
   post_build:
     commands:
       - echo "we are in the post build phase"
