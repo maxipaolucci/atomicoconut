@@ -1,4 +1,8 @@
 sudo: required
+
+env:
+  - CURRENT_BRANCH=$TRAVIS_BRANCH
+  
 services:
   - docker 
 
@@ -11,7 +15,6 @@ script:
   # - docker run -e CI=true $DOCKER_ID/atomic-coconut-client-dev ng build
 
 after_success:
-  - CURRENT_BRANCH=$TRAVIS_BRANCH
   - echo "$CURRENT_BRANCH"
   - ./manage_images.sh
 #   - docker build -t $DOCKER_ID/atomic-coconut-client ./client
