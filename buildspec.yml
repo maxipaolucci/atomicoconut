@@ -1,5 +1,11 @@
 version: 0.2
 
+env:
+  variables:
+  parameter-store:
+    DOCKER_ID: "/maxipaolucci/dockerID"
+    DOCKER_PASSWORD: "/maxipaolucci/dockerPassword"
+
 phases: 
   install:
     runtime-versions:
@@ -14,8 +20,9 @@ phases:
       - echo "we are in the build block"
       - echo "we will run some tests"
       - ls -lh
-      - which basename
-      - basename branch/lalalal
+      - echo $DOCKER_PASSWORD
+      - echo $DOCKER_ID
+      - CURRENT_BRANCH=$(basename $CODEBUILD_WEBHOOK_TRIGGER)
       - ./manage_images2.sh
   post_build:
     commands:
