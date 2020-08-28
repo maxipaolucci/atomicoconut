@@ -6,12 +6,12 @@ services:
 #   - docker build -t $DOCKER_ID/atomic-coconut-client-dev -f ./client/Dockerfile.dev ./client
 
 script:
-  - CURRENT_BRANCH=$TRAVIS_BRANCH
-  - echo "$CURRENT_BRANCH"
   # - docker run -e CI=true $DOCKER_ID/atomic-coconut-client npm run test -- --coverage
   # - docker run -e CI=true $DOCKER_ID/atomic-coconut-client-dev ng build
 
 after_success:
+  - CURRENT_BRANCH=$TRAVIS_BRANCH
+  - echo "$CURRENT_BRANCH"
   - ./manage_images.sh
 #   - docker build -t $DOCKER_ID/atomic-coconut-client ./client
 #   - docker build -t $DOCKER_ID/atomic-coconut-nginx ./nginx
