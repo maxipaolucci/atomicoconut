@@ -14,7 +14,9 @@ phases:
       - echo "we are in the build block"
       - echo "we will run some tests"
       - ls -lh
-      - printenv
+      - which basename
+      - basename branch/lalalal
+      - ./manage_images2.sh
   post_build:
     commands:
       - echo "we are in the post build phase"
