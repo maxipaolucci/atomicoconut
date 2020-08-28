@@ -1,16 +1,14 @@
 # Access my EC2 instance from SSH console
-Mac
-ssh -i [key-pair.pem] ec2-user@[ec2 instance public dns | ip]
+SSH connection to EC2
 
-ssh -i xxx ec2-user@13.239.181.176
-
-Windows
 1- enable port TCP 22 in VPC group for ElastikBeanStalk env
 2- create a key pair in the EC2 instance
 3- in ElasticBeanStalk configuration go to security. In section VM permissions select the keypair created in EC2 and assign to the aws-elastikbeanstalk-ec2-role and save
-4- the step 2 will automatically download a keypair.pem file. We need to convert it into a ppk file. In windows use Puttygen that is installed when installing putty.msi version. Open the pem file with puttygen and save as private key.
-5- use this ppk file in putty in seccion Connection > ssh > auth
-6- putty config here https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html . Disregard anything related with stopping ec2 instance and stuff
+4- the step 2 will automatically download a keypair.pem file. We need to convert it into a ppk file. 
+4.a- In mac copy that file to ~/.ssh and use it with: ssh -i [path/to/key-pair.pem] ec2-user@[ec2 instance    public dns | ip]
+4.b.1- In windows use Puttygen that is installed when installing putty.msi version. Open the pem file with puttygen and save as private key.
+4.b.2- use this ppk file in putty in seccion Connection > ssh > auth
+4.b.3- putty config here https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html . Disregard anything related with stopping ec2 instance and stuff
 
 # Setup mongo db from console on a DocumentDB cluster
 1- Connect to ElastikBeanStalk console
