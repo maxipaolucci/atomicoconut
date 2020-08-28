@@ -18,9 +18,8 @@ phases:
     commands:
       - echo "we are in the build block"
       - echo "we will run some tests"
-      - ls -lh
-      - echo $DOCKER_PASSWORD
-      - echo $DOCKER_ID
+      - git config --global user.email "aws.codebuild.atomicoconut@gmail.com"
+      - git config --global user.name "AWS Codebuild atomiCoconut"
       - CURRENT_BRANCH=$(basename $CODEBUILD_WEBHOOK_TRIGGER)
       - ./manage_images2.sh
   post_build:
