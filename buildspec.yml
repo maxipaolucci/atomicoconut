@@ -1,7 +1,6 @@
 version: 0.2
 
 env:
-  variables:
   parameter-store:
     DOCKER_ID: "/maxipaolucci/dockerID"
     DOCKER_PASSWORD: "/maxipaolucci/dockerPassword"
