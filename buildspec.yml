@@ -27,3 +27,9 @@ phases:
   post_build:
     commands:
       - echo "we are in the post build phase"
+
+artifacts:
+  files:
+    # let's archive everything in the repo
+    - "Dockerrun.aws.json" 
+  name: atomiCoconut-build-artifact
