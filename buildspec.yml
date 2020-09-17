@@ -30,6 +30,6 @@ phases:
 
 artifacts:
   files:
-    # let's archive everything in the repo
+    # archive the only file necessary for elastikbeanstalk to redeploy the new docker images pushed
     - "Dockerrun.aws.json" 
   name: atomiCoconut-build-artifact
