@@ -10,7 +10,7 @@ phases:
     runtime-versions:
       nodejs: 10
     commands:
-      - printenv
+      # - printenv
       - echo "installing something"
   pre_build:
     commands: 
@@ -19,9 +19,9 @@ phases:
     commands:
       - echo "we are in the build block"
       - echo "we will run some tests"
-      - git config --global user.email "aws.codebuild.atomicoconut@gmail.com"
-      - git config --global user.name "AWS Codebuild atomiCoconut"
-      #- CURRENT_BRANCH=$(basename $CODEBUILD_WEBHOOK_TRIGGER)
+      # no need this, no more code commits in manage_images.sh
+      # - git config --global user.email "aws.codebuild.atomicoconut@gmail.com"
+      # - git config --global user.name "AWS Codebuild atomiCoconut"
       - echo $CURRENT_BRANCH
       - ./manage_images.sh
   post_build:
@@ -32,4 +32,4 @@ artifacts:
   files:
     # archive the only file necessary for elastikbeanstalk to redeploy the new docker images pushed
     - "Dockerrun.aws.json" 
-  name: atomiCoconut-build-artifact
+  name: atomiCoconut-build-artifact # this name seems to be completely ignored when codepipeline orchastrates this build
