@@ -8,7 +8,7 @@ if ! [ -x "$(command -v docker-compose)" ]; then
 fi
 
 # domains=(example.org www.example.org)
-domains=(atomicoconut.com www.atomicoconut.com testss.atomicoconut.com)
+domains=(atomicoconut.com www.atomicoconut.com testingss.atomicoconut.com)
 rsa_key_size=4096
 data_path="."
 email="maxipaolucci@gmail.com" # Adding a valid address is strongly recommended
