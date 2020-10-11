@@ -94,7 +94,7 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
         
         if (fromCryptoData && toCryptoData) {
             const ratio = fromCryptoData.priceUsd / toCryptoData.priceUsd;
-            const alert = (ratio > 0.01 || ratio < 0.005) ? '[URGENT]': '';
+            const alert = (ratio > 0.015 || ratio < 0.005) ? '[URGENT]': '';
             const toEmail = 'maxipaolucci@gmail.com';
             
             console.log(`${methodTrace} ${getMessage('message', 1054, ANONYMOUS_USER, true, 'Crypto ratio', toEmail)}`); 
