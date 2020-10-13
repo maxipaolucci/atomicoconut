@@ -186,11 +186,11 @@ exports.forgot = async (req, res) => {
     const methodTrace = `${errorTrace} forgot() >`;
 
     const email = req.body.email;
-    console.log(`${methodTrace} ${getMessage('message', 1006, email, true, email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1006, ANONYMOUS_USER, true, email)}`);
     //1 see user with that email exists
     const user = await User.findOne({ email });
     if (!user) {
-        console.log(`${methodTrace} ${getMessage('error', 455, email, true, email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 455, ANONYMOUS_USER, true, email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 455,
@@ -201,12 +201,12 @@ exports.forgot = async (req, res) => {
     }
     
     //2 set reset tokens and expiry on their account
-    console.log(`${methodTrace} ${getMessage('message', 1007, email, true, email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1007, ANONYMOUS_USER, true, email)}`);
     user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
     user.resetPasswordExpires = Date.now() + 3600000; //1 hour from now
     await user.save();
     //3 send them email with the token
-    console.log(`${methodTrace} ${getMessage('message', 1008, email, true, email, 'reset password')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1008, ANONYMOUS_USER, true, email, 'reset password')}`);
     const resetURL = `${req.headers.origin}/users/account/reset/${user.resetPasswordToken}`;
     mail.send({
         toEmail : user.email,
