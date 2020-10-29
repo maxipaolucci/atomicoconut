@@ -27,9 +27,14 @@ phases:
   post_build:
     commands:
       - echo "we are in the post build phase"
+      - rm docker-compose.yml
+      - mv docker-compose-beanstalk.yml docker-compose.yml
+      # zip the app including just what needed for deployment: docker-compose.yml and .plat* dir
+      - zip -r acoApp.zip docker-compose.yml .plat*
 
 artifacts:
   files:
     # archive the only file necessary for elastikbeanstalk to redeploy the new docker images pushed
-    - "Dockerrun.aws.json" 
+    # - "Dockerrun.aws.json"
+    - "acoApp.zip"
   name: atomiCoconut-build-artifact # this name seems to be completely ignored when codepipeline orchastrates this build

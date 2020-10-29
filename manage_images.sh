@@ -28,9 +28,12 @@ if [[ "$CURRENT_BRANCH" == "master" || "$CURRENT_BRANCH" == "testing" ]]; then
   docker push $DOCKER_ID/atomic-coconut-server:$IMAGE_TAG
 
   # replace the image names with this one with the current branch as tag
-  sed -i "s?atomic-coconut-client?atomic-coconut-client:$IMAGE_TAG?" Dockerrun.aws.json
-  sed -i "s?atomic-coconut-server?atomic-coconut-server:$IMAGE_TAG?" Dockerrun.aws.json
-  sed -i "s?atomic-coconut-nginx?atomic-coconut-nginx:$IMAGE_TAG?" Dockerrun.aws.json
+  sed -i "s?atomic-coconut-client?atomic-coconut-client:$IMAGE_TAG?" docker-compose-beanstalk.yml
+  sed -i "s?atomic-coconut-server?atomic-coconut-server:$IMAGE_TAG?" docker-compose-beanstalk.yml
+  sed -i "s?atomic-coconut-nginx?atomic-coconut-nginx:$IMAGE_TAG?" docker-compose-beanstalk.yml
+  # sed -i "s?atomic-coconut-client?atomic-coconut-client:$IMAGE_TAG?" Dockerrun.aws.json
+  # sed -i "s?atomic-coconut-server?atomic-coconut-server:$IMAGE_TAG?" Dockerrun.aws.json
+  # sed -i "s?atomic-coconut-nginx?atomic-coconut-nginx:$IMAGE_TAG?" Dockerrun.aws.json
   # git commit -am "updated images tags in Dockerrun.aws.json by CI build job in manage_images.sh"
 else
   echo
