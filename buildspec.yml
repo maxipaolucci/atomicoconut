@@ -19,24 +19,20 @@ phases:
     commands:
       - echo "we are in the build block"
       - echo "we will run some tests"
-      # no need this, no more code commits in manage_images.sh
-      # - git config --global user.email "aws.codebuild.atomicoconut@gmail.com"
-      # - git config --global user.name "AWS Codebuild atomiCoconut"
       - echo $CURRENT_BRANCH
       - ./manage_images.sh
   post_build:
     commands:
       - echo "we are in the post build phase"
+      # we don't need this one
       - rm docker-compose.yml
+      # we need this one to be archived
       - mv docker-compose-beanstalk.yml docker-compose.yml
-      # zip the app including just what needed for deployment: docker-compose.yml and .plat* dir
-      - zip -r acoApp.zip docker-compose.yml .plat*
 
 artifacts:
   files:
     # archive the only file necessary for elastikbeanstalk to redeploy the new docker images pushed
-    # - "Dockerrun.aws.json"
     - "docker-compose.yml"
     - ".platform/hooks/postdeploy/01-setup-cloudwatch-agent.sh"
-  discard-paths: no
+  discard-paths: no # to keep directory structure
   name: atomiCoconut-build-artifact # this name seems to be completely ignored when codepipeline orchastrates this build
