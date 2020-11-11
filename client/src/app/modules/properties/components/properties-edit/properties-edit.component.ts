@@ -87,7 +87,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     unit: null,
     status: null,
     statusDetail: null,
-    sharedWith: []
+    sharedWith: [],
+    links: []
   };
 
   modelHouseFiguresResults: any = {

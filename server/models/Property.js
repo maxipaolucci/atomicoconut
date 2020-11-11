@@ -69,7 +69,6 @@ const propertySchema = new mongoose.Schema({
     type : String,
     default : 'USD'
   },
-
   purchasePrice : {
     type : Number,
     default : null
@@ -183,6 +182,18 @@ const propertySchema = new mongoose.Schema({
   propertyUsers : [{
     type : mongoose.Schema.ObjectId,
     ref : 'PropertyUser'
+  }],
+  links: [{
+    displayText: {
+      type: String,
+      default: null,
+      trim: true
+    },
+    address: {
+      type: String,
+      default: null,
+      trim: true 
+    } 
   }]
 });
 

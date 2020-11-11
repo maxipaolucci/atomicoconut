@@ -11,6 +11,7 @@ import { House } from './models/house';
 import { Address } from './models/address';
 import { map, catchError, switchMap, mergeMap } from 'rxjs/operators';
 import obj2fd from 'obj2fd';
+import { Link } from '../shared/models/link';
 
 @Injectable()
 export class PropertiesService {
@@ -141,6 +142,14 @@ export class PropertiesService {
         address = new Address(data.location.address, data.location.coordinates[1], data.location.coordinates[0], data.location.mapsPlaceId);
       }
 
+      // populate links
+      const links : Link[] = [];
+      console.log(data.links);
+      for (const link of data.links) {
+        const newLink = new Link(link.displayText, link.address);
+        links.push(newLink);
+      }
+
       // populate sharedwith
       const sharedWith : User[] = [];
       for (const member of data.sharedWith) {
@@ -154,7 +163,7 @@ export class PropertiesService {
             data.purchasePrice3, data.purchasePrice3Unit, data.purchasePrice4, data.purchasePrice4Unit, data.purchasePrice5, data.purchasePrice5Unit, data.dateListed, 
             data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit,
             data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, 
-            data.description, data.otherCost, data.otherCostUnit, data.notes, data.photos, data.unit, data.status, data.statusDetail, sharedWith, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces,
+            data.description, data.otherCost, data.otherCostUnit, data.notes, data.photos, data.unit, data.status, data.statusDetail, sharedWith, links, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces,
             data.propertyTypeData.fenced, data.propertyTypeData.rented, data.propertyTypeData.rentPrice, data.propertyTypeData.rentPriceUnit, data.propertyTypeData.rentPricePeriod, data.propertyTypeData.rentAppraisalDone, data.propertyTypeData.vacancy, data.propertyTypeData.bodyCorporate,
             data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
       }

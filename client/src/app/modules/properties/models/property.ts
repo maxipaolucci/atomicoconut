@@ -1,3 +1,4 @@
+import { Link } from '../../shared/models/link';
 import { User } from '../../users/models/user';
 import { Address } from './address';
 
@@ -40,6 +41,7 @@ export class Property {
   status: string;
   statusDetail: string;
   sharedWith: User[];
+  links: Link[];
 
   constructor(
       id: string = null,
@@ -78,7 +80,8 @@ export class Property {
       unit: string = null,
       status: string = null,
       statusDetail: string = null,
-      sharedWith: User[] = null) {
+      sharedWith: User[] = null,
+      links: Link[] = null) {
     
     this.id = id;
     this.type = type;
@@ -117,5 +120,6 @@ export class Property {
     this.status = status;
     this.statusDetail = statusDetail;
     this.sharedWith = sharedWith;
+    this.links = links;
   }
 }
