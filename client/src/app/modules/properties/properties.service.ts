@@ -144,11 +144,16 @@ export class PropertiesService {
 
       // populate links
       const links : Link[] = [];
-      console.log(data.links);
-      for (const link of data.links) {
-        const newLink = new Link(link.displayText, link.address);
-        links.push(newLink);
-      }
+      if (data.links && data.links.length) {
+        for (const link of data.links) {
+          const newLink = new Link(link.displayText, link.address);
+          links.push(newLink);
+        }
+      } 
+      // else {
+      //   links.push(new Link("Test link", "http://www.google.com"));
+      //   links.push(new Link("Test link de la que nos importa realmente si es que esto importa", "http://www.trademe.co.nz"));
+      // }
 
       // populate sharedwith
       const sharedWith : User[] = [];

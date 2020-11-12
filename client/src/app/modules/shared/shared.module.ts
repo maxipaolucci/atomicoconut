@@ -18,9 +18,11 @@ import { environment } from '../../../environments/environment';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { FilesUploaderComponent } from './components/files-uploader/files-uploader.component';
 import { ProgressBarDialogComponent } from './components/progress-bar-dialog/progress-bar-dialog.component';
+import { LinkDialogComponent } from './components/link-dialog/link-dialog.component';
 import { StoreModule } from '@ngrx/store';
 import { HouseFiguresResultsComponent } from './components/house-figures-results/house-figures-results.component';
 import * as fromMainNavigator from './components/main-navigator/main-navigator.reducer';
+
 
 @NgModule({
   imports: [
@@ -48,7 +50,8 @@ import * as fromMainNavigator from './components/main-navigator/main-navigator.r
     ProgressBarComponent,
     FilesUploaderComponent,
     ProgressBarDialogComponent,
-    HouseFiguresResultsComponent
+    HouseFiguresResultsComponent,
+    LinkDialogComponent
   ],
   exports: [ 
     MainNavigatorComponent, 
@@ -63,7 +66,8 @@ import * as fromMainNavigator from './components/main-navigator/main-navigator.r
     ProgressBarComponent,
     FilesUploaderComponent,
     ProgressBarDialogComponent,
-    HouseFiguresResultsComponent
+    HouseFiguresResultsComponent,
+    LinkDialogComponent
   ]
 })
 export class SharedModule { }

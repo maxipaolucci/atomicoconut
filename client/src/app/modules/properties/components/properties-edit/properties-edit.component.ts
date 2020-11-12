@@ -24,6 +24,9 @@ import { RequestUpdate, RequestCreate, ResetAllEntitiesLoaded } from '../../prop
 import _ from 'lodash';
 import { propertyByIdSelector } from '../../property.selectors';
 import { SetLinks, AppendLink } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
+import { LinkDialogComponent } from 'src/app/modules/shared/components/link-dialog/link-dialog.component';
+import { Link } from 'src/app/modules/shared/models/link';
+
 
 @Component({
   selector: 'properties-edit',
@@ -252,6 +255,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.model.unit = property.unit;
     this.model.status = property.status;
     this.model.statusDetail = property.statusDetail;
+    this.model.links = _.cloneDeep(property.links);
 
     if ([ PROPERTY_TYPES.HOUSE ].includes(property.type)) {
       this.model.propertyTypeData = {
@@ -304,6 +308,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     for (const member of this.property.sharedWith) {
       this.model.sharedWith.push(member.email);
     }
+
     this.model.propertyPhotos = this.propertyPhotos;
     // to prevent receiving notification of actions performed by current user
     this.model.pusherSocketID = this.appService.pusherSocketID;
@@ -390,6 +395,32 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       if (result) {
         const newMember = new User('', result);
         this.property.sharedWith.push(newMember);
+      }
+    });
+
+    this.subscription.add(newSubscription);
+
+    return false;
+  }
+  
+  removeLink(index: number) {
+    this.model.links.splice(index, 1);
+  }
+
+  openNewLinkDialog() {
+    const newLinkDialogRef = this.dialog.open(LinkDialogComponent, {
+      width: '250px',
+      data: {}
+    });
+
+    const newSubscription = newLinkDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (!result.address.startsWith('http')) {
+          result.address = `http://${result.address}`; 
+        }
+
+        const newLink = new Link(result.displayText, result.address);
+        this.model.links.push(newLink);
       }
     });
 

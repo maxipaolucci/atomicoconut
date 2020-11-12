@@ -79,6 +79,26 @@
           </mat-form-field>
         </div>
       </div>
+
+      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+        <!-- Links -->
+        <h3 class="title">
+          <p class="header">Links</p>
+        </h3>
+        
+        <mat-chip-list *ngIf="model.links && model.links.length" class="aco-link-list" fxLayout="row" fxLayoutGap="10px">
+          <mat-chip *ngFor="let link of model.links; index as linkIndex" class="aco-link" selected removable (removed)="removeLink(linkIndex)">
+            <a [href]="link.address" target="_blank">{{ link.displayText }}</a>
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+        
+        <section class="add-link" fxLayout="column" fxLayoutAlign="start end">
+          <button mat-fab color="primary" (click)="openNewLinkDialog()">
+            <mat-icon matTooltip="Create new link..." matTooltipPosition="left" aria-label="Create new link...">add</mat-icon>
+          </button>
+        </section>
+      </div>
   
       <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
         <h3 class="title">

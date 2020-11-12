@@ -1,0 +1,39 @@
+
+
+<h2 mat-dialog-title>Share with...</h2>
+
+<mat-dialog-content>
+  <div fxLayout="column" class="container__add-link">
+    <form class="form__container form__add-link" #addLinkForm="ngForm" novalidate fxLayout="column" fxLayoutGap="10px">
+      
+      <section fxLayout="column" class="form__fields">
+        <div fxLayout="column" class="form__fields__row">
+          <!-- Display text -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="text" id="display-text" name="display-text" placeholder="Display text" 
+                [(ngModel)]="model.displayText" required #displayText="ngModel">
+
+            <mat-error *ngIf="displayText.invalid && (displayText.dirty || displayText.touched) && displayText.errors.required">Display text is required</mat-error>
+          </mat-form-field>
+          
+          <!-- Address -->
+          <mat-form-field fxFlex class="form__field">
+            <input matInput type="text" id="address" name="address" placeholder="Address" 
+                [(ngModel)]="model.address" required #address="ngModel">
+
+            <mat-error *ngIf="address.invalid && (address.dirty || address.touched) && address.errors.required">Address text is required</mat-error>
+          </mat-form-field>
+        </div>
+      </section>
+    </form>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-around center">
+  <button mat-mini-fab color="warn" mat-dialog-close>
+    <mat-icon aria-label="Cancel">clear</mat-icon>
+  </button>
+  <button mat-mini-fab color="accent" [mat-dialog-close]="model" [disabled]="!addLinkForm.form.valid">
+    <mat-icon aria-label="Add">done</mat-icon>
+  </button>
+</mat-dialog-actions>
