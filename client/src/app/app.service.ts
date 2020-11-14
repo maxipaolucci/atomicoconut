@@ -20,7 +20,7 @@ export class AppService {
   constructor(public snackBar: MatSnackBar) {
     this.pusher = new Pusher(environment.pusher.key, {
       cluster: environment.pusher.cluster,
-      encrypted: true
+      forceTLS: true
     });
     
     this.pusher.connection.bind('connected', () => {
