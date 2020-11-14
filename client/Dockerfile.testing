@@ -1,4 +1,4 @@
-FROM node:10.16.2-alpine as builder
+FROM node:14.15-alpine as builder
 
 RUN node -v && npm -v
 
