@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     //Show or hide progress bar for loading...
     this.loading$ = this.store.select(loadingSelector());
-
+    
     // subscribe to teams
     this.subscription.add(this.store.select(teamsSelector()).subscribe((teams: Team[]) => this.teams = teams));
 
