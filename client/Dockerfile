@@ -7,7 +7,7 @@ WORKDIR /app
 # To handle 'not get uid/gid' in Travis CI. Try to remove this in the future
 RUN npm config set unsafe-perm true
 
-RUN npm install -g @angular/cli@9.0.6
+RUN npm install -g @angular/cli@11.0.1
 
 COPY ./package.json ./
 
