@@ -1,8 +1,5 @@
 FROM node:14.15-alpine
 
-# required to install some npm
-RUN apk add python make g++
-
 RUN node -v && npm -v
 
 WORKDIR /app
