@@ -25,7 +25,8 @@ exports.createToken = (user) => {
 // this method check the JWT sent in the request to be valid against the private key
 exports.jwtCheck = expressjwt({
   secret: process.env.SESSION_SECRET,
-  requestProperty: 'jwtToken' //send the decoded token data to req.auth
+  requestProperty: 'jwtToken', //send the decoded token data to req.auth
+  algorithms: ['sha1', 'RS256', 'HS256'],
 });
 
 // this method checks that the jwt provided and decoded matched the user email

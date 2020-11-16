@@ -4,7 +4,7 @@ const userController = require('../../controllers/userController');
 const authController = require('../../controllers/authController');
 const authHandler = require('../../handlers/authHandler');
 const { catchErrors } = require('../../handlers/errorHandlers');
-const { check, sanitizeBody } = require('express-validator');
+const { check, body } = require('express-validator');
 
 
 //*************************************************************************** */
@@ -15,10 +15,10 @@ router.route('/login').post(authController.login);
 
 router.route('/register').post(
   [
-    sanitizeBody('name'),
+    body('name'),
     check('name', 'A name is required.').not().isEmpty(),
     check('email', 'The email provided is invalid').isEmail(),
-    sanitizeBody('email'),
+    body('email'),
     check('password', 'Password is required').not().isEmpty(),
     check('password-confirm', 'Password confirmation is required').not().isEmpty()
     //check('password', 'Password confirmation must match the password').equals('password-confirm')

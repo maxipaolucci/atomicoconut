@@ -1,4 +1,7 @@
-FROM node:10.16.2-alpine
+FROM node:14.15-alpine
+
+# required to install some npm
+RUN apk add python make g++
 
 RUN node -v && npm -v
 

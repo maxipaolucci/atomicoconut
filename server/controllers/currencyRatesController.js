@@ -6,7 +6,6 @@ const axios = require('axios');
 
 const errorTrace = 'currencyRatesController >';
 
-
 /**
  * This method stores a rate into our currencyRate table in DB.
  * @param {*} ratesObject . This contains a date and a rates object for store

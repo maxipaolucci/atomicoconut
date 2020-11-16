@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 const multer = require('multer'); 
 const passport = require('passport');
 const { promisify } = require('es6-promisify');
-const flash = require('connect-flash');
 const routes = require('./routes/index');
 const usersRoutes = require('./routes/api/usersRoutes');
 const teamsRoutes = require('./routes/api/teamsRoutes');
@@ -57,7 +56,7 @@ app.use(multer(multerOptions).array('files'));
 app.use(cookieParser());
 
 // Sessions allow us to store data on visitors from request to request
-// This keeps users logged in and allows us to send flash messages
+// This keeps users logged in
 app.use(session({
   secret: process.env.SESSION_SECRET,
   key: process.env.SESSION_KEY,
@@ -71,13 +70,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// // The flash middleware let's us use req.flash('error', 'Shit!'), which will then pass that message to the next page the user requests
-app.use(flash());
-
 // pass variables to our templates + all requests
 app.use((req, res, next) => {
   res.locals.h = helpers;
-  res.locals.flashes = req.flash();
   res.locals.user = req.user || null;
   res.locals.currentPath = req.path;
   res.locals.environment = process.env.NODE_ENV;
