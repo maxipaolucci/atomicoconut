@@ -168,14 +168,7 @@ export class NetWorthComponent implements OnInit, OnDestroy {
       switchMap((investments: Investment[]) => {
         currentUserInvestments = investments;
         let investmentsDates: string[] = investments.map((investment: Investment) => {
-          if ([ INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO ].includes(investment.type)) {  
-            return this.utilService.formatDate((<CurrencyInvestment>investment).buyingDate);
-          } else if ([ INVESTMENTS_TYPES.PROPERTY ].includes(investment.type)) {
-            return this.utilService.formatDate((<PropertyInvestment>investment).buyingDate);
-          }
-          
-          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Invalid investment instance type.`);
-          return this.utilService.formatToday(); // this should never happen. BuyingDate is required in investments
+          return this.utilService.formatDate(investment.getBuyingDate());
         });
         
         if (investments.length) {

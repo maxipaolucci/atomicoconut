@@ -203,8 +203,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         unit : (<CurrencyInvestment>investment).unit,
         amount : (<CurrencyInvestment>investment).amount,
         buyingPrice : (<CurrencyInvestment>investment).buyingPrice,
-        buyingPriceUnit : (<CurrencyInvestment>investment).buyingPriceUnit,
-        buyingDate : (<CurrencyInvestment>investment).buyingDate
+        buyingPriceUnit : (<CurrencyInvestment>investment).buyingPriceUnit
       };
     } else if ([ INVESTMENTS_TYPES.PROPERTY ].includes(investment.type)) {
       this.model.investmentData = {
@@ -212,10 +211,11 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         property : (<PropertyInvestment>investment).property,
         address : (<PropertyInvestment>investment).property.address,
         buyingPrice : (<PropertyInvestment>investment).buyingPrice,
-        buyingPriceUnit : (<PropertyInvestment>investment).buyingPriceUnit,
-        buyingDate : (<PropertyInvestment>investment).buyingDate
+        buyingPriceUnit : (<PropertyInvestment>investment).buyingPriceUnit
       };
     }
+
+    this.model.investmentData.buyingDate = investment.getBuyingDate();
 
   }
 

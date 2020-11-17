@@ -1,7 +1,7 @@
 import { User } from '../../users/models/user';
 import { Team } from '../../teams/models/team';
 
-export class Investment {
+export abstract class Investment {
 
   id: string;
   type: 'crypto' | 'currency' | 'property';
@@ -25,4 +25,6 @@ export class Investment {
     this.loanAmount = loanAmount;
     this.loanAmountUnit = loanAmountUnit;
   }
+
+  abstract getBuyingDate():Date;
 }

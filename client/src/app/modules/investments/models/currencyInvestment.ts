@@ -20,4 +20,8 @@ export class CurrencyInvestment extends Investment {
     this.buyingPrice = buyingPrice;
     this.buyingPriceUnit = buyingPriceUnit;
   }
+
+  getBuyingDate():Date {
+    return this.buyingDate;
+  }
 }
