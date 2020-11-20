@@ -6,6 +6,7 @@ import { RoutingPaths } from './constants';
 @Injectable()
 export class UtilService {
 
+  // this must be up to date with flexLayout library breakpoints 
   private settings : any = {
     flexLayoutBkpts : {
       xs : { min: 0, max: 599 },
@@ -76,18 +77,6 @@ export class UtilService {
    */
   formatToday(formatStr : string = 'YYYY-MM-DD') {
     return this.formatDate(new Date(), formatStr);
-  }
-
-  /**
-   * Show logs in the console if enabled in the current environment
-   * @param type . Error type
-   * @param message . The message to show
-   * @param params . Any extra parameters to list in the log.
-   */
-  consoleLog(type : 'log' | 'debug' | 'warn' | 'info' | 'error', message : string, ...params) {
-    if (environment.showLogs) {
-      console[type](message, params);
-    }
   }
 
   getRoutingPath(name: string) {

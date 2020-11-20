@@ -14,10 +14,10 @@ export const NZ_HOUSE_TITLE_TYPES = {
   LEASE_HOLD : 'leaseHold'
 };
 
-export const INVESTMENTS_TYPES = {
-  CURRENCY: 'currency',
-  CRYPTO : 'crypto',
-  PROPERTY : 'property'
+export enum INVESTMENTS_TYPES {
+  CURRENCY = 'currency',
+  CRYPTO = 'crypto',
+  PROPERTY = 'property'
 };
 
 export const COINCAP_CRYPTO_TYPES = {

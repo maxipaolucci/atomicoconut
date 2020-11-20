@@ -3,8 +3,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../environments/environment';
 import { SnackbarSimpleComponent } from './modules/shared/components/snackbar-simple/snackbar-simple.component';
 import { Response } from './models/response';
-import { HttpErrorResponse } from '@angular/common/http';
-import { throwError, Observable } from 'rxjs';
 import Pusher from 'pusher-js';
 import { ConsoleNotificationTypes, SnackbarNotificationTypes, ServerResponseStatus } from './constants';
 

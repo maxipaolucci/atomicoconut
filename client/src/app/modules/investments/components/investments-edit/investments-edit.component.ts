@@ -85,8 +85,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     const params$ = this.route.paramMap.pipe(
       map((params: ParamMap): any => { 
         const type: string = params.get('type');
-
-        if (![INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO, INVESTMENTS_TYPES.PROPERTY].includes(type)) {
+        if (!(<Array<string>>Object.values(INVESTMENTS_TYPES)).includes(type)) { 
           this.appService.showResults('You must provide a valid investment type to continue.', SnackbarNotificationTypes.ERROR);
           this.router.navigate(['welcome']);
         } else {
@@ -196,27 +195,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.model.investmentAmount = investment.investmentAmount;
     this.model.investmentAmountUnit = investment.investmentAmountUnit;
     this.model.type = investment.type;
-    
-    if ([ INVESTMENTS_TYPES.CURRENCY, INVESTMENTS_TYPES.CRYPTO ].includes(investment.type)) {
-      this.model.investmentData = {
-        type : investment.type,
-        unit : (<CurrencyInvestment>investment).unit,
-        amount : (<CurrencyInvestment>investment).amount,
-        buyingPrice : (<CurrencyInvestment>investment).buyingPrice,
-        buyingPriceUnit : (<CurrencyInvestment>investment).buyingPriceUnit
-      };
-    } else if ([ INVESTMENTS_TYPES.PROPERTY ].includes(investment.type)) {
-      this.model.investmentData = {
-        type : investment.type,
-        property : (<PropertyInvestment>investment).property,
-        address : (<PropertyInvestment>investment).property.address,
-        buyingPrice : (<PropertyInvestment>investment).buyingPrice,
-        buyingPriceUnit : (<PropertyInvestment>investment).buyingPriceUnit
-      };
-    }
-
-    this.model.investmentData.buyingDate = investment.getBuyingDate();
-
+    this.model.investmentData = investment.getSpecificDataRaw();
+    this.model.investmentData.type = investment.type;
   }
 
   ngAfterViewInit(): void {
