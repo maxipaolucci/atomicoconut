@@ -194,7 +194,12 @@ const propertySchema = new mongoose.Schema({
       default: null,
       trim: true 
     } 
-  }]
+  }],
+  propertyAdditionalInfo : {
+    type : mongoose.Schema.ObjectId,
+    ref : 'PropertyAdditionalInfo',
+    default: null
+  }
 });
 
 module.exports = mongoose.model('Property', propertySchema);

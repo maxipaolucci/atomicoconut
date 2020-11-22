@@ -296,6 +296,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
 
     this.model.createdOn = new Date(Date.now());
     this.model.updatedOn = new Date(Date.now());
+    this.model.propertyAdditionalInfo = this.modelHouseFiguresResults;
 
     this.store.dispatch(new RequestCreate({ model: _.cloneDeep(this.model) }));
   }

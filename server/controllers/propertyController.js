@@ -121,7 +121,8 @@ exports.create = async (req, res, next) => {
         status : req.body.status,
         statusDetail : req.body.statusDetail,
         propertyUsers : [],
-        links: req.body.links
+        links: req.body.links,
+        propertyAdditionalInfo: req.body.propertyAdditionalInfo
     })).save();
 
     if (!property) {
@@ -278,7 +279,8 @@ exports.update = async (req, res, next) => {
         unit : req.body.unit,
         status : req.body.status,
         statusDetail : req.body.statusDetail,
-        links: req.body.links
+        links: req.body.links,
+        propertyAdditionalInfo: req.body.propertyAdditionalInfo
     };
 
     //update property
@@ -730,6 +732,7 @@ const aggregationStages = () => {
                 }
             }
         },
+        { $lookup : { from : 'propertyAdditionalInfo', localField : 'propertyAdditionalInfo', foreignField : '_id', as : 'propertyAdditionalInfo' } }, //for houses
         { $lookup : { from : 'houses', localField : '_id', foreignField : 'parent', as : 'houseData' } }, //for houses
         { $lookup : { from : 'properties', localField : '_id', foreignField : '_id', as : 'propertyData' } }, //we do this to be able to easily retrieve data after grouping
         { $unwind : '$propertyUsers' },
@@ -803,6 +806,7 @@ const beautifyPropertiesFormat = async (properties, options = null) => {
             { propertyTypeData : property.propertyTypeData },
             { sharedWith: property.sharedWith }
         );
+        
         delete result['__v'];
         results.push(result);
     }

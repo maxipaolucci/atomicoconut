@@ -33,6 +33,7 @@ require('./models/Investment');
 require('./models/CurrencyInvestment');
 require('./models/PropertyInvestment');
 require('./models/Property');
+require('./models/PropertyAdditionalInfo');
 require('./models/House');
 require('./models/CurrencyRate');
 require('./models/Property_User');
