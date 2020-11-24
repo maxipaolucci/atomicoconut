@@ -318,7 +318,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.model.propertyPhotos = this.propertyPhotos;
     // to prevent receiving notification of actions performed by current user
     this.model.pusherSocketID = this.appService.pusherSocketID;
-    console.log(this.model);
+    
     this.store.dispatch(new RequestUpdate({ model: _.cloneDeep(this.model) }));
   }
 
@@ -354,9 +354,9 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
       }
     });
 
-    const newSubscription = houseFiguresDialogRef.afterClosed().subscribe(modelHouseFiguresResults => {
+    const newSubscription = houseFiguresDialogRef.afterClosed().subscribe(dialogResult => {
       if (houseFiguresDialogRef.componentInstance.modelHouseFiguresResults) {
-        this.modelHouseFiguresResults = modelHouseFiguresResults;
+        this.modelHouseFiguresResults = houseFiguresDialogRef.componentInstance.modelHouseFiguresResults;
       }
 
       this.showPropertyFiguresDialogSpinner = false;

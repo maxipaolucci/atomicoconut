@@ -186,7 +186,6 @@ export class InvestmentsService {
         }
 
         if (propertyData.propertyType === PROPERTY_TYPES.HOUSE) {
-          console.log(propertyData);
           // we share the createdBy of the investment because we know is the same
           property = new House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
               propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit,
