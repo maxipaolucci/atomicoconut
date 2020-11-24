@@ -186,6 +186,7 @@ export class InvestmentsService {
         }
 
         if (propertyData.propertyType === PROPERTY_TYPES.HOUSE) {
+          console.log(propertyData);
           // we share the createdBy of the investment because we know is the same
           property = new House(propertyData._id, propertyData.propertyType, address, createdBy, propertyData.landArea, propertyData.floorArea, propertyData.askingPrice, propertyData.askingPriceUnit,
               propertyData.offerPrice, propertyData.offerPriceUnit, propertyData.walkAwayPrice, propertyData.walkAwayPriceUnit, propertyData.purchasePrice, propertyData.purchasePriceUnit,
@@ -193,7 +194,7 @@ export class InvestmentsService {
               propertyData.purchasePrice5, propertyData.purchasePrice5Unit, propertyData.dateListed, 
               propertyData.reasonForSelling, propertyData.marketValue, propertyData.marketValueUnit, propertyData.registeredValue, propertyData.registeredValueUnit, propertyData.rates, propertyData.ratesUnit,
               propertyData.insurance, propertyData.insuranceUnit, propertyData.renovationCost, propertyData.renovationCostUnit, propertyData.maintenanceCost, propertyData.maintenanceCostUnit, 
-              propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.photos, propertyData.unit, propertyData.status, propertyData.statusDetail, [], propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces,
+              propertyData.description, propertyData.otherCost, propertyData.otherCostUnit, propertyData.notes, propertyData.photos, propertyData.unit, propertyData.status, propertyData.statusDetail, [], propertyData.links, null, propertyData.capitalGrowth, propertyData.bedrooms, propertyData.bathrooms, propertyData.parkingSpaces,
               propertyData.fenced, propertyData.rented, propertyData.rentPrice, propertyData.rentPriceUnit, propertyData.rentPricePeriod, propertyData.rentAppraisalDone, propertyData.vacancy, propertyData.bodyCorporate,
               propertyData.bodyCorporateUnit, propertyData.utilitiesCost, propertyData.utilitiesCostUnit, propertyData.agent, propertyData.managed, propertyData.managerRate, propertyData.buildingType, propertyData.titleType);
         }  

@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { Property } from './models/property';
 import { Response } from '../../models/response';
 import { User } from '../users/models/user';
-import { PROPERTY_TYPES, ConsoleNotificationTypes } from '../../constants';
+import { PROPERTY_TYPES, ConsoleNotificationTypes, SnackbarNotificationTypes } from '../../constants';
 import { House } from './models/house';
 import { Address } from './models/address';
 import { map, catchError, switchMap, mergeMap } from 'rxjs/operators';
@@ -34,7 +34,14 @@ export class PropertiesService {
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers }).pipe(
       map(this.appService.extractData),
       map((data: any): Property => {
-        return this.populate(data);
+        if (data && data._id) {
+          this.appService.showResults(`Property successfully created!`, SnackbarNotificationTypes.SUCCESS);
+          return this.populate(data);
+        } else {
+          this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);
+        }
+
+        return null;
       })
     );
   } 
