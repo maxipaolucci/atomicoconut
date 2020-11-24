@@ -40,6 +40,7 @@ const Investment = require('../models/Investment');
 const CurrencyInvestment = require('../models/CurrencyInvestment');
 const PropertyInvestment = require('../models/PropertyInvestment');
 const Property = require('../models/Property');
+const PropertyAdditionalInfo = require('../models/PropertyAdditionalInfo');
 const House = require('../models/House');
 const CurrencyRate = require('../models/CurrencyRate');
 const PropertyUser = require('../models/Property_User');
@@ -67,6 +68,8 @@ async function deleteData() {
     console.log(`PropertyInvestment table is empty.`);
     await Property.deleteMany({});
     console.log(`Property table is empty.`);
+    await PropertyAdditionalInfo.deleteMany({});
+    console.log(`PropertyAdditionalInfo table is empty.`);
     await House.deleteMany({});
     console.log(`House table is empty.`);
     await CurrencyRate.deleteMany({});
@@ -98,6 +101,7 @@ async function loadData(source = 'dev') {
     const currencyinvestments = jsonfile.readFileSync(`${__dirname}/${source}/currencyinvestments.json`);
     const propertyinvestments = jsonfile.readFileSync(`${__dirname}/${source}/propertyinvestments.json`);
     const properties = jsonfile.readFileSync(`${__dirname}/${source}/properties.json`);
+    const propertyadditionalinfos = jsonfile.readFileSync(`${__dirname}/${source}/propertyadditionalinfos.json`);
     const houses = jsonfile.readFileSync(`${__dirname}/${source}/houses.json`);
     const currencyrates = jsonfile.readFileSync(`${__dirname}/${source}/currencyrates.json`);
     const propertyusers = jsonfile.readFileSync(`${__dirname}/${source}/propertyusers.json`);
@@ -145,6 +149,11 @@ async function loadData(source = 'dev') {
     if (properties.length) {
       await Property.insertMany(properties);
       console.log(`${properties.length} Properties loaded successfully.`);
+    }
+
+    if (propertyadditionalinfos.length) {
+      await Property.insertMany(propertyadditionalinfos);
+      console.log(`${propertyadditionalinfos.length} PropertyAdditionalInfos loaded successfully.`);
     }
 
     if (houses.length) {
@@ -210,6 +219,10 @@ async function dumpData() {
     const properties = await Property.find({}, { __v : false });
     jsonfile.writeFileSync(`${__dirname}/${environment}/properties.json`, properties);
     console.log(`${properties.length} properties exported to json successfully.`);
+    
+    const propertyadditionalinfos = await PropertyAdditionalInfo.find({}, { __v : false });
+    jsonfile.writeFileSync(`${__dirname}/${environment}/propertyadditionalinfos.json`, propertyadditionalinfos);
+    console.log(`${propertyadditionalinfos.length} propertyadditionalinfos exported to json successfully.`);
 
     const houses = await House.find({}, { __v : false });
     jsonfile.writeFileSync(`${__dirname}/${environment}/houses.json`, houses);
