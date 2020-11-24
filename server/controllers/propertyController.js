@@ -9,7 +9,8 @@ const { getPusher, removeDuplicatesFromObjectIdArray } = require('../handlers/ut
 const { getPropertyIdsInInvestments } = require('./investmentController');
 const jimp = require('jimp'); //resize images
 const uuid = require('uuid'); //unique names for the images files
-const propertyUserController = require('../controllers/propertyUserController');
+const propertyAdditionalInfoController = require('./propertyAdditionalInfoController');
+const propertyUserController = require('./propertyUserController');
 const { validationResult } = require('express-validator');
 const errorTrace = 'propertyController >';
 
@@ -121,8 +122,7 @@ exports.create = async (req, res, next) => {
         status : req.body.status,
         statusDetail : req.body.statusDetail,
         propertyUsers : [],
-        links: req.body.links,
-        propertyAdditionalInfo: req.body.propertyAdditionalInfo
+        links: req.body.links
     })).save();
 
     if (!property) {
@@ -139,6 +139,10 @@ exports.create = async (req, res, next) => {
         
     console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Property')}`);
 
+    // Save additional info for the property
+    await propertyAdditionalInfoController.create(property._id, req.body.propertyAdditionalInfo, user.email, res);
+
+    // Save property type 
     let propertyType = null;
     if (property.propertyType === PROPERTY_TYPES.HOUSE) {
         //save a new house record in DB
@@ -279,8 +283,7 @@ exports.update = async (req, res, next) => {
         unit : req.body.unit,
         status : req.body.status,
         statusDetail : req.body.statusDetail,
-        links: req.body.links,
-        propertyAdditionalInfo: req.body.propertyAdditionalInfo
+        links: req.body.links
     };
 
     //update property
@@ -301,6 +304,9 @@ exports.update = async (req, res, next) => {
             data : null
         });
     }
+
+    // update additional data
+    await propertyAdditionalInfoController.update(property._id, req.body.propertyAdditionalInfo, user.email, res);
     
     //update property type data
     console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Property')}`);
@@ -552,6 +558,9 @@ exports.delete = async (req, res) => {
     writeResult = null;
     console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Property', '_id', property._id)}`);
 
+    // delete additional data
+    await propertyAdditionalInfoController.delete(property._id, user.email, res);
+    
     writeResult = await Property.deleteOne({ _id : property._id });
     if (!(writeResult && writeResult.n > 0)) {
         //Failed to delete property
@@ -732,7 +741,7 @@ const aggregationStages = () => {
                 }
             }
         },
-        { $lookup : { from : 'propertyAdditionalInfo', localField : 'propertyAdditionalInfo', foreignField : '_id', as : 'propertyAdditionalInfo' } }, //for houses
+        { $lookup : { from : 'propertyadditionalinfos', localField : '_id', foreignField : 'parent', as : 'propertyAdditionalInfoData' } }, //for propertyAdditionalInfos
         { $lookup : { from : 'houses', localField : '_id', foreignField : 'parent', as : 'houseData' } }, //for houses
         { $lookup : { from : 'properties', localField : '_id', foreignField : '_id', as : 'propertyData' } }, //we do this to be able to easily retrieve data after grouping
         { $unwind : '$propertyUsers' },
@@ -751,6 +760,7 @@ const aggregationStages = () => {
                 _id : "$_id",
                 createdBy: { $first: '$createdBy'}, 
                 updatedBy: { $first: '$updatedBy'}, 
+                propertyAdditionalInfoData: { $first: '$propertyAdditionalInfoData' },
                 houseData: { $first: '$houseData'}, 
                 propertyData: { $first: '$propertyData'}, 
                 sharedWith: { $push: "$sharedWith" }
@@ -789,8 +799,18 @@ const beautifyPropertiesFormat = async (properties, options = null) => {
         property.updatedBy.email = property.updatedBy.email[0];
         property.updatedBy.gravatar = 'https://gravatar.com/avatar/' + md5(property.updatedBy.email) + '?s=200';
 
+        // property additional info data
+        if (property.propertyAdditionalInfoData && property.propertyAdditionalInfoData.length) {
+            property.propertyAdditionalInfo = property.propertyAdditionalInfoData[0];
+            delete property.propertyAdditionalInfo['__v'];
+        }
+
+        if (property.propertyAdditionalInfo && !(options && options.propertyAdditionalInfoId)) {
+            delete property.propertyAdditionalInfo['_id'];
+        }
+
         //property type data
-        if (property.houseData[0]) {
+        if (property.houseData && property.houseData.length) {
             property.propertyTypeData = property.houseData[0];
         }
 
@@ -801,10 +821,11 @@ const beautifyPropertiesFormat = async (properties, options = null) => {
         let result = Object.assign(
             {}, 
             property.propertyData[0], 
-            { createdBy : property.createdBy }, 
-            { updatedBy : property.updatedBy }, 
-            { propertyTypeData : property.propertyTypeData },
-            { sharedWith: property.sharedWith }
+            { createdBy: property.createdBy }, 
+            { updatedBy: property.updatedBy }, 
+            { propertyTypeData: property.propertyTypeData },
+            { sharedWith: property.sharedWith },
+            { propertyAdditionalInfo: property.propertyAdditionalInfo }
         );
         
         delete result['__v'];

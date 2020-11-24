@@ -1,6 +1,7 @@
 import { Link } from '../../shared/models/link';
 import { User } from '../../users/models/user';
 import { Address } from './address';
+import { PropertyAdditionalInfo } from './property-additional-info';
 
 export class Property {
 
@@ -42,6 +43,7 @@ export class Property {
   statusDetail: string;
   sharedWith: User[];
   links: Link[];
+  propertyAdditionalInfo: PropertyAdditionalInfo;
 
   constructor(
       id: string = null,
@@ -81,7 +83,8 @@ export class Property {
       status: string = null,
       statusDetail: string = null,
       sharedWith: User[] = null,
-      links: Link[] = null) {
+      links: Link[] = null,
+      propertyAdditionalInfo: PropertyAdditionalInfo = null) {
     
     this.id = id;
     this.type = type;
@@ -121,5 +124,6 @@ export class Property {
     this.statusDetail = statusDetail;
     this.sharedWith = sharedWith;
     this.links = links;
+    this.propertyAdditionalInfo = propertyAdditionalInfo;
   }
 }

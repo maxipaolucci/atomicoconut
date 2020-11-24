@@ -256,6 +256,8 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.model.status = property.status;
     this.model.statusDetail = property.statusDetail;
     this.model.links = _.cloneDeep(property.links);
+    this.modelHouseFiguresResults = Object.assign({}, this.modelHouseFiguresResults, property.propertyAdditionalInfo);
+    this.modelHouseFiguresResults.paymentFrecuency = this.modelHouseFiguresResults.paymentFrecuency.toString();
 
     if ([ PROPERTY_TYPES.HOUSE ].includes(property.type)) {
       this.model.propertyTypeData = {
@@ -297,6 +299,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.model.createdOn = new Date(Date.now());
     this.model.updatedOn = new Date(Date.now());
     this.model.propertyAdditionalInfo = this.modelHouseFiguresResults;
+    this.model.propertyAdditionalInfo.paymentFrecuency = parseInt(this.model.propertyAdditionalInfo.paymentFrecuency, 10);
 
     this.store.dispatch(new RequestCreate({ model: _.cloneDeep(this.model) }));
   }
@@ -309,11 +312,13 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     for (const member of this.property.sharedWith) {
       this.model.sharedWith.push(member.email);
     }
+    this.model.propertyAdditionalInfo = this.modelHouseFiguresResults;
+    this.model.propertyAdditionalInfo.paymentFrecuency = parseInt(this.model.propertyAdditionalInfo.paymentFrecuency, 10);
 
     this.model.propertyPhotos = this.propertyPhotos;
     // to prevent receiving notification of actions performed by current user
     this.model.pusherSocketID = this.appService.pusherSocketID;
-
+    console.log(this.model);
     this.store.dispatch(new RequestUpdate({ model: _.cloneDeep(this.model) }));
   }
 

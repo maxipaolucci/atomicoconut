@@ -6,7 +6,7 @@ mongoose.Promise = global.Promise;
 const propertySchema = new mongoose.Schema({
   propertyType: {
     type: String,
-    required: 'A currency type is required!.',
+    required: 'A property type is required!.',
     trim: true
   },
   createdBy: {
@@ -194,12 +194,7 @@ const propertySchema = new mongoose.Schema({
       default: null,
       trim: true 
     } 
-  }],
-  propertyAdditionalInfo : {
-    type : mongoose.Schema.ObjectId,
-    ref : 'PropertyAdditionalInfo',
-    default: null
-  }
+  }]
 });
 
 module.exports = mongoose.model('Property', propertySchema);

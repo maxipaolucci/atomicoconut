@@ -12,6 +12,7 @@ import { Address } from './models/address';
 import { map, catchError, switchMap, mergeMap } from 'rxjs/operators';
 import obj2fd from 'obj2fd';
 import { Link } from '../shared/models/link';
+import { PropertyAdditionalInfo } from './models/property-additional-info';
 
 @Injectable()
 export class PropertiesService {
@@ -149,11 +150,13 @@ export class PropertiesService {
           const newLink = new Link(link.displayText, link.address);
           links.push(newLink);
         }
-      } 
-      // else {
-      //   links.push(new Link("Test link", "http://www.google.com"));
-      //   links.push(new Link("Test link de la que nos importa realmente si es que esto importa", "http://www.trademe.co.nz"));
-      // }
+      }
+
+      let propertyAdditionalInfo: PropertyAdditionalInfo = null;
+      if (data.propertyAdditionalInfo) {
+        propertyAdditionalInfo = new PropertyAdditionalInfo(data.propertyAdditionalInfo.loanCoverage, data.propertyAdditionalInfo.interestRates, 
+            data.propertyAdditionalInfo.loanTerm, data.propertyAdditionalInfo.paymentFrecuency);
+      }
 
       // populate sharedwith
       const sharedWith : User[] = [];
@@ -168,7 +171,7 @@ export class PropertiesService {
             data.purchasePrice3, data.purchasePrice3Unit, data.purchasePrice4, data.purchasePrice4Unit, data.purchasePrice5, data.purchasePrice5Unit, data.dateListed, 
             data.reasonForSelling, data.marketValue, data.marketValueUnit, data.propertyTypeData.registeredValue, data.propertyTypeData.registeredValueUnit, data.propertyTypeData.rates, data.propertyTypeData.ratesUnit,
             data.propertyTypeData.insurance, data.propertyTypeData.insuranceUnit, data.renovationCost, data.renovationCostUnit, data.maintenanceCost, data.maintenanceCostUnit, 
-            data.description, data.otherCost, data.otherCostUnit, data.notes, data.photos, data.unit, data.status, data.statusDetail, sharedWith, links, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces,
+            data.description, data.otherCost, data.otherCostUnit, data.notes, data.photos, data.unit, data.status, data.statusDetail, sharedWith, links, propertyAdditionalInfo, data.propertyTypeData.capitalGrowth, data.propertyTypeData.bedrooms, data.propertyTypeData.bathrooms, data.propertyTypeData.parkingSpaces,
             data.propertyTypeData.fenced, data.propertyTypeData.rented, data.propertyTypeData.rentPrice, data.propertyTypeData.rentPriceUnit, data.propertyTypeData.rentPricePeriod, data.propertyTypeData.rentAppraisalDone, data.propertyTypeData.vacancy, data.propertyTypeData.bodyCorporate,
             data.propertyTypeData.bodyCorporateUnit, data.propertyTypeData.utilitiesCost, data.propertyTypeData.utilitiesCostUnit, data.propertyTypeData.agent, data.propertyTypeData.managed, data.propertyTypeData.managerRate, data.propertyTypeData.buildingType, data.propertyTypeData.titleType);
       }

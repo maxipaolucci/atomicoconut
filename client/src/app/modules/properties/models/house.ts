@@ -2,6 +2,7 @@ import { User } from '../../users/models/user';
 import { Property } from './property';
 import { Address } from './address';
 import { Link } from '../../shared/models/link';
+import { PropertyAdditionalInfo } from './property-additional-info';
 
 export class House extends Property {
 
@@ -82,6 +83,7 @@ export class House extends Property {
       statusDetail: string = null,
       sharedWith: User[] = null,
       links: Link[] = null,
+      propertyAdditionalInfo: PropertyAdditionalInfo = null,
       capitalGrowth: number = null,
       bedrooms: number = null,
       bathrooms: number = null,
@@ -107,7 +109,7 @@ export class House extends Property {
         walkAwayPrice, walkAwayPriceUnit, purchasePrice, purchasePriceUnit, purchasePrice2, purchasePrice2Unit, purchasePrice3, 
         purchasePrice3Unit, purchasePrice4, purchasePrice4Unit, purchasePrice5, purchasePrice5Unit, dateListed, reasonForSelling, marketValue,
         marketValueUnit, renovationCost, renovationCostUnit, maintenanceCost, maintenanceCostUnit, description, otherCost,
-        otherCostUnit, notes, photos, unit, status, statusDetail, sharedWith, links);
+        otherCostUnit, notes, photos, unit, status, statusDetail, sharedWith, links, propertyAdditionalInfo);
     
     this.landArea = landArea;
     this.floorArea = floorArea;
