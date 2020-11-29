@@ -162,6 +162,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
           return this.property;
         }
       }),
+      // check if the property is part of any investment and update the investment.property field with the latest info for this property
       switchMap((property: Property) => {
         if (!property) {
           return of([]);
@@ -175,7 +176,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
         let updates: PropertyInvestment = _.cloneDeep(investment);
         updates.property = this.property;
 
-        // let's update the investment property with the recently updated property data
+        // let's update the investment property with the recently retrieved/updated property data
         const entityChanges: Update<Investment> = {
           id: updates.id,
           changes: updates
