@@ -16,10 +16,9 @@ import { State } from 'src/app/main.reducer';
 import { CurrencyRate } from 'src/app/modules/currency-exchange/models/currency-rate';
 import { userSelector } from 'src/app/modules/users/user.selectors';
 import { currencyRateByIdsSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
-import { RequestDelete } from '../../investment.actions';
+import { RequestDelete, Update_ } from '../../investment.actions';
 import { loadingSelector } from 'src/app/app.selectors';
 import { LoadingData } from 'src/app/models/loadingData';
-import { Investment } from '../../models/investment';
 
 
 @Component({
@@ -76,7 +75,8 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
       this.teams$
     ).pipe(
       filter(([ user, currencyRates, teams ]: [ User, { string: CurrencyRate }, Team[] ]) => {
-        if (!currencyRates || !currencyRates[this.utilService.formatToday()] || !currencyRates[this.utilService.formatDate(this.investment.buyingDate)]) {
+        if (!currencyRates || !currencyRates[this.utilService.formatToday()] || 
+            !currencyRates[this.utilService.formatDate(this.investment.buyingDate)]) {
           return false;
         }
 
@@ -86,6 +86,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
 
     newSubscription = combineLatest$.subscribe(([user, currencyRates, teams]: [User, { string: CurrencyRate }, Team[]]) => {
       this.user = user;
+
       // for all this info I need to be sure currencyRates are here
       if (currencyRates && Object.keys(currencyRates).length) {
         // market value should be always up to date so no rate conversion is required
@@ -99,7 +100,8 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
         this.investmentReturn = this.currentPrice;
       }
 
-      this.setInvestmentTeamData(teams);
+      this.team = this.investment.team ? teams.filter(team => team.slug === this.investment.team.slug)[0] : null; // look for the team of the investment
+      this.setInvestmentTeamData(this.team);
     });
     this.subscription.add(newSubscription);
   }
@@ -114,11 +116,9 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
   /**
    * Populates team data as well as the distribution on the investment between team members when the investment is asigned to a team
    * 
-   * @param {Team[]} teams . The teams of the current user
+   * @param {Team} team . The team of the investment
    */
-  setInvestmentTeamData(teams: Team[]) {
-    this.team = this.investment.team ? teams.filter(team => team.slug === this.investment.team.slug)[0] : null; // look for the team of the investment
-    
+  setInvestmentTeamData(team: Team) {
     // set totals to emit to parent component. If no team assigned then the total of the investment is the same as my portion
     const totals = {
       investmentId : this.investment.id,
@@ -127,6 +127,8 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
       myInvestmentAmount : this.investmentAmount,
       myInvestmentReturn : this.investmentReturn
     };
+
+    this.investmentDistribution = [];
 
     if (this.team) {
       // if team is present then get my portion of the investment

@@ -140,6 +140,7 @@ export class PropertyEffects {
           id: property.id,
           changes: property
         }
+        
         return new Update_({ entityChanges });
       }
       return new FinalizeOperation();

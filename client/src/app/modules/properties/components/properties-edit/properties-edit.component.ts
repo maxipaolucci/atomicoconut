@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, of } from 'rxjs';
 import { User } from '../../../users/models/user';
 import { Property } from '../../models/property';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -12,7 +12,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { UtilService } from '../../../../util.service';
 import { HouseFiguresDialogComponent } from '../house-figures-dialog/house-figures-dialog.component';
 import { PropertyYieldsDialogComponent } from '../property-yields-dialog/property-yields-dialog.component';
-import { map } from 'rxjs/operators';
+import { map, first, switchMap } from 'rxjs/operators';
 import { FilesUploaderChange } from '../../../../modules/shared/components/files-uploader/models/filesUploaderChange';
 import { ShareWithDialogComponent } from '../share-with-dialog/share-with-dialog.component';
 import { userSelector } from 'src/app/modules/users/user.selectors';
@@ -21,11 +21,16 @@ import { State } from 'src/app/main.reducer';
 import { LoadingData } from 'src/app/models/loadingData';
 import { loadingSelector } from 'src/app/app.selectors';
 import { RequestUpdate, RequestCreate, ResetAllEntitiesLoaded } from '../../property.actions';
+import { Update_ as UpdateInvestment } from 'src/app/modules/investments/investment.actions';
 import _ from 'lodash';
 import { propertyByIdSelector } from '../../property.selectors';
 import { SetLinks, AppendLink } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 import { LinkDialogComponent } from 'src/app/modules/shared/components/link-dialog/link-dialog.component';
 import { Link } from 'src/app/modules/shared/models/link';
+import { investmentsByPropertyIdSelector } from 'src/app/modules/investments/investment.selectors';
+import { PropertyInvestment } from 'src/app/modules/investments/models/propertyInvestment';
+import { Investment } from 'src/app/modules/investments/models/investment';
+import { Update } from '@ngrx/entity';
 
 
 @Component({
@@ -137,13 +142,14 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     }));
     
     // get property from resolver
-    const newSubscription = this.store.select(propertyByIdSelector(this.route.snapshot.params.id)) // I read this one instead from resolver because this has always the latest information when we update the property
-      .subscribe((property: Property) => {
+    const newSubscription = this.store.select(propertyByIdSelector(this.route.snapshot.params.id)).pipe( // I read this one instead from resolver because this has always the latest information when we update the property
+      map((property: Property) => {
         if (!property) {
           // we are creating a new property
           this.id = this.model.id = null;
           this.editMode = false;
           this.store.dispatch(new AppendLink({ link: { displayName: 'Create Property', url: '', selected : true }}));
+          return null;
         } else {
           if (!this.editMode) {
             this.store.dispatch(new AppendLink({ link: { displayName: 'Edit Property', url: '', selected : true }}));
@@ -153,8 +159,31 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
           this.id = this.model.id = property.id;
           this.editMode = true;
           this.populateModel(property);
+          return this.property;
         }
+      }),
+      switchMap((property: Property) => {
+        if (!property) {
+          return of([]);
+        }
+
+        // just the first to avoid a loop of investment updates
+        return this.store.select(investmentsByPropertyIdSelector(property.id)).pipe(first());
+      })
+    ).subscribe((investments: PropertyInvestment[]) => {
+      investments.forEach((investment: PropertyInvestment) => {
+        let updates: PropertyInvestment = _.cloneDeep(investment);
+        updates.property = this.property;
+
+        // let's update the investment property with the recently updated property data
+        const entityChanges: Update<Investment> = {
+          id: updates.id,
+          changes: updates
+        }
+
+        this.store.dispatch(new UpdateInvestment({ entityChanges }));
       });
+    });
     this.subscription.add(newSubscription);
 
     // get TYPE parameter

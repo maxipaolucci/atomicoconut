@@ -1,7 +1,8 @@
 <div fxLayout="column" fxLayoutGap="10px" class="container__investments">
+
   <net-worth></net-worth>
+  
   <section *ngIf="!(loading$ | async) && investments.length" fxLayout="column" fxLayoutGap="10px">
-    
     <div *ngFor="let row of investmentsUI" fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
       <div *ngFor="let investment of row" fxFlex fxFlex.gt-xs="50">
         <currency-investment *ngIf="investment.type === INVESTMENTS_TYPES.CURRENCY || investment.type === INVESTMENTS_TYPES.CRYPTO"

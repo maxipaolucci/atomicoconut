@@ -14,10 +14,10 @@ import { PropertyInvestment } from './models/propertyInvestment';
  * if it is serialized then we convert it to a proper investment object.
  * https://github.com/ngrx/platform/issues/976
  * 
- * @param {any} investment
- * @returns {Investment} . The output as a proper Investment object
+ * @param {any} investment The investment object to map if neccessary as input
+ * @returns {Investment} The output as a proper Investment object
  */
-const mapInvestmentPlainObjectToInvestmentObject = (investment: any) => {
+const mapInvestmentPlainObjectToInvestmentObject = (investment: any): Investment => {
   const methodTrace = `investment.selectors.ts > mapInvestmentPlainObjectToInvestmentObject() > `; // for debugging
   
   let newInvestmentObject = investment;
@@ -25,7 +25,7 @@ const mapInvestmentPlainObjectToInvestmentObject = (investment: any) => {
     consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Mapping investment plain object to proper investment object...`, investment);
     if (investment.type == INVESTMENTS_TYPES.PROPERTY) {
       newInvestmentObject = new PropertyInvestment(investment.id, investment.investmentAmount, investment.investmentAmountUnit, investment.createdBy, investment.team, investment.investmentDistribution, 
-        investment.property, investment.buyingPrice, investment.buyingPriceUnit, investment.buyingDate, 
+          investment.property, investment.buyingPrice, investment.buyingPriceUnit, investment.buyingDate, 
           investment.type, investment.loanAmount, investment.loanAmountUnit);
 
     } else if (investment.type == INVESTMENTS_TYPES.CRYPTO || investment.type == INVESTMENTS_TYPES.CURRENCY) {
@@ -69,10 +69,29 @@ export const allInvestmentsLoadedSelector = () => createSelector(
 );
 
 export const investmentByIdSelector = (id: string) => {
-  
-
   return createSelector(
-      selectInvestmentsState,
-      investmentsState => mapInvestmentPlainObjectToInvestmentObject(investmentsState.entities[id])
+    selectInvestmentsState,
+    investmentsState => mapInvestmentPlainObjectToInvestmentObject(investmentsState.entities[id])
+  )
+};
+
+// return the investments on a specific property (PropertyInvestments)
+export const investmentsByPropertyIdSelector = (propertyId: string) => {
+  return createSelector(
+    selectInvestmentsState,
+    investmentsState => {
+      if (!(investmentsState && investmentsState.entities)) {
+        // if nothing yet, return empty array
+        return [];
+      }
+
+      return Object.values(investmentsState.entities).reduce((investmentsWithProperty: Investment[], investment: any) => {
+        if (investment.type == INVESTMENTS_TYPES.PROPERTY && investment.property && investment.property.id === propertyId) {
+          return investmentsWithProperty.concat(mapInvestmentPlainObjectToInvestmentObject(investment));
+        }
+        
+        return investmentsWithProperty;
+      }, []);
+    }
   )
 };
