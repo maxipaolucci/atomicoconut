@@ -30,12 +30,44 @@ if (environment === 'dev'){
 }
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 
+// let collections = null;
+// mongoose.connection.on('open', (ref) => {
+//   console.log('Connected to mongo server.');
+//   //trying to get collection names
+//   mongoose.connection.db.listCollections().toArray((err, names) => {
+//       console.log(names); // [{ name: 'dbname.myCollection' }]
+//       collections = names;
+//       // module.exports.Collection = names;
+//   });
+// });
+
+const collections = [
+  'FinancialInfo',
+  'PersonalInfo',
+  'User',
+  'Team',
+  'Team_User',
+  'Investment',
+  'CurrencyInvestment',
+  'PropertyInvestment',
+  'Property',
+  'PropertyAdditionalInfo',
+  'House',
+  'CurrencyRate',
+  'Property_User'
+];
+
+const collectionMap = {}
+collections.forEach(collectionName => {
+  collectionMap[collectionName] = require(`../models/${collectionName}`);
+});
+
 // import all of our models - they need to be imported only once
 const FinancialInfo = require('../models/FinancialInfo');
 const PersonalInfo = require('../models/PersonalInfo');
 const User = require('../models/User');
 const Team = require('../models/Team');
-const TeamUser = require('../models/Team_User');
+const Team_User = require('../models/Team_User');
 const Investment = require('../models/Investment');
 const CurrencyInvestment = require('../models/CurrencyInvestment');
 const PropertyInvestment = require('../models/PropertyInvestment');
@@ -43,7 +75,7 @@ const Property = require('../models/Property');
 const PropertyAdditionalInfo = require('../models/PropertyAdditionalInfo');
 const House = require('../models/House');
 const CurrencyRate = require('../models/CurrencyRate');
-const PropertyUser = require('../models/Property_User');
+const Property_User = require('../models/Property_User');
 
 
 async function deleteData() {
@@ -54,8 +86,8 @@ async function deleteData() {
     console.log(`FinancialInfo table is empty.`);
     await PersonalInfo.deleteMany({});
     console.log(`PersonalInfo table is empty.`);
-    await TeamUser.deleteMany({});
-    console.log(`TeamUser table is empty.`);
+    await Team_User.deleteMany({});
+    console.log(`Team_User table is empty.`);
     await Team.deleteMany({});
     console.log(`Team table is empty.`);
     await User.deleteMany({});
@@ -74,8 +106,8 @@ async function deleteData() {
     console.log(`House table is empty.`);
     await CurrencyRate.deleteMany({});
     console.log(`CurrencyRate table is empty.`);
-    await PropertyUser.deleteMany({});
-    console.log(`PropertyUser table is empty.`);
+    await Property_User.deleteMany({});
+    console.log(`Property_User table is empty.`);
 
 
     console.log('\n\n👍👍👍👍👍👍👍👍 Done!. To load sample data, run\n\n\t npm run loadData [prod|test|dev]\n\n');
@@ -117,7 +149,7 @@ async function loadData(source = 'dev') {
     }
     
     if (teamusers.length) {
-      await TeamUser.insertMany(teamusers);
+      await Team_User.insertMany(teamusers);
       console.log(`${teamusers.length} TeamUsers loaded successfully.`);
     }
     
@@ -167,7 +199,7 @@ async function loadData(source = 'dev') {
     }
 
     if (propertyusers.length) {
-      await PropertyUser.insertMany(propertyusers);
+      await Property_User.insertMany(propertyusers);
       console.log(`${propertyusers.length} PropertyUsers loaded successfully.`);
     }
     
@@ -180,62 +212,79 @@ async function loadData(source = 'dev') {
   }
 }
 
+// async function dumpData() {
+//   try {
+//     console.log(`Started dumping data from ${environment.toUpperCase()}...`);
+
+//     const users = await User.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/users.json`, users);
+//     console.log(`${users.length} Users exported to json successfully.`);
+
+//     const teams = await Team.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/teams.json`, teams);
+//     console.log(`${teams.length} Teams exported to json successfully.`);
+
+//     const teamusers = await Team_User.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/teamusers.json`, teamusers);
+//     console.log(`${teamusers.length} TeamUsers exported to json successfully.`);
+
+//     const financialinfos = await FinancialInfo.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/financialinfos.json`, financialinfos);
+//     console.log(`${financialinfos.length} FinancialInfos exported to json successfully.`);
+
+//     const personalinfos = await PersonalInfo.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/personalinfos.json`, personalinfos);
+//     console.log(`${personalinfos.length} PersonalInfos exported to json successfully.`);
+
+//     const investments = await Investment.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/investments.json`, investments);
+//     console.log(`${investments.length} Investments exported to json successfully.`);
+
+//     const currencyinvestments = await CurrencyInvestment.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/currencyinvestments.json`, currencyinvestments);
+//     console.log(`${currencyinvestments.length} CurrencyInvestments exported to json successfully.`);
+
+//     const propertyinvestments = await PropertyInvestment.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/propertyinvestments.json`, propertyinvestments);
+//     console.log(`${propertyinvestments.length} propertyinvestments exported to json successfully.`);
+
+//     const properties = await Property.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/properties.json`, properties);
+//     console.log(`${properties.length} properties exported to json successfully.`);
+    
+//     const propertyadditionalinfos = await PropertyAdditionalInfo.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/propertyadditionalinfos.json`, propertyadditionalinfos);
+//     console.log(`${propertyadditionalinfos.length} propertyadditionalinfos exported to json successfully.`);
+
+//     const houses = await House.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/houses.json`, houses);
+//     console.log(`${houses.length} houses exported to json successfully.`);
+
+//     const currencyrates = await CurrencyRate.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/currencyrates.json`, currencyrates);
+//     console.log(`${currencyrates.length} currencyrates exported to json successfully.`);
+    
+//     const propertyusers = await Property_User.find({}, { __v : false });
+//     jsonfile.writeFileSync(`${__dirname}/${environment}/propertyusers.json`, propertyusers);
+//     console.log(`${propertyusers.length} propertyusers exported to json successfully.`);
+
+//     console.log(`\n\n👍👍👍👍👍👍👍👍 Done!. To load the data, run\n\n\t npm run loadData [prod|test|dev]\n\n`);
+//     process.exit();
+//   } catch(e) {
+//     console.log(`\n\n👎👎👎👎👎👎👎👎 Error! dumping data from \n\n\t ${environment.toUpperCase()} \n\n\n`);
+//     console.log(e);
+//     process.exit();
+//   }
+// }
 async function dumpData() {
   try {
     console.log(`Started dumping data from ${environment.toUpperCase()}...`);
-
-    const users = await User.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/users.json`, users);
-    console.log(`${users.length} Users exported to json successfully.`);
-
-    const teams = await Team.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/teams.json`, teams);
-    console.log(`${teams.length} Teams exported to json successfully.`);
-
-    const teamusers = await TeamUser.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/teamusers.json`, teamusers);
-    console.log(`${teamusers.length} TeamUsers exported to json successfully.`);
-
-    const financialinfos = await FinancialInfo.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/financialinfos.json`, financialinfos);
-    console.log(`${financialinfos.length} FinancialInfos exported to json successfully.`);
-
-    const personalinfos = await PersonalInfo.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/personalinfos.json`, personalinfos);
-    console.log(`${personalinfos.length} PersonalInfos exported to json successfully.`);
-
-    const investments = await Investment.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/investments.json`, investments);
-    console.log(`${investments.length} Investments exported to json successfully.`);
-
-    const currencyinvestments = await CurrencyInvestment.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/currencyinvestments.json`, currencyinvestments);
-    console.log(`${currencyinvestments.length} CurrencyInvestments exported to json successfully.`);
-
-    const propertyinvestments = await PropertyInvestment.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/propertyinvestments.json`, propertyinvestments);
-    console.log(`${propertyinvestments.length} propertyinvestments exported to json successfully.`);
-
-    const properties = await Property.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/properties.json`, properties);
-    console.log(`${properties.length} properties exported to json successfully.`);
+    for (const collectionName of collections) {
+      const data = await collectionMap[collectionName].find({}, { __v : false });
+      jsonfile.writeFileSync(`${__dirname}/${environment}/${collectionName}.json`, data);
+      console.log(`${data.length} ${collectionName} exported to json successfully.`);
+    }
     
-    const propertyadditionalinfos = await PropertyAdditionalInfo.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/propertyadditionalinfos.json`, propertyadditionalinfos);
-    console.log(`${propertyadditionalinfos.length} propertyadditionalinfos exported to json successfully.`);
-
-    const houses = await House.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/houses.json`, houses);
-    console.log(`${houses.length} houses exported to json successfully.`);
-
-    const currencyrates = await CurrencyRate.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/currencyrates.json`, currencyrates);
-    console.log(`${currencyrates.length} currencyrates exported to json successfully.`);
-    
-    const propertyusers = await PropertyUser.find({}, { __v : false });
-    jsonfile.writeFileSync(`${__dirname}/${environment}/propertyusers.json`, propertyusers);
-    console.log(`${propertyusers.length} propertyusers exported to json successfully.`);
-
     console.log(`\n\n👍👍👍👍👍👍👍👍 Done!. To load the data, run\n\n\t npm run loadData [prod|test|dev]\n\n`);
     process.exit();
   } catch(e) {
@@ -256,6 +305,6 @@ if (process.argv.includes('--delete')) {
   }
   
   loadData(source);
-} else {
+} else if (process.argv.includes('--dump')){
   dumpData();
 }
