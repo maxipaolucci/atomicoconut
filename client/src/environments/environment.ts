@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  pwa: true,
+  pwa: false,
   apiHost : '',
   showLogs : true,
   mapsApiKey : 'AIzaSyBVl8QaQnQGBw6IyvlQ5K3XepPj6Z9nHt0',

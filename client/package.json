@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "http-server -p 4200 -c-1 dist/client",
+    "start": "ng serve --hmr --host 0.0.0.0 --disable-host-check --public-host http://localhost:2222",
     "build": "ng build",
     "buildTesting": "ng build --configuration=testing",
     "test": "ng test",
