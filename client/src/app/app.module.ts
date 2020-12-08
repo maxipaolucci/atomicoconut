@@ -49,7 +49,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     EffectsModule.forRoot([AppEffects]),
     StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer }),
     CurrencyExchangeModule,
-    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.pwa })
+    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.pwa, registrationStrategy: 'registerImmediately' })
   ],
   declarations: [
     AppComponent,
