@@ -24,6 +24,7 @@ import { CustomSerializer } from './modules/shared/custom-router-serializer';
 import { HttpErrorInterceptor } from './http-error.interceptor';
 import { AppEffects } from './app.effects';
 import { CurrencyExchangeModule } from './modules/currency-exchange/currency-exchange.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { CurrencyExchangeModule } from './modules/currency-exchange/currency-exc
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
     StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer }),
-    CurrencyExchangeModule
+    CurrencyExchangeModule,
+    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.pwa })
   ],
   declarations: [
     AppComponent,

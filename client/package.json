@@ -4,8 +4,9 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --hmr --host 0.0.0.0 --disable-host-check --public-host http://localhost:2222",
+    "start": "http-server -p 4200 -c-1 dist/client",
     "build": "ng build",
+    "buildTesting": "ng build --configuration=testing",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -25,6 +26,7 @@
     "@angular/platform-browser": "~11.0.0",
     "@angular/platform-browser-dynamic": "~11.0.0",
     "@angular/router": "~11.0.0",
+    "@angular/service-worker": "~11.0.0",
     "@ngrx/effects": "~10.0.0",
     "@ngrx/entity": "~10.0.0",
     "@ngrx/router-store": "~10.0.0",
