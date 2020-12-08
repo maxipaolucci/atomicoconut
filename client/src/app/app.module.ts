@@ -51,7 +51,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     CurrencyExchangeModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { 
       enabled: environment.pwa, 
-      // registrationStrategy: 'registerImmediately' 
+      registrationStrategy: 'registerImmediately' 
     })
   ],
   declarations: [
