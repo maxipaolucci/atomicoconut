@@ -30,8 +30,8 @@
   "dataGroups": [{
     "name": "api-performance",
     "urls": [
-      "/cryptoRates",
-      "/currencyRates"
+      "/api/cryptoRates",
+      "/api/currencyRates"
     ],
     "cacheConfig": {
       "maxSize": 100,
