@@ -26,5 +26,28 @@
         ]
       }
     }
-  ]
+  ],
+  "dataGroups": [{
+    "name": "api-performance",
+    "urls": [
+      "/cryptoRates",
+      "/currencyRates"
+    ],
+    "cacheConfig": {
+      "maxSize": 100,
+      "maxAge": "1d",
+      "strategy": "performance"
+    }
+  }, {
+    "name": "api-freshness",
+    "urls": [
+      "/api"
+    ],
+    "cacheConfig": {
+      "maxSize": 100,
+      "maxAge": "1h",
+      "timeout": "10s",
+      "strategy": "freshness"
+    }
+  }]
 }
