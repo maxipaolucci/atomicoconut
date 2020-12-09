@@ -19,6 +19,7 @@ import { RequestAll as RequestAllTeams } from './modules/teams/team.actions';
 import { teamsSelector } from './modules/teams/team.selectors';
 import _ from 'lodash';
 import { NavigatorLinkModel } from './modules/shared/components/main-navigator/models/navigator-link-model';
+import { PwaService } from './pwa.service';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
       private appService: AppService,
       private utilService: UtilService,
+      private pwaService: PwaService, // injected here just to make the constructor run
       private store: Store<State>
   ) {
 

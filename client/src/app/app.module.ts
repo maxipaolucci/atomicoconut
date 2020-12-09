@@ -25,6 +25,7 @@ import { HttpErrorInterceptor } from './http-error.interceptor';
 import { AppEffects } from './app.effects';
 import { CurrencyExchangeModule } from './modules/currency-exchange/currency-exchange.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { PwaService } from './pwa.service';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
   providers: [
     AppService, 
     UtilService, 
-    CurrencyExchangeService, 
+    CurrencyExchangeService,
+    PwaService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorInterceptor,
