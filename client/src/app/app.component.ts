@@ -47,7 +47,6 @@ export class AppComponent implements OnInit, OnDestroy {
       { displayName: 'Home', url: RoutingPaths.WELCOME, icon: 'home' }, 
       { displayName: 'Investments', url: RoutingPaths.INVESTMENTS, icon: 'trending_up'},
       { displayName: 'Properties', url: RoutingPaths.PROPERTIES, icon: 'home_work'},
-      { displayName: 'Properties2', url: RoutingPaths.PROPERTIES, icon: 'home_work'},
       { displayName: 'Calculators', url: RoutingPaths.CALCULATORS, icon: 'calculate'}
     );
   }
