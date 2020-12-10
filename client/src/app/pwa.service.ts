@@ -14,12 +14,15 @@ import { first } from 'rxjs/operators';
 })
 export class PwaService {
 
+  public promptInstall: any = null;
+
   constructor(
       private swUpdate: SwUpdate, 
       private appService: AppService,
       public dialog: MatDialog,
       private appRef: ApplicationRef
   ) {
+    
     if (environment.pwa && this.swUpdate.isEnabled) {
       const methodTrace = `${this.constructor.name} > constructor() > `; // for debugging
 
@@ -34,8 +37,17 @@ export class PwaService {
         this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} New version activated!. Time to show a tutorial of new changes`, event, event.previous, event.current);
       });
 
+      // prompt for app installation if not yet
+      window.addEventListener('beforeinstallprompt', event => {
+        this.promptInstall = event;
+      });
+
       this.checkForUpdates();
     }
+  }
+
+  promptInstallApp(): void {
+    this.promptInstall.prompt();
   }
 
   /**

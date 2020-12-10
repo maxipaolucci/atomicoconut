@@ -45,6 +45,10 @@
           <mat-icon class="side-nav-item__icon">{{item.icon}}</mat-icon>
           <span>{{item.displayName}}</span>
         </a>
+        <a mat-list-item (click)="pwaService.promptInstallApp()" *ngIf="pwaService.promptInstall">
+          <mat-icon class="side-nav-item__icon">get_app</mat-icon>
+          <span>Install app</span>
+        </a>
       </mat-nav-list>
     </mat-sidenav>
   

@@ -40,7 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
       private appService: AppService,
       private utilService: UtilService,
-      private pwaService: PwaService, // injected here just to make the constructor run
+      public pwaService: PwaService, // injected here just to make the constructor run
       private store: Store<State>
   ) {
     //Populates the side navigator
