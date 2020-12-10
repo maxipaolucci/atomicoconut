@@ -20,6 +20,7 @@ export class PwaService {
       public dialog: MatDialog,
       private appRef: ApplicationRef
   ) {
+    console.log(environment.pwa, this.swUpdate.isEnabled);
     if (environment.pwa && this.swUpdate.isEnabled) {
       const methodTrace = `${this.constructor.name} > constructor() > `; // for debugging
       this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Checking for updates...`);
