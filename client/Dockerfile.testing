@@ -12,7 +12,7 @@ RUN npm install
 
 COPY . .
 
-RUN ng build --configuration=testing
+RUN ng build --configuration testing
 
 # This nginx is just for serving the frontend assets
 # the other one in the nginx folder is for routing between the client and the server

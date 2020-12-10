@@ -10,7 +10,7 @@ import { State } from 'src/app/main.reducer';
 import { RequestLogout } from './modules/users/user.actions';
 import { userSelector } from './modules/users/user.selectors';
 import { LoadingData } from './models/loadingData';
-import { SnackbarNotificationTypes, ConsoleNotificationTypes, RoutingPaths } from './constants';
+import { SnackbarNotificationTypes, RoutingPaths } from './constants';
 import { loadingSelector } from './app.selectors';
 import { currencyRateByIdSelector } from './modules/currency-exchange/currency-rate.selectors';
 import { CurrencyRate } from './modules/currency-exchange/models/currency-rate';
@@ -43,7 +43,6 @@ export class AppComponent implements OnInit, OnDestroy {
       private pwaService: PwaService, // injected here just to make the constructor run
       private store: Store<State>
   ) {
-
     //Populates the side navigator
     this.sideNavItems.push(
       { displayName: 'Home', url: RoutingPaths.WELCOME, icon: 'home' }, 

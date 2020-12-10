@@ -5,6 +5,7 @@
 
 export const environment = {
   production: false,
+  type: 'development',
   pwa: false,
   apiHost : '',
   showLogs : true,

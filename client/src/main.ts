@@ -9,5 +9,7 @@ if (environment.production) {
   console.log('ENV: Production');
 }
 
+console.log(`aCo app built using ${environment.type} configuration.`)
+
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));

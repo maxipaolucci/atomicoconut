@@ -20,10 +20,8 @@ export class PwaService {
       public dialog: MatDialog,
       private appRef: ApplicationRef
   ) {
-    console.log(environment.pwa, this.swUpdate.isEnabled);
     if (environment.pwa && this.swUpdate.isEnabled) {
       const methodTrace = `${this.constructor.name} > constructor() > `; // for debugging
-      this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Checking for updates...`);
 
       // check for new version available
       this.swUpdate.available.subscribe(event => {
@@ -37,21 +35,25 @@ export class PwaService {
       });
 
       this.checkForUpdates();
-    } 
+    }
   }
 
   /**
-   * Checks for updates in the app every 6 hours. If and update is available then this.swUpdate.available will fire
+   * Checks for updates in the app every 1 hours. If and update is available then this.swUpdate.available will fire
    */
   checkForUpdates() {
     const methodTrace = `${this.constructor.name} > checkForUpdates() > `; // for debugging
+    
     // Allow the app to stabilize first, before starting polling for updates with `interval()`.
-    const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
-    const everySixHours$ = interval(30000);//(6 * 60 * 60 * 1000);
-    const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$);
+    // const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
+    const everySomeTime$ = interval(1 * 60 * 60 * 1000); // every one hour
+    // for some reason app is never stable
+    // const everySomeTimeOnceAppIsStable$ = concat(appIsStable$, everySomeTime$);
 
-    everySixHoursOnceAppIsStable$.subscribe(() => {
+    everySomeTime$.subscribe(() => {
+      this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Checking for app updates...`);      
       this.swUpdate.checkForUpdate().then(() => {
+        // this swUpdate.checkForUpdate() call will make this.swUpdate.available to fire a new observable (chek constructor)
         this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} Successfully checked for updates!.`);
       });
     });
