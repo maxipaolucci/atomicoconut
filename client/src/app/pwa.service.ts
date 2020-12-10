@@ -47,7 +47,17 @@ export class PwaService {
   }
 
   promptInstallApp(): void {
+    const methodTrace = `${this.constructor.name} > promptInstallApp() > `; // for debugging
+    
     this.promptInstall.prompt();
+    // Wait for the user to respond to the prompt
+    this.promptInstall.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} User accepted the install prompt`);
+      } else {
+        this.appService.consoleLog(ConsoleNotificationTypes.INFO, `${methodTrace} User dismissed the install prompt`);
+      }
+    });
   }
 
   /**
