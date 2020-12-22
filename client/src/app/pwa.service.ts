@@ -110,6 +110,8 @@ export class PwaService {
     const methodTrace = `${this.constructor.name} > openUpdateDialog() > `; // for debugging
 
     const yesNoDialogRef = this.dialog.open(YesNoDialogComponent, {
+      disableClose: true,
+      closeOnNavigation: false,
       width: '250px',
       data: { 
         title : 'New version available!',
