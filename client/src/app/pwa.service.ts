@@ -46,6 +46,31 @@ export class PwaService {
     }
   }
 
+  clearSWCache(): void {
+    const methodTrace = `${this.constructor.name} > clearSWCache() > `; // for debugging
+    const self = this;
+    caches.keys().then(function(cacheNames) {
+      self.appService.consoleLog(ConsoleNotificationTypes.WARN, `${methodTrace} Removing service worker cache...`, cacheNames);
+
+      return Promise.all(
+        cacheNames.filter(function(cacheName) {
+          // Return true if you want to remove this cache,
+          // but remember that caches are shared across
+          // the whole origin
+          if (/*CACHE_NAME !== cacheName &&*/  cacheName.startsWith("ngsw:")) {
+            return true;
+          }
+
+          return false;
+        }).map(function(cacheName) {
+          return caches.delete(cacheName);
+        })
+      ).then(() => {
+        document.location.reload();
+      });
+    })
+  }
+
   promptInstallApp(): void {
     const methodTrace = `${this.constructor.name} > promptInstallApp() > `; // for debugging
     

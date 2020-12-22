@@ -46,9 +46,11 @@ export class AppComponent implements OnInit, OnDestroy {
     //Populates the side navigator
     this.sideNavItems.push(
       { displayName: 'Home', url: RoutingPaths.WELCOME, icon: 'home' }, 
+      { displayName: 'Calculators', url: RoutingPaths.CALCULATORS, icon: 'calculate'},
       { displayName: 'Investments', url: RoutingPaths.INVESTMENTS, icon: 'trending_up'},
       { displayName: 'Properties', url: RoutingPaths.PROPERTIES, icon: 'home_work'},
-      { displayName: 'Calculators', url: RoutingPaths.CALCULATORS, icon: 'calculate'}
+      { displayName: 'Teams', url: RoutingPaths.TEAMS, icon: 'group'},
+      
     );
   }
 
