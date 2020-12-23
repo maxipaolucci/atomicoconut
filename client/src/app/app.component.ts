@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppService } from './app.service';
 import { User } from './modules/users/models/user';
 import { UtilService } from './util.service';
-import { of, Subscription, Observable } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { switchMap, filter } from 'rxjs/operators';
 import { Team } from './modules/teams/models/team';
 import { Store } from '@ngrx/store';
@@ -59,8 +59,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
 
-    this.subscription.add(this.store.select(isOnlineSelector()).subscribe((isOnline: boolean) => {
-      
+    // check online selector
+    this.subscription.add(this.store.select(isOnlineSelector()).pipe(
+      filter((isOnline: boolean) => typeof isOnline !== 'undefined')
+    ).subscribe((isOnline: boolean) => {
       if (!isOnline) {
         this.appService.showResults(`Seems that you are OFFLINE. Try to not save any changes until you are back online.`, SnackbarNotificationTypes.ERROR, 0); // never dismiss with duration 0
       } else if (!this.isOnline) {
@@ -71,6 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isOnline = isOnline;
     }));
 
+    // start monitoring connectivity status
     this.store.dispatch(new StartOnlineOfflineCheck());
 
     //Show or hide progress bar for loading...

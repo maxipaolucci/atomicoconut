@@ -44,8 +44,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
         //send request
         return next.handle(secureRequest).pipe(
           retry(1),
-          catchError((result: HttpErrorResponse, caught: Observable<any>) => { 
-            this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing a request to: ${secureRequest.url}`, result.error);
+          catchError((result: HttpErrorResponse, caught: Observable<any>) => {
+            this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} There was an error in the server while performing a request to ${secureRequest.url}${result.message ? `: ${result.message}.` : '.'}`, result);
             switch(result.error.codeno) { 
               case 401: { 
                 // JWT token invalid or expired
@@ -71,7 +71,15 @@ export class HttpErrorInterceptor implements HttpInterceptor {
               }
 
               default: { 
-                this.appService.showResults(result.error.msg, SnackbarNotificationTypes.ERROR);
+                // default message
+                let message = `There was an error in the server while performing a request to ${secureRequest.url}. Check again in a few minutes.`;
+                
+                if (result.error.msg) {
+                  // custom message if exists
+                  message = result.error.msg;
+                }
+                
+                this.appService.showResults(message || '', SnackbarNotificationTypes.ERROR, 10000);
                 break; 
               } 
             }

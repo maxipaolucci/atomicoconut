@@ -9,6 +9,7 @@ snack-bar-container {
   &.snackbar--simple {
     padding : 10px;
     color: $almostWhite;
+    font-family: $fontFamily;
   }
 
   &.snackbar--success {

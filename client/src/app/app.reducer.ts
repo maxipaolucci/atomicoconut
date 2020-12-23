@@ -12,7 +12,7 @@ export interface AppState {
 export const initialState: AppState = {
   loadingData: null,
   redirectUrl: null,
-  isOnline: navigator.onLine
+  isOnline: true
 };
 
 export function reducer(state: AppState = initialState, action: AppActions): AppState {
