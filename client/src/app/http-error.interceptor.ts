@@ -72,7 +72,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
 
               default: { 
                 // default message
-                let message = `There was an error in the server while performing a request to ${secureRequest.url}. Check again in a few minutes.`;
+                let message = `There was an error in the server while performing a request to ${secureRequest.url}. Check your internet connection and try again...`;
                 
                 if (result.error.msg) {
                   // custom message if exists
