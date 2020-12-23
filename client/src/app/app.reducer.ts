@@ -5,12 +5,14 @@ export const appFeatureKey = 'application';
 
 export interface AppState {
   loadingData: LoadingData,
-  redirectUrl: String
+  redirectUrl: String,
+  isOnline: boolean
 }
 
 export const initialState: AppState = {
   loadingData: null,
-  redirectUrl: null
+  redirectUrl: null,
+  isOnline: navigator.onLine
 };
 
 export function reducer(state: AppState = initialState, action: AppActions): AppState {
@@ -41,6 +43,12 @@ export function reducer(state: AppState = initialState, action: AppActions): App
         loadingData: null
       }
     }
+
+    case AppActionTypes.SetIsOnline:
+      return {
+        ...state,
+        isOnline: action.payload
+      };
 
     default: {
       return state;

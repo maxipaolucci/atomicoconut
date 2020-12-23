@@ -11,7 +11,7 @@ import { RequestLogout } from './modules/users/user.actions';
 import { userSelector } from './modules/users/user.selectors';
 import { LoadingData } from './models/loadingData';
 import { SnackbarNotificationTypes, RoutingPaths } from './constants';
-import { loadingSelector } from './app.selectors';
+import { isOnlineSelector, loadingSelector } from './app.selectors';
 import { currencyRateByIdSelector } from './modules/currency-exchange/currency-rate.selectors';
 import { CurrencyRate } from './modules/currency-exchange/models/currency-rate';
 import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
@@ -20,6 +20,7 @@ import { teamsSelector } from './modules/teams/team.selectors';
 import _ from 'lodash';
 import { NavigatorLinkModel } from './modules/shared/components/main-navigator/models/navigator-link-model';
 import { PwaService } from './pwa.service';
+import { StartOnlineOfflineCheck } from './app.actions';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
   loading$: Observable<LoadingData> = null;
   teams: Team[] = [];
   sideNavItems: NavigatorLinkModel[] = [];
+  isOnline: boolean = true;
 
   constructor(
       private appService: AppService,
@@ -56,6 +58,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const methodTrace = `${this.constructor.name} > ngOnInit() > `; // for debugging
+
+    this.subscription.add(this.store.select(isOnlineSelector()).subscribe((isOnline: boolean) => {
+      
+      if (!isOnline) {
+        this.appService.showResults(`Seems that you are OFFLINE. Try to not save any changes until you are back online.`, SnackbarNotificationTypes.ERROR, 0); // never dismiss with duration 0
+      } else if (!this.isOnline) {
+        // just when we move from offline to online we show this alert
+        this.appService.showResults(`Seems that you are ONLINE again!`, SnackbarNotificationTypes.SUCCESS, 5000);
+      }
+
+      this.isOnline = isOnline;
+    }));
+
+    this.store.dispatch(new StartOnlineOfflineCheck());
 
     //Show or hide progress bar for loading...
     this.loading$ = this.store.select(loadingSelector());

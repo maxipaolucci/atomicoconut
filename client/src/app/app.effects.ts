@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AppActionTypes, FinalizeOperation } from './app.actions';
+import { AppActionTypes, FinalizeOperation, SetIsOnline } from './app.actions';
 import { Actions, ofType, Effect } from '@ngrx/effects';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { tap, switchMap, mapTo, map } from 'rxjs/operators';
+import { merge, of, fromEvent } from "rxjs";
 import { State } from 'src/app/main.reducer';
 import { Store } from '@ngrx/store';
 import { HideProgressBar } from 'src/app/app.actions';
@@ -40,6 +41,24 @@ export class AppEffects {
         { displayName: 'Properties', url: RoutingPaths.PROPERTIES, selected: false },
         { displayName: 'Calculators', url: RoutingPaths.CALCULATORS, selected: false }
       ]}));
+    })
+  );
+
+  @Effect()
+  startOnlineOfflineCheck$ = this.actions$.pipe(
+    ofType(AppActionTypes.StartOnlineOfflineCheck),
+    switchMap(() => {
+      // for something more sophisticated check some libraries like: 
+      // https://www.npmjs.com/package/ng-connection-service in  https://medium.com/@balramchavan/detecting-internet-connection-status-in-angular-application-ng-connection-service-1fa8add3b975 or
+      // https://www.npmjs.com/package/@ngx-pwa/offline
+      return merge(
+        of(navigator.onLine),
+        fromEvent(window, "online").pipe(mapTo(true)),
+        fromEvent(window, "offline").pipe(mapTo(false))
+      );
+    }),
+    map(isOnline => {
+      return new SetIsOnline(isOnline);
     })
   );
 

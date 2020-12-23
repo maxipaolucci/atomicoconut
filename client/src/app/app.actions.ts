@@ -5,7 +5,9 @@ export enum AppActionTypes {
   ShowProgressBar = '[App] Show progress bar',
   HideProgressBar = '[App] Hide progress bar',
   FinalizeOperation = '[App] Finalize last operation',
-  SetRedirectUrl = '[App] Set router redirect url to Store'
+  SetRedirectUrl = '[App] Set router redirect url to Store',
+  StartOnlineOfflineCheck = "[App] StartOnlineOfflineCheck",
+  SetIsOnline = "[App] SetIsOnline"
 }
 
 export class SetRedirectUrl implements Action {
@@ -30,7 +32,18 @@ export class FinalizeOperation implements Action {
   constructor(public payload: { redirectData: any[] } = null) {}
 }
 
+export class StartOnlineOfflineCheck implements Action {
+  readonly type = AppActionTypes.StartOnlineOfflineCheck;
+}
+
+export class SetIsOnline implements Action {
+  readonly type = AppActionTypes.SetIsOnline;
+
+  constructor(public payload: boolean) {}
+}
+
 
 export type AppActions = FinalizeOperation |  
   ShowProgressBar | HideProgressBar |
-  SetRedirectUrl;
+  SetRedirectUrl | StartOnlineOfflineCheck | 
+  SetIsOnline;

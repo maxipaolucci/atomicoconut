@@ -13,3 +13,8 @@ export const loadingSelector = () => createSelector(
   selectAppState,
   (state: fromApp.AppState) => state.loadingData
 );
+
+export const isOnlineSelector = () => createSelector(
+  selectAppState,
+  (state: fromApp.AppState) => state.isOnline
+);
