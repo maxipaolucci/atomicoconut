@@ -6,6 +6,7 @@ import { State } from 'src/app/main.reducer';
 import _ from 'lodash';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
 import { RoutingPaths } from 'src/app/constants';
+import { UtilService } from 'src/app/util.service';
 
 @Component({
   selector: 'welcome',
@@ -18,7 +19,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private appService: AppService,
-    private store: Store<State>
+    private store: Store<State>,
+    public utilService: UtilService
   ) { }
 
   ngOnInit() {

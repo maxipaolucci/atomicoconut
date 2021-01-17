@@ -1,1 +1,44 @@
-<div></div>
+<section fxLayout="column" fxLayoutGap="10px">
+  <div class="welcome__container" fxLayout="column" fxLayoutGap="10px">
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
+      <mat-card matRipple class="feature__card" fxFlex.gt-xs="50"
+          [routerLink]="utilService.getRoutingPath('INVESTMENTS')">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>trending_up</mat-icon>
+          <mat-card-title>Investments</mat-card-title>
+          <mat-card-subtitle>Manage your investment porfolio</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+      
+      <mat-card matRipple class="feature__card" fxFlex.gt-xs="50"
+          [routerLink]="utilService.getRoutingPath('PROPERTIES')">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>home_work</mat-icon>
+          <mat-card-title>Properties</mat-card-title>
+          <mat-card-subtitle>Manage your properties</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+    
+    <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px">
+      <mat-card matRipple class="feature__card" fxFlex.gt-xs="50"
+          [routerLink]="utilService.getRoutingPath('TEAMS')">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>group</mat-icon>
+          <mat-card-title>Teams</mat-card-title>
+          <mat-card-subtitle>Manage your investment teams</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+      
+      <mat-card matRipple class="feature__card" fxFlex.gt-xs="50"
+          [routerLink]="utilService.getRoutingPath('CALCULATORS')">
+        <mat-card-header>
+          <mat-icon mat-card-avatar>calculate</mat-icon>
+          <mat-card-title>Calculators</mat-card-title>
+          <mat-card-subtitle>Play the numbers</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
+    
+  </div>
+</section>
