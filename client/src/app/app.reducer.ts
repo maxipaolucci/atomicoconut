@@ -1,18 +1,21 @@
 import { LoadingData } from './models/loadingData';
 import { AppActions, AppActionTypes } from './app.actions';
+import { ApiKeys } from './models/api-keys';
 
 export const appFeatureKey = 'application';
 
 export interface AppState {
   loadingData: LoadingData,
   redirectUrl: String,
-  isOnline: boolean
+  isOnline: boolean,
+  apiKeys: ApiKeys
 }
 
 export const initialState: AppState = {
   loadingData: null,
   redirectUrl: null,
-  isOnline: true
+  isOnline: true,
+  apiKeys: null
 };
 
 export function reducer(state: AppState = initialState, action: AppActions): AppState {
@@ -44,11 +47,19 @@ export function reducer(state: AppState = initialState, action: AppActions): App
       }
     }
 
-    case AppActionTypes.SetIsOnline:
+    case AppActionTypes.SetIsOnline: {
       return {
         ...state,
         isOnline: action.payload
       };
+    }
+
+    case AppActionTypes.AddApiKeys: {
+      return {
+        ...state,
+        apiKeys: action.payload.apiKeys
+      }
+    }
 
     default: {
       return state;

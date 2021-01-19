@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { ApiKeys } from './models/api-keys';
 import { LoadingData } from './models/loadingData';
 
 export enum AppActionTypes {
@@ -7,7 +8,9 @@ export enum AppActionTypes {
   FinalizeOperation = '[App] Finalize last operation',
   SetRedirectUrl = '[App] Set router redirect url to Store',
   StartOnlineOfflineCheck = "[App] StartOnlineOfflineCheck",
-  SetIsOnline = "[App] SetIsOnline"
+  SetIsOnline = "[App] SetIsOnline",
+  RequestApiKeys = '[App] Request API Keys from Server',
+  AddApiKeys = '[App] Add API Keys to Store'
 }
 
 export class SetRedirectUrl implements Action {
@@ -42,8 +45,19 @@ export class SetIsOnline implements Action {
   constructor(public payload: boolean) {}
 }
 
+export class RequestApiKeys implements Action {
+  readonly type = AppActionTypes.RequestApiKeys;
+}
+
+export class AddApiKeys implements Action {
+  readonly type = AppActionTypes.AddApiKeys;
+
+  constructor(public payload: { apiKeys: ApiKeys }) {}
+}
+
 
 export type AppActions = FinalizeOperation |  
   ShowProgressBar | HideProgressBar |
   SetRedirectUrl | StartOnlineOfflineCheck | 
-  SetIsOnline;
+  SetIsOnline | RequestApiKeys | 
+  AddApiKeys;

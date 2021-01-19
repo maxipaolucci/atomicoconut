@@ -18,3 +18,8 @@ export const isOnlineSelector = () => createSelector(
   selectAppState,
   (state: fromApp.AppState) => state.isOnline
 );
+
+export const apiKeysSelector = () => createSelector(
+  selectAppState,
+  (state: fromApp.AppState) => state.apiKeys
+);

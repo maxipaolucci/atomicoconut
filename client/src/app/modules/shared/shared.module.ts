@@ -13,8 +13,7 @@ import { NumberValidatorDirective } from './directives/number-validator.directiv
 import { InfoTooltipComponent } from './components/info-tooltip/info-tooltip.component';
 import { AddressAutocompleteComponent } from './components/address-autocomplete/address-autocomplete.component';
 import { DynamicMapComponent } from './components/dynamic-map/dynamic-map.component';
-import { AgmCoreModule } from '@agm/core';
-import { environment } from '../../../environments/environment';
+import { AgmCoreModule, LAZY_MAPS_API_CONFIG } from '@agm/core';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { FilesUploaderComponent } from './components/files-uploader/files-uploader.component';
 import { ProgressBarDialogComponent } from './components/progress-bar-dialog/progress-bar-dialog.component';
@@ -22,6 +21,7 @@ import { LinkDialogComponent } from './components/link-dialog/link-dialog.compon
 import { StoreModule } from '@ngrx/store';
 import { HouseFiguresResultsComponent } from './components/house-figures-results/house-figures-results.component';
 import * as fromMainNavigator from './components/main-navigator/main-navigator.reducer';
+import { MapsConfig } from './maps-config';
 
 
 @NgModule({
@@ -31,11 +31,19 @@ import * as fromMainNavigator from './components/main-navigator/main-navigator.r
     FormsModule,
     FlexLayoutModule,
     CustomMaterialDesignModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.mapsApiKey,
-      libraries: ['places']
-    }),
+    AgmCoreModule.forRoot(
+      // {
+      // apiKey: environment.mapsApiKey,
+      // libraries: ['places']
+    // }
+    ),
     StoreModule.forFeature(fromMainNavigator.mainNavigatorFeatureKey, fromMainNavigator.reducer),
+  ],
+  providers: [
+    {
+      provide: LAZY_MAPS_API_CONFIG,
+      useClass: MapsConfig
+    }
   ],
   declarations: [ 
     MainNavigatorComponent, 

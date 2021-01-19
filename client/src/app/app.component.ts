@@ -11,7 +11,7 @@ import { RequestLogout } from './modules/users/user.actions';
 import { userSelector } from './modules/users/user.selectors';
 import { LoadingData } from './models/loadingData';
 import { SnackbarNotificationTypes, RoutingPaths } from './constants';
-import { isOnlineSelector, loadingSelector } from './app.selectors';
+import { apiKeysSelector, isOnlineSelector, loadingSelector } from './app.selectors';
 import { currencyRateByIdSelector } from './modules/currency-exchange/currency-rate.selectors';
 import { CurrencyRate } from './modules/currency-exchange/models/currency-rate';
 import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
@@ -20,7 +20,9 @@ import { teamsSelector } from './modules/teams/team.selectors';
 import _ from 'lodash';
 import { NavigatorLinkModel } from './modules/shared/components/main-navigator/models/navigator-link-model';
 import { PwaService } from './pwa.service';
-import { StartOnlineOfflineCheck } from './app.actions';
+import { RequestApiKeys, StartOnlineOfflineCheck } from './app.actions';
+import { ApiKeys } from './models/api-keys';
+import { MapsConfig } from './modules/shared/maps-config';
 
 
 @Component({
@@ -75,6 +77,16 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // start monitoring connectivity status
     this.store.dispatch(new StartOnlineOfflineCheck());
+
+    // set api keys
+    this.store.select(apiKeysSelector()).subscribe((apiKeys: ApiKeys) => {
+      if (apiKeys) {
+        this.appService.apiKeys = apiKeys;
+      }
+    });
+    
+    //Get api keys from server
+    this.store.dispatch(new RequestApiKeys());
 
     //Show or hide progress bar for loading...
     this.loading$ = this.store.select(loadingSelector());

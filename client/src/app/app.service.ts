@@ -5,17 +5,28 @@ import { SnackbarSimpleComponent } from './modules/shared/components/snackbar-si
 import { Response } from './models/response';
 import Pusher from 'pusher-js';
 import { ConsoleNotificationTypes, SnackbarNotificationTypes, ServerResponseStatus } from './constants';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { ApiKeys } from './models/api-keys';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppService {
 
+  apiKeys: ApiKeys;
   pusher: any;
   pusherChannel: any;
   pusherSocketID: any;
+  private serverHost: string = environment.apiHost + '/api/system';
+  private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  constructor(public snackBar: MatSnackBar) {
+  constructor(
+      private http: HttpClient, 
+      public snackBar: MatSnackBar
+  ) {
     this.pusher = new Pusher(environment.pusher.key, {
       cluster: environment.pusher.cluster,
       forceTLS: true
@@ -95,5 +106,19 @@ export class AppService {
     }
   }
 
+  /**
+   * Server call to Get several API keys from the server
+   * 
+   * @return { Observable<ApiKeys> }
+   */
+  getApiKeys$(): Observable<ApiKeys> {
+    const methodTrace = `${this.constructor.name} > getApiKeys() > `; // for debugging
 
+    return this.http.get<Response>(`${this.serverHost}/getClientApiKeys`).pipe(
+      map(this.extractData),
+      map((data): ApiKeys => {
+        return new ApiKeys(data.mapsApiKey, data.pusher);
+      })
+    );
+  }
 }

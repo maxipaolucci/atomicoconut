@@ -24,7 +24,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       private appService: AppService, 
       private store: Store<State>) {
     
-        this.store.select(apiSecurityTokenSelector()).subscribe((token: string) => this.apiToken = token);
+    this.store.select(apiSecurityTokenSelector()).subscribe((token: string) => this.apiToken = token);
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
