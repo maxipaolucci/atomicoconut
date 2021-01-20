@@ -5,7 +5,7 @@ import { User } from '../../../users/models/user';
 import { AppService } from '../../../../app.service';
 import { Team } from '../../../teams/models/team';
 import { Subscription, Observable, of, BehaviorSubject } from 'rxjs';
-import { map, combineLatest, debounceTime, switchMap } from 'rxjs/operators';
+import { map, combineLatest, debounceTime, switchMap, first } from 'rxjs/operators';
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSelectChange } from '@angular/material/select';
 import { Investment } from '../../models/investment';
@@ -115,7 +115,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
         this.populateRequiredData(user, investmentId, propertyId);
 
         //With the user set start listening to Pusher notifications related to this component
-        this.bindToPushNotificationEvents();
+        this.appService.pusherReady$.pipe(
+          first((ready: boolean) => ready == true) // when pusher is ready then bind and stop listening to this
+        ).subscribe((ready: boolean) => this.bindToPushNotificationEvents());
         
         if (!investmentId) {
           this.editMode = false;
@@ -281,8 +283,10 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
    * Stop listening to Pusher notifications comming from server
    */
   unbindToPushNotificationEvents() {
-    this.appService.pusherChannel.unbind('investment-deleted');
-    this.appService.pusherChannel.unbind('team-updated');
+    if (this.appService.pusherChannel) {
+      this.appService.pusherChannel.unbind('investment-deleted');
+      this.appService.pusherChannel.unbind('team-updated');
+    }
   }
 
   ngOnDestroy() {

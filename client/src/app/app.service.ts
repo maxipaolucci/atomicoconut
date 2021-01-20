@@ -3,11 +3,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from '../environments/environment';
 import { SnackbarSimpleComponent } from './modules/shared/components/snackbar-simple/snackbar-simple.component';
 import { Response } from './models/response';
-import Pusher from 'pusher-js';
+
 import { ConsoleNotificationTypes, SnackbarNotificationTypes, ServerResponseStatus } from './constants';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { ApiKeys } from './models/api-keys';
 
 
@@ -20,6 +20,7 @@ export class AppService {
   pusher: any;
   pusherChannel: any;
   pusherSocketID: any;
+  pusherReady$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false); //notifies when pusher setup is ready
   private serverHost: string = environment.apiHost + '/api/system';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
@@ -27,18 +28,8 @@ export class AppService {
       private http: HttpClient, 
       public snackBar: MatSnackBar
   ) {
-    this.pusher = new Pusher(environment.pusher.key, {
-      cluster: environment.pusher.cluster,
-      forceTLS: true
-    });
     
-    this.pusher.connection.bind('connected', () => {
-      // we'll use this id to prevent the executor of the action to receive a notification
-      this.pusherSocketID = this.pusher.connection.socket_id;
-    });
     
-    //start listening to the same channel where the server is emiting msgs
-    this.pusherChannel = this.pusher.subscribe(environment.pusher.channel);
   }
 
   /**

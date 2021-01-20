@@ -22,7 +22,8 @@ import { NavigatorLinkModel } from './modules/shared/components/main-navigator/m
 import { PwaService } from './pwa.service';
 import { RequestApiKeys, StartOnlineOfflineCheck } from './app.actions';
 import { ApiKeys } from './models/api-keys';
-import { MapsConfig } from './modules/shared/maps-config';
+import { MapsConfigService } from './modules/shared/maps-config.service';
+import Pusher from 'pusher-js';
 
 
 @Component({
@@ -43,6 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
       private appService: AppService,
+      private mapsConfigService: MapsConfigService, // injected here just to make the constructor run
       private utilService: UtilService,
       public pwaService: PwaService, // injected here just to make the constructor run
       private store: Store<State>
@@ -78,25 +80,39 @@ export class AppComponent implements OnInit, OnDestroy {
     // start monitoring connectivity status
     this.store.dispatch(new StartOnlineOfflineCheck());
 
-    // set api keys
-    this.store.select(apiKeysSelector()).subscribe((apiKeys: ApiKeys) => {
-      if (apiKeys) {
-        this.appService.apiKeys = apiKeys;
-      }
-    });
-    
-    //Get api keys from server
-    this.store.dispatch(new RequestApiKeys());
-
     //Show or hide progress bar for loading...
     this.loading$ = this.store.select(loadingSelector());
+
+    //Get api keys from server
+    this.store.dispatch(new RequestApiKeys());
     
     // subscribe to teams
     this.subscription.add(this.store.select(teamsSelector()).subscribe((teams: Team[]) => this.teams = teams));
 
-    // On any user change let loads its preferred currency rate and show it in the currency secondary toolbar
+    // First get apikeys and then on any user change let loads its preferred currency rate and show it in the currency secondary toolbar
     // subscribe to the user
-    let newSubscription: Subscription = this.store.select(userSelector()).pipe(
+    let newSubscription: Subscription = this.store.select(apiKeysSelector()).pipe(
+      switchMap((apiKeys: ApiKeys) => {
+        if (apiKeys && apiKeys.pusher) {
+          this.appService.pusher = new Pusher(apiKeys.pusher.key, {
+            cluster: apiKeys.pusher.cluster,
+            forceTLS: true
+          });
+          
+          this.appService.pusher.connection.bind('connected', () => {
+            // we'll use this id to prevent the executor of the action to receive a notification
+            this.appService.pusherSocketID = this.appService.pusher.connection.socket_id;
+          });
+          
+          //start listening to the same channel where the server is emiting msgs
+          this.appService.pusherChannel = this.appService.pusher.subscribe(apiKeys.pusher.channel);
+          this.appService.pusherReady$.next(true);
+        } else {
+          this.appService.pusherReady$.next(false);
+        }
+
+        return this.store.select(userSelector());
+      }),
       filter((user: User) => {
         if (!user) {
           this.user = null;
@@ -155,52 +171,54 @@ export class AppComponent implements OnInit, OnDestroy {
    * Start listening to Pusher notifications comming from server
    */
   bindToPushNotificationEvents() {
-    this.appService.pusherChannel.bind('investment-created', data => {
-      this.showInvestmentNotification('created', data, this.teams);
-    });
+    if (this.appService.pusherChannel) {
+      this.appService.pusherChannel.bind('investment-created', data => {
+        this.showInvestmentNotification('created', data, this.teams);
+      });
 
-    this.appService.pusherChannel.bind('investment-updated', (data: any) => {
-      this.showInvestmentNotification('updated', data, this.teams);
-    });
+      this.appService.pusherChannel.bind('investment-updated', (data: any) => {
+        this.showInvestmentNotification('updated', data, this.teams);
+      });
 
-    this.appService.pusherChannel.bind('investment-deleted', (data: any) => {
-      this.showInvestmentNotification('deleted', data, this.teams);
-    });
+      this.appService.pusherChannel.bind('investment-deleted', (data: any) => {
+        this.showInvestmentNotification('deleted', data, this.teams);
+      });
 
-    this.appService.pusherChannel.bind('team-updated', (data: any) => {
-      if (data && data.team.memberState[this.user.email]) {
-        const currentUserState = data.team.memberState[this.user.email];
-        switch(currentUserState) {
-          case 'add': {
-            this.appService.showResults(`${data.name} added you to the team ${data.team.name}.`, SnackbarNotificationTypes.INFO, 8000);
-            break;
-          }
+      this.appService.pusherChannel.bind('team-updated', (data: any) => {
+        if (data && data.team.memberState[this.user.email]) {
+          const currentUserState = data.team.memberState[this.user.email];
+          switch(currentUserState) {
+            case 'add': {
+              this.appService.showResults(`${data.name} added you to the team ${data.team.name}.`, SnackbarNotificationTypes.INFO, 8000);
+              break;
+            }
 
-          case 'keep': {
-            this.appService.showResults(`${data.name} updated the team ${data.team.name}.`, SnackbarNotificationTypes.INFO, 8000);
-            break;
-          }
+            case 'keep': {
+              this.appService.showResults(`${data.name} updated the team ${data.team.name}.`, SnackbarNotificationTypes.INFO, 8000);
+              break;
+            }
 
-          case 'remove': {
-            this.appService.showResults(`${data.name} removed you from the team ${data.team.name}.`, SnackbarNotificationTypes.INFO, 8000);
-            break;
-          }
+            case 'remove': {
+              this.appService.showResults(`${data.name} removed you from the team ${data.team.name}.`, SnackbarNotificationTypes.INFO, 8000);
+              break;
+            }
 
-          default: {
-            break;
+            default: {
+              break;
+            }
           }
         }
-      }
-    });
-    
-    this.appService.pusherChannel.bind('team-deleted', data => {
-      if (data && data.team) {
-        const isMember = data.team.members.some((member: any) => member.email == this.user.email);
-        if (isMember) {
-          this.appService.showResults(`${data.name} deleted the team ${data.team.name} you was member of.`, SnackbarNotificationTypes.INFO, 8000);
+      });
+      
+      this.appService.pusherChannel.bind('team-deleted', data => {
+        if (data && data.team) {
+          const isMember = data.team.members.some((member: any) => member.email == this.user.email);
+          if (isMember) {
+            this.appService.showResults(`${data.name} deleted the team ${data.team.name} you was member of.`, SnackbarNotificationTypes.INFO, 8000);
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   showInvestmentNotification(action: string, data: any = {}, teams: Team[] = []) {
@@ -227,10 +245,12 @@ export class AppComponent implements OnInit, OnDestroy {
    * Stop listening to Pusher notifications comming from server
    */
   unbindToPushNotificationEvents() {
-    this.appService.pusherChannel.unbind('investment-created');
-    this.appService.pusherChannel.unbind('investment-updated');
-    this.appService.pusherChannel.unbind('investment-deleted');
-    this.appService.pusherChannel.unbind('team-updated');
-    this.appService.pusherChannel.unbind('team-deleted');
+    if (this.appService.pusherChannel) {
+      this.appService.pusherChannel.unbind('investment-created');
+      this.appService.pusherChannel.unbind('investment-updated');
+      this.appService.pusherChannel.unbind('investment-deleted');
+      this.appService.pusherChannel.unbind('team-updated');
+      this.appService.pusherChannel.unbind('team-deleted');
+    }
   }
 }

@@ -21,7 +21,7 @@ import { LinkDialogComponent } from './components/link-dialog/link-dialog.compon
 import { StoreModule } from '@ngrx/store';
 import { HouseFiguresResultsComponent } from './components/house-figures-results/house-figures-results.component';
 import * as fromMainNavigator from './components/main-navigator/main-navigator.reducer';
-import { MapsConfig } from './maps-config';
+import { MapsConfigService } from './maps-config.service';
 
 
 @NgModule({
@@ -31,18 +31,13 @@ import { MapsConfig } from './maps-config';
     FormsModule,
     FlexLayoutModule,
     CustomMaterialDesignModule,
-    AgmCoreModule.forRoot(
-      // {
-      // apiKey: environment.mapsApiKey,
-      // libraries: ['places']
-    // }
-    ),
+    AgmCoreModule.forRoot(),
     StoreModule.forFeature(fromMainNavigator.mainNavigatorFeatureKey, fromMainNavigator.reducer),
   ],
   providers: [
     {
       provide: LAZY_MAPS_API_CONFIG,
-      useClass: MapsConfig
+      useClass: MapsConfigService
     }
   ],
   declarations: [ 

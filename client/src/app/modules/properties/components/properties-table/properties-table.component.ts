@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { Subscription, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { userSelector } from 'src/app/modules/users/user.selectors';
@@ -72,7 +73,10 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
 
     //start listening to Pusher notifications related to this component
-    this.bindToPushNotificationEvents();
+    this.appService.pusherReady$.pipe(
+      first((ready: boolean) => ready == true) // when pusher is ready then bind and stop listening to this
+    ).subscribe((ready: boolean) => this.bindToPushNotificationEvents());
+
     this.getProperties();
 
     // selection changed
@@ -149,8 +153,10 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
    * Stop listening to Pusher notifications comming from server
    */
   unbindToPushNotificationEvents() {
-    this.appService.pusherChannel.unbind('property-deleted');
-    this.appService.pusherChannel.unbind('property-updated');
+    if (this.appService.pusherChannel) {
+      this.appService.pusherChannel.unbind('property-deleted');
+      this.appService.pusherChannel.unbind('property-updated');
+    }
   }
 
   ngOnDestroy() {

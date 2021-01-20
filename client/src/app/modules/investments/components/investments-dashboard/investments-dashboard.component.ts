@@ -6,7 +6,7 @@ import { Investment } from '../../models/investment';
 import { AppService } from '../../../../app.service';
 import { Team } from '../../../teams/models/team';
 import { Observable, Subscription, of, combineLatest } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, first } from 'rxjs/operators';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES, COINCAP_CRYPTO_TYPES, RoutingPaths } from 'src/app/constants';
 import { UtilService } from '../../../../util.service';
@@ -16,7 +16,7 @@ import { State } from 'src/app/main.reducer';
 import { userSelector } from 'src/app/modules/users/user.selectors';
 import _ from 'lodash';
 import { LoadingData } from 'src/app/models/loadingData';
-import { loadingSelector } from 'src/app/app.selectors';
+import { apiKeysSelector, loadingSelector } from 'src/app/app.selectors';
 import { RequestAll, ResetAllEntitiesLoaded } from '../../investment.actions';
 import { RequestAll as RequestAllTeams, ResetAllEntitiesLoaded as ResetAllTeamsLoaded } from '../../../teams/team.actions';
 import { investmentsSelector } from '../../investment.selectors';
@@ -26,6 +26,7 @@ import { RequestMany as RequestManyCryptoRate } from 'src/app/modules/currency-e
 import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
 import { allCurrencyRateByIdsLoadedSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
+import { ApiKeys } from 'src/app/models/api-keys';
 
 
 @Component({
@@ -118,7 +119,11 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
     });
     this.subscription.add(newSubscription);
 
-    this.bindToPushNotificationEvents();
+    //start listening to Pusher notifications related to this component
+    this.appService.pusherReady$.pipe(
+      first((ready: boolean) => ready == true) // when pusher is ready then bind and stop listening to this
+    ).subscribe((ready: boolean) => this.bindToPushNotificationEvents());
+    
     this.getInvestments();
     this.getTeams();
   }
@@ -190,10 +195,12 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
    * Stop listening to Pusher notifications comming from server
    */
   unbindToPushNotificationEvents() {
-    this.appService.pusherChannel.unbind('investment-deleted');
-    this.appService.pusherChannel.unbind('investment-updated');
-    this.appService.pusherChannel.unbind('investment-created');
-    this.appService.pusherChannel.unbind('team-updated');
+    if (this.appService.pusherChannel) {
+      this.appService.pusherChannel.unbind('investment-deleted');
+      this.appService.pusherChannel.unbind('investment-updated');
+      this.appService.pusherChannel.unbind('investment-created');
+      this.appService.pusherChannel.unbind('team-updated');
+    }
   }
 
   /**

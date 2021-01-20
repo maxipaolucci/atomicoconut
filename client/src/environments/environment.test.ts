@@ -7,11 +7,5 @@ export const environment = {
   type: 'testing',
   pwa: true,
   apiHost : '',
-  showLogs : true,
-  mapsApiKey : 'AIzaSyBVl8QaQnQGBw6IyvlQ5K3XepPj6Z9nHt0',
-  pusher: {
-    key: '27cd80ad4160d1834d8b',
-    cluster: 'ap4',
-    channel: 'pusher-events-channel'
-  }
+  showLogs : true
 };

@@ -5,6 +5,7 @@ import { Team } from '../../models/team';
 import { User } from '../../../users/models/user';
 import { YesNoDialogComponent } from '../../../shared/components/yes-no-dialog/yes-no-dialog.component';
 import { Subscription, Observable } from 'rxjs';
+import { first, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { RequestDelete } from '../../team.actions';
@@ -28,7 +29,6 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   teams: Team[] = [];
   teams$: Observable<any> = null;
   subscription: Subscription = new Subscription();
-  bindedToPushNotifications: boolean = false;
   loading$: Observable<LoadingData>;
   
   constructor(
@@ -51,14 +51,14 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: false }));
     this.teams$ = this.store.select(teamsSelector());
-    let newSubscription = this.teams$.subscribe((teams: Team[]) => {
-      this.teams = teams;
-      if (!this.bindedToPushNotifications) {
-        this.bindToPushNotificationEvents();
-      }
-    }, (error: any) => {
-      this.teams = [];
-    });
+    let newSubscription = this.teams$.pipe(
+      switchMap((teams: Team[]) => {
+        this.teams = teams;
+        return this.appService.pusherReady$.pipe(
+          first((ready: boolean) => ready == true) // when pusher is ready then bind and stop listening to this
+        );
+      })
+    ).subscribe((ready: boolean) => this.bindToPushNotificationEvents());
     this.subscription.add(newSubscription);
 
     this.loading$ = this.store.select(loadingSelector());
@@ -100,16 +100,16 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
 
       this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: true, silently: true }));
     });
-
-    this.bindedToPushNotifications = true;
   }
 
   /**
    * Stop listening to Pusher notifications comming from server
    */
   unbindToPushNotificationEvents() {
-    this.appService.pusherChannel.unbind('team-deleted');
-    this.appService.pusherChannel.unbind('team-updated');
+    if (this.appService.pusherChannel) {
+      this.appService.pusherChannel.unbind('team-deleted');
+      this.appService.pusherChannel.unbind('team-updated');
+    }
   }
 
   openDeleteTeamDialog(index: number, team: Team = null) {

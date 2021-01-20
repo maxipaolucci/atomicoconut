@@ -131,7 +131,9 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     this.loading$ = this.store.select(loadingSelector());
 
     //start listening to Pusher notifications related to this component
-    this.bindToPushNotificationEvents();
+    this.appService.pusherReady$.pipe(
+      first((ready: boolean) => ready == true) // when pusher is ready then bind and stop listening to this
+    ).subscribe((ready: boolean) => this.bindToPushNotificationEvents());
 
     this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => {
       this.user = user
@@ -232,8 +234,10 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
    * Stop listening to Pusher notifications comming from server
    */
   unbindToPushNotificationEvents() {
-    this.appService.pusherChannel.unbind('property-deleted');
-    this.appService.pusherChannel.unbind('property-updated');
+    if (this.appService.pusherChannel) {
+      this.appService.pusherChannel.unbind('property-deleted');
+      this.appService.pusherChannel.unbind('property-updated');
+    }
   }
 
   ngOnDestroy(): void {

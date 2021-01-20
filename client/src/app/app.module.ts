@@ -26,6 +26,7 @@ import { AppEffects } from './app.effects';
 import { CurrencyExchangeModule } from './modules/currency-exchange/currency-exchange.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { PwaService } from './pwa.service';
+import { MapsConfigService } from './modules/shared/maps-config.service';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { PwaService } from './pwa.service';
     AppService, 
     UtilService, 
     CurrencyExchangeService,
+    MapsConfigService,
     PwaService,
     {
       provide: HTTP_INTERCEPTORS,
