@@ -19,6 +19,7 @@ const systemRoutes = require('./routes/api/systemRoutes');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
 const cors = require('cors');
+const AWSXRay = require('aws-xray-sdk');
 require('./handlers/passport'); //used by passport library
 
 // create our Express app
@@ -35,6 +36,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Initialize AWS XRay SDK
+app.use(AWSXRay.express.openSegment('atomiCoconut'));
 
 // takes the request of multipart/form-data types and put the payload and files into req.body and req.files respectively (thanks to multer)
 const multerOptions = {
@@ -102,6 +106,9 @@ app.use('/api/currencyRates', currencyRatesRoutes);
 app.use('/api/cryptoRates', cryptoRatesRoutes);
 app.use('/api/system', systemRoutes);
 app.use('/', routes); //this one at the end cause it contains the wildcard if the requested route does not match any route declared before
+
+// AWS XRay exceptions after declaring routes 
+app.use(AWSXRay.express.closeSegment());
 
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);
