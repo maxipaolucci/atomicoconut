@@ -10,6 +10,9 @@ RUN npm install
 
 COPY . .
 
+# nodejs server
 EXPOSE 7777
+# xray daemon
+EXPOSE 2000
 
 CMD ["npm", "run", "start"]
