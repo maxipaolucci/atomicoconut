@@ -38,7 +38,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Initialize AWS XRay SDK
+// EC2Plugin adds the instance ID, Availability Zone, and the CloudWatch Logs Group.
+// ElasticBeanstalkPlugin adds the environment name, version label, and deployment ID.
+AWSXRay.config([AWSXRay.plugins.EC2Plugin,AWSXRay.plugins.ElasticBeanstalkPlugin]);
 app.use(AWSXRay.express.openSegment('atomiCoconut'));
+AWSXRay.middleware.enableDynamicNaming('*.atomicoconut.com');
 
 // takes the request of multipart/form-data types and put the payload and files into req.body and req.files respectively (thanks to multer)
 const multerOptions = {
