@@ -1,5 +1,9 @@
 FROM node:14.15-alpine
 
+RUN apk update
+# this install telnet command
+RUN apk add busybox-extras 
+
 RUN node -v && npm -v
 
 WORKDIR /app
