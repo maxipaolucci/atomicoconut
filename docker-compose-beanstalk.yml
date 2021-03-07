@@ -35,3 +35,9 @@ services:
     links:
       - acclient
       - acserver
+  xraydaemon:
+    image: "amazon/aws-xray-daemon"
+    ports:
+      - "2000/udp:2000/udp"
+      - "2000/tcp:2000/tcp"
+    mem_limit: 256m
