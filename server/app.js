@@ -38,24 +38,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Initialize AWS XRay SDK
-const awsLogToConsole = (message, meta) => {
-  console.log(`[AWS Log message] ${message}`);
-  console.log(`[AWS Log meta] ${meta}`);
-}; 
-let logger = {
-  error: (message, meta) => awsLogToConsole(message, meta),
-  warn: (message, meta) => awsLogToConsole(message, meta),
-  info: (message, meta) => awsLogToConsole(message, meta),
-  debug: (message, meta) => awsLogToConsole(message, meta)
-}
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testing') {
+  const awsLogToConsole = (message, meta) => {
+    console.log(`[AWS Log message] ${message}`);
+    console.log(`[AWS Log meta] ${meta}`);
+  }; 
+  let logger = {
+    error: (message, meta) => awsLogToConsole(message, meta),
+    warn: (message, meta) => awsLogToConsole(message, meta),
+    info: (message, meta) => awsLogToConsole(message, meta),
+    debug: (message, meta) => awsLogToConsole(message, meta)
+  }
 
-AWSXRay.setLogger(logger);
-AWSXRay.setDaemonAddress('xraydaemon:2000');
-// EC2Plugin adds the instance ID, Availability Zone, and the CloudWatch Logs Group.
-// ElasticBeanstalkPlugin adds the environment name, version label, and deployment ID.
-AWSXRay.config([AWSXRay.plugins.EC2Plugin,AWSXRay.plugins.ElasticBeanstalkPlugin]);
-app.use(AWSXRay.express.openSegment('atomiCoconut'));
-AWSXRay.middleware.enableDynamicNaming('*.atomicoconut.com');
+  AWSXRay.setLogger(logger);
+  AWSXRay.setDaemonAddress('xraydaemon:2000');
+  // EC2Plugin adds the instance ID, Availability Zone, and the CloudWatch Logs Group.
+  // ElasticBeanstalkPlugin adds the environment name, version label, and deployment ID.
+  AWSXRay.config([AWSXRay.plugins.EC2Plugin,AWSXRay.plugins.ElasticBeanstalkPlugin]);
+  app.use(AWSXRay.express.openSegment(`atomiCoconut-${process.env.NODE_ENV}`));
+  AWSXRay.middleware.enableDynamicNaming('*.atomicoconut.com');
+}
 
 // takes the request of multipart/form-data types and put the payload and files into req.body and req.files respectively (thanks to multer)
 const multerOptions = {
@@ -124,8 +126,10 @@ app.use('/api/cryptoRates', cryptoRatesRoutes);
 app.use('/api/system', systemRoutes);
 app.use('/', routes); //this one at the end cause it contains the wildcard if the requested route does not match any route declared before
 
-// AWS XRay exceptions after declaring routes 
-app.use(AWSXRay.express.closeSegment());
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testing') {
+  // AWS XRay exceptions after declaring routes 
+  app.use(AWSXRay.express.closeSegment());
+}
 
 // If that above routes didnt work, we 404 them and forward to error handler
 app.use(errorHandlers.notFound);
