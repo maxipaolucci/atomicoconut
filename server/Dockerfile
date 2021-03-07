@@ -1,8 +1,7 @@
 FROM node:14.15-alpine
 
-RUN apk update
-# this install telnet command
-RUN apk add busybox-extras 
+# for telnet and curl
+RUN apk update && apk add busybox-extras curl
 
 RUN node -v && npm -v
 
