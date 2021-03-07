@@ -50,6 +50,7 @@ let logger = {
 }
 
 AWSXRay.setLogger(logger);
+AWSXRay.setDaemonAddress('xraydaemon:2000');
 // EC2Plugin adds the instance ID, Availability Zone, and the CloudWatch Logs Group.
 // ElasticBeanstalkPlugin adds the environment name, version label, and deployment ID.
 AWSXRay.config([AWSXRay.plugins.EC2Plugin,AWSXRay.plugins.ElasticBeanstalkPlugin]);
