@@ -55,7 +55,7 @@ export class HouseFiguresResultsComponent implements OnInit, OnChanges {
     this.grossAnnualRent = weeklyRent * 52;
     this.netAnnualRent = this.grossAnnualRent - weeklyRent * this.vacancy;
     this.grossYield = this.grossAnnualRent / this.purchasePrice;
-    this.expenses = this.renovationCost + this.maintenanceCost + this.bodyCorporate + this.houseRates + this.utilities + this.insurance
+    this.expenses = this.maintenanceCost + this.bodyCorporate + this.houseRates + this.utilities + this.insurance
         + this.otherCosts + this.netAnnualRent * (this.managed / 100);
     this.netYield = (this.netAnnualRent - this.expenses) / this.purchasePrice;
     this.loanInterest = this.purchasePrice * (this.interestRates / 100);
