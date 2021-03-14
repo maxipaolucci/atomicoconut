@@ -74,3 +74,14 @@ services:
     volumes:
     - ./nginx/certbot/conf:/etc/letsencrypt
     - ./nginx/certbot/www:/var/www/certbot
+
+  xraydaemon:
+    image: "amazon/aws-xray-daemon"
+    ports:
+    - "2000:2000"
+    volumes: 
+    - ~/.aws/:/root/.aws/:ro
+    environment:
+    - AWS_REGION=ap-southeast-2
+    # mem_limit: 256m
+    entrypoint: ["/xray", "-o"]
