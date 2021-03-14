@@ -39,8 +39,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Initialize AWS XRay SDK
 if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testing') {
-  AWSXRay.captureHTTPsGlobal(require('http'));
-  AWSXRay.captureHTTPsGlobal(require('https'));
+  // AWSXRay.captureHTTPsGlobal(require('http'));
+  // AWSXRay.captureHTTPsGlobal(require('https'));
 
   const awsLogToConsole = (message, meta) => {
     console.log(`[AWS Log message] ${message}`);
