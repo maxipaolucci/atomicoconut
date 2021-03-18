@@ -245,7 +245,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   getTeams() {
     const methodTrace = `${this.constructor.name} > getTeams() > `; // for debugging
 
-    this.store.dispatch(new RequestAllTeams({ userEmail: this.user.email, forceServerRequest: false }));
+    this.store.dispatch(new RequestAllTeams({ forceServerRequest: false }));
   }
 
   setTotals(totalReturns: any): void {

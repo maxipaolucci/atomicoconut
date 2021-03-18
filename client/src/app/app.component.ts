@@ -128,7 +128,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (!_.isEqual(user, this.user)) {
           this.user = user;
           //get the teams, will need them for the pusher notifications
-          this.store.dispatch(new RequestAllTeams({ userEmail: this.user.email, forceServerRequest: false }));
+          this.store.dispatch(new RequestAllTeams({ forceServerRequest: false }));
           this.bindToPushNotificationEvents();
         }
         

@@ -433,16 +433,6 @@ exports.getAllTeams = async (req, res) => {
     for (let teamId of Object.keys(teamsObj)) {
         result.push(teamsObj[teamId]);
     }
-    
-    
-    // console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
-    // res.status(401).json({ 
-    //         status : "error", 
-    //         codeno : 465,
-    //         msg : getMessage('error', 465, null, false),
-    //         data : null
-    //     });
-    // return;
 
     //5 - Return teams info to the user.
     console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
@@ -611,7 +601,7 @@ exports.delete = async (req, res) => {
     const methodTrace = `${errorTrace} delete() >`;
 
     const user = req.user;
-    const team = await getTeamBySlugObject(req.params.slug, req.query.email, { withId : true, withInvestments : true });
+    const team = await getTeamBySlugObject(req.params.slug, user.email, { withId : true, withInvestments : true });
 
     if (!team) {
         console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
@@ -625,7 +615,7 @@ exports.delete = async (req, res) => {
         return;
     }
 
-    if (team && team.admin && team.admin.email !== req.query.email) {
+    if (team && team.admin && team.admin.email !== user.email) {
         //the client is not the admin of the team requested
         console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Team', user.email)}`);
         res.status(401).json({ 

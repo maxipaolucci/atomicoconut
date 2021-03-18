@@ -24,11 +24,11 @@ export class TeamsService {
 
   /**
    * Server call to Create a new team in the system 
-   * @param postData 
+   * @param { TeamEditModel } postData
    * 
    * @return { Observable<Team> }
    */
-  create$(postData: any = {}): Observable<Team> {
+  create$(postData: TeamEditModel): Observable<Team> {
     const methodTrace = `${this.constructor.name} > create$() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/create`, postData, { headers : this.headers }).pipe(
@@ -96,16 +96,15 @@ export class TeamsService {
    * 
    * @return { Observable<Team> }
    */
-  getMyTeamBySlug$(email: string, slug: string): Observable<Team> {
+  getMyTeamBySlug$(slug: string): Observable<Team> {
     const methodTrace = `${this.constructor.name} > getMyTeamBySlug$() > `; // for debugging
 
-    if (!email || !slug) {
+    if (!slug) {
       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return of(null);
     }
 
     const params = new HttpParams()
-        .set('email', email)
         .set('slug', slug);
 
     return this.http.get<Response>(`${this.serverHost}/getMyTeamBySlug`, { params }).pipe(
@@ -118,21 +117,13 @@ export class TeamsService {
 
   /**
    * Server call to Get all the teams for the current user from the server
-   * @param {string} slug . The team slug
    * 
    * @return { Observable<Team[]> }
    */
-  getTeams$(email: string): Observable<Team[]> {
+  getTeams$(): Observable<Team[]> {
     const methodTrace = `${this.constructor.name} > getTeams$() > `; // for debugging
 
-    if (!email) {
-      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
-      return of([]);
-    }
-
-    const params = new HttpParams().set('email', email);
-
-    return this.http.get<Response>(`${this.serverHost}/getAll`, { params }).pipe(
+    return this.http.get<Response>(`${this.serverHost}/getAll`).pipe(
       map(this.appService.extractData),
       mergeMap((teamsData): Observable<Team[]> => {
         const teams: Team[] = [];
@@ -184,16 +175,15 @@ export class TeamsService {
    * 
    * @return { Observable<any> }
    */
-  delete$(slug: string, email: string): Observable<any> {
+  delete$(slug: string): Observable<any> {
     const methodTrace = `${this.constructor.name} > delete$() > `; // for debugging
 
-    if (!slug || !email) {
+    if (!slug) {
       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return Observable.throw(null);
     }
 
     const params = new HttpParams()
-        .set('email', email)
         .set('pusherSocketID', this.appService.pusherSocketID);
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${slug}`, {headers : this.headers, params } )

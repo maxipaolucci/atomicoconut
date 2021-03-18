@@ -49,7 +49,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
     this.user$ = this.store.select(userSelector());
     this.subscription.add(this.user$.subscribe((user: User) => this.user = user));
 
-    this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: false }));
+    this.store.dispatch(new RequestAll({ forceServerRequest: false }));
     this.teams$ = this.store.select(teamsSelector());
     let newSubscription = this.teams$.pipe(
       switchMap((teams: Team[]) => {
@@ -88,7 +88,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: true, silently: true }));
+      this.store.dispatch(new RequestAll({ forceServerRequest: true, silently: true }));
     });
 
     // when a user removes a team
@@ -98,7 +98,7 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: true, silently: true }));
+      this.store.dispatch(new RequestAll({ forceServerRequest: true, silently: true }));
     });
   }
 
@@ -141,6 +141,6 @@ export class TeamsDashboardComponent implements OnInit, OnDestroy {
   delete(index: number, team: Team = null) {
     const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
 
-    this.store.dispatch(new RequestDelete({ userEmail: this.user.email, slug: team.slug }));
+    this.store.dispatch(new RequestDelete({ slug: team.slug }));
   }
 }

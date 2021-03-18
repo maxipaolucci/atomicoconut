@@ -36,7 +36,7 @@ export class TeamEffects {
         return false;
       }
     }),
-    mergeMap(([{ payload }, allEntitiesLoaded]) => this.teamsService.getTeams$(payload.userEmail)
+    mergeMap(([{ payload }, allEntitiesLoaded]) => this.teamsService.getTeams$()
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
@@ -65,7 +65,7 @@ export class TeamEffects {
     tap(({payload}) => {
       this.store.dispatch(new ShowProgressBar({ message: 'Fetching team...' }));
     }),
-    mergeMap(({ payload }) => this.teamsService.getMyTeamBySlug$(payload.userEmail, payload.slug)
+    mergeMap(({ payload }) => this.teamsService.getMyTeamBySlug$(payload.slug)
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
@@ -95,7 +95,7 @@ export class TeamEffects {
     tap(({payload}) => {
       this.store.dispatch(new ShowProgressBar({ message: 'Removing team...', color: 'warn' }));
     }),
-    mergeMap(({ payload }) => this.teamsService.delete$(payload.slug, payload.userEmail).
+    mergeMap(({ payload }) => this.teamsService.delete$(payload.slug).
       pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )

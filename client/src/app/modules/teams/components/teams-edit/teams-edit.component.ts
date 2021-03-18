@@ -35,7 +35,6 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
   model: TeamEditModel = {
     name : null,
     description : null,
-    email : null, // user email for api check
     members : [] //this is a list of member email, not User objects
   };
   slug: string = null;
@@ -59,8 +58,6 @@ export class TeamsEditComponent implements OnInit, OnDestroy {
 
     // get the user (this is fast)
     this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
-
-    this.model.email = this.user.email;
     
     this.loading$ = this.store.select(loadingSelector());
 

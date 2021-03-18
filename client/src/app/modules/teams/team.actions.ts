@@ -30,13 +30,13 @@ export class AddAll implements Action {
 export class RequestAll implements Action {
   readonly type = TeamActionTypes.RequestAll;
 
-  constructor(public payload: { userEmail: string, forceServerRequest: boolean, silently?: boolean }) {}
+  constructor(public payload: { forceServerRequest: boolean, silently?: boolean }) {}
 }
 
 export class RequestDelete implements Action {
   readonly type = TeamActionTypes.RequestDelete;
 
-  constructor(public payload: { userEmail: string, slug: string }) {}
+  constructor(public payload: { slug: string }) {}
 }
 
 export class Delete implements Action {
@@ -48,7 +48,7 @@ export class Delete implements Action {
 export class RequestOne implements Action {
   readonly type = TeamActionTypes.RequestOne;
 
-  constructor(public payload: { userEmail: string, slug: string }) {}
+  constructor(public payload: { slug: string }) {}
 }
 
 export class AddOne implements Action {

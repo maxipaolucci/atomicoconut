@@ -329,7 +329,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.teams = [];
     this.getTeamsServiceRunning = true;
 
-    this.store.dispatch(new RequestAllTeams({ userEmail: this.user.email, forceServerRequest: false }));
+    this.store.dispatch(new RequestAllTeams({ forceServerRequest: false }));
     const newSubscription = this.store.select(teamsSelector()).subscribe((teams: Team[]) => {
       this.teams = teams;
       this.setSelectedTeam();
