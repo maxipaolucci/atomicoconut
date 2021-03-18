@@ -21,11 +21,11 @@ export class InvestmentEffects {
   @Effect()
   requestAll$ = this.actions$.pipe(
     ofType<RequestAll>(InvestmentActionTypes.RequestAll),
-    tap(({ payload }) => {
+    tap((action) => {
       this.store.dispatch(new ShowProgressBar({ message: 'Fetching investments...' }));
     }),
     withLatestFrom(this.store.pipe(select(allInvestmentsLoadedSelector()))),
-    filter(([{ payload }, allEntitiesLoaded]) => {
+    filter(([action, allEntitiesLoaded]) => {
       if (!allEntitiesLoaded) {
         // properties are not in the store or we want to push a fetch from the server
         return true;
@@ -36,7 +36,7 @@ export class InvestmentEffects {
       }
     }),
     // delay(4000),
-    mergeMap(([{ payload }, allEntitiesLoaded]) => this.investmentsService.getInvestments$(payload.userEmail)
+    mergeMap(([action, allEntitiesLoaded]) => this.investmentsService.getInvestments$()
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
@@ -66,7 +66,7 @@ export class InvestmentEffects {
       this.store.dispatch(new ShowProgressBar({ message: 'Removing investment...', color: 'warn' }));
     }),
     // delay(4000),
-    mergeMap(({ payload }) => this.investmentsService.delete$(payload.id, payload.userEmail).
+    mergeMap(({ payload }) => this.investmentsService.delete$(payload.id).
       pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
@@ -99,7 +99,7 @@ export class InvestmentEffects {
     tap(({payload}) => {
       this.store.dispatch(new ShowProgressBar({ message: 'Fetching investment...' }));
     }),
-    mergeMap(({ payload }) => this.investmentsService.getInvestmentById$(payload.userEmail, payload.id)
+    mergeMap(({ payload }) => this.investmentsService.getInvestmentById$(payload.id)
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )

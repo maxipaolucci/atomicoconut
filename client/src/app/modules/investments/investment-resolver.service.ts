@@ -30,7 +30,7 @@ export class InvestmentResolver implements Resolve<Investment> {
       select(investmentByIdSelector(investmentId)),
       tap((investment: Investment) => {
         if (!investment) {
-          this.store.dispatch(new RequestOne({ userEmail: this.user.email, id: investmentId }));
+          this.store.dispatch(new RequestOne({ id: investmentId }));
         }
       }),
       first((investment: Investment) => !!investment)

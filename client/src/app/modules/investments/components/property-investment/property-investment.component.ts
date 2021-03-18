@@ -179,7 +179,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
   delete() {
     const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
 
-    this.store.dispatch(new RequestDelete({ userEmail: this.user.email, id: this.investment.id }));
+    this.store.dispatch(new RequestDelete({ id: this.investment.id }));
   }
 
 }

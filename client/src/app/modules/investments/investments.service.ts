@@ -80,17 +80,16 @@ export class InvestmentsService {
    * 
    * @return { Observable<Investment> }
    */
-  getInvestmentById$(email: string, id: string): Observable<Investment> {
+  getInvestmentById$(id: string): Observable<Investment> {
     const methodTrace = `${this.constructor.name} > getInvestmentById$() > `; // for debugging
 
-    if (!id || !email) {
+    if (!id) {
       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return of(null);
     }
 
     const params = new HttpParams()
-        .set('id', id)
-        .set('email', email);
+        .set('id', id);
 
     return this.http.get<Response>(`${this.serverHost}/getbyId`, { params })
       .pipe(
@@ -110,21 +109,13 @@ export class InvestmentsService {
 
   /**
    * Server call to Get all the Investments for the current user from the server
-   * @param {string} email . The user email
    * 
    * @return { Observable<Investment[]> } 
    */
-  getInvestments$(email: string): Observable<Investment[]> {
+  getInvestments$(): Observable<Investment[]> {
     const methodTrace = `${this.constructor.name} > getInvestments$() > `; // for debugging
 
-    if (!email) {
-      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
-      return of([]);
-    }
-
-    const params = new HttpParams().set('email', email);
-
-    return this.http.get<Response>(`${this.serverHost}/getAll`, { params })
+    return this.http.get<Response>(`${this.serverHost}/getAll`)
       .pipe(
         map(this.appService.extractData),
         map((investmentsData): Investment[] => {
@@ -216,16 +207,15 @@ export class InvestmentsService {
    * 
    * @return { Observable<any> }
    */
-  delete$(id: string, email: string): Observable<any> {
+  delete$(id: string): Observable<any> {
     const methodTrace = `${this.constructor.name} > delete$() > `; // for debugging
 
-    if (!id || !email) {
+    if (!id) {
       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return Observable.throw(null);
     }
 
     const params = new HttpParams()
-        .set('email', email)
         .set('pusherSocketID', this.appService.pusherSocketID); //to prevent receiving notification of actions performed by current user
 
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } )

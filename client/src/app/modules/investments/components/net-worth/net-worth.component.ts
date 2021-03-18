@@ -119,7 +119,7 @@ export class NetWorthComponent implements OnInit, OnDestroy {
         }
         
         this.calculateProgressBarWealthValue();
-        this.store.dispatch(new RequestAllInvestments({ userEmail: this.user.email }));
+        this.store.dispatch(new RequestAllInvestments());
         this.getCurrencyRatesForUserInvestments();
       }
     });

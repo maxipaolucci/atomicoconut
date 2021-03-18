@@ -27,14 +27,12 @@ export class AddAll implements Action {
 
 export class RequestAll implements Action {
   readonly type = InvestmentActionTypes.RequestAll;
-
-  constructor(public payload: { userEmail: string }) {}
 }
 
 export class RequestDelete implements Action {
   readonly type = InvestmentActionTypes.RequestDelete;
 
-  constructor(public payload: { userEmail: string, id: string }) {}
+  constructor(public payload: { id: string }) {}
 }
 
 export class Delete implements Action {
@@ -46,7 +44,7 @@ export class Delete implements Action {
 export class RequestOne implements Action {
   readonly type = InvestmentActionTypes.RequestOne;
 
-  constructor(public payload: { userEmail: string, id: string }) {}
+  constructor(public payload: { id: string }) {}
 }
 
 export class AddOne implements Action {

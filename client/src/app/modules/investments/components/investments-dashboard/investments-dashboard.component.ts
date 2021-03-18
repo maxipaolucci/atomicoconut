@@ -10,13 +10,12 @@ import { switchMap, first } from 'rxjs/operators';
 import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES, COINCAP_CRYPTO_TYPES, RoutingPaths } from 'src/app/constants';
 import { UtilService } from '../../../../util.service';
-import { PropertyInvestment } from '../../models/propertyInvestment';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { userSelector } from 'src/app/modules/users/user.selectors';
 import _ from 'lodash';
 import { LoadingData } from 'src/app/models/loadingData';
-import { apiKeysSelector, loadingSelector } from 'src/app/app.selectors';
+import { loadingSelector } from 'src/app/app.selectors';
 import { RequestAll, ResetAllEntitiesLoaded } from '../../investment.actions';
 import { RequestAll as RequestAllTeams, ResetAllEntitiesLoaded as ResetAllTeamsLoaded } from '../../../teams/team.actions';
 import { investmentsSelector } from '../../investment.selectors';
@@ -26,7 +25,6 @@ import { RequestMany as RequestManyCryptoRate } from 'src/app/modules/currency-e
 import { RequestMany as RequestManyCurrencyRates } from 'src/app/modules/currency-exchange/currency-rate.actions';
 import { allCurrencyRateByIdsLoadedSelector } from 'src/app/modules/currency-exchange/currency-rate.selectors';
 import { SetLinks } from 'src/app/modules/shared/components/main-navigator/main-navigator.actions';
-import { ApiKeys } from 'src/app/models/api-keys';
 
 
 @Component({
@@ -236,7 +234,7 @@ export class InvestmentsDashboardComponent implements OnInit, OnDestroy {
   getInvestments()  {
     const methodTrace = `${this.constructor.name} > getInvestments$() > `; // for debugging
 
-    this.store.dispatch(new RequestAll({ userEmail: this.user.email }));
+    this.store.dispatch(new RequestAll());
   }
 
   /**

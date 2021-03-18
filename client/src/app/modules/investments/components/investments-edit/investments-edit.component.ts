@@ -38,7 +38,6 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
   investment: Investment = null;
   model: any = {
     id : null,
-    email : null, // user email for api check
     owner : 'me',
     team : null,
     teamSlug : null,
@@ -157,7 +156,6 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.user = user;
     this.getTeams(); // don't need to wait for this
     
-    this.model.email = user.email;
     this.model.investmentAmountUnit = user.currency || DEFAULT_CURRENCY;
     this.model.loanAmountUnit = user.currency || DEFAULT_CURRENCY;
     this.model.id = investmentId;
