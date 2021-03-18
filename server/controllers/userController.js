@@ -136,6 +136,16 @@ exports.accountActivation = async (req, res) => {
     user = await getUserObject(user.email);
     user.token = token;
 
+    // send email to me alerting new user
+    mail.send({
+        toEmail: 'maxipaolucci@gmail.com',
+        fromEmail: 'alert@atomicoconut.com',
+        subject : `New user account activated`,
+        accountEmail: user.email,
+        accountName: user.name,
+        filename : 'account-created' //this is going to be the mail template file
+    });
+
     console.log(`${methodTrace} ${getMessage('message', 1057, user.email, true, user.email)}`);
     res.json({
         status : 'success', 

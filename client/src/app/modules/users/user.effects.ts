@@ -102,8 +102,8 @@ export class UserEffects {
         // if redirectUrl was set it has precedence over the router current route 
         this.router.navigate([redirectUrl]);
       } else if (routerState && (routerState["url"] === `${RoutingPaths.USERS}/login` ||
-          routerState["url"].startsWith(`${RoutingPaths.USERS}/account/reset`))) {
-        // if the current route is login or reset password we move to home
+          routerState["url"].startsWith(`${RoutingPaths.USERS}/account/reset`) || routerState["url"].startsWith(`${RoutingPaths.USERS}/account/activation`))) {
+        // if the current route is login or reset password or account activation we move to home
         this.router.navigate([RoutingPaths.HOME]);
       }
       // otherwise stay in current route
