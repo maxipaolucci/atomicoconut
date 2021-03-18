@@ -10,9 +10,7 @@ const authHandler = require('../../handlers/authHandler');
 //*************************************************************************** */
 
 router.route('/getClientApiKeys').get(
-  // authController.isLogggedIn,
-  // authHandler.jwtCheck,
-  // authHandler.checkDecodedJwtMatchUser,
+  // it is not required to be logged in to access this route
   systemController.getClientApiKeys
 );
 

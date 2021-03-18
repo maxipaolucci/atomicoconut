@@ -38,7 +38,7 @@ export class PropertyEffects {
       }
     }),
     // delay(4000),
-    mergeMap(([{ payload }, allEntitiesLoaded]) => this.propertiesService.getProperties$(payload.userEmail)
+    mergeMap(([{ payload }, allEntitiesLoaded]) => this.propertiesService.getProperties$()
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
@@ -68,7 +68,7 @@ export class PropertyEffects {
       this.store.dispatch(new ShowProgressBar({ message: 'Removing property...', color: 'warn' }));
     }),
     // delay(4000),
-    mergeMap(({ payload }) => this.propertiesService.delete$(payload.id, payload.userEmail).
+    mergeMap(({ payload }) => this.propertiesService.delete$(payload.id).
       pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )
@@ -101,7 +101,7 @@ export class PropertyEffects {
     tap(({payload}) => {
       this.store.dispatch(new ShowProgressBar({ message: 'Fetching property...' }));
     }),
-    mergeMap(({ payload }) => this.propertiesService.getPropertyById$(payload.userEmail, payload.id)
+    mergeMap(({ payload }) => this.propertiesService.getPropertyById$(payload.id)
       .pipe(
         catchError((error: any) => of(null)) //http errors are properly handle in http-error.interceptor, just send null to the next method
       )

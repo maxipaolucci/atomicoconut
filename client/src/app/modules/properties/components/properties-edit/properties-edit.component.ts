@@ -59,7 +59,6 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
   // models
   model: any = {
     id : null,
-    email : null, // user email for api check
     type : null,
     propertyTypeData : {}, // specific data related to the property type
     address : {},
@@ -136,8 +135,7 @@ export class PropertiesEditComponent implements OnInit, OnDestroy {
     ).subscribe((ready: boolean) => this.bindToPushNotificationEvents());
 
     this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => {
-      this.user = user
-      this.model.email = this.user.email;
+      this.user = user;
       this.model.askingPriceUnit = this.model.offerPriceUnit = this.model.walkAwayPriceUnit =
           this.model.purchasePriceUnit = this.model.marketValueUnit = this.model.renovationCostUnit =
           this.model.maintenanceCostUnit = this.model.otherCostUnit = (this.user.currency || DEFAULT_CURRENCY);

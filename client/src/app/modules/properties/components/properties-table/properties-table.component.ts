@@ -177,7 +177,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
     this.propertiesDataSource.data = [];
     this.propertiesDataSource.paginator = this.propertiesTablePaginator;
 
-    this.store.dispatch(new RequestAll({ userEmail: this.user.email, forceServerRequest: false }));
+    this.store.dispatch(new RequestAll({ forceServerRequest: false }));
     this.properties$ = this.store.select(propertiesSelector());
     const newSubscription: Subscription = this.properties$.subscribe((properties: Property[]) => {
       this.properties = properties;
@@ -233,7 +233,7 @@ export class PropertiesTableComponent implements OnInit, OnDestroy, AfterViewIni
   delete(index: number, propertyToDelete: Property = null) {
     const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
 
-    this.store.dispatch(new RequestDelete({ userEmail: this.user.email, id: propertyToDelete.id }));
+    this.store.dispatch(new RequestDelete({ id: propertyToDelete.id }));
   }
 
   applyFilter(filterValue: string) {

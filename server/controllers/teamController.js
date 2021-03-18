@@ -604,7 +604,7 @@ exports.delete = async (req, res) => {
     const team = await getTeamBySlugObject(req.params.slug, user.email, { withId : true, withInvestments : true });
 
     if (!team) {
-        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, 'Team')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 461,

@@ -478,7 +478,7 @@ exports.delete = async (req, res) => {
     
     if (!property){
         //Nothing found for that ID
-        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Property')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, 'Property')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 461,
@@ -494,11 +494,11 @@ exports.delete = async (req, res) => {
 
     if (creator.email !== user.email) {
         //3.2 - the user it is not the creator of the property
-        console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Property', req.user.email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Property', user.email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 462,
-            msg : getMessage('error', 462, null, false, 'Property', req.user.email),
+            msg : getMessage('error', 462, null, false, 'Property', user.email),
             data : { creator }
         });
 

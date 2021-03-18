@@ -115,17 +115,15 @@ export class PropertiesService {
    * 
    * @return { Observable<Property> }
    */
-  getPropertyById$(email: string, id: string): Observable<Property> {
+  getPropertyById$(id: string): Observable<Property> {
     const methodTrace = `${this.constructor.name} > getPropertyById() > `; // for debugging
 
-    if (!id || !email) {
+    if (!id) {
       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return of(null);
     }
 
-    const params = new HttpParams().set('email', email);
-
-    return this.http.get<Response>(`${this.serverHost}/${id}`, { params }).pipe(
+    return this.http.get<Response>(`${this.serverHost}/${id}`).pipe(
       map(this.appService.extractData),
       map((data): Property => {
         return this.populate(data);
@@ -192,21 +190,16 @@ export class PropertiesService {
   /**
    * Server call to Get all the properties for the current user from the server.
    * This proeprties will be the properties the user created plus the investment properties where she/he has a piece of the cake.
-   * @param {string} email . The user email
    * @param {boolean} justUserProperties . If false it get properties created by the user with the email provided plus properties from investments where the user has a portion of it.
    *                                       If true it just bring back the properties created by the user with the email provided.
    * 
    * @return { Observable<Property[]> } 
    */
-  getProperties$(email: string, justUserProperties: boolean = false): Observable<Property[]> {
+  getProperties$(justUserProperties: boolean = false): Observable<Property[]> {
     const methodTrace = `${this.constructor.name} > getProperties() > `; // for debugging
 
-    if (!email) {
-      this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
-      return of([]);
-    }
-
-    const params = new HttpParams().set('email', email).set('justUserProperties', justUserProperties + '');
+    const params = new HttpParams()
+        .set('justUserProperties', justUserProperties + '');
 
     return this.http.get<Response>(`${this.serverHost}/getAll`, { params }).pipe(
       map(this.appService.extractData),
@@ -230,21 +223,19 @@ export class PropertiesService {
   /**
    * Server call to delete a property from the system
    * @param {string} id . The record id
-   * @param {string} email . The current user email.
    * 
    * @return { any }
    * 
    */
-  delete$(id: string, email: string): Observable<any> {
+  delete$(id: string): Observable<any> {
     const methodTrace = `${this.constructor.name} > delete() > `; // for debugging
 
-    if (!id || !email) {
+    if (!id) {
       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Required parameters missing.`);
       return Observable.throw(null);
     }
 
     const params = new HttpParams()
-        .set('email', email)
         .set('pusherSocketID', this.appService.pusherSocketID);
     
     return this.http.delete<Response>(`${this.serverHost}/delete/${id}`, { headers : this.headers, params } ).pipe(
