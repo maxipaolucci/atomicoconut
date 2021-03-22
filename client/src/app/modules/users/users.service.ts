@@ -16,6 +16,7 @@ import { UserAdditionalInfo } from './models/user-additional-info';
 import { State } from 'src/app/main.reducer';
 import { userSelector } from './user.selectors';
 import { SaveApiSecurityToken } from './user.actions';
+import { AccountUserInfoModel } from './models/account-user-info-model';
 
 @Injectable()
 export class UsersService {
@@ -54,11 +55,11 @@ export class UsersService {
 
   /**
    * Server call to update account user details 
-   * @param postData 
+   * @param { AccountUserInfoModel } postData 
    * 
    * @return { Observable<User> }
    */
-  updateAccount$(postData: any = {}): Observable<User> {
+  updateAccount$(postData: AccountUserInfoModel): Observable<User> {
     const methodTrace = `${this.constructor.name} > updateAccount() > `; // for debugging
 
     return this.http.post<Response>(`${this.serverHost}/account`, postData, { headers : this.headers }).pipe(

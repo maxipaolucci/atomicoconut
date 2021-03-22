@@ -21,7 +21,7 @@ import { RequestUpdateAccountPersonalInfo } from '../../user.actions';
 export class AccountPersonalInfoComponent implements OnInit, OnDestroy {
 
   user: User;
-  model: AccountPersonalInfoModel = { birthday : null, email : null };
+  model: AccountPersonalInfoModel = { birthday : null };
   startAt: Date = new Date(1990, 0, 1);
   subscription: Subscription = new Subscription();
   loading$: Observable<LoadingData>;
@@ -38,7 +38,6 @@ export class AccountPersonalInfoComponent implements OnInit, OnDestroy {
     // get the user (this is fast)
     this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
     
-    this.model.email = this.user.email;
     if (this.user.personalInfo) {
       this.model.birthday = this.user.personalInfo.birthday;
       

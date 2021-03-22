@@ -20,8 +20,7 @@ import { RequestUpdateAccountFinancialInfo } from '../../user.actions';
 export class AccountFinanceInfoComponent implements OnInit, OnDestroy {
 
   user: User;
-  model: AccountFinancialInfoModel = { 
-    email : null, 
+  model: AccountFinancialInfoModel = {
     annualIncome : null,
     annualIncomeUnit : null,
     incomeTaxRate : null, 
@@ -38,8 +37,7 @@ export class AccountFinanceInfoComponent implements OnInit, OnDestroy {
     
     // get the user (this is fast)
     this.subscription.add(this.store.select(userSelector()).subscribe((user: User) => this.user = user));
-
-    this.model.email = this.user.email;
+    
     this.model.annualIncomeUnit = this.user.currency || DEFAULT_CURRENCY;
     this.model.savingsUnit = this.user.currency || DEFAULT_CURRENCY;
 

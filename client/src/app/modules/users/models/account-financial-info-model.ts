@@ -1,5 +1,4 @@
 export interface AccountFinancialInfoModel {
-  email: string, 
   annualIncome: number,
   annualIncomeUnit: string,
   incomeTaxRate : number, 
