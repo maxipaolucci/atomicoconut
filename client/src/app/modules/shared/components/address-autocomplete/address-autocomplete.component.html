@@ -12,11 +12,11 @@
               [(ngModel)]="model"
               [matAutocomplete]="addressAutocomplete"
               required
-              [readonly]="disabled"
+              [readonly]="readonly"
               #addressInput="ngModel">
 
           <mat-icon matPrefix>directions</mat-icon>
-          <mat-hint *ngIf="disabled" align="start">Only the creator of this property is allowed to edit its address.</mat-hint>
+          <mat-hint *ngIf="readonly" align="start">Only <b>{{creator}}</b> is allowed to edit this address.</mat-hint>
           <mat-error *ngIf="addressInput.invalid && (addressInput.dirty || addressInput.touched) && addressInput.errors.required">This field is required.</mat-error>
           
           <mat-autocomplete autoActiveFirstOption #addressAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)" [displayWith]="autocompleteDisplayFn">

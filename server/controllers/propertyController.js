@@ -289,6 +289,7 @@ exports.update = async (req, res, next) => {
     if (property.createdBy.email !== user.email) {
         // only the property creator is allowd to edit it address
         delete updates.location;
+        delete updates.unit;
     }
 
     //update property

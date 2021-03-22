@@ -22,7 +22,8 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
   @Input() id: string;
   @Input() placeHolder: string;
   @Input() defaultValues: any = null; // the default values of the component model
-  @Input() disabled: boolean = false; // use this to make the field editable
+  @Input() readonly: boolean = false; // use this to make the field editable
+  @Input() creator: string = null; // email of the creator of the property with this address if apply
   @Output() values: EventEmitter<any> = new EventEmitter();
 
   model: any = {

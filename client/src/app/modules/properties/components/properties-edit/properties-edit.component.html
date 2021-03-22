@@ -15,7 +15,8 @@
               [id]="'address'" 
               [defaultValues]="model.address"
               [placeHolder]="'Address'"
-              [disabled]="property && user.email != property.createdBy.email"
+              [readonly]="property && user.email != property.createdBy.email"
+              [creator]="property ? property.createdBy.email : ''"
               (values)="onAddressChange($event)">
           </address-autocomplete>
           
@@ -24,6 +25,7 @@
             <input matInput type="text" id="unit" name="unit" placeholder="Unit" 
                 [(ngModel)]="model.unit" 
                 [value]="model.unit"
+                [readonly]="property && user.email != property.createdBy.email"
                 #unit="ngModel">
           </mat-form-field>
         </div>
