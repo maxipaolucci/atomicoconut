@@ -8,14 +8,15 @@
 
       <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
         <mat-form-field fxFlex class="form__field">
-          
           <input matInput type="text" [id]="id" [name]="id" [placeholder]="placeHolder" 
               [(ngModel)]="model"
               [matAutocomplete]="addressAutocomplete"
               required
+              [readonly]="disabled"
               #addressInput="ngModel">
 
           <mat-icon matPrefix>directions</mat-icon>
+          <mat-hint *ngIf="disabled" align="start">Only the creator of this property is allowed to edit its address.</mat-hint>
           <mat-error *ngIf="addressInput.invalid && (addressInput.dirty || addressInput.touched) && addressInput.errors.required">This field is required.</mat-error>
           
           <mat-autocomplete autoActiveFirstOption #addressAutocomplete="matAutocomplete" (optionSelected)="onOptionSelected($event)" [displayWith]="autocompleteDisplayFn">

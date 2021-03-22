@@ -15,6 +15,7 @@
               [id]="'address'" 
               [defaultValues]="model.address"
               [placeHolder]="'Address'"
+              [disabled]="property && user.email != property.createdBy.email"
               (values)="onAddressChange($event)">
           </address-autocomplete>
           

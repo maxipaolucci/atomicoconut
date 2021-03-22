@@ -22,6 +22,7 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
   @Input() id: string;
   @Input() placeHolder: string;
   @Input() defaultValues: any = null; // the default values of the component model
+  @Input() disabled: boolean = false; // use this to make the field editable
   @Output() values: EventEmitter<any> = new EventEmitter();
 
   model: any = {
@@ -155,8 +156,7 @@ export class AddressAutocompleteComponent implements OnInit, AfterViewInit, OnDe
       // none of above, return invalid
       valid = false;
     }
-
-
+    
     this.values.emit({
       value : {
         address,
