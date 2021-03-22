@@ -286,6 +286,11 @@ exports.update = async (req, res, next) => {
         links: req.body.links
     };
 
+    if (property.createdBy.email !== user.email) {
+        // only the property creator is allowd to edit it address
+        delete updates.location;
+    }
+
     //update property
     console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'Property', '_id', property._id)}`);
     property = await Property.findOneAndUpdate(
