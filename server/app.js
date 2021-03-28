@@ -41,6 +41,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
   AWSXRay.captureHTTPsGlobal(require('http'));
   AWSXRay.captureHTTPsGlobal(require('https'));
+  AWSXRay.capturePromise();
 
   const awsLogToConsole = (message, meta) => {
     console.log(`[AWS Log message] ${message}`);
@@ -62,9 +63,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
   }
   app.use(AWSXRay.express.openSegment(`atomiCoconut-${process.env.NODE_ENV}`));
   // AWSXRay.middleware.enableDynamicNaming('*.atomicoconut.com');
-
-  const segment = AWSXRay.getSegment();
-  console.log(segment);
 
 // takes the request of multipart/form-data types and put the payload and files into req.body and req.files respectively (thanks to multer)
 const multerOptions = {
