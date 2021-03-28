@@ -2,9 +2,19 @@ const { getMessage } = require('../handlers/errorHandlers');
 const { ANONYMOUS_USER, CRYPTO_RATES_SERVER_URL, CRYPTO_CURRENCIES } = require('../constants/constants');
 const axios = require('axios');
 const mail = require('../handlers/mail');
+const AWSXRay = require('aws-xray-sdk');
 
 const errorTrace = 'cryptoRatesController >';
 
+AWSXRay.captureHTTPsGlobal(require('http'));
+AWSXRay.captureHTTPsGlobal(require('https'));
+AWSXRay.capturePromise();
+const http = require('http');
+const https = require('https');
+const axiosInstance = axios.create({
+    httpAgent: new http.Agent(),
+    httpsAgent: new https.Agent(),
+  }); // Instrument axious instance
 
 /**
  * Get many today rates of and array of cryptos. 
@@ -62,7 +72,7 @@ const getTodayRatesFromWebservice = async (source = CRYPTO_CURRENCIES.BITCOIN, u
     let response = null;
 
     try {
-        response = await axios.get(url);
+        response = await axiosInstance.get(url);
         if (response && response.status === 200 && response.data 
                 && response.data.data && response.data.data.id === source) {
             return response.data.data;

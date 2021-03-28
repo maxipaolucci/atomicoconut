@@ -39,9 +39,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Initialize AWS XRay SDK
 
-  AWSXRay.captureHTTPsGlobal(require('http'));
-  AWSXRay.captureHTTPsGlobal(require('https'));
-  AWSXRay.capturePromise();
+  
 
   const awsLogToConsole = (message, meta) => {
     console.log(`[AWS Log message] ${message}`);
