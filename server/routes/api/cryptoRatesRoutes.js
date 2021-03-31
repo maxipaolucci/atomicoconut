@@ -11,4 +11,8 @@ router.route('/getTodayRates').get(
   catchErrors(cryptoRatesController.getTodayRates)
 );
 
+router.route('/test').get(
+  catchErrors(cryptoRatesController.test)
+);
+
 module.exports = router;

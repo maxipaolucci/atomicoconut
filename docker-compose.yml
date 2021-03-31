@@ -44,6 +44,7 @@ services:
       PUSHER_SECRET: ${PUSHER_SECRET}
       PUSHER_CLUSTER: ${PUSHER_CLUSTER}
       MAPS_API_KEY: ${MAPS_API_KEY}
+      AWS_XRAY_CONTEXT_MISSING: ${AWS_XRAY_CONTEXT_MISSING}
     volumes:
     - /app/node_modules
     - ./server:/app
@@ -76,7 +77,9 @@ services:
     - ./nginx/certbot/www:/var/www/certbot
 
   xraydaemon:
-    image: "amazon/aws-xray-daemon"
+    # image: "amazon/aws-xray-daemon"
+    build:
+      context: ./xray
     ports:
     - "2000:2000"
     volumes: 
@@ -84,4 +87,4 @@ services:
     environment:
     - AWS_REGION=ap-southeast-2
     # mem_limit: 256m
-    entrypoint: ["/xray", "-o"]
+    entrypoint: ["/xray", "-o", "-t", "0.0.0.0:2000", "-b", "0.0.0.0:2000"]

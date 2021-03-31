@@ -1,16 +1,19 @@
 const { getMessage } = require('../handlers/errorHandlers');
 const { ANONYMOUS_USER, CRYPTO_RATES_SERVER_URL, CRYPTO_CURRENCIES } = require('../constants/constants');
-const axios = require('axios');
+
 const mail = require('../handlers/mail');
 const AWSXRay = require('aws-xray-sdk');
 
 const errorTrace = 'cryptoRatesController >';
 
 AWSXRay.captureHTTPsGlobal(require('http'));
+
 AWSXRay.captureHTTPsGlobal(require('https'));
-AWSXRay.capturePromise();
-const http = require('http');
-const https = require('https');
+let http = require('http');
+let https = require('https');
+// AWSXRay.capturePromise();
+const axios = require('axios');
+
 const axiosInstance = axios.create({
     httpAgent: new http.Agent(),
     httpsAgent: new https.Agent(),
@@ -129,3 +132,39 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
     } 
 };
 exports.alertCryptoRatio = alertCryptoRatio;
+
+
+exports.test = async (req, res) => {
+    const methodTrace = `${errorTrace} test() >`;
+
+    const endpoint = 'https://google.com/';
+    
+    https.get(endpoint, (response) => {
+        response.on('data', () => {});
+        response.on('error', (err) => {
+            console.log(`${methodTrace} Encountered error while making HTTPS request: ${err}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 461,
+                msg : `Encountered error while making HTTPS request: ${err}`,
+                data : null
+            });
+        });
+        response.on('end', () => {
+            mail.send({
+                toEmail: 'maxipaolucci@gmail.com',
+                fromEmail: 'test@atomicoconut.com',
+                subject : `test email`,
+                accountName : 'test',
+                accountEmail : 'test',
+                filename : 'account-created' //this is going to be the mail template file
+            });
+            res.json({
+                status : 'success', 
+                codeno : 200,
+                msg : `Successfully reached ${endpoint}.`,
+                data : { status: "OK" }
+            });
+        });
+    });
+};

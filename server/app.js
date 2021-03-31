@@ -60,6 +60,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
     AWSXRay.config([AWSXRay.plugins.EC2Plugin,AWSXRay.plugins.ElasticBeanstalkPlugin]);
   }
   app.use(AWSXRay.express.openSegment(`atomiCoconut-${process.env.NODE_ENV}`));
+
   // AWSXRay.middleware.enableDynamicNaming('*.atomicoconut.com');
 
 // takes the request of multipart/form-data types and put the payload and files into req.body and req.files respectively (thanks to multer)
