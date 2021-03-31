@@ -4,6 +4,14 @@ const juice = require('juice'); //inline css for email clients
 const htmlToText = require('html-to-text'); //convert html to text format
 const sgMail = require('@sendgrid/mail'); //to send emails using SendGrid
 const { getMessage } = require('./errorHandlers');
+const fs = require('fs');
+
+// encodes an image in a base64 encoded string
+const base64ImageEncoder = (fileName) => {
+  var bitmap = fs.readFileSync(fileName);
+  return new Buffer(bitmap).toString("base64");
+}
+const base64LogoStr = base64ImageEncoder(__dirname +'/images/coconut.png');
 
 const errorTrace = 'handlers/mail >';
 
@@ -36,7 +44,7 @@ const sendMtMail = async (options) => {
     attachments: [{
       filename: 'coconut.png',
       path: __dirname +'/images/coconut.png',
-      cid: 'logo' //my mistake was putting "cid:logo@cid" here! 
+      cid: 'logo'
     }]
   }
 
@@ -53,13 +61,14 @@ const sendSgMail = async (options) => {
     from: options.fromEmail ? options.fromEmail : 'support@atomiCoconut.com',
     subject: options.subject,
     text,
-    html
-    // ,
-    // attachments: [{
-    //   filename: 'coconut.png',
-    //   path: __dirname +'/images/coconut.png',
-    //   cid: 'logo' //my mistake was putting "cid:logo@cid" here! 
-    // }]
+    html,
+    attachments: [{
+      filename: "coconut.png",
+      type : "image/png",
+      content: base64LogoStr,
+      content_id: "logo",
+      disposition : "inline"
+    }]
   };
   
   return sgMail.send(mailOptions);
@@ -67,7 +76,7 @@ const sendSgMail = async (options) => {
 
 exports.send = async(options) => {
   const methodTrace = `${errorTrace} send() >`;
-  
+
   if (process.env.NODE_ENV === 'production') {
     console.log(`${methodTrace} ${getMessage('message', 1041, null, true, 'SendGrid')}`);
     return sendSgMail(options);
