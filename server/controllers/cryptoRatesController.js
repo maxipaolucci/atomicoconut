@@ -3,21 +3,22 @@ const { ANONYMOUS_USER, CRYPTO_RATES_SERVER_URL, CRYPTO_CURRENCIES } = require('
 
 const mail = require('../handlers/mail');
 const AWSXRay = require('aws-xray-sdk');
+const axios = require('axios');
+
 
 const errorTrace = 'cryptoRatesController >';
 
-AWSXRay.captureHTTPsGlobal(require('http'));
+// AWSXRay.captureHTTPsGlobal(require('http'));
 
-AWSXRay.captureHTTPsGlobal(require('https'));
+// AWSXRay.captureHTTPsGlobal(require('https'));
 let http = require('http');
 let https = require('https');
-// AWSXRay.capturePromise();
-const axios = require('axios');
+// // AWSXRay.capturePromise();
 
-const axiosInstance = axios.create({
-    httpAgent: new http.Agent(),
-    httpsAgent: new https.Agent(),
-  }); // Instrument axious instance
+// const axiosInstance = axios.create({
+//     httpAgent: new http.Agent(),
+//     httpsAgent: new https.Agent(),
+//   }); // Instrument axious instance
 
 /**
  * Get many today rates of and array of cryptos. 
@@ -75,7 +76,7 @@ const getTodayRatesFromWebservice = async (source = CRYPTO_CURRENCIES.BITCOIN, u
     let response = null;
 
     try {
-        response = await axiosInstance.get(url);
+        response = await axios.get(url);
         if (response && response.status === 200 && response.data 
                 && response.data.data && response.data.data.id === source) {
             return response.data.data;
@@ -151,14 +152,14 @@ exports.test = async (req, res) => {
             });
         });
         response.on('end', () => {
-            mail.send({
-                toEmail: 'maxipaolucci@gmail.com',
-                fromEmail: 'test@atomicoconut.com',
-                subject : `test email`,
-                accountName : 'test',
-                accountEmail : 'test',
-                filename : 'account-created' //this is going to be the mail template file
-            });
+            // mail.send({
+            //     toEmail: 'maxipaolucci@gmail.com',
+            //     fromEmail: 'test@atomicoconut.com',
+            //     subject : `test email`,
+            //     accountName : 'test',
+            //     accountEmail : 'test',
+            //     filename : 'account-created' //this is going to be the mail template file
+            // });
             res.json({
                 status : 'success', 
                 codeno : 200,
