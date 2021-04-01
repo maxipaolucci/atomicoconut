@@ -13,9 +13,9 @@ export class CurrencyInvestment extends Investment {
 
   constructor(id: string, investmentAmount: number, investmentAmountUnit: string, createdBy: User, team: Team = null, investmentDistribution: any[] = [],
       unit: string, amount: number, buyingPrice: number, buyingPriceUnit: string, buyingDate: Date, type: INVESTMENTS_TYPES, 
-      loanAmount: number = 0, loanAmountUnit: string) {
+      loanAmount: number = 0, loanAmountUnit: string, simulate: boolean) {
     
-    super(id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, loanAmount, loanAmountUnit);
+    super(id, type, investmentAmount, investmentAmountUnit, createdBy, team, investmentDistribution, loanAmount, loanAmountUnit, simulate);
     this.unit = unit;
     this.amount = amount;
     this.buyingDate = buyingDate;

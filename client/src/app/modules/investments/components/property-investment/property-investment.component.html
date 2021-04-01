@@ -1,9 +1,9 @@
-<mat-card class="investment__card">
+<mat-card class="investment__card" [class.investment-card__simulated]="investment.simulate">
   <mat-card-header routerLink="/properties/{{investment.property.type}}/edit/{{investment.property.id}}">
     <div mat-card-avatar class="header-image">
         <img [src]="'/assets/images/house.png'" [alt]="investment.type" />
     </div>
-    <mat-card-title>{{investmentTitle}}</mat-card-title>
+    <mat-card-title>{{investmentTitle + (investment.simulate ? ' [SIMULATED]' : '')}}</mat-card-title>
     <mat-card-subtitle>{{investment.property.address.description}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="card__content">

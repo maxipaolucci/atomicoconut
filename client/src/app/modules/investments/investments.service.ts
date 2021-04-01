@@ -167,7 +167,7 @@ export class InvestmentsService {
       if (item.investmentType === INVESTMENTS_TYPES.CURRENCY || item.investmentType === INVESTMENTS_TYPES.CRYPTO) {
         return new CurrencyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, item.investmentData.amountUnit, 
             item.investmentData.amount, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, item.investmentType,
-            item.loanAmount, item.loanAmountUnit);
+            item.loanAmount, item.loanAmountUnit, item.simulate);
       } else if (item.investmentType === INVESTMENTS_TYPES.PROPERTY) {
         let property = null;
         const propertyData = item.investmentData.property;
@@ -191,7 +191,7 @@ export class InvestmentsService {
 
         return new PropertyInvestment(item._id, item.amount, item.amountUnit, createdBy, team, item.investmentDistribution, 
             property, item.investmentData.buyingPrice, item.investmentData.buyingPriceUnit, item.investmentData.buyingDate, 
-            item.investmentType, item.loanAmount, item.loanAmountUnit);
+            item.investmentType, item.loanAmount, item.loanAmountUnit, item.simulate);
       }
     } else {
       this.appService.consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unexpected data format.`);

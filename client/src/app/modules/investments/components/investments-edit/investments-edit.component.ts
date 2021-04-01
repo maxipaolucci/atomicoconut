@@ -9,9 +9,8 @@ import { map, combineLatest, debounceTime, switchMap, first } from 'rxjs/operato
 import { MatRadioChange } from '@angular/material/radio';
 import { MatSelectChange } from '@angular/material/select';
 import { Investment } from '../../models/investment';
-import { CurrencyInvestment } from '../../models/currencyInvestment';
 import { INVESTMENTS_TYPES, DEFAULT_CURRENCY, SnackbarNotificationTypes, RoutingPaths } from 'src/app/constants';
-import { PropertyInvestment } from '../../models/propertyInvestment';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/main.reducer';
 import { LoadingData } from 'src/app/models/loadingData';
@@ -48,7 +47,8 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     investmentAmountUnit : null,
     type : null,
     investmentData : {}, // specific data related to the investment type
-    investmentDistribution : [] // how the investment would be distributed into its owners
+    investmentDistribution : [], // how the investment would be distributed into its owners
+    simulate: false // whether this invesment is a simulation or not
   };
   id: string = null; // investment id
   type: string = null; // investment type
@@ -197,6 +197,7 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     this.model.type = investment.type;
     this.model.investmentData = investment.getSpecificDataRaw();
     this.model.investmentData.type = investment.type;
+    this.model.simulate = investment.simulate;
   }
 
   ngAfterViewInit(): void {
@@ -405,5 +406,9 @@ export class InvestmentsEditComponent implements OnInit, OnDestroy, AfterViewIni
     for (const member of this.model.team.members) {
       this.model.membersPercentage[member.email] = defaultPercentage;
     }
+  }
+
+  onSlideToggleChange($event: MatSlideToggleChange) {
+    this.model[$event.source.id] = $event.checked;
   }
 }

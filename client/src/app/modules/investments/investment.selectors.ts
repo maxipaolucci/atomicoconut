@@ -26,12 +26,12 @@ const mapInvestmentPlainObjectToInvestmentObject = (investment: any): Investment
     if (investment.type == INVESTMENTS_TYPES.PROPERTY) {
       newInvestmentObject = new PropertyInvestment(investment.id, investment.investmentAmount, investment.investmentAmountUnit, investment.createdBy, investment.team, investment.investmentDistribution, 
           investment.property, investment.buyingPrice, investment.buyingPriceUnit, investment.buyingDate, 
-          investment.type, investment.loanAmount, investment.loanAmountUnit);
+          investment.type, investment.loanAmount, investment.loanAmountUnit, investment.simulate);
 
     } else if (investment.type == INVESTMENTS_TYPES.CRYPTO || investment.type == INVESTMENTS_TYPES.CURRENCY) {
       newInvestmentObject = new CurrencyInvestment(investment.id, investment.investmentAmount, investment.investmentAmountUnit, investment.createdBy, investment.team, investment.investmentDistribution,
           investment.unit, investment.amount, investment.buyingPrice, investment.buyingPriceUnit, investment.buyingDate, investment.type, 
-          investment.loanAmount, investment.loanAmountUnit);
+          investment.loanAmount, investment.loanAmountUnit, investment.simulate);
     } else {
       // warning on invalid type
       consoleLog(ConsoleNotificationTypes.ERROR, `${methodTrace} Unknown investment type: ${investment.type}.`);

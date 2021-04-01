@@ -61,6 +61,10 @@ const investmentSchema = new mongoose.Schema({
     type : String,
     default : 'USD'
   },
+  simulate: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model('Investment', investmentSchema);

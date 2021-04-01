@@ -85,7 +85,8 @@ exports.create = async (req, res, next) => {
         team : team ? team._id : null,
         investmentDistribution : req.body.investmentDistribution,
         loanAmount : req.body.loanAmount,
-        loanAmountUnit : req.body.loanAmountUnit
+        loanAmountUnit : req.body.loanAmountUnit,
+        simulate : req.body.simulate
     })).save();
 
     if (!investment) {
@@ -244,7 +245,8 @@ exports.update = async (req, res, next) => {
         team : team ? team._id : null,
         investmentDistribution : req.body.investmentDistribution,
         loanAmount : req.body.loanAmount,
-        loanAmountUnit : req.body.loanAmountUnit
+        loanAmountUnit : req.body.loanAmountUnit,
+        simulate: req.body.simulate 
     };
 
     //update investment

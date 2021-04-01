@@ -14,9 +14,10 @@ export abstract class Investment {
   investmentAmountUnit: string; 
   loanAmount: number; // the amount of money borrowed from the lender
   loanAmountUnit: string;
+  simulate: boolean; // whether this investment is simulated or real
 
   constructor(id: string, type: INVESTMENTS_TYPES, investmentAmount: number, investmentAmountUnit: string, createdBy: User, 
-      team: Team = null, investmentDistribution: any[] = [], loanAmount: number = 0, loanAmountUnit: string) {
+      team: Team = null, investmentDistribution: any[] = [], loanAmount: number = 0, loanAmountUnit: string, simulate: boolean) {
     this.investmentAmount = investmentAmount;
     this.investmentAmountUnit = investmentAmountUnit;
     this.team = team;
@@ -26,6 +27,7 @@ export abstract class Investment {
     this.type = type;
     this.loanAmount = loanAmount;
     this.loanAmountUnit = loanAmountUnit;
+    this.simulate = simulate;
   }
 
   abstract getBuyingDate() : Date;

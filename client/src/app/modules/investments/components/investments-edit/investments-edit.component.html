@@ -131,18 +131,32 @@
             </mat-form-field>
           </div>
         </div>
+
+        <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
+          <currency-investment-form *ngIf="type === INVESTMENT_TYPES.CRYPTO || type === INVESTMENT_TYPES.CURRENCY" [defaultValues]="model.investmentData"
+              (values)="onInvestmentDataChange($event)">
+          </currency-investment-form>
+  
+          <property-investment-form *ngIf="type === INVESTMENT_TYPES.PROPERTY" [defaultValues]="model.investmentData"
+              [user]="user"
+              (values)="onInvestmentDataChange($event)">
+          </property-investment-form>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="10px" fxLayoutAlign.gt-xs="start center" class="form__fields__row">
+          <!-- Simulated? -->
+        <div fxFlex class="form__field">
+          <mat-slide-toggle class="" id="simulate" name="simulate"
+              color="accent"
+              [checked]="model.simulate"
+              (change)="onSlideToggleChange($event)">
+            Simulate?
+          </mat-slide-toggle>
+        </div>
+        </div>
       </div>
 
-      <div fxLayout="column" fxLayoutGap="20px" class="form__fields__row__container">
-        <currency-investment-form *ngIf="type === INVESTMENT_TYPES.CRYPTO || type === INVESTMENT_TYPES.CURRENCY" [defaultValues]="model.investmentData"
-            (values)="onInvestmentDataChange($event)">
-        </currency-investment-form>
-
-        <property-investment-form *ngIf="type === INVESTMENT_TYPES.PROPERTY" [defaultValues]="model.investmentData"
-            [user]="user"
-            (values)="onInvestmentDataChange($event)">
-        </property-investment-form>
-      </div>
+      
     </section>
 
     

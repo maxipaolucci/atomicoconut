@@ -1,5 +1,11 @@
+@import '../../../../../variables';
+
 .investment__card {
   text-align: left;
+
+  &.investment-card__simulated {
+    background-color: $purpleDark;
+  }
 
   mat-card-header {
     cursor: pointer;
