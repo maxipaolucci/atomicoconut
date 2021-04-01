@@ -120,13 +120,24 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
    */
   setInvestmentTeamData(team: Team) {
     // set totals to emit to parent component. If no team assigned then the total of the investment is the same as my portion
-    const totals = {
+    let totals = {
       investmentId : this.investment.id,
       investmentAmount : this.investmentAmount,
       investmentReturn : this.investmentReturn,
       myInvestmentAmount : this.investmentAmount,
       myInvestmentReturn : this.investmentReturn
     };
+
+    if (this.investment.simulate) {
+      // on simulated investments we don't want to send back totals
+      totals = {
+        investmentId : this.investment.id,
+        investmentAmount : 0,
+        investmentReturn : 0,
+        myInvestmentAmount : 0,
+        myInvestmentReturn : 0
+      };
+    }
 
     this.investmentDistribution = [];
 
@@ -140,7 +151,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
           money : this.investmentReturn * percentage / 100
         });
 
-        if (this.user && this.user.email === member.email) {
+        if (!this.investment.simulate && this.user && this.user.email === member.email) {
           totals.myInvestmentAmount = this.investmentAmount * percentage / 100;
           totals.myInvestmentReturn = this.investmentReturn * percentage / 100;  
         }
