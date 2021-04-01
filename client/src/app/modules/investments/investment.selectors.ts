@@ -51,12 +51,16 @@ export const selectInvestmentsState = createFeatureSelector<fromInvestment.State
 //   fromInvestment.selectAll,
 // );
 
-export const investmentsSelector = () => createSelector(
+export const investmentsSelector = (filterSimulated: boolean = false) => createSelector(
   selectInvestmentsState,
   investmentsState => {
     const investmentsMapped: Investment[] = [];
     Object.values(investmentsState.entities).map(investment => {
-      investmentsMapped.push(mapInvestmentPlainObjectToInvestmentObject(investment));
+      if (filterSimulated && investment['simulate']) {
+        // do nothing with simulated investments when filter simulated is required
+      } else {
+        investmentsMapped.push(mapInvestmentPlainObjectToInvestmentObject(investment));
+      }
     });
 
     return investmentsMapped;

@@ -134,7 +134,7 @@ export class NetWorthComponent implements OnInit, OnDestroy {
     let currentUserInvestments = [];
 
     // create crypto rates from investments observable
-    let cryptoRates$ = this.store.select(investmentsSelector()).pipe(
+    let cryptoRates$ = this.store.select(investmentsSelector(true)).pipe(
       filter((investments: Investment[]) => !!investments.length),
       switchMap((investments: Investment[]) => {
         let cryptoUnits: string[] = [];
@@ -163,7 +163,7 @@ export class NetWorthComponent implements OnInit, OnDestroy {
     );
     
     // create currency rates from investments observable
-    let currencyRates$ = this.store.select(investmentsSelector()).pipe(
+    let currencyRates$ = this.store.select(investmentsSelector(true)).pipe(
       filter((investments: Investment[]) => !!investments.length),
       switchMap((investments: Investment[]) => {
         currentUserInvestments = investments;
