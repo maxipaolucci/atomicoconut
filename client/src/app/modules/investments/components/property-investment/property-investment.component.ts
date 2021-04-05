@@ -97,7 +97,7 @@ export class PropertyInvestmentComponent implements OnInit, OnDestroy {
         this.loanAmount = this.investment.loanAmount / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.loanAmountUnit}`] || 1);
         // the buying price (of the property) was requested on the date of the investment so we need to convert using that day rates
         this.buyingPrice = this.investment.buyingPrice / (currencyRates[this.utilService.formatDate(this.investment.buyingDate)][`USD${this.investment.buyingPriceUnit}`] || 1);
-        this.investmentReturn = this.currentPrice;
+        this.investmentReturn = this.currentPrice - this.loanAmount;
       }
 
       this.team = this.investment.team ? teams.filter(team => team.slug === this.investment.team.slug)[0] : null; // look for the team of the investment
