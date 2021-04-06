@@ -136,7 +136,6 @@ export class NetWorthComponent implements OnInit, OnDestroy {
     let cryptoRates$ = this.store.select(investmentsSelector(true)).pipe(
       filter((investments: Investment[]) => !!investments.length),
       switchMap((investments: Investment[]) => {
-        console.log(investments);
         let cryptoUnits: string[] = [];
         investments.map((investment: Investment) => {
           if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
