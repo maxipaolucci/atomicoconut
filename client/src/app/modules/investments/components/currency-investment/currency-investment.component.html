@@ -19,7 +19,7 @@
       </div>
       
       <div>
-        Today price: 
+        Current price: 
         <span [class.color__accent]="currentPrice >= buyingPrice" 
           [class.color__red]="currentPrice < buyingPrice">
 
@@ -34,12 +34,12 @@
         
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
           <span>ROI: <strong>{{ investmentReturn | currency : 'USD' : 'code' : '1.2-2' }}</strong></span>
-          <info-tooltip text="Return on investment" position="right"></info-tooltip>
+          <info-tooltip text="Today price * Quantity - Loan amount" position="right"></info-tooltip>
         </div>
 
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
           <span>Net ROI: <strong>{{ investmentReturn - investmentAmount | currency : 'USD' : 'code' : '1.2-2' }}</strong> ({{(investmentReturn - investmentAmount) / investmentAmount * 100 | number : '1.1-2'}}%)</span>
-          <info-tooltip text="Return on investment - Amount invested" position="right"></info-tooltip>
+          <info-tooltip text="ROI - Amount invested" position="right"></info-tooltip>
         </div>
       </div>
     </div>

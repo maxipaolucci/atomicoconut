@@ -73,7 +73,6 @@ export class NetWorthComponent implements OnInit, OnDestroy {
       this.store.select(currencyRateByIdsSelector([this.utilService.formatToday()])) //request is trigger by app component
     ).pipe(
       filter(([user, todayRates]: [User, { string: CurrencyRate }]) => {
-        
         if (!user) {
           this.user = null;
           additionalUserDataRequested = false;
@@ -86,7 +85,7 @@ export class NetWorthComponent implements OnInit, OnDestroy {
         }
         
         if (this.user && _.isEqual(user, this.user)) {
-          // this means the observer was trigger again with data no new data. Block it
+          // this means the observer was trigger again with no new data. Block it
           return false;
         }
         
@@ -137,6 +136,7 @@ export class NetWorthComponent implements OnInit, OnDestroy {
     let cryptoRates$ = this.store.select(investmentsSelector(true)).pipe(
       filter((investments: Investment[]) => !!investments.length),
       switchMap((investments: Investment[]) => {
+        console.log(investments);
         let cryptoUnits: string[] = [];
         investments.map((investment: Investment) => {
           if (investment.type === INVESTMENTS_TYPES.CRYPTO) {
@@ -212,9 +212,9 @@ export class NetWorthComponent implements OnInit, OnDestroy {
     const methodTrace = `${this.constructor.name} > combineInvestmentsWithCurrencyRates() > `; // for debugging
     
     const newSubscription = this.store.select(currencyRateByIdsSelector(currentUserInvestmentsDates)).pipe(
+      first(),
       filter((currencyRates: {string: CurrencyRate}) => {
         const currencyRatesLength = Object.keys(currencyRates).length;
-
         if (!(currencyRatesLength && currentUserInvestmentsDates.length) || currencyRatesLength !== currentUserInvestmentsDates.length) {
           return false;
         }
@@ -254,6 +254,7 @@ export class NetWorthComponent implements OnInit, OnDestroy {
           }
         } else if ([ INVESTMENTS_TYPES.PROPERTY ].includes(investmentAndCurrencyRates.investment.type)) {
           const investment: PropertyInvestment = <PropertyInvestment>investmentAndCurrencyRates.investment;
+
           this.wealthAmount += (this.currencyExchangeService.getUsdValueOf(investment.property.marketValue, investment.property.marketValueUnit, currencyRates)
               - (investment.loanAmount / (currencyRates[this.utilService.formatDate(investment.buyingDate)][`USD${investment.loanAmountUnit}`] || 1)))
               * myPercentage / 100;
