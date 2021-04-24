@@ -68,3 +68,6 @@ public/uploads/**/*.jpeg
 public/uploads/**/*.png
 public/uploads/**/*.bmp
 public/uploads/**/*.gif
+
+# logstash logs
+logstash/logs

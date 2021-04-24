@@ -69,6 +69,9 @@ services:
       dockerfile: Dockerfile.dev
     ports:
     - "2222:80"
+    volumes:
+    # make logs files accessible by logstash
+    - ./logstash/logs:/var/log/nginx
   
   certbot:
     image: certbot/certbot
@@ -88,3 +91,26 @@ services:
     - AWS_REGION=ap-southeast-2
     # mem_limit: 256m
     entrypoint: ["/xray", "-o", "-t", "0.0.0.0:2000", "-b", "0.0.0.0:2000"]
+
+  # elasticsearch:
+  #   image: elasticsearch:7.12.0
+  #   ports:
+  #   - 9200:9200
+  #   - 9300:9300
+  #   environment:
+  #     discovery.type: single-node
+  
+  # kibana:
+  #   image: kibana:7.12.0
+  #   depends_on: 
+  #   - elasticsearch
+  #   ports:
+  #   - 5601:5601
+
+  # logstash:
+  #   image: docker.elastic.co/logstash/logstash:7.12.0
+  #   depends_on: 
+  #   - elasticsearch
+  #   - nginx
+  #   volumes:
+  #   - ./logstash:/usr/share/logstash/pipeline

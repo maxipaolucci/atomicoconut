@@ -21,6 +21,7 @@ const errorHandlers = require('./handlers/errorHandlers');
 const cors = require('cors');
 const AWSXRay = require('aws-xray-sdk');
 require('./handlers/passport'); //used by passport library
+const winston = require('winston');
 
 // create our Express app
 const app = express();
@@ -37,22 +38,53 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Initialize AWS XRay SDK
 
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'user-service' },
+  transports: [
+    //
+    // - Write all logs with level `error` and below to `error.log`
+    // - Write all logs with level `info` and below to `combined.log`
+    //
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' }),
+  ],
+});
+
+//
+// If we're not in production then log to the `console` with the format:
+// `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
+//
+if (process.env.ENV !== 'production') {
+  logger.add(new winston.transports.Console({
+    format: winston.format.simple(),
+  }));
+}
+// Initialize AWS XRay SDK
+logger.log({
+  level: 'info',
+  message: 'Hello distributed log files!'
+});
+
+logger.info('Hello again distributed logs');
+logger.warn('this is a warn log');
+logger.error('this is an error log');
   
 
   const awsLogToConsole = (message, meta) => {
     // console.log(`[AWS Log message] ${message}`);
     // console.log(`[AWS Log meta] ${meta}`);
   }; 
-  let logger = {
+  let awsLogger = {
     error: (message, meta) => awsLogToConsole(message, meta),
     warn: (message, meta) => awsLogToConsole(message, meta),
     info: (message, meta) => awsLogToConsole(message, meta),
     debug: (message, meta) => awsLogToConsole(message, meta)
   }
 
-  AWSXRay.setLogger(logger);
+  AWSXRay.setLogger(awsLogger);
   AWSXRay.setDaemonAddress('xraydaemon:2000');
   // EC2Plugin adds the instance ID, Availability Zone, and the CloudWatch Logs Group.
   // ElasticBeanstalkPlugin adds the environment name, version label, and deployment ID.
