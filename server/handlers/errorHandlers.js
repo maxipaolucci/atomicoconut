@@ -1,7 +1,9 @@
 const moment = require('moment');
+const winston = require('winston');
 const { ANONYMOUS_USER, ENVIRONMENTS } = require('../constants/constants');
 
 const errorTrace = 'errorHandlers >';
+
 
 const errorCodes = {
   400: 'Error catched by errorHandlers().',
@@ -107,6 +109,49 @@ const messageCodes = {
   1064: 'Alert crypto ratio notification is off for {{param}}.'
 };
 
+// Get Logger instance
+let logger = null;
+const getLoggerInstance = () => {
+  const methodTrace = `getLoggerInstance() >`;
+
+  if (!logger) {
+    logger = winston.createLogger({
+      level: 'info',
+      format: winston.format.json(),
+      defaultMeta: { service: 'acserver' },
+      transports: [
+        //
+        // - Write all logs with level `error` and below to `error.log`
+        // - Write all logs with level `info` and below to `combined.log`
+        //
+        new winston.transports.File({ filename: 'logs/acservererror.log', level: 'error' }),
+        new winston.transports.File({ filename: 'logs/acserver.log' }),
+      ],
+    });
+
+    logger.log({
+      level: 'info',  
+      codeno: 1,
+      message: 'Logger created successfuly.',
+      date: moment(Date.now()).format('DD/MM/YYYY HH:mm:ss.SSS'),
+      userEmail: null,
+    });
+
+    // If we're not in production then log to the `console` with the format:
+    // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
+    //
+    // if (process.env.ENV !== 'production') {
+    //   logger.info(`As environment is ${process.env.ENV}, adding console output to logger.`);
+    //   logger.add(new winston.transports.Console({
+    //     format: winston.format.simple(),
+    //   }));
+    // } 
+  }
+  
+  return logger;
+};
+exports.getLoggerInstance = getLoggerInstance;
+
 /**
  * Return messages configured with provided params if set
  * @param {*} codeno . The number of message to get back
@@ -134,15 +179,26 @@ const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = fa
     prefix += `[${userEmail}`;
   }
 
+  let date = moment(Date.now()).format('DD/MM/YYYY HH:mm:ss.SSS');
   if (showDate) {
-    let date = moment(Date.now()).format('DD/MM/YYYY HH:mm:ss.SSS');
+    
 
     prefix += prefix.length ? ` on ${date}]` : `[on ${date}]`;
   }
 
-  return `${prefix} ${message}`;
-};
+  let finalMessage = `${prefix} ${message}`
+  
+  // send to logger
+  this.getLoggerInstance().log({
+    level: type == 'message' ? 'info' : type,  
+    codeno,
+    message,
+    date,
+    userEmail,
+  });
 
+  return finalMessage;
+};
 exports.getMessage = getMessage;
 
 /*

@@ -21,7 +21,7 @@ const errorHandlers = require('./handlers/errorHandlers');
 const cors = require('cors');
 const AWSXRay = require('aws-xray-sdk');
 require('./handlers/passport'); //used by passport library
-const winston = require('winston');
+
 
 // create our Express app
 const app = express();
@@ -39,39 +39,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  defaultMeta: { service: 'user-service' },
-  transports: [
-    //
-    // - Write all logs with level `error` and below to `error.log`
-    // - Write all logs with level `info` and below to `combined.log`
-    //
-    new winston.transports.File({ filename: 'logs/acservererror.log', level: 'error' }),
-    new winston.transports.File({ filename: 'logs/acserver.log' }),
-  ],
-});
 
-//
-// If we're not in production then log to the `console` with the format:
-// `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
-//
-if (process.env.ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format: winston.format.simple(),
-  }));
-}
-// Initialize AWS XRay SDK
-logger.log({
-  level: 'info',
-  message: 'Hello distributed log files!'
-});
-
-logger.info('Hello again distributed logs');
-logger.warn('this is a warn log');
-logger.error('this is an error log');
-  
+// Initialize AWS XRay SDK  
 
   const awsLogToConsole = (message, meta) => {
     // console.log(`[AWS Log message] ${message}`);
