@@ -42,21 +42,22 @@ exports.getTodayRates = async (req, res) => {
     const resultsAmount = Object.keys(results).length; 
     if (!resultsAmount) {
         //Nothing found for that date
-        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, 'crypto rates')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, true, 'crypto rates')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 461,
-            msg : getMessage('error', 461, userEmail, false, 'crypto rates'),
+            msg : getMessage('error', 461, userEmail, false, false, 'crypto rates'),
             data : null
         });
 
         return;
     }
 
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, true, resultsAmount, 'crypto rates object(s)')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1036, null, false, resultsAmount, 'crypto rates object(s)'),
+        msg : getMessage('message', 1036, null, false, false, resultsAmount, 'crypto rates object(s)'),
         data : results
     });
 };
@@ -73,7 +74,7 @@ exports.getTodayRates = async (req, res) => {
 const getTodayRatesFromWebservice = async (source = CRYPTO_CURRENCIES.BITCOIN, userEmail) => {
     const methodTrace = `${errorTrace} getTodayRatesFromWebservice() >`;
     
-    console.log(`${methodTrace} ${getMessage('message', 1047, userEmail, true, 'Coincap Service API', 'crypto', source)}`); 
+    console.log(`${methodTrace} ${getMessage('message', 1047, userEmail, true, true, 'Coincap Service API', 'crypto', source)}`); 
     const url = `${CRYPTO_RATES_SERVER_URL}${source}`;
     let response = null;
 
@@ -84,7 +85,7 @@ const getTodayRatesFromWebservice = async (source = CRYPTO_CURRENCIES.BITCOIN, u
             return response.data.data;
         } 
 
-        throw new Error(getMessage('error', 477, userEmail, true, 'Coincap Service API', 'crypto', source))
+        throw new Error(getMessage('error', 477, userEmail, true, true, 'Coincap Service API', 'crypto', source))
     } catch(err) {
         console.log(`${methodTrace} ${err.toString()}`);
         return null;
@@ -150,7 +151,6 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
             } else {
                 throw new Error(getMessage('error', 478, ADMIN_EMAIL, true, 'Coincap Service API'))
             }
-            
         } catch(err) {
             console.log(`${methodTrace} ${getMessage('error', 481, ADMIN_EMAIL, true, fromCrypto, toCrypto)}`); 
             console.log(`${methodTrace} ${err.toString()}`);

@@ -15,19 +15,19 @@ const errorTrace = 'teamController >';
 exports.validateData = (req, res, next) => {
     const methodTrace = `${errorTrace} validateData() >`;
 
-    console.log(`${methodTrace} ${getMessage('message', 1015, null, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1015, null, true, true)}`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(`${methodTrace} ${getMessage('error', 458, null, true, errors.array())}`);
+        console.log(`${methodTrace} ${getMessage('error', 458, null, true, true, errors.array())}`);
         return res.status(400).json({ 
             status : "error", 
             codeno : 458,
-            msg : getMessage('error', 458, null, true, ''),
+            msg : getMessage('error', 458, null, true, false, ''),
             data: errors.array()
         }); 
     }
     
-    console.log(`${methodTrace} ${getMessage('message', 1016, null, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1016, null, true, true)}`);
     next(); //call next middleware
 };
 
@@ -39,7 +39,7 @@ exports.create = async (req, res, next) => {
     
 
     //save a new team record in DB
-    console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'Team')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, true, 'Team')}`);
     let team = await (new Team({
         name : req.body.name,
         description : req.body.description,
@@ -47,25 +47,25 @@ exports.create = async (req, res, next) => {
     })).save();
 
     if (!team) {
-        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'Team')}`);
+        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, true, 'Team')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 459,
-            msg : getMessage('error', 459, null, false, 'Team'),
+            msg : getMessage('error', 459, null, false, false, 'Team'),
             data : null
         });
 
         return;
     }
-    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Team')}`); 
+    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, true, 'Team')}`); 
     await addMemberToTeam(user, team, user.email);
 
     const result = await getTeamBySlugObject(team.slug, user.email, { withId : false });
-    console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Team')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, true, 'Team')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1033, null, false, 'Team'),
+        msg : getMessage('message', 1033, null, false, false, 'Team'),
         data : result
     });
 };
@@ -84,40 +84,40 @@ const addMemberToTeam = async (member, team, userEmail) => {
     let teamUser = await TeamUser.findOne({user : member._id, team : team._id});
     if (teamUser) {
         //if one is found means that the member to add already belong to the Team, return
-        console.log(`${methodTrace} ${getMessage('error', 466, userEmail, true, member.email, team.name)}`);
+        console.log(`${methodTrace} ${getMessage('error', 466, userEmail, true, true, member.email, team.name)}`);
         return false;
     }
 
     //Add a new record in TeamUser with the member and team provided
-    console.log(`${methodTrace} ${getMessage('message', 1031, userEmail, true, 'TeamUser')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1031, userEmail, true, true, 'TeamUser')}`);
     teamUser = await (new TeamUser({
         team : team._id,
         user : member._id,
         isAdmin : false
     })).save();
-    console.log(`${methodTrace} ${getMessage('message', 1026, userEmail, true, 'TeamUser')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1026, userEmail, true, true, 'TeamUser')}`);
 
     //add the new TeamUser id to the member in his array of teamUsers
-    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, 'User', '_id', member._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, true, 'User', '_id', member._id)}`);
     member = await User.findOneAndUpdate(
         { _id : member._id },
         { $addToSet : { teamUsers : teamUser } },
         { new : true }
     );
-    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, 'User')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, true, 'User')}`);
 
     //add the new TeamUser id to the team in its array of teamUsers
-    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, 'Team', '_id', team._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, true, 'Team', '_id', team._id)}`);
     await Team.findOneAndUpdate(
         { _id : team._id },
         { $addToSet : { teamUsers : teamUser } },
         { new : true }
     );
-    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, 'Team')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, true, 'Team')}`);
 
     //update each investment of the team with the new member in the distribution array.
     if (team.investments && team.investments.length) {
-        console.log(`${methodTrace} ${getMessage('message', 1043, userEmail, true)}`);
+        console.log(`${methodTrace} ${getMessage('message', 1043, userEmail, true, true)}`);
         try {
             await Investment.updateMany(
                 { _id : { $in : team.investments } },
@@ -129,9 +129,9 @@ const addMemberToTeam = async (member, team, userEmail) => {
                 } }
             );
 
-            console.log(`${methodTrace} ${getMessage('message', 1044, userEmail, true)}`);
+            console.log(`${methodTrace} ${getMessage('message', 1044, userEmail, true, true)}`);
         } catch (error) {
-            console.log(`${methodTrace} ${getMessage('error', 472, userEmail, true)}`);
+            console.log(`${methodTrace} ${getMessage('error', 472, userEmail, true, true)}`);
             
             return false;
         }
@@ -152,36 +152,36 @@ const deleteMemberFromTeam = async (member, team, userEmail) => {
     const methodTrace = `${errorTrace} deleteMemberFromTeam() >`;
 
     //Look for the specific TeamUser
-    console.log(`${methodTrace} ${getMessage('message', 1037, userEmail, true, 'TeamUser', `with teamID : ${team._id} and userID : ${member._id}`)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1037, userEmail, true, true, 'TeamUser', `with teamID : ${team._id} and userID : ${member._id}`)}`);
     let teamUser = await TeamUser.findOne({ team : team._id, user : member._id });
     if (teamUser) {
-        console.log(`${methodTrace} ${getMessage('message', 1035, userEmail, true, 'TeamUser')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1035, userEmail, true, true, 'TeamUser')}`);
     } else {
-        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, 'TeamUser')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, true, 'TeamUser')}`);
         return false;
     }
 
     //remove the teamUser id from the array of teamUsers in User
-    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, 'User', '_id', member._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, true, 'User', '_id', member._id)}`);
     member = await User.findByIdAndUpdate(
         { _id : teamUser.user },
         { $pull : { teamUsers : teamUser._id } },
         { new : true }
     );
-    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, 'User')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, true, 'User')}`);
 
     //remove the teamUser id from the array of teamUsers in Team
-    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, 'Team', '_id', team._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, true, 'Team', '_id', team._id)}`);
     await Team.findByIdAndUpdate(
         { _id : teamUser.team },
         { $pull : { teamUsers : teamUser._id } },
         { new : true }
     );
-    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, 'Team')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, true, 'Team')}`);
 
     //update each investment of the team removing the member from the distribution array.
     if (team.investments && team.investments.length) {
-        console.log(`${methodTrace} ${getMessage('message', 1045, userEmail, true)}`);
+        console.log(`${methodTrace} ${getMessage('message', 1045, userEmail, true, true)}`);
         try {
             await Investment.updateMany(
                 { _id : { $in : team.investments } },
@@ -192,22 +192,22 @@ const deleteMemberFromTeam = async (member, team, userEmail) => {
                 } }
             );
 
-            console.log(`${methodTrace} ${getMessage('message', 1046, userEmail, true)}`);
+            console.log(`${methodTrace} ${getMessage('message', 1046, userEmail, true, true)}`);
         } catch (error) {
-            console.log(`${methodTrace} ${getMessage('error', 473, userEmail, true)}`);
+            console.log(`${methodTrace} ${getMessage('error', 473, userEmail, true, true)}`);
 
             return false;
         }
     }
 
     //Remove the TeamUser record
-    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'TeamUser', '_id', teamUser._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, true, 'TeamUser', '_id', teamUser._id)}`);
     const writeResult = await TeamUser.deleteOne({ _id : teamUser._id });
     if (writeResult.n > 0) {
-        console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'TeamUser')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, true, 'TeamUser')}`);
         return true;
     } else {
-        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, 'TeamUser', '_id', teamUser._id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, true, 'TeamUser', '_id', teamUser._id)}`);
         return false;
     }
 };
@@ -223,11 +223,11 @@ exports.update = async (req, res, next) => {
     
     if (team && team.admin && team.admin.email !== user.email) {
         //the client is not the admin of the team requested
-        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Team', user.email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, true, 'Team', user.email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 462,
-            msg : getMessage('error', 462, null, false, 'Team', user.email),
+            msg : getMessage('error', 462, null, false, false, 'Team', user.email),
             data : null
         });
 
@@ -239,11 +239,11 @@ exports.update = async (req, res, next) => {
     for (let oldMember of team.members) {
         memberState[oldMember.email] = req.body.members.includes(oldMember.email) ? 'keep' : 'remove';
         if (memberState[oldMember.email] === 'remove' && oldMember.isAdmin) {
-            console.log(`${methodTrace} ${getMessage('error', 463, user.email, true, 'Team')}`);
+            console.log(`${methodTrace} ${getMessage('error', 463, user.email, true, true, 'Team')}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 463,
-                msg : getMessage('error', 463, null, false, 'Team'),
+                msg : getMessage('error', 463, null, false, false, 'Team'),
                 data : null
             });
     
@@ -275,7 +275,7 @@ exports.update = async (req, res, next) => {
                     usersNotRegistered.push(memberEmail);
                     memberState[memberEmail] = 'email-sent';
                     
-                    console.log(`${methodTrace} ${getMessage('message', 1040, user.email, true, memberEmail)}`);
+                    console.log(`${methodTrace} ${getMessage('message', 1040, user.email, true, true, memberEmail)}`);
                     const registerURL = `${req.headers.origin}/users/register`;
                     mail.send({
                         toEmail : memberEmail,
@@ -309,7 +309,7 @@ exports.update = async (req, res, next) => {
                                     //so we check if the property is there to konw it changed.
     }
 
-    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'Team', 'slug', team.slug)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, true, 'Team', 'slug', team.slug)}`);
     team = await Team.findOneAndUpdate(
         { slug : team.slug },
         { $set : updates },
@@ -317,18 +317,18 @@ exports.update = async (req, res, next) => {
     );
     
     if (!team) {
-        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'Team', 'slug', oldSlug)}`);
+        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, true, 'Team', 'slug', oldSlug)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 465,
-            msg : getMessage('error', 465, null, false, 'Team', 'slug', oldSlug),
+            msg : getMessage('error', 465, null, false, false, 'Team', 'slug', oldSlug),
             data : null
         });
 
         return;
     }
     
-    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Team')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, true, 'Team')}`);
     team = await getTeamBySlugObject(team.slug, user.email, { withId : false });
 
     // send push notification to client
@@ -345,7 +345,7 @@ exports.update = async (req, res, next) => {
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1032, null, false, 'Team'),
+        msg : getMessage('message', 1032, null, false, false, 'Team'),
         data : { team, usersNotRegistered, duplicatedMembers, membersNotInTeam }
     });
 };
@@ -356,7 +356,7 @@ exports.update = async (req, res, next) => {
 exports.getAllTeams = async (req, res) => {
     const methodTrace = `${errorTrace} getAllTeams() >`;
     //1 - Get all the teams where I am a member
-    console.log(`${methodTrace} ${getMessage('message', 1034, req.user.email, true, 'all Teams', 'user', req.user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1034, req.user.email, true, true, 'all Teams', 'user', req.user.email)}`);
     //let teamUsers = await TeamUser.find({ _id : req.user.teamUsers });
     
     //2 - Get teams with members
@@ -435,11 +435,11 @@ exports.getAllTeams = async (req, res) => {
     }
 
     //5 - Return teams info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, teams.length, 'Team(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, true, teams.length, 'Team(s)')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1036, null, false, teams.length, 'Team(s)'),
+        msg : getMessage('message', 1036, null, false, false, teams.length, 'Team(s)'),
         data : result
     });
 };
@@ -457,7 +457,7 @@ const getTeamBySlugObject = async (slug, userEmail = null, options = null) => {
     const methodTrace = `${errorTrace} getTeamBySlugObject() >`;
 
     //check for a team with the provided slug
-    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'Team', 'slug', slug)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, true, 'Team', 'slug', slug)}`);
 
     //filter by slug
     let aggregationStages = [{ $match : { slug } }];
@@ -553,7 +553,7 @@ const getTeamBySlugObject = async (slug, userEmail = null, options = null) => {
     }
 
     //Return teams info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, Object.keys(result).length ? 1 : 0, 'Team(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, true, Object.keys(result).length ? 1 : 0, 'Team(s)')}`);
     return Object.keys(result).length ? result : null;
 };
 exports.getTeamBySlugObject = getTeamBySlugObject;
@@ -567,32 +567,33 @@ exports.getMyTeamBySlug = async (req, res) => {
     const result = await getTeamBySlugObject(req.query.slug, req.user.email, { withId : false });
     
     if (!result) {
-        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Team')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, true, 'Team')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 461,
-            msg : getMessage('error', 461, null, false, 'Team'),
+            msg : getMessage('error', 461, null, false, false, 'Team'),
             data : null
         });
 
         return;
     } else if (result && result.admin && result.admin.email !== req.user.email) {
         //the client is not the admin of the team requested
-        console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Team', req.user.email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, true, 'Team', req.user.email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 462,
-            msg : getMessage('error', 462, null, false, 'Team', req.user.email),
+            msg : getMessage('error', 462, null, false, false, 'Team', req.user.email),
             data : null
         });
 
         return;
     }
     
+    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, true, 1, 'Team(s)')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1036, null, false, 1, 'Team(s)'),
+        msg : getMessage('message', 1036, null, false, false, 1, 'Team(s)'),
         data : result
     });
 };
@@ -604,11 +605,11 @@ exports.delete = async (req, res) => {
     const team = await getTeamBySlugObject(req.params.slug, user.email, { withId : true, withInvestments : true });
 
     if (!team) {
-        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, 'Team')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, true, 'Team')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 461,
-            msg : getMessage('error', 461, null, false, 'Team'),
+            msg : getMessage('error', 461, null, false, false, 'Team'),
             data : null
         });
 
@@ -617,11 +618,11 @@ exports.delete = async (req, res) => {
 
     if (team && team.admin && team.admin.email !== user.email) {
         //the client is not the admin of the team requested
-        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Team', user.email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, true, 'Team', user.email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 462,
-            msg : getMessage('error', 462, null, false, 'Team', user.email),
+            msg : getMessage('error', 462, null, false, false, 'Team', user.email),
             data : null
         });
 
@@ -630,11 +631,11 @@ exports.delete = async (req, res) => {
 
     //check if the team has any investment
     if (team.investments && team.investments.length) {
-        console.log(`${methodTrace} ${getMessage('error', 471, user.email, true, 'Team', 'Investments')}`);
+        console.log(`${methodTrace} ${getMessage('error', 471, user.email, true, true, 'Team', 'Investments')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 471,
-            msg : getMessage('error', 471, null, false, 'Team', 'Investments'),
+            msg : getMessage('error', 471, null, false, false, 'Team', 'Investments'),
             data : null
         });
 
@@ -646,19 +647,19 @@ exports.delete = async (req, res) => {
         const person = await User.findOne({ email : member.email});
         const result = await deleteMemberFromTeam(person, team, user.email);
         if (!result) {
-            console.log(`${methodTrace} ${getMessage('error', 469, user.email, true, `user = ${member.email}`, `team = ${team.slug}`)}`);
+            console.log(`${methodTrace} ${getMessage('error', 469, user.email, true, true, `user = ${member.email}`, `team = ${team.slug}`)}`);
         }
     }
 
     //remove the team
-    console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Team', '_id', team._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, true, 'Team', '_id', team._id)}`);
     const writeResult = await Team.deleteOne({ _id : team._id });
     if (!(writeResult && writeResult.n > 0)) {
-        console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Team', '_id', team._id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, true, 'Team', '_id', team._id)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 464,
-            msg : getMessage('error', 464, null, false, 'Team', '_id', team._id),
+            msg : getMessage('error', 464, null, false, false, 'Team', '_id', team._id),
             data : null
         });
 
@@ -676,11 +677,11 @@ exports.delete = async (req, res) => {
         name: user.name,
     }, req.query.pusherSocketID);
 
-    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Team')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, true, 'Team')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1039, null, false, 'Team'),
+        msg : getMessage('message', 1039, null, false, false, 'Team'),
         data : { 
             removed: writeResult.n, 
             team: {
@@ -727,4 +728,3 @@ const getTeamDataObject = (rawObject = {}, optionalFields = {}) => {
   
     return dto;
 };
-

@@ -14,7 +14,7 @@ const errorTrace = 'authController >';
 const getUserObject = async (email, fieldsToPopulate = {}) => {
     const methodTrace = `${errorTrace} getUserObject() >`;
     
-    console.log(`${methodTrace} ${getMessage('message', 1006, email, true, email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1006, email, true, true, email)}`);
     let user = null;
     if (Object.keys(fieldsToPopulate).length) {
         user = await User.findOneAndPopulate({ email }, fieldsToPopulate);
@@ -23,7 +23,7 @@ const getUserObject = async (email, fieldsToPopulate = {}) => {
     }
 
     if (!user) {
-        console.log(`${methodTrace} ${getMessage('error', 455, email, true, email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 455, email, true, true, email)}`);
         return null;
     }
 
@@ -48,10 +48,10 @@ exports.getUserObject = getUserObject;
 exports.login = (req, res, next) => {
     const methodTrace = `${errorTrace} login() > `;
 
-    console.log(`${methodTrace}${getMessage('message', 1001, null, true)}`);
+    console.log(`${methodTrace}${getMessage('message', 1001, null, true, true)}`);
     passport.authenticate('local', function(err, user, info) {
         if (err) {
-            console.log(`${methodTrace}${getMessage('error', 450, user && user.email ? user.email : null, true)}`);
+            console.log(`${methodTrace}${getMessage('error', 450, user && user.email ? user.email : null, true, true)}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 450,
@@ -61,35 +61,35 @@ exports.login = (req, res, next) => {
             return; //stop from running 
         }
         if (!user) {
-            console.log(`${methodTrace}${getMessage('error', 451, null, true)}`);
+            console.log(`${methodTrace}${getMessage('error', 451, null, true, true)}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 451,
-                msg : getMessage('error', 451, null, false),
+                msg : getMessage('error', 451, null, false, false),
                 data : null
             });
             return; //stop from running 
         }
 
-        console.log(`${methodTrace}${getMessage('message', 1002, user.email, true)}`);
+        console.log(`${methodTrace}${getMessage('message', 1002, user.email, true, true)}`);
         req.login(user, async function(err) {
             if (err) {
-                console.log(`${methodTrace}${getMessage('error', 452, user.email, true)}`);
+                console.log(`${methodTrace}${getMessage('error', 452, user.email, true, true)}`);
                 res.status(401).json({ 
                     status : "error", 
                     codeno : 452,
-                    msg : getMessage('error', 452, null, false),
+                    msg : getMessage('error', 452, null, false, false),
                     data : null
                 });
                 return; //stop from running 
             }
 
             if (!user.active) {
-                console.log(`${methodTrace}${getMessage('error', 479, user.email, true, user.email)}`);
+                console.log(`${methodTrace}${getMessage('error', 479, user.email, true, true, user.email)}`);
                 res.status(401).json({ 
                     status : "error", 
                     codeno : 479,
-                    msg : getMessage('error', 479, null, false, user.email),
+                    msg : getMessage('error', 479, null, false, false, user.email),
                     data : null
                 });
                 return; //stop from running 
@@ -100,11 +100,11 @@ exports.login = (req, res, next) => {
             user = await getUserObject(user.email);
             user.token = token;
             
-            console.log(`${methodTrace}${getMessage('message', 1000, user.email, true)}`);
+            console.log(`${methodTrace}${getMessage('message', 1000, user.email, true, true)}`);
             res.json({
                 status : 'success', 
                 codeno : 200,
-                msg : getMessage('message', 1000, null, false),
+                msg : getMessage('message', 1000, null, false, false),
                 data : user
             });
         });
@@ -118,14 +118,14 @@ exports.logout = async (req, res) => {
     
     const user = req.user;
     const userEmail = user ? user.email : ANONYMOUS_USER;
-    console.log(`${methodTrace} ${getMessage('message', 1005, userEmail, true, userEmail)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1005, userEmail, true, true, userEmail)}`);
     
     req.logout(); //this was added in passport
 
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1005, null, false, userEmail),
+        msg : getMessage('message', 1005, null, false, false, userEmail),
         data : null
     });
 };
@@ -135,20 +135,20 @@ exports.isLogggedIn = (req, res, next) => {
     
     const userEmail = req.user ? req.user.email : ANONYMOUS_USER;
     
-    console.log(`${methodTrace}${getMessage('message', 1003, userEmail, true)}`);
+    console.log(`${methodTrace}${getMessage('message', 1003, userEmail, true, true)}`);
     if (!req.isAuthenticated()) { //check in passport for authentication
-        console.log(`${methodTrace} ${getMessage('error', 453, userEmail, true)}`);
+        console.log(`${methodTrace} ${getMessage('error', 453, userEmail, true, true)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 453,
-            msg : getMessage('error', 453, null, false),
+            msg : getMessage('error', 453, null, false, false),
             data : null
         });
         
         return;
     }
 
-    console.log(`${methodTrace} ${getMessage('message', 1004, userEmail, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1004, userEmail, true, true)}`);
     next();
 };
 
@@ -156,16 +156,16 @@ exports.getUser = async (req, res, next) => {
     const methodTrace = `${errorTrace} getUser() >`;
 
     const email = req.user.email;
-    console.log(`${methodTrace} ${getMessage('message', 1004, email, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1004, email, true, true)}`);
 
     let user = await getUserObject(email, req.query);
     
     if (!user) {
-        console.log(`${methodTrace} ${getMessage('error', 455, email, true, email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 455, email, true, true, email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 455,
-            msg : getMessage('error', 455, null, false, email),
+            msg : getMessage('error', 455, null, false, false, email),
             data : null
         });
         return;
@@ -177,7 +177,7 @@ exports.getUser = async (req, res, next) => {
     res.json({
         status : 'success',
         codeno : 200,
-        msg : getMessage('message', 1004, null, false),
+        msg : getMessage('message', 1004, null, false, false),
         data : user
     });
 };
@@ -186,27 +186,27 @@ exports.forgot = async (req, res) => {
     const methodTrace = `${errorTrace} forgot() >`;
 
     const email = req.body.email;
-    console.log(`${methodTrace} ${getMessage('message', 1006, ANONYMOUS_USER, true, email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1006, ANONYMOUS_USER, true, true, email)}`);
     //1 see user with that email exists
     const user = await User.findOne({ email });
     if (!user) {
-        console.log(`${methodTrace} ${getMessage('error', 455, ANONYMOUS_USER, true, email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 455, ANONYMOUS_USER, true, true, email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 455,
-            msg : getMessage('error', 455, null, false, email),
+            msg : getMessage('error', 455, null, false, false, email),
             data : null
         });
         return;
     }
     
     //2 set reset tokens and expiry on their account
-    console.log(`${methodTrace} ${getMessage('message', 1007, ANONYMOUS_USER, true, email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1007, ANONYMOUS_USER, true, true, email)}`);
     user.resetPasswordToken = crypto.randomBytes(20).toString('hex');
     user.resetPasswordExpires = Date.now() + 3600000; //1 hour from now
     await user.save();
     //3 send them email with the token
-    console.log(`${methodTrace} ${getMessage('message', 1008, ANONYMOUS_USER, true, email, 'reset password')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1008, ANONYMOUS_USER, true, true, email, 'reset password')}`);
     const resetURL = `${req.headers.origin}/users/account/reset/${user.resetPasswordToken}`;
     mail.send({
         toEmail : user.email,
@@ -215,33 +215,32 @@ exports.forgot = async (req, res) => {
         filename : 'password-reset' //this is going to be the mail template file
     });
 
+    console.log(`${methodTrace} ${getMessage('message', 1009, email, true, true, 'password reset')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1009, null, false, 'password reset'),
+        msg : getMessage('message', 1009, null, false, false, 'password reset'),
         data : { email : user.email, expires : '1 hour' }
     });
-
-    console.log(`${methodTrace} ${getMessage('message', 1010, email, true, email)}`);
 };
 
 exports.confirmedPasswords = (req, res, next) => {
     const methodTrace = `${errorTrace} confirmedPasswords() >`;
 
-    console.log(`${methodTrace} ${getMessage('message', 1052, null, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1052, null, true, true)}`);
     if (req.body.password !== req.body['password-confirm']) {
-        console.log(`${methodTrace} ${getMessage('error', 456, null, true)}`);
+        console.log(`${methodTrace} ${getMessage('error', 456, null, true, true)}`);
         res.status(401).json({
             status : "error", 
             codeno : 456,
-            msg : getMessage('error', 456, null, false),
+            msg : getMessage('error', 456, null, false, false),
             data : null
         });
         
         return;
     }
 
-    console.log(`${methodTrace} ${getMessage('message', 1053, null, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1053, null, true, true)}`);
     next();
 };
 
@@ -252,7 +251,7 @@ exports.reset = async (req, res) => {
     const methodTrace = `${errorTrace} reset() >`;
     
     const userEmail = req.user ? req.user.email : null;
-    console.log(`${methodTrace} ${getMessage('message', 1011, userEmail, true, req.params.token)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1011, userEmail, true, true, req.params.token)}`);
     let user = await User.findOne({
         $and : [
             { resetPasswordToken : req.params.token },
@@ -261,18 +260,18 @@ exports.reset = async (req, res) => {
     });
 
     if (!user) {
-        console.log(`${methodTrace} ${getMessage('error', 457, userEmail, true)}`);
+        console.log(`${methodTrace} ${getMessage('error', 457, userEmail, true, true)}`);
         res.status(401).json({
             status : "error", 
             codeno : 457,
-            msg : getMessage('error', 457, null, false),
+            msg : getMessage('error', 457, null, false, false),
             data : null
         });
 
         return;
     }
 
-    console.log(`${methodTrace} ${getMessage('message', 1012, user.email, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1012, user.email, true, true)}`);
     await user.setPassword(req.body.password);
     user.resetPasswordToken = undefined; //the way to remove fields from mongo is set to undefined
     user.resetPasswordExpires = undefined;
@@ -280,10 +279,11 @@ exports.reset = async (req, res) => {
     await req.login(updatedUser); //this comes from passport js
     
     if (!req.user) {
+        console.log(`${methodTrace} ${getMessage('error', 452, user.email, true, true)}`);
         res.status(401).json({
             status : "error", 
             codeno : 452,
-            msg : getMessage('error', 452, null, false),
+            msg : getMessage('error', 452, null, false, false),
             data : null
         });
 
@@ -296,11 +296,11 @@ exports.reset = async (req, res) => {
     user = await getUserObject(user.email);
     user.token = token;
     
-    console.log(`${methodTrace} ${getMessage('message', 1013, user.email, true, user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1013, user.email, true, true, user.email)}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1013, null, false),
+        msg : getMessage('message', 1013, null, false, false),
         data : user
     });
 };

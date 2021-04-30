@@ -157,7 +157,7 @@ exports.getLoggerInstance = getLoggerInstance;
  * @param {*} codeno . The number of message to get back
  * @param {*} params . The params to configure the message
  */
-const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = false, ...params) => {
+const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = false, sendToLogger = true, ...params) => {
   if (codeno === -1) {
     return '';
   }
@@ -181,23 +181,21 @@ const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = fa
 
   let date = moment(Date.now()).format('DD/MM/YYYY HH:mm:ss.SSS');
   if (showDate) {
-    
-
     prefix += prefix.length ? ` on ${date}]` : `[on ${date}]`;
   }
-
-  let finalMessage = `${prefix} ${message}`
   
   // send to logger
-  this.getLoggerInstance().log({
-    level: type == 'message' ? 'info' : type,  
-    codeno,
-    message,
-    date,
-    userEmail,
-  });
+  if (sendToLogger) {
+    this.getLoggerInstance().log({
+      level: type == 'message' ? 'info' : type,  
+      codeno,
+      message,
+      date,
+      userEmail,
+    });
+  }
 
-  return finalMessage;
+  return `${prefix} ${message}`;
 };
 exports.getMessage = getMessage;
 
@@ -225,11 +223,11 @@ exports.catchErrors = (fn) => {
 exports.notFound = (req, res, next) => {
   const methodTrace = `${errorTrace} notFound() >`;
   
-  console.log(`${methodTrace} ${getMessage('error', 468, req.user ? req.user.email : ANONYMOUS_USER, true, req.originalUrl)}`);
+  console.log(`${methodTrace} ${getMessage('error', 468, req.user ? req.user.email : ANONYMOUS_USER, true, true, req.originalUrl)}`);
   const err = new Error('Not Found');
   err.status = 'error';
   err.codeno = 404;
-  err.message = getMessage('error', 468, null, false, req.originalUrl);
+  err.message = getMessage('error', 468, null, false, false, req.originalUrl);
   
   next(err);
 };
@@ -242,7 +240,7 @@ exports.notFound = (req, res, next) => {
 exports.customErrorHandler = (err, req, res, next) => {
   const methodTrace = `${errorTrace} customErrorHandler() >`;
   
-  console.log(`${methodTrace} ${getMessage('error', 467, req.user ? req.user.email : null, true)} ${err.message}`);
+  console.log(`${methodTrace} ${getMessage('error', 467, req.user ? req.user.email : null, true, true)} ${err.message}`);
   err.stack = err.stack || '';
   
   let errorDetails = {};

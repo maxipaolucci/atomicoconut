@@ -19,11 +19,11 @@ exports.validateData = (req, res, next) => {
     console.log(`${methodTrace} ${getMessage('message', 1015, null, true)}`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(`${methodTrace} ${getMessage('error', 458, null, true, errors.array())}`);
+        console.log(`${methodTrace} ${getMessage('error', 458, null, true, true, errors.array())}`);
         return res.status(400).json({ 
             status : "error", 
             codeno : 458,
-            msg : getMessage('error', 458, null, true, ''),
+            msg : getMessage('error', 458, null, true, false, ''),
             data: errors.array()
         }); 
     }
@@ -42,11 +42,11 @@ exports.create = async (req, res, next) => {
     if (!(req.body.type === INVESTMENTS_TYPES.CRYPTO || req.body.type === INVESTMENTS_TYPES.CURRENCY || 
             req.body.type === INVESTMENTS_TYPES.PROPERTY)) {
         
-        console.log(`${methodTrace} ${getMessage('error', 474, user.email, true, req.body.type)}`);
+        console.log(`${methodTrace} ${getMessage('error', 474, user.email, true, true, req.body.type)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 474,
-            msg : getMessage('error', 474, null, false, req.body.type),
+            msg : getMessage('error', 474, null, false, false, req.body.type),
             data : null
         });
 
@@ -55,11 +55,11 @@ exports.create = async (req, res, next) => {
 
     //check the property was created by the user creating the investment
     if (req.body.type === INVESTMENTS_TYPES.PROPERTY && req.body.investmentData.property.createdBy.email !== user.email) {
-        console.log(`${methodTrace} ${getMessage('error', 476, user.email, true, 'Property Investment', 'Property')}`);
+        console.log(`${methodTrace} ${getMessage('error', 476, user.email, true, true, 'Property Investment', 'Property')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 476,
-            msg : getMessage('error', 476, null, false, req.body.type),
+            msg : getMessage('error', 476, null, false, false, req.body.type),
             data : null
         });
 
@@ -73,7 +73,7 @@ exports.create = async (req, res, next) => {
     }
 
     //save a new investment record in DB
-    console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'Investment')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, true, 'Investment')}`);
     let investment = await (new Investment({
         investmentType : req.body.type,
         createdBy: user._id,
@@ -90,11 +90,11 @@ exports.create = async (req, res, next) => {
     })).save();
 
     if (!investment) {
-        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'Investment')}`);
+        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, true, 'Investment')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 459,
-            msg : getMessage('error', 459, null, false, 'Investment'),
+            msg : getMessage('error', 459, null, false, false, 'Investment'),
             data : null
         });
 
@@ -102,7 +102,7 @@ exports.create = async (req, res, next) => {
     }
         
     //save a new investment type record in DB
-    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Investment')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, true, 'Investment')}`);
     let investmentType = null;
     if (investment.investmentType === INVESTMENTS_TYPES.CRYPTO || investment.investmentType === INVESTMENTS_TYPES.CURRENCY) {
         investmentType = await createCurrencyInvestment(req.body.type, investment._id, req.body.investmentData);
@@ -111,18 +111,18 @@ exports.create = async (req, res, next) => {
     }
     
     if (!investmentType) {
-        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'CurrencyInvestment')}`);
+        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, true, 'CurrencyInvestment')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 459,
-            msg : getMessage('error', 459, null, false, 'CurrencyInvestment'),
+            msg : getMessage('error', 459, null, false, false, 'CurrencyInvestment'),
             data : null
         });
 
         return;
     }
     
-    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'CurrencyInvestment')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, true, 'CurrencyInvestment')}`);
     
     //send back a well formated invetment object
     investment = await getByIdObject(investment._id, user.email, {
@@ -147,11 +147,11 @@ exports.create = async (req, res, next) => {
         }, req.body.pusherSocketID);  
     }
     
-    console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Investment')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, true, 'Investment')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1033, null, false, 'Investment'),
+        msg : getMessage('message', 1033, null, false, false, 'Investment'),
         data : { investment, type : investment.investmentType, id : investment._id }
     });
 };
@@ -196,11 +196,11 @@ exports.update = async (req, res, next) => {
 
     if (!investment) {
         //no investment found with that id
-        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true,'Investment')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, true, 'Investment')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 461,
-            msg : getMessage('error', 461, null, false, 'Investment'),
+            msg : getMessage('error', 461, null, false, false, 'Investment'),
             data : null
         });
 
@@ -218,11 +218,11 @@ exports.update = async (req, res, next) => {
 
     if (!found) {
         //the client is not an owner  of the investment requested
-        console.log(`${methodTrace} ${getMessage('error', 470, user.email, true, 'Investment')}`);
+        console.log(`${methodTrace} ${getMessage('error', 470, user.email, true, true, 'Investment')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 470,
-            msg : getMessage('error', 470, null, false, 'Investment'),
+            msg : getMessage('error', 470, null, false, false, 'Investment'),
             data : null
         });
 
@@ -250,7 +250,7 @@ exports.update = async (req, res, next) => {
     };
 
     //update investment
-    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'Investment', '_id', investment._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, true, 'Investment', '_id', investment._id)}`);
     investment = await Investment.findOneAndUpdate(
         { _id : investment._id },
         { $set : updates },
@@ -259,17 +259,17 @@ exports.update = async (req, res, next) => {
 
     if (!investment) {
         //failed to update investment
-        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'Investment', '_id', originalInvestment._id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, true, 'Investment', '_id', originalInvestment._id)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 465,
-            msg : getMessage('error', 465, null, false, 'Investment', '_id', originalInvestment._id),
+            msg : getMessage('error', 465, null, false, false, 'Investment', '_id', originalInvestment._id),
             data : null
         });
 
         return;
     }
-    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Investment')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, true, 'Investment')}`);
 
     let investmentData = null;
     let modelName = null;
@@ -306,11 +306,11 @@ exports.update = async (req, res, next) => {
 
     if (!investmentData) {
         //failed to update investment data
-        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'CurrencyInvestment', '_id', investment.investmentData._id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, true, 'CurrencyInvestment', '_id', investment.investmentData._id)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 465,
-            msg : getMessage('error', 465, null, false, 'CurrencyInvestment', '_id', investment.investmentData._id),
+            msg : getMessage('error', 465, null, false, false, 'CurrencyInvestment', '_id', investment.investmentData._id),
             data : null
         });
 
@@ -318,7 +318,7 @@ exports.update = async (req, res, next) => {
     }
 
     //success
-    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, modelName)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, true, modelName)}`);
     
     //send back a well formated invetment object
     investment = await getByIdObject(investment._id, user.email, {
@@ -348,11 +348,11 @@ exports.update = async (req, res, next) => {
     // send push notification to client
     getPusher().trigger(PUSHER_CHANNEL, 'investment-updated', pusherData, req.body.pusherSocketID);    
 
-    console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Investment')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, true, 'Investment')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1042, null, false, 'Investment'),
+        msg : getMessage('message', 1042, null, false, false, 'Investment'),
         data : { investment, type : investment.investmentType, id : investment._id }
     });    
 };
@@ -363,7 +363,7 @@ exports.update = async (req, res, next) => {
 exports.getAllInvestments = async (req, res) => {
     const methodTrace = `${errorTrace} getAllInvestments() >`;
     //1 - Get all the investments where user is involved
-    console.log(`${methodTrace} ${getMessage('message', 1034, req.user.email, true, 'all Investments', 'user', req.user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1034, req.user.email, true, true, 'all Investments', 'user', req.user.email)}`);
     const aggregationStagesArr = [{ $match : { investmentDistribution : { $elemMatch : { email : req.user.email } } } }].concat(aggregationStages(), 
             { $sort : { "buyingDate" : 1 } });
     let investments = await Investment.aggregate(aggregationStagesArr);
@@ -372,11 +372,11 @@ exports.getAllInvestments = async (req, res) => {
     let result = await beautifyInvestmentsFormat(investments);
 
     //3- Return investments info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, result.length, 'Investment(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, req.user.email, true, true, result.length, 'Investment(s)')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1036, null, false, result.length, 'Investment(s)'),
+        msg : getMessage('message', 1036, null, false, false, result.length, 'Investment(s)'),
         data : result
     });
 };
@@ -525,7 +525,7 @@ const getByIdObject = async (id, userEmail = null, options = null) => {
     const methodTrace = `${errorTrace} getByIdObject() >`;
 
     //1- check for an investment with the provided id
-    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'Investment', 'id', id)}`); 
+    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, true, 'Investment', 'id', id)}`); 
     try {
         id = ObjectId(id);    
     } catch(error) {
@@ -542,7 +542,7 @@ const getByIdObject = async (id, userEmail = null, options = null) => {
     result = result.length ? result[0] : null;
     
     //4 - Return investment info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, result ? 1 : 0, 'Investment(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, true, result ? 1 : 0, 'Investment(s)')}`);
     return result;
 };
 exports.getByIdObject = getByIdObject;
@@ -574,7 +574,7 @@ exports.getById = async (req, res) => {
             res.json({
                 status : 'success', 
                 codeno : 200,
-                msg : getMessage('message', 1036, null, false, 1, 'Investment(s)'),
+                msg : getMessage('message', 1036, null, false, false, 1, 'Investment(s)'),
                 data : result
             });
 
@@ -582,11 +582,11 @@ exports.getById = async (req, res) => {
         }
     } else if (!result){
     //Nothing found for that ID
-        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Investment')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, true, 'Investment')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 461,
-            msg : getMessage('error', 461, null, false, 'Investment'),
+            msg : getMessage('error', 461, null, false, false, 'Investment'),
             data : null
         });
 
@@ -594,11 +594,11 @@ exports.getById = async (req, res) => {
     }
 
     //3.2 - the client is not member of the investment requested
-    console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Investment', req.user.email)}`);
+    console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, true, 'Investment', req.user.email)}`);
     res.status(401).json({ 
         status : "error", 
         codeno : 462,
-        msg : getMessage('error', 462, null, false, 'Investment', req.user.email),
+        msg : getMessage('error', 462, null, false, false, 'Investment', req.user.email),
         data : null
     });
 };
@@ -615,11 +615,11 @@ exports.delete = async (req, res) => {
 
     if (!investment){
         //Nothing found for that ID
-        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, 'Investment')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, req.user.email, true, true, 'Investment')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 461,
-            msg : getMessage('error', 461, null, false, 'Investment'),
+            msg : getMessage('error', 461, null, false, false, 'Investment'),
             data : null
         });
 
@@ -639,11 +639,11 @@ exports.delete = async (req, res) => {
     
     if (!found) {
         //3.2 - the client is not member of the investment requested
-        console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, 'Investment', req.user.email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 462, req.user.email, true, true, 'Investment', req.user.email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 462,
-            msg : getMessage('error', 462, null, false, 'Investment', req.user.email),
+            msg : getMessage('error', 462, null, false, false, 'Investment', req.user.email),
             data : null
         });
 
@@ -669,7 +669,7 @@ exports.delete = async (req, res) => {
         res.status(401).json({ 
             status : "error", 
             codeno : 464,
-            msg : getMessage('error', 464, null, false, investmentDataModel, '_id', investmentDataId),
+            msg : getMessage('error', 464, null, false, false, investmentDataModel, '_id', investmentDataId),
             data : null
         });
 
@@ -677,15 +677,15 @@ exports.delete = async (req, res) => {
     }
 
     writeResult = null;
-    console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Investment', '_id', investment._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, true, 'Investment', '_id', investment._id)}`);
     writeResult = await Investment.deleteOne({ _id : investment._id });
     if (!(writeResult && writeResult.n > 0)) {
         //Failed to delete investment
-        console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Investment', '_id', investment._id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, true, 'Investment', '_id', investment._id)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 464,
-            msg : getMessage('error', 464, null, false, 'Investment', '_id', investment._id),
+            msg : getMessage('error', 464, null, false, false, 'Investment', '_id', investment._id),
             data : null
         });
 
@@ -712,11 +712,11 @@ exports.delete = async (req, res) => {
     }
 
     //Success deleting investment
-    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Investment')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, true, 'Investment')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1039, null, false, 'Investment'),
+        msg : getMessage('message', 1039, null, false, false, 'Investment'),
         data : { 
             removed : writeResult.n,
             investment: {
@@ -734,12 +734,12 @@ exports.delete = async (req, res) => {
 const deleteCurrencyInvestment = async (id, userEmail) => {
     const methodTrace = `${errorTrace} deleteCurrencyInvestment() >`;
     
-    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'CurrencyInvestment', '_id', id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, true, 'CurrencyInvestment', '_id', id)}`);
     const writeResult = await CurrencyInvestment.deleteOne({ _id : id });
     if (writeResult && writeResult.n > 0) {
-        console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'CurrencyInvestment')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, true, 'CurrencyInvestment')}`);
     } else {
-        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, 'CurrencyInvestment', '_id', id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, true, 'CurrencyInvestment', '_id', id)}`);
     }
     
     return writeResult;
@@ -753,12 +753,12 @@ const deleteCurrencyInvestment = async (id, userEmail) => {
 const deletePropertyInvestment = async (id, userEmail) => {
     const methodTrace = `${errorTrace} deletePropertyInvestment() >`;
     
-    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'PropertyInvestment', '_id', id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, true, 'PropertyInvestment', '_id', id)}`);
     const writeResult = await PropertyInvestment.deleteOne({ _id : id });
     if (writeResult && writeResult.n > 0) {
-        console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'PropertyInvestment')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, true, 'PropertyInvestment')}`);
     } else {
-        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, 'PropertyInvestment', '_id', id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, true, 'PropertyInvestment', '_id', id)}`);
     }
     
     return writeResult;
@@ -773,7 +773,7 @@ const deletePropertyInvestment = async (id, userEmail) => {
 exports.getPropertyIdsInInvestments = async(userEmail) => {
     const methodTrace = `${errorTrace} getPropertyIdsInInvestments() >`;
     
-    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'PropertyInvestment(s)', 'user email', userEmail)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, true, 'PropertyInvestment(s)', 'user email', userEmail)}`);
 
     let propertiesInInvestments = await Investment.aggregate([
         { 
@@ -801,7 +801,7 @@ exports.getPropertyIdsInInvestments = async(userEmail) => {
         propertyIds.push(property.propertyId[0]);
     }
 
-    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, propertyIds.length, 'PropertyInvestment(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, true, propertyIds.length, 'PropertyInvestment(s)')}`);
 
     return propertyIds;
 };

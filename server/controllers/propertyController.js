@@ -17,19 +17,19 @@ const errorTrace = 'propertyController >';
 exports.validateData = (req, res, next) => {
     const methodTrace = `${errorTrace} validateData() >`;
 
-    console.log(`${methodTrace} ${getMessage('message', 1015, null, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1015, null, true, true)}`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(`${methodTrace} ${getMessage('error', 458, null, true, errors.array())}`);
+        console.log(`${methodTrace} ${getMessage('error', 458, null, true, true, errors.array())}`);
         return res.status(400).json({ 
             status : "error", 
             codeno : 458,
-            msg : getMessage('error', 458, null, true, ''),
+            msg : getMessage('error', 458, null, true, false, ''),
             data: errors.array()
         }); 
     }
     
-    console.log(`${methodTrace} ${getMessage('message', 1016, null, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1016, null, true, true)}`);
     next(); //call next middleware
 };
 
@@ -80,7 +80,7 @@ exports.create = async (req, res, next) => {
     let user = req.user;
 
     //save a new record in DB
-    console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'Property')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, true, 'Property')}`);
     const location = { address : req.body.address.description, coordinates : [req.body.address.longitude, req.body.address.latitude], mapsPlaceId : req.body.address.mapsPlaceId };
     let property = await (new Property({
         propertyType : req.body.type,
@@ -126,18 +126,18 @@ exports.create = async (req, res, next) => {
     })).save();
 
     if (!property) {
-        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'Property')}`);
+        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, true, 'Property')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 459,
-            msg : getMessage('error', 459, null, false, 'Property'),
+            msg : getMessage('error', 459, null, false, false, 'Property'),
             data : null
         });
 
         return;
     }
         
-    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'Property')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, true, 'Property')}`);
 
     // Save additional info for the property
     await propertyAdditionalInfoController.create(property._id, req.body.propertyAdditionalInfo, user.email, res);
@@ -146,7 +146,7 @@ exports.create = async (req, res, next) => {
     let propertyType = null;
     if (property.propertyType === PROPERTY_TYPES.HOUSE) {
         //save a new house record in DB
-        console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, 'House')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1031, user.email, true, true, 'House')}`);
         propertyType = await (new House({
             parent : property._id,
             buildingType : req.body.propertyTypeData.buildingType,
@@ -181,24 +181,24 @@ exports.create = async (req, res, next) => {
     }
 
     if (!propertyType) {
-        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, property.propertyType)}`);
+        console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, true, property.propertyType)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 459,
-            msg : getMessage('error', 459, null, false, property.propertyType),
+            msg : getMessage('error', 459, null, false, false, property.propertyType),
             data : null
         });
 
         return;
     } 
-    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, property.propertyType)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, true, property.propertyType)}`);
     
     let propertyUserCreated = await(propertyUserController.addPropertyUser(property._id, user._id, user.email, true));
     if (!propertyUserCreated) {
         res.status(401).json({ 
             status : "error", 
             codeno : 459,
-            msg : getMessage('error', 459, null, false, 'PropertyUser'),
+            msg : getMessage('error', 459, null, false, false, 'PropertyUser'),
             data : null
         });
 
@@ -210,11 +210,11 @@ exports.create = async (req, res, next) => {
         propertyTypeDataId : true
     });
 
-    console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, 'Property')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1033, user.email, true, true, 'Property')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1033, null, false, 'Property'),
+        msg : getMessage('message', 1033, null, false, false, 'Property'),
         data : property
     });       
 };
@@ -293,7 +293,7 @@ exports.update = async (req, res, next) => {
     }
 
     //update property
-    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'Property', '_id', property._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, true, 'Property', '_id', property._id)}`);
     property = await Property.findOneAndUpdate(
         { _id : property._id },
         { $set : updates },
@@ -302,11 +302,11 @@ exports.update = async (req, res, next) => {
 
     if (!property) {
         //failed to update property
-        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, 'Property', '_id', originalProperty._id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, true, 'Property', '_id', originalProperty._id)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 465,
-            msg : getMessage('error', 465, null, false, 'Property', '_id', originalProperty._id),
+            msg : getMessage('error', 465, null, false, false, 'Property', '_id', originalProperty._id),
             data : null
         });
     }
@@ -315,7 +315,7 @@ exports.update = async (req, res, next) => {
     await propertyAdditionalInfoController.update(property._id, req.body.propertyAdditionalInfo, user.email, res);
     
     //update property type data
-    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, 'Property')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, true, 'Property')}`);
     let propertyType = null;
     if (property.propertyType === PROPERTY_TYPES.HOUSE) {
         const propertyTypeUpdates = {
@@ -359,17 +359,17 @@ exports.update = async (req, res, next) => {
 
     if (!propertyType) { 
         //failed to update proeprty type data
-        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, property.propertyType, '_id', property.propertyTypeData._id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 465, user.email, true, true, property.propertyType, '_id', property.propertyTypeData._id)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 465,
-            msg : getMessage('error', 465, null, false, property.propertyType, '_id', property.propertyTypeData._id),
+            msg : getMessage('error', 465, null, false, false, property.propertyType, '_id', property.propertyTypeData._id),
             data : null
         });
 
         return;
     }
-    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, property.propertyType)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, user.email, true, true, property.propertyType)}`);
 
     // if user is the admin of the property then update property_users, this are the users sharing this property
     let propertyUsersUpdateResult = null;
@@ -401,11 +401,11 @@ exports.update = async (req, res, next) => {
     }, req.body.pusherSocketID);
 
     //success
-    console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, 'Property')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1042, user.email, true, true, 'Property')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1042, null, false, 'Property'),
+        msg : getMessage('message', 1042, null, false, false, 'Property'),
         data : { property, type : property.propertyType, id : property._id, propertyUsersUpdateResult }
     });
 };
@@ -422,11 +422,11 @@ const checkUserCanViewEditProperty = async(property, user) => {
 
     if (!property) {
         //no record found with that id
-        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, 'Property')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, true, 'Property')}`);
         return {
             status : false,
             codeno : 461,
-            msg : getMessage('error', 461, null, false, 'Property')
+            msg : getMessage('error', 461, null, false, false, 'Property')
         };
     }
 
@@ -458,11 +458,11 @@ const checkUserCanViewEditProperty = async(property, user) => {
     });
 
     if (!sharedUser) {
-        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Property', user.email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, true, 'Property', user.email)}`);
         return {
             status : false,
             codeno : 462,
-            msg : getMessage('error', 462, null, false, 'Property', user.email)
+            msg : getMessage('error', 462, null, false, false, 'Property', user.email)
         };
     }
 
@@ -484,11 +484,11 @@ exports.delete = async (req, res) => {
     
     if (!property){
         //Nothing found for that ID
-        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, 'Property')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, user.email, true, true, 'Property')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 461,
-            msg : getMessage('error', 461, null, false, 'Property'),
+            msg : getMessage('error', 461, null, false, false, 'Property'),
             data : null
         });
 
@@ -500,11 +500,11 @@ exports.delete = async (req, res) => {
 
     if (creator.email !== user.email) {
         //3.2 - the user it is not the creator of the property
-        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, 'Property', user.email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 462, user.email, true, true, 'Property', user.email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 462,
-            msg : getMessage('error', 462, null, false, 'Property', user.email),
+            msg : getMessage('error', 462, null, false, false, 'Property', user.email),
             data : { creator }
         });
 
@@ -515,11 +515,11 @@ exports.delete = async (req, res) => {
     const propertyIds = await getPropertyIdsInInvestments(user.email);
     for (let propertyId of propertyIds) {
         if (property._id.equals(propertyId)) {
-            console.log(`${methodTrace} ${getMessage('error', 475, user.email, true, 'Property', 'Investments')}`);
+            console.log(`${methodTrace} ${getMessage('error', 475, user.email, true, true, 'Property', 'Investments')}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 475,
-                msg : getMessage('error', 475, null, false, 'Property', 'Investments'),
+                msg : getMessage('error', 475, null, false, false, 'Property', 'Investments'),
                 data : null
             });
     
@@ -530,10 +530,11 @@ exports.delete = async (req, res) => {
     //3.1 - The property belongs to the user, we proceed to delete
     let propertyUsersRemoved = await propertyUserController.deleteAllForProperty(property._id, user.email);
     if (!propertyUsersRemoved) {
+        console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, true, 'PropertyUser', 'property', property._id)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 459,
-            msg : getMessage('error', 464, user.email, true, 'PropertyUser', 'property', property._id),
+            msg : getMessage('error', 464, user.email, true, false, 'PropertyUser', 'property', property._id),
             data : null
         });
 
@@ -551,10 +552,11 @@ exports.delete = async (req, res) => {
     
     if (!(writeResult && writeResult.n > 0)) {
         //Failed to delete property type data
+        console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, true, propertyTypeDataModel, '_id', propertyTypeDataId)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 464,
-            msg : getMessage('error', 464, null, false, propertyTypeDataModel, '_id', propertyTypeDataId),
+            msg : getMessage('error', 464, null, false, false, propertyTypeDataModel, '_id', propertyTypeDataId),
             data : null
         });
 
@@ -562,7 +564,7 @@ exports.delete = async (req, res) => {
     }
         
     writeResult = null;
-    console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, 'Property', '_id', property._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1038, user.email, true, true, 'Property', '_id', property._id)}`);
 
     // delete additional data
     await propertyAdditionalInfoController.delete(property._id, user.email, res);
@@ -570,11 +572,11 @@ exports.delete = async (req, res) => {
     writeResult = await Property.deleteOne({ _id : property._id });
     if (!(writeResult && writeResult.n > 0)) {
         //Failed to delete property
-        console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, 'Property', '_id', property._id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 464, user.email, true, true, 'Property', '_id', property._id)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 464,
-            msg : getMessage('error', 464, null, false, 'Property', '_id', property._id),
+            msg : getMessage('error', 464, null, false, false, 'Property', '_id', property._id),
             data : null
         });
 
@@ -591,11 +593,11 @@ exports.delete = async (req, res) => {
     }, req.query.pusherSocketID);
 
     //Success deleting property
-    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, 'Property')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1039, user.email, true, true, 'Property')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1039, null, false, 'Property'),
+        msg : getMessage('message', 1039, null, false, false, 'Property'),
         data : { 
             removed : writeResult.n,
             property: {
@@ -614,7 +616,7 @@ exports.delete = async (req, res) => {
 const deletePropertyTypeData = async (model, id, userEmail) => {
     const methodTrace = `${errorTrace} deletePropertyTypeData() >`;
     
-    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, model, '_id', id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, true, model, '_id', id)}`);
     
     let writeResult = null;
     if (model.toLowerCase() === PROPERTY_TYPES.HOUSE) {
@@ -622,9 +624,9 @@ const deletePropertyTypeData = async (model, id, userEmail) => {
     }
 
     if (writeResult && writeResult.n > 0) {
-        console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, model)}`);
+        console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, true, model)}`);
     } else {
-        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, model, '_id', id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, true, model, '_id', id)}`);
     }
     
     return writeResult;
@@ -658,7 +660,7 @@ exports.getById = async (req, res) => {
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1036, null, false, 1, 'Property(s)'),
+        msg : getMessage('message', 1036, null, false, false, 1, 'Property(s)'),
         data : result
     });
 };
@@ -667,7 +669,7 @@ const getByIdObject = async (id, userEmail = null, options = null) => {
     const methodTrace = `${errorTrace} getByIdObject() >`;
 
     //1- check for a record with the provided id
-    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'Property', 'id', id)}`); 
+    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, true, 'Property', 'id', id)}`); 
     try {
         id = ObjectId(id);    
     } catch(error) {
@@ -684,7 +686,7 @@ const getByIdObject = async (id, userEmail = null, options = null) => {
     result = result.length ? result[0] : null;
     
     //4 - Return property info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, result ? 1 : 0, 'Property(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, true, result ? 1 : 0, 'Property(s)')}`);
     return result;
 };
 exports.getByIdObject = getByIdObject;
@@ -707,7 +709,7 @@ exports.getAllProperties = async (req, res) => {
     const propertyIds = removeDuplicatesFromObjectIdArray(propertyIdsSharedWithMe.concat(propertyIdsInMyInvestments));
     
     // - Get all the properties where user is involved (created or has a part of an investment in the property)
-    console.log(`${methodTrace} ${getMessage('message', 1034, user.email, true, 'all Properties', 'user', user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1034, user.email, true, true, 'all Properties', 'user', user.email)}`);
     const aggregationStagesArr = [{ $match : { _id : { $in : propertyIds } } }].concat(aggregationStages(), { $sort : { "location.address" : 1 } });
     let properties = await Property.aggregate(aggregationStagesArr);
 
@@ -715,11 +717,11 @@ exports.getAllProperties = async (req, res) => {
     let result = await beautifyPropertiesFormat(properties);
 
     //- Return properties info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, user.email, true, result.length, 'Property(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, user.email, true, true, result.length, 'Property(s)')}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1036, null, false, result.length, 'Property(s)'),
+        msg : getMessage('message', 1036, null, false, false, result.length, 'Property(s)'),
         data : result
     });
 };

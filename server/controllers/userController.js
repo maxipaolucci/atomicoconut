@@ -17,19 +17,19 @@ const errorTrace = 'userController >';
 exports.validateData = (req, res, next) => {
     const methodTrace = `${errorTrace} validateData() >`;
 
-    console.log(`${methodTrace} ${getMessage('message', 1015, null, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1015, null, true, true)}`);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(`${methodTrace} ${getMessage('error', 458, null, true, errors.array())}`);
+        console.log(`${methodTrace} ${getMessage('error', 458, null, true, true, errors.array())}`);
         return res.status(400).json({ 
             status : "error", 
             codeno : 458,
-            msg : getMessage('error', 458, null, true, ''),
+            msg : getMessage('error', 458, null, false, false, ''),
             data: errors.array()
         }); 
     }
     
-    console.log(`${methodTrace} ${getMessage('message', 1016, null, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1016, null, true, true)}`);
     next(); //call next middleware
 };
 
@@ -37,9 +37,9 @@ exports.register = async (req, res, next) => {
     const methodTrace = `${errorTrace} register() >`;
     
     const user = new User({ email : req.body.email, name : req.body.name });
-    console.log(`${methodTrace} ${getMessage('message', 1017, user.email, true, user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1017, user.email, true, true, user.email)}`);
     await User.register(user, req.body.password)
-    console.log(`${methodTrace} ${getMessage('message', 1018, user.email, true, user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1018, user.email, true, true, user.email)}`);
     next(); //call next middleware
 };
 
@@ -47,27 +47,27 @@ exports.sendActivationToken = async(req, res) => {
     const methodTrace = `${errorTrace} sendActivationToken() >`;
 
     const email = req.body.email;
-    console.log(`${methodTrace} ${getMessage('message', 1006, email, true, email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1006, email, true, true, email)}`);
     //1 see user with that email exists
     const user = await User.findOne({ email });
     if (!user) {
-        console.log(`${methodTrace} ${getMessage('error', 455, email, true, email)}`);
+        console.log(`${methodTrace} ${getMessage('error', 455, email, true, true, email)}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 455,
-            msg : getMessage('error', 455, null, false, email),
+            msg : getMessage('error', 455, null, false, false, email),
             data : null
         });
         return;
     }
     
     //2 set reset tokens and expiry on their account
-    console.log(`${methodTrace} ${getMessage('message', 1007, email, true, email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1007, email, true, true, email)}`);
     user.activationToken = crypto.randomBytes(20).toString('hex');
     user.activationTokenExpires = Date.now() + (3600000 * 24); //1 day from now
     await user.save();
     //3 send them email with the token
-    console.log(`${methodTrace} ${getMessage('message', 1008, email, true, email, 'account activation')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1008, email, true, true, email, 'account activation')}`);
     const activationURL = `${req.headers.origin}/users/account/activation/${user.activationToken}`;
     mail.send({
         toEmail : user.email,
@@ -79,11 +79,11 @@ exports.sendActivationToken = async(req, res) => {
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1009, null, false, 'account activation'),
+        msg : getMessage('message', 1009, null, false, false, 'account activation'),
         data : { email : user.email, expires : '1 day' }
     });
 
-    console.log(`${methodTrace} ${getMessage('message', 1010, email, true, email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1010, email, true, true, email)}`);
 };
 
 /**
@@ -93,7 +93,7 @@ exports.accountActivation = async (req, res) => {
     const methodTrace = `${errorTrace} accountActivation() >`;
     
     const userEmail = req.user ? req.user.email : ANONYMOUS_USER;
-    console.log(`${methodTrace} ${getMessage('message', 1011, userEmail, true, req.params.token)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1011, userEmail, true, true, req.params.token)}`);
     let user = await User.findOne({
         $and : [
             { activationToken : req.params.token },
@@ -102,18 +102,18 @@ exports.accountActivation = async (req, res) => {
     });
 
     if (!user) {
-        console.log(`${methodTrace} ${getMessage('error', 457, userEmail, true)}`);
+        console.log(`${methodTrace} ${getMessage('error', 457, userEmail, true, true)}`);
         res.status(401).json({
             status : "error", 
             codeno : 457,
-            msg : getMessage('error', 457, null, false),
+            msg : getMessage('error', 457, null, false, false),
             data : null
         });
 
         return;
     }
 
-    console.log(`${methodTrace} ${getMessage('message', 1056, user.email, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1056, user.email, true, true)}`);
     user.active = true; //activate the user
     user.activationToken = undefined; //the way to remove fields from mongo is set to undefined
     user.activationTokenExpires = undefined;
@@ -124,7 +124,7 @@ exports.accountActivation = async (req, res) => {
         res.status(401).json({
             status : "error", 
             codeno : 452,
-            msg : getMessage('error', 452, null, false),
+            msg : getMessage('error', 452, null, false, false),
             data : null
         });
 
@@ -147,11 +147,11 @@ exports.accountActivation = async (req, res) => {
         filename : 'account-created' //this is going to be the mail template file
     });
 
-    console.log(`${methodTrace} ${getMessage('message', 1057, user.email, true, user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1057, user.email, true, true, user.email)}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1057, null, false),
+        msg : getMessage('message', 1057, null, false, false),
         data : user
     });
 };
@@ -159,7 +159,7 @@ exports.accountActivation = async (req, res) => {
 exports.deleteExpiredInactiveAccounts = async() => {
     const methodTrace = `${errorTrace} deleteExpiredInactiveAccounts() >`;
 
-    console.log(`${methodTrace} ${getMessage('message', 1038, ANONYMOUS_USER, true, 'User', 'active', 'false')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1038, ANONYMOUS_USER, true, true, 'User', 'active', 'false')}`);
     const writeResult = await User.deleteMany({
         $and : [
             { active: false },
@@ -169,26 +169,26 @@ exports.deleteExpiredInactiveAccounts = async() => {
 
     if (!writeResult) {
         // error
-        console.log(`${methodTrace} ${getMessage('error', 464, ANONYMOUS_USER, true, 'User', 'active', 'false')}`);
+        console.log(`${methodTrace} ${getMessage('error', 464, ANONYMOUS_USER, true, true, 'User', 'active', 'false')}`);
 
         return;
     }
 
     //success
-    console.log(`${methodTrace} ${getMessage('message', 1050, ANONYMOUS_USER, true, writeResult.deletedCount, 'User')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1050, ANONYMOUS_USER, true, true, writeResult.deletedCount, 'User')}`);
 };
 
 const updateUserAccount = async (user, updates = {}) => {
     const methodTrace = `${errorTrace} updateUserAccount() >`;
     
-    console.log(`${methodTrace} ${getMessage('message', 1019, user.email, true, user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1019, user.email, true, true, user.email)}`);
     user = await User.findOneAndUpdate(
         { email : user.email },
         { $set : updates },
         { new : true, runValidators : true, context : 'query' }
     );
 
-    console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, true, user.email)}`);
     return await getUserObject(user.email);
 };
 exports.updateUserAccount = updateUserAccount;
@@ -204,7 +204,7 @@ exports.updateAccount = async (req, res) => {
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1020, null, false, user.email),
+        msg : getMessage('message', 1020, null, false, false, user.email),
         data : user
     });
 };
@@ -220,7 +220,7 @@ exports.updateAccountPersonalInfo = async (req, res) => {
     };
 
     //check for a PersonalInfo record for the user found
-    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'PersonalInfo', 'user', user._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, true, 'PersonalInfo', 'user', user._id)}`);
     let personalInfo = await PersonalInfo.findOneAndUpdate(
         { user : user._id },
         { $set : updates },
@@ -229,28 +229,28 @@ exports.updateAccountPersonalInfo = async (req, res) => {
 
     if (!personalInfo) {
         //if no personalInfo record found then create one and save
-        console.log(`${methodTrace} ${getMessage('message', 1025, user.email, true, 'PersonalInfo')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1025, user.email, true, true, 'PersonalInfo')}`);
         personalInfo = await (new PersonalInfo({ 
             user : user._id, 
             birthday : req.body.birthday 
         })).save();
 
         if (!personalInfo) {
-            console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'PersonalInfo')}`);
+            console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, true, 'PersonalInfo')}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 459,
-                msg : getMessage('error', 459, null, false, 'PersonalInfo'),
+                msg : getMessage('error', 459, null, false, false, 'PersonalInfo'),
                 data : null
             });
 
             return;
         }
         
-        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'PersonalInfo')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, true, 'PersonalInfo')}`);
         
         //search for the user and add the personal info id
-        console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'User', 'user', user._id)}`);
+        console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, true, 'User', 'user', user._id)}`);
         user = await User.findOneAndUpdate(
             { _id : user._id },
             { $set : { personalInfo } },
@@ -258,11 +258,11 @@ exports.updateAccountPersonalInfo = async (req, res) => {
         );
     }
 
-    console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, true, user.email)}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1020, null, false, user.email),
+        msg : getMessage('message', 1020, null, false, false, user.email),
         data : await getUserObject(user.email, { personalInfo: 'true' })
     });
 };
@@ -283,7 +283,7 @@ exports.updateAccountFinancialInfo = async (req, res) => {
     };
 
     //check for a FinancialInfo record for the user
-    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'FinancialInfo', 'user', user._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, true, 'FinancialInfo', 'user', user._id)}`);
     let financialInfo = await FinancialInfo.findOneAndUpdate(
         { user : user._id },
         { $set : updates },
@@ -292,7 +292,7 @@ exports.updateAccountFinancialInfo = async (req, res) => {
 
     if (!financialInfo) {
         //if no financialInfo record found then create one and save
-        console.log(`${methodTrace} ${getMessage('message', 1025, user.email, true, 'FinancialInfo')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1025, user.email, true, true, 'FinancialInfo')}`);
         financialInfo = await (new FinancialInfo({ 
             user : user._id, 
             annualIncome : req.body.annualIncome,
@@ -303,21 +303,21 @@ exports.updateAccountFinancialInfo = async (req, res) => {
         })).save();
 
         if (!financialInfo) {
-            console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'FinancialInfo')}`);
+            console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, true, 'FinancialInfo')}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 459,
-                msg : getMessage('error', 459, null, false, 'FinancialInfo'),
+                msg : getMessage('error', 459, null, false, false, 'FinancialInfo'),
                 data : null
             });
             
             return;
         }
 
-        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'FinancialInfo')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, true, 'FinancialInfo')}`);
 
         //search for the user and add the new financial info id
-        console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'User', 'id', user._id)}`);
+        console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, true, 'User', 'id', user._id)}`);
         user = await User.findOneAndUpdate(
             { _id : user._id },
             { $set : { financialInfo } },
@@ -325,11 +325,11 @@ exports.updateAccountFinancialInfo = async (req, res) => {
         );
     }
         
-    console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, true, user.email)}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1020, null, false, user.email),
+        msg : getMessage('message', 1020, null, false, false, user.email),
         data : await getUserObject(user.email, { financialInfo: 'true' })
     });
 };
@@ -345,10 +345,10 @@ exports.updateAccountFinancialInfo = async (req, res) => {
 exports.getUsersByIds = async(userIds, userEmail) => {
     const methodTrace = `${errorTrace} getUsersByIds() >`;
 
-    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, 'User(s)', `ids in: ${userIds}`)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, true, 'User(s)', `ids in: ${userIds}`)}`);
     const usersCursor = await User.find({ _id : { $in: userIds } });
     const records = usersCursor.length;
-    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'User(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, true, records, 'User(s)')}`);
 
     return usersCursor;
 };
@@ -364,10 +364,10 @@ exports.getUsersByIds = async(userIds, userEmail) => {
 exports.getUsersByEmails = async(emails, userEmail) => {
     const methodTrace = `${errorTrace} getUsersByEmails() >`;
 
-    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, 'User(s)', `emails in: ${emails}`)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, true, 'User(s)', `emails in: ${emails}`)}`);
     const usersCursor = await User.find({ email : { $in: emails } });
     const records = usersCursor.length;
-    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'User(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, true, records, 'User(s)')}`);
 
     return usersCursor;
 };

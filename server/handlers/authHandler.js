@@ -10,7 +10,7 @@ const errorTrace = 'authHandler >';
 exports.createToken = (user) => {
   const methodTrace = `${errorTrace} createToken() >`;
 
-  console.log(`${methodTrace}${getMessage('message', 1060, user.email, true, user.email, process.env.SESSION_DURATION_SECONDS)}`);
+  console.log(`${methodTrace}${getMessage('message', 1060, user.email, true, true, user.email, process.env.SESSION_DURATION_SECONDS)}`);
 
   return jwt.sign(
     {
@@ -35,20 +35,20 @@ exports.checkDecodedJwtMatchUser = (req, res, next) => {
 
   const { user, jwtToken } = req; //jwtToken is where the token data is saved once checked in jwtCheck method
   
-  console.log(`${methodTrace}${getMessage('message', 1058, user.email, true, user.email)}`);
+  console.log(`${methodTrace}${getMessage('message', 1058, user.email, true, true, user.email)}`);
   //check tokent in request again the logged in user
   if (user.email != jwtToken.username) {
-    console.log(`${methodTrace}${getMessage('error', 480, user.email, true, user.email)}`);
+    console.log(`${methodTrace}${getMessage('error', 480, user.email, true, true, user.email)}`);
     res.status(401).json({ 
       status : "error", 
       codeno : 480,
-      msg : getMessage('error', 480, user.email, false, user.email),
+      msg : getMessage('error', 480, user.email, false, false, user.email),
       data : null
     });
 
     return;
   }
 
-  console.log(`${methodTrace}${getMessage('message', 1059, user.email, true, user.email)}`);
+  console.log(`${methodTrace}${getMessage('message', 1059, user.email, true, true, user.email)}`);
   next();
 };

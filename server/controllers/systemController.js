@@ -20,7 +20,7 @@ exports.getClientApiKeys = (req, res) => {
         }
     };
 
-    console.log(`${methodTrace} ${getMessage('message', 1062, userEmail, true)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1062, userEmail, true, true)}`);
     res.json({
         status : 'success', 
         codeno : 200,

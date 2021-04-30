@@ -4,6 +4,7 @@ const juice = require('juice'); //inline css for email clients
 const htmlToText = require('html-to-text'); //convert html to text format
 const sgMail = require('@sendgrid/mail'); //to send emails using SendGrid
 const { getMessage } = require('./errorHandlers');
+const { ANONYMOUS_USER } = require('../constants/constants');
 const fs = require('fs');
 
 // encodes an image in a base64 encoded string
@@ -77,11 +78,13 @@ const sendSgMail = async (options) => {
 exports.send = async(options) => {
   const methodTrace = `${errorTrace} send() >`;
 
+  const fromEmail = options.fromEmail ? options.fromEmail : ANONYMOUS_USER;
+
   if (process.env.NODE_ENV === 'production') {
-    console.log(`${methodTrace} ${getMessage('message', 1041, null, true, 'SendGrid')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1041, fromEmail, true, 'SendGrid')}`);
     return sendSgMail(options);
   } else {
-    console.log(`${methodTrace} ${getMessage('message', 1041, null, true, 'Mailtrap')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1041, fromEmail, true, 'Mailtrap')}`);
     return sendMtMail(options);
   }
 }

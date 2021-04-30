@@ -15,18 +15,18 @@ const add = async (ratesObject, userEmail) => {
     const methodTrace = `${errorTrace} add() >`;
 
     //save a new record in DB
-    console.log(`${methodTrace} ${getMessage('message', 1031, userEmail, true, 'CurrencyRate')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1031, userEmail, true, true, 'CurrencyRate')}`);
     let currencyRates = await (new CurrencyRate({
         date : ratesObject.date,
         rates: ratesObject.rates
     })).save();
 
     if (currencyRates) {
-        console.log(`${methodTrace} ${getMessage('message', 1026, userEmail, true, 'CurrencyRate')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1026, userEmail, true, true, 'CurrencyRate')}`);
         return true;
     }
 
-    console.log(`${methodTrace} ${getMessage('error', 459, userEmail, true, 'CurrencyRate')}`);
+    console.log(`${methodTrace} ${getMessage('error', 459, userEmail, true, true, 'CurrencyRate')}`);
     return false;
 };
 
@@ -43,11 +43,11 @@ exports.getByDates = async (req, res) => {
     
     if (!results || !Object.keys(results).length) {
         //Nothing found for that date
-        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, 'CurrencyRate')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, true, 'CurrencyRate')}`);
         res.status(401).json({ 
             status : "error", 
             codeno : 461,
-            msg : getMessage('error', 461, null, false, 'CurrencyRate'),
+            msg : getMessage('error', 461, null, false, false, 'CurrencyRate'),
             data : null
         });
 
@@ -57,7 +57,7 @@ exports.getByDates = async (req, res) => {
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1036, null, false, Object.keys(results).length, 'CurrencyRate(s)'),
+        msg : getMessage('message', 1036, null, false, false, Object.keys(results).length, 'CurrencyRate(s)'),
         data : results
     });
 };
@@ -75,7 +75,7 @@ const getByDatesObjects = async (dates, base = 'USD', userEmail, options = null)
     const methodTrace = `${errorTrace} getByDatesObjects() >`;
 
     //1- check for records in DB with the provided dates
-    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, 'CurrencyRate', 'dates', `[ ${dates} ]`)}`); 
+    console.log(`${methodTrace} ${getMessage('message', 1034, userEmail, true, true, 'CurrencyRate', 'dates', `[ ${dates} ]`)}`); 
     const aggregationStagesArr = [
         { $match : { date : { $in : dates } } },
         {
@@ -112,7 +112,7 @@ const getByDatesObjects = async (dates, base = 'USD', userEmail, options = null)
     }
      
     //7- Return rates info to the user.
-    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, results.length, 'CurrencyRate(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, true, results.length, 'CurrencyRate(s)')}`);
     return indexedResults;
 };  
 
@@ -127,7 +127,7 @@ const getRatesFromWebservice = async (date, source = 'USD', userEmail) => {
     const methodTrace = `${errorTrace} getRatesFromWebservice() >`;
     source = 'USD'; //the free plan we have only supports USD
     
-    console.log(`${methodTrace} ${getMessage('message', 1047, userEmail, true, 'CurrencyLayer Service API', 'date', date)}`); 
+    console.log(`${methodTrace} ${getMessage('message', 1047, userEmail, true, true, 'CurrencyLayer Service API', 'date', date)}`); 
     
     const url = `http://apilayer.net/api/historical?date=${date}&access_key=${process.env.CURRENCYLAYER_KEY}&source=${source}&format=1`;
     //console.log(url);
@@ -136,25 +136,25 @@ const getRatesFromWebservice = async (date, source = 'USD', userEmail) => {
     if (response && response.status === 200 && response.data) {
         const data = response.data;
         if (data.success === true && data.quotes) {
-            console.log(`${methodTrace} ${getMessage('message', 1048, userEmail, true, 'CurrencyLayer Service API')}`);
+            console.log(`${methodTrace} ${getMessage('message', 1048, userEmail, true, true, 'CurrencyLayer Service API')}`);
             return data.quotes;
         } else if (data.success === false && data.error && data.error.code === 302) {
             //if the service failed because the format of the date, we are probably asking today date or a future date because of the client timezone => return latest rates available in the system
-            console.log(`${methodTrace} ${getMessage('message', 1049, userEmail, true, 'CurrencyLayer Service API')}`); 
+            console.log(`${methodTrace} ${getMessage('message', 1049, userEmail, true, true, 'CurrencyLayer Service API')}`); 
             
             response = await axios.get(`http://apilayer.net/api/live?access_key=${process.env.CURRENCYLAYER_KEY}&source=${source}&format=1`);
             if (response && response.status === 200 && response.data) {
                 const data = response.data;
                 
                 if (data.success === true && data.quotes) {
-                    console.log(`${methodTrace} ${getMessage('message', 1048, userEmail, true, 'CurrencyLayer Service API')}`);
+                    console.log(`${methodTrace} ${getMessage('message', 1048, userEmail, true, true, 'CurrencyLayer Service API')}`);
                     return data.quotes;
                 }
             }
         }
     } 
 
-    console.log(`${methodTrace} ${getMessage('error', 477, userEmail, true, 'CurrencyLayer Service API', 'date', date)}`);
+    console.log(`${methodTrace} ${getMessage('error', 477, userEmail, true, true, 'CurrencyLayer Service API', 'date', date)}`);
     return null;
 };
 //exports.getByDatesObjects = getByDatesObjects;

@@ -20,10 +20,10 @@ const getPropertyUsersByProperty = async(propertyId, userEmail) => {
     const methodTrace = `${errorTrace} getPropertyUsersByProperty() >`;
 
     //Look for the specific PropertyUser
-    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, 'PropertyUser', `propertyID = ${propertyId}`)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, true, 'PropertyUser', `propertyID = ${propertyId}`)}`);
     const propertyUserCursor = await PropertyUser.find({ property : propertyId });
     const records = propertyUserCursor.length;
-    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'PropertyUser(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, true, records, 'PropertyUser(s)')}`);
     
     return propertyUserCursor;
 };
@@ -41,7 +41,7 @@ const addPropertyUser = async (propertyId, userId, userEmail, isAdmin = false) =
     const methodTrace = `${errorTrace} addPropertyUser() >`;
 
     //Add a new record in PropertyUser with the user and property provided
-    console.log(`${methodTrace} ${getMessage('message', 1031, userEmail, true, 'PropertyUser')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1031, userEmail, true, true, 'PropertyUser')}`);
     let propertyUser = await (new PropertyUser({
         property : propertyId,
         user : userId,
@@ -50,29 +50,29 @@ const addPropertyUser = async (propertyId, userId, userEmail, isAdmin = false) =
     })).save();
 
     if (!propertyUser) {
-        console.log(`${methodTrace} ${getMessage('error', 459, userEmail, true, 'PropertyUser')}`);
+        console.log(`${methodTrace} ${getMessage('error', 459, userEmail, true, true, 'PropertyUser')}`);
         return false;
     }
     
-    console.log(`${methodTrace} ${getMessage('message', 1026, userEmail, true, 'PropertyUser')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1026, userEmail, true, true, 'PropertyUser')}`);
 
     //add the new PropertyUser id to the user in his array of propertyUsers
-    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, 'User', '_id', userId)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, true, 'User', '_id', userId)}`);
     user = await User.findOneAndUpdate(
         { _id : userId },
         { $addToSet : { propertyUsers : propertyUser } },
         { new : true }
     );
-    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, 'User')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, true, 'User')}`);
 
     //add the new PropertyUser id to the porperty in its array of propertyUsers
-    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, 'Property', '_id', propertyId)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, true, 'Property', '_id', propertyId)}`);
     property = await Property.findOneAndUpdate(
         { _id : propertyId },
         { $addToSet : { propertyUsers : propertyUser } },
         { new : true }
     );
-    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, 'Property')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, true, 'Property')}`);
 
     return true;
 };
@@ -90,47 +90,47 @@ const deletePropertyUser = async (propertyId, userId, userEmail, force = false) 
     const methodTrace = `${errorTrace} deletePropertyUser() >`;
 
     //Look for the specific PropertyUser
-    console.log(`${methodTrace} ${getMessage('message', 1037, userEmail, true, 'PropertyUser', `with propertyID : ${propertyId} and userID : ${userId}`)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1037, userEmail, true, true, 'PropertyUser', `with propertyID : ${propertyId} and userID : ${userId}`)}`);
     const propertyUser = await PropertyUser.findOne({ property : propertyId, user : userId });
     if (!propertyUser) {
-        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, 'PropertyUser')}`);
+        console.log(`${methodTrace} ${getMessage('error', 461, userEmail, true, true, 'PropertyUser')}`);
         return false;
     }
-    console.log(`${methodTrace} ${getMessage('message', 1035, userEmail, true, 'PropertyUser')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1035, userEmail, true, true, 'PropertyUser')}`);
 
     //check that nobody can remove the admin of this property
     if (!force && propertyUser.isAdmin) {
-        console.log(`${methodTrace} ${getMessage('error', 463, userEmail, true, 'Property')}`);
+        console.log(`${methodTrace} ${getMessage('error', 463, userEmail, true, true, 'Property')}`);
         return false;
     }
 
     //remove the propertyUser id from the array of PropertyUsers in User
-    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, 'User', '_id', userId)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, true, 'User', '_id', userId)}`);
     user = await User.findByIdAndUpdate(
         { _id : propertyUser.user },
         { $pull : { propertyUsers : propertyUser._id } },
         { new : true }
     );
-    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, 'User')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, true, 'User')}`);
 
     //remove the propertyUser id from the array of PropertyUsers in Property
-    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, 'Property', '_id', propertyId)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, userEmail, true, true, 'Property', '_id', propertyId)}`);
     property = await Property.findByIdAndUpdate(
         { _id : propertyUser.property },
         { $pull : { propertyUsers : propertyUser._id } },
         { new : true }
     );
-    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, 'Property')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1032, userEmail, true, true, 'Property')}`);
 
     //Remove the PropertyUser record
-    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, 'PropertyUser', '_id', propertyUser._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1038, userEmail, true, true, 'PropertyUser', '_id', propertyUser._id)}`);
     const writeResult = await PropertyUser.deleteOne({ _id : propertyUser._id });
     if (!(writeResult && writeResult.n > 0)) {
-        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, 'PropertyUser', '_id', propertyUser._id)}`);
+        console.log(`${methodTrace} ${getMessage('error', 464, userEmail, true, true, 'PropertyUser', '_id', propertyUser._id)}`);
         return false;    
     }
 
-    console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, 'PropertyUser')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1039, userEmail, true, true, 'PropertyUser')}`);
     return true;
 };
 exports.deletePropertyUser = deletePropertyUser;
@@ -154,7 +154,7 @@ exports.deleteAllForProperty = async(propertyId, userEmail) => {
         await deletePropertyUser(propertyUser.property, propertyUser.user, userEmail, true);
     });
 
-    console.log(`${methodTrace} ${getMessage('message', 1050, userEmail, true, propertyUserCursor.length, 'PropertyUser')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1050, userEmail, true, true, propertyUserCursor.length, 'PropertyUser')}`);
     return true;
 };
 
@@ -215,7 +215,7 @@ exports.updatePropertyUsers = async(propertyId, emails, userEmail, hostname) => 
     //get the emails not registered in atomiCoconut yet
     let emailsNotRegistered = emails.filter(x => !usersCursorEmails.includes(x));
     for (const email of emailsNotRegistered) {
-        console.log(`${methodTrace} ${getMessage('message', 1040, userEmail, true, email)}`);
+        console.log(`${methodTrace} ${getMessage('message', 1040, userEmail, true, true, email)}`);
         const registerURL = `${hostname}/users/register`;
         mail.send({
             toEmail : email,
@@ -258,10 +258,10 @@ exports.getPropertyIdsSharedWith = async(userId, userEmail) => {
     const methodTrace = `${errorTrace} getPropertyIdsSharedWithMe() >`;
 
     //Look for the PropertyUsers that matches the userId as param
-    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, 'PropertyUser', `userID = ${userId}`)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1051, userEmail, true, true, 'PropertyUser', `userID = ${userId}`)}`);
     let propertyUserCursor = await PropertyUser.find({ user : userId });
     const records = propertyUserCursor.length;
-    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'PropertyUser(s)')}`);
+    console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, true, records, 'PropertyUser(s)')}`);
     
     //generate array of property ids
     let propertyIds = propertyUserCursor.map(propertyUser => propertyUser.property);
