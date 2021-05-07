@@ -69,5 +69,10 @@ public/uploads/**/*.png
 public/uploads/**/*.bmp
 public/uploads/**/*.gif
 
+###########################
+# ELK
+###########################
+
 # logstash logs
-logstash/logs
+elk/logstash/logs
+
