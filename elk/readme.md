@@ -1,8 +1,10 @@
-# Testing logstash configuration file
+# ELK STACK
 
-## Run logstash docker container
+## Start local stack 
+> `docker compose up [--build]`
+
+## Testing logstash configuration file
 1) Start logstash container
-
   Option a) run the whole docker compose at the heavy cost of starting all the detailed containers
   Option b) Start just the logstash container (open terminal in this directory) and run >`docker run --rm --name logstash_cont -v ``pwd``/logstash:/usr/share/logstash/pipeline docker.elastic.co/logstash/logstash:7.12.0`
 
