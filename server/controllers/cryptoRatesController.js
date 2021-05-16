@@ -1,5 +1,7 @@
 const { getMessage } = require('../handlers/errorHandlers');
-const { ANONYMOUS_USER, CRYPTO_RATES_SERVER_URL, CRYPTO_CURRENCIES } = require('../constants/constants');
+const { getUserObject } = require('./authController');
+
+const { ADMIN_EMAIL, ANONYMOUS_USER, CRYPTO_RATES_SERVER_URL, CRYPTO_CURRENCIES } = require('../constants/constants');
 
 const mail = require('../handlers/mail');
 const AWSXRay = require('aws-xray-sdk');
@@ -101,36 +103,40 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
     let fromCryptoData = null;
     let toCryptoData = null;
     
-    try {
-        fromCryptoData = await getTodayRatesFromWebservice(fromCrypto, ANONYMOUS_USER);
-        toCryptoData = await getTodayRatesFromWebservice(toCrypto, ANONYMOUS_USER);
-        
-        
-        if (fromCryptoData && toCryptoData) {
-            const ratio = fromCryptoData.priceUsd / toCryptoData.priceUsd;
-            const alert = (ratio >= 0.01 /* || ratio < 0.005 */) ? '[URGENT]': '';
-            const toEmail = 'maxipaolucci@gmail.com';
+    // get user settings
+    const user = await getUserObject(ADMIN_EMAIL, { userSetting: 'true' });
+    
+    if (user && user.userSetting.ratioBtcXmrNotification) {
+        try {
+            fromCryptoData = await getTodayRatesFromWebservice(fromCrypto, ADMIN_EMAIL);
+            toCryptoData = await getTodayRatesFromWebservice(toCrypto, ADMIN_EMAIL);
             
-            console.log(`${methodTrace} ${getMessage('message', 1054, ANONYMOUS_USER, true, 'Crypto ratio', toEmail)}`); 
-            mail.send({
-                toEmail,
-                fromEmail: 'alert@atomicoconut.com',
-                subject : `${alert} Ratio ${fromCrypto}/${toCrypto}: ${ratio}`,
-                ratio,
-                fromCrypto,
-                fromCyptoPriceUsd : fromCryptoData.priceUsd,
-                toCyptoPriceUsd : toCryptoData.priceUsd,
-                toCrypto,
-                filename : 'alert-crypto-ratio' //this is going to be the mail template file
-            });
-            console.log(`${methodTrace} ${getMessage('message', 1055, ANONYMOUS_USER, true, toEmail)}`);
-        } else {
-            throw new Error(getMessage('error', 478, ANONYMOUS_USER, true, 'Coincap Service API'))
+            if (fromCryptoData && toCryptoData) {
+                const ratio = fromCryptoData.priceUsd / toCryptoData.priceUsd;
+                const alert = (ratio >= user.userSetting.ratioBtcXmrMax || ratio < user.userSetting.ratioBtcXmrMin ) ? '[URGENT]': '';
+                const toEmail = ADMIN_EMAIL;
+                
+                console.log(`${methodTrace} ${getMessage('message', 1054, ADMIN_EMAIL, true, 'Crypto ratio', toEmail)}`); 
+                mail.send({
+                    toEmail,
+                    fromEmail: 'alert@atomicoconut.com',
+                    subject : `${alert} Ratio ${fromCrypto}/${toCrypto}: ${ratio}`,
+                    ratio,
+                    fromCrypto,
+                    fromCyptoPriceUsd : fromCryptoData.priceUsd,
+                    toCyptoPriceUsd : toCryptoData.priceUsd,
+                    toCrypto,
+                    filename : 'alert-crypto-ratio' //this is going to be the mail template file
+                });
+                console.log(`${methodTrace} ${getMessage('message', 1055, ADMIN_EMAIL, true, toEmail)}`);
+            } else {
+                throw new Error(getMessage('error', 478, ADMIN_EMAIL, true, 'Coincap Service API'))
+            }
+            
+        } catch(err) {
+            console.log(`${methodTrace} ${err.toString()}`);
         }
-        
-    } catch(err) {
-        console.log(`${methodTrace} ${err.toString()}`);
-    } 
+    }
 };
 exports.alertCryptoRatio = alertCryptoRatio;
 
@@ -153,7 +159,7 @@ exports.test = async (req, res) => {
         });
         response.on('end', () => {
             // mail.send({
-            //     toEmail: 'maxipaolucci@gmail.com',
+            //     toEmail: ADMIN_EMAIL,
             //     fromEmail: 'test@atomicoconut.com',
             //     subject : `test email`,
             //     accountName : 'test',

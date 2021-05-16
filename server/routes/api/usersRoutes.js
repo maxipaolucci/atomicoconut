@@ -54,6 +54,13 @@ router.route('/accountFinancialInfo').post(
   catchErrors(userController.updateAccountFinancialInfo)
 );
 
+router.route('/settings').post(
+  authController.isLogggedIn, 
+  authHandler.jwtCheck,
+  authHandler.checkDecodedJwtMatchUser,
+  catchErrors(userController.updateSettings)
+);
+
 router.route('/account').post(
   authController.isLogggedIn,
   authHandler.jwtCheck,

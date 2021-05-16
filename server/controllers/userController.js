@@ -2,12 +2,13 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const PersonalInfo = mongoose.model('PersonalInfo');
 const FinancialInfo = mongoose.model('FinancialInfo');
+const UserSetting = mongoose.model('UserSetting');
 const { getMessage } = require('../handlers/errorHandlers');
 const { getUserObject } = require('./authController');
 const { validationResult } = require('express-validator');
 const crypto = require('crypto'); //get crytographic strings
 const mail = require('../handlers/mail');
-const { ANONYMOUS_USER } = require('../constants/constants');
+const { ANONYMOUS_USER, ADMIN_EMAIL } = require('../constants/constants');
 const authHandler = require('../handlers/authHandler');
 
 const errorTrace = 'userController >';
@@ -138,7 +139,7 @@ exports.accountActivation = async (req, res) => {
 
     // send email to me alerting new user
     mail.send({
-        toEmail: 'maxipaolucci@gmail.com',
+        toEmail: ADMIN_EMAIL,
         fromEmail: 'alert@atomicoconut.com',
         subject : `New user account activated`,
         accountEmail: user.email,
@@ -350,7 +351,8 @@ exports.getUsersByIds = async(userIds, userEmail) => {
     console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'User(s)')}`);
 
     return usersCursor;
-} 
+};
+
 /**
  * Returns all the users with the provided emails
  * 
@@ -368,4 +370,66 @@ exports.getUsersByEmails = async(emails, userEmail) => {
     console.log(`${methodTrace} ${getMessage('message', 1036, userEmail, true, records, 'User(s)')}`);
 
     return usersCursor;
-} 
+};
+
+exports.updateSettings = async (req, res) => {
+    const methodTrace = `${errorTrace} updateSettings() >`;
+    
+    //get the logged in user from req
+    let user = req.user;
+
+    const updates = {
+        ratioBtcXmrNotification : req.body.ratioBtcXmrNotification,
+        ratioBtcXmrMin: req.body.ratioBtcXmrMin,
+        ratioBtcXmrMax: req.body.ratioBtcXmrMax
+    };
+
+    //check for a Settings record for the user found
+    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'UserSetting', 'user', user._id)}`);
+    let userSetting = await UserSetting.findOneAndUpdate(
+        { user : user._id },
+        { $set : updates },
+        { new : true, runValidators : true, context : 'query' }
+    );
+
+    if (!userSetting) {
+        //if no userSetting record found then create one and save
+        console.log(`${methodTrace} ${getMessage('message', 1025, user.email, true, 'UserSetting')}`);
+        userSetting = await (new UserSetting({ 
+            user : user._id, 
+            ratioBtcXmrNotification : req.body.ratioBtcXmrNotification,
+            ratioBtcXmrMin: req.body.ratioBtcXmrMin,
+            ratioBtcXmrMax: req.body.ratioBtcXmrMax
+        })).save();
+
+        if (!userSetting) {
+            console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'UserSetting')}`);
+            res.status(401).json({ 
+                status : "error", 
+                codeno : 459,
+                msg : getMessage('error', 459, null, false, 'UserSetting'),
+                data : null
+            });
+
+            return;
+        }
+        
+        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'UserSetting')}`);
+        
+        //search for the user and add the personal info id
+        console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'User', 'user', user._id)}`);
+        user = await User.findOneAndUpdate(
+            { _id : user._id },
+            { $set : { userSetting } },
+            { new : true, runValidators : true, context : 'query' }
+        );
+    }
+
+    console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, user.email)}`);
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1020, null, false, user.email),
+        data : await getUserObject(user.email, { userSetting: 'true' })
+    });
+};

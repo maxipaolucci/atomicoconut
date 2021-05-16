@@ -37,6 +37,7 @@ require('./models/PropertyAdditionalInfo');
 require('./models/House');
 require('./models/CurrencyRate');
 require('./models/Property_User');
+require('./models/UserSetting');
 
 // Start our app!
 const app = require('./app');

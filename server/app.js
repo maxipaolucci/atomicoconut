@@ -42,8 +42,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
   
 
   const awsLogToConsole = (message, meta) => {
-    console.log(`[AWS Log message] ${message}`);
-    console.log(`[AWS Log meta] ${meta}`);
+    // console.log(`[AWS Log message] ${message}`);
+    // console.log(`[AWS Log meta] ${meta}`);
   }; 
   let logger = {
     error: (message, meta) => awsLogToConsole(message, meta),

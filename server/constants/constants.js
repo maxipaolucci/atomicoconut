@@ -24,3 +24,5 @@ exports.CRYPTO_CURRENCIES = {
 };
 
 exports.CRYPTO_RATES_SERVER_URL = 'https://api.coincap.io/v2/assets/';
+
+exports.ADMIN_EMAIL = 'maxipaolucci@gmail.com'
