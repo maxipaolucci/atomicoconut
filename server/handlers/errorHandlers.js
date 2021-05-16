@@ -101,7 +101,8 @@ const messageCodes = {
   1059: 'JWT is valid for {{param}}',
   1060: 'Creating a new JWT for {{param}}..., it will expire in {{param}}.',
   1061: 'JWT created for {{param}}, expires in {{param}}.',
-  1062: 'Client app API keys successfully retrieved.'
+  1062: 'Client app API keys successfully retrieved.',
+  1063: 'Alert Crypto Ratio triggered.'
 };
 
 /**

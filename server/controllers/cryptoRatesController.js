@@ -92,6 +92,23 @@ const getTodayRatesFromWebservice = async (source = CRYPTO_CURRENCIES.BITCOIN, u
 };
 
 /**
+ * This endpoint is for testing
+ */
+exports.sendAlertCryptoRatio = async (req, res) => {
+    const methodTrace = `${errorTrace} sendAlertCryptoRatio() >`;
+
+    console.log(`${methodTrace} ${getMessage('message', 1063, req.user.email, true)}`); 
+    alertCryptoRatio(CRYPTO_CURRENCIES.MONERO, CRYPTO_CURRENCIES.BITCOIN);
+
+    res.json({
+        status : 'success', 
+        codeno : 200,
+        msg : getMessage('message', 1063, null, false),
+        data : null
+    });
+};
+
+/**
  * Sends an email with the crypto ratio between two crypto currencies
  * 
  * @param {string} fromCrypto
