@@ -59,8 +59,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-cryptoRatesController.alertCryptoRatio(CRYPTO_CURRENCIES.MONERO, CRYPTO_CURRENCIES.BITCOIN);
-
 // this job runs every day at 8:00 am
 cron.schedule("0 8 * * *", () => {
   userController.deleteExpiredInactiveAccounts();
