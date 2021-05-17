@@ -35,7 +35,8 @@ const errorCodes = {
   477: 'Error trying to retrieve data from {{param}} with {{param}} = {{param}}.',
   478: 'Error trying to retrieve data from {{param}}.',
   479: 'User account for {{param}} was not activated. Please check in your email for an activation link.',
-  480: 'JWT provided is invalid for {{param}}'
+  480: 'JWT provided is invalid for {{param}}',
+  481: 'Error trying to generate a crypto ratio alert for {{param}}/{{param}}'
 };
 
 const messageCodes = {
@@ -102,7 +103,8 @@ const messageCodes = {
   1060: 'Creating a new JWT for {{param}}..., it will expire in {{param}}.',
   1061: 'JWT created for {{param}}, expires in {{param}}.',
   1062: 'Client app API keys successfully retrieved.',
-  1063: 'Alert Crypto Ratio triggered.'
+  1063: 'Alert Crypto Ratio triggered.',
+  1064: 'Alert crypto ratio notification is off for {{param}}.'
 };
 
 /**

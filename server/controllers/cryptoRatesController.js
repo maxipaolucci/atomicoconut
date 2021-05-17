@@ -123,6 +123,7 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
     // get user settings
     const user = await getUserObject(ADMIN_EMAIL, { userSetting: 'true' });
     
+    
     if (user && user.userSetting.ratioBtcXmrNotification) {
         try {
             fromCryptoData = await getTodayRatesFromWebservice(fromCrypto, ADMIN_EMAIL);
@@ -151,8 +152,11 @@ const alertCryptoRatio = async(fromCrypto, toCrypto) => {
             }
             
         } catch(err) {
+            console.log(`${methodTrace} ${getMessage('error', 481, ADMIN_EMAIL, true, fromCrypto, toCrypto)}`); 
             console.log(`${methodTrace} ${err.toString()}`);
         }
+    } else {
+        console.log(`${methodTrace} ${getMessage('message', 1064, ADMIN_EMAIL, true, ADMIN_EMAIL)}`);
     }
 };
 exports.alertCryptoRatio = alertCryptoRatio;
