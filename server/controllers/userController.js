@@ -385,7 +385,7 @@ exports.updateSettings = async (req, res) => {
     };
 
     //check for a Settings record for the user found
-    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'UserSetting', 'user', user._id)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, true, 'UserSetting', 'user', user._id)}`);
     let userSetting = await UserSetting.findOneAndUpdate(
         { user : user._id },
         { $set : updates },
@@ -394,7 +394,7 @@ exports.updateSettings = async (req, res) => {
 
     if (!userSetting) {
         //if no userSetting record found then create one and save
-        console.log(`${methodTrace} ${getMessage('message', 1025, user.email, true, 'UserSetting')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1025, user.email, true, true, 'UserSetting')}`);
         userSetting = await (new UserSetting({ 
             user : user._id, 
             ratioBtcXmrNotification : req.body.ratioBtcXmrNotification,
@@ -403,21 +403,21 @@ exports.updateSettings = async (req, res) => {
         })).save();
 
         if (!userSetting) {
-            console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, 'UserSetting')}`);
+            console.log(`${methodTrace} ${getMessage('error', 459, user.email, true, true, 'UserSetting')}`);
             res.status(401).json({ 
                 status : "error", 
                 codeno : 459,
-                msg : getMessage('error', 459, null, false, 'UserSetting'),
+                msg : getMessage('error', 459, null, false, false, 'UserSetting'),
                 data : null
             });
 
             return;
         }
         
-        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, 'UserSetting')}`);
+        console.log(`${methodTrace} ${getMessage('message', 1026, user.email, true, true, 'UserSetting')}`);
         
         //search for the user and add the personal info id
-        console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, 'User', 'user', user._id)}`);
+        console.log(`${methodTrace} ${getMessage('message', 1024, user.email, true, true, 'User', 'user', user._id)}`);
         user = await User.findOneAndUpdate(
             { _id : user._id },
             { $set : { userSetting } },
@@ -425,11 +425,11 @@ exports.updateSettings = async (req, res) => {
         );
     }
 
-    console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, user.email)}`);
+    console.log(`${methodTrace} ${getMessage('message', 1020, user.email, true, true, user.email)}`);
     res.json({
         status : 'success', 
         codeno : 200,
-        msg : getMessage('message', 1020, null, false, user.email),
+        msg : getMessage('message', 1020, null, false, false, user.email),
         data : await getUserObject(user.email, { userSetting: 'true' })
     });
 };

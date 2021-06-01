@@ -1,29 +1,32 @@
 version: '3'
 services:
   
-  elasticsearch:
-    image: elasticsearch:7.12.0
-    ports:
-    - 9200:9200
-    - 9300:9300
-    environment:
-      discovery.type: single-node
+  # elasticsearch:
+  #   image: elasticsearch:7.12.0
+  #   ports:
+  #   - 9200:9200
+  #   - 9300:9300
+  #   environment:
+  #     discovery.type: single-node
   
-  kibana:
-    image: kibana:7.12.0
-    depends_on: 
-    - elasticsearch
-    ports:
-    - 5601:5601
+  # kibana:
+  #   image: kibana:7.12.0
+  #   depends_on: 
+  #   - elasticsearch
+  #   ports:
+  #   - 5601:5601
 
   logstash:
     image: docker.elastic.co/logstash/logstash:7.12.0
-    depends_on: 
-    - elasticsearch
+    # depends_on: 
+    # - elasticsearch
     ports:
     - 5044:5044
     volumes:
     - ./logstash:/usr/share/logstash/pipeline
+    environment: 
+      ES_BONSAI_USERNAME: ${ES_BONSAI_USERNAME}
+      ES_BONSAI_PASSWORD: ${ES_BONSAI_PASSWORD}
 
   filebeat:
     depends_on: 

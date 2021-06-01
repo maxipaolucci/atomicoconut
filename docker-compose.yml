@@ -45,6 +45,7 @@ services:
       PUSHER_CLUSTER: ${PUSHER_CLUSTER}
       MAPS_API_KEY: ${MAPS_API_KEY}
       AWS_XRAY_CONTEXT_MISSING: ${AWS_XRAY_CONTEXT_MISSING}
+      LOGGER_ENABLED: ${LOGGER_ENABLED}
     volumes:
     - /app/node_modules
     - ./server:/app

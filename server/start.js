@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const utils = require('./handlers/utils');
 
 // Make sure we are running node 7.6+
 const [major, minor] = process.versions.node.split('.').map(parseFloat);
@@ -52,7 +53,7 @@ const { CRYPTO_CURRENCIES } = require('./constants/constants');
 // https://crontab.guru/every-day-8am
 
 // cron job for xmr/btc ratio just in prod to avoid using mailtrap free data
-if (process.env.NODE_ENV === 'production') {
+if (utils.isProduction()) {
   // this job runs every hour at minute 1
   cron.schedule("1 * * * *", () => {
     cryptoRatesController.alertCryptoRatio(CRYPTO_CURRENCIES.MONERO, CRYPTO_CURRENCIES.BITCOIN);

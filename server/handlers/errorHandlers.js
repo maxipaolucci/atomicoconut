@@ -1,6 +1,8 @@
 const moment = require('moment');
 const winston = require('winston');
-const { ANONYMOUS_USER, ENVIRONMENTS } = require('../constants/constants');
+require('winston-daily-rotate-file');
+const { ANONYMOUS_USER } = require('../constants/constants');
+const utils = require('./utils');
 
 const errorTrace = 'errorHandlers >';
 
@@ -109,12 +111,33 @@ const messageCodes = {
   1064: 'Alert crypto ratio notification is off for {{param}}.'
 };
 
-// Get Logger instance
+// Get Logger instance. Using the logger variable we handle it as a singleton.
 let logger = null;
 const getLoggerInstance = () => {
   const methodTrace = `getLoggerInstance() >`;
 
   if (!logger) {
+    let transport = new winston.transports.DailyRotateFile({
+      filename: 'acserver-%DATE%.log',
+      datePattern: 'YYYY-MM-DD-HH',
+      dirname: 'logs',
+      maxSize: '2k'
+    });
+
+    console.log(1234, utils.isProduction());
+  
+    transport.on('rotate', async (oldFilename, newFilename) => {
+      console.log('rotacionnnnnnnnnnnnnnnnnnnn')
+      if (!utils.isProduction()) {
+        // wait 60 seconds to allow filebeat to extract all the information
+        await utils.delay(1000);
+        // send oldFilename to s3
+        console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${oldFilename}<<<<<<<${newFilename}`);
+        utils.runCommand('ls -la && pwd');
+      }
+      
+    });
+    
     logger = winston.createLogger({
       level: 'info',
       format: winston.format.json(),
@@ -124,8 +147,9 @@ const getLoggerInstance = () => {
         // - Write all logs with level `error` and below to `error.log`
         // - Write all logs with level `info` and below to `combined.log`
         //
-        new winston.transports.File({ filename: 'logs/acservererror.log', level: 'error' }),
-        new winston.transports.File({ filename: 'logs/acserver.log' }),
+        //new winston.transports.File({ filename: 'logs/acservererror.log', level: 'error' }),
+        // new winston.transports.File({ filename: 'logs/acserver.log' }),
+        transport
       ],
     });
 
@@ -140,24 +164,33 @@ const getLoggerInstance = () => {
     // If we're not in production then log to the `console` with the format:
     // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
     //
-    // if (process.env.ENV !== 'production') {
-    //   logger.info(`As environment is ${process.env.ENV}, adding console output to logger.`);
+    // if (!utils.isProduction()) {
     //   logger.add(new winston.transports.Console({
     //     format: winston.format.simple(),
     //   }));
+    //   logger.info(`As environment is ${process.env.NODE_ENV}, adding console output to logger.`);
     // } 
   }
   
   return logger;
 };
-exports.getLoggerInstance = getLoggerInstance;
+
+/**
+ * Sends log data to the logger if the logger env variable is set to true
+ * @param {*} loggerData 
+ */
+const sendToLogger = (loggerData = null) => {
+  if (process.env.LOGGER_ENABLED === 'true') {
+    getLoggerInstance().log(loggerData);
+  }
+};
 
 /**
  * Return messages configured with provided params if set
  * @param {*} codeno . The number of message to get back
  * @param {*} params . The params to configure the message
  */
-const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = false, sendToLogger = true, ...params) => {
+const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = false, addToLogger = true, ...params) => {
   if (codeno === -1) {
     return '';
   }
@@ -185,8 +218,8 @@ const getMessage = (type = 'error', codeno = -1, userEmail = null, showDate = fa
   }
   
   // send to logger
-  if (sendToLogger) {
-    this.getLoggerInstance().log({
+  if (addToLogger) {
+    sendToLogger({
       level: type == 'message' ? 'info' : type,  
       codeno,
       message,
@@ -250,7 +283,7 @@ exports.customErrorHandler = (err, req, res, next) => {
       msg: err.message,
       status: err.status,
       codeno: err.codeno,
-      data: process.env.ENV !== ENVIRONMENTS.PRODUCTION ? err.stack : ''
+      data: !utils.isProduction() ? err.stack : ''
     };
   } else {
     // it comes from an exception thronw from another controller
@@ -259,7 +292,7 @@ exports.customErrorHandler = (err, req, res, next) => {
       status: 'error',
       codeno: err.codeno || err.status,
       code: err.code || '',
-      data: process.env.ENV !== ENVIRONMENTS.PRODUCTION ? err.stack : ''
+      data: !utils.isProduction() ? err.stack : ''
     };
   }
   

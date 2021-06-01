@@ -6,6 +6,7 @@ const sgMail = require('@sendgrid/mail'); //to send emails using SendGrid
 const { getMessage } = require('./errorHandlers');
 const { ANONYMOUS_USER } = require('../constants/constants');
 const fs = require('fs');
+const utils = require('./utils');
 
 // encodes an image in a base64 encoded string
 const base64ImageEncoder = (fileName) => {
@@ -80,7 +81,7 @@ exports.send = async(options) => {
 
   const fromEmail = options.fromEmail ? options.fromEmail : ANONYMOUS_USER;
 
-  if (process.env.NODE_ENV === 'production') {
+  if (utils.isProduction()) {
     console.log(`${methodTrace} ${getMessage('message', 1041, fromEmail, true, 'SendGrid')}`);
     return sendSgMail(options);
   } else {

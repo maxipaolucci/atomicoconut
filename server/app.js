@@ -19,6 +19,7 @@ const systemRoutes = require('./routes/api/systemRoutes');
 const helpers = require('./helpers');
 const errorHandlers = require('./handlers/errorHandlers');
 const cors = require('cors');
+const utils = require('./handlers/utils')
 const AWSXRay = require('aws-xray-sdk');
 require('./handlers/passport'); //used by passport library
 
@@ -57,7 +58,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
   AWSXRay.setDaemonAddress('xraydaemon:2000');
   // EC2Plugin adds the instance ID, Availability Zone, and the CloudWatch Logs Group.
   // ElasticBeanstalkPlugin adds the environment name, version label, and deployment ID.
-  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testing') {
+  if (utils.isProduction() || utils.isTesting()) {
     AWSXRay.config([AWSXRay.plugins.EC2Plugin,AWSXRay.plugins.ElasticBeanstalkPlugin]);
   }
   app.use(AWSXRay.express.openSegment(`atomiCoconut-${process.env.NODE_ENV}`));
@@ -131,7 +132,7 @@ app.use('/api/cryptoRates', cryptoRatesRoutes);
 app.use('/api/system', systemRoutes);
 app.use('/', routes); //this one at the end cause it contains the wildcard if the requested route does not match any route declared before
 
-// if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'testing') {
+// if (utils.isProduction() || utils.isTesting()) {
   // AWS XRay exceptions after declaring routes 
   app.use(AWSXRay.express.closeSegment());
 // }
