@@ -1,16 +1,8 @@
-# FROM node:14.15-alpine
-FROM node:14-stretch-slim
+FROM node:14.15-alpine
 
-# RUN apk update && apk add busybox-extras curl
-RUN apt-get update && apt-get install -y curl unzip sudo
-# install aws cli v2
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-RUN unzip -q awscliv2.zip
-RUN sudo ./aws/install
-RUN rm awscliv2.zip
+RUN apk update && apk add busybox-extras curl
 
-
-RUN node -v && npm -v && aws --version
+RUN node -v && npm -v
 
 WORKDIR /app
 

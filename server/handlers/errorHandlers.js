@@ -130,10 +130,10 @@ const getLoggerInstance = () => {
       console.log('rotacionnnnnnnnnnnnnnnnnnnn')
       if (!utils.isProduction()) {
         // wait 60 seconds to allow filebeat to extract all the information
-        await utils.delay(1000);
+        await utils.delay(10000);
         // send oldFilename to s3
         console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${oldFilename}<<<<<<<${newFilename}`);
-        utils.runCommand('ls -la && pwd');
+        utils.runCommand(`mv ${oldFilename} logs-old`);
       }
       
     });

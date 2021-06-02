@@ -58,17 +58,20 @@ node_modules
 *.env
 
 # data
-data/**/*
-!data/data-handler.js
+server/data/**/*
+!server/data/data-handler.js
 
 # Public folder
-public/app/index.html
-public/uploads/**/*.jpg
-public/uploads/**/*.jpeg
-public/uploads/**/*.png
-public/uploads/**/*.bmp
-public/uploads/**/*.gif
+server/public/app/index.html
+server/public/uploads/**/*.jpg
+server/public/uploads/**/*.jpeg
+server/public/uploads/**/*.png
+server/public/uploads/**/*.bmp
+server/public/uploads/**/*.gif
 
+# logs
+server/logs/*
+server/logs-old/*
 ###########################
 # ELK
 ###########################
@@ -76,3 +79,7 @@ public/uploads/**/*.gif
 # logstash logs
 elk/logstash/logs
 
+###########################
+# ACO-LOGS
+###########################
+aco-logs/*

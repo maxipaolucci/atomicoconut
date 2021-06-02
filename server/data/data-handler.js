@@ -16,7 +16,8 @@ const collections = [
   'PropertyAdditionalInfo',
   'House',
   'CurrencyRate',
-  'Property_User'
+  'Property_User',
+  'UserSetting'
 ];
 
 //get the environment
