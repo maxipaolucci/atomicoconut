@@ -49,8 +49,8 @@ services:
     volumes:
     - /app/node_modules
     - ./server:/app
-    - ./elk/logstash/logs:/app/logs # make logs files accessible by logstash
-    - ./aco-logs:/app/logs-old # this is to send logs to s3
+    - ./elk/logstash/logs:/app/logs:rw # make logs files accessible by logstash
+    - ./aco-logs:/app/logs-old:rw # this is to send logs to s3
     command: ["npm", "run", "dev"]
 
   acclient:

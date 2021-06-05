@@ -1,10 +1,13 @@
-const errorTrace = 'utils >';
 const Pusher = require("pusher");
 const { exec } = require('child_process');
 const { ENVIRONMENTS } = require("../constants/constants");
+const { getMessage } = require('./errorHandlers');
+const { ANONYMOUS_USER } = require('../constants/constants');
 
+const errorTrace = 'utils >';
 
 let pusher = null; 
+
 
 /**
  * Returns and instance of Pusher object. This is use to send push notifications to the frontend
@@ -41,23 +44,41 @@ exports.removeDuplicatesFromObjectIdArray = (objectIDs) => {
 
 /**
  * Delay method, to wait some amount of miliseconds before execute something
- * This format of the function is to use it with async/await
+ * This promise returned from the function is to use it with async/await to run it sync
  * async () => { await delay(1000); return do_something(); }
  * @param {*} ms 
+ * 
+ * @return {Promise}
  */
 exports.delay = (ms) => new Promise(res => setTimeout(res, ms));
 
-// environment methods
+/**
+ * environment methods
+ * 
+ * @return {boolean} 
+ */
 exports.isProduction = () => process.env.NODE_ENV === ENVIRONMENTS.PRODUCTION;
 exports.isDevelopment = () => process.env.NODE_ENV === ENVIRONMENTS.DEVELOPMENT;
 exports.isTesting = () => process.env.NODE_ENV === ENVIRONMENTS.TESTING;
 
+/**
+ * Run a command in the machine running this nodejs server. If return a promite 
+ * This promise returned from the function is to use it with async/await to run it sync
+ * @param {string} command . The command to run  
+ * 
+ * @return {Promise}
+ */
 exports.runCommand = (command) => new Promise(res => exec(command, (error, stdout, stderr) => {
-  console.log(res);
+  const methodTrace = `${errorTrace} runCommand() >`;
+  
   if (error) {
-    console.error(`exec error: ${error}`);
+    console.log(`${methodTrace} ${getMessage('error', 433, ANONYMOUS_USER, true, true, command, error)}`);
     return;
   }
-  console.log(`stdout: ${stdout}`);
-  console.error(`stderr: ${stderr}`);
+  
+  console.log(`${methodTrace} ${getMessage('message', 1065, ANONYMOUS_USER, true, true, command, stdout)}`);
+  
+  if (stderr) {
+    console.log(`${methodTrace} ${getMessage('error', 432, ANONYMOUS_USER, true, true, command, stderr)}`);
+  }
 }));

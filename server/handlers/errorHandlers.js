@@ -40,7 +40,9 @@ const errorCodes = {
   478: 'Error trying to retrieve data from {{param}}.',
   479: 'User account for {{param}} was not activated. Please check in your email for an activation link.',
   480: 'JWT provided is invalid for {{param}}',
-  481: 'Error trying to generate a crypto ratio alert for {{param}}/{{param}}'
+  481: 'Error trying to generate a crypto ratio alert for {{param}}/{{param}}',
+  432: 'Command "{{param}}" execution failed. Output: {{param}}',
+  433: 'child_process.exec({{param}}) failed. Error: {{param}}'
 };
 
 const messageCodes = {
@@ -108,7 +110,8 @@ const messageCodes = {
   1061: 'JWT created for {{param}}, expires in {{param}}.',
   1062: 'Client app API keys successfully retrieved.',
   1063: 'Alert Crypto Ratio triggered.',
-  1064: 'Alert crypto ratio notification is off for {{param}}.'
+  1064: 'Alert crypto ratio notification is off for {{param}}.',
+  1065: 'Command "{{param}}" executed successfully. Output: {{param}}'
 };
 
 // Get Logger instance. Using the logger variable we handle it as a singleton.
@@ -118,24 +121,21 @@ const getLoggerInstance = () => {
 
   if (!logger) {
     let transport = new winston.transports.DailyRotateFile({
-      filename: 'acserver-%DATE%.log',
-      datePattern: 'YYYY-MM-DD-HH',
+      filename: `acserver.log`,
+      // filename: `acserver-%DATE%.log`,
+      // datePattern: 'YYYY-MM-DD-HH-',
       dirname: 'logs',
-      maxSize: '2k'
+      maxSize: '10k'
     });
-
-    console.log(1234, utils.isProduction());
   
     transport.on('rotate', async (oldFilename, newFilename) => {
-      console.log('rotacionnnnnnnnnnnnnnnnnnnn')
-      if (!utils.isProduction()) {
-        // wait 60 seconds to allow filebeat to extract all the information
-        await utils.delay(10000);
-        // send oldFilename to s3
-        console.log(`>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>${oldFilename}<<<<<<<${newFilename}`);
-        utils.runCommand(`mv ${oldFilename} logs-old`);
-      }
-      
+      // wait 60 seconds to allow filebeat to extract all the information
+      await utils.delay(20000);
+      let newDate = moment(Date.now()).format('DD-MM-YYYY_HH-mm-ss-SSS');
+      let oldFilenameArr = oldFilename.split('/')[1].split('.');
+      let oldFileNameUnique = `${oldFilenameArr[0]}-${newDate}.${oldFilenameArr[1]}`; 
+      // move oldFilename to a mounted dir to be able to be send to S3 by a cronjob
+      utils.runCommand(`mv ${oldFilename} logs-old/${oldFileNameUnique}`);
     });
     
     logger = winston.createLogger({
