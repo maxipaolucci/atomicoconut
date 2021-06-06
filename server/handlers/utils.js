@@ -57,9 +57,17 @@ exports.delay = (ms) => new Promise(res => setTimeout(res, ms));
  * 
  * @return {boolean} 
  */
-exports.isProduction = () => process.env.NODE_ENV === ENVIRONMENTS.PRODUCTION;
-exports.isDevelopment = () => process.env.NODE_ENV === ENVIRONMENTS.DEVELOPMENT;
-exports.isTesting = () => process.env.NODE_ENV === ENVIRONMENTS.TESTING;
+exports.isProduction = () => getEnvironment() === ENVIRONMENTS.PRODUCTION;
+exports.isDevelopment = () => getEnvironment() === ENVIRONMENTS.DEVELOPMENT;
+exports.isTesting = () => getEnvironment() === ENVIRONMENTS.TESTING;
+
+/**
+ * get the current environment from NODE_ENV env variable
+ * 
+ * @returns {string}
+ */
+const getEnvironment = () => process.env.NODE_ENV;
+exports.getEnvironment = getEnvironment;
 
 /**
  * Run a command in the machine running this nodejs server. If return a promite 

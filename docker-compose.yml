@@ -25,7 +25,7 @@ services:
     # ports: 
     #   - "7777:7777"
     environment:
-      NODE_ENV: ${ENV}
+      NODE_ENV: ${NODE_ENV}
       DATABASE: ${DATABASE}
       DATABASE_TEST: ${DATABASE_TEST} # required to run data-handler.js against test env
       DATABASE_PROD: ${DATABASE_PROD} # required to run data-handler.js against prod env

@@ -121,7 +121,7 @@ const getLoggerInstance = () => {
 
   if (!logger) {
     let transport = new winston.transports.DailyRotateFile({
-      filename: `acserver.log`,
+      filename: `acserver-${utils.getEnvironment()}.log`,
       // filename: `acserver-%DATE%.log`,
       // datePattern: 'YYYY-MM-DD-HH-',
       dirname: 'logs',
@@ -141,7 +141,7 @@ const getLoggerInstance = () => {
     logger = winston.createLogger({
       level: 'info',
       format: winston.format.json(),
-      defaultMeta: { service: 'acserver' },
+      defaultMeta: { service: 'acserver', environment: utils.getEnvironment() },
       transports: [
         //
         // - Write all logs with level `error` and below to `error.log`

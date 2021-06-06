@@ -23,10 +23,12 @@ services:
     ports:
     - 5044:5044
     volumes:
-    - ./logstash:/usr/share/logstash/pipeline
+    - ./logstash:/usr/share/logstash/pipeline:ro
     environment: 
-      ES_BONSAI_USERNAME: ${ES_BONSAI_USERNAME}
-      ES_BONSAI_PASSWORD: ${ES_BONSAI_PASSWORD}
+      # ES_BONSAI_USERNAME: ${ES_BONSAI_USERNAME}
+      # ES_BONSAI_PASSWORD: ${ES_BONSAI_PASSWORD}
+      ELASTIC_SEARCH_URL: ${ELASTIC_SEARCH_URL}
+      NODE_ENV: ${NODE_ENV}
 
   filebeat:
     depends_on: 
@@ -36,4 +38,6 @@ services:
       dockerfile: Dockerfile.filebeat
     volumes:
     # make logs files accessible to filebeat
-    - ./logstash/logs:/usr/share/filebeat/logs
+    - ./logstash/logs:/usr/share/filebeat/logs:ro
+    environment: 
+      NODE_ENV: ${NODE_ENV}
