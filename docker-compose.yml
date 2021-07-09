@@ -24,33 +24,12 @@ services:
       dockerfile: Dockerfile.dev
     # ports: 
     #   - "7777:7777"
-    environment:
-      NODE_ENV: ${NODE_ENV}
-      DATABASE: ${DATABASE}
-      DATABASE_TEST: ${DATABASE_TEST} # required to run data-handler.js against test env
-      DATABASE_PROD: ${DATABASE_PROD} # required to run data-handler.js against prod env
-      MAIL_TRAP_USER: ${MAIL_TRAP_USER}
-      MAIL_TRAP_PASS: ${MAIL_TRAP_PASS}
-      MAIL_TRAP_HOST: ${MAIL_TRAP_HOST}
-      MAIL_TRAP_PORT: ${MAIL_TRAP_PORT}
-      SENDGRID_API_KEY: ${SENDGRID_API_KEY}
-      PORT: ${PORT}
-      SESSION_SECRET: ${SESSION_SECRET}
-      SESSION_KEY: ${SESSION_KEY}
-      SESSION_DURATION_SECONDS: ${SESSION_DURATION_SECONDS}
-      CURRENCYLAYER_KEY: ${CURRENCYLAYER_KEY}
-      PUSHER_APP_ID: ${PUSHER_APP_ID}
-      PUSHER_KEY: ${PUSHER_KEY}
-      PUSHER_SECRET: ${PUSHER_SECRET}
-      PUSHER_CLUSTER: ${PUSHER_CLUSTER}
-      MAPS_API_KEY: ${MAPS_API_KEY}
-      AWS_XRAY_CONTEXT_MISSING: ${AWS_XRAY_CONTEXT_MISSING}
-      LOGGER_ENABLED: ${LOGGER_ENABLED}
+    env_file:
+      - .env
     volumes:
     - /app/node_modules
     - ./server:/app
-    - ./elk/logstash/logs:/app/logs:rw # make logs files accessible by logstash
-    - ./aco-logs:/app/logs-old:rw # this is to send logs to s3
+    - ./elk/logs:/app/logs-old:rw # make logs files accessible for filebeat
     command: ["npm", "run", "dev"]
 
   acclient:
@@ -73,8 +52,8 @@ services:
     ports:
     - "2222:80"
     volumes:
-    # make logs files accessible by logstash
-    - ./elk/logstash/logs:/var/log/nginx
+    # make logs files accessible for filebeat
+    - ./elk/logs:/var/log/nginx
   
   certbot:
     image: certbot/certbot

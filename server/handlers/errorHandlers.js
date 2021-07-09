@@ -125,7 +125,7 @@ const getLoggerInstance = () => {
       // filename: `acserver-%DATE%.log`,
       // datePattern: 'YYYY-MM-DD-HH-',
       dirname: 'logs',
-      maxSize: '10k'
+      maxSize: '2k'
     });
   
     transport.on('rotate', async (oldFilename, newFilename) => {
