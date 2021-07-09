@@ -125,12 +125,10 @@ const getLoggerInstance = () => {
       // filename: `acserver-%DATE%.log`,
       // datePattern: 'YYYY-MM-DD-HH-',
       dirname: 'logs',
-      maxSize: '2k'
+      maxSize: process.env.LOG_SIZE
     });
   
     transport.on('rotate', async (oldFilename, newFilename) => {
-      // wait 60 seconds to allow filebeat to extract all the information
-      await utils.delay(20000);
       let newDate = moment(Date.now()).format('DD-MM-YYYY_HH-mm-ss-SSS');
       let oldFilenameArr = oldFilename.split('/')[1].split('.');
       let oldFileNameUnique = `${oldFilenameArr[0]}-${newDate}.${oldFilenameArr[1]}`; 
