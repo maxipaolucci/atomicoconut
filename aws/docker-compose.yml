@@ -1,0 +1,8 @@
+version: '3'
+services:
+  awscli:
+    build:
+      context: .
+    restart: always
+    volumes: 
+    - ~/.aws:/root/.aws:ro
