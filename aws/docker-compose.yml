@@ -4,5 +4,8 @@ services:
     build:
       context: .
     restart: always
+    env_file:
+    - .env
     volumes: 
-    - ~/.aws:/root/.aws:ro
+    - ~/.aws:/root/.aws:ro # for aws credentials
+    - ../elk/logs:/aws/s3-logs:rw # make logs imported from S3 files accessible for filebeat
