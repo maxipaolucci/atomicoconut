@@ -29,7 +29,7 @@ services:
     volumes:
     - /app/node_modules
     - ./server:/app
-    - ./elk/logs:/app/logs-old:rw # make logs files accessible for filebeat
+    - ./elk/logs/development:/app/logs-old:rw # make logs files accessible for filebeat
     command: ["npm", "run", "dev"]
 
   acclient:
