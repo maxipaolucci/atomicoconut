@@ -24,9 +24,8 @@ services:
     - 5044:5044
     volumes:
     - ./logstash:/usr/share/logstash/pipeline:ro
-    - ./logstash/config:/usr/share/logstash/config:ro
     env_file:
-      - .env
+    - .env
 
   filebeat:
     depends_on: 
@@ -38,4 +37,4 @@ services:
     # make logs files accessible to filebeat
     - ./logs:/usr/share/filebeat/logs:ro
     env_file:
-      - .env
+    - .env

@@ -18,7 +18,8 @@ COPY cronjob.sh /aws
 # exec permissions
 RUN chmod -x /aws/*.sh
 
-RUN mkdir -p /aws/s3-logs
+RUN mkdir -p /aws/s3-logs/production
+RUN mkdir -p /aws/s3-logs/testing
 
 VOLUME [ "/root/.aws" ]
 VOLUME [ "/aws/s3-logs" ]
