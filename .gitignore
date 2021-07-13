@@ -78,6 +78,7 @@ server/logs-old/*
 
 # logstash logs
 elk/logs
+elk/filebeat
 
 ###########################
 # ACO-LOGS

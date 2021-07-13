@@ -36,5 +36,6 @@ services:
     volumes:
     # make logs files accessible to filebeat
     - ./logs:/usr/share/filebeat/logs:ro
+    - ./filebeat/data:/usr/share/filebeat/data:rw
     env_file:
     - .env
