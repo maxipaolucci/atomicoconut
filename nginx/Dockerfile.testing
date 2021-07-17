@@ -20,6 +20,7 @@ COPY startup.sh /
 RUN rm /etc/logrotate.d/nginx
 COPY ./logrotate.conf /etc/logrotate.d
 RUN mv /etc/logrotate.d/logrotate.conf /etc/logrotate.d/nginx
+RUN chmod 644 /etc/logrotate.d/nginx
 
 # add cronjob to run evey x minutes to check if a rotation is needed
 RUN echo "*/1 * * * * /usr/sbin/logrotate /etc/logrotate.d/nginx" >> mycron
