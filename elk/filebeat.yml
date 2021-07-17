@@ -1,20 +1,28 @@
 filebeat.inputs:
   - type: log
     enabled: true
-    paths: /usr/share/filebeat/logs/development/acserver-*.log
+    paths: /usr/share/filebeat/logs/server/development/acserver-*.log
     fields: { log_type: acserver_log, environment: development }
   - type: log
     enabled: true
-    paths: /usr/share/filebeat/logs/production/acserver-*.log
+    paths: /usr/share/filebeat/logs/server/production/acserver-*.log
     fields: { log_type: acserver_log, environment: production }
   - type: log
     enabled: true
-    paths: /usr/share/filebeat/logs/testing/acserver-*.log
+    paths: /usr/share/filebeat/logs/server/testing/acserver-*.log
     fields: { log_type: acserver_log, environment: testing }
   - type: log
     enabled: true
-    paths: /usr/share/filebeat/logs/nginx-access-${NODE_ENV}-*.log
-    fields: { log_type: nginx_access_log }
+    paths: /usr/share/filebeat/logs/nginx/development/access.log*
+    fields: { log_type: nginx_access_log, environment: development }
+  - type: log
+    enabled: true
+    paths: /usr/share/filebeat/logs/nginx/production/access.log*
+    fields: { log_type: nginx_access_log, environment: production }
+  - type: log
+    enabled: true
+    paths: /usr/share/filebeat/logs/nginx/testing/access.log*
+    fields: { log_type: nginx_access_log, environment: testing }
 
 filebeat.config:
   modules:

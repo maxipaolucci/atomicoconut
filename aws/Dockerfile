@@ -1,4 +1,5 @@
-FROM amazon/aws-cli
+FROM amazon/aws-cli:2.2.20
+# latest version tested
 
 
 # isntall crontab
@@ -18,8 +19,10 @@ COPY cronjob.sh /aws
 # exec permissions
 RUN chmod -x /aws/*.sh
 
-RUN mkdir -p /aws/s3-logs/production
-RUN mkdir -p /aws/s3-logs/testing
+RUN mkdir -p /aws/s3-logs/server/production
+RUN mkdir -p /aws/s3-logs/server/testing
+RUN mkdir -p /aws/s3-logs/nginx/production
+RUN mkdir -p /aws/s3-logs/nginx/testing
 
 VOLUME [ "/root/.aws" ]
 VOLUME [ "/aws/s3-logs" ]

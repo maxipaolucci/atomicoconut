@@ -8,4 +8,5 @@ services:
     - .env
     volumes: 
     - ~/.aws:/root/.aws:ro # for aws credentials
-    - ../elk/logs:/aws/s3-logs:rw # make logs imported from S3 files accessible for filebeat
+    - ../elk/logs/server:/aws/s3-logs/server:rw # make server log files imported from S3 accessible to filebeat
+    - ../elk/logs/nginx:/aws/s3-logs/nginx:rw # make nginx log files imported from S3 accessible to filebeat
